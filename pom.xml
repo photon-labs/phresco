@@ -46,6 +46,16 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
 
+            <properties>
+                <phresco.service.url>http://locahost:3030/service</phresco.service.url>
+                <phresco.repo.url>http://locahost:8080/nexus/content/groups/public/</phresco.repo.url>
+                <phresco.server.dependency.config.file>/config/dependency/1.0.1001/dependency-1.0.1001.properties</phresco.server.dependency.config.file>
+                <phresco.ldap.url>ldap://localhost:389</phresco.ldap.url>
+                <phresco.ldap.basedn>ou=users,o=org,dc=org,dc=com</phresco.ldap.basedn>
+                <phresco.ldap.login.attribute>uid</phresco.ldap.login.attribute>
+                <phresco.authenticate.url>http://localhost:7070/auth</phresco.authenticate.url>
+            </properties>
+            
             <distributionManagement>
                 <snapshotRepository>
                     <id>dev-snapshots</id>
@@ -68,16 +78,31 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            
+            <properties>
+                <phresco.service.url>http://locahost:3030/service</phresco.service.url>
+                <phresco.repo.url>http://locahost:8080/nexus/content/groups/public/</phresco.repo.url>
+                <phresco.server.dependency.config.file>/config/dependency/1.0.1001/dependency-1.0.1001.properties</phresco.server.dependency.config.file>
+                <phresco.ldap.url>ldap://localhost:389</phresco.ldap.url>
+                <phresco.ldap.basedn>ou=users,o=org,dc=org,dc=com</phresco.ldap.basedn>
+                <phresco.ldap.login.attribute>uid</phresco.ldap.login.attribute>
+                <phresco.authenticate.url>http://localhost:7070/auth</phresco.authenticate.url>
+            </properties>
+            
             <distributionManagement>
-            <repository>
-                <id>test-release</id>
-                <url>http://456:8080/nexus/content/repositories/releases/</url>
-            </repository>
-             <site>
-                <id>phresco</id>
-                <name>Phresco</name>
-                <url>scp://phresco.org/home/public_html/</url>
-            </site>
+                <snapshotRepository>
+                    <id>test-snapshots</id>
+                    <url>http://localhost:8080/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>test-releases</id>
+                    <url>http://localhost:8080/nexus/content/repositories/releases/</url>
+                </repository>
+                 <site>
+                    <id>phresco</id>
+                    <name>Phresco</name>
+                    <url>scp://phresco.org/home/public_html/</url>
+                </site>
             </distributionManagement>
      </profile>
 
@@ -86,16 +111,27 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            
+            <properties>
+                <phresco.service.url>http://locahost:3030/service</phresco.service.url>
+                <phresco.repo.url>http://locahost:8080/nexus/content/groups/public/</phresco.repo.url>
+                <phresco.server.dependency.config.file>/config/dependency/1.0.1001/dependency-1.0.1001.properties</phresco.server.dependency.config.file>
+                <phresco.ldap.url>ldap://localhost:389</phresco.ldap.url>
+                <phresco.ldap.basedn>ou=users,o=org,dc=org,dc=com</phresco.ldap.basedn>
+                <phresco.ldap.login.attribute>uid</phresco.ldap.login.attribute>
+                <phresco.authenticate.url>http://localhost:7070/auth</phresco.authenticate.url>
+            </properties>
+            
             <distributionManagement>
-            <repository>
-                <id>stage-release</id>
-                <url>http://456:8080/nexus/content/repositories/releases/</url>
-            </repository>
+                <repository>
+                    <id>stage-releases</id>
+                    <url>http://localhost:8080/nexus/content/repositories/releases/</url>
+                </repository>
                 <site>
                     <id>phresco</id>
                     <name>Phresco</name>
                     <url>scp://phresco.org/home/public_html/</url>
-               </site>
+                </site>
             </distributionManagement>
      </profile>
      
@@ -105,10 +141,21 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            
+            <properties>
+                <phresco.service.url>http://locahost:3030/service</phresco.service.url>
+                <phresco.repo.url>http://locahost:8080/nexus/content/groups/public/</phresco.repo.url>
+                <phresco.server.dependency.config.file>/config/dependency/1.0.1001/dependency-1.0.1001.properties</phresco.server.dependency.config.file>
+                <phresco.ldap.url>ldap://localhost:389</phresco.ldap.url>
+                <phresco.ldap.basedn>ou=users,o=org,dc=org,dc=com</phresco.ldap.basedn>
+                <phresco.ldap.login.attribute>uid</phresco.ldap.login.attribute>
+                <phresco.authenticate.url>http://localhost:7070/auth</phresco.authenticate.url>
+            </properties>
+            
             <distributionManagement>
             <repository>
-                <id>prod-release</id>
-                <url>http://456:8080/nexus/content/repositories/releases/</url>
+                <id>prod-releases</id>
+                <url>http://localhost:8080/nexus/content/repositories/releases/</url>
             </repository>
              <site>
                 <id>phresco</id>
