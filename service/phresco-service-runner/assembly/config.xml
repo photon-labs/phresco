@@ -13,6 +13,7 @@
 		<fileSet>
 			<directory>${basedir}/delivery/</directory>
 			<outputDirectory>/phresco-server/</outputDirectory>
+            <filtered>true</filtered>
 			<includes>
 			    <include>bin/**</include>			    
 			    <include>docs/**</include>
@@ -23,6 +24,7 @@
 		<!-- filter to copy the Maven -->
     	<fileSet>
 			<directory>${maven.binary.home}</directory>
+            <filtered>true</filtered>
 			<outputDirectory>/phresco-server/tools/maven</outputDirectory>
 		</fileSet>		
 	</fileSets>

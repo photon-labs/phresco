@@ -13,6 +13,7 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 		<fileSet>
 			<directory>${basedir}/delivery</directory>
 			<outputDirectory>/phresco-framework/</outputDirectory>
+            <filtered>true</filtered>
 			<includes>
 			    <include>bin/*.bat</include>
 			    <include>bin/*.xml</include>
@@ -36,6 +37,7 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 		<fileSet>
 			<directory>${basedir}/delivery/tools/maven</directory>
 			<outputDirectory>/phresco-framework/tools/maven</outputDirectory>
+            <filtered>true</filtered>
 			<fileMode>0777</fileMode>
 		</fileSet>
 	</fileSets>

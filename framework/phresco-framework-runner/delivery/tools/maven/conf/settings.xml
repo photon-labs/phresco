@@ -162,12 +162,8 @@ under the License.
 
     <mirror>
       <id>Phresco Repository</id>
-      <name>Phresco Repository</name>	  
-                
-<!--		<url>http://23.21.177.233:8080/nexus/content/groups/prod/</url>  -->    
-
-		<url>http://172.16.18.178:8080/nexus/content/groups/testing/</url>
-<!--	  <url>http://repo.photoninfotech.com:8880/repo/content/groups/public/</url>-->
+      <name>Phresco Repository</name>
+      <url>${phresco.repo.url}</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
 
