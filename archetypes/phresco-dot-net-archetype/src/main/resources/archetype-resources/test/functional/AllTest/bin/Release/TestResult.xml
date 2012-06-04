@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.dll" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-05-04" time="15:20:50">
+  <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3625" os-version="Microsoft Windows NT 5.2.3790 Service Pack 2" platform="Win32NT" cwd="C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release" machine-name="PHOTON-C1BD88AF" user="Photon" user-domain="PHOTON-C1BD88AF" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.dll" executed="False" result="Cancelled">
+    <results>
+      <test-suite type="Namespace" name="AllTest" executed="False" result="Cancelled">
+        <results>
+          <test-suite type="TestFixture" name="HelloWorld" executed="False" result="Cancelled">
+            <results>
+              <test-case name="AllTest.HelloWorld.helloWorldTest" executed="False" result="Cancelled">
+                <failure>
+                  <message><![CDATA[Test cancelled by user]]></message>
+                  <stack-trace><![CDATA[at System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+at System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+at NUnit.Core.Reflect.InvokeMethod(MethodInfo method, Object fixture, Object[] args)
+at NUnit.Core.TestMethod.RunTestMethod(TestResult testResult)
+at NUnit.Core.TestMethod.RunTestCase(TestResult testResult)
+]]></stack-trace>
+                </failure>
+              </test-case>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

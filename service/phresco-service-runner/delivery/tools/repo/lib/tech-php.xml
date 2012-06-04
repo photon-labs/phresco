@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libraries xmlns="http://www.example.org/Phresco">
+    <library id="lib-java-wsdl4j-1.6.2" name="WSD4J" version="1.6.2">
+        <contentURL xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">/files/lib/java/wsdl4j.jar</contentURL>
+    </library>
+</libraries>

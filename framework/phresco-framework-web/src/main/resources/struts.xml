@@ -1,0 +1,589 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.custom.i18n.resources" value="framework" />
+    <constant name="struts.ui.theme" value="simple" />
+    
+    <package name="default" extends="struts-default,json-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+        
+        <!--  Login Page Action -->
+        <action name="login" method="login" class="com.photon.phresco.framework.actions.Login">
+            <result name="success" type="tiles">home</result>
+            <result name="failure">/pages/login.jsp</result>
+        </action>
+        
+        <action name="cmdlogin" method="cmdLogin" class="com.photon.phresco.framework.actions.Login">
+            <result name="success" type="tiles">home</result>
+            <result name="failure">/pages/login.jsp</result>
+        </action>
+        
+       	<action name="logout" method="logout" class="com.photon.phresco.framework.actions.Login">
+            <result name="success">/pages/login.jsp</result>
+        </action>
+
+        <!--  Home Actions -->
+        <action name="home" method="view" class="com.photon.phresco.framework.actions.home.Home">
+            <result name="home">/pages/home/videoholder.jsp</result>
+        </action>
+   
+        <action name="video" method="video" class="com.photon.phresco.framework.actions.home.Home">
+            <result name="video">/pages/home/video.jsp</result>
+        </action>
+
+        <!--  Applications Actions -->
+        <action name="applications" method="list" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="discover" method="discover" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="delete" method="delete" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="import" method="importApplication" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="importFromSvn" method="importFromSvn" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="importFromSvn">/pages/applications/svn_import.jsp</result>
+        </action>
+        
+        <action name="importcredentialdetails" method="importApplication" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json"/>
+        </action>
+        
+        <!--  Applications action -->
+        <action name="applicationDetails" method="applicationDetails" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="applicationDetails">/pages/applications/application.jsp</result>
+        </action>
+        
+        <action name="appinfo" method="appInfo" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="appinfo">/pages/applications/appinfo.jsp</result>
+        </action>
+        
+        <action name="applicationType" method="applicationType" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="applicationType">/pages/applications/application_type.jsp</result>
+        </action>
+      
+        <action name="technology" method="technology" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="technology">/pages/applications/technology.jsp</result>
+        </action>
+        
+        <action name="techVersions" method="techVersions" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+       
+        <action name="previous" method="previous" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="appinfo">/pages/applications/appinfo.jsp</result>
+        </action>
+        
+        <action name="save" method="save" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="update" method="update" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="list">/pages/applications/list.jsp</result>
+        </action>
+        
+        <action name="features" method="features" class="com.photon.phresco.framework.actions.applications.Features">
+            <result name="features_oneClm">/pages/applications/features_oneClm.jsp</result>
+            <result name="features_twoClm">/pages/applications/features_twoClm.jsp</result>
+            <result name="features_threeClm">/pages/applications/features_threeClm.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="checkDependency" method="checkDependency" class="com.photon.phresco.framework.actions.applications.Features">
+            <result type="json" />
+        </action>
+        
+        <action name="getPilotProjectModules" method="getPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
+            <result type="json" />
+        </action>
+        
+        <action name="fetchDefaultModules" method="fetchDefaultModules" class="com.photon.phresco.framework.actions.applications.Features">
+            <result type="json" />
+        </action>
+        
+        <action name="getAllVersions" method="allVersions" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+        
+        <action name="addDetails" method="addDetails" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+        
+        <action name="openAttrPopup" method="openAttrPopup" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="openAttrPopup">/pages/applications/add_appinfo_attr.jsp</result>
+        </action>
+        
+        <action name="updateHiddenFields" method="updateHiddenFields" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+        
+        <action name="quality" method="quality" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="quality">/pages/applications/quality/quality.jsp</result>
+        </action>
+        
+		<action name="ci" method="ci" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="configure" method="configure" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="configure">/pages/applications/ci/configure.jsp</result>
+        </action>
+        
+        <action name="showSettings" method="showSettings" class="com.photon.phresco.framework.actions.applications.Applications">
+        	<result type="json" />
+        </action>
+        
+        <action name="saveJob" method="save" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+       	<action name="updateJob" method="update" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="CIDelete" method="deleteBuildCI" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="buildCI" method="build" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="CIBuildDelete" method="deleteCIBuild" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="CIJobDelete" method="deleteCIJob" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="ci">/pages/applications/ci/ci.jsp</result>
+        </action>
+        
+        <action name="CIBuildDownload" method="CIBuildDownload" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}.zip"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        
+      	<action name="cronValidation" method="cronValidation" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="cronValidation">/pages/applications/ci/cronValidation.jsp</result>
+        </action>
+        
+        <action name="setup" method="setup" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="startJenkins" method="startJenkins" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="stopJenkins" method="stopJenkins" class="com.photon.phresco.framework.actions.applications.CI">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="code" method="view" class="com.photon.phresco.framework.actions.applications.Code">
+            <result name="code">/pages/applications/code.jsp</result>
+        </action>
+        
+        <action name="progressValidate" method="progressValidate" class="com.photon.phresco.framework.actions.applications.Code">
+        	<result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="check" method="check" class="com.photon.phresco.framework.actions.applications.Code">
+            <result name="code">/pages/applications/iframe.jsp</result>
+        </action>
+        
+        <action name="buildView" method="view" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="build">/pages/applications/build.jsp</result>
+        </action>
+        
+        <action name="generateBuild" method="generateBuild" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="generateBuild">/pages/applications/generate_build.jsp</result>
+        </action>
+        
+        <action name="openFolder" method="openFolder" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
+        
+        <action name="copyPath" method="copyPath" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
+        
+        <action name="copyToClipboard" method="copyToClipboard" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
+      
+        <action name="deployAndroid" method="deployAndroid" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="deployAndroid">/pages/applications/android_popup.jsp</result>
+        </action>
+        
+        <action name="deployIphone" method="deployIphone" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="deployIphone">/pages/applications/iphone_popup.jsp</result>
+        </action>
+        
+        <action name="deleteBuild" method="delete" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="build">/pages/applications/build.jsp</result>
+        </action>
+        
+        <action name="builds" method="builds" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="builds">/pages/applications/builds.jsp</result>
+        </action>
+        
+        <action name="build" method="build" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="deploy" method="deploy" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="NodeJSRunAgainstSource" method="NodeJSRunAgainstSource" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="runAgainstSource" method="runAgainstSource" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="stopServer" method="stopServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+         <action name="restartServer" method="restartServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="startServer" method="startServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="startNodeJSServer" method="startNodeJSServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="stopNodeJSServer" method="stopNodeJSServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+
+        <action name="restartNodeJSServer" method="restartNodeJSServer" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+
+        <action name="downloadBuild" method="download" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+        <action name="downloadBuildIpa" method="downloadIpa" class="com.photon.phresco.framework.actions.applications.Build">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+		<action name="configuration" method="list" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="list">/pages/applications/configuration/list.jsp</result>
+        </action>
+        
+        <action name="deleteConfigurations" method="delete" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="list">/pages/applications/configuration/list.jsp</result>
+        </action>
+        
+        <action name="addConfiguration" method="add" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="addConfiguration">/pages/applications/configuration/add.jsp</result>
+        </action>
+        
+        <action name="fetchProjectInfoVersions" method="fetchProjectInfoVersions" class="com.photon.phresco.framework.actions.applications.Configurations">
+           <result type="json" />
+        </action>
+
+        <action name="fetchSettingProjectInfoVersions" method="fetchSettingProjectInfoVersions" class="com.photon.phresco.framework.actions.settings.Settings">
+           <result type="json" />
+        </action>
+
+        <action name="checkForRespectiveConfig" method="checkForRespectiveConfig" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+
+        <action name="saveConfiguration" method="save" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="list">/pages/applications/configuration/list.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="editConfiguration" method="edit" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="editConfiguration">/pages/applications/configuration/add.jsp</result>
+        </action>
+        
+        <action name="openEnvironmentPopup" method="openEnvironmentPopup" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="environment">/pages/applications/configuration/environment.jsp</result>
+        </action>
+        
+        <action name="openSettingsEnvPopup" method="openSettingsEnvPopup" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result name="environment">/pages/applications/configuration/environment.jsp</result>
+        </action>
+        
+        <action name="createEnvironment" method="createEnvironment" class="com.photon.phresco.framework.actions.applications.Configurations">
+			<result name="list">/pages/applications/configuration/list.jsp</result>
+        </action>
+        
+        <action name="createSettingsEnvironment" method="createSettingsEnvironment" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result name="list">/pages/settings/list.jsp</result>
+        </action>
+        
+        <action name="deleteEnvironment" method="deleteEnvironment" class="com.photon.phresco.framework.actions.applications.Configurations">
+			<result type="json" />
+        </action>
+        
+        <action name="deleteSettingsEnvironment" method="deleteSettingsEnvironment" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result type="json" />
+        </action>
+        
+        <action name="updateConfiguration" method="update" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="list">/pages/applications/configuration/list.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="checkDuplicateEnv" method="checkDuplicateEnv" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result type="json" />
+        </action>
+        
+        <action name="checkDuplicateEnvSettings" method="checkDuplicateEnvSettings" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result type="json" />
+        </action>
+        
+         <action name="checkForRemove" method="checkForRemove" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result type="json" />
+        </action>
+        
+         <action name="checkForRemoveSettings" method="checkForRemoveSettings" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result type="json" />
+        </action>
+        
+        <action name="checkForConfiguration" method="checkForConfiguration" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+        
+        <action name="checkForConfigType" method="checkForConfigType" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json" />
+        </action>
+        
+        <!--  Settings Actions -->
+        <action name="settings" method="list" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result name="list">/pages/settings/list.jsp</result>
+        </action>
+
+        <action name="deleteSettings" method="delete" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result name="list">/pages/settings/list.jsp</result>
+        </action>
+
+        <action name="addSettings" method="add" class="com.photon.phresco.framework.actions.settings.Settings">
+        	<result name="add">/pages/settings/add.jsp</result>
+        </action>
+
+        <action name="saveSetting" method="save" class="com.photon.phresco.framework.actions.settings.Settings">
+        	<result name="list">/pages/settings/list.jsp</result>
+        	<result type="json" />
+        </action>
+        
+        <action name="editSetting" method="edit" class="com.photon.phresco.framework.actions.settings.Settings">
+            <result name="edit">/pages/settings/add.jsp</result>
+        </action>
+
+        <action name="updateSetting" method="update" class="com.photon.phresco.framework.actions.settings.Settings">
+        	<result name="list">/pages/settings/list.jsp</result>
+        	<result type="json" />
+        </action>
+
+       	<action name="settingsType" method="settingsType" class="com.photon.phresco.framework.actions.settings.Settings">
+        	<result name="type">/pages/settings/type.jsp</result>
+        </action>
+
+		<action name="configurationsType" method="configurationsType" class="com.photon.phresco.framework.actions.applications.Configurations">
+        	<result name="type">/pages/applications/configuration/type.jsp</result>
+        </action>
+        
+        <action name="download" method="list" class="com.photon.phresco.framework.actions.applications.Download">
+            <result name="download">/pages/applications/download.jsp</result>
+        </action>
+		
+        <!--  Quality Actions -->
+        <action name="testType" method="testType" class="com.photon.phresco.framework.actions.applications.Quality">
+	        <result name="unit">/pages/applications/quality/unit.jsp</result>
+	        <result name="functional">/pages/applications/quality/functional.jsp</result>
+	        <result name="performance">/pages/applications/quality/performance.jsp</result>
+            <result name="load">/pages/applications/quality/load.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="fillTestResultFiles" method="fillTestResultFiles" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json" />
+        </action>
+        
+        <action name="fillTestSuites" method="fillTestSuites"  class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json" />
+        </action>
+        
+        <action name="fetchBuildInfoEnvs" method="fetchBuildInfoEnvs" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result type="json" />
+        </action>
+        
+        <action name="functional" method="functional" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="load" method="load" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="performanceTest" method="performance" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="unit" method="unit" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="perTest" method="performanceTest" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="generateUnitTest" method="generateUnitTest" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="generateUnitTest">/pages/applications/quality/generate_unit_test.jsp</result>
+        </action>
+        
+        <action name="generateTest" method="generateFunctionalTest" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="generateTest">/pages/applications/quality/generate_test.jsp</result>
+        </action>
+        
+        <action name="testAndroid" method="testAndroid" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="testAndroid">/pages/applications/android_popup.jsp</result>
+        </action>
+        
+        <action name="testIphone" method="testIphone" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="success">/pages/applications/iphone_popup.jsp</result>
+        </action>
+        
+        <action name="testReport" method="testReport" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="testReport">/pages/applications/quality/testSuite.jsp</result>
+        </action>
+        
+        <action name="generateJmeter" method="generateJmeter" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="load">/pages/applications/quality/generate_jmeter_load.jsp</result>
+            <result name="performance">/pages/applications/quality/generate_jmeter_performance.jsp</result>
+            <result name="androidPerformance">/pages/applications/quality/generate_jmeter_performance_android.jsp</result>
+        </action>
+        
+        <action name="getPerfTestJSONData" method="fetchPerfTestJSONData" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json"/>
+        </action>
+        
+        <action name="getConfigNames" method="configNames" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result type="json" />
+        </action>
+        
+        <action name="loadTestResult" method="loadTestResult" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="loadTestResult">/pages/applications/quality/loadTestResult.jsp</result>
+        </action>
+        
+        <action name="performanceTestResult" method="performanceTestResult" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="performanceTestResult">/pages/applications/quality/performanceTestResult.jsp</result>
+        </action>
+        
+        <action name="performanceTestResultFiles" method="performanceTestResultFiles" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result type="json"><param name="root">testResultFiles</param></result>
+        </action>
+        
+        <action name="performanceTestResultAvail" method="performanceTestResultAvail" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result type="json"><param name="root">atleastOneFileAvail</param></result>
+        </action>
+        
+        <action name="connectionAliveCheck" method="connectionAliveCheck" class="com.photon.phresco.framework.actions.settings.Settings">
+        	<result type="json"><param name="root">connectionAlive</param></result>
+        </action>
+		
+		<action name="updateVersion" method="update" class="com.photon.phresco.framework.actions.applications.VersionUpdate">
+			<result name="success">updatedInfo.jsp</result>
+		</action>
+        
+        <action name="about" method="about" class="com.photon.phresco.framework.actions.applications.VersionUpdate">
+        	<result name="about">about.jsp</result>
+        </action>
+        
+        <action name="versionInfo" method="versionInfo" class="com.photon.phresco.framework.actions.applications.VersionUpdate">
+        	<result type="json"/>
+        </action>
+        
+		<!-- Forum actions -->
+        <action name="forum" method="forum" class="com.photon.phresco.framework.actions.forum.Forum">
+            <result name="forumindex" >/pages/forum/forum.jsp</result>
+        </action>
+        <!-- Error report -->
+        <action name="sendReport" method="sendReport" class="com.photon.phresco.framework.actions.ErrorReport">
+        	<result type="json"/>
+        </action>
+        
+        <!-- get Server caption for performance server actions -->
+       	<action name="getCaption" method="getSettingCaption" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json"/>
+        </action>
+        
+        <!-- get test result files -->
+       	<action name="getTstResultFiles" method="tstResultFiles" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json"/>
+        </action>
+        
+        <!-- Validation -->
+        <action name="validateFramework" method="validateFramework" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="validateFramework">/pages/applications/validate_popup.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="validateProject" method="validateProject" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="validateProject">/pages/applications/validate_popup.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="showFrameworkValidationResult" method="showFrameworkValidationResult" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="showFrameworkVldtRslt">/pages/applications/validate_popup.jsp</result>
+        </action>
+        
+        <action name="showProjectValidationResult" method="showProjectValidationResult" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="showProjectVldtRslt">/pages/applications/validate_popup.jsp</result>
+        </action>
+		
+		<action name="tstResultFiles" method="tstResultFiles" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json"><param name="root">testResultFiles</param></result>
+        </action>
+        
+       	<action name="getBuildsSize" method="getTotalBuilds" class="com.photon.phresco.framework.actions.applications.CI">
+            <result type="json"><param name="root">totalBuildSize</param></result>
+        </action>
+        
+        <action name="getBuildProgress" method="buildProgress" class="com.photon.phresco.framework.actions.applications.CI">
+            <result type="json"><param name="root">buildInProgress</param></result>
+        </action>
+        
+        <action name="getCodeValidatePopUp" method="showCodeValidatePopUp" class="com.photon.phresco.framework.actions.applications.Code">
+            <result name="showCodeValidatePopUp">/pages/applications/code_validate_pop_up.jsp</result>
+        </action>
+        
+        <action name="getDevices" method="devices" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result type="json"><param name="root">deviceNames</param></result>
+        </action>
+        
+        <action name="getScreenshot" method="getScreenshot" class="com.photon.phresco.framework.actions.applications.ImgStreaming"/>
+    </package>
+</struts>

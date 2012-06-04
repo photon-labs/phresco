@@ -1,0 +1,101 @@
+package com.photon.phresco.util;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ModuleGroup;
+import com.photon.phresco.model.ProjectInfo;
+
+public class ProjectUtils implements Constants {
+	public static void writeProjectInfo(ProjectInfo info, File phrescoFolder) throws PhrescoException {
+		BufferedWriter out = null;
+		FileWriter fstream = null;
+		try {
+			// create .project file inside the .phresco folder
+			File projectFile = new File(phrescoFolder.getPath() + File.separator + PROJECT_INFO_FILE);
+			if (!projectFile.exists()) {
+				projectFile.createNewFile();
+			}
+			// make the .phresco folder as hidden for windows
+			// for linux its enough to create the folder with '.' to make it as
+			// hidden
+			if (System.getProperty(OSNAME).startsWith(WINDOWS)) {
+				Runtime.getRuntime().exec(
+						"attrib +h " + STR_DOUBLE_QUOTES + phrescoFolder.getPath() + STR_DOUBLE_QUOTES);
+			}
+
+			// write the project info as json string into the .project file
+			Gson gson = new Gson();
+			String infoJSON = gson.toJson(info);
+			fstream = new FileWriter(projectFile.getPath());
+			out = new BufferedWriter(fstream);
+			out.write(infoJSON);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+				if (fstream != null) {
+					fstream.close();
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	}
+	
+	public static void updateProjectInfo(ProjectInfo info, File phrescoFolder) throws PhrescoException {
+		BufferedWriter out = null;
+		FileWriter fstream = null;
+		BufferedReader reader = null;
+		try {
+			Gson gson = new Gson();
+			reader = new BufferedReader(new FileReader(phrescoFolder));
+			ProjectInfo projectInfos = gson.fromJson(reader, ProjectInfo.class);
+			
+			List<ModuleGroup> ProjectInfomodules = projectInfos.getTechnology().getModules();
+			List<ModuleGroup> projectInfojsLibraries = projectInfos.getTechnology().getJsLibraries();
+			
+			List<ModuleGroup> selectedInfomodules = info.getTechnology().getModules();
+			List<ModuleGroup> selectedInfojsLibraries = info.getTechnology().getJsLibraries();
+			if(ProjectInfomodules != null && !ProjectInfomodules.isEmpty()) {
+				selectedInfomodules.addAll(ProjectInfomodules);	
+			}
+			if(projectInfojsLibraries != null && !projectInfojsLibraries.isEmpty() && selectedInfojsLibraries != null) {
+			    selectedInfojsLibraries.addAll(projectInfojsLibraries); 
+            }
+			
+			info.getTechnology().setModules(selectedInfomodules);
+			info.getTechnology().setJsLibraries(selectedInfojsLibraries);
+			String infoJSON = gson.toJson(info);
+			fstream = new FileWriter(phrescoFolder.getPath());
+			out = new BufferedWriter(fstream);
+			out.write(infoJSON);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+				if (fstream != null) {
+					fstream.close();
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	}
+	
+	
+	
+}

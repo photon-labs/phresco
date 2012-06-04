@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<editors xmlns="http://www.example.org/Phresco">
+    <editor id="editor-Drupal-PHP Edit" version="2.0">
+        <name>PHP Edit</name>
+    </editor>
+    <editor id="editor-Drupal-PHP Eclipse" version="2.0">
+        <name>PHP Eclipse</name>
+    </editor>
+    <editor id="editor-Drupal-Notepad++" version="2.0">
+        <name>Notepad++</name>
+    </editor>
+    <editor id="editor-Drupal-MPHP Code" version="2.0">
+        <name>MPHP Code</name>
+    </editor>
+</editors>

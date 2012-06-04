@@ -1,0 +1,45 @@
+h1. Resources Provided by the Extension
+
+Using the javascript-maven-plugin extension in a project provides a number of changes to your project's lifecycle mappings, dependencies, plugins and plugin configurations in order to provide a suitable environment for JavaScript development.
+
+These changes are listed in detail below:
+
+h2. Lifecycle Mappings
+
+||Phase||Plugin||Goal||
+|process-sources|js-import-maven-plugin|import-js|
+|generate-resources|js-import-maven-plugin|generate-html|
+|process-resources|maven-resources-plugin|resources|
+|process-resources|jslint-maven-plugin|jslint|
+|process-test-sources|js-import-maven-plugin|test-import-js|
+|generate-test-resources|js-import-maven-plugin|test-generate-html|
+|process-test-resources|maven-resources-plugin|testResources|
+|process-test-resources|jslint-maven-plugin|test-jslint|
+|test-compile|maven-compiler-plugin|testCompile|
+|test|maven-surefire-plugin|test|
+|prepare-package|webminifier-maven-plugin|minify-js|
+|package|TODO|TODO|
+|install|maven-install-plugin|install|
+|deploy|maven-deploy-plugin|deploy|
+                            
+h2. Dependencies
+
+||Scope||Dependency||
+|Compile|[almond.js|http://github.com/jrburke/almond]|
+|Test|[QUnit|http://docs.jquery.com/QUnit]|
+|Test|[js-testrunner|http://js-testrunner.codehaus.org/]|
+
+h2. Plugins
+
+||Plugin||Configuration Notes||
+|[Jetty|http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin]|Context path set to /|
+| |Resource bases includes target/classes|
+| |Resource bases includes target/test-classes|
+|[Compiler|http://maven.apache.org/plugins/maven-compiler-plugin/]| |
+|[Surefire|http://maven.apache.org/plugins/maven-surefire-plugin/]| |
+|[Site|http://maven.apache.org/plugins/maven-site-plugin/]|maven-jstools-plugin reporting plugin added|
+| |maven-jstools-plugin jsdoc report type added|
+| |Exclude apt module|
+|[JS Import|http://mojo.codehaus.org/js-import-maven-plugin/]| |
+|[JS Lint|http://mojo.codehaus.org/jslint-maven-plugin/]| |
+|[Webminifier|http://mojo.codehaus.org/webminifier-maven-plugin/]| |

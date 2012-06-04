@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+  <name>${artifactId}</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.photon.phresco.plugins</groupId>
+				<artifactId>wordpress-maven-plugin</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<markersDirectory>do_not_checkin/binaries</markersDirectory>
+							<artifactItems>
+								<artifactItem>
+									<groupId>binaries</groupId>
+									<artifactId>wordpress</artifactId>
+									<version>3.3.1</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>do_not_checkin/binaries</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<sourceDirectory>source</sourceDirectory>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>binaries</groupId>
+			<artifactId>wordpress</artifactId>
+			<version>3.3.1</version>
+			<type>zip</type>
+		</dependency>
+	</dependencies>
+	
+</project>

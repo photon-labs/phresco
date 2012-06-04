@@ -1,0 +1,190 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+name="nodejs">
+	<fileSets>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source</directory> 
+			<includes> 
+				<include>server.js</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/src</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/public/assets/images</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/public/css</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/public/js</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/lib</directory> 
+			<includes> 
+				<include>exception.js</include> 
+				<include>logger.js</include> 
+				<include>utility.js</include> 
+				<include>services.js</include> 
+				<include>configure.js</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/public/resources</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/views/</directory> 
+			<includes> 
+				<include>index.html</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test</directory> 
+			<includes> 
+				<include>AllTest.js</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/unit</directory> 
+			<includes> 
+				<include>TestSuite1.js</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/main/java/com/photon/phresco/Screens</directory> 
+			<includes> 
+				<include>AbstractBaseScreen.java</include> 
+				<include>AddScreen.java</include> 
+				<include>BaseScreen.java</include> 
+				<include>PhotonAbstractScreen.java</include> 
+				<include>WelcomeScreen.java</include> 
+				<include>WebDriverAbstractBaseScreen.java</include> 
+				<include>WebDriverBaseScreen.java</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/main/java/com/photon/phresco/selenium/report</directory> 
+			<includes> 
+				<include>Reporter.java</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/main/java/com/photon/phresco/selenium/util</directory> 
+			<includes> 
+				<include>Constants.java</include>
+				<include>ExtractExeToLocalMachine.java</include>
+				<include>ProcessWaiter.java</include>
+				<include>ScreenActionFailedException.java</include>
+				<include>ScreenException.java</include>
+				<include>ScreenshottingSelenium.java</include>
+				<include>GetCurrentDir.java</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/main/java/com/photon/phresco/uiconstants</directory> 
+			<includes> 
+				<include>PhrescoUiConstants.java</include>
+				<include>TestProperties.java</include>
+				<include>ReadXMLFile.java</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/main/resources</directory> 
+			<includes> 
+				<include>config.ini</include>
+				<include>phresco-env-config.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/src/test/java/photon/phresco/nodejs/testcases</directory> 
+			<includes> 
+				<include>AllTest.java</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load</directory> 
+			<includes> 
+				<include>build.properties</include> 
+				<include>build.xml</include> 
+				<include>pom.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/database</directory> 
+			<includes> 
+				<include>build.properties</include> 
+				<include>build.xml</include> 
+				<include>pom.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/database/tests</directory> 
+			<includes> 
+				<include>categories.csv</include> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include> 
+				<include>products.csv</include> 
+				<include>reviews.csv</include> 
+				<include>users.csv</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server</directory> 
+			<includes> 
+				<include>build.properties</include> 
+				<include>build.xml</include> 
+				<include>pom.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+	</fileSets>
+</archetype-descriptor> 

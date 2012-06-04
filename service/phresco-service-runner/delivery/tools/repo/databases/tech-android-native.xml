@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databases xmlns="http://www.example.org/Phresco">
+    <database id="databaseAndroid-SQLLite" name="SQLLite" version="2.0"/>
+    <database id="database-Android-Oracle9i" name="Oracle9i" version="2.0"/>
+    <database id="database-Android-MS-SqlServer" name="MS-SqlServer" version="2.0"/>
+    <database id="database-Android-Derby" name="Derby" version="2.0"/>
+</databases>

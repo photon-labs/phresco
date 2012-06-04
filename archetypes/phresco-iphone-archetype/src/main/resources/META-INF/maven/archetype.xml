@@ -1,0 +1,41 @@
+<archetype>
+  <id>phresco-iphone-archetype</id>
+	<sources>
+		<source>source/main.m</source>
+		<source>source/MainWindow.xib</source>
+		<source>source/Phresco_Prefix.pch</source>
+		<source>source/Phresco-Info.plist</source>
+		<source>source/phresco-env-config.xml</source>
+		<source>source/Classes/PhrescoAppDelegate.h</source>
+		<source>source/Classes/PhrescoAppDelegate.m</source>
+		<source>source/Classes/RootViewController.h</source>
+		<source>source/Classes/RootViewController.m</source>
+		<source>source/Classes/RootViewController.xib</source>
+	</sources>
+	<testSources>
+		<source>test/functional/tests/TestSuite.js</source>
+	</testSources>
+	<resources>
+		<resource>source/images/Icon.png</resource>
+		<resource>source/Phresco.xcodeproj/esfdsnat.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/esfdsnat.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/mac.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/mac.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/photon.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/photon.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/project.pbxproj</resource>
+		<resource>source/Phresco.xcodeproj/project.xcworkspace/contents.xcworkspacedata</resource>
+		<resource>source/Phresco.xcodeproj/project.xcworkspace/xcuserdata/bharatkumar.xcuserdatad/UserInterfaceState.xcuserstate</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 2.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 4.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 6.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 8.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/xcschememanagement.plist</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/HomeViewTest 2.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/HomeViewTest.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/Phresco.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/xcschememanagement.plist</resource>
+	</resources>
+</archetype>

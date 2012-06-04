@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="2.3.1" name="addthis" id="mod_addthis_2.3.1">
+        <contentURL>/modules/tech-wordpress/files/mod_addthis_2.3.1/2.3.1/mod_addthis_2.3.1-2.3.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows any visitor to bookmark your site easily with many popular services.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Get more traffic back to your site by installing the AddThis WordPress plugin. With AddThis, your users can promote your content by sharing to 330 of the most popular social networking and bookmarking sites (like Facebook, Twitter, Digg, StumbleUpon and MySpace). We also support address bar sharing in modern browsers. Our button is small, unobtrusive, quick to load and recognized all over the web. 
+Optionally, sign up for a free AddThis.com account to see how your visitors are sharing your content: which services they're using for sharing, which content is shared the most, and more.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.0.5" name="advanced-custom-fields" id="mod_advanced-custom-fields_2.0.5">
+        <contentURL>/modules/tech-wordpress/files/mod_advanced-custom-fields_2.0.5/2.0.5/mod_advanced-custom-fields_2.0.5-2.0.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Completely Customise your edit pages with an assortment of field types: Wysiwyg, Repeater, text, textarea, image, file, select, checkbox post type, page link and more!
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Advanced Custom Fields is the perfect solution for any wordpress website which needs more flexible data like other Content Management Systems. 
+
+* Visually create your Fields
+* Select from multiple input types (text, textarea, wysiwyg, image upload, page link, select, checkbox, more to come)
+* Assign your fields to multiple edit pages (specific ID's, post types, post slugs, parent ID's, template names)
+* Add, Edit and reorder infinite rows to your fields
+* Easily load data through a simple and friendly API
+* Uses the native WordPress custom post type for ease of use and fast processing
+* Now uses custom Database tables to improve speed, reliability and future development</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="2.5.5" name="akismet" id="mod_akismet_2.5.5">
+        <contentURL>/modules/tech-wordpress/files/mod_akismet_2.5.5/2.5.5/mod_akismet_2.5.5-2.5.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Akismet is quite possibly the best way in the world to protect your blog from comment and trackback spam.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Akismet checks your comments against the Akismet web service to see if they look like spam or not and lets you
+review the spam it catches under your blog's &quot;Comments&quot; admin screen.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.6.13.3" name="all-in-one-seo-pack" id="mod_all-in-one-seo-pack_1.6.13.3">
+        <contentURL>/modules/tech-wordpress/files/mod_all-in-one-seo-pack_1.6.13.3/1.6.13.3/mod_all-in-one-seo-pack_1.6.13.3-1.6.13.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Out-of-the-box SEO for your Wordpress blog.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.3" name="ambrosite-nextprevious-post-link-plus" id="mod_ambrosite-nextprevious-post-link-plus_2.3">
+        <contentURL>/modules/tech-wordpress/files/mod_ambrosite-nextprevious-post-link-plus_2.3/2.3/mod_ambrosite-nextprevious-post-link-plus_2.3-2.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Upgrades the next/previous post link template tags to reorder or loop adjacent post navigation links.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This plugin creates two new template tags -- **next_post_link_plus** and **previous_post_link_plus** -- which are upgraded versions of the core WordPress next/previous post link template tags. The new tags include all of the functionality of the core tags, plus the following additional options:
+
+* Sort the next/previous post links on columns other than post_date (e.g. alphabetically).
+* Sort the next/previous links on custom fields.
+* Full WordPress 3.2 compatibility, including support for custom post types, custom taxonomies, and post formats.
+* Loop around to the first post if there is no next post (and vice versa).
+* Retrieve the first/last post, rather than the previous/next post (for First|Previous|Next|Last navigation links).
+* Display post thumbnails alongside the links (WordPress 2.9 or higher).
+* Truncate the link titles to any length, and display custom text in the tooltip.
+* Display the date, author, category, and meta value of the next/previous links.
+* Restrict next/previous links to same category, taxonomy, format, or author.
+* Exclude categories, custom taxonomies, post formats, or individual post IDs.
+* Three category exclusion methods for greater control over the navigation stream.
+* Return multiple next/previous links (e.g. the next N links, in an HTML list).
+* Return the links as a PHP string, instead of echoing them.
+* Return false if no next/previous link is found, so themes may conditionally display alternate text.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.8.5" name="breadcrumbs" id="mod_breadcrumbs_0.8.5">
+        <contentURL>/modules/tech-wordpress/files/mod_breadcrumbs_0.8.5/0.8.5/mod_breadcrumbs_0.8.5-0.8.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Outputs a fully customizable breadcrumb path.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Easily add breadcrumbs to your template. If you're using one of the supported WordPress frameworks, it's as easy as enabling the plugin and checking the &quot;Try to add automatically box&quot;, if you're not using one of those, adding it is as simple as adding one line of code to your template!</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.3" name="bulk-delete" id="mod_bulk-delete_1.3">
+        <contentURL>/modules/tech-wordpress/files/mod_bulk-delete_1.3/1.3/mod_bulk-delete_1.3-1.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Bulk delete posts from selected categories or tags.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>
+Bulk Delete is a WordPress Plugin which can be used to delete posts in bulk from selected categories, tags or custom taxonomies. This Plugin can also delete all drafts, post revisions or pages.
+
+More details about the Plugin can be found at the [Plugins Home page][1].
+
+If you looking for just moving posts, instead of deleting, then use [Bulk Move Plugin][2] instead.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="3.0" name="category-pagefix.php" id="mod_category-pagefix.php_3.0">
+        <contentURL>/modules/tech-wordpress/files/mod_category-pagefix.php_3.0/3.0/mod_category-pagefix.php_3.0-3.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Fixes 404 page error in pagination of category page while using custom permalink.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.4.6" name="contact-form-7" id="mod_contact-form-7_2.4.6">
+        <contentURL>/modules/tech-wordpress/files/mod_contact-form-7_2.4.6/2.4.6/mod_contact-form-7_2.4.6-2.4.6.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>contact form plugin. Simple but flexible.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>
+Bulk Delete is a WordPress Plugin which can be used to delete posts in bulk from selected categories, tags or custom taxonomies. This Plugin can also delete all drafts, post revisions or pages.
+
+More details about the Plugin can be found at the [Plugins Home page][1].
+
+If you looking for just moving posts, instead of deleting, then use [Bulk Move Plugin][2] instead.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="cpt-category-pagefix.php" id="mod_cpt-category-pagefix.php_1.0">
+        <contentURL>/modules/tech-wordpress/files/mod_cpt-category-pagefix.php_1.0/1.0/mod_cpt-category-pagefix.php_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Fixes 404 error when attemping to view paginated category listing page, consisting of custom post types, greater than one.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.7" name="custom-post-type-ui" id="mod_custom-post-type-ui_0.7">
+        <contentURL>/modules/tech-wordpress/files/mod_custom-post-type-ui_0.7/0.7/mod_custom-post-type-ui_0.7-0.7.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Admin panel for creating custom post types and custom taxonomies in WordPress.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This plugin provides an easy to use interface to create and administer custom post types and taxonomies in WordPress.  This plugin is created for WordPress 3.x.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.72" name="disqus-comment-system" id="mod_disqus-comment-system_2.72">
+        <contentURL>/modules/tech-wordpress/files/mod_disqus-comment-system_2.72/2.72/mod_disqus-comment-system_2.72-2.72.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The Disqus comment system replaces your WordPress comment system with your comments hosted and powered by Disqus.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Disqus, pronounced &quot;discuss&quot;, is a service and tool for web comments and
+discussions. Disqus makes commenting easier and more interactive,
+while connecting websites and commenters across a thriving discussion
+Community.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="3.2.6" name="google-sitemap-generator" id="mod_google-sitemap-generator_3.2.6">
+        <contentURL>/modules/tech-wordpress/files/mod_google-sitemap-generator_3.2.6/3.2.6/mod_google-sitemap-generator_3.2.6-3.2.6.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This plugin will generate a special XML sitemap which will help search engines like Google, Yahoo, Bing and Ask.com to better index your blog.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This plugin will generate a special XML sitemap which will help search engines like Google, Bing, Yahoo and Ask.com to better index your blog. With such a sitemap, it's much easier for the crawlers to see the complete structure of your site and retrieve it more efficiently. The plugin supports all kinds of WordPress generated pages as well as custom URLs. Additionally it notifies all major search engines every time you create a post about the new content.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.6" name="hello.php (Hello Dolly)" id="mod_hello.php_(hello_dolly)_1.6">
+        <contentURL>/modules/tech-wordpress/files/mod_hello.php_(hello_dolly)_1.6/1.6/mod_hello.php_(hello_dolly)_1.6-1.6.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Displays random lyric from Hello, Dolly in the upper right of your admin screen on every page.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.1.0" name="kapost-byline" id="mod_kapost-byline_1.1.0">
+        <contentURL>/modules/tech-wordpress/files/mod_kapost-byline_1.1.0/1.1.0/mod_kapost-byline_1.1.0-1.1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This plugin allows posts published from Kapost.com into your WordPress blog to keep the same username for the author. If the author on the published post doesn't exists in WordPress (check done by looking at email address), this plugin will create a new user in WordPress.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This plugin allows posts published from Kapost.com into your WordPress blog to keep the same username for the author. If the author on the published post doesn't exists in WordPress (check done by looking at email address), this plugin will create a new user in WordPress.
+
+In addition, this plugin allows Kapost newsrooms to publish to a Custom Type. 
+
+For this to work, you should name a Custom Field (on Kapost.com) as &quot;kapost_custom_type&quot;. 
+
+The display name can be anything but the field name has to be what's listed above. 
+
+Also, on the Kapost.com side, in the dropdown list, then put the name exactly of the Custom Type. 
+
+The way you can tell what it is, go to post type, and the page in WP will reveal what the exact name is. 
+
+The name in the Custom Field has to be exact name.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.9.2" name="nextgen-gallery" id="mod_nextgen-gallery_1.9.2">
+        <contentURL>/modules/tech-wordpress/files/mod_nextgen-gallery_1.9.2/1.9.2/mod_nextgen-gallery_1.9.2-1.9.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A NextGENeration Photo Gallery for WordPress.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>NextGEN Gallery is a full integrated Image Gallery plugin for WordPress with a slideshow option. Before I started writing the plugin I studied all the existing image and gallery plugins for WordPress. 
+Some of them are really good and well designed, but the gap I filled was a simple administration system at the back end which can also handle multiple galleries.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="ogp (Open Graph Pro)" id="mod_ogp_(open_graph_pro)_1.0">
+        <contentURL>/modules/tech-wordpress/files/mod_ogp_(open_graph_pro)_1.0/1.0/mod_ogp_(open_graph_pro)_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Control how your posts and pages are presented on Facebook and other social media sites.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content> Automagically adds Open Graph tags to your blog. Control how your posts and pages are presented on Facebook and other social media sites. No configuration needed.  When someone likes or shares your blog on Facebook, your header image is shown. If someone likes or shares a post, the featured image (post thumbnail) is shown. If you haven't selected a featured image, then the plugin looks for the first image inside the post. If there aren't any images in your post, then your blog's header image is shown.  For more information on the Open Graph protocol go to http://ogp.me/</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.2.10" name="redirection" id="mod_redirection_2.2.10">
+        <contentURL>/modules/tech-wordpress/files/mod_redirection_2.2.10/2.2.10/mod_redirection_2.2.10-2.2.10.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Manage all your 301 redirects and monitor 404 errors.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Redirection is a WordPress plugin to manage 301 redirections, keep track of 404 errors, and generally tidy up any loose ends your site may have. This is particularly useful if you are migrating pages from an old website, or are changing the directory of your WordPress installation.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.2.3" name="regenerate-thumbnails" id="mod_regenerate-thumbnails_2.2.3">
+        <contentURL>/modules/tech-wordpress/files/mod_regenerate-thumbnails_2.2.3/2.2.3/mod_regenerate-thumbnails_2.2.3-2.2.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows you to regenerate all thumbnails after changing the thumbnail sizes.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Regenerate Thumbnails allows you to regenerate the thumbnails for your image attachments. This is very handy if you've changed any of your thumbnail dimensions (via Settings -&gt; Media) after previously uploading images or have changed to a theme with different featured post image dimensions.
+
+You can either regenerate the thumbnails for all image uploads, individual image uploads, or specific multiple image uploads.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.2" name="rss-importer" id="mod_rss-importer_0.2">
+        <contentURL>/modules/tech-wordpress/files/mod_rss-importer_0.2/0.2/mod_rss-importer_0.2-0.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Import posts from an RSS feed.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.1" name="simple-open-graph" id="mod_simple-open-graph_2.1">
+        <contentURL>/modules/tech-wordpress/files/mod_simple-open-graph_2.1/2.1/mod_simple-open-graph_2.1-2.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Displays simple open graph data
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Simple Open Graph adds Facebook's Open Graph meta data to the header. It's simple. Activate it and forget about it.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="3.8.8" name="smart-youtube" id="mod_smart-youtube_3.8.8">
+        <contentURL>/modules/tech-wordpress/files/mod_smart-youtube_3.8.8/3.8.8/mod_smart-youtube_3.8.8-3.8.8.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Insert YouTube videos in posts, comments and RSS feeds with ease and full customization.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Smart Youtube is a Wordpress Youtube Plugin that allows you to easily insert Youtube videos/playlists in your post, comments and in RSS feed. 
+
+The main purpose of the plugin is to correctly embed youtube videos into your blog post. The video will be shown in full in your RSS feed as well.
+
+Smart youtube also supports playback of high quality videos, works on iPhone, produces xHTML valid code (unlike YouTube embed code), allows you to view videos in fullscreen,  supports YouTube playlists (normal/HD) and the new outube IFRAME embed code.
+
+The plugin is designed to be small and fast and not use any external resources. It has a number of customizable options.
+
+Main Features:
+
+* Easily embeds YouTube videos (normal/HD, both youtube.com and youtu.be links)
+* Embed YouTube playlist (normal/HD)
+* Supports latest high quality video protocols (360p and HD quality 720p)
+* Allows full YouTube customization (colors, border, size, full screen...)
+* Supports video deep linking (starting at desired point with &amp;start=time parameter)
+* Works on iPhone, iPad and iPod
+* Supports migrated blogs from Wordpress.com
+* Supports migration from other Youtube plugins such as wp-youtube
+* Provides a sidebar widget for videos as well
+* Produces xHTML valid code
+* Very fast and light, no extra scripts needed</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.1" name="social-metrics" id="mod_social-metrics_2.1">
+        <contentURL>/modules/tech-wordpress/files/mod_social-metrics_2.1/2.1/mod_social-metrics_2.1-2.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Track how your blog is doing across the leading social networking websites like Twitter, Facebook and others...
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Social Metrics is a Social Media Analytics tool you can use to track your WordPress blog performance on popular social networking websites and services.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.0.1" name="update-urls" id="mod_update-urls_2.0.1">
+        <contentURL>/modules/tech-wordpress/files/mod_update-urls_2.0.1/2.0.1/mod_update-urls_2.0.1-2.0.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This plugin updates all urls in your website by replacing old urls with new urls.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>If you move your WordPress website to a new domain name, you will find that internal links to pages and references to images are not updated. Instead, these links and references will point to your old domain name. This plugin fixes that problem. This Update URLs plugin updates all urls and content links in your website.
+
+Features:
+
+*   Choose to update permalinks
+*   Choose whether links embedded in content and excerpts should be updated</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.1" name="wcs-custom-permalinks-hotfix" id="mod_wcs-custom-permalinks-hotfix_1.1">
+        <contentURL>/modules/tech-wordpress/files/mod_wcs-custom-permalinks-hotfix_1.1/1.1/mod_wcs-custom-permalinks-hotfix_1.1-1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This plugin is a hotfix for permalink issues encountered with WordPress installations after upgrading to 3.1.x.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This plugin is a hotfix for permalink issues encountered with WordPress installations after upgrading to 3.1.x. **It fixes** the 404 error (or blank page) for menu/dropdown categories and tags. **It fixes** pagination for search results, categories, and tags. And, **it fixes** RSS feeds for categories and tags.
+
+Before using it, be sure that your issues are not caused by plugins that modify category links, tag links, and/or canonical redirection ... by deactivating them. More details are available under *Installation* (above) and at Dashboard-&gt;WCS-Permalinks (after activation).</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.5.2" name="wordpress-importer" id="mod_wordpress-importer_0.5.2">
+        <contentURL>/modules/tech-wordpress/files/mod_wordpress-importer_0.5.2/0.5.2/mod_wordpress-importer_0.5.2-0.5.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Import posts, pages, comments, custom fields, categories, tags and more from a WordPress export file.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The WordPress Importer will import the following content from a WordPress export file:  * Posts, pages and other custom post types * Comments * Custom fields and post meta * Categories, tags and terms from custom taxonomies * Authors  For further information and instructions please see the [Codex page on Importing Content](http://codex.wordpress.org/Importing_Content#WordPress)</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="wp-no-category-base" id="mod_wp-no-category-base_1.0">
+        <contentURL>/modules/tech-wordpress/files/mod_wp-no-category-base_1.0/1.0/mod_wp-no-category-base_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Removes '/category' text from your category permalinks.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>As the name suggests this plugin will completely remove the mandatory 'Category Base' from your category permalinks ( e.g. `myblog.com/category/my-category/` to `myblog.com/my-category/` ).
+
+The plugin requires no setup or modifying core wordpress files and will not break any links. It will also take care of redirecting your old category links to the new ones.
+
+= Features =
+
+1. Better and logical permalinks like `myblog.com/my-category/` and `myblog.com/my-category/my-post/`.
+2. Simple plugin - barely adds any overhead.
+3. Works out of the box - no setup needed.
+4. No need to modify wordpress files.
+5. Doesn't require other plugins to work.
+6. Compatible with sitemap plugins.
+7. Works with multiple sub-categories.
+8. Works with WordPress Multisite.
+9. Redirects old category permalinks to the new ones (301 redirect, good for SEO).</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.61" name="wp-polls" id="mod_wp-polls_2.61">
+        <contentURL>/modules/tech-wordpress/files/mod_wp-polls_2.61/2.61/mod_wp-polls_2.61-2.61.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds an AJAX poll system to your WordPress blog. You can easily include a poll into your WordPress's blog post/page.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>WP-Polls is extremely customizable via templates and css styles and there are tons of options for you to choose to ensure that WP-Polls runs the way you wanted. It now supports multiple selection of answers.</content>
+            </document>
+        </documents>
+    </module>
+</modules>

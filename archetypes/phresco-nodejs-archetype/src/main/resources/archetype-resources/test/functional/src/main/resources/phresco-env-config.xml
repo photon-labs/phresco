@@ -1,0 +1,23 @@
+<environment>
+			<Browser>googlechrome</Browser>
+			
+			<selenium>
+				<selenium.host>localhost</selenium.host>
+				<selenium.port>4444</selenium.port>
+				<speed>300</speed>
+			</selenium>
+			<CapturedString>
+				<stringCapturehelloworldUrl>Hello World</stringCapturehelloworldUrl>
+			</CapturedString>
+<Server appliesTo="" desc="" name="server">
+        <context>nodenone</context>
+        <admin_username/>
+        <deploy_dir>c</deploy_dir>
+        <port>8000</port>
+        <admin_password/>
+        <version>7.0.x</version>
+        <type>Apache Tomcat</type>
+        <protocol>http</protocol>
+        <host>localhost</host>
+    </Server>
+</environment>

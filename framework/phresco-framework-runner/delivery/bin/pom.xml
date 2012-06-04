@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.photon.phresco.framework</groupId>
+	<artifactId>PhrescoFrameworkRuntime</artifactId>
+	<packaging>pom</packaging>
+	<version>2.0.0-SNAPSHOT</version>
+	<name>Phresco Framework Web Application</name>
+
+    <properties>
+		<phresco.framework.version>2.0.0-SNAPSHOT</phresco.framework.version>		
+	</properties>
+
+	<dependencies>
+	
+	  <dependency>
+		<groupId>com.photon.phresco.framework</groupId>
+		<artifactId>phresco-framework-web</artifactId>
+		<version>${phresco.framework.version}</version>
+		<type>war</type>
+	  </dependency>
+	  
+	  <dependency>
+		<groupId>binaries</groupId>
+		<artifactId>apache-tomcat-https</artifactId>
+		<version>7.0.21</version>
+		<type>zip</type>
+	  </dependency>
+	  
+	  <dependency>
+		<groupId>sonar</groupId>
+		<artifactId>sonar</artifactId>
+		<version>2.12</version>
+		<type>war</type>
+	  </dependency>
+	  
+	  <dependency>
+		<groupId>org.apache.jmeter</groupId>
+		<artifactId>jmeter</artifactId>
+		<version>2.5.1</version>
+		<type>zip</type>
+	  </dependency>
+	  
+	  <dependency>
+		<groupId>com.photon.phresco.file.server</groupId>
+		<artifactId>file-server</artifactId>
+		<version>${phresco.framework.version}</version>
+		<type>jar</type>
+	  </dependency>
+
+	</dependencies>
+	
+	<build>	
+		<plugins>		
+		  
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+
+					<!-- download the necessary files -->
+					<execution>
+						<id>unpack-binaries</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<markersDirectory>../workspace/temp/markers</markersDirectory>
+							<artifactItems>
+								<!-- extracting tomcat -->
+								<artifactItem>
+									<groupId>binaries</groupId>
+									<artifactId>apache-tomcat-https</artifactId>
+									<version>7.0.21</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+								<!-- extracting phresco framework war -->
+								<artifactItem>									
+									<groupId>com.photon.phresco.framework</groupId>
+									<artifactId>phresco-framework-web</artifactId>
+									<version>${phresco.framework.version}</version>
+									<type>war</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools/war/phresco.war</outputDirectory>
+								</artifactItem>
+
+								<!-- extracting sonar war file -->
+								<artifactItem>
+									<groupId>sonar</groupId>
+									<artifactId>sonar</artifactId>
+									<version>2.12</version>
+									<type>war</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools/war/sonar.war</outputDirectory>
+								</artifactItem>
+
+								<!-- extracting sonar zip file -->
+								<artifactItem>
+									<groupId>sonar</groupId>
+									<artifactId>sonar</artifactId>
+									<version>2.12</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+								<!-- extracting JMeter zip file -->
+								<artifactItem>
+									<groupId>org.apache.jmeter</groupId>
+									<artifactId>jmeter</artifactId>
+									<version>2.5.1</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			
+        	<plugin>
+        		<groupId>org.codehaus.mojo</groupId>
+            	<artifactId>build-helper-maven-plugin</artifactId>
+            	<version>1.7</version>
+            	<executions>
+	              <execution>
+	                <id>reserve-network-port</id>
+	                <goals>
+	                  <goal>reserve-network-port</goal>
+	                </goals>
+	                <phase>validate</phase>
+	                <configuration>
+	                  <portNames>
+	                    <portName>phresco.file.server.port.num</portName>
+	                  </portNames>
+	                </configuration>
+	              </execution>
+	            </executions>
+        	</plugin>
+        	
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>				  
+					<execution>
+						<id>deploy-phresco</id>
+						<phase>validate</phase>
+						<goals>
+						  <goal>run</goal>
+						</goals>
+						<configuration>
+							<target>  
+								<property name="file-server-location" value="${maven.dependency.com.photon.phresco.file.server.file-server.jar.path}"/>
+								<echo message="file server location: ${file-server-location}"/>
+								<ant antfile="build.xml" target="run-phresco" inheritRefs="true" inheritAll="true"/>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>clean-phresco</id>
+						<phase>clean</phase>
+						<goals>
+						  <goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								  <ant antfile="build.xml" target="clean-phresco" inheritAll="false"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>		
+			<id>phresco</id>
+			<url>http://dev-repo.photoninfotech.com:8880/repo/content/groups/public</url>
+		</repository>
+	</repositories>
+
+</project>

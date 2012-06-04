@@ -1,0 +1,59 @@
+package com.photon.phresco.plugins;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.FileUtils;
+
+import com.photon.phresco.util.PluginConstants;
+
+/**
+ * Goal which cleans the target
+ * 
+ * @goal clean
+ * 
+ */
+public class WordPressClean extends AbstractMojo implements PluginConstants {
+
+	/**
+	 * The Maven project.
+	 * 
+	 * @parameter expression="${project}"
+	 * @required
+	 * @readonly
+	 */
+	protected MavenProject project;
+	/**
+	 * @parameter expression="${project.basedir}" required="true"
+	 * @readonly
+	 */
+	protected File baseDir;
+	/**
+	 * The php source folder.
+	 * 
+	 * @parameter expression="/do_not_checkin/target"
+	 * @required
+	 */
+	protected String targetDirStr;
+
+	@Override
+	public void execute() throws MojoExecutionException {
+		File targetDir = new File(baseDir + targetDirStr);
+		if (targetDir.exists()) {
+			deleteDir(targetDir);
+		}
+	}
+
+	private void deleteDir(File dir) throws MojoExecutionException {
+		try {
+			getLog().info("Deleting : " + dir.getPath());
+			FileUtils.deleteDirectory(dir);
+			getLog().info("Target Folder Deleted Successfully");
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+}

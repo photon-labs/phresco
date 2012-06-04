@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <parent>
+        <groupId>com.photon.phresco.service</groupId>
+        <artifactId>phresco-service-root</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.service</groupId>
+    <artifactId>phresco-service-runner</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Service Runner</name>
+    <description>Module for creating service archive which will be delivered</description>
+        
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <finalName>phresco-service-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly/config.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+           </plugin>             
+        </plugins>
+    </build>
+    
+    <profiles>
+        <profile>
+            <id>development</id>
+            <!-- Rename the zip Name as development -->
+            <build>
+             <finalName>phresco-service-dev-${project.version}</finalName>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>production</id>
+                <!-- Rename the zip Name as production -->
+            <build>
+             <finalName>phresco-service-prod-${project.version}</finalName>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>qa</id>
+                <!-- Rename the zip Name as qa -->
+            <build>
+                <finalName>phresco-service-qa-${project.version}</finalName>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

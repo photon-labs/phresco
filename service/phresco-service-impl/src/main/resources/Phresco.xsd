@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Photon.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Photon Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.photon.in/legal/ppl-v10.html
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  
+  Contributors:
+      Photon - initial API and implementation
+-->
+<xs:schema targetNamespace="http://www.example.org/Phresco" elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:tns="http://www.example.org/Phresco">
+
+  <xs:element name="apptypes" type="tns:apptypes"/>
+  <xs:complexType name="apptypes">
+    <xs:sequence>
+      <xs:element ref="tns:apptype" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="apptype" type="tns:apptype"/>
+  <xs:complexType name="apptype">
+    <xs:sequence>
+      <xs:element ref="tns:technology" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+
+  <xs:element name="technology" type="tns:technology"/>
+  <xs:complexType name="technology">
+    <xs:sequence>
+      <xs:element name="moduleRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="libraryRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="platformRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="editorRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="tns:archetypeInfo"/>
+      <xs:element ref="tns:documents" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+
+  <xs:element name="archetypeInfo" type="tns:archetypeInfo"/>
+  <xs:complexType name="archetypeInfo">
+    <xs:sequence>
+      <xs:element name="groupId" type="xs:string"/>
+      <xs:element name="artifactId" type="xs:string"/>
+      <xs:element name="version" type="xs:string"/>
+      <xs:element name="projectGroupId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="documents" type="tns:documents"/>
+  <xs:complexType name="documents">
+    <xs:sequence>
+      <xs:element ref="tns:document" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="document" type="tns:document"/>
+  <xs:complexType name="document">
+    <xs:choice>
+      <xs:element name="url" type="xs:string" minOccurs="0"/>
+      <xs:element name="content" type="xs:string" minOccurs="0"/>
+    </xs:choice>
+    <xs:attribute name="documentType" type="xs:string" />
+    <xs:attribute name="contentType" type="xs:string" />
+  </xs:complexType>
+
+  <xs:element name="libraries" type="tns:libraries"/>
+  <xs:complexType name="libraries">
+    <xs:sequence>
+      <xs:element ref="tns:library" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="library" type="tns:library"/>
+  <xs:complexType name="library">
+    <xs:sequence>
+      <xs:element name="contentType" type="xs:string"></xs:element>
+      <xs:element name="contentURL" type="xs:string"/>
+      <xs:element name="technolgoyRef" type="xs:string"
+        maxOccurs="unbounded" />
+      <xs:element name="dependentLibs" type="xs:string"
+        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="tns:documents" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="version" type="xs:string" />
+   	<xs:attribute name="required" type="xs:boolean" />
+  </xs:complexType>
+
+  <xs:element name="modules" type="tns:modules"/>
+  <xs:complexType name="modules">
+    <xs:sequence>
+      <xs:element ref="tns:module" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="module" type="tns:module"/>
+  <xs:complexType name="module">
+  	<xs:sequence>
+  		<xs:element name="contentType" type="xs:string"></xs:element>
+  		<xs:element name="contentURL" type="xs:string" />
+  		<xs:element name="technolgoyRef" type="xs:string"
+  			maxOccurs="unbounded" />
+  		<xs:element name="dependentModules" type="xs:string"
+  			minOccurs="0" maxOccurs="unbounded" />
+  		<xs:element ref="tns:documents" minOccurs="0" />
+  	</xs:sequence>
+  	<xs:attribute name="id" type="xs:string" />
+  	<xs:attribute name="name" type="xs:string" />
+  	<xs:attribute name="version" type="xs:string" />
+  	<xs:attribute name="core" type="xs:boolean" />
+  	<xs:attribute name="required" type="xs:boolean" />
+  	<xs:attribute name="groupId" type="xs:string"></xs:attribute>
+  	<xs:attribute name="artifactId" type="xs:string"></xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="databases" type="tns:databases"/>
+  <xs:complexType name="databases">
+    <xs:sequence>
+      <xs:element ref="tns:database" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="database" type="tns:database"/>
+  <xs:complexType name="database">
+    <xs:sequence>
+      <xs:element name="contentURL" type="xs:string"/>
+      <xs:element name="externalURL" type="xs:string" maxOccurs="unbounded" />
+      <xs:element name="platformRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="platforms" type="tns:platforms"/>
+  <xs:complexType name="platforms">
+    <xs:sequence>
+      <xs:element ref="tns:platform" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="platform" type="tns:platform"/>
+  <xs:complexType name="platform">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="appservers" type="tns:appservers"/>
+  <xs:complexType name="appservers">
+    <xs:sequence>
+      <xs:element ref="tns:appserver" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="appserver" type="tns:appserver"/>
+  <xs:complexType name="appserver">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="platformRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="technolgoyRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="editors" type="tns:editors"/>
+  <xs:complexType name="editors">
+    <xs:sequence>
+      <xs:element ref="tns:editor" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="editor" type="tns:editor"/>
+  <xs:complexType name="editor">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="contentURL" minOccurs="0" type="xs:string"/>
+      <xs:element name="platformRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="technolgoyRef" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>

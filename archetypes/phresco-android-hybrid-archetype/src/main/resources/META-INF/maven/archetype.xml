@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype>
+	<id>phresco-android-archetype</id>
+	<sources>
+		<source>source/AndroidManifest.xml</source>
+		<source>source/proguard.cfg</source>
+		<source>source/project.properties</source>
+		<source>source/assets/www/index.html</source>
+		<source>source/assets/www/main.js</source>
+		<source>source/assets/www/master.css</source>
+		<source>source/assets/www/phonegap-1.4.1.js</source>
+		<source>source/src/com/photon/phresco/hybrid/activity/MainActivity.java</source>
+        <source>source/src/com/photon/phresco/hybrid/config/ConfigReader.java</source>
+        <source>source/src/com/photon/phresco/hybrid/config/Configuration.java</source>
+		<source>source/libs/phonegap-1.4.1.jar</source>
+	</sources>
+	<resources>
+		<resource>source/res/drawable-hdpi/ic_launcher.png</resource>
+		<resource>source/res/drawable-ldpi/ic_launcher.png</resource>
+		<resource>source/res/drawable-mdpi/ic_launcher.png</resource>
+		<resource>source/res/drawable-ldpi/icon.png</resource>
+		<resource>source/res/layout/main.xml</resource>
+		<resource>source/res/values/strings.xml</resource>
+		<resource>source/res/xml/phonegap.xml</resource>
+		<resource>source/res/xml/plugins.xml</resource>
+		<resource>source/res/drawable/icon.png</resource>
+	</resources>
+</archetype>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.photon.phresco.commons.model.Customer" table="ph_ser_customer">
+        <id name="id" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<generator class="uuid"/>
+		</id>
+		<property name="name" type="string">
+            <column name="name" length="255"/>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="255"/>
+        </property>
+        <property name="type" type="int">
+            <column name="type" length="255"/>
+        </property>
+        <property name="status" type="int">
+            <column name="status" length="255"/>
+        </property>
+     </class>
+
+	 <query name="admin.customers.findCustomers">
+	        from Customer
+	 </query>
+
+	 <query name="service.getCustomerById">
+	        from Customer where id = ?
+	 </query>
+
+</hibernate-mapping>

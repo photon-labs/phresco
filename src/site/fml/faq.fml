@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="Frequently Asked Questions"
+  toplink="false">
+
+  <part id="general">
+    <title>General</title>
+
+    <faq id="whats-foo">
+      <question>
+        What is Phresco?
+      </question>
+      <answer>
+        <p>PHoton Realtime Enterprise Social COnnectivity</p>
+
+
+        <p>some markup goes here</p>
+      </answer>
+    </faq>
+
+    <faq id="whats-bar">
+      <question>
+        What is Bar?
+      </question>
+      <answer>
+        <p>some markup goes here</p>
+      </answer>
+    </faq>
+  </part>
+
+  <part id="FrameworkBased">
+    <title>Framework Based</title>
+    <faq id="how-install">
+      <question>
+        How do I install Phresco?
+      </question>
+      <answer>
+        <p>You can download a latest build from http://phresco.photoninfotech.com/releases</p>
+      </answer>
+    </faq>
+    <faq id="how-start">
+      <question>
+        How do I start the Framework of Phresco?
+      </question>
+      <answer>
+        <p>Download the Phresco Framework-version.zip
+      Run Start framework server.bat if it is windows platform else Start framework server.sh for Linux/Mac
+      Specify the URL: http://localhost:2468/phresco in any browser. [excluding Internet explorer]
+    </p>
+      </answer>
+    </faq>
+    <faq id="how-update">
+      <question>
+        How do I update the existing Framework of Phresco to newer one?
+      </question>
+      <answer>
+        <p>Phresco releases periodic updates for the Framework and these new versions enables the "Update Available" button in the About Phresco tab.
+        Users can update the new releases by Clicking the "Update Available" button.
+    </p>
+      </answer>
+    </faq>
+    <faq id="Application Types">
+      <question>
+        What types of application are administered by the Phresco?
+      </question>
+      <answer>
+        <p>There are three types of applications administered by the Phresco, they are 
+    Web Application
+        Mobile Application
+        Web Services.
+    </p>
+      </answer>
+    </faq>
+    <faq id="Web Tech Types">
+      <question>
+        What are the technologies under Web Application category available in Phresco?
+      </question>
+      <answer>
+        <p>The technologies under web application are:
+       PHP, Drupal, Word Press, Share Point, Java, HTML5 YUI Multichannel Widget, HTML5 jQuery Multichannel Widget and ASP.NET
+    </p>
+      </answer>
+    </faq>
+    <faq id="Moboile Tech Types">
+      <question>
+        What are the technologies under Mobile Application category available in Phresco?
+      </question>
+      <answer>
+        <p>The technologies under mobile application are:
+       Android Native, Android Hybrid, iPhone Native and iPhone Hybrid
+    </p>
+      </answer>
+    </faq>
+    <faq id="Web Services Types">
+      <question>
+        What are the technologies under Web Services category available in Phresco?
+      </question>
+      <answer>
+        <p>The technologies under Web Service application are:
+       NodeJS Web Service and Java Web Service
+    </p>
+      </answer>
+    </faq>  
+  </part>  
+  
+  <part id="PhrescoAdaption">
+    <title>Phresco Adaption</title>
+    <faq id="eclipse">
+      <question>
+        How to import Phresco Adapted Project to Eclipse?
+      </question>
+      <answer>
+        <p>Phresco Project need to be imported to Eclipse as an "Existing Maven Project". </p>
+    <p> Normally, Eclipse refers to the Maven Default Repository(http://repo1.maven.org/maven2) hence it will not be able to 
+      point the Phresco dependencies.
+      To avoid this you need to set the path in Eclipse --> Projects --> Preferences -->Maven -->User Settings as below
+         \phresco-framework\tools\maven\conf\settings.xml
+         </p>
+      </answer>
+    </faq>
+    <faq id="ImportingCode">
+      <question>
+        How the Source code can be imported to Phresco Framework from the SVN
+      </question>
+      <answer>
+        <p>Their is an option available in "App Info" page of the Phresco UI where in one can specify the URL path of the Source code which is located in SVN</p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

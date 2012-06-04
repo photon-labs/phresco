@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <parent>
+        <groupId>com.photon.phresco</groupId>
+        <artifactId>phresco-parent</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.archetypes</groupId>
+    <artifactId>phresco-archetypes</artifactId>    
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Phresco Archetypes</name>
+	
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>phresco-android-archetype/</module>
+        <module>phresco-android-hybrid-archetype/</module>
+        <module>phresco-drupal7-archetype/</module>
+        <module>phresco-drupal6-archetype/</module>
+        <module>phresco-iphone-archetype/</module>
+        <module>phresco-iphone-hybrid-archetype/</module>
+        <module>phresco-javawebservice-archetype/</module>
+        <module>phresco-nodejs-archetype/</module>
+        <module>phresco-php-archetype/</module>
+        <module>phresco-sharepoint-archetype/</module>
+        <module>phresco-html5-archetype/</module>
+        <module>phresco-dot-net-archetype/</module>
+        <module>phresco-wordpress-archetype/</module>
+        <module>phresco-java-quickstart-archetype/</module>
+		<module>phresco-html5-jquery-archetype/</module>
+    </modules>
+	
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.archetypes</id>
+            <name>Phresco Archetypes</name>
+            <url>scp://phresco.org/home/projects/archetypes/public_html/</url>
+        </site>
+    </distributionManagement>
+
+
+
+
+</project>

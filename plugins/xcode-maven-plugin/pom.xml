@@ -1,0 +1,143 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+        <groupId>com.photon.phresco.plugins</groupId>
+        <artifactId>phresco-plugins-root</artifactId>
+        <version>1.0</version>
+  </parent> 
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.photon.phresco.plugins.xcode</groupId>
+  <artifactId>xcode-maven-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>2.0.0-SNAPSHOT</version>
+  <name>Xcodebuild Command-Line Wrapper</name>
+
+    <scm>
+        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</connection>
+        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</developerConnection>
+        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</url>
+    </scm>
+  
+     <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.plugins.xcode</id>
+            <name>Phresco Plugins - XCode</name>
+            <url>scp://phresco.org/home/projects/plugins/xcode/public_html/</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact-manager</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-provider-api</artifactId>
+            <version>1.0-alpha-5</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-plugin-testing-harness</artifactId>
+            <version>1.0-beta-1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>jmock</groupId>
+            <artifactId>jmock</artifactId>
+            <version>1.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.photon.phresco.framework</groupId>
+            <artifactId>phresco-framework-impl</artifactId>
+            <version>${phresco-commons-version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.7</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

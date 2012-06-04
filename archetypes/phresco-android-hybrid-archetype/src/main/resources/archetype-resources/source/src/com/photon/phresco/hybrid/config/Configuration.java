@@ -1,0 +1,90 @@
+package com.photon.phresco.hybrid.config;
+
+import java.util.Properties;
+
+public class Configuration {
+	
+	private String name;
+	private String desc;
+	private String type;
+	private String envName;
+	private Properties properties;
+	String appliesTo;
+
+	
+	public Configuration(String name, String desc, String envName, String type, Properties properties, String configAppliesTo) {
+		super();
+		this.name = name;
+		this.desc = desc;
+		this.envName = envName;
+		this.type = type;
+		this.appliesTo = configAppliesTo;
+		this.properties = properties;
+	}
+	
+	public Configuration(String name, String desc, String type, Properties properties, String configAppliesTo) {
+		this (name, desc, null, type, properties, configAppliesTo);
+	}
+	
+	public Configuration(String name, String type) {
+		super();
+		this.name = name;
+		this.type = type;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getEnvName() {
+		return envName;
+	}
+
+	public void setEnvName(String envName) {
+		this.envName = envName;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+
+	public void setAppliesTo(String configAppliesTo) {
+		this.appliesTo = configAppliesTo;
+	}
+	
+	public String getAppliesTo() {
+		return appliesTo;
+	}
+
+	@Override
+	public String toString() {
+		return "Configuration [name=" + name + ", type=" + type
+				+ ", properties=" + properties + "]";
+	}
+	
+}

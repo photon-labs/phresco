@@ -1,0 +1,182 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+    name="wordpress">
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress</directory> 
+			<includes> 
+				<include>wp-config.php</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mysql/5.5.1</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress/config</directory> 
+			<includes> 
+				<include>phresco-env-config.xml</include> 
+				<include>config.php</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress/wp-content/gallery</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress/wp-content/plugins</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress/wp-content/themes</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/wordpress/wp-content/uploads</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include>
+				<include>precondition.ini</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/main/php/phresco/tests</directory> 
+			<includes> 
+				<include>basescreen.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/site/doxygen</directory> 
+			<includes> 
+				<include>doxygen.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/site/phpdoc</directory> 
+			<includes> 
+				<include>phpdoc.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/test/php/phresco/tests</directory> 
+			<includes> 
+				<include>WordPressCommonFun.php</include>
+				<include>WpSetting.xml</include>
+				<include>CommonSuite.php</include>
+				<include>phresco-env-config.xml</include>
+				<include>Login_NewUsers.php</include>
+				<include>UserSuite.php</include>
+				<include>Welcompage.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/test/php/phresco</directory> 
+			<includes> 
+				<include>AllTest.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/tescases</directory> 
+			<includes> 
+				<include>WORDPRESS_TestCase_V1.0.ods</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/load</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/load/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/server</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/server/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit</directory> 
+			<includes> 
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/main/php/phresco/tests</directory> 
+			<includes> 
+				<include>BaseScreen.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/site/doxygen</directory> 
+			<includes> 
+				<include>doxygen.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/site/phpdoc</directory> 
+			<includes> 
+				<include>phpdoc.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/test/php/phresco</directory> 
+			<includes> 
+				<include>AllTest.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/test/php/phresco/tests</directory> 
+			<includes> 
+				<include>DateValidation.php</include>
+				<include>EmailVerification.php</include>
+				<include>UsernameValidation.php</include>
+			</includes> 
+		</fileSet>
+	</fileSets>
+</archetype-descriptor> 

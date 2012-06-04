@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="1.0" name="Droid-Fu" id="mod_droid-fu_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_droid-fu_1.0/1.0/mod_droid-fu_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Droid-Fu Contains utility classes and ready to use android components.
+
+Android components: 
+1)Activity. 
+2)Service.
+3)Broadcast receiver.
+4)Content provider.
+5)Intent.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.2.3" name="ACRA" id="mod_acra_4.2.3">
+        <contentURL>/modules/tech-android-native/files/mod_acra_4.2.3/4.2.3/mod_acra_4.2.3-4.2.3.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ACRA is a library enabling Android Application to automatically post their crash reports to a GoogleDoc form. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.1.2" name="AndroidAnnotations" id="mod_androidannotations_2.1.2">
+        <contentURL>/modules/tech-android-native/files/mod_androidannotations_2.1.2/2.1.2/mod_androidannotations_2.1.2-2.1.2.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Andriod annotations is a complite time framework helps user to avoid writing huge block of code.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.6.1" name="SimpleXML" id="mod_simplexml_2.6.1">
+        <contentURL>/modules/tech-android-native/files/mod_simplexml_2.6.1/2.6.1/mod_simplexml_2.6.1-2.6.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Simple XML is a framework for Java, which enables rapid development of XML configuration and communication systems.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.7.1" name="GoogleGSON" id="mod_googlegson_1.7.1">
+        <contentURL>/modules/tech-android-native/files/mod_googlegson_1.7.1/1.7.1/mod_googlegson_1.7.1-1.7.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Google GSON is a Java library that can be used to convert Java Objects into their JSON representation and vice-versa.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="JacksonJSON" id="mod_jacksonjson_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_jacksonjson_1.0/1.0/mod_jacksonjson_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Jackson JSON is a JSON processor written in Java, which offers full node-based Tree Model, as well as full OJM (Object/Json Mapper) data binding functionality.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.26" name="ORMLite" id="mod_ormlite_4.26">
+        <contentURL>/modules/tech-android-native/files/mod_ormlite_4.26/4.26/mod_ormlite_4.26-4.26.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ORMLite is an open source software framework that provides lightweight object relational mapping (ORM) between Java classes and SQL databases.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="ContactsLib" id="mod_contactslib_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_contactslib_1.0.1/1.0.1/mod_contactslib_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ContactsLib is an Android library for developers, wishing to work easily with Contacts.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="SocialLib" id="mod_sociallib_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_sociallib_1.0.1/1.0.1/mod_sociallib_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SocialLib is an Android library designed to make your life easier when developing applications that interact with social networks.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.4" name="Jackcess" id="mod_jackcess_1.2.4">
+        <contentURL>/modules/tech-android-native/files/mod_jackcess_1.2.4/1.2.4/mod_jackcess_1.2.4-1.2.4.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Jackcess is a pure Java library for reading from and writing to MS Access databases.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.2.4" name="Twitter4J" id="mod_twitter4j_2.2.4">
+        <contentURL>/modules/tech-android-native/files/mod_twitter4j_2.2.4/2.2.4/mod_twitter4j_2.2.4-2.2.4.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Twitter4J is an open-sourced, mavenized safe Java library for the Twitter API. Twitter4J allows you to easily integrate your application with the Twitter service.</content>
+            </document>
+        </documents>
+    </module>
+    <module artifactId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" groupId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" required="false" core="false" version="1.0" name="Facebook" id="mod_facebook_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_facebook_1.0/1.0/mod_facebook_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Facebook SDK allows integrating the facebook functionalities with android applications.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.5.5" name="MobilePaymentLibrary" id="mod_mobilepaymentlibrary_1.5.5">
+        <contentURL>/modules/tech-android-native/files/mod_mobilepaymentlibrary_1.5.5/1.5.5/mod_mobilepaymentlibrary_1.5.5-1.5.5.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Mobilepaymentlibrary allows merchants and developers to integrate payment functionality to mobile apps. Customers pay using PayPal without leaving the application.</content>
+            </document>
+        </documents>
+    </module>
+    <module artifactId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" groupId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" required="false" core="false" version="1.0" name="AndroidMapViewBalloons" id="mod_androidmapviewballoons_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_androidmapviewballoons_1.0/1.0/mod_androidmapviewballoons_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Android Map view balloon provides an easy way to annotate map overlay items with a simple information balloon when using the Android Maps external library </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="3.0.5" name="OSMDroid " id="mod_osmdroid__3.0.5">
+        <contentURL>/modules/tech-android-native/files/mod_osmdroid__3.0.5/3.0.5/mod_osmdroid__3.0.5-3.0.5.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>OSM droid is a replacement for Android MapView class, which provides Tools / Views to interact with OpenStreetMap-Data.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="AdColony" id="mod_adcolony_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_adcolony_1.0/1.0/mod_adcolony_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>AdColony helps to create  high-definition (HD), Instant-Play video advertisements that can be played
+anywhere within your application.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="UrbanAirShip" id="mod_urbanairship_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_urbanairship_1.0.1/1.0.1/mod_urbanairship_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Urban Airship sends push notifications to people who have installed the app.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.0" name="PhoneGap" id="mod_phonegap_1.2.0">
+        <contentURL>/modules/tech-android-native/files/mod_phonegap_1.2.0/1.2.0/mod_phonegap_1.2.0-1.2.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.</content>
+            </document>
+        </documents>
+    </module>
+</modules>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.photon.phresco.model.Technology" table="technology">
+        <id name="id" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="id" length="255"/>
+		</id>
+        <property name="name" type="string">
+            <column name="name" length="255"/>
+        </property>
+        <property name="appTypeId" type="string">
+            <column name="app_type_id" length="255"/>
+        </property>
+    </class>
+    <query name="service.getTechnology">
+        from Technology
+    </query>
+	<query name="service.getTechnologyappid">
+        from Technology where app_type_id=:appId
+    </query>
+</hibernate-mapping>

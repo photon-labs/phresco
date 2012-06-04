@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.photon.phresco.model.AdminConfigInfo" table="admin_config">
+        <id name="id" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="id" length="255"/>
+		</id>
+        <property name="key" type="string">
+            <column name="admin_key" length="255"/>
+        </property>
+        <property name="value" type="string">
+            <column name="admin_value" length="255"/>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="255"/>
+        </property>
+    </class>
+    <query name="service.getAdminConfigInfo">
+        from AdminConfigInfo
+    </query>
+</hibernate-mapping>

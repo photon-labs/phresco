@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- <parent> <groupId>com.photon.phresco</groupId> <artifactId>PHR_android</artifactId> 
+		<version>1.0.7003</version> <relativePath>../../</relativePath> </parent> -->
+	<groupId>com.photon.phresco.eShop</groupId>
+	<artifactId>eShopRobotiumPerfTest</artifactId>
+	<packaging>apkperf</packaging>
+	<version>1.0.7003</version>
+	<name>eShopRobotiumPerfTest</name>
+	<properties>
+    	<android.version>2.3.3</android.version>
+    </properties>	
+	<dependencies>
+		<dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
+            <version>2.3.3</version>
+			<scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${android.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.android.robotium</groupId>
+			<artifactId>robotium-solo</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.1</version>
+		</dependency>			
+	</dependencies>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>com.photon.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<version>2.0.0-SNAPSHOT</version>
+				<configuration>
+					<run>
+						<debug>false</debug>
+					</run>
+					<sdk>
+						<platform>${android.version}</platform>
+					</sdk>
+					<extractDuplicates>true</extractDuplicates>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					<androidManifestFile>AndroidManifest.xml</androidManifestFile>
+					<resourceDirectory>res</resourceDirectory>
+					
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

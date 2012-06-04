@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="com.photon.phresco.model.Modules" table="modules">
+  <id name="id" type="int">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="id" length="255"/>
+			<generator class="increment"/>
+</id>
+   <property name="moduleId" type="string">
+            <column name="moduleid" length="255"/>
+   </property>
+ </class>
+ <query name="service.getModules">
+ from Modules
+ </query>
+</hibernate-mapping>

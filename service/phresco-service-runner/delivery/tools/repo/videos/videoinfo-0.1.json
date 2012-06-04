@@ -1,0 +1,57 @@
+[
+{
+    "name":"video1_pic-1.0",
+    "description":"Demo about phresco",
+    "imageurl":"/video/video1/video1_pic-1.0.png",
+    "videoList":[
+        {
+            "type":"webm",
+            "url":"/video/video1/video1-1.0.webm",
+            "codecs":"webm"
+        },
+        {
+            "type":"mp4",
+            "url":"/video/video1/video1-1.0.mp4",
+            "codecs":"MPEG"
+        },
+	{
+            "type":"ogg",
+            "url":"/video/video1/video1-1.0.ogg",
+            "codecs":"ogg , vorbis"
+        },
+	{
+            "type":"ogv",
+            "url":"/video/video1/video1-1.0.ogv",
+            "codecs":"ogv , vorbis"
+        }
+    ]
+},
+{
+    "name":"video2_pic-1.0",
+    "description":"Demo about phresco",
+    "imageurl":"/video/video2/video2_pic-1.0.png",
+    "videoList":[
+        {
+            "type":"webm",
+            "url":"/video/video2/video2-1.0.webm",
+            "codecs":"webm"
+        },
+        {
+            "type":"mp4",
+            "url":"/video/video2/video2-1.0.mp4",
+            "codecs":"MPEG"
+        },
+	{
+            "type":"ogg",
+            "url":"/video/video2/video2-1.0.ogg",
+            "codecs":"ogg , vorbis"
+        },
+	{
+            "type":"ogv",
+            "url":"/video/video2/video2-1.0.ogv",
+            "codecs":"ogv , vorbis"
+        }
+    ]
+}
+]
+

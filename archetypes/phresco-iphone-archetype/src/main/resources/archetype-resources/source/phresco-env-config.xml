@@ -1,0 +1,14 @@
+<environments>
+    <environment name="Dev" default="true">
+        <WebService name="mywebservice">
+            <host>172.16.17.180</host>
+            <port>2020</port>
+            <protocol>http</protocol>
+            <context>eshop</context>
+            <username>admin</username>
+            <password>admin</password>
+        </WebService>
+    </environment>
+</environments>
+
+

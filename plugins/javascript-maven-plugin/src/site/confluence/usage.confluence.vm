@@ -1,0 +1,56 @@
+h1. Usage
+
+This page provides examples of how to use this extension.
+
+h2. Example Usage
+
+Declare this extension in your POM like so:
+
+{code}
+<project>
+    ...
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javascript-maven-plugin</artifactId>
+                <version>${projectVersion}</version>
+            </extension>
+        </extensions>
+    </build>
+    ...
+</project>
+{code}
+
+To take advantage of the extension's capabilities.
+
+h2. Overriding Predefined Dependencies/Plugins/Plugin Configurations
+
+To override the a dependency, plugin or plugin's configuration you can specify that dependency or plugin (optionally with configuration) in your POM file. If the extension detects a conflicting depdendency or plugin it will retain the user-specified version and will not attempt to configure its own.
+
+E.g., to override Jetty, retaining the resource bases but specifying a different context path, add the following to your POM:
+
+{code}
+<project>
+    ...
+    <build>
+        <plugin>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>7.4.2.v20110526</version>
+            <configuration>
+                <webAppConfig>
+                    <contextPath>/newContentPath</contextPath>
+                    <resourceBases>
+                        <resourceBase>${project.build.outputDirectory}</resourceBase>
+                        <resourceBase>${project.build.testOutputDirectory}</resourceBase>
+                    </resourceBases>
+                </webAppConfig>
+            </configuration>
+        </plugin>
+    </build>
+    ...
+</project>
+{code}
+
+Note that if you specify your own plugin you must specify _all_ configuration options - none of the extension's predefined configuration settings will be applied to a user-specified plugin.

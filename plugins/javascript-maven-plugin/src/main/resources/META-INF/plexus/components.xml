@@ -1,0 +1,291 @@
+<!-- ~ Licensed to the Apache Software Foundation (ASF) under one ~ or more 
+	contributor license agreements. See the NOTICE file ~ distributed with this 
+	work for additional information ~ regarding copyright ownership. The ASF 
+	licenses this file ~ to you under the Apache License, Version 2.0 (the ~ 
+	"License"); you may not use this file except in compliance ~ with the License. 
+	You may obtain a copy of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 
+	~ ~ Unless required by applicable law or agreed to in writing, ~ software 
+	distributed under the License is distributed on an ~ "AS IS" BASIS, WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY ~ KIND, either express or implied. See the 
+	License for the ~ specific language governing permissions and limitations 
+	~ under the License. -->
+
+<component-set>
+
+	<components>
+
+		<!-- 'js' Packaging. Based on maven-core JAR packaging. -->
+
+		<!-- Custom plugin mojo which dynamically loads specified plugins -->
+		<component>
+			<role>org.apache.maven.AbstractMavenLifecycleParticipant</role>
+			<role-hint>js</role-hint>
+			<implementation>org.codehaus.mojo.javascript.Configurer
+			</implementation>
+			<requirements>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>jettyPlugin</role-hint>
+					<field-name>jettyPlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>mavenCompilerPlugin</role-hint>
+					<field-name>mavenCompilerPlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>mavenSurefirePlugin</role-hint>
+					<field-name>mavenSurefirePlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>mavenSitePlugin</role-hint>
+					<field-name>mavenSitePlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>mavenAssemblyPlugin</role-hint>
+					<field-name>mavenAssemblyPlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Plugin</role>
+					<role-hint>mavenJstoolsPlugin</role-hint>
+					<field-name>mavenJstoolsPlugin</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Dependency</role>
+					<role-hint>almond</role-hint>
+					<field-name>almondDependency</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Dependency</role>
+					<role-hint>qunit</role-hint>
+					<field-name>qunitDependency</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.model.Dependency</role>
+					<role-hint>jstestrunner-junit</role-hint>
+					<field-name>jstestrunnerJUnitDependency</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.project.MavenProjectHelper</role>
+					<field-name>projectHelper</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.artifact.handler.manager.ArtifactHandlerManager
+					</role>
+					<field-name>artifactHandlerManager</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+					<role-hint>js</role-hint>
+					<field-name>jsArtifactHandler</field-name>
+				</requirement>
+			</requirements>
+			<configuration>
+
+				<htmlResourceDir>src/main/resources</htmlResourceDir>
+				<htmlResourceExcludes>**/*.html</htmlResourceExcludes>
+				<htmlTestResourceDir>src/test/resources</htmlTestResourceDir>
+				<htmlTestResourceExcludes>**/*.html</htmlTestResourceExcludes>
+
+				<jsResourceDir>src/main/js</jsResourceDir>
+				<jsResourceExcludes>**/*.js</jsResourceExcludes>
+				<jsTestResourceDir>src/test/js</jsTestResourceDir>
+				<jsTestResourceExcludes>**/*.js</jsTestResourceExcludes>
+
+				<jettyContextPath>/</jettyContextPath>
+				<jettyResourceBases>
+					<resourceBase>\${project.build.outputDirectory}</resourceBase>
+					<resourceBase>\${project.build.testOutputDirectory}</resourceBase>
+				</jettyResourceBases>
+
+				<mavenSiteExcludeModules>apt</mavenSiteExcludeModules>
+				<mavenSiteJstoolsGroup>gr.abiss.mvn.plugins</mavenSiteJstoolsGroup>
+				<mavenSiteJstoolsArtifact>maven-jstools-plugin
+				</mavenSiteJstoolsArtifact>
+				<mavenSiteJstoolsVersion>${jstoolsVersion}</mavenSiteJstoolsVersion>
+				<mavenSiteJstoolsReportsJsDir>\${basedir}/src/main/js
+				</mavenSiteJstoolsReportsJsDir>
+				<mavenSiteJstoolsReports>
+					<report>jsdoc</report>
+				</mavenSiteJstoolsReports>
+
+			</configuration>
+		</component>
+
+		<!-- jetty-maven-plugin -->
+		<component>
+			<role>org.apache.maven.model.Plugin</role>
+			<role-hint>jettyPlugin</role-hint>
+			<implementation>org.apache.maven.model.Plugin</implementation>
+			<configuration>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jettyVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- maven-compiler-plugin -->
+		<component>
+			<role>org.apache.maven.model.Plugin</role>
+			<role-hint>mavenCompilerPlugin</role-hint>
+			<implementation>org.apache.maven.model.Plugin</implementation>
+			<configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${mavenCompilerVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- maven-surefire-plugin -->
+		<component>
+			<role>org.apache.maven.model.Plugin</role>
+			<role-hint>mavenSurefirePlugin</role-hint>
+			<implementation>org.apache.maven.model.Plugin</implementation>
+			<configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${mavenSurefireVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- maven-assembly-plugin -->
+		<component>
+			<role>org.apache.maven.model.Plugin</role>
+			<role-hint>mavenAssemblyPlugin</role-hint>
+			<implementation>org.apache.maven.model.Plugin</implementation>
+			<configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${mavenAssemblyVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- maven-site-plugin -->
+		<component>
+			<role>org.apache.maven.model.Plugin</role>
+			<role-hint>mavenSitePlugin</role-hint>
+			<implementation>org.apache.maven.model.Plugin</implementation>
+			<configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${mavenSiteVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- Almond -->
+		<component>
+			<role>org.apache.maven.model.Dependency</role>
+			<role-hint>almond</role-hint>
+			<implementation>org.apache.maven.model.Dependency</implementation>
+			<configuration>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>almond</artifactId>
+				<version>${almondVersion}</version>
+				<type>js</type>
+			</configuration>
+		</component>
+
+		<!-- QUnit -->
+		<component>
+			<role>org.apache.maven.model.Dependency</role>
+			<role-hint>qunit</role-hint>
+			<implementation>org.apache.maven.model.Dependency</implementation>
+			<configuration>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>qunit-amd</artifactId>
+				<version>${qunitVersion}</version>
+				<classifier>www</classifier>
+				<type>zip</type>
+			</configuration>
+		</component>
+
+		<!-- JS Test Runner -->
+		<component>
+			<role>org.apache.maven.model.Dependency</role>
+			<role-hint>jstestrunner-junit</role-hint>
+			<implementation>org.apache.maven.model.Dependency</implementation>
+			<configuration>
+				<groupId>org.codehaus.jstestrunner</groupId>
+				<artifactId>jstestrunner-junit</artifactId>
+				<version>${jstestrunnerVersion}</version>
+			</configuration>
+		</component>
+
+		<!-- Define 'js' as an artifact handler that will not be included on the 
+			class path -->
+		<component>
+			<role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+			<role-hint>js</role-hint>
+			<implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler
+			</implementation>
+			<configuration>
+				<type>js</type>
+				<language>javascript</language>
+				<addedToClasspath>false</addedToClasspath>
+			</configuration>
+		</component>
+
+		<!-- Map our set of plugins to the appropriate goals -->
+		<component>
+			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+			<role-hint>js</role-hint>
+			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			</implementation>
+			<configuration>
+				<lifecycles>
+					<lifecycle>
+						<id>default</id>
+
+						<phases>
+							<process-sources>
+								org.codehaus.mojo:jslint-maven-plugin:${jslintVersion}:jslint,
+								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:import-js
+							</process-sources>
+							<generate-resources>
+								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:generate-html
+							</generate-resources>
+							<process-resources>
+								org.apache.maven.plugins:maven-resources-plugin:${mavenResourcesVersion}:resources
+							</process-resources>
+							<compile>
+                        		org.apache.maven.plugins:maven-compiler-plugin:${mavenCompilerVersion}:compile
+                    		</compile>
+							<process-test-sources>
+								org.codehaus.mojo:jslint-maven-plugin:${jslintVersion}:test-jslint,
+								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:test-import-js
+							</process-test-sources>
+							<generate-test-resources>
+								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:test-generate-html
+							</generate-test-resources>
+							<process-test-resources>
+								org.apache.maven.plugins:maven-resources-plugin:${mavenResourcesVersion}:testResources
+							</process-test-resources>
+							<test-compile>
+								org.apache.maven.plugins:maven-compiler-plugin:${mavenCompilerVersion}:testCompile
+							</test-compile>
+							<test>
+								org.apache.maven.plugins:maven-surefire-plugin:${mavenSurefireVersion}:test
+							</test>
+							<prepare-package>
+								org.codehaus.mojo:webminifier-maven-plugin:${webminifierVersion}:minify-js
+							</prepare-package>
+							<package>
+							</package>
+							<install>
+								org.apache.maven.plugins:maven-install-plugin:${mavenInstallVersion}:install
+							</install>
+							<deploy>
+								org.apache.maven.plugins:maven-deploy-plugin:${mavenDeployVersion}:deploy
+							</deploy>
+						</phases>
+
+					</lifecycle>
+				</lifecycles>
+			</configuration>
+		</component>
+
+	</components>
+</component-set>

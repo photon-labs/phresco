@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<platforms xmlns="http://www.example.org/Phresco">
+    <platform id="plat-Drupal-win32" version="2.3">
+        <name>Win32</name>
+    </platform>
+    <platform id="plat-Drupal-win64" version="2.3">
+        <name>Win64</name>
+    </platform>
+    <platform id="plat-Drupal-Linux" version="2.3">
+        <name>Linux</name>
+    </platform>
+    <platform id="plat-Drupal-Solaris" version="2.3">
+        <name>solaris</name>
+    </platform>
+</platforms>

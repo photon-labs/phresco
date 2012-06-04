@@ -1,0 +1,148 @@
+<project name="upload" default="deploy-all" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+	
+	<path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.1.jar" />
+	
+	<typedef
+     resource="org/apache/maven/artifact/ant/antlib.xml"
+     uri="antlib:org.apache.maven.artifact.ant"
+     classpathref="maven-ant-tasks.classpath"
+   />
+
+	<property name="mavenhome" location="C:/apache-maven-3.0.3" />	
+	<property name="src" location="D:/work/phresco/Phresco-binaries/softwares" />
+	<property name="maven-repository-id" value="auto-releases" />
+	<property name="maven-repository-url" value="http://172.16.18.178:9090/nexus/content/repositories/auto-releases/" />
+	
+	<property name="tomcat" value="${src}/tomcat/apache-tomcat-7.0.21.zip" />
+	<property name="sonar" value="${src}/sonar/sonar-2.12.zip" />
+	<property name="jenkins" value="${src}/jenkins/jenkins-1.442.zip" />
+	<property name="jforum" value="${src}/jforum/jforum-2.1.8.war" />
+	<property name="jmeter" value="${src}/jmeter/2.5.1/jakarta-jmeter-2.5.1.zip" />
+	<property name="drupal" value="${src}/drupal/drupal-7.8.zip" />
+	<property name="mysql" value="${src}/mysql/5.5.18/mysql-5.5.18-win32.zip" />
+	<property name="nunit" value="${src}/nunit/nunit-2.5.9.10348.zip" />
+    
+	<target name="deploy-all">
+		<antcall target="deploytomcat"/>
+		<antcall target="deploysonar"/>
+		<antcall target="deployjenkins"/>
+		<antcall target="deployjforum"/>
+		<antcall target="deployjmeter"/>
+		<antcall target="deploydrupal"/>
+		<antcall target="deploymysql"/>
+		<antcall target="deploynunit"/>
+   </target>
+    
+	<target name="deploytomcat">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=tomcat" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${tomcat}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deploysonar">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=sonar" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${sonar}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployjenkins">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=jenkins" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${jenkins}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployjforum">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=jforum" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=war" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${jforum}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployjmeter">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=jmeter" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${jmeter}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deploydrupal">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=drupal" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${drupal}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deploymysql">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=mysql" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${mysql}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deploynunit">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=binaries" />
+			<arg value="-DartifactId=nunit" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=zip" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${nunit}" />
+		</artifact:mvn>
+    </target>
+	
+</project>

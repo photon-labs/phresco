@@ -1,0 +1,118 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+    name="iphone">
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include>
+				<include>excludefiles.txt</include> 	
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include>
+				<include>README.txt</include> 	
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source</directory> 
+			<includes>
+				<include>main.m</include>
+				<include>MainWindow.xib</include>
+				<include>Phresco_Prefix.pch</include>
+				<include>Phresco-Info.plist</include>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+			<fileSet filtered="false" packaged="false"> 
+			<directory>source/Classes</directory> 
+			<includes>
+				<include>PhrescoAppDelegate.h</include>
+				<include>PhrescoAppDelegate.m</include>
+				<include>RootViewController.h</include>
+				<include>RootViewController.m</include>
+				<include>RootViewController.xib</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Images</directory> 
+			<includes>
+				<include>Icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj</directory> 
+			<includes>
+				<include>esfdsnat.pbxuser</include>
+				<include>esfdsnat.perspectivev3</include>
+				<include>mac.pbxuser</include>
+				<include>mac.perspectivev3</include>
+				<include>photon.pbxuser</include>
+				<include>photon.perspectivev3</include>
+				<include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace</directory> 
+			<includes>
+				<include>contents.xcworkspacedata</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/NativeControllers</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/ThirdParty/ConfigurationReader</directory> 
+			<includes>
+				<include>ConfigurationReader.h</include>
+				<include>ConfigurationReader.m</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/OCUnitReports</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HomeViewTest</directory> 
+			<includes>
+				<include>HomeViewTest.h</include>
+				<include>HomeViewTest.m</include>
+				<include>HomeViewTest-Info.plist</include>
+				<include>HomeViewTest-Prefix.pch</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HomeViewTest/en.lproj</directory> 
+			<includes>
+				<include>InfoPlist.strings</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional</directory> 
+			<includes>
+				<include>TestSuite.js</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/load</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

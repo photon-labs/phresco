@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<name>${artifactId}</name>
+	<packaging>xcode</packaging>
+	<build>
+	<sourceDirectory>/source</sourceDirectory>
+	  <plugins>
+		<plugin>
+			<groupId>com.photon.phresco.plugins.xcode</groupId>
+			<artifactId>xcode-maven-plugin</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+			<extensions>true</extensions>
+			<configuration>
+				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>
+			</configuration>
+		</plugin>
+	  </plugins>
+  </build>
+</project>

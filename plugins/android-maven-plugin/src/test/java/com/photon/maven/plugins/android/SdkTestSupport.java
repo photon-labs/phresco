@@ -1,0 +1,50 @@
+/*
+ * Copyright (C) 2009 Jayway AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+package com.photon.maven.plugins.android;
+
+import org.junit.Assert;
+
+import com.photon.maven.plugins.android.AndroidSdk;
+
+import java.io.File;
+
+/**
+ */
+public class SdkTestSupport {
+    private final String env_ANDROID_HOME = System.getenv("ANDROID_HOME");
+
+    private final AndroidSdk sdk_with_platform_1_5;
+    private final AndroidSdk sdk_with_platform_default;
+
+    public SdkTestSupport() {
+        Assert.assertNotNull("For running the tests, you must have environment variable ANDROID_HOME set to a valid Android SDK 1.5+ directory.", env_ANDROID_HOME);
+
+        sdk_with_platform_1_5     = new AndroidSdk(new File(env_ANDROID_HOME), "3");
+        sdk_with_platform_default = new AndroidSdk(new File(env_ANDROID_HOME), null);
+    }
+
+    public String getEnv_ANDROID_HOME() {
+        return env_ANDROID_HOME;
+    }
+
+    public AndroidSdk getSdk_with_platform_1_5() {
+        return sdk_with_platform_1_5;
+    }
+
+    public AndroidSdk getSdk_with_platform_default() {
+        return sdk_with_platform_default;
+    }
+}

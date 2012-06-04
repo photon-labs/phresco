@@ -1,0 +1,14 @@
+<environments>
+    <environment name="Production" default="true">
+        <Database name="mysql">
+            <host>localhost</host>
+            <port>3306</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password></password>
+            <dbname>blog</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table_prefix></table_prefix>
+        </Database>
+    </environment>
+</environments>

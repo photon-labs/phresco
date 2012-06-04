@@ -1,0 +1,96 @@
+E:\Photon\Functional\AllTest\AllTest\bin\Release\AllTest.dll.config
+E:\Photon\Functional\AllTest\AllTest\bin\Release\AllTest.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\AllTest.pdb
+E:\Photon\Functional\AllTest\AllTest\bin\Release\nmock.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\nunit.core.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\nunit.framework.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\ThoughtWorks.Selenium.Core.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\ThoughtWorks.Selenium.IntegrationTests.dll
+E:\Photon\Functional\AllTest\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+E:\Photon\Functional\AllTest\AllTest\bin\Release\ThoughtWorks.Selenium.IntegrationTests.pdb
+E:\Photon\Functional\AllTest\AllTest\obj\Release\ResolveAssemblyReference.cache
+E:\Photon\Functional\AllTest\AllTest\obj\Release\AllTest.dll
+E:\Photon\Functional\AllTest\AllTest\obj\Release\AllTest.pdb
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\AllTest.dll.config
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\AllTest.dll
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\AllTest.pdb
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\nunit.framework.dll
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\nunit.framework.xml
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\bin\Release\ThoughtWorks.Selenium.IntegrationTests.pdb
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\obj\Release\AllTest.dll
+C:\Documents and Settings\Photon\Desktop\helloworld_sharepoint\functional\AllTest\obj\Release\AllTest.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\AllTest.dll.config
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\AllTest.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\AllTest.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\nmock.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\nunit.core.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\nunit.framework.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.IntegrationTests.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.Support.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Newtonsoft.Json.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Castle.Core.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Ionic.Zip.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.xml
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.xml
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.IntegrationTests.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.Support.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\WebDriver.Support.xml
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.xml
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\obj\Release\ResolveAssemblyReference.cache
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\obj\Release\AllTest.dll
+E:\1.0.5002\phresco-framework\workspace\projects\PHR_net\test\functional\AllTest\obj\Release\AllTest.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\AllTest.dll.config
+E:\webdriveralltest\nethello\AllTest\bin\Release\AllTest.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\AllTest.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\nunit.framework.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\System.Drawing.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\ThoughtWorks.Selenium.Core.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\WebDriver.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\Newtonsoft.Json.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\Ionic.Zip.dll
+E:\webdriveralltest\nethello\AllTest\bin\Release\WebDriver.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\WebDriver.xml
+E:\webdriveralltest\nethello\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\Selenium.WebDriverBackedSelenium.xml
+E:\webdriveralltest\nethello\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\ThoughtWorks.Selenium.Core.xml
+E:\webdriveralltest\nethello\AllTest\obj\Release\ResolveAssemblyReference.cache
+E:\webdriveralltest\nethello\AllTest\obj\Release\AllTest.dll
+E:\webdriveralltest\nethello\AllTest\obj\Release\AllTest.pdb
+E:\webdriveralltest\nethello\AllTest\bin\Release\nunit.framework.xml
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.dll.config
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.dll
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.pdb
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\nunit.framework.dll
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\Newtonsoft.Json.dll
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\Ionic.Zip.dll
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\WebDriver.pdb
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\WebDriver.xml
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.xml
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\obj\Release\AllTest.dll
+C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\obj\Release\AllTest.pdb
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\AllTest.dll.config
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\AllTest.dll
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\AllTest.pdb
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\nunit.framework.dll
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\Newtonsoft.Json.dll
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\Ionic.Zip.dll
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\WebDriver.pdb
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\WebDriver.xml
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\nunit.framework.xml
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\bin\Release\ThoughtWorks.Selenium.Core.xml
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\obj\Release\ResolveAssemblyReference.cache
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\obj\Release\AllTest.dll
+E:\1.1.12001\phresco-framework\workspace\projects\PHR_newnet\test\functional\AllTest\obj\Release\AllTest.pdb

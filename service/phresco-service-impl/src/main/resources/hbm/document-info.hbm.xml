@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.photon.phresco.model.Documentation" table="documents">
+       <id name="id" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="id" length="255"/>
+	</id>
+        <property name="url" type="string">
+            <column name="url" length="255"/>
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="255"/>
+        </property>
+    </class>
+    
+    <query name="service.getDocumentation">
+        from Documentation
+    </query>
+    
+</hibernate-mapping>

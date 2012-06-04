@@ -1,0 +1,30 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	
+	<baseDirectory>/</baseDirectory> 
+	<formats>
+		<format>zip</format>
+	<!--<format>tar.gz</format> -->
+	</formats>
+
+	<fileSets>
+		<!-- filter to copy the contents from the delivery directory -->
+		<fileSet>
+			<directory>${basedir}/delivery/</directory>
+			<outputDirectory>/phresco-server/</outputDirectory>
+			<includes>
+			    <include>bin/**</include>			    
+			    <include>docs/**</include>
+			    <include>conf/**</include>
+			</includes>
+		</fileSet>
+		
+		<!-- filter to copy the Maven -->
+    	<fileSet>
+			<directory>${maven.binary.home}</directory>
+			<outputDirectory>/phresco-server/tools/maven</outputDirectory>
+		</fileSet>		
+	</fileSets>
+
+</assembly>	

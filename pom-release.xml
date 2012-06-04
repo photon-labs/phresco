@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.photon.phresco</groupId>
+	<artifactId>phresco-release</artifactId>
+	<version>1.1</version>
+        <packaging>pom</packaging>
+	<url>http://www.phresco.com</url>
+	<name>Phresco Parent POM for repository and distribution management</name>
+
+	<properties>
+
+<!--
+             <current.version>http://23.21.177.233:8080/nexus/content/repositories/releases/</current.version>
+             <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</next.version>
+-->
+<!--
+
+ 		<current.version>http://23.21.177.233:8080/nexus/content/groups/prod/</current.version>
+                <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</next.version>
+-->
+
+
+
+	 	<current.version>1.1.16000-SNAPSHOT</current.version>
+		<next.version>2.0.0-SNAPSHOT</next.version>
+
+	</properties>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.google.code.maven-replacer-plugin</groupId>
+            <artifactId>maven-replacer-plugin</artifactId>
+            <version>1.4.0</version>
+            <executions>                
+                <execution>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>replace</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <includes>
+			<include>**/pom.xml</include>
+			<!--
+			<include>commons/**/pom.xml</include>
+			<include>framework/**/pom.xml</include>
+			-->
+			<include>**/deployjson.bat</include>
+			<include>**/deployjson.sh</include>
+
+			<!-- <include>**/server.config</include> -->
+                </includes>
+                <excludes>
+			<exclude>**/tags/**</exclude>
+			<exclude>**/tag/**</exclude>
+                </excludes>
+		<token>${current.version}</token>
+		<value>${next.version}</value>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+	
+</project>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libs xmlns="http://www.example.org/Phresco">
+    <lib id="1.0" name="Login">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="2.0" name="Registration">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="3.0" name="My Account / Settings">
+        <dependentModules>CS </dependentModules>
+    </lib>
+    <lib id="4.0" name="Forgot Password">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="5.0" name="Change Password">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="6.0" name="About">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="7.0" name="Contact US"/>
+    <lib id="8.0" name="Image Capture">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The Camera class is used to set image capture settings, start/stop preview, snap pictures, and retrieve frames for encoding for video. This class is a client for the Camera service, which manages the actual camera hardware.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="9.0" name="Video Capture">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="10.0" name="Making voice call">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="11.0" name="Contact Listing "/>
+    <lib id="12.0" name="SMS">
+        <dependentModules>SA</dependentModules>
+    </lib>
+    <lib id="13.0" name="Wi-Fi connectivity">
+        <dependentModules>SA</dependentModules>
+    </lib>
+    <lib id="14.0" name="Location information">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="17.0" name="Facebook integration"/>
+    <lib id="18.0" name="Notifications">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="19.0" name="GPS Status">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="20.0" name="Battery level">
+        <dependentModules>CS </dependentModules>
+        <dependentModules> SA</dependentModules>
+    </lib>
+    <lib id="22.0" name="Persistent State">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates how you can save and restore preferences, which are stored even after the user closes the application.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="23.0" name="Receive Result on calling screen">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates how an activity screen can return a result to the activity that opened it.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="25.0" name="Auto launch application on boot">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Auto start the application when the device boots up</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="27.0" name="Shopping cart"/>
+    <lib id="35.0" name="foot print / four square">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>take video / picture of place</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="42.0" name="Recreate Activity">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates how an Activity can cause itself to be recreated.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="43.0" name="Forwarding">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates opening a new activity and removing the current activity from the history stack, so that when the user later presses BACK they will not see the intermediate activity.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="44.0" name="Redirection">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates how to save data to preferences and use it to determine which activity to open next.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="45.0" name="Reorder Activity">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to use Intent flags to reorder the activities in activity stack</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="46.0" name="Translucent">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to make an activity with a transparent background.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="47.0" name="TranslucentBlur">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to make an activity with a transparent background with a special effect (blur).</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="48.0" name="Dialog Activity">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to use an activity that sets its theme to android:style/Theme.Dialog so that it looks like a Dialog.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="49.0" name="Custom Dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to write an activity that looks like a pop-up dialog with a custom theme using a different text color.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="50.0" name="Custome Title">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How to places a custom UI in its title.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="51.0" name="Screen Orientation">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How an activity can request different screen orientations</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="52.0" name="Soft Input Modes">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>How different soft input modes set in an Activity's window impacts how it adjusts to accommodate an IME.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="54.0" name="Animations">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Demonstrates how to use custom animations when moving between activities.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="56.0" name="Activity Manager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Recent tasks</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="60.0" name="Alarm Manager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>These allow you to schedule your application to be run at some point in the future</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="61.0" name="Alert dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dialog that can display one, two or three buttons</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="62.0" name="Alias Activity">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It Stub activity that launches another activity (and then finishes itself) based on information in its component's manifest meta-data. This is a simple way to implement an alias-like mechanism. To use this activity, you should include in the manifest for the associated component an entry named &quot;android.app.alias&quot;. It is a reference to an XML resource describing an intent that launches the real application.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="63.0" name="Application">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Base class for those who need to maintain global application state. You can provide your own implementation by specifying its name in your AndroidManifest.xml's &lt;application&gt; tag, which will cause that class to be instantiated for you when the process for your application/package is created.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="64.0" name="Datepicker dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dialog containing the datepicker control</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="65.0" name="Dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Display a dialog</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="66.0" name="DownloadManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It is a system service that handles long-running HTTP downloads. Clients may request that a URI be downloaded to a particular destination file. The download manager will conduct the download in the background, taking care of HTTP interactions and retrying downloads after failures or across connectivity changes and system reboots.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="67.0" name="Expandable list">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It displays an expandable list of items by binding to a data source implementing the ExpandableListAdapter, and exposes event handlers when the user selects an item</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="68.0" name="Instrumentation">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Base class for implementing application instrumentation code. When running with instrumentation turned on, this class will be instantiated for you before any of the application code, allowing you to monitor all of the interaction the system has with the application. An Instrumentation implementation is described to the system through an AndroidManifest.xml's &lt;instrumentation&gt; tag</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="69.0" name="IntentService">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>IntentService is a base class for Services that handle asynchronous requests (expressed as Intents) on demand. Clients send requests throughstartService(Intent) calls; the service is started as needed, handles each Intent in turn using a worker thread, and stops itself when it runs out of work</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="70.0" name="KeyguardManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This class can be used to lock and unlock the keyboard. Get an instance of this class by calling getSystemService(java.lang.String) with argument KEYGUARD_SERVICE.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="71.0" name="List Activity">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>An activity that displays a list of items by binding to a data source such as an array or Cursor, and exposes event handlers when the user selects an item</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="72.0" name="NotificationManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Class to notify the user of events that happen. This is how you tell the user that something has happened in the background.
+
+Notifications can take different forms:
+
+1. A persistent icon that goes in the status bar and is accessible through the launcher, (when the user selects it, a designated Intent can be launched),
+2. Turning on or flashing LEDs on the device, or
+3. Alerting the user by flashing the backlight, playing a sound, or vibrating.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="73.0" name="PendingIntents">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>By giving a PendingIntent to another application, you are granting it the right to perform the operation you have specified as if the other application was yourself (with the same permissions and identity).</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="75.0" name="Progress Dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A dialog showing a progress indicator and an optional text message or view. </content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="76.0" name="Search">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This provides access to the system search services.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="77.0" name="Tabs">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Using TabHost and TabWidget, application can be developed which has tabs to switch between different activities</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="78.0" name="Timepicker Dialog">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A dialog that prompts the user for the time of day using a TimePicker. </content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="79.0" name="UiModeManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This class provides access to the system uimode services. These services allow applications to control UI modes of the device. It provides functionality to disable the car mode and it gives access to the night mode settings.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="80.0" name="WallpaperManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>With WallpaperManager, you can get the current wallpaper, get the desired dimensions for the wallpaper, set the wallpaper, and more. Get an instance of WallpaperManager with getInstance()</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="81.0" name="Device Administration">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides device administration features at the system level, allowing you to create security-aware applications that are useful in enterprise settings, in which IT professionals require rich control over employee devices.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="82.0" name="Backup / Restore">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Contains the backup and restore functionality available to applications. If a user wipes the data on their device or upgrades to a new Android-powered device, all applications that have enabled backup can restore the user's previous data when the application is reinstalled.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="83.0" name="App widget">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>App Widgets are miniature application views that can be embedded in other applications (such as the Home screen) and receive periodic updates</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="84.0" name="Bluetooth">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides functionality, such as scanning for devices, connecting with devices, and managing data transfer between devices.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="86.0" name="Content providers">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Read / write data to content providers to share it between different applications</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="87.0" name="Gestures">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It allows user to draw shapes on touch screen, using multiple strokes</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="88.0" name="Graphics">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides low level graphics tools such as canvases, color filters, points, and rectangles that let you handle drawing to the screen directly</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="89.0" name="Hardware">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>camera related operations</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="92.0" name="Location services">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Address</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="97.0" name="Media:"/>
+    <lib id="98.0" name="AsyncPlayer">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It Plays a series of audio URIs, but does all the hard work on another thread so that any slowness with preparing or loading doesn't block the calling thread.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="99.0" name="AudioFormat">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>To access a number of audio format and channel configuration constants</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="100.0" name="AudioManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides access to volume and ringer mode control.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="101.0" name="AudioRecord">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It manages the audio resources for Java applications to record audio from the audio input hardware of the platform</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="102.0" name="AudioTrack">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It manages and plays a single audio resource for Java applications. It allows to stream PCM audio buffers to the audio hardware for playback</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="103.0" name="CamcorderProfile">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This is used to retrieve the predefined camcorder profile settings for camcorder applications. These settings are read-only. The compressed output from a recording session with a given CamcorderProfile contains two tracks: one for auido and one for video.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="104.0" name="CameraProfile">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This is used to retrieve the pre-defined still image capture (jpeg) quality levels (0-100) used for low, medium, and high quality settings in the Camera application.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="105.0" name="FaceDetector">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It Identifies the faces of people in a Bitmap graphic object.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="106.0" name="JetPlayer">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content> JET is an interactive music player for small embedded devices, including the those running the Android platform. It allows applications to include interactive music soundtracks, in MIDI format, that respond in real-time to game play events and user interaction.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="107.0" name="MediaPlayer">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It can be used to control playback of audio/video files and streams</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="108.0" name="MediaRecorder">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It is used to record audio and video</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="109.0" name="MediaScannerConnection">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides a way for applications to pass a newly created or downloaded media file to the media scanner service. The media scanner service will read metadata from the file and add the file to the media content provider. The MediaScannerConnectionClient provides an interface for the media scanner service to return the Uri for a newly scanned file to the client of the MediaScannerConnection class.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="110.0" name="Ringtone">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>it  provides a quick method for playing a ringtone, notification, or other similar types of sounds.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="111.0" name="SoundPool">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It manages and plays audio resources for applications.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="112.0" name="ThumbnailUtils">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>To create the thumbnail for videos</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="114.0" name="Audio FX:">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides classes that manage audio effects implemented in the media framework.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="115.0" name="AudioEffect">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It is the base class for controlling audio effects provided by the android audio framework.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="116.0" name="BassBoost">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Bass boost is an audio effect to boost or amplify low frequencies of the sound. It is comparable to a simple equalizer but limited to one band amplification in the low frequency range</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="117.0" name="Equalizer">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It is used to alter the frequency response of a particular music source or of the main output mix.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="118.0" name="Virtualizer">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>An audio virtualizer is a general name for an effect to spatialize audio channels. The exact behavior of this effect is dependent on the number of audio input channels and the types and number of audio output channels of the device. For example, in the case of a stereo input and stereo headphone output, a stereo widening effect is used when this effect is turned on.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="122.0" name="Network:"/>
+    <lib id="123.0" name="ConnectivityManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It queries about the state of network connectivity. It also notifies applications when network connectivity changes
+
+The primary responsibilities of this class are to:
+1. Monitor network connections (Wi-Fi, GPRS, UMTS, etc.)
+2. Send broadcast intents when network connectivity changes
+3. Attempt to &quot;fail over&quot; to another network when connectivity to a network is lost
+4. Provide an API that allows applications to query the coarse-grained or fine-grained state of the available networks</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="124.0" name="DhcpInfo">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A simple object for retrieving the results of a DHCP request.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="125.0" name="NetworkInfo">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It describes the status of a network interface of a given type (currently either Mobile or Wifi).</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="126.0" name="AndroidHTTPClient">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It's a Subclass of the Apache DefaultHttpClient that is configured with reasonable default settings and registered schemes for Android</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="127.0" name="WiFi">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The Wi-Fi APIs provide a means by which applications can communicate with the lower-level wireless stack that provides Wi-Fi network access. Almost all information from the device supplicant is available, including the connected network's link speed, IP address, negotiation state, and more, plus information about other networks that are available. Some other API features include the ability to scan, add, save, terminate and initiate Wi-Fi connections.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="128.0" name="ScanResults">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides information like BSSID, SSID, capabilities, frequency, level etc for detected access point.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="129.0" name="WiFiConfiguration">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides information regarding the configured wifi network.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="130.0" name="WiFiInfo">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It describes the state of any Wifi connection that is active or is in the process of being set up.</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="131.0" name="WiFiManager">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides the primary API for managing all aspects of Wi-Fi connectivity. Get an instance of this class by calling Context.getSystemService(Context.WIFI_SERVICE). It deals with several categories of items:
+
+1. The list of configured networks. The list can be viewed and updated, and attributes of individual entries can be modified.
+2. The currently active Wi-Fi network, if any. Connectivity can be established or torn down, and dynamic information about the state of the network can be queried.
+3. Results of access point scans, containing enough information to make decisions about what access point to connect to.
+4. It defines the names of various Intent actions that are broadcast upon any sort of change in Wi-Fi state</content>
+            </document>
+        </documents>
+    </lib>
+    <lib id="132.0" name="OpenGL">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>It provides OpenGL utilities to handle images and textures</content>
+            </document>
+        </documents>
+    </lib>
+</libs>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="3.0.1" name="Flurry" id="mod_flurry_3.0.1">
+        <contentURL>/modules/tech-iphone-native/files/mod_flurry_3.0.1/3.0.1/mod_flurry_3.0.1-3.0.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Flurry Analytics delivers powerful insight into how consumers interact with your mobile applications in real-time. Flurry Analytics helps mobile application developers make better apps, deepen consumer engagement and improve monetization of their applications. The service is free, cross-platform, easy to integrate, able to handle data loads of any size application and frequently updated with new, advanced features.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Flurry is mainly used for report generation.
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.1.1" name="Urban Airship" id="mod_urban_airship_1.1.1">
+        <contentURL>/modules/tech-iphone-native/files/mod_urban_airship_1.1.1/1.1.1/mod_urban_airship_1.1.1-1.1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Urbanairship sends push notifications directly to people who have installed the app. Rich Push allows you to go beyond simple alerts by adding engaging experiences into your notifications. Add HTML, video, audio, maps and other rich media components to your push messages. Track delivery and message views, and allow your Rich Push messages to be kept in a persistent inbox located within your app.
+
+Urban Airship primarily provides app developers the ability to easily add features such as creation and delivery of enhanced push notifications, in-app purchase and subscriptions, as well as reporting on the use of those features back to app developers. The company offers these services on Android, iOS, and BlackBerry.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Urban Airship sends push notifications to people who have installed the app.
+
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.12.5" name="OpenFeint" id="mod_openfeint_2.12.5">
+        <contentURL>/modules/tech-iphone-native/files/mod_openfeint_2.12.5/2.12.5/mod_openfeint_2.12.5-2.12.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>OpenFeint is a 'social platform' which allows developers to easily add social networking aspects into their game with minimal additional programming. For example, it lets you add friends, see what your friends are playing, view leaderboards, forums and live chat, and more. It also serves as a platform to advertise other 'OpenFeint enabled' games. For most iPhone games OpenFeint is optional and works as a 'layer' on top of the actual game. OpenFeint enabled games have the option of including a badge on the corner of their game's icon consisting of the OpenFeint logo.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>OpenFeint is a 3rd party library that enables social gaming features such as public leaderboards and achievements.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="false" version="2.3.2" name="SBJSON" id="mod_sbjson_2.3.2">
+        <contentURL>/modules/tech-iphone-native/files/mod_sbjson_2.3.2/2.3.2/mod_sbjson_2.3.2-2.3.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A strict JSON parser and generator for Objective-C. It adds categories to existing Objective-C objects for a super-simple interface. More flexible APIs are also provided for added control. 
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A strict JSON parser and generator for Objective-C.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.2.2" name="Scanner kit" id="mod_scanner_kit_4.2.2">
+        <contentURL>/modules/tech-iphone-native/files/mod_scanner_kit_4.2.2/4.2.2/mod_scanner_kit_4.2.2-4.2.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Scanner kit brings the power of barcode scanning that allows the user to scan barcodes and quick response codes of multiple formats using iPhone apps.This scans the bar code using camera facilities.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Scanner kit brings the power of barcode scanning that allows the user to scan barcodes and Quick response code of multiple formats.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.2.1" name="Sharekit" id="mod_sharekit_0.2.1">
+        <contentURL>/modules/tech-iphone-native/files/mod_sharekit_0.2.1/0.2.1/mod_sharekit_0.2.1-0.2.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Sharekit brings the features of sharing to delicious, email, facebook, google reader, Instapaper, Pinboard, Read It later, tumblr, twitter. Which helps the people to be stay connected and to know the updates frequently.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Sharekit brings the features of sharing to social medias.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="1.0" name="OCUnitReportGenerator" id="mod_ocunitreportgenerator_1.0">
+        <contentURL>/modules/tech-iphone-native/files/mod_ocunitreportgenerator_1.0/1.0/mod_ocunitreportgenerator_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>OCUnit report generator Library that generates Junit style report from OCUnit logger files. These sources needs to be added as sources for compilation available at ThirdParty/OCUnitReportLogger</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>OC Unit report generator Library that generates Junit style report from OCUnit logger files</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="1.0" name="ConfigurationReader" id="mod_configurationreader_1.0">
+        <contentURL>/modules/tech-iphone-native/files/mod_configurationreader_1.0/1.0/mod_configurationreader_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Configuration reader library to read and write XML configuration created by phresco</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Library to read and write XML configuration created by phresco</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="1.6.0" name="PhoneGap " id="mod_phonegap__1.6.0">
+        <contentURL>/modules/tech-iphone-native/files/mod_phonegap__1.6.0/1.6.0/mod_phonegap__1.6.0-1.6.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores. PhoneGap leverages web technologies developers already know best... HTML and JavaScript.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Phonegap is used for creating iPhone Hybrid application</content>
+            </document>
+        </documents>
+    </module>
+</modules>

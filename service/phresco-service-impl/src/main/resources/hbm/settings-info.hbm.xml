@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="com.photon.phresco.model.SettingsInfo" table="settings">
+        <id name="settingId" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="settingId" length="255"/>
+		</id>
+  <property generated="never" lazy="false" name="name" type="string">
+   <column length="255" name="name"/>
+  </property>
+  <property generated="never" lazy="false" name="description" type="string">
+   <column length="255" name="description"/>
+  </property>
+  <property generated="never" lazy="false" name="type" type="string">
+   <column length="255" name="type"/>
+  </property>
+  <property generated="never" lazy="false" name="status" type="boolean">
+   <column length="255" name="status"/>
+  </property>
+ </class>
+ <query name="service.getSettingsInfo">from SettingsInfo</query>
+</hibernate-mapping>

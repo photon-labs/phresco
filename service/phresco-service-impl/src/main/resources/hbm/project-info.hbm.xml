@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+
+ <class name="com.photon.phresco.model.ProjectInfo" table="project_info">
+ 	 <id name="pilotid" type="int">
+		<meta attribute="use-in-equals">true</meta>
+		<column name="pilotid" length="255"/>
+	</id>
+	<property name="id" type="string">
+		<column name="id" length="255"/>
+	</property>
+  <property name="name" type="string">
+  	 <column length="255" name="name"/>
+  </property>
+  <property name="code" type="string">
+   <column length="255" name="code"/>
+  </property>
+  <property  name="version" type="string">
+   <column length="255" name="version"/>
+  </property>
+  <property  name="description" type="string">
+   <column length="255" name="description"/>
+  </property>
+  <property  name="application" type="string">
+   <column length="255" name="application"/>
+  </property>
+
+ </class>
+
+ <class name="com.photon.phresco.model.PilotTechModules" table="pilot_tech_modules">
+ 	 <id name="id" type="int">
+		<meta attribute="use-in-equals">true</meta>
+		<column name="id" length="255"/>
+	</id>
+  <property name="name" type="string">
+  	 <column length="255" name="name"/>
+  </property>
+  <property name="mgid" type="string">
+   <column length="255" name="mgid"/>
+  </property>
+  <property  name="PilotTechid" type="int">
+   <column length="255" name="PilotTechid"/>
+  </property>
+  </class>
+
+
+
+<class name="com.photon.phresco.model.PilotTechModuleVersions" table="pilot_tech_module_versions">
+ 	 <id name="id" type="int">
+		<meta attribute="use-in-equals">true</meta>
+		<column name="id" length="255"/>
+	</id>
+  <property name="Version" type="string">
+  	 <column length="255" name="Version"/>
+  </property>
+  <property name="pilotTechModulesid" type="int">
+   <column length="255" name="PilotTechModulesid"/>
+  </property>
+</class>
+
+
+<class name="com.photon.phresco.model.PilotTechnology" table="pilot_technology">
+ 	 <id name="id" type="int">
+		<meta attribute="use-in-equals">true</meta>
+		<column name="id" length="255"/>
+	</id>
+  <property name="techid" type="string">
+  	 <column length="255" name="techid"/>
+  </property>
+  <property name="name" type="string">
+   <column length="255" name="name"/>
+  </property>
+  <property name="projectInfoid" type="int">
+   <column length="255" name="ProjectInfoid"/>
+  </property>
+</class>
+
+
+<query name="service.getPilotTechModulesVersions">
+ from PilotTechModuleVersions
+ </query>
+ <query name="service.getPilotTechModules">
+ from PilotTechModules
+ </query>
+ <query name="service.getProjectInfo">
+ from ProjectInfo
+ </query>
+</hibernate-mapping>

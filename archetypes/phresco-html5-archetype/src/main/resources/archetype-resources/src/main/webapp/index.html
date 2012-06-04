@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Landing Page</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <!-- Linking styles -->
+        	
+           <!--  Style sheets -->
+           <style>
+				#helloworld{
+					margin:0 auto;
+					width:80%;
+					text-align:center;
+					font-weight:bold;
+					font-size:30px;
+					padding:30% 0 35% 0;					
+					color:#00000;
+				}
+				
+				html, body {
+					height:100%;
+					margin:0;
+					padding:0;
+				}
+			</style>
+            	
+        <!-- Linking styles end  -->
+        
+        
+        <!-- Linking scripts -->
+        	
+            <!--  Javascripts -->
+
+        <!-- Linking scripts ends -->
+        
+		
+		<!-- Api scripts -->
+        <script src="lib/jquery/jquery.js"></script>
+		<script type="text/javascript" src="lib/yui/build/yui/yui-min.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery.js"></script>
+        <script type="text/javascript" src="lib/xml2json/jquery.xml2json.js"></script>
+
+        <!-- EShop API JS -->
+		<script type="text/javascript" src="js/controller/AppAPI.js"></script>
+		<!-- Api end -->
+        <!-- Widget JS -->
+		<script type="text/javascript" src="js/widgets/BaseWidget.js"></script>
+		<script type="text/javascript" src="js/widgets/HelloWidget.js"></script>
+
+        <!-- <script type="text/javascript" src="js/widgets/configure.js"></script> -->
+		
+     		
+            <!--  All widgets -->
+            
+		<!-- Widget JS end -->
+		<script type="text/javascript">
+            YUI().use('node', 'widget', 'appAPI', 'baseWidget', 'helloWidget', function(Y) {
+
+                Y.on("domready", function () {
+                    var appAPI = new Y.Base.AppAPI({});
+
+                    // instantiate NavigationWidget with the HTML
+                    var helloWidget = new Y.Base.HelloWidget({
+                        // place holder can be decided by specifying the attribute
+                        targetNode : "#helloworld",
+						apiReference : appAPI
+                   });
+
+                    appAPI.getWSConfig();
+                    //helloAPI.getConfig();
+                    helloWidget.renderUI();
+                });
+            });
+        </script>
+
+    </head>
+
+    <body>
+        <div id="helloworld"></div>
+    </body>
+</html>

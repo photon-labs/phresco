@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="1.0" name="Droid-Fu" id="mod_droid-fu_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_droid-fu_1.0/1.0/mod_droid-fu_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Droid- Fu is an external jar file it makes the developer more simpler to work with android components. Droid-Fu contains utility classes as well as some self-contained, ready to use Android components, all of which considered useful for typical Android applications. 
+
+Areas which Droid-Fu offers support classes include:
+1. application life-cycle
+2. background tasks
+3. HTTP messaging
+4. (remote) image handling
+5. custom adapters
+
+Droid-Fu is an open-source effort aiming to collect and bundle solutions to common concerns in the development of applications for the Google Android platform.It mostly contains code which pulled out of Qype's Android app and proves useful to other developers. 
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Droid-Fu Contains utility classes and ready to use android components.
+
+Android components: 
+1)Activity. 
+2)Service.
+3)Broadcast receiver.
+4)Content provider.
+5)Intent.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.2.3" name="ACRA" id="mod_acra_4.2.3">
+        <contentURL>/modules/tech-android-native/files/mod_acra_4.2.3/4.2.3/mod_acra_4.2.3-4.2.3.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ACRA is a library enabling Android Application to automatically post their crash reports to a GoogleDoc form. It is targetted to android applications developers to help them get data from their applications when they crash or behave erroneously.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ACRA is a library enabling Android Application to automatically post their crash reports to a GoogleDoc form. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.1.2" name="AndroidAnnotations" id="mod_androidannotations_2.1.2">
+        <contentURL>/modules/tech-android-native/files/mod_androidannotations_2.1.2/2.1.2/mod_androidannotations_2.1.2-2.1.2.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>AndroidAnnotations works in a very simple way. It automatically adds an extra compilation step that generates source code, using the standard Java Annotation Processing tool.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Andriod annotations is a complite time framework helps user to avoid writing huge block of code.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.6.1" name="SimpleXML" id="mod_simplexml_2.6.1">
+        <contentURL>/modules/tech-android-native/files/mod_simplexml_2.6.1/2.6.1/mod_simplexml_2.6.1-2.6.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Simple is a high performance XML serialization and configuration framework for Java. Its goal is to provide an XML framework that enables rapid development of XML configuration and communication systems. This framework aids the development of XML systems with minimal effort and reduced errors. It offers full object serialization and deserialization, maintaining each reference encountered. In essence it is similar to C# XML serialization for the Java platform, but offers additional features for interception and manipulation.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Simple XML is a framework for Java, which enables rapid development of XML configuration and communication systems.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.7.1" name="GoogleGSON" id="mod_googlegson_1.7.1">
+        <contentURL>/modules/tech-android-native/files/mod_googlegson_1.7.1/1.7.1/mod_googlegson_1.7.1-1.7.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Gson can work with arbitrary Java objects including pre-existing objects that you do not have source-code of
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Google GSON is a Java library that can be used to convert Java Objects into their JSON representation and vice-versa.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="JacksonJSON" id="mod_jacksonjson_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_jacksonjson_1.0/1.0/mod_jacksonjson_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Jackson is a:
+1. Streaming (reading, writing)
+2. FAST (measured to be faster than any other Java json parser and data binder)
+3. Powerful (full data binding for common JDK classes as well as any Java bean class, Collection, Map or Enum)
+4. Zero-dependency (does not rely on other packages beyond JDK)
+5. Open Source (LGPL or AL)
+6. Fully conformant
+7. Extremely configurable
+JSON processor (JSON parser + JSON generator) written in Java. Beyond basic JSON reading/writing (parsing, generating), it also offers full node-based Tree Model, as well as full OJM (Object/Json Mapper) data binding functionality.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Jackson JSON is a JSON processor written in Java, which offers full node-based Tree Model, as well as full OJM (Object/Json Mapper) data binding functionality.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.26" name="ORMLite" id="mod_ormlite_4.26">
+        <contentURL>/modules/tech-android-native/files/mod_ormlite_4.26/4.26/mod_ormlite_4.26-4.26.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Object Relational Mapping Lite (ORM Lite) provides some lightweight functionality for persisting Java objects to SQL databases while avoiding the complexity and overhead of more standard ORM packages.
+
+ORMLite supports JDBC connections to MySQL, PostgreSQL, Microsoft SQL Server, H2 [free SQL database written in Java], Derby, HSQLDB, and SQLite and can be extended to additional databases relatively easily. There are also initial implementations for DB2 and Oracle. It has a separate database backend which also supports native database calls on Android OS. You can contact the author of ORMLite if your database is not supported.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ORMLite is an open source software framework that provides lightweight object relational mapping (ORM) between Java classes and SQL databases.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="ContactsLib" id="mod_contactslib_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_contactslib_1.0.1/1.0.1/mod_contactslib_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ContactsLib is an Android library for developers, wishing to work easily with Contacts,without knowing how a Content Provider operates.
+
+This library provides methods to :
+1. Get information about a contact
+2. Search record by name, phone number or others attributes
+3. Insert new contact in the Content Provider
+4. Update contact's data
+5. Delete a contact</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ContactsLib is an Android library for developers, wishing to work easily with Contacts.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="SocialLib" id="mod_sociallib_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_sociallib_1.0.1/1.0.1/mod_sociallib_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Social Lib aims to make the development of Social apps much more easier.Currently, Social Lib provides access to the following social networks :
+1. Facebook
+2. Twitter
+3. Google Buzz
+4. LinkedIn
+SocialLib provides methods to read and write data from these social networks. You can have access to a Facebook wall, or send a tweet very easily, with few lines of code. SocialLib also gives you the ability to make custom API calls to these social networks, so that you are not limited to the pre-existing methods. SocialLib also provides methods to read and parse social networks responses. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SocialLib is an Android library designed to make your life easier when developing applications that interact with social networks.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.4" name="Jackcess" id="mod_jackcess_1.2.4">
+        <contentURL>/modules/tech-android-native/files/mod_jackcess_1.2.4/1.2.4/mod_jackcess_1.2.4-1.2.4.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Jackcess is a pure Java library for reading from and writing to MS Access databases (currently supporting versions 2000-2007).It is part of the OpenHMS project from Health Market Science, Inc.. It is not an application. There is no GUI. It's a library, intended for other developers to use to build Java applications. Jackcess is licensed under the GNU Lesser General Public License</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Jackcess is a pure Java library for reading from and writing to MS Access databases.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.2.4" name="Twitter4J" id="mod_twitter4j_2.2.4">
+        <contentURL>/modules/tech-android-native/files/mod_twitter4j_2.2.4/2.2.4/mod_twitter4j_2.2.4-2.2.4.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Twitter4J is an unofficial Java library for the Twitter API. With Twitter4J, you can easily integrate your Java application with the Twitter service.
+
+Twitter4J  feature:
+1. 100% Pure Java - works on any Java Platform version 1.4.2 or later
+2. Zero dependency : No additional jars required
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Twitter4J is an open-sourced, mavenized safe Java library for the Twitter API. Twitter4J allows you to easily integrate your application with the Twitter service.</content>
+            </document>
+        </documents>
+    </module>
+    <module artifactId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" groupId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" required="false" core="false" version="1.0" name="Facebook" id="mod_facebook_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_facebook_1.0/1.0/mod_facebook_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Facebook is a reference library project, which user need to add to their native application.facebook features like login to facebook, post on wall, etc from their own android application
+
+Note: jar file is created for this reference library project, but the suggested way to use facebook is, to include the library project.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Facebook SDK allows integrating the facebook functionalities with android applications.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.5.5" name="MobilePaymentLibrary" id="mod_mobilepaymentlibrary_1.5.5">
+        <contentURL>/modules/tech-android-native/files/mod_mobilepaymentlibrary_1.5.5/1.5.5/mod_mobilepaymentlibrary_1.5.5-1.5.5.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Mobilepaymentlibraries allows merchants and developers to add payment functionality to mobile apps. The payment transaction in completely integrated into the app. Customers pay using PayPal without leaving the application.When customers use a merchants' app for payment, PayPal's Mobile Payments Library displays an in-app Pay with PayPal button.
+
+Customers click on a Pay with PayPal button supported by Express and log in (included with Mobile Payment Libraries). Customers log in to their PayPal account. They do not need to enter their shipping, billing, or payment information, because it is already available through their PayPal account. Customers stay in the merchant's app throughout the checkout and payment process.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Mobilepaymentlibrary allows merchants and developers to integrate payment functionality to mobile apps. Customers pay using PayPal without leaving the application.</content>
+            </document>
+        </documents>
+    </module>
+    <module artifactId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" groupId="This is a library project, which users need to add to their own project as library when they want to use it.&#xA;&#xA;NOTE: IT'S NOT A JAR" required="false" core="false" version="1.0" name="AndroidMapViewBalloons" id="mod_androidmapviewballoons_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_androidmapviewballoons_1.0/1.0/mod_androidmapviewballoons_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Android Map view ballon project provides an easy way to annotate map overlay items with a simple information balloon when using the Android Maps external library (com.google.android.maps). It consists of BalloonOverlayView, a view representing the balloon that is displayed over your MapView andBalloonItemizedOverlay, an abstract extension of ItemizedOverlay.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Android Map view balloon provides an easy way to annotate map overlay items with a simple information balloon when using the Android Maps external library </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="3.0.5" name="OSMDroid " id="mod_osmdroid__3.0.5">
+        <contentURL>/modules/tech-android-native/files/mod_osmdroid__3.0.5/3.0.5/mod_osmdroid__3.0.5-3.0.5.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>OSMDroid provides Tools / Views to interact with OpenStreetMap-Data.The OpenStreetMapView is a (almost) full/free replacement for Androids MapView class.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>OSM droid is a replacement for Android MapView class, which provides Tools / Views to interact with OpenStreetMap-Data.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="AdColony" id="mod_adcolony_1.0">
+        <contentURL>/modules/tech-android-native/files/mod_adcolony_1.0/1.0/mod_adcolony_1.0-1.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>AdColony helps to create  high-definition (HD), Instant-Play video advertisements that can be played
+anywhere within your application. Video ads may require a brief waiting time on the first attempt to play
+after which, the videos will play without any delay. AdColony also contains a secure system for
+rewarding users with virtual currency upon the completion of video plays.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>AdColony helps to create  high-definition (HD), Instant-Play video advertisements that can be played
+anywhere within your application.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.1" name="UrbanAirShip" id="mod_urbanairship_1.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_urbanairship_1.0.1/1.0.1/mod_urbanairship_1.0.1-1.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Urbanairship sends push notifications directly to people who have installed the app. Rich Push allows you to go beyond simple alerts by adding engaging experiences into your notifications. Add HTML, video, audio, maps and other rich media components to your push messages. Track delivery and message views, and allow your Rich Push messages to be kept in a persistent inbox located within your app.
+
+Urban Airship primarily provides app developers the ability to easily add features such as creation and delivery of enhanced push notifications, in-app purchase and subscriptions, as well as reporting on the use of those features back to app developers. The company offers these services on Android, iOS, and BlackBerry.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Urban Airship sends push notifications to people who have installed the app.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.0" name="PhoneGap" id="mod_phonegap_1.2.0">
+        <contentURL>/modules/tech-android-native/files/mod_phonegap_1.2.0/1.2.0/mod_phonegap_1.2.0-1.2.0.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.Even though user works on web based application[hybrid apps] while using phone gap user feel as if they are working on native applications.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.4" name="Commons IO" id="mod_commons_io_1.4">
+        <contentURL>/modules/tech-android-native/files/mod_commons_io_1.4/1.4/mod_commons_io_1.4-1.4.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Commons IO is a library of utilities to assist with developing IO functionality.
+
+There are six main areas included:
+
+1)Utility classes - with static methods to perform common tasks.
+2)Input - useful Input Stream and Reader implementations.
+3)Output - useful Output Stream and Writer implementations.
+4)Filters - various implementations of file filters.
+5)Comparators - various implementations of java.util.Comparator for files.
+6)File Monitor - a component for monitoring file system events.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Commons IO is a library of utilities to assist with developing IO functionality.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="4.0.1" name="HttpClient" id="mod_httpclient_4.0.1">
+        <contentURL>/modules/tech-android-native/files/mod_httpclient_4.0.1/4.0.1/mod_httpclient_4.0.1-4.0.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>HTTP client is mainly used for retrieving data from server.HTTP stands for Hyper text transfer protocol.
+
+Procedure to send Request :- 
+
+First add the import statement import HTTPClient.*; to user file(s). Please create HTTPConnection  Requests can then be sent using one of the methods Head(), Get(), Post(), etc in HTTPConnection. These methods all return an instance of HTTP Response which has methods for accessing the response headers (getHeader(), getHeaderAsInt(), etc), various response info (getStatusCode(), getReasonLine(), etc), the response data (getData(), getText(), and getInputStream()) and any trailers that might have been sent (getTrailer(), getTrailerAsInt(), etc).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>HTTP client is mainly used for retrieving data from server.HTTP stands for Hyper text transfer protocol.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.1.1" name="SignPostCommonsHttp4" id="mod_signpostcommonshttp4_1.2.1.1">
+        <contentURL>/modules/tech-android-native/files/mod_signpostcommonshttp4_1.2.1.1/1.2.1.1/mod_signpostcommonshttp4_1.2.1.1-1.2.1.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SignPostCommonsHttp4 will download all dependencies and create a JAR in the target/ folder.
+
+Setting up Signpost :
+
+Signpost supports signing HTTP requests of type java.net.HttpURLConnection. If user want to use a different HTTP messaging system, User must download an adapter module that supports adapting request objects of that library for Signpost being able to sign them. The adapter module must be added to project's build path. 
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SignPostCommonsHttp4 will download all dependencies and create a JAR in the target/ folder.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.1.1" name="SignpostCore" id="mod_signpostcore_1.2.1.1">
+        <contentURL>/modules/tech-android-native/files/mod_signpostcore_1.2.1.1/1.2.1.1/mod_signpostcore_1.2.1.1-1.2.1.1.jar</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SignPostCore will download all dependencies and create a JAR in the target/ folder.
+
+Setting up Signpost :
+
+Signpost supports signing HTTP requests of type java.net.HttpURLConnection. If user want to use a different HTTP messaging system, User must download an adapter module that supports adapting request objects of that library for Signpost being able to sign them. The adapter module must be added to project's build path</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SignPostCore will download all dependencies and create a JAR in the target/ folder.</content>
+            </document>
+        </documents>
+    </module>
+</modules>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <!--<parent>
+       <groupId>com.photon.phresco.libraries</groupId>
+       <artifactId>phresco-libraries</artifactId>
+       <version>2.0.0-SNAPSHOT</version>
+   </parent> -->
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.file.server</groupId>
+    <artifactId>file-server</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <name>Phresco File Server</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+ 
+     <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.libraries.fileserver</id>
+            <name>Phresco Libraries - File Server</name>
+            <url>scp://phresco.org/home/projects/libraries/file_server/public_html/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+  </dependencies>
+  
+	<build>
+		<plugins>
+		    <plugin>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>2.3.1</version>
+		        <configuration>
+		        <archive>
+		        <manifest>
+		             <mainClass>com.photon.phresco.fileserver.PhrescoFileServer</mainClass>
+<!-- 		             <packageName>com.photon.phresco.fileserver</packageName> -->
+		        </manifest>
+		        </archive>
+		        </configuration>
+		    </plugin>
+		</plugins>
+	</build>
+
+</project>

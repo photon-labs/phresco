@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+        <groupId>com.photon.phresco.plugins</groupId>
+        <artifactId>phresco-plugins-root</artifactId>
+        <version>1.0</version>
+    </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.photon.phresco.plugins</groupId>
+  <artifactId>drupal-maven-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>2.0.0-SNAPSHOT</version>
+  <name>drupal-maven-plugin Maven Mojo</name>
+  <url>http://maven.apache.org</url>
+  
+    <scm>
+        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/drupal-maven-plugin/trunk</connection>
+        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/drupal-maven-plugin/trunk</developerConnection>
+        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/drupal-maven-plugin/trunk</url>
+    </scm>
+     
+     <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.plugins.drupal</id>
+            <name>Phresco Plugins - Drupal</name>
+            <url>scp://phresco.org/home/projects/plugins/drupal/public_html/</url>
+        </site>
+    </distributionManagement>
+       
+    <properties>
+        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
+        <maven-plugin-plugin.version>2.8</maven-plugin-plugin.version>
+        <maven.api.version>3.0.3</maven.api.version>
+        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+  <dependencies>
+     <dependency>
+        <groupId>org.sonatype.sisu</groupId>
+        <artifactId>sisu-inject-plexus</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.photon.phresco.commons</groupId>
+        <artifactId>phresco-commons</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.photon.phresco.framework</groupId>
+        <artifactId>phresco-framework</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.photon.phresco.framework</groupId>
+        <artifactId>phresco-framework-impl</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-plugin-api</artifactId>
+        <version>2.0</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.16</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-utils</artifactId>
+        <version>3.0</version>            
+    </dependency>
+    
+    <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>2.2.1</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>1.3.2</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.13</version>
+    </dependency>
+	
+	<dependency>
+		<groupId>com.microsoft.sqlserver.jdbc.sqlserverdriver</groupId>
+		<artifactId>sqlserverdriver</artifactId>
+		<version>4.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>oracle.jdbc.oracledriver</groupId>
+		<artifactId>oracledriver</artifactId>
+		<version>10.2.0.4.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.ibm.db2.jcc.db2Driver</groupId>
+		<artifactId>db2Driver</artifactId>
+		<version>1.4.2</version>
+	</dependency>
+	
+</dependencies>
+  
+ </project>

@@ -1,0 +1,8 @@
+{"server": {
+  "host": "localhost",
+  "port": "8880",
+  "protocol": "http",
+  "context": "eshop",
+  "username": "admin",
+  "password": "admin"
+}}

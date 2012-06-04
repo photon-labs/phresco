@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<users>
+	<user>
+		<username>john</username>
+		<password>john</password>
+		<EMailAddress>john@photoninfotech.net</EMailAddress>
+	</user>
+</users>

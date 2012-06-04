@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+   <trackList>
+	  <track>
+         <location>http://localhost:8080/phresco/videos/happyfit2.webm</location>
+         <creator>Scott Stevenson</creator>
+         <title>Happy feet</title>
+         <annotation>Movie video</annotation>
+         <image>http://localhost:8080/phresco/videoplayer/thumbs/happy.jpeg</image>
+         <info>http://localhost:8080/phresco/videos/happyfit2.webm</info>
+      </track>
+	  <track>
+		 <location>http://localhost:8080/phresco/videos/RoboCupSoccer_Robot.ogg</location>
+		 <creator>Mike1024</creator>
+         <title>Robocup Soccer</title>
+         <annotation>A robotic soccer tournament.</annotation>
+         <image>http://localhost:8080/phresco/videoplayer/thumbs/robo.jpeg</image>
+         <info>http://localhost:8080/phresco/videos/RoboCupSoccer_Robot.ogg</info>
+      </track>
+      <track>
+         <location>http://localhost:8080/phresco/videos/big_buck_bunny.ogg</location>
+         <creator>Scott Stevenson</creator>
+         <title>big_buck_bunny trailer</title>
+         <annotation>Wikipedia demonstration video</annotation>
+         <image>http://localhost:8080/phresco/videoplayer/thumbs/bunny.jpeg</image>
+         <info>http://localhost:8080/phresco/videos/big_buck_bunny.ogg</info>
+      </track>
+      <track>
+         <location>http://localhost:8080/phresco/videos/The Simpsons Movie.mp4</location>
+		 <creator>Mike1024</creator>
+         <title>Simsons trailer</title>
+         <annotation>A robotic soccer tournament.</annotation>
+         <image>http://localhost:8080/phresco/videoplayer/thumbs/simpsons.gif</image>
+         <info>http://localhost:8080/phresco/videos/The Simpsons Movie.mp4</info>
+      </track>
+   </trackList>
+</playlist>

@@ -1,0 +1,26 @@
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>jar</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+				
+				<phases>
+					<clean>
+						com.photon.phresco.plugins:drupal-maven-plugin:clean
+					</clean>
+					<deploy>
+						com.photon.phresco.plugins:drupal-maven-plugin:deploy
+					</deploy>
+					<package>
+							com.photon.phresco.plugins:drupal-maven-plugin:package
+					</package>
+				</phases>
+						
+            </configuration>
+        </component>
+    </components>
+</component-set>

@@ -1,0 +1,238 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.custom.i18n.resources" value="service-messages" />
+	<constant name="struts.ui.theme" value="simple"/>
+	<!-- <constant name="struts.devMode" value="true" /> -->
+    <package name="default" extends="struts-default, json-default">
+       
+		<!--- LOGIN-->
+		<action name="login" class="com.photon.phresco.service.admin.actions.Login" method="login" >
+			<result name="login">/login.jsp</result>
+			<result name="success">/admin/baselayout.jsp</result>
+			<result name="failure">/admin/login.jsp</result>
+		</action>
+
+		<!--- DASHBOARD-->
+		<action name="dashboard" class="com.photon.phresco.service.admin.actions.Dashboard" method="list" >
+            <result name="dashboard">/admin/pages/dashboard/report.jsp</result>
+        </action>
+		
+		
+		<!--- COMPONENTS-->
+			<!-- COMPONENT FEATURES STARTS-->
+		<action name="components" class="com.photon.phresco.service.admin.actions.components.ComponentMenu" method="getCompMenu">
+            <result name="compMenu">/admin/pages/components/menu.jsp</result>
+        </action>
+
+		<action name="featuresList" class="com.photon.phresco.service.admin.actions.components.Features" method="list">
+            <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
+        </action>
+		
+		<action name="featuresAdd" class="com.photon.phresco.service.admin.actions.components.Features" method="add">
+            <result name="featuresAdd">/admin/pages/components/feature/add.jsp</result>
+        </action>
+		
+		<action name="featuresSave" class="com.photon.phresco.service.admin.actions.components.Features" method="save">
+            <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
+            <result type="json" />
+        </action>
+		
+		<action name="featuresCancel" class="com.photon.phresco.service.admin.actions.components.Features" method="cancel">
+            <result name="featuresCancel">/admin/pages/components/feature/list.jsp</result>
+        </action>
+			<!-- COMPONENT FEATURES ENDS-->
+			
+			<!-- COMPONENT ARCHETYPES STARTS-->
+		<action name="archetypesList" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="list">
+            <result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+        </action>
+		
+		<action name="archetypeAdd" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="add">
+            <result name="archetypeAdd">/admin/pages/components/archetype/add.jsp</result>
+        </action>
+		
+		<action name="archetypeSave" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="save">
+            <result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+            <result type="json" />
+        </action>
+		
+		<action name="archetypeCancel" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="cancel">
+            <result name="archetypeCancel">/admin/pages/components/archetype/list.jsp</result>
+        </action>
+		
+			<!-- COMPONENT ARCHETYPES ENDS-->
+			
+			
+			<!-- COMPONENT APPLICATION TYPES STARTS-->
+		<action name="applntypesList" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="list">
+            <result name="applntypesList">/admin/pages/components/application/list.jsp</result>
+        </action>
+		
+		<action name="applicationAdd" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="add">
+            <result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
+        </action>
+		
+		<action name="applicationSave" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="save">
+            <result name="applntypesList">/admin/pages/components/application/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="applicationCancel" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="cancel">
+            <result name="applicationCancel">/admin/pages/components/application/list.jsp</result>
+        </action>
+		
+			<!-- COMPONENT APPLICATION TYPES ENDS-->
+			
+			
+			<!-- COMPONENT CONFIG TEMPLATE STARTS-->
+			
+		<action name="configtempList" class="com.photon.phresco.service.admin.actions.components.ConfigTemplates" method="list">
+            <result name="configtempList">/admin/pages/components/configTemplate/list.jsp</result>
+        </action>
+		
+		<action name="configtempAdd" class="com.photon.phresco.service.admin.actions.components.ConfigTemplates" method="add">
+            <result name="configtempAdd">/admin/pages/components/configTemplate/add.jsp</result>
+        </action>
+		
+		<action name="configtempSave" class="com.photon.phresco.service.admin.actions.components.ConfigTemplates" method="save">
+            <result name="configtempList">/admin/pages/components/configTemplate/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="configtempCancel" class="com.photon.phresco.service.admin.actions.components.ConfigTemplates" method="cancel">
+            <result name="configtempCancel">/admin/pages/components/configTemplate/list.jsp</result>
+        </action>
+			
+			<!-- COMPONENT CONFIG TEMPLATE ENDS-->
+			
+			<!-- COMPONENT PILOT PROJECTS STARTS-->
+		<action name="pilotprojList" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="list">
+            <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
+        </action>
+		
+		<action name="pilotprojAdd" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="add">
+            <result name="pilotprojAdd">/admin/pages/components/pilotproject/add.jsp</result>
+        </action>
+		
+		<action name="pilotprojSave" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="save">
+            <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="pilotprojCancel" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="cancel">
+            <result name="pilotprojCancel">/admin/pages/components/pilotproject/list.jsp</result>
+        </action>
+		
+			<!-- COMPONENT PILOT PROJECTS ENDS-->
+			
+			
+		<!--- ADMIN-->
+			
+		<action name="adminMenu" class="com.photon.phresco.service.admin.actions.admin.AdminMenu" method="getAdminMenu">
+            <result name="adminMenu">/admin/pages/admin/menu.jsp</result>
+        </action>
+			
+			<!--- ADMIN CUSTOMER STARTS-->
+		<action name="customerList" class="com.photon.phresco.service.admin.actions.admin.CustomerList" method="list">
+			<result name="customerList">/admin/pages/admin/customer/list.jsp</result>
+        </action>
+		
+		<action name="customerAdd" class="com.photon.phresco.service.admin.actions.admin.CustomerList" method="add">
+			<result name="customerAdd">/admin/pages/admin/customer/add.jsp</result>
+        </action>
+		
+		<action name="customerSave" class="com.photon.phresco.service.admin.actions.admin.CustomerList" method="save">
+			<result name="customerList">/admin/pages/admin/customer/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="customerCancel" class="com.photon.phresco.service.admin.actions.admin.CustomerList" method="cancel">
+			<result name="customerCancel">/admin/pages/admin/customer/list.jsp</result>
+        </action>
+			<!--- ADMIN CUSTOMER ENDS-->
+		
+		
+		<action name="userList" class="com.photon.phresco.service.admin.actions.admin.UserList" method="list">
+			<result name="userList">/admin/pages/admin/user/list.jsp</result>
+        </action>
+			
+			<!--- ADMIN ROLE STARTS-->
+		<action name="roleList" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="list">
+			<result name="roleList">/admin/pages/admin/role/list.jsp</result>
+        </action>
+		
+		<action name="roleAdd" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="add">
+			<result name="roleAdd">/admin/pages/admin/role/add.jsp</result>
+        </action>
+		
+		<action name="roleSave" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="save">
+			<result name="roleList">/admin/pages/admin/role/list.jsp</result>
+			<result type="json" />
+        </action>
+
+		<action name="roleCancel" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="cancel">
+			<result name="roleCancel">/admin/pages/admin/role/list.jsp</result>
+        </action>
+		
+		<action name="assignPermission" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="assign">
+			<result name="assignPermission">/admin/pages/admin/role/permission.jsp</result>
+        </action>
+		
+		<action name="permissionSave" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="assignSave">
+			<result name="permissionSave">/admin/pages/admin/role/list.jsp</result>
+        </action>
+		
+		<action name="permissionCancel" class="com.photon.phresco.service.admin.actions.admin.RoleList" method="assignCancel">
+			<result name="permissionCancel">/admin/pages/admin/role/list.jsp</result>
+        </action>
+			<!--- ADMIN ROLE ENDS-->
+			
+			<!-- ADMIN PERMISSION STARTS-->
+		<action name="permissionList" class="com.photon.phresco.service.admin.actions.admin.PermissionList" method="list">
+			<result name="permissionList">/admin/pages/admin/permission/list.jsp</result>
+        </action>
+			<!-- ADMIN PERMISSION ENDS-->
+			
+			<!-- ADMIN GLOBALURL STARTS-->
+		<action name="globalurlList" class="com.photon.phresco.service.admin.actions.admin.GlobalUrlList" method="list">
+			<result name="globalurlList">/admin/pages/admin/globalurl/list.jsp</result>
+        </action>
+		
+		<action name="globalurlAdd" class="com.photon.phresco.service.admin.actions.admin.GlobalUrlList" method="add">
+			<result name="globalurlAdd">/admin/pages/admin/globalurl/add.jsp</result>
+        </action>
+		
+		<action name="globalurlSave" class="com.photon.phresco.service.admin.actions.admin.GlobalUrlList" method="save">
+			<result name="globalurlList">/admin/pages/admin/globalurl/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="globalurlCancel" class="com.photon.phresco.service.admin.actions.admin.GlobalUrlList" method="cancel">
+			<result name="globalurlCancel">/admin/pages/admin/globalurl/list.jsp</result>
+        </action>
+			<!-- ADMIN GLOBALURL ENDS-->
+			
+			<!-- ADMIN DOWNLOAD STARTS-->
+		<action name="downloadList" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="list">
+			<result name="downloadList">/admin/pages/admin/download/list.jsp</result>
+        </action>
+		
+		<action name="downloadAdd" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="add">
+			<result name="downloadAdd">/admin/pages/admin/download/add.jsp</result>
+        </action>
+		
+		<action name="downloadSave" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="save">
+			<result name="downloadList">/admin/pages/admin/download/list.jsp</result>
+			<result type="json" />
+        </action>
+		
+		<action name="downloadCancel" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="cancel">
+			<result name="downloadCancel">/admin/pages/admin/download/list.jsp</result>
+        </action>
+		
+			<!-- ADMIN DOWNLOAD ENDS-->
+    </package>
+</struts>

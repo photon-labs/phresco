@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="com.photon.phresco.model.VideoType" table="video_type">
+  <id name="id" type="string">
+   <meta attribute="use-in-equals">true</meta>
+   <column name="id" length="255"/>
+  </id>
+  <property generated="never" lazy="false" name="type" type="string">
+   <column length="255" name="type"/>
+  </property>
+  <property generated="never" lazy="false" name="url" type="string">
+   <column length="255" name="url"/>
+  </property>
+  <property generated="never" lazy="false" name="codecs" type="string">
+   <column length="255" name="codecs"/>
+  </property>
+ </class>
+ <query name="service.getVideoType">from VideoType</query>
+</hibernate-mapping>

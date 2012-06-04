@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.photon.phresco.repository</groupId>
+  <artifactId>repository</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>tools</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+ 
+   <dependencies>
+		<dependency>
+			<groupId>com.photon.phresco.service.tools</groupId>
+			<artifactId>phresco-service-tools</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-install-plugin</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+    </dependencies>
+  
+
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${project.basedir}/repo/config.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					 <mainClass>com.photon.phresco.service.tools.SetupDataGenerator</mainClass>
+						<arguments>  
+							<argument>${phresco.fileUrl}</argument>  		
+							<argument>${phresco.maven.repository.url}</argument>  				  
+							<argument>${phresco.maven.repository.user.name}</argument>  
+							<argument>${phresco.maven.repository.user.password}</argument>  
+						</arguments> 
+				</configuration>				
+			</plugin>
+		</plugins>
+	</build>
+</project>

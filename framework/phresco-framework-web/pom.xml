@@ -1,0 +1,237 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+     <parent>
+        <groupId>com.photon.phresco.framework</groupId>
+        <artifactId>phresco-framework-root</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+   
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.framework</groupId>
+    <artifactId>phresco-framework-web</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Framework Web Archive</name>
+    <description>Framework Web Archive</description>
+    
+	 <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.framework.web</id>
+            <name>Phresco Framework</name>
+            <url>scp://phresco.org/home/projects/framework/web/public_html/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.photon.phresco.framework</groupId>
+            <artifactId>phresco-framework</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- TODO: To be used only during runtime -->
+        <dependency>
+            <groupId>com.photon.phresco.framework</groupId>
+            <artifactId>phresco-framework-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>com.photon.phresco.pom</groupId>
+            <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>2.2.3.1</version>
+            <exclusions>
+                 <exclusion>
+                    <artifactId>tools</artifactId>
+                    <groupId>com.sun</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+            <groupId>struts</groupId>
+            <artifactId>struts</artifactId>
+            <version>1.2.9</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-tiles-plugin</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-compat</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-core</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-servlet</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.9-ea07</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.9-ea07</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-json-plugin</artifactId>
+            <version>2.2.3.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>quartz-all</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.18</version>
+        </dependency>
+        
+        <dependency>
+           <groupId>org.json</groupId>
+           <artifactId>json</artifactId>
+           <version>20090211</version>
+       </dependency>
+   
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jspc-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jspc</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <injectString>&lt;!-- [INSERT FRAGMENT HERE] --&gt;</injectString>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>target/jspweb.xml</webXml>
+                    <warSourceExcludes>**/*.jsp</warSourceExcludes>
+                </configuration>
+            </plugin> 
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId> 
+                <version>1.1</version>           
+                <configuration>
+                <path>/phresco</path>
+                <server>dev-server</server>
+                <port>2468</port>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.codehaus.mojo
+                                        </groupId>
+                                        <artifactId>
+                                            jspc-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [1.4.6,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>compile</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+</project>

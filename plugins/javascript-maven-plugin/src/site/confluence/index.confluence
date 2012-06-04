@@ -1,0 +1,19 @@
+h1. JavaScript Maven Plugin
+
+The JavaScript Maven Plugin modifies several aspects of a default Maven project to provide a suitable base environment for JavaScript development with no extra configuration required. The extension provides a maven packaging type for JavaScript - 'js' - which provides dependencies, plugins and lifecycle mappings. The default configuration should be suitable for many projects but can be further configured using standard Maven POM configuration if required.
+
+Declaring this plugin as an extension on your JavaScript project and setting the project's packaging type to 'js' gives you:
+* Preconfigured Maven resource directories suitable for a JavaScript project
+* JavaScript dependency management via js-import
+* JavaScript AMD dependency management via js-import and almond.js
+* Automated JavaScript unit testing with QUnit and JS Test Runner
+* Automated JSLint support
+* JavaScript and web resource minification via webminifier
+* Preconfigured Jetty for local application deployment
+* Configured site generation including JavaScript documentation via jsdoc
+* JavaScript aware artifact selection suitable for libraries and applications
+
+h2. More Information
+
+* [Usage|usage] (including a usage example and an example of how to override a provided plugin)
+* [Resources Provided by the Extension|extension-information] (including lifecycle mappings, dependencies and plugins which are provided to projects which use this extension)

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-2.5.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>files/config.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="jdbc:${db.type}://${db.host}:${db.port}/${db.name}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+		p:dataSource-ref="dataSource">
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:hbm/customer.hbm.xml</value>
+				<value>classpath:hbm/application-type.hbm.xml</value>
+				<value>classpath:hbm/technology.hbm.xml</value>
+				<value>classpath:hbm/video-info.hbm.xml</value>
+				<value>classpath:hbm/video-type.hbm.xml</value>
+
+				<value>classpath:hbm/property-info.hbm.xml</value>
+				<value>classpath:hbm/admin-config.hbm.xml</value>
+				<value>classpath:hbm/download-info.hbm.xml</value>
+
+
+			    <!--
+				<value>classpath:hbm/archetype.hbm.xml</value>
+				<value>classpath:hbm/document-types.hbm.xml</value>
+				<value>classpath:hbm/document.hbm.xml</value>
+				<value>classpath:hbm/documents.hbm.xml</value>
+				<value>classpath:hbm/module.hbm.xml</value>
+				<value>classpath:hbm/modules.hbm.xml</value>
+				<value>classpath:hbm/module-group.hbm.xml</value>
+				<value>classpath:hbm/project-info.hbm.xml</value>
+				<value>classpath:hbm/libraries.hbm.xml</value>
+				<value>classpath:hbm/settings.hbm.xml</value>
+			    -->
+
+
+				<!--
+				<value>classpath:hbm/library.hbm.xml</value>
+				<value>classpath:hbm/settings-info.hbm.xml</value>
+				<value>classpath:hbm/module-group.hbm.xml</value>
+				<value>classpath:hbm/modules.hbm.xml</value>
+				<value>classpath:hbm/document-info.hbm.xml</value>
+				//removed from previous entries
+
+				<value>classpath:hbm/module-group.hbm.xml</value>
+				<value>classpath:hbm/modules.hbm.xml</value>
+				<value>classpath:hbm/settings-info.hbm.xml</value>
+				<value>classpath:hbm/admin-config.hbm.xml</value>
+				<value>classpath:hbm/video-info.hbm.xml</value>
+				<value>classpath:hbm/download-info.hbm.xml</value>
+				<value>classpath:hbm/project-info.hbm.xml</value>
+				<value>classpath:hbm/property-template.hbm.xml</value>
+				 -->
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.format_sql=true
+				hibernate.show_sql=false
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+				hibernate.hbm2ddl.auto=update
+      		</value>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory" />
+
+	<bean id="phresco-db-service" class="com.photon.phresco.service.db.DBService"
+		p:sessionFactory-ref="sessionFactory" />
+	<bean id="phresco-admin-db-service" class="com.photon.phresco.service.data.db.AdminDBService"
+		p:sessionFactory-ref="sessionFactory" />
+	<bean id="phresco-component-db-service" class="com.photon.phresco.service.data.db.ComponentDBService"
+		p:sessionFactory-ref="sessionFactory" />
+	<bean id="phresco-dashboard-service" class="com.photon.phresco.service.data.db.DashboardDBService"
+		p:sessionFactory-ref="sessionFactory" />
+
+</beans>

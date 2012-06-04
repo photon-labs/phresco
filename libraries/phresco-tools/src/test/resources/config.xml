@@ -1,0 +1,96 @@
+<environments>
+    <environment name="Dev" default="false">
+        <database name="mydb">
+            <host>localhost</host>
+            <port>8889</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password>root123</password>
+            <dbname>eshop</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table-prefix>eshop_</table-prefix>
+        </database>
+        <database name="oracledb">
+            <host>localhost</host>
+            <port>3306</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password>root123</password>
+            <dbname>eshop</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table-prefix>eshop_</table-prefix>
+        </database>
+        <server name="myserver">
+            <host>172.16.21.191</host>
+            <port>8880</port>
+            <protocol>http</protocol>
+            <context>eshop</context>
+            <username>admin</username>
+            <password>admin</password>
+        </server>
+        <webservice name="mywebservice">
+            <host>172.16.18.174</host>
+            <port>9090</port>
+            <protocol>http</protocol>
+            <context>eshop</context>
+            <username>admin</username>
+            <password>admin</password>
+        </webservice>
+        <email name="myemail">
+            <fullname>Admin</fullname>
+            <email-outgoing>smtp.gmail.com</email-outgoing>
+            <email-id>phresco-admin@photoninfotech.net</email-id>
+            <password>admin</password>
+            <port>465</port>
+            <type>SSL</type>
+        </email>
+    </environment>
+ <environment name="Production" default="true">
+        <database name="mydb">
+            <host>172.16.18.10</host>
+            <port>9999</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password>root123</password>
+            <dbname>eshop</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table-prefix>eshop_</table-prefix>
+        </database>
+        <database name="oracledb">
+            <host>172.16.18.10</host>
+            <port>3306</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password>root123</password>
+            <dbname>eshop</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table-prefix>eshop_</table-prefix>
+        </database>
+        <server name="myserver">
+            <host>localhost</host>
+            <port>9990</port>
+            <protocol>http</protocol>
+            <context>shop</context>
+            <username>admin</username>
+            <password>admin</password>
+        </server>
+        <webservice name="mywebservice">
+            <host>172.16.18.10</host>
+            <port>9090</port>
+            <protocol>http</protocol>
+            <context>eshop</context>
+            <username>admin</username>
+            <password>admin</password>
+        </webservice>
+        <email name="myemail">
+            <fullname>Admin</fullname>
+            <email-outgoing>smtp.gmail.com</email-outgoing>
+            <email-id>phresco-admin@photoninfotech.net</email-id>
+            <password>admin</password>
+            <port>465</port>
+            <type>SSL</type>
+        </email>
+    </environment>
+</environments>
+
+

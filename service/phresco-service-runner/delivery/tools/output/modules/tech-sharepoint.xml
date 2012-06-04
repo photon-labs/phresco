@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="1.0" name="ADUser" id="mod_aduser_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_aduser_1.0/1.0/mod_aduser_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ADUsers provides all the tools needed to create, modify and delete Active Directory user accounts in bulk. With advanced features like importing and attribute search and replace, ADusers simplifies all your daily user management tasks. ADUsers is a solution for administrators tasked with adding or changing information on user objects on a regular basis. No extensive product roll-out or lengthy installation procedure because ADusers is a client only application, which needs no back-end database.
+
+ADUsers can be used in conjunction with ADreporter, and other ADtoolkit Elements. Reports run in ADreporter can be imported into ADusers to modify only those users found in the report.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ADUsers provides all the tools needed to create, modify and delete. Active Directory user accounts in bulk.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="AlertManager" id="mod_alertmanager_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_alertmanager_1.0/1.0/mod_alertmanager_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SharePoint Alert Manager for SharePoint Server 2007 and SharePoint Foundation 2007 infuses SharePoint with the capability to customize and manage your SharePoint alerts with flexibility, power, and ease-of-use you’ve never imagined. Plus, AM[AlertManager] 2007 adds new Reminder functionality. 
+With SharePoint Alert Manager 2007, SharePoint’s out-of-the-box alerting capabilities explode!
+
+SharePoint Alert Manager 2007 is not a web part, but a full-featured SharePoint alerts management and reminder solution!
+Fully integrated into SharePoint’s Central Admin console and Site Settings. No separate program and interface to learn.
+Ability to manage all alerts from one place – across an entire site collection.
+Subscribe other SharePoint users to alerts on any list, document library or document.
+Target alerts to SharePoint groups or domain groups as well as individual users.
+Customize alert templates with images and branding. You have complete control over the look and content of each alert with custom alert templates.  WYSIWYG HTML editor allows you to customize alert templates or the body of any SharePoint alert.
+New “Reminders” feature allows you to set and receive reminders on tasks or events – or any list item in SharePoint with a date and time field.
+
+The robust feature set of our SharePoint Alert Manager product line continues to expand in this new version with new killer functionality like SharePoint Reminders.  No other SharePoint alerts management solution currently on the market contains the wealth of features we place at your fingertips in SharePoint Alert Manager 2007.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>AlertManager is a document which  instruct set of instructions to set up alert messages. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="ApplicationPage" id="mod_applicationpage_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_applicationpage_1.0/1.0/mod_applicationpage_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>An application page is an ASP.NET Web page that is designed for use in a SharePoint Web site. Application pages are a specialized type of ASP.NET page.
+
+1)These pages will be available to all sites of a farm.
+2)They are deployed under &lt;Path name &gt;.
+3)They are available through a virtual directory namely _layout.
+4)These pages are basically for administrative tasks.
+5)By default the page will use the default.master page.
+6)The page is derived from the base class LayoutsPageBase which is derived from Microsoft.SharePoint.WebControls namespace.
+7)Application pages cannot be personalized or customized by the end user because they are defined on the file system.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content> Application page is an ASP.NET Web page that is designed for use in a SharePoint Web site. Application pages are a specialized type of ASP.NET page. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="BDCApplications" id="mod_bdcapplications_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_bdcapplications_1.0/1.0/mod_bdcapplications_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Business Data Catalog (BDC) application definition is the file that defines how SharePoint connects and communicates with Line-of-Business applications, such as SQL Server, WCF web services, etc.
+BDC Meta Man is the first Business Data Catalog tool for all SharePoint Developers and Administrators interested in line of business data integration with SharePoint. Without writing a single line of code you can be viewing and searching across your business data through Microsoft Office SharePoint Server 2007 in minutes.
+Business Data Catalog (BDC) allows to integrate business data from external business applications into SharePoint application. BDC has built-in support for displaying data from such data sources as databases and web services. In other words, if the business application is a database or comprises a web service to emit data, its data can be easily incorporated into SharePoint application. If some business application isn’t database and doesn’t have any proper web services, you always can develop your own web service to provide access to the business application’s data.
+
+Once the external business application has been registered within Business Data Catalog, its data can be used in Business Data Web Parts, Business Data Column, Search, User profile and other custom solutions.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Business Data Catalog (BDC) application definition is the file that defines how SharePoint connects and communicates with Line-of-Business applications, such as SQL Server, WCF web services, etc.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="BlogCreation" id="mod_blogcreation_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_blogcreation_1.0/1.0/mod_blogcreation_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Windows SharePoint Services provides a blog template that makes creating a blog easy. A blog is a site that contains lists and libraries, such as a list of blog posts, a list of other blogs, and a library for photos.
+
+1)Once you create a blog, you can set up categories, and then customize the blog settings.
+2)A blog is a Web site that enables you or your organization to quickly share ideas and information. 
+3)Blogs contain posts that are dated and listed in reverse chronological order. 
+4)People can comment on your posts, as well as provide links to interesting sites, photos, and related blogs.
+
+Blogs posts can be created quickly, and they often have an informal tone or provide a unique perspective. Although blogs are frequently used for commentary on the Internet, they can be used in several ways in a corporate environment.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SharePoint Services provides a blog template that makes creating a blog easy. A blog is a site that contains lists and libraries, such as a list of blog posts, a list of other blogs, and a library for photos.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Branding" id="mod_branding_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_branding_1.0/1.0/mod_branding_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Branding act of building a specific image or identity that people recognize in relation to your company.
+
+Branding for SharePoint:
+-Master Pages, Page Layouts, CSS, Web Parts, XSLT, images, etc.Microsoft SharePoint Server 2007 publishing sites use Publishing Features to provide capabilities to create engaging web content management (WCM) sites. Frequently used as Internet-facing websites, these sites require the use of custom-designed user interfaces (UIs) to establish an online corporate identity. Creating custom-designed UIs, either on a traditional HTML page or in Microsoft SharePoint Server 2007, is known as website branding. Cascading style sheets (.css files) to enable designers and developers to create branded websites with designs that can rival those of many current and popular websites today. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content> Branding is used  mainly  to differentiate web pages based on user selection.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="ChangePasswordWebpart" id="mod_changepasswordwebpart_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_changepasswordwebpart_1.0/1.0/mod_changepasswordwebpart_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ChangePasswordWebpart allow users to change their password. Installs as a feature and utilises STSDev[Security Token Services]  [binary included]
+This web part enables users to change their local or Active Directory password from within a SharePoint Site Collection. It is designed for Windows SharePoint Services v3 and the Microsoft Office SharePoint Server 2007 as well. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ChangePasswordWebpart allow users to change their password.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="Chat" id="mod_chat_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_chat_1.0/1.0/mod_chat_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Chat is a jQuery plugin for SharePoint 2007 that places a chat application onto a SharePoint webpart page. The plugin uses jquery to add messages to a list and display them in real-time on a list-view web part. It’s simple to install and customize.
+
+It was always a nice to have for our extranet environment to have a webpart available within SharePoint to let users change their password instead of using an isolated .NET web application SharePoint Chat is also assembly-free. This means you don't have to install anything on your SharePoint server. It is a 100 percent jQuery/Javascript solution that can be implemented into a Content Editor Web Part.
+It brings integrated, web-based chat to SharePoint 2007.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Chat is a jQuery plugin that places a chat application onto a SharePoint webpart page. The plugin uses jquery to add messages to a list and display them in real-time on a list-view web part. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="CustomList" id="mod_customlist_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_customlist_1.0/1.0/mod_customlist_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Custom list is a  configuration document which insrtuct  how to create custom list. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>CustomList  is a configuration document which insrtuct  how to create custom list. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="CustomWebpart" id="mod_customwebpart_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_customwebpart_1.0/1.0/mod_customwebpart_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>CustomWebpart is user defined web part which defines in customized way as per user needs.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>CustomWebpart is user defined web part which defines in customized way as per user needs.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Dashboard" id="mod_dashboard_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_dashboard_1.0/1.0/mod_dashboard_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dashboard is a hub were we have collective information in simplyfied manner which helps user to access information easily.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Dashboard is a hub were we have collective information in simplyfied manner which helps user to access information easily.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="DocumentUploader" id="mod_documentuploader_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_documentuploader_1.0/1.0/mod_documentuploader_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>DocumentUploader control the upload events after upload my document. It can be used by the customer a easy and fast way to send documents to the document library, and give the opportunity to choose where want to go after upload.
+
+1) The name of the Document Library
+2) The page you want to redirect, after you upload file or if you want to cancel.
+
+This has the capability to upload Documents to every Web site and sub sites where the user have permissions.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>DocumentUploader has capability to upload Documents to every Web site and sub sites where the user have permissions</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="ErrorReporting" id="mod_errorreporting_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_errorreporting_1.0/1.0/mod_errorreporting_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ErrorReporting  is a configuration which makes the users to understand the error from system formate to user understandable formate.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ErrorReporting is a configuration which makes the users to understand the error from system formate to user understandable formate.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="EventReceiver" id="mod_eventreceiver_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_eventreceiver_1.0/1.0/mod_eventreceiver_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Event Receiver Manager tool draws upon the needs I've had as a SharePoint developer and the ideas of several other tools that just covered part of what I needed them to do but just didn't go quite far enough to make the easy to use and painless.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Event Receiver Manager tool draws upon the needs of the developer to add events driven implementation.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="FBAAuthentication" id="mod_fbaauthentication_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_fbaauthentication_1.0/1.0/mod_fbaauthentication_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>FBA Authentication is a  document to provide the step by step information about enabling the Form Based  Authentication(FBA). Generally sites uses windows authentication by default. But some business needs form based authentication to fulfill the requirements. 
+Below section explains to enable Form Based Authentication for MOSS [Microsoft Office Sharepoint Server] 2007 site. 
+
+
+     
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>FBA Authentication is a document to provide the step by step information about enabling the Form Based  Authentication(FBA). Generally sites uses windows authentication by default. But some business needs form based authentication to fulfill the requirements. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.3" name="FusionCharts" id="mod_fusioncharts_1.3">
+        <contentURL>/modules/tech-sharepoint/files/mod_fusioncharts_1.3/1.3/mod_fusioncharts_1.3-1.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Fusion Charts Free for SharePoint (FCFS) provides a set of 22 different charts (2D &amp; 3D) that integrates easily into your SharePoint environment (WSS 3.0 / MOSS[Microsoft Office Sharepoint Server] 2007 / Sharepoint Foundation 2007 / Sharepoint Server 2007).
+
+FCFS provides you a powerful way to display very nice looking charts into SharePoint with minimum effort.
+
+Main Features 
+1)Very nice looking charts (see below) 
+2) one WebPart to display directly charts from SharePoint Lists (no coding) 
+3) one WebPart to display charts from XML input (very flexible) 
+4)Can export data to CSV or XML 
+5)Easy installation and deployment 
+6)Compatible with Sharepoint Foundation 2007 &amp; Sharepoint Server 2007 (manual deployment, see 2.0 release)</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Fusion Charts Free for SharePoint (FCFS) provides a set of 22 different charts (2D &amp; 3D) that integrates easily into your SharePoint environment (WSS 3.0 / MOSS [Microsoft Office SharePoint Services] 2007 / Sharepoint Foundation 2007 / Sharepoint Server 2007).</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="GoogleMap" id="mod_googlemap_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_googlemap_1.0/1.0/mod_googlemap_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Google Map Sharepoint solution allow user to add a &quot;google map&quot; custom field on a contact list displaying contact's address in a map.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>GoogleMap Sharepoint solution allow user to add a &quot;google map&quot; custom field on a contact list displaying contact's address in a map.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.5" name="ImportSpreadsheet" id="mod_importspreadsheet_1.5">
+        <contentURL>/modules/tech-sharepoint/files/mod_importspreadsheet_1.5/1.5/mod_importspreadsheet_1.5-1.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ImportSpreadsheet feature used to create custom list from a spreadsheet and import that data to an existing SharePoint list. This feature developed in C# .Net and easy to install.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ImportSpread sheet feature used to create custom list from a spreadsheet and import that data to an existing SP list. This feature developed in C# .Net and easy to install.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="JqueryIntegration" id="mod_jqueryintegration_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_jqueryintegration_1.0/1.0/mod_jqueryintegration_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>JqueryIntegration is a jQuery library which abstracts SharePoint's Web Services and makes them easier to use. It also includes functions which use the various Web Service operations to provide more useful capabilities. It works entirely client side and requires no server install.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>jqueryIntegration feature used to create custom list from a spreadsheet and import that data to an existing SP list. This feature developed in C# .Net and easy to install.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="ListDefinition" id="mod_listdefinition_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_listdefinition_1.0/1.0/mod_listdefinition_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ListDefinition in a Web site based on Microsoft Windows SharePoint Services is a collection of information that you share with team members. For example, we can create a sign-up sheet for an event, or we can create a tasks that we need to track.
+
+We can use the lists that come with our site as is, we can change or delete lists that we don't use, and we can create our own lists. Windows SharePoint Services has templates for links, announcements, contacts, events, tasks, and issues lists. When we create our own lists, we can base them on the designs used for the built-in lists, or we can create custom lists from scratch. 
+
+If we have a Windows SharePoint Services-compatible program such as Microsoft Office Excel 2003 and Microsoft Internet Explorer 5 or later installed, we can create lists that are based on spreadsheets.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ListDefinition is a document which  instruct set of instructions to create a Custom List.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="Log4Net" id="mod_log4net_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_log4net_1.0/1.0/mod_log4net_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Log4Net is used for error handling .Demostrate the logging system into the sharepoint error handling using log4net. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Log4Net is used for error handling .Demostrate the logging system into the sharepoint error handling using log4net. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="MasterPage" id="mod_masterpage_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_masterpage_1.0/1.0/mod_masterpage_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Master pages provide the look and feel for all of the pages in the site.Using master pages we can create a single page template and use it as the basis for multiple pages. Master pages allow us to apply our own personalize style and layout to our SharePoint site, and work with all Application Templates, allowing us to create more advanced customizations.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content> Master pages of SharePoint utilizes features from ASP.NET 2.0. They provide the ability to lay out the framework of a rendered page separate from the page containing the content. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="MediaPlayer" id="mod_mediaplayer_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_mediaplayer_1.0/1.0/mod_mediaplayer_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Media Player Rotator Web Part either selects a random media file, a specific media file or a media playlist from the specified Sharepoint Picture or Document Library. The Microsoft Media Player plug-in is used to play back the media files.
+Supported file formats are MP3, SWF (Flash), FLV/F4V (Flash Video), PDF, AVI, WMV, MP4, MPG, MPEG, YouTube, ASX, RTMP (Streaming Media), MOV and M4V (QuickTime) 
+
+The Web Part can also be used to display a single static movie by specifying a filename in the &quot;Media File Name&quot; parameter field.
+
+1)The Web Part also allows to play back YouTube videos.
+2)The Web Part can be used both with Windows Sharepoint Services V3 and MOSS[Microsoft Office SharePoint Server]
+
+The following parameters can be configured:
+
+1)Sharepoint Library containing the media file(s)
+2)single movie/movie rotation mode
+3)Media Player dimensions
+4)Display of Title and Description information taken from the Sharepoint Library
+5)Display of a Playlist for manual selection of the media files to be played back
+6)Web Part Connection to a Sharepoint List or Library </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Media Player Rotator Web Part either selects a random media file, a specific media file or a media playlist from the specified Sharepoint Picture or Document Library.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="PopupWebPart" id="mod_popupwebpart_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_popupwebpart_1.0/1.0/mod_popupwebpart_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Popup web part allows to create a popup div that might include links to hide it from display in future. The preferences are stored using jQuery, a custom web service, and a list template.
+
+This is a pretty simple SharePoint 2007 project that can be used to display a popup div at any location on a web part page. It is made up of six parts:
+1)An HTML and CSS file to define the contents and design of your popup div
+2)A couple of JavaScript files to define the behaviour of the div
+3)A web part that renders out the required code to reference the CSS and JavaScript files, and also render out the contents of the HTML file (contained in a Site Collection feature)
+4)A list template that provides a basic template to store user preferences associated to the popup div (also contained in a Site Collection feature) - e.g. if the user doesn't want to see the popup again, that preference can be stored in this list
+5)The jQuery 1.6.1 library.
+6)A web service that enables updating of the user preference via SOAP calls made easy with jQuery (deployed to the /_layouts/ folder)</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Pop upWeb Part allows you to create a popup div that might include links to hide it from display in future. The preferences are stored using jQuery, a custom web service, and a list template.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.1" name="ProgressBar" id="mod_progressbar_1.1">
+        <contentURL>/modules/tech-sharepoint/files/mod_progressbar_1.1/1.1/mod_progressbar_1.1-1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Progress bar is a field column for different type lists such as Custom List, Document Library, Issue Tracking, not only for Issue Tracking type list.
+This control is display progress in the field in percent (0-100%). 
+
+Following are the features of the Progress Bar:
+1)Display progress (0-100%)
+2)Simple in use
+3)Simple installation
+4)Use tooltip
+5)Orientation
+      (i)  Horizontal
+      (ii) Vertical
+6)Change fill color</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Progress bar features provides a custom column field which provides a graphical representation of the progress data (0-100%) entered.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.1" name="RegularExpression" id="mod_regularexpression_1.1">
+        <contentURL>/modules/tech-sharepoint/files/mod_regularexpression_1.1/1.1/mod_regularexpression_1.1-1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Regular expression project is a custom field for SharePoint 2007 platform including Windows SharePoint Services 3.0 (WSS) and Microsoft Office SharePoint Server 2007 (MOSS). This custom field is a regular expression validator. When you create a new Regular expression field, you have to provide a Regular expression and a custom error message. When a user tries to create/edit this field, this custom field checks if the value matches the regular expression.
+
+This custom field will be deployed within a feature and a solution package (.wsp).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Regular Expression feature provides a custom field to valid input data using regular expression. This features helps in validating data like email id, telephone no, mobile no, alphanumeric data, etc. based on the regular expression input provided.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="RESTBasedWebservice" id="mod_restbasedwebservice_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_restbasedwebservice_1.0/1.0/mod_restbasedwebservice_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The REST based web service API for SharePoint is designed to give developers an alternative method to access the data that stored inside of SharePoint</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The REST based web service API for SharePoint is designed to give developers an alternative method to access the data that stored inside of SharePoint</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="SearchConfiguration" id="mod_searchconfiguration_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_searchconfiguration_1.0/1.0/mod_searchconfiguration_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Search configuration function offers a new and improved solution for filtering data when trying to find a particular item and excluding some irrelevant information. The advance search button gives a wide variety of choices for finding out documents by using keywords, exact phrase, and managed properties. It also has an amazing feature that provides searchable choices from other languages like French, German, Japanese and Spanish. It is possible to refine searches according to result type formats like powerpoint, excel, word and the combination of all.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Search configuration function offers a new and improved solution for filtering data when trying to find a particular item and excluding some irrelevant information.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="TreeViewDocLib" id="mod_treeviewdoclib_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_treeviewdoclib_1.0/1.0/mod_treeviewdoclib_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The document libraries are one of the most popular features of SharePoint. Many companies have implemented their archives and Windows file sharing in document libraries. One useful view of directories and files in a document library is the treeview. If we show other useful information like size and number of files in each directory, it will be more useful for the users.
+
+In this, we will implement a treeview Web Part for the document library. Our intended features of this Web Part are:
+
+1)The tree view will show all files and folders of a document library.
+2)The size and number of files in each directory will be shown for users as a tool tip of each directory.
+3)User can select and change his target document library in an easy and graphical view.
+4)The files and directories will be sorted based on their name.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Tree view will show all files and folders of a document library.The size and number of files in each directory will be shown for users as a tool tip of each directory.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="SilverlightHosting" id="mod_silverlighthosting_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_silverlighthosting_1.0/1.0/mod_silverlighthosting_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SharePoint and Silverlight when combined together provide a powerful platform for building Rich Internet Applications. The Generic Silverlight WebPart was inspired by the need to avoid going back to the SharePoint administrator and asking for a new webpart to be deployed each time you wanted to host some silverlight content. The focus was also on improving the user experience while editing the initialization parameters. A custom popup dialog has been provided to where an user can edit a comma separated string to specify the initializaiton parameters. Additionally, there is also a popup dialog that renders a Silverlight user interface to let the user edit the initialization parameters in a Grid like interface.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SharePoint and Silverlight when combined together provide a powerful platform for building Rich Internet Applications. This provide an integrated Silverlight web part that can be activated as &quot;Features&quot; on SharePoint 2007.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="SiteDefinition" id="mod_sitedefinition_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_sitedefinition_1.0/1.0/mod_sitedefinition_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>1)Site Definitions are the foundations on which all sites and user templates are built. 
+2)Site Definition is collection ox XML and .aspx file.
+3)Site Definitions are predefined components needs to be included when a site was created in SharePoint server.
+4)Site Definition contains information of Web Part , Lists, Features and navigation bars to be included in the site.
+5)Customizing Portal Sites and other SharePoint sites using Site Definition is most appropriate for third party developer and SharePoint Administrator.
+6)Site Definitions requires access to a file system of the Web Server.
+7)Server administrator must be also involved in deployment of Site Definitions. 
+8)Custom Site Definitions are Version and Upgrade independent. 
+9)Subsequent upgrades to SharePoint products  and technologies may overwrite  existing Site Definitions. Using Custom Site definition exclude site from potential upgrade issues. 
+To avoid Unghosting  , Custom Site Definition is to be create.
+
+Two options to create:-
+
+1)Create New Site Definition File : Either Start from Scratch and create files one by one  or Copy an existing Site Definition and modify it.
+
+2)Copy a Site Definition and change it in Visual Studio:   We can make copy an existing site definition and modify it in visual studio to create new site definition.
+
+The configuration of this site definitions are defined in XML file which is available in 
+C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\TEMPLATE\1033\XML folder.
+
+In the file system these definitions are available in C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\TEMPLATE\Site Templates.
+
+Each of these site definitions consists a XML folder and a Home page (default.aspx).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Site Definitions are the foundations on which all sites and user templates are built. Site Definition is collection ox XML and .aspx file. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0" name="SkypeStatus" id="mod_skypestatus_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_skypestatus_1.0/1.0/mod_skypestatus_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>SkypeStatus allows to create a column that shows the current Skype status of the entered account name. Great for extending the presence information.Possibility to configure the field to display small skype status icon possibility to decide the behaviour after clicking on the status (chat, call, account information etc).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>SkypeStatus allows to create a column that shows the current Skype status of the entered account name. Great for extending the presence information. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="SoapBasedWebService" id="mod_soapbasedwebservice_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_soapbasedwebservice_1.0/1.0/mod_soapbasedwebservice_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Soap based web service is a software designed to support interoperable program-to-program interactions over a network. In the context of Microsoft SharePoint Designer 2007, a Web service is a service that returns XML data in response to remote procedure call–type queries. With SharePoint Designer 2007, you can interact with existing Web services by including an XML Web Service data source control on your Web pages. Typically you do this by configuring an XML Web Service as a data source and then by creating Data Views of that data,
+Web services are used in a range of application-integration and data-sharing scenarios because they provide interoperability between software components that can reside on different platforms or in different companies. A Web service performs a specific task, in which information is requested by the client computer and returned by the Web service in the form of XML. Some common examples of XML Web services are currency converters, mortgage calculators, and stock quote reports.
+
+XML Web services are made possible by SOAP, a standards-based protocol that is used for exchanging information in XML format over a computer network. Each Web service includes a Web Service Description Language (WSDL) file that contains information about the XML Web service and its capabilities. Web service providers can register their Web services by using Universal Description Discovery and Integration (UDDI), a specification for publishing and locating information about Web services. Interested users can search the UDDI registry for Web services that they might find helpful. After a Web service is added to a Web site, the information about that Web service is displayed by using Hypertext Transfer Protocol (HTTP).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Soap based web service is to help administrator and maintain your SharePoint site, you want to create a Data View that displays the names and URLs of all subsites in the current site collection. By connecting to the SOAP Web service in SharePoint Foundation 2007 and using it as a data source, you can quickly retrieve this data and create a view of it.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="1.0.2" name="TagCloud" id="mod_tagcloud_1.0.2">
+        <contentURL>/modules/tech-sharepoint/files/mod_tagcloud_1.0.2/1.0.2/mod_tagcloud_1.0.2-1.0.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Tag cloud is merely a collection of terms, typically used as &quot;tags&quot; or &quot;keywords&quot;.  These terms are represented graphically.  Font sizes are increased for popular tags and decreased for less popular tags.  A tag cloud is a &quot;heat map&quot; for keywords, enabling users at a glance to scan a list of terms. Here's the classic example from Flicker:This tag cloud represents the all time most popular tags associated with photos uploaded to Flicker.  From this simple display, you can imply statements like &quot;wedding photos are more popular pictures.
+    
+Tag clouds are good for discovery in an unbounded set of results. The primary point here is that tag clouds are a great way to depict a large and unpredictable set of tags, terms and topics. However tag clouds are much less suitable when your universe of possible tags is small or finite. If you're dealing with just 10-20 possible tags, do your users a favour and stick with a frequency distribution, histogram or ranked list of categories.
+    
+Tag clouds should almost always be used as supporting or redundant navigation. Whenever possible I would recommend providing users with a logical, hierarchical browsing structure first, and adding a tag cloud to increase discovery second.  This tag clouds makes a great addition to SharePoint. SharePoint is great at providing highly structured vertical pathing to resources. Adding tag clouds to SharePoint increases discoverability and helps address the chronic problem of finding all of the useful content that gets neatly filed away in your portal.
+    
+Tag clouds work best on highly dynamic data sets. Tag clouds are most interesting when they change regularly. AJAX enabled tag cloud that updates on the fly would be incredibly great.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Tag cloud is merely a collection of terms, typically used as &quot;tags&quot; or &quot;keywords&quot;.  These terms are represented graphically.  Font sizes are increased for popular tags and decreased for less popular tags.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="TimerJob" id="mod_timerjob_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_timerjob_1.0/1.0/mod_timerjob_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Timer jobs are a great feature of SharePoint to use when you need to perform background execution at regular or specific times or when you need to execute code on all or selected servers in the farm.
+
+The Variations feature uses specific SharePoint timer jobs to perform tasks such as creating and propagating sites and pages. The Variation Timer jobs are bound to each web application which contain a site collection which has the publishing feature enabled.
+
+You can change the Schedule for each job on the Job Definitions page on the Central Administration Web site. The following timer jobs are used to with Variations:
+1)The solution provides a simple mechanism for modifying the timer jobs deployed within SharePoint, without needing to redeploy them. 
+2)This timer job is responsible to create the variation hierarchy of unspawned labels by creating peers in the new label of sites and pages in the source variation label. By default, this timer job runs once a day.
+3)This timer job creates peer sites when the Automatic Creation option has been disabled and a user manually creates a new variation site using Site Manager. By default, this timer job runs every 5 minutes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Timer jobs are a great feature of SharePoint to use when you need to perform background execution at regular or specific times or when you need to execute code on all or selected servers in the farm.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="UserControl" id="mod_usercontrol_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_usercontrol_1.0/1.0/mod_usercontrol_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>User control is a control that is associated with a .ASCX extension and was originally intended for a developer to re-use within a single project.  ASP.NET developers know it is really easy to create a new user control, drag and drop some controls onto a visual designer, put some logic in the control’s code-behind, and re-use the control within a single project.  This is because the .ASCX file associated with the control enables you to create markup for your control:
+Because you can add markup for your control, you get the nice WYSIWYG designers for your control.  This allows you to drag items from the toolbox, such as a button, a label, and a text box.  
+Another nice feature of user controls is that you can quickly add event handlers for your control.  For instance, I double-click the button to add some code-behind, and Visual Studio pops up the code editor to allow me to add some code.
+Notice that our code-behind derives from System.Web.UI.UserControl.  For existing ASP.NET developers, you will be happy to see that it’s the same old UserControl class that’s been there since ASP.NET was introduced.  By using the .ASCX, Visual Studio 2007 provides the same WYSIWYG, drag-and-drop features that you have with ASP.NET development.  In your SharePoint 2007 project, add a new User Control to your project, add the markup to the .ASCX file, and put some code in the code-behind. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>User control is a control that is associated with a .ASCX extension and was originally intended for a developer to re-use within a single project.  ASP.NET developers know it is really easy to create a new user control, drag and drop some controls onto a visual designer, put some logic in the control’s code-behind, and re-use the control within a single project. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="UserProfiles" id="mod_userprofiles_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_userprofiles_1.0/1.0/mod_userprofiles_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>User profiles enable you to search for and connect with people within your organization. User profile information is also used to generate a personal site in the portal for individual users. Users can personalize their view of this site, called My Site. In addition, user profile information is used by index and search services to provide better search results, and is used in targeting content to audiences. You can import user profile information directly from Microsoft Active Directory directory service or enter it manually. You can also customize the properties of the user profile according to the needs of your organization or to map to Active Directory properties.
+
+The personal view contains private information that is viewable only by you and portal users with the Manage Profiles right.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>User profiles enable you to search for and connect with people within your organization. User profile information is also used to generate a personal site in the portal for individual users.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Weather Web Part " id="mod_weather_web_part__1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_weather_web_part__1.0/1.0/mod_weather_web_part__1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Weather Web Part displays the current weather plus a forecast for the next two days as provided by the Yahoo Weather RSS feed.
+The Web Part can be used with Windows Sharepoint Services V3, MOSS [Microsoft Office SharePoint Services] and Sharepoint 2010. 
+The RSS feed is automatically cached by Sharepoint for 1 hour to avoid unnecessary network traffic.
+Since the web part connects to an external RSS feed, it needs to be deployed to the Global Assemby Cache (GAC) for security reasons.
+
+Parameters configuration:
+
+1)Locations: Multiple location can be specified (including international locations)
+2)Temperature Units (Fahrenheit or Celsius)
+3) Display of Humidity and Wind Speed
+4)Custom CSS styles</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Weather Web Part displays the current weather plus a forecast for the next two days as provided by the Yahoo Weather RSS feed. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="WikiCreation" id="mod_wikicreation_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_wikicreation_1.0/1.0/mod_wikicreation_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Wiki creation is a site that is designed for groups of people to quickly capture and share ideas by creating simple pages and linking them together. After someone creates a page, another team member can add more content, edit the content, or add supporting links. The community of authors helps to ensure the accuracy and relevance of the content. Wikis continue to evolve as people add and revise information.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Wiki creation is a site that is designed for groups of people to quickly capture and share ideas by creating simple pages and linking them together.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="XMLtoList" id="mod_xmltolist_1.0">
+        <contentURL>/modules/tech-sharepoint/files/mod_xmltolist_1.0/1.0/mod_xmltolist_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>XMLto list  feature creates a list definition based on the list structure defined in the XML file. On feature activation a custom list  definition template  is added to the List template gallery using which the Custom list can be created.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>XML to list  feature used to create list definition based on the XML defined.</content>
+            </document>
+        </documents>
+    </module>
+</modules>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<appservers xmlns="http://www.example.org/Phresco">
+    <appserver id="appserver-Drupal-Apache" version="3.0">
+        <name>Apache</name>
+    </appserver>
+    <appserver id="appserver-Drupal-Xamp" version="3.0">
+        <name>Xamp</name>
+    </appserver>
+    <appserver id="appserver-Drupal-Wamp" version="3.0">
+        <name>Wamp</name>
+    </appserver>
+</appservers>

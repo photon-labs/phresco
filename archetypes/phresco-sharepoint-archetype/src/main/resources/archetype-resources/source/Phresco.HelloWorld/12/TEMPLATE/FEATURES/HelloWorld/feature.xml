@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature  Id="fa83c953-655c-4b95-aedf-203779786bf4"
+          Title="HelloWorld"
+          Description="Description for HelloWorld"
+          Version="12.0.0.0"
+          Hidden="FALSE"
+          Scope="Site"
+          DefaultResourceFile="core"
+          xmlns="http://schemas.microsoft.com/sharepoint/">
+  <ElementManifests>
+    <ElementManifest Location="elements.xml"/>
+    <ElementFile Location="HelloWorld.webpart" />
+  </ElementManifests>
+</Feature>

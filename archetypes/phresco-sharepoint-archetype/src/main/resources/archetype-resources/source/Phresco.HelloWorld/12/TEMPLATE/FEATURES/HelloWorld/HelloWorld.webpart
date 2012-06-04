@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Phresco.HelloWorld.HelloWorld, Phresco.HelloWorld, Version=1.0.0.0, Culture=neutral, PublicKeyToken=954a3c258ac652b4" />
+      <importErrorMessage>Cannot import HelloWorld Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">HelloWorld</property>
+        <property name="Description" type="string">Description for HelloWorld</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

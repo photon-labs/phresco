@@ -1,0 +1,15 @@
+1. Unzip the phresco-framework-<version>.zip to /Users/demouser/phresco
+
+2. Set PHRESCO_HOME to /Users/demouser/phresco/phresco-framework
+	
+		export PHRESCO_HOME=/Users/demouser/phresco/phresco-framework
+
+3. If you have installed maven on your machine copy the mirrors and profiles section from <PHRESCO_HOME>/tools/maven/conf/settings.xml to your maven/conf/settings.xml. You can also replace the maven/conf/settings.xml with <PHRESCO_HOME>/tools/maven/conf/settings.xml.
+
+4. If you don't have maven installed,
+	a) Add <PHRESCO_HOME>/tools/maven/bin to the path using export command
+			export PATH=${PHRESCO_HOME}/tools/maven/bin:${PATH}
+	b) Provide execute permission for the mvn executable under ${PHRESCO_HOME}/tools/maven/bin/mvn
+			chmod +x ${PHRESCO_HOME}/tools/maven/bin/mvn
+5. start the framework by running the start-framework-server.sh in ${PHRESCO_HOME}/bin
+	sh start-framework-server.sh

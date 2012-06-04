@@ -1,0 +1,14 @@
+TODOs
+-----
+
+1. Provide SDK version (typeable combo box) DONE
+2. Provide configuration (Release, Debug.. typeable combo box) DONE
+3. Plist edit (configuration from UI) DONE
+4. Deployment of APP into iphone simulator DONE
+5. deployment in iPhone device. 
+6. run simulation (DONE)
+7. launch instrumentation
+8. extract results.
+9. Support for iphone SDK 4.3 and 4.0 DONE
+10. Integrate OCUnit tests 
+11. Configure schema based build 

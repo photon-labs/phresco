@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.photon.phresco.framework</groupId>
+	<artifactId>PhrescoServicekRuntime</artifactId>
+	<packaging>pom</packaging>
+	<!-- <version>1.0.2.0.0-SNAPSHOT</version> -->
+	<version>1.0-SNAPSHOT</version>
+	<name>Phresco Service Web Application</name>
+
+    <properties>
+		<phresco.service.version>${project.version}</phresco.service.version>
+		<!-- Enable the following if you want to test against snapshots. 
+		Also uncomment the dev-snapshots repository in the repositories section -->
+		<!--  <phresco.framework.version>${project.version}-SNAPSHOT</phresco.framework.version>  -->
+		<tomcat.download.url>http://172.16.18.86:8080/nexus/content/repositories/phresco-auto/binaries/apache-tomcat/7.0.21/apache-tomcat-7.0.21.zip</tomcat.download.url>
+    </properties>
+
+	<dependencies>
+	  <dependency>
+		<groupId>com.photon.phresco.service</groupId>
+		<artifactId>phresco-service-web</artifactId>
+		<version>${phresco.service.version}</version>
+		<type>war</type>
+	  </dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.1.3</version>
+				<configuration>
+				<container>
+					<containerId>tomcat7x</containerId>
+					<zipUrlInstaller>
+						<url>${tomcat.download.url}</url>					
+						<downloadDir>target/tools/</downloadDir>
+						<extractDir>target/tools/tomcat</extractDir>
+					</zipUrlInstaller>
+				</container>
+				<configuration>
+					<properties>
+						<cargo.servlet.port>3030</cargo.servlet.port>
+					</properties>
+					<deployables>
+					  <deployable>
+						<groupId>com.photon.phresco.service</groupId>
+						<artifactId>phresco-service-web</artifactId>
+						<type>war</type>
+						<properties>
+						  <context>service</context>
+						</properties>
+					  </deployable>
+					</deployables>
+				  </configuration>
+				</configuration>
+			</plugin>
+		  
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>  
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.photon.phresco.service.tools.RepositoryServerInitializer</mainClass>
+					<arguments>
+						<argument>haihai</argument>
+                    </arguments>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+			<id>phresco-dev</id>
+			<url>http://172.16.18.86:8080/nexus/content/repositories/phresco-dev/</url>			
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		
+		<!-- Enable this if you want to test against the dev snapshots -->
+		<!--
+		<repository>
+			<id>dev-snapshots</id>
+			<url>http://172.16.18.86:9090/nexus/content/repositories/dev-snapshots/</url>
+		</repository>
+		-->
+		
+		<!-- Enable this if you want to test against the dev builds -->
+		<!--
+		<repository>
+			<id>dev-releases</id>
+			<url>http://172.16.18.86:9090/nexus/content/repositories/dev-releases/</url>
+		</repository>
+		-->
+		
+		<!-- Enable this if you want to test against the staging builds -->
+		<!--
+		<repository>
+			<id>staging</id>
+			<url>http://172.16.18.86:9090/nexus/content/repositories/staging/</url>
+		</repository>
+		-->
+		
+		<!-- Enable this if you want to test against the releases -->
+		<!--
+		<repository>
+			<id>releases</id>
+			<url>http://172.16.18.86:9090/nexus/content/repositories/releases/</url>
+		</repository>
+		-->		
+	</repositories>
+
+</project>

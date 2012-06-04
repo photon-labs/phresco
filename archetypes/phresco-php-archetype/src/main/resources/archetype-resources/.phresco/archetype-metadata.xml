@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<archetype-descriptor name="php"> 
+	<fileSets> 
+	    <fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/public_html</directory> 
+			<includes> 
+				<include>index.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source</directory> 
+			<includes> 
+				<include>index.php</include> 
+				<include>config.php</include> 
+				<include>path.php</include> 
+				<include>db2.php</include> 
+				<include>mysql.php</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/config</directory> 
+			<includes> 
+				<include>phresco-env-config.xml</include> 
+				<include>config.php</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mysql/5.5.1</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/public_html/css</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/public_html/images</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/public_html/js</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>source/resources/library</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>source/resources/templates</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		
+		<fileSet filtered="false"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include>
+				<include>precondition.ini</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/src/main/php/phresco/tests</directory> 
+			<includes> 
+				<include>basescreen.php</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/src/site/doxygen</directory> 
+			<includes> 
+				<include>doxygen.config</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/src/site/phpdoc</directory> 
+			<includes> 
+				<include>phpdoc.config</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/src/test/php/phresco</directory> 
+			<includes> 
+				<include>AllTest.php</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/src/test/php/phresco/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.xml</include>
+				<include>Homepage.php</include>
+				<include>PhpCommonFun.php</include>
+				<include>UserModules.php</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/functional/testcases</directory> 
+			<includes> 
+				<include>PHTN_Phresco_PHP_TestCases_ExecutionReport.xls</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/load</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/load/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/server</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/server/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/database</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/database/tests</directory> 
+			<includes> 
+				<include>add.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+				<include>registerDetails.csv</include>
+				<include>topics.csv</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit</directory> 
+			<includes> 
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit/src/main/php/phresco/tests</directory> 
+			<includes> 
+				<include>basescreen.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit/src/site/doxygen</directory> 
+			<includes> 
+				<include>doxygen.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit/src/site/phpdoc</directory> 
+			<includes> 
+				<include>phpdoc.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit/src/test/php/phresco</directory> 
+			<includes> 
+				<include>AllTest.php</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/unit/src/test/php/phresco/tests</directory> 
+			<includes> 
+				<include>Home.php</include>
+			</includes> 
+		</fileSet>
+	</fileSets> 
+</archetype-descriptor> 

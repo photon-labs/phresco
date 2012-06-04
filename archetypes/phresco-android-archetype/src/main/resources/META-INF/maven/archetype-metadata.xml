@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="android">
+	<fileSets> 
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source</directory> 
+			<includes>
+				<include>AndroidManifest.xml</include>
+				<include>project.properties</include>
+				<include>proguard.cfg</include>
+				<include>default.properties</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/assets</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/libs</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/res/drawable-hdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/res/drawable-ldpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/res/drawable-mdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/res/layout</directory> 
+			<includes>
+				<include>main.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/res/values</directory> 
+			<includes>
+				<include>strings.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/com/photon/phresco/nativeapp/activity</directory> 
+			<includes>
+				<include>MainActivity.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/com/photon/phresco/nativeapp/config</directory> 
+			<includes>
+				<include>ConfigReader.java</include>
+				<include>Configuration.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional</directory> 
+			<includes>
+				<include>AndroidManifest.xml</include>
+				<include>proguard.cfg</include>
+				<include>project.properties</include>
+				<include>default.properties</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/assets</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/com/photon/phresco/nativeapp/functional/test/testcases</directory> 
+			<includes>
+				<include>MainActivityTest.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/drawable-hdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/drawable-ldpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/drawable-mdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/layout</directory> 
+			<includes>
+				<include>main.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/values</directory> 
+			<includes>
+				<include>strings.xml</include>
+			</includes>
+		</fileSet>
+		
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit</directory> 
+			<includes>
+				<include>AndroidManifest.xml</include>
+				<include>proguard.cfg</include>
+				<include>project.properties</include>
+				<include>default.properties</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/assets</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/com/photon/phresco/nativeapp/unit/test/testcases</directory> 
+			<includes>
+				<include>A_MainActivityTest.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/src/com/photon/phresco/nativeapp/unit/test</directory> 
+			<includes>
+				<include>AllTests.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/res/drawable-hdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/res/drawable-ldpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/res/drawable-mdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/res/layout</directory> 
+			<includes>
+				<include>main.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/res/values</directory> 
+			<includes>
+				<include>strings.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/load</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance</directory> 
+			<includes>
+				<include>AndroidManifest.xml</include>
+				<include>project.properties</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/assets</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/libs</directory> 
+			<includes>
+				<include>robotium-solo-3.0.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/res/drawable-hdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/res/drawable-ldpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/res/drawable-mdpi</directory> 
+			<includes>
+				<include>icon.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/res/layout</directory> 
+			<includes>
+				<include>main.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/res/values</directory> 
+			<includes>
+				<include>strings.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/src/com/photon/phresco/nativeapp/performance/test/testcases</directory> 
+			<includes>
+				<include>MainActivityTest.java</include>
+				<include>MainActivityVerificationTest.java</include>
+				<include>TestException.java</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

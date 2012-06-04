@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <server>
+        <!--index 0--><context>phrescohelloworld/home.aspx</context>
+        <!--index 1--><protocol>http</protocol>
+        <!--index 2--><host>172.16.18.110</host>
+        <!--index 3--><port>8090</port>
+    </server>
+  <!--index 1--><errorcomment>Selenium Server Should be Start</errorcomment>
+  <!--index 2--><waitforpagetoload>10000</waitforpagetoload>
+  <!--index 3--><searchhelloworldtext_screenshot>../../../target/nunit-report/screenshots/AllTest.HelloWorld.helloWorldTest.png</searchhelloworldtext_screenshot>
+  <!--index 4--><searchhelloworldtext_createscreenshotdir>../../../target/nunit-report/screenshots</searchhelloworldtext_createscreenshotdir>
+  <!--index 5--><helloworldtextpresent>Hello World</helloworldtextpresent>
+ 
+</configuration >

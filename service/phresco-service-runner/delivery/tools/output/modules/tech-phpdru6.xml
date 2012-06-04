@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="true" version="6.19" name="Aggregator" id="mod_aggregator_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Aggregates syndicated content (RSS, RDF, and Atom feeds).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Aggregates syndicated content (RSS, RDF, and Atom feeds).</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Blog" id="mod_blog_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables keeping easily and regularly updated user web pages or blogs.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables keeping easily and regularly updated user web pages or blogs.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Blog API" id="mod_blog_api_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to post content using applications that support XML-RPC blog APIs.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to post content using applications that support XML-RPC blog APIs.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Book" id="mod_book_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to structure site pages in a hierarchy or outline.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to structure site pages in a hierarchy or outline.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Color" id="mod_color_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows the user to change the color scheme of certain themes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows the user to change the color scheme of certain themes.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Comment" id="mod_comment_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to comment on and discuss published content.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to comment on and discuss published content.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Contact" id="mod_contact_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables the use of both personal and site-wide contact forms.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables the use of both personal and site-wide contact forms.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Content translation" id="mod_content_translation_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows content to be translated into different languages.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows content to be translated into different languages.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Database logging" id="mod_database_logging_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Logs and records system events to the database.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Logs and records system events to the database.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Forum" id="mod_forum_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables threaded discussions about general topics.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables threaded discussions about general topics.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Help" id="mod_help_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Manages the display of online help.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Manages the display of online help.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Locale" id="mod_locale_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds language handling functionality and enables the translation of the user interface to languages other than English.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Adds language handling functionality and enables the translation of the user interface to languages other than English.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Menu" id="mod_menu_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows administrators to customize the site navigation menu.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows administrators to customize the site navigation menu.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="OpenId" id="mod_openid_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to log into your site using OpenID.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to log into your site using OpenID.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Path" id="mod_path_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to rename URLs.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to rename URLs.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="PHP filter" id="mod_php_filter_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows embedded PHP code/snippets to be evaluated.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows embedded PHP code/snippets to be evaluated.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Ping" id="mod_ping_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Alerts other sites when your site has been updated.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Alerts other sites when your site has been updated.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Poll" id="mod_poll_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows your site to capture votes on different topics in the form of multiple choice questions.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows your site to capture votes on different topics in the form of multiple choice questions.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Profile" id="mod_profile_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Supports configurable user profiles.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Supports configurable user profiles.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Search" id="mod_search_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables site-wide keyword searching.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables site-wide keyword searching.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Statistics" id="mod_statistics_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Logs access statistics for your site.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Logs access statistics for your site.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Syslog" id="mod_syslog_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Logs and records system events to syslog.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Logs and records system events to syslog.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Taxonomy" id="mod_taxonomy_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables the categorization of content.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables the categorization of content.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Throttle" id="mod_throttle_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Handles the auto-throttling mechanism, to control site congestion.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Handles the auto-throttling mechanism, to control site congestion.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Tracker" id="mod_tracker_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables tracking of recent posts for users.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables tracking of recent posts for users.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Trigger" id="mod_trigger_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables actions to be fired on certain system events, such as when new content is created.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables actions to be fired on certain system events, such as when new content is created.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Update status" id="mod_update_status_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Checks the status of available updates for Drupal and your installed modules and themes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Checks the status of available updates for Drupal and your installed modules and themes.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="true" version="6.19" name="Upload" id="mod_upload_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to upload and attach files to content.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to upload and attach files to content.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="6.19" name="Block" id="mod_block_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Controls the boxes that are displayed around the main content.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Controls the boxes that are displayed around the main content.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="6.19" name="Filter" id="mod_filter_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Handles the filtering of content in preparation for display.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Handles the filtering of content in preparation for display.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="6.19" name="Node" id="mod_node_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows content to be submitted to the site and displayed on pages.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows content to be submitted to the site and displayed on pages.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="6.19" name="System" id="mod_system_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Handles general site configuration for administrators.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Handles general site configuration for administrators.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="true" core="true" version="6.19" name="User" id="mod_user_6.19">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Manages the user registration and login system.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Manages the user registration and login system.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.5" name="AddThis" id="mod_addthis_6.x-2.5">
+        <contentURL>/modules/tech-phpdru6/files/mod_addthis_6.x-2.5/6.x-2.5/mod_addthis_6.x-2.5-6.x-2.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Creates AddThis button as a block, to be used in themes and to node links.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Creates AddThis button as a block, to be used in themes and to node links.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.5" name="autologout" id="mod_autologout_6.x-2.5">
+        <contentURL>/modules/tech-phpdru6/files/mod_autologout_6.x-2.5/6.x-2.5/mod_autologout_6.x-2.5-6.x-2.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds automated timed logout</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Adds automated timed logout</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="bazaar_voice" id="mod_bazaar_voice_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_bazaar_voice_6.3/6.3/mod_bazaar_voice_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Bazaar Voice</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Bazaar Voice</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.18" name="boost" id="mod_boost_6.x-1.18">
+        <contentURL>/modules/tech-phpdru6/files/mod_boost_6.x-1.18/6.x-1.18/mod_boost_6.x-1.18-6.x-1.18.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Caches text (html, ajax, xml) outputted by Drupal as static files for performance and scalability purposes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Caches text (html, ajax, xml) outputted by Drupal as static files for performance and scalability purposes.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0" name="CAS" id="mod_cas_6.x-1.0">
+        <contentURL>/modules/tech-phpdru6/files/mod_cas_6.x-1.0/6.x-1.0/mod_cas_6.x-1.0-6.x-1.0.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_profile_6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides single sign-on Central Authentication Services (CAS)</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides single sign-on Central Authentication Services (CAS)</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.2" name="CCK" id="mod_cck_6.x-2.2">
+        <contentURL>/modules/tech-phpdru6/files/mod_cck_6.x-2.2/6.x-2.2/mod_cck_6.x-2.2-6.x-2.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows administrators to define new content types.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows administrators to define new content types.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="contactus" id="mod_contactus_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_contactus_6.3/6.3/mod_contactus_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_formbuilder_6.x</dependentModules>
+        <dependentModules>mod_modalframe_6.x-1.3</dependentModules>
+        <dependentModules>mod_jquery_ui_6.x-1.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides capability for users of the website to send feedback via a web-based form.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides capability for users of the website to send feedback via a web-based form.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="crm_client" id="mod_crm_client_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_crm_client_6.3/6.3/mod_crm_client_6.3-6.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides API to connect to CRM</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides API to connect to CRM</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.8" name="ctools" id="mod_ctools_6.x-1.8">
+        <contentURL>/modules/tech-phpdru6/files/mod_ctools_6.x-1.8/6.x-1.8/mod_ctools_6.x-1.8-6.x-1.8.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A library of helpful tools by Merlin of Chaos.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A library of helpful tools by Merlin of Chaos.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.7" name="date" id="mod_date_6.x-2.7">
+        <contentURL>/modules/tech-phpdru6/files/mod_date_6.x-2.7/6.x-2.7/mod_date_6.x-2.7-6.x-2.7.zip</contentURL>
+        <dependentModules>mod_cck_6.x-2.2</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Defines CCK date/time fields and widgets.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Defines CCK date/time fields and widgets.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="emailsubscription" id="mod_emailsubscription_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_emailsubscription_6.3/6.3/mod_emailsubscription_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_userprofile_6.x-1.0</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Manage the email subscription system for Newsletter.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Manage the email subscription system for Newsletter.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="findastore" id="mod_findastore_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_findastore_6.3/6.3/mod_findastore_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides the ability to search stores and plot the store location in a map</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides the ability to search stores and plot the store location in a map</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x" name="Formbuilder" id="mod_formbuilder_6.x">
+        <contentURL>/modules/tech-phpdru6/files/mod_formbuilder_6.x/6.x/mod_formbuilder_6.x-6.x.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Client-side UI for building and editing drupal form arrays.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Client-side UI for building and editing drupal form arrays.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.1" name="framework_1_5" id="mod_framework_1_5_6.x-1.1">
+        <contentURL>/modules/tech-phpdru6/files/mod_framework_1_5_6.x-1.1/6.x-1.1/mod_framework_1_5_6.x-1.1-6.x-1.1.zip</contentURL>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Framework core module that is used by other ITrInno modules</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Framework core module that is used by other ITrInno modules</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-3.3-JNJ-1.1" name="google_analytics" id="mod_google_analytics_6.x-3.3-JNJ-1.1">
+        <contentURL>/modules/tech-phpdru6/files/mod_google_analytics_6.x-3.3-JNJ-1.1/6.x-3.3-JNJ-1.1/mod_google_analytics_6.x-3.3-JNJ-1.1-6.x-3.3-JNJ-1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds Google Analytics javascript tracking code to all your site's pages.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Adds Google Analytics javascript tracking code to all your site's pages.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0" name="GoogleMaps" id="mod_googlemaps_6.x-1.0">
+        <contentURL>/modules/tech-phpdru6/files/mod_googlemaps_6.x-1.0/6.x-1.0/mod_googlemaps_6.x-1.0-6.x-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Google Maps module. Its uses the Google Map API</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Google Maps module. Its uses the Google Map API</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="GoogleSearch" id="mod_googlesearch_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_googlesearch_6.3/6.3/mod_googlesearch_6.3-6.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables internet/site-wide keyword searching.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables internet/site-wide keyword searching.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="itrinno_campaign" id="mod_itrinno_campaign_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_itrinno_campaign_6.3/6.3/mod_itrinno_campaign_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_formbuilder_6.x</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Display ITrInno campaign list or ITrInno campaign detail and collect responses from the user</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Display ITrInno campaign list or ITrInno campaign detail and collect responses from the user</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.2" name="itrinno_cron" id="mod_itrinno_cron_6.x-2.2">
+        <contentURL>/modules/tech-phpdru6/files/mod_itrinno_cron_6.x-2.2/6.x-2.2/mod_itrinno_cron_6.x-2.2-6.x-2.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Mulptiple scheduler for users.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Mulptiple scheduler for users.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="itrinnoPoll" id="mod_itrinnopoll_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_itrinnopoll_6.3/6.3/mod_itrinnopoll_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_jquery_ui_6.x-1.3</dependentModules>
+        <dependentModules>mod_modalframe_6.x-1.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Display a list of Assessment and Survey questions and collect responses from the user</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Display a list of Assessment and Survey questions and collect responses from the user</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.8" name="jnj_deploy_tool" id="mod_jnj_deploy_tool_6.x-1.8">
+        <contentURL>/modules/tech-phpdru6/files/mod_jnj_deploy_tool_6.x-1.8/6.x-1.8/mod_jnj_deploy_tool_6.x-1.8-6.x-1.8.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Tool for deploy on JnJ stage server.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Tool for deploy on JnJ stage server.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.3" name="jquery_ui" id="mod_jquery_ui_6.x-1.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_jquery_ui_6.x-1.3/6.x-1.3/mod_jquery_ui_6.x-1.3-6.x-1.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides the jQuery UI plug-in to other Drupal modules.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides the jQuery UI plug-in to other Drupal modules.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.3" name="modalframe" id="mod_modalframe_6.x-1.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_modalframe_6.x-1.3/6.x-1.3/mod_modalframe_6.x-1.3-6.x-1.3.zip</contentURL>
+        <dependentModules>mod_jquery_ui_6.x-1.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides an API to render an iframe within a modal dialog based on the jQuery UI Dialog plugin.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides an API to render an iframe within a modal dialog based on the jQuery UI Dialog plugin.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0-rc1" name="NodeWords" id="mod_nodewords_6.x-1.0-rc1">
+        <contentURL>/modules/tech-phpdru6/files/mod_nodewords_6.x-1.0-rc1/6.x-1.0-rc1/mod_nodewords_6.x-1.0-rc1-6.x-1.0-rc1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to add meta tags, eg keywords or description.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows users to add meta tags, eg keywords or description.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0-jjbuild-v2" name="pear" id="mod_pear_6.x-1.0-jjbuild-v2">
+        <contentURL>/modules/tech-phpdru6/files/mod_pear_6.x-1.0-jjbuild-v2/6.x-1.0-jjbuild-v2/mod_pear_6.x-1.0-jjbuild-v2-6.x-1.0-jjbuild-v2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A Drupal frontend for managing a PEAR installations.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A Drupal frontend for managing a PEAR installations.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="policy" id="mod_policy_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_policy_6.3/6.3/mod_policy_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_jquery_ui_6.x-1.3</dependentModules>
+        <dependentModules>mod_modalframe_6.x-1.3</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Display list of Policy</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Display list of Policy</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.x-1.1" name="productlocator" id="mod_productlocator_1.x-1.1">
+        <contentURL>/modules/tech-phpdru6/files/mod_productlocator_1.x-1.1/1.x-1.1/mod_productlocator_1.x-1.1-1.x-1.1.zip</contentURL>
+        <dependentModules>mod_storelocator_6.x-1.0</dependentModules>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The module which performs product locator actions .Fetching the categories ,sub categories and products.It depends to itrinno modules Framework,PEAR,RESTApi</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The module which performs product locator actions .Fetching the categories ,sub categories and products.It depends to itrinno modules Framework,PEAR,RESTApi</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-0.x-dev" name="restapi" id="mod_restapi_6.x-0.x-dev">
+        <contentURL>/modules/tech-phpdru6/files/mod_restapi_6.x-0.x-dev/6.x-0.x-dev/mod_restapi_6.x-0.x-dev-6.x-0.x-dev.zip</contentURL>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Module for making REST Web Service calls</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Module for making REST Web Service calls</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0" name="storelocator" id="mod_storelocator_6.x-1.0">
+        <contentURL>/modules/tech-phpdru6/files/mod_storelocator_6.x-1.0/6.x-1.0/mod_storelocator_6.x-1.0-6.x-1.0.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides the ability to search stores and plot the store location in a google map</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides the ability to search stores and plot the store location in a google map</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.3" name="survey" id="mod_survey_6.3">
+        <contentURL>/modules/tech-phpdru6/files/mod_survey_6.3/6.3/mod_survey_6.3-6.3.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <dependentModules>mod_jquery_ui_6.x-1.3</dependentModules>
+        <dependentModules>mod_modalframe_6.x-1.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Display list of Assessment and Survey Questions and collects responses from user</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Display list of Assessment and Survey Questions and collects responses from user</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.11" name="Token" id="mod_token_6.x-1.11">
+        <contentURL>/modules/tech-phpdru6/files/mod_token_6.x-1.11/6.x-1.11/mod_token_6.x-1.11-6.x-1.11.zip</contentURL>
+        <dependentModules>mod_search_6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides a shared API for replacement of textual placeholders with actual data.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides a shared API for replacement of textual placeholders with actual data.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-1.0" name="UserProfile" id="mod_userprofile_6.x-1.0">
+        <contentURL>/modules/tech-phpdru6/files/mod_userprofile_6.x-1.0/6.x-1.0/mod_userprofile_6.x-1.0-6.x-1.0.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>User profile with IAPP compliance.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>User profile with IAPP compliance.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="6.x-2.6" name="WebProxy" id="mod_webproxy_6.x-2.6">
+        <contentURL>/modules/tech-phpdru6/files/mod_webproxy_6.x-2.6/6.x-2.6/mod_webproxy_6.x-2.6-6.x-2.6.zip</contentURL>
+        <dependentModules>mod_framework_1_5_6.x-1.1</dependentModules>
+        <dependentModules>mod_pear_6.x-1.0-jjbuild-v2</dependentModules>
+        <dependentModules>mod_restapi_6.x-0.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables to make call http request to external url from JNJ DMZ..</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Enables to make call http request to external url from JNJ DMZ..</content>
+            </document>
+        </documents>
+    </module>
+</modules>

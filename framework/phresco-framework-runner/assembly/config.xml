@@ -1,0 +1,43 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	
+	<baseDirectory>/</baseDirectory> 
+	<formats>
+		<format>zip</format>
+	</formats>
+
+	<fileSets>
+	
+		<!-- filter to copy the contents from the base directory -->
+		<fileSet>
+			<directory>${basedir}/delivery</directory>
+			<outputDirectory>/phresco-framework/</outputDirectory>
+			<includes>
+			    <include>bin/*.bat</include>
+			    <include>bin/*.xml</include>
+			    <include>docs/**</include>
+			    <include>conf/**</include>
+			    <include>README.txt</include>
+			    <include>workspace/tools/jenkins/**</include>
+			</includes>
+		</fileSet>
+		
+		<!-- filter to copy the contents from the base directory -->
+		<fileSet>
+			<directory>${basedir}/delivery</directory>
+			<outputDirectory>/phresco-framework/</outputDirectory>
+			<includes>
+			    <include>bin/*.sh</include>
+			</includes>
+			<fileMode>0777</fileMode>
+		</fileSet>		
+		
+		<fileSet>
+			<directory>${basedir}/delivery/tools/maven</directory>
+			<outputDirectory>/phresco-framework/tools/maven</outputDirectory>
+			<fileMode>0777</fileMode>
+		</fileSet>
+	</fileSets>
+
+</assembly>

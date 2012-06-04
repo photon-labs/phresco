@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<name>${artifactId}</name>
+	<packaging>war</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>		
+	</dependencies>
+	
+	<build>
+		<directory>do_not_checkin/target</directory>
+		<finalName>service</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.photon.phresco.plugins</groupId>
+				<artifactId>java-maven-plugin</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.t7mp</groupId>
+				<artifactId>maven-t7-plugin</artifactId>
+				<version>0.9.9</version>
+					<configuration>
+							<tomcatHttpPort>${server.port}</tomcatHttpPort>
+							<tomcatShutdownPort>${server.shutdown.port}</tomcatShutdownPort>
+							<tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
+							<tomcatVersion>7.0.6</tomcatVersion>
+							<tomcatSetAwait>true</tomcatSetAwait>
+							<webapps>
+								<webappArtifact>							  
+								   <groupId>${project.groupId}</groupId>
+								   <artifactId>${project.artifactId}</artifactId>
+								   <version>${project.version}</version>
+								   <contextPath>${project.build.finalName}</contextPath>
+								</webappArtifact>
+							</webapps>
+					</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<reporting>
+		<plugins>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.8</version>				
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>				
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

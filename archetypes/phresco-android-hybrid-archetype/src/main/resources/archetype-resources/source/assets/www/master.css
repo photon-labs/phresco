@@ -1,0 +1,18 @@
+  
+  #info{
+    background:#ffa;
+    border: 1px solid #ffd324;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    clear:both;
+    margin:15px 6px 0;
+    width:295px;
+    padding:4px 0px 2px 10px;
+  }
+  
+  #info > h4{
+    font-size:.95em;
+    margin:5px 0;
+  }
+ 	
+ 

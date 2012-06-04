@@ -1,0 +1,148 @@
+<project name="upload" default="deploy-all" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+	
+	<path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.1.jar" />
+	
+	<typedef
+     resource="org/apache/maven/artifact/ant/antlib.xml"
+     uri="antlib:org.apache.maven.artifact.ant"
+     classpathref="maven-ant-tasks.classpath"
+   />
+
+	<property name="mavenhome" location="C:/apache-maven-3.0.3" />	
+	<property name="src" location="D:/work/phresco/Phresco-binaries/videos" />
+	<property name="maven-repository-id" value="auto-releases" />
+	<property name="maven-repository-url" value="http://172.16.18.178:9090/nexus/content/repositories/auto-releases/" />
+	
+	<property name="video1mp4" value="${src}/video1/video1-1.0.mp4" />
+	<property name="video1ogg" value="${src}/video1/video1-1.0.ogg" />
+	<property name="video1ogv" value="${src}/video1/video1-1.0.ogv" />
+	<property name="video1webm" value="${src}/video1/video1-1.0.webm" />
+	<property name="video2mp4" value="${src}/video2/video2-1.0.mp4" />
+	<property name="video2ogg" value="${src}/video2/video2-1.0.ogg" />
+	<property name="video2ogv" value="${src}/video2/video2-1.0.ogv" />
+	<property name="video2webm" value="${src}/video2/video2-1.0.webm" />
+    
+	<target name="deploy-all">
+		<antcall target="deployvideo1mp4"/>
+		<antcall target="deployvideo1ogg"/>
+		<antcall target="deployvideo1ogv"/>
+		<antcall target="deployvideo1webm"/>
+		<antcall target="deployvideo2mp4"/>
+		<antcall target="deployvideo2ogg"/>
+		<antcall target="deployvideo2ogv"/>
+		<antcall target="deployvideo2webm"/>
+   </target>
+    
+	<target name="deployvideo1mp4">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video1" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=mp4" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video1mp4}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo1ogg">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video1" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=ogg" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video1ogg}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo1ogv">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video1" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=ogv" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video1ogv}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo1webm">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video1" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=webm" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video1webm}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo2mp4">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video2" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=mp4" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video2mp4}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo2ogg">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video2" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=ogg" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video2ogg}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo2ogv">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video2" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=ogv" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video2ogv}" />
+		</artifact:mvn>
+    </target>
+	
+	<target name="deployvideo2webm">
+		<artifact:mvn  mavenHome="${mavenhome}">	
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-DgroupId=videos.homepage" />
+			<arg value="-DartifactId=video2" />
+			<arg value="-Dversion=1.0" />
+			<arg value="-Dpackaging=webm" />
+			<arg value="-Durl=${maven-repository-url}" />
+			<arg value="-DrepositoryId=${maven-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${video2webm}" />
+		</artifact:mvn>
+    </target>
+	
+</project>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  /*
+ * Copyright (C) 2009 Jayway AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>apk</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                	<generate-sources>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:generate-sources
+                    </generate-sources>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>
+                        org.apache.maven.plugins:maven-compiler-plugin:compile
+                    </compile>
+                    <process-classes>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:unpack,
+						com.photon.maven.plugins.android.generation2:android-maven-plugin:proguard
+                    </process-classes>
+                    <process-test-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:testResources
+                    </process-test-resources>
+                    <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                    <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                    <prepare-package>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:dex
+                    </prepare-package>
+                    <package>
+                    	org.apache.maven.plugins:maven-jar-plugin:jar,
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:apk
+                    </package>
+                    <install>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:updatebuildinfo,
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <pre-integration-test>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:internal-pre-integration-test
+                    </pre-integration-test>
+                    <integration-test>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:internal-integration-test
+                    </integration-test>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+        
+        
+        <!-- Adds handling for 'apkperf' packaging.  This implies the POM has defined 'apkperf' as the packaging -->
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>apkperf</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                	<generate-sources>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:generate-sources
+                    </generate-sources>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>
+                        org.apache.maven.plugins:maven-compiler-plugin:compile
+                    </compile>
+                    <process-classes>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:unpack,
+						com.photon.maven.plugins.android.generation2:android-maven-plugin:proguard
+                    </process-classes>
+                    <process-test-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:testResources
+                    </process-test-resources>
+                    <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                    <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                    <prepare-package>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:dex
+                    </prepare-package>
+                    <package>
+                    	org.apache.maven.plugins:maven-jar-plugin:jar,
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:apk
+                    </package>
+                    <install>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:updatebuildinfo,
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <pre-integration-test>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:internal-pre-integration-test
+                    </pre-integration-test>
+                    <integration-test>
+                    	com.photon.maven.plugins.android.generation2:android-maven-plugin:perftest
+                    </integration-test>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+
+        <!-- Adds handling for 'so' packaging.  This implies the POM has defined 'so' as the packaging -->
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>so</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                	 <clean>
+                       org.apache.maven.plugins:maven-clean-plugin:clean,com.photon.maven.plugins.android.generation2:android-maven-plugin:clean
+                    </clean>
+                    <generate-sources>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:generate-sources
+                    </generate-sources>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:ndk-build
+                    </compile>
+                    <install>
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+
+        <!-- Adds handling for 'a' packaging (static library).  This implies the POM has defined 'a' as the packaging -->
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>a</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                 <clean>
+                       org.apache.maven.plugins:maven-clean-plugin:clean,com.photon.maven.plugins.android.generation2:android-maven-plugin:clean
+                    </clean>
+                    <generate-sources>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:generate-sources
+                    </generate-sources>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:ndk-build
+                    </compile>
+                    <install>
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>dex</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>dex</extension>
+                <type>dex</type>
+                <language>java</language>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>apk</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>apk</extension>
+                <type>apk</type>
+                <language>java</language>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>so</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>so</extension>
+                <type>so</type>
+                <language>native</language>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>apklib</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                    <generate-sources>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:generate-sources
+                    </generate-sources>
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <compile>
+                        org.apache.maven.plugins:maven-compiler-plugin:compile
+                    </compile>
+                    <process-classes>
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:unpack,
+						com.photon.maven.plugins.android.generation2:android-maven-plugin:proguard
+                    </process-classes>
+                    <process-test-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:testResources
+                    </process-test-resources>
+                    <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+                    <test>org.apache.maven.plugins:maven-surefire-plugin:test</test>
+                    <package>
+                    	org.apache.maven.plugins:maven-jar-plugin:jar,
+                        com.photon.maven.plugins.android.generation2:android-maven-plugin:apklib
+                    </package>
+                    <install>
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>apklib</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>apklib</extension>
+                <type>apklib</type>
+                <language>java</language>
+            </configuration>
+        </component>
+    </components>
+</component-set>

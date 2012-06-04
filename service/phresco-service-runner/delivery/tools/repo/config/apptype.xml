@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<apptypes xmlns="http://www.example.org/Phresco">
+    <apptype name="Web Application" id="apptype-webapp">
+        <technology name="PHP" id="tech-php">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-php-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+            <documents>
+                <document documentType="ARCHITECHTURE">
+                    <content>PHP is a general-purpose server-side scripting language originally designed for web development to produce dynamic web pages. For this purpose, PHP code is embedded into the HTML source document and interpreted by a web server with a PHP processor module, which generates the web page document. It also has evolved to include a command-line interface capability and can be used in standalone graphical applications.PHP can be deployed on most web servers and as a standalone interpreter, on almost every operating system and platform free of charge.</content>
+                </document>
+                <document documentType="CODING_GUIDELINES">
+                    <url>http://pear.php.net/manual/en/standards.bestpractices.php</url>
+                </document>
+            </documents>
+        </technology>
+		<technology name="Drupal6" id="tech-phpdru6">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-drupal6-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+            <documents>
+                <document documentType="ARCHITECHTURE">
+                    <content>Drupal is a general-purpose server-side scripting language originally designed for web development to produce dynamic web pages. For this purpose, PHP code is embedded into the HTML source document and interpreted by a web server with a PHP processor module, which generates the web page document. It also has evolved to include a command-line interface capability and can be used in standalone graphical applications.PHP can be deployed on most web servers and as a standalone interpreter, on almost every operating system and platform free of charge.</content>
+                </document>
+                <document documentType="CODING_GUIDELINES">
+                    <url>http://pear.php.net/manual/en/standards.bestpractices.php</url>
+                </document>
+            </documents>
+        </technology>
+        <technology name="Drupal7" id="tech-phpdru7">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-drupal7-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+            <documents>
+                <document documentType="ARCHITECHTURE">
+                    <content>Drupal is a general-purpose server-side scripting language originally designed for web development to produce dynamic web pages. For this purpose, PHP code is embedded into the HTML source document and interpreted by a web server with a PHP processor module, which generates the web page document. It also has evolved to include a command-line interface capability and can be used in standalone graphical applications.PHP can be deployed on most web servers and as a standalone interpreter, on almost every operating system and platform free of charge.</content>
+                </document>
+                <document documentType="CODING_GUIDELINES">
+                    <url>http://pear.php.net/manual/en/standards.bestpractices.php</url>
+                </document>
+            </documents>
+        </technology>
+        <technology name="Sharepoint" id="tech-sharepoint">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-sharepoint-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+            <documents>
+                <document documentType="ARCHITECHTURE">
+                    <content>Sharepoint is a general-purpose server-side scripting language originally designed for web development to produce dynamic web pages. For this purpose, PHP code is embedded into the HTML source document and interpreted by a web server with a PHP processor module, which generates the web page document. It also has evolved to include a command-line interface capability and can be used in standalone graphical applications.PHP can be deployed on most web servers and as a standalone interpreter, on almost every operating system and platform free of charge.</content>
+                </document>
+                <document documentType="CODING_GUIDELINES">
+                    <url>http://pear.php.net/manual/en/standards.bestpractices.php</url>
+                </document>
+            </documents>
+        </technology>
+        <technology name="HTML5 Multichannel YUI Widget" id="tech-html5-widget">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-html5-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+		<technology name="HTML5 Multichannel JQuery Widget" id="tech-html5-jquery-widget">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-html5-jquery-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+		<technology name="HTML5 Mobile Widget" id="tech-html5-mobile-widget">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-html5-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+		<technology name="ASP.NET" id="tech-dotnet">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-dot-net-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+		<technology name="WordPress" id="tech-wordpress">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-wordpress-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+		<technology name="Java Standalone" id="tech-java-standalone">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-java-quickstart-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+    </apptype>
+    <apptype name="Mobile Application" id="apptype-mobile">
+        <technology name="iPhone Native" id="tech-iphone-native">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-iphone-native-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+        <technology name="iPhone Hybrid" id="tech-iphone-hybrid">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-iphone-hybrid-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+        <technology name="Android Native" id="tech-android-native">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-android-native-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+        <technology name="Android Hybrid" id="tech-android-hybrid">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-android-hybrid-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+    </apptype>
+    <apptype name="Web Services" id="apptype-web-services">
+        <technology name="Node JS Web Service" id="tech-nodejs-webservice">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-nodejs-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+        <technology name="Java Web Service" id="tech-java-webservice">
+            <archetypeInfo>
+                <groupId>archetypes</groupId>
+                <artifactId>phresco-javawebservice-archetype</artifactId>
+				<version>1.1.14003</version>
+                <projectGroupId>com.photon.phresco</projectGroupId>
+            </archetypeInfo>
+        </technology>
+    </apptype>
+</apptypes>

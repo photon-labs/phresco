@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libraries xmlns="http://www.example.org/Phresco">
+    <library id="libraries-JQUERY" name="JQuery" version="3.0"/>
+    <library id="libraries-Mootools" name="Mootools" version="3.0"/>
+    <library id="libraries-Prototype" name="Prototype" version="3.0"/>
+    <library id="libraries-YUI3" name="YUI3" version="3.0"/>
+</libraries>

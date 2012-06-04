@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+  <name>${artifactId}</name>
+  
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>com.photon.phresco.plugins</groupId>
+				<artifactId>php-maven-plugin</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<sourceDirectory>source</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>/source/resources</directory>
+			</resource>
+		</resources>
+	</build>
+	
+	<properties>
+		<sonar.language>php</sonar.language>
+		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
+		<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
+		<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
+		<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
+		<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
+		<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
+		<sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
+		<!--<sonar.phpUnit.mainTestClass>/test/functional/src/test/php/phresco/AllTest.php</sonar.phpUnit.mainTestClass>-->
+		<sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
+		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
+		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
+	    <sonar.phase>validate</sonar.phase>
+    </properties>
+	
+</project>

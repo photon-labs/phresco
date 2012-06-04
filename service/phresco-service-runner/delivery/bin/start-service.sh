@@ -1,0 +1,1 @@
+sh phresco.sh cargo:run

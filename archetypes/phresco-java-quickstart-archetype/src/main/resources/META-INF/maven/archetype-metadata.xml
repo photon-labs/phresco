@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="java-quickstart">
+
+  <fileSets> 	
+  		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/java</directory> 
+			<includes> 
+				<include>App.java</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/test/java</directory> 
+			<includes> 
+				<include>AppTest.java</include> 
+			</includes> 
+		</fileSet>
+  </fileSets>
+  
+</archetype-descriptor>

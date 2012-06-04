@@ -1,0 +1,44 @@
+<project name="Phresco">
+ 
+ 
+ <poweredBy>
+    <logo name="Phresco" href="http://phresco.org/"
+          img="http://maven.apache.org/images/logos/maven-feather.png"/>
+  </poweredBy>
+ 
+ <publishDate format="yyyy-MM-dd" position="right" />
+  <version position="right" />
+
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.2.1</version>
+  </skin>
+
+  <custom>
+    <fluidoSkin>
+      <googleSearch>
+        <sitesearch>mojo.codehaus.org</sitesearch>
+      </googleSearch>
+      <ohloh>
+        <projectId>5211</projectId>
+        <widget>thin-badge</widget>
+      </ohloh>
+    </fluidoSkin>
+  </custom>
+
+  <body>
+    <links>
+        <item name="Maven" href="http://maven.apache.org"/>
+        <item name="Photon" href="http://photon.in"/> 
+    </links>
+     <breadcrumbs>
+      <item name="Phresco" href="http://phresco.org"/> 
+     </breadcrumbs>
+    <menu ref="parent" inherit="bottom" />
+    <menu ref="modules" inherit="bottom" />
+	  <menu ref="reports" inherit="bottom" />
+    <menu name="FAQ" ref="faq.html" />
+  </body>
+
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+	<users id="jebastin_p">
+        <roles>Manager</roles>
+    </users>
+	 <users id="sathishkumar_dh">
+        <roles>Manager</roles>
+    </users>
+    <users id="bharatkumar_r">
+        <roles>Manager</roles>
+    </users>
+    <users id="senthilkumar_sh">
+        <roles>Manager</roles>
+    </users>
+	<users id="suresh_d">
+        <roles>Manager</roles>
+    </users>
+	<users id="arunachalam_l">
+        <roles>Manager</roles>
+    </users>
+	<users id="saravanakumar_s">
+        <roles>Manager</roles>
+    </users>
+	<users id="prasanna_k">
+        <roles>Manager</roles>
+    </users>	
+</users>

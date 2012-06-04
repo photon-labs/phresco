@@ -1,0 +1,154 @@
+<project name="Phresco Deployment Script" basedir="." default="run-phresco">
+
+	<property name="phresco.home" value="${basedir}/.."/>
+	<property name="tomcat.home" value="${phresco.home}/workspace/tools/apache-tomcat-https-7.0.21"/>
+	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-2.12"/>
+	<property name="jenkins.home" value="${phresco.home}/workspace/tools/jenkins"/>
+	<property name="phresco.war.dir" value="${phresco.home}/workspace/tools/war/phresco.war"/>
+	<property name="sonar.war.dir" value="${phresco.home}/workspace/tools/war/sonar.war"/>
+	<property name="phresco.upgrade.file" value="${phresco.home}/workspace/temp/upgrade.properties"/>
+	<property name="phresco.file.server.home" value="${phresco.home}/workspace/projects"/>
+	<property name="phresco.file.server" value="PhrescoFileServer"/>
+	<property name="phresco.url" value="http://localhost:2468/phresco"/>
+	
+	<target name="init">
+		<available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
+	</target>	
+	
+	<target name="run-phresco">
+		<echo message="starting phresco deployment from ${phresco.home}"/>
+		<antcall target="clean-sonar"/>
+		<antcall target="copy-phresco"/>
+        <antcall target="copy-security"/>
+		<antcall target="copy-framework-config"/>
+		<parallel>
+			<antcall target="tomcat-start"/>
+			<antcall target="copy-sonar"/>
+			<antcall target="file-server-start"/>
+		</parallel>
+	</target>
+
+	<target name="copy-phresco">
+		<echo message="copying phresco war into tomcat"/>
+		<copy todir="${tomcat.home}/webapps/phresco">
+			<fileset dir="${phresco.war.dir}"/>
+		</copy>
+	</target>
+	
+	<target name="copy-security">
+		<echo message="copying security keystore"/>        
+		<copy file="${phresco.home}/conf/security/phresco.keystore" 
+			todir="${tomcat.home}/conf/" 
+			overwrite="true"
+		/>
+	</target>
+	
+    <target name="copy-framework-config">
+		<echo message="copying framework.config into conf"/>
+		<copy file="${phresco.home}/conf/service.properties" 
+			tofile="${tomcat.home}/webapps/phresco/WEB-INF/classes/framework.config" 
+			overwrite="true"
+		/>
+	</target>
+	
+	<target name="copy-sonar">
+		<sleep seconds="10"/>
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		<echo message="      							          "/> 
+		<echo message="    PHRESCO started successfully (${phresco.url})   "/>
+		<echo message="      							          "/> 
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		<echo message="*******************************************************************"/>
+		
+		<antcall target="open-browser"/> 
+		
+		<echo message="Started deploying sonar "/>
+		<copy todir="${tomcat.home}/webapps/sonar">
+			<fileset dir="${sonar.war.dir}"/>
+		</copy>
+		
+	</target>
+	
+	<target name="open-browser">
+		<echo message="Opening  Phresco URL ${phresco.url}"/>
+        <exec executable="cmd" osfamily="windows">
+            <arg line="/C start ${phresco.url}" />
+        </exec>
+
+        <exec executable="open" osfamily="mac">
+            <arg line="${phresco.url}" />
+        </exec>
+
+        <exec executable="gnome-open" os="Linux">
+            <arg line="${phresco.url}" />
+        </exec>
+
+    </target>
+	
+	<target name="clean-sonar">
+		<echo message="removing sonar war from tomcat"/>
+		<delete dir="${tomcat.home}/webapps/sonar"/>
+	</target>
+	
+	<target name="clean-phresco" depends="init" if="phresco.upgraded">
+		<echo message="removing older version of phresco war from tomcat"/>
+		<delete dir="${tomcat.home}/webapps/phresco"/>
+		<delete dir="${tomcat.home}/work/Catalina/localhost/phresco"/>
+		<delete dir="${phresco.war.dir}"/>
+		<delete file="${phresco.upgrade.file}"/>
+	</target>
+	
+	<target name="tomcat-start">
+		<echo message="Starting tomcat"/>
+		<echo message="${tomcat.home}"/>
+		<java 
+		classname="org.apache.catalina.startup.Bootstrap"
+		fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+			<jvmarg value="-Dtomcat.http.port=2468"/>
+			<jvmarg value="-Dtomcat.ajp.port=2469"/>
+			<jvmarg value="-Dtomcat.redirect.port=2470"/>
+			<jvmarg value="-Dtomcat.shudown.port=2471"/>			
+			<jvmarg value="-Xmx1024m"/>
+			<jvmarg value="-XX:MaxPermSize=256M"/>
+            <jvmarg value="-Dtomcat.keystore.pass=photonphresco"/>
+			
+			<classpath>
+			  <fileset dir="${tomcat.home}/bin">
+				<include name="*.jar"/>
+			  </fileset>
+			</classpath>
+			<sysproperty key="phresco.file.server.port" value="${phresco.file.server.port.num}"/>
+			<sysproperty key="PHRESCO_HOME" value="${phresco.home}"/>
+			<sysproperty key="SONAR_HOME" value="${sonar.home}"/>
+			<sysproperty key="JENKINS_HOME" value="${jenkins.home}"/>
+		</java>
+	</target>
+
+	<target name="file-server-start">
+		<echo message="Starting phresco file server on port"/>
+		<echo message="${phresco.file.server.port.num}"/>
+		<echo message="Starting phresco file server "/>
+		<echo message="${phresco.file.server.home}"/>
+		<java jar="${file-server-location}" fork="true">
+			<arg value="${phresco.file.server.port.num}"/>
+			<arg value="${phresco.file.server.home}"/>
+		</java>
+	</target>
+
+	<target name="tomcat-stop">
+		<java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+			<arg line="stop"/>
+			 <classpath>
+			   <pathelement location="${tomcat.home}/bin/tomcat-juli.jar"/>
+			 </classpath>
+		</java>
+	</target>
+  
+</project>

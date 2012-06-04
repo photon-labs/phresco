@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="1.2.1" name="Sequelize" id="mod_sequelize_1.2.1">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_sequelize_1.2.1/1.2.1/mod_sequelize_1.2.1-1.2.1.zip</contentURL>
+        <dependentModules>mod_underscore_1.2.2</dependentModules>
+        <dependentModules>mod_underscore.string_1.2.0</dependentModules>
+        <dependentModules>mod_lingo_0.0.4</dependentModules>
+        <dependentModules>mod_moment_1.1.2</dependentModules>
+        <dependentModules>mod_validator_0.3.5</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Sequelize library provides easy access to a MySQL database by mapping database entries to objects and vice versa.  it's an ORM (Object-Relational-Mapper). The library is written entirely in JavaScript and can be used in the Node.JS environment.
+
+Features:
+1)Schema definition.
+2)Schema synchronization/dropping.
+3)Easy definition of class/instance methods.
+4)Instance saving/updating/dropping.
+5)Asynchronous library.
+6)Associations.
+7)Importing definitions from single files.
+
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Sequelize library provides easy access to a MySQL database by mapping database entries to objects and vice versa.  It's an ORM (Object-Relational-Mapper). The library is written entirely in JavaScript and can be used in the Node.JS environment.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.2" name="underscore" id="mod_underscore_1.2.2">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_underscore_1.2.2/1.2.2/mod_underscore_1.2.2-1.2.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Underscore is a utility-belt library for JavaScript that provides support for the usual functional suspects (each, map, reduce, filter)  without extending any core JavaScript objects. This module is used for utility purpose. Underscore provides 60-odd functions that support both the usual functional suspects [map, select, invoke — as well as more specialized helpers: function binding, javascript templating, deep equality testing,] It delegates to built-in functions and it  present some of the  modern browsers will use the native implementations for each, map, reduce, filter, every, some and indexOf.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Underscore is a utility-belt library for JavaScript that provides support for the usual functional suspects (each, map, reduce, filter)  without extending any core JavaScript objects. This module is used for utility purpose</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.0" name="underscore.string" id="mod_underscore.string_1.2.0">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_underscore.string_1.2.0/1.2.0/mod_underscore.string_1.2.0-1.2.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>String manipulation extensions for Underscore.js javascript library.Underscore.string is JavaScript library for comfortable manipulation with strings, extension for Underscore.js inspired by Prototype.js, Right.js, Underscore and beautiful Ruby language.
+
+Underscore.string provides you several useful functions: 
+1)capitalize.
+2)clean.
+3)includes.
+4)count.
+5)escapeHTML.
+6)unescapeHTML.
+7)insert. 
+8)splice.
+9)startsWith.
+10)endsWith.
+11) titleize.
+12)trim.
+13)truncate and so on.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Underscore.string  module is for string manipulation.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.4" name="lingo" id="mod_lingo_0.0.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_lingo_0.0.4/0.0.4/mod_lingo_0.0.4-0.0.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Lingo is a linguistics module, currently providing inflection and string transformations. Lingo has an ability to extends its capabilities and add additional languages.Lingo is an open source indexing system for research and teachings.
+
+Functions of Lingo:
+1)Identification of (i.e. reduction to) basic word form by means of dictionaries and suffix lists.
+2)Algorithmic decomposition.
+3)Dictionary-based synonymisation and identification of phrases.
+4)Generic identification of phrases/word sequences based on patterns of word classes.
+
+Lines with an asterisk (*) and lines without. That's because Lingo distinguishes between commands and data. The +text_reader+ did not only read the content of the file, but also communicated through the commands when a file begins and when it ends. This can (and will) be an important piece of information for other attendees.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content> Lingo is a linguistics module, currently providing inflection and string transformations.Lingo has an ability to extends its capabilities and add additional languages.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.1.2" name="moment" id="mod_moment_1.1.2">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_moment_1.1.2/1.1.2/mod_moment_1.1.2-1.1.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Moment is used for date formating. A lightweight javascript date library for parsing, manipulating.Moment was designed to work in all browser and in NodeJS. Instead of modifying the native Date.prototype, Moment.js creates a wrapper for the Date object. This is a pretty robust function for adding time to an existing date. 
+
+Functions:
+1)An integer value representing the number of milliseconds since 1 January 1970 00:00:00 UTC.
+2)A string that can be parsed by Date.parse. 
+3)To get the current date and time, just call moment()with no parameters. 
+4)An array mirroring the parameters passed into new Date().
+5)Any value past the year is optional, and will default to the lowest possible number.
+6)Construction with an array will create a date in the current timezone. 
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Moment is used for date formating. A lightweight javascript date library for parsing, manipulating.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.3.5" name="validator" id="mod_validator_0.3.5">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_validator_0.3.5/0.3.5/mod_validator_0.3.5-0.3.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Validator is  used for String validation and sanitization in JavaScript.Often it's more desirable to check or automatically sanitize parameters by name (rather than the actual string). See this gist for instructions on binding the library to the request prototype. If you are using the express.js framework you can use the express-validator middleware to seamlessly integrate node-validator.
+
+Functions:
+1)When adding to the Validator prototype, use this.str to access the string and this.error(this.msg || default_msg) when the string is invalid.
+2)When adding to the Filter (sanitize) prototype, use this.str to access the string and this.modify(new_str) to update it.
+3)By default, the validation methods throw an exception when a check fails.
+4)To set a custom error message, set the second param of.
+5)To attach a custom error handler, set the error method of the validator instance.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Validator is used for String validation and sanitization in JavaScript.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.1.1" name="Findit" id="mod_findit_0.1.1">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_findit_0.1.1/0.1.1/mod_findit_0.1.1-0.1.1.zip</contentURL>
+        <dependentModules>mod_seq_0.3.5</dependentModules>
+        <dependentModules>mod_chainsaw_0.1.0</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Find it modules is to getting the directories or files from the file system and it is also  used for recursively walk directory trees.
+
+Methods:
+1)Do an asynchronous recursive walk starting at basedir.Optionally supply an options object. 
+2)Setting the property 'follow_symlinks' will follow symlinks.
+3)Optionally supply a callback that will get the same arguments as the path event documented below in &quot;events&quot;.
+4)If basedir is actually a non-directory regular file, findit emits a single &quot;file&quot; event for it then emits &quot;end&quot;.
+5)Findit uses fs.lstat() so symlinks are not traversed automatically to have it follow symlinks, supply the options argument with 'follow_symlinks' set to true. 
+6)Findit won't traverse an inode that it has seen before so directories can have symlink cycles and findit won't blow up.
+
+Features:
+1)sync(basedir, options, callback[cb]) Return an array of files and directories from a synchronous recursive walk.
+2)Return an array of files and directories from a synchronous recursive walk starting at basedir.Optionally supply an options object. 
+3)Setting the property 'follow_symlinks' will follow symlinks. An optional callback [cb] will get called with callback (file, stat) if specified.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Find it modules is to getting the directories or files from the file system and it is also used for recursively walk directory trees.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.3.5" name="seq" id="mod_seq_0.3.5">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_seq_0.3.5/0.3.5/mod_seq_0.3.5-0.3.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Seq module is to do sequential operations.Seq is an asynchronous flow control library with a chainable interface for sequential and parallel actions. Even the error handling is chainable.Each action in the chain operates on a stack of values. There is also a variables hash for storing values by name.The seq package provides functional sequences with the Seq interface. Seq provides two concrete implementations: SequentialSeq and ConcurrentSeq. SequentialSeq is like vector, and ConcurrentSeq is like a vector that calculates its elements in the background, which can be used for lazy sequences or for some types of parallel computation to enumerate the elements of a Sequence use one of the Sequence methods or call it in the range clause of a for-loop.The functionality is mainly accessible through functions, rather than methods, although there is partial method support. The methods are mainly there to support the functions. </content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Seq module is to do sequential operations.Seq is an asynchronous flow control library with a chainable interface for sequential and parallel actions. Even the error handling is chainable.Each action in the chain operates on a stack of values. There is also a variables hash for storing values by name.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.1.0" name="chainsaw" id="mod_chainsaw_0.1.0">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_chainsaw_0.1.0/0.1.0/mod_chainsaw_0.1.0-0.1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Chainsaw modules is mainly used to do chain operations. Build chainable fluent interfaces the easy way in node.js with this meta-module user can write modules with chainable interfaces. Chainsaw takes care of all of the boring details and makes nested flow control super simple too. Just call Chainsaw with a constructor function to create a nested chain.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Chainsaw modules is mainly used to do chain operations.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.1.14" name="xml2js" id="mod_xml2js_0.1.14">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_xml2js_0.1.14/0.1.14/mod_xml2js_0.1.14-0.1.14.zip</contentURL>
+        <dependentModules>mod_sax_0.3.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Xml2js module is used for conversion from xml to javascript object (JSON) using sax parsing mechanism.To display the full  result use console.log(util.inspect(result, false, null)), which displays the whole result.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Xml2js module is used for conversion from xml to javascript object (JSON)
+
+
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.3.3" name="sax" id="mod_sax_0.3.3">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_sax_0.3.3/0.3.3/mod_sax_0.3.3-0.3.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Sax is an event-based sequential access parser API for XML documents. SAX provides a mechanism for reading data from an XML document that is an alternative to that provided by the Document Object Model (DOM). Where the DOM operates on the document as a whole, SAX parsers operate on each piece of the XML document sequentially. SAX parsers have certain benefits over DOM-style parsers. The quantity of memory that a SAX parser must use in order to function is typically much smaller than that of a DOM parser. DOM parsers must have the entire tree in memory before any processing can begin, so the amount of memory used by a DOM parser depends entirely on the size of the input data. The memory footprint of a SAX parser, by contrast, is based only on the maximum depth of the XML file (the maximum depth of the XML tree) and the maximum data stored in XML attributes on a single XML element. Both of these are always smaller than the size of the parsed tree itself. Because of the event-driven nature of SAX, processing documents can often be faster than DOM-style parsers. Memory allocation takes time, so the larger memory footprint of the DOM is also a performance issue.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Sax is an event-based sequential access parser API for XML documents. SAX provides a mechanism for reading data from an XML document that is an alternative to that provided by the Document Object Model (DOM).
+
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.2.4" name="soda" id="mod_soda_0.2.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_soda_0.2.4/0.2.4/mod_soda_0.2.4-0.2.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Soda is mainly used for creating functional test case in Selenium. It acts as an node adapter. A light-weight Selenium RC[ Remote control] client for NodeJS, with additional Sauce Labs integration for acceptance testing in the cloud for functional automation testing. [Selenium Node Adapter. A light-weight Selenium RC client for NodeJS]
+
+Actions:
+1)Selenese&quot; actions include commands such as open and type. 
+2)Every action has a corresponding Client method which accept a variable number of arguments followed by a callback Function which receives any potential err, the response body, and response object itself because nested callbacks can quickly become overwhelming. 
+3)Soda has optional chaining support by simply utilizing the chain getter If an exception is thrown in a callback, or a command fails then it will be passed to end(err). 
+4)The chain getter should only be used once, activating the chaining api when chaining successful commands may receive a callback, which is useful for custom assertions with the .and() method you can add additional commands to the queue. The callback accepts the client instance, which is also the value of &quot;this&quot;.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Soda is mainly used for creating functional test case in Selenium.It acts as an node adapter. A light-weight Selenium RC[ Remote control] client for NodeJS, with additional Sauce Labs integration for acceptance testing in the cloud for functional automation testing.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0.8" name="formidable" id="mod_formidable_1.0.8">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_formidable_1.0.8/1.0.8/mod_formidable_1.0.8-1.0.8.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Formidable module is used for file uploads and form data .A node.js module for parsing form data, especially file uploads
+
+Features:
+1)Fast (~500mb/sec), non-buffering multipart parser.
+2)Automatically writing file uploads to disk.
+3) Low memory footprint.
+4)Graceful error handling.
+5) Very high test coverage.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Formidable module is used for file uploads A node.js module for parsing form data.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.5" name="memcached" id="mod_memcached_0.0.5">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_memcached_0.0.5/0.0.5/mod_memcached_0.0.5-0.0.5.zip</contentURL>
+        <dependentModules>mod_hashring_0.0.5</dependentModules>
+        <dependentModules>mod_bisection_0.0.2</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Memcached is a free and open source, high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load. Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering.  Memcached is simple yet powerful. Its simple design promotes quick deployment, ease of development, and solves many problems facing large data caches.  Its API is available for most popular languages.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Memcached is a free and open source, high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.5" name="hashring" id="mod_hashring_0.0.5">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_hashring_0.0.5/0.0.5/mod_hashring_0.0.5-0.0.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Hashring provides consistent hashing based on the libketema library. The constructor is designed to handle multiple arguments types as the hash ring can be used for different use cases. The ability to use a &quot;String&quot; to add a single server, a &quot;Array&quot; to provide multiple servers or an &quot;Object&quot; to provide servers with a custom weight. The weight can be used to give a server a bigger distribution in the hash ring. For example you have 3 machines, 2 of those machines have 8 gig memory and one has 32 gig of memory because the last server has more memory you might it to handle more keys than the other server. So you can give it a weight of 2 and the other servers a weight of 1.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Hashring provides consistent hashing based on the libketema library.
+
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.2" name="bisection" id="mod_bisection_0.0.2">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_bisection_0.0.2/0.0.2/mod_bisection_0.0.2-0.0.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Bisection module provides support for maintaining a list in sorted order without having to sort the list after each insertion. For long lists of items with expensive comparison operations, this can be an improvement over the more common approach. Node-Bisection is a JavaScript port of the Python 8.5. bisect - Array bisection algorithm. The module is called bisect because it uses a basic bisection algorithm to do its work. The source code may be most useful as a working example of the algorithm (the boundary conditions are already right!).&quot;</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Bisection module provides support for maintaining a list in sorted order without having to sort the list after each insertion. For long lists of items with expensive comparison operations, this can be an improvement over the more common approach. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.4.3" name="ldapjs" id="mod_ldapjs_0.4.3">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_ldapjs_0.4.3/0.4.3/mod_ldapjs_0.4.3-0.4.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ldapjs is a pure JavaScript, from-scratch framework for implementing LDAP clients and servers in Node.js. It is intended for developers used to interacting with HTTP services in node and express.
+
+Features:
+1)ldapjs implements most of the common operations in the LDAP v3 RFC(s), for both client and server. 
+2)It is 100% wire-compatible with the LDAP protocol itself, and is interoperable with OpenLDAP and any other LDAPv3-compliant implementation. 3)ldapjs gives you a powerful routing and &quot;intercepting filter&quot; pattern for implementing server(s). 
+4)It is intended that you can build LDAP over anything you want, not just traditional databases.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ldapjs is a pure JavaScript, from-scratch framework for implementing LDAP clients and servers in Node.js. It is intended for developers used to interacting with HTTP services in node and express.
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.5.0" name="Express" id="mod_express_0.5.0">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_express_0.5.0/0.5.0/mod_express_0.5.0-0.5.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Express is used for high performance and for high class web development for Node.js.  Creating A Server: To create an instance of the express.HTTPServer, simply invoke the createServer() method. With our instance app we can then define routes based on the HTTP verbs, in this example app.get().  Creating An HTTPS Server: To initialize a express.HTTPSServer we do the same as above, however we pass an options object, accepting key, cert and the others mentioned in node’s https documentation.  Configuration: Express supports arbitrary environments, such as production and development. Developers can use the configure() method to setup needs required by the current environment. When configure() is called without an environment name it will be run in every environment prior to the environment specific callback.In the example below we only dumpExceptions, and respond with exception stack traces in development mode, however for both environments we utilize methodOverride and bodyParser. Note the use of app.router, which can (optionally) be used to mount the application routes, otherwise the first call to app.get(), app.post(), etc will mount the routes.  Settings: Express supports the following settings out of the box:  1)Basepath Application base path used for res.redirect() and transparently handling mounted apps. 2)Views Root views directory defaulting to CWD/views 3)View engine Default view engine name for views rendered without extensions 4)View options An object specifying global view options 5)View cache Enable view caching (enabled in production) 6)Case sensitive routes Enable case-sensitive routing 7)Strict routing When enabled trailing slashes are no longer ignored 8)Jsonp callback Enable res.send() / res.json() transparent jsonp support  Routing: Express utilizes the HTTP verbs to provide a meaningful, expressive routing API. For example we may want to render a user’s account for the path /user/12, this can be done by defining the route below. The values associated to the named placeholders are available as req.params.  Passing Route Control: We may pass control to the next matching route, by calling the third argument, the next() function. When a match cannot be made, control is passed back to Connect, and middleware continue to be invoked in the order that they are added via use(). The same is true for several routes which have the same path defined, they will simply be executed in order until one does not call next() and decides to respond.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Express is used for high performance and for high class web development for Node.js.    </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.7.2" name="connect" id="mod_connect_1.7.2">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_connect_1.7.2/1.7.2/mod_connect_1.7.2-1.7.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Connect is a middleware framework for node, shipping with over 18 bundled middleware and a rich selection of 3rd-party middleware
+
+Middleware:
+
+1)Logger request logger with custom format support
+2)Csrf Cross-site request forgery protection
+3)Compress Gzip compression middleware
+4)BasicAuth basic http authentication
+5)BodyParser extensible request body parser
+6)Json application/json parser
+7)Urlencoded application/x-www-form-urlencoded parser
+8)Multipart multipart/form-data parser
+9)CookieParser cookie parser
+10)Session session management support with bundled MemoryStore
+11)SessionSession cookie-based session support
+12)MethodOverride faux HTTP method support
+13)ResponseTime calculates response-time and exposes via X-Response-Time
+14)StaticCache memory cache layer for the static() middleware
+15)Static streaming static file server supporting Range and more
+16)Directory directory listing middleware
+17)Vhost virtual host sub-domain mapping middleware
+18)Favicon efficient favicon server (with default icon)
+19)Limit limit the bytesize of request bodies
+20)Query automatic querystring parser, populating req.query
+21)ErrorHandler flexible error handler
+
+Internals:
+
+1)Server prototype
+2)Connect utilities
+3)Node monkey patches
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Connect is a middleware framework for node, shipping with over 18 bundled middleware and a rich selection of 3rd-party middleware.
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.4" name="hashish" id="mod_hashish_0.0.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_hashish_0.0.4/0.0.4/mod_hashish_0.0.4-0.0.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Hash data structure manipulation functions.Hashish is a node.js library for manipulating hash data structures. It is distilled from the finest that ruby, perl, and haskell have to offer by way of hash/map interfaces.Hashish provides a chaining interface.
+
+Methods:
+1)forEach( )
+2)map( )
+3)filter( )
+4)detect( )
+5)reduce( )
+6)some( )
+7)updateAll( )
+8)valuesAt( )
+9)tap( )
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Hashish is a node.js library for manipulating hash data structures. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.2.4" name="mime" id="mod_mime_1.2.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_mime_1.2.4/1.2.4/mod_mime_1.2.4-1.2.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Mime is mainly used for mapping API.
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Mime is mainly used for mapping API.
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.9.4" name="mysql" id="mod_mysql_0.9.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_mysql_0.9.4/0.9.4/mod_mysql_0.9.4-0.9.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Mysql is mainly used for  database creation .A pure node.js JavaScript Client implementing the MySQL protocol.
+
+Table manipulation:
+1)Create.
+2)Update/Edit.
+3)Delete.
+4)Truncate.
+5)Drop.
+
+
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Mysql is mainly used for  database creation .A pure node.js JavaScript Client implementing the MySQL protocol.
+
+
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.3.1" name="qs" id="mod_qs_0.3.1">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_qs_0.3.1/0.3.1/mod_qs_0.3.1-0.3.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Query string parser for node supporting nesting.This module provides utilities for dealing with query strings.Query string parser for node supporting nesting.This module provides utilities for dealing with query strings.  
+
+Methods:
+1)querystring.stringify(obj, sep='&amp;', eq='=').
+2)Serialize an object to a query string. Optionally override the default separator and assignment characters.
+3)querystring.parse(str, sep='&amp;', eq='=').
+4)Deserialize a query string to an object. Optionally override the default separator and assignment characters. querystring.escape.
+5)The escape function used by querystring.stringify, provided so that it could be overridden if necessary. querystring.unescape.
+6)The unescape function used by querystring.parse, provided so that it could be overridden if necessary.
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Query string parser for node supporting nesting.This module provides utilities for dealing with query strings. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.5.1" name="traverse" id="mod_traverse_0.5.1">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_traverse_0.5.1/0.5.1/mod_traverse_0.5.1-0.5.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Traverse and transform objects by visiting every node on a recursive walk.
+
+Methods:
+1).map(fn)
+2).forEach(fn)
+3).reduce(fn, acc)
+4).paths()
+5).nodes()
+6).clone()
+7).get(path)
+8).set(path, value)
+9).has(path)
+
+
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Traverse and transform objects by visiting every node on a recursive walk.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.0.2" name="datejs" id="mod_datejs_0.0.2">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_datejs_0.0.2/0.0.2/mod_datejs_0.0.2-0.0.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Datejs is a simple NPM wrapper around the excellent datejs client-side library.It modifies the Date prototype.Datejs is an open-source JavaScript Date Library.Comprehensive, yet simple, stealthy and fast. Datejs has passed all trials and is ready to strike. Datejs doesn’t just parse strings, it slices them cleanly in two.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Datejs is a simple NPM wrapper around the excellent datejs client-side library.It modifies the Date prototype.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="2.9.1" name="request" id="mod_request_2.9.1">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_request_2.9.1/2.9.1/mod_request_2.9.1-2.9.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Request is designed to be the simplest way possible to make http calls.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Request is designed to be the simplest way possible to make http calls.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.5.4" name="libxmljs" id="mod_libxmljs_0.5.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_libxmljs_0.5.4/0.5.4/mod_libxmljs_0.5.4-0.5.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>libxmljs provides a SAX2 push parser interface that accepts chunks of data. SaxPush parser inherits from EventEmitter to emit parse events.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>libxmljs provides a SAX2 push parser interface that accepts chunks of data. SaxPush parser inherits from EventEmitter to emit parse events.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="0.2.4" name="xml2json" id="mod_xml2json_0.2.4">
+        <contentURL>/modules/tech-nodejs-webservice/files/mod_xml2json_0.2.4/0.2.4/mod_xml2json_0.2.4-0.2.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>xml2json converts xml to json and viceverza, using node-expat.
+
+It does not parse the following elements:
+
+1)CDATA sections
+2)Processing instructions
+3)XML declarations
+4)Entity declarations
+5)Comments
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>xml2json converts xml to json and viceverza, using node-expat.</content>
+            </document>
+        </documents>
+    </module>
+</modules>

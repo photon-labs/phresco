@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="E:\Photon\unit\AllTest\AllTest\bin\Release\AllTest.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-02-28" time="18:40:55">
+  <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3625" os-version="Microsoft Windows NT 5.2.3790 Service Pack 2" platform="Win32NT" cwd="E:\Photon\unit\AllTest\AllTest\bin\Release" machine-name="FRAMEWORK-WIN2" user="Photon" user-domain="FRAMEWORK-WIN2" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="E:\Photon\unit\AllTest\AllTest\bin\Release\AllTest.dll" executed="True" result="Success" success="True" time="0.250" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="AllTest" executed="True" result="Success" success="True" time="0.234" asserts="0">
+        <results>
+          <test-suite type="TestFixture" name="helloTest" executed="True" result="Success" success="True" time="0.219" asserts="0">
+            <results>
+              <test-case name="AllTest.helloTest.AdditionTests" executed="True" result="Success" success="True" time="0.047" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

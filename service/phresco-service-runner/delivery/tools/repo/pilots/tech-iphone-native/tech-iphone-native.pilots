@@ -1,0 +1,13 @@
+{ "application" : "apptype-mobile",
+  "code" : "PHTN_iPhone_eshop",
+  "description" : "Electronic Shopping application for iPhone",
+  "name" : "eshop",
+  "technology" : { "appServers" : [ {  } ],
+      "databases" : [ {  } ],
+      "editors" : [ {  } ],
+      "frameworks" : [ {  } ],
+      "id" : "tech-iphone-native",
+      "name" : "iPhone Native",
+      "platforms" : [ {  } ]
+    }
+}

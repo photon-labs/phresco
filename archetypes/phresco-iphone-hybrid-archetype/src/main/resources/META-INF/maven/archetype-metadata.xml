@@ -1,0 +1,139 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+    name="iphone">
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include>
+				<include>excludefiles.txt</include> 	
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco</directory> 
+			<includes>
+				<include>main.m</include>
+				<include>PhoneGap.plist</include>
+				<include>Phresco-Info.plist</include>
+				<include>Phresco-Prefix.pch</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Classes</directory> 
+			<includes>
+				<include>AppDelegate.h</include>
+				<include>AppDelegate.m</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/en.lproj</directory> 
+			<includes>
+				<include>InfoPlist.strings</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/icons</directory> 
+			<includes>
+				<include>icon-72.png</include>
+				<include>icon.png</include>
+				<include>icon@2x.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Plugins</directory> 
+			<includes>
+				<include>README</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/Capture.bundle</directory> 
+			<includes>
+				<include>controls_bg.png</include>
+				<include>controls_bg@2x.png</include>
+				<include>controls_bg~ipad.png</include>
+				<include>microphone.png</include>
+				<include>microphone@2x.png</include>
+				<include>microphone~ipad.png</include>
+				<include>record_button@2x.png</include>
+				<include>record_button.png</include>
+				<include>record_button~ipad.png</include>
+				<include>recording_bg.png</include>
+				<include>recording_bg@2x.png</include>
+				<include>recording_bg~ipad.png</include>
+				<include>stop_button.png</include>
+				<include>stop_button@2x.png</include>
+				<include>stop_button~ipad.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/en.lproj</directory> 
+			<includes>
+				<include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/es.lproj</directory> 
+			<includes>
+				<include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj</directory> 
+			<includes>
+				<include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace</directory> 
+			<includes>
+				<include>contents.xcworkspacedata</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/ThirdParty</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/www</directory> 
+			<includes>
+				<include>index.html</include>
+				<include>phonegap-1.3.0.js</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/load</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/unit</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

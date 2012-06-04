@@ -1,0 +1,298 @@
+<!--
+  Copyright (c) 2011 Photon.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Photon Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.photon.in/legal/ppl-v10.html
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  
+  Contributors:
+      Photon - initial API and implementation
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.photon.phresco.service.tools</groupId>
+	<artifactId>phresco-service-setup</artifactId>
+    <version>2.2</version>
+	<packaging>pom</packaging>
+	<name>Phresco Service Setup</name>
+	<description>Phresco Service Tools Module</description>
+
+	
+	<properties>
+		<server.id>releases</server.id>
+		<server.url>http://localhost:8080/nexus/content/repositories/releases/</server.url>
+		<current.version>1.1.14002</current.version>
+		<next.version>2.2</next.version>
+		<inputexceldir>D:/work/phresco/agra/service/trunk/phresco-service-runner/delivery/tools/</inputexceldir>
+		<binariesdir>D:/work/phresco/Phresco-binaries/</binariesdir>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.photon.phresco.service.tools</groupId>
+			<artifactId>phresco-service-tools</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- Replace the version numbers in necessary files -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>maven-replacer-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>delivery/tools/repo/config/dependency.properties</include>
+						<include>delivery/tools/repo/config/apptype.xml</include>
+					</includes>
+					<token>${current.version}</token>
+					<value>${next.version}</value>
+				</configuration>
+			</plugin>
+		
+			<!-- Upload the replaced files -->
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-upload-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>dependency</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/dependency.properties</resourceSrc>
+							<resourceDest>config/dependency/${next.version}</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>apptype</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/apptype.xml</resourceSrc>
+							<resourceDest>config/apptype/${next.version}</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>settings</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/settings.json</resourceSrc>
+							<resourceDest>config/settings/0.3</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>admin</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/admin.json</resourceSrc>
+							<resourceDest>config/admin/0.1</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>config</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/config.xml</resourceSrc>
+							<resourceDest>/config/ci/config/0.2</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>credential</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/credential.xml</resourceSrc>
+							<resourceDest>/config/ci/credential/1.0</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+														
+					<execution>
+						<id>javahomeconfig</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/javahomeconfig.xml</resourceSrc>
+							<resourceDest>/config/ci/javahomeconfig/1.0</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>mavenhomeconfig</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/mavenhomeconfig.xml</resourceSrc>
+							<resourceDest>/config/ci/mavenhomeconfig/1.0</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>emailext</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/emailext.hpi</resourceSrc>
+							<resourceDest>/config/ci/emailext/1.0</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>ci</id>
+						<phase>package</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>delivery/tools/repo/config/ci.xml</resourceSrc>
+							<resourceDest>/config/ci/2.0/</resourceDest>
+							<serverId>${server.id}</serverId>
+							<url>${server.url}</url>
+						</configuration>
+					</execution>
+					
+				</executions>
+			</plugin>
+
+			<!-- Call the Repository Initializer
+				 Set HeapSpace As set MAVEN_OPTS=-Xmx1300m-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>  
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.photon.phresco.service.tools.RepositoryServerInitializer</mainClass>
+					<arguments>
+						<argument>${inputexceldir}</argument>
+						<argument>${binariesdir}</argument>
+					 </arguments>
+				</configuration>
+			</plugin>
+			
+			 
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<dependencies>
+				<dependency>
+				   <groupId>org.apache.maven</groupId>
+				   <artifactId>maven-ant-tasks</artifactId>
+				   <version>2.1.1</version>
+				</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>binaries</id>
+						<phase>package</phase>
+						<configuration>
+							  <target>
+								<property name="compile_classpath" refid="maven.compile.classpath"/>
+								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
+								<property name="test_classpath" refid="maven.test.classpath"/>
+								<property name="plugin_classpath" refid="maven.plugin.classpath"/>
+
+								<ant antfile="${basedir}/deploybinaries.xml">
+								</ant>
+							  </target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>videos</id>
+						<phase>package</phase>
+						<configuration>
+							  <target>
+								<property name="compile_classpath" refid="maven.compile.classpath"/>
+								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
+								<property name="test_classpath" refid="maven.test.classpath"/>
+								<property name="plugin_classpath" refid="maven.plugin.classpath"/>
+
+								<ant antfile="${basedir}/deployvideo.xml">
+								</ant>
+							  </target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+			
+		</plugins>
+	</build>
+	
+</project>

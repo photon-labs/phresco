@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="com.photon.phresco.model.ModuleGroup" table="modules_group">
+  <id name="id" type="string">
+			<meta attribute="use-in-equals">true</meta>
+			<column name="id" length="255"/>
+		</id>
+  <property generated="never" lazy="false" name="groupId" type="string">
+   <column length="255" name="groupId"/>
+  </property>
+  <property generated="never" lazy="false" name="artifactId" type="string">
+   <column length="255" name="artifactId"/>
+  </property>
+  <property generated="never" lazy="false" name="type" type="string">
+   <column length="255" name="type"/>
+  </property>
+  <property generated="never" lazy="false" name="name" type="string">
+   <column length="255" name="name"/>
+  </property>
+  <property generated="never" lazy="false" name="vendor" type="string">
+   <column length="255" name="vendor"/>
+  </property>
+  <property generated="never" lazy="false" name="core" type="boolean">
+   <column length="255" name="core"/>
+  </property>
+  <property generated="never" lazy="false" name="required" type="boolean">
+   <column length="255" name="required"/>
+  </property>
+ </class>
+ <query name="service.getModuleGroup">from ModuleGroup</query>
+</hibernate-mapping>

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<archetype-descriptor name=".Net"> 
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/lib</directory> 
+			<includes> 
+				<include>ReadMe.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src</directory> 
+			<includes> 
+				<include>Estee.GlobalPricingSystem.sln</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core</directory> 
+			<includes> 
+				<include>BAL.Core.csproj</include> 
+				<include>BALSample.cs</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/bin</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/obj/Debug</directory> 
+			<includes> 
+				<include>BAL.Core.csproj.FileListAbsolute.txt</include> 
+				<include>Estee.GloablPricing.BAL.Core.dll</include> 
+				<include>Estee.GloablPricing.BAL.Core.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/obj/Debug/Refactor</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/BAL/BAL.Core/Utility</directory> 
+			<includes> 
+				<include>Utility.cs</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core</directory> 
+			<includes> 
+				<include>DAL.Core.csproj</include> 
+				<include>DAL.Core.csproj.user</include> 
+				<include>Estee.GlobalPricingSystem.Database.csproj</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/bin</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/Entities</directory> 
+			<includes> 
+				<include>GlobalPricingModel.Designer.cs</include> 
+				<include>GlobalPricingModel.edmx</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/obj/Debug</directory> 
+			<includes> 
+				<include>Estee.GlobalPricing.DAL.Core.csproj.FileListAbsolute.txt</include> 
+				<include>Estee.GlobalPricing.DAL.Core.dll</include> 
+				<include>Estee.GlobalPricing.DAL.Core.pdb</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/obj/Debug/Refactor</directory> 
+			<includes> 
+				<include>Estee.GlobalPricing.DAL.Core.dll</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/DAL/DAL.Core/Utility</directory> 
+			<includes> 
+				<include>Utility.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Services</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Tools</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem</directory> 
+			<includes> 
+				<include>Default.aspx</include>
+				<include>Default.aspx.cs</include>
+				<include>Default.aspx.designer.cs</include>
+				<include>Estee.GlobalPricingSystem.csproj</include>
+				<include>Estee.GlobalPricingSystem.csproj.user</include>
+				<include>Home.aspx</include>
+				<include>Home.aspx.cs</include>
+				<include>Home.aspx.designer.cs</include>
+				<include>Web.config</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/App_Data</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/CSS</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/Images</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/JavaScript</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/bin</directory> 
+			<includes> 
+				<include>Estee.GloablPricing.BAL.Core.dll</include>
+				<include>Estee.GloablPricing.BAL.Core.pdb</include>
+				<include>Estee.GloablPricingSystem.dll</include>
+				<include>Estee.GloablPricingSystem.pdb</include>
+				<include>Estee.GlobalPricing.DAL.Core.dll</include>
+				<include>Estee.GlobalPricing.DAL.Core.pdb</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/bin/Entities</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/MasterPages</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug</directory> 
+			<includes> 
+				<include>Estee.GloablPricingSystem.dll</include>
+				<include>Estee.GloablPricingSystem.pdb</include>
+				<include>Estee.GlobalPricingSystem.csproj.FileListAbsolute.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug/Refactor</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Pages</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/UserControls</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Web/Estee.GlobalPricingSystem/Utility</directory> 
+			<includes> 
+				<include>ModelUtility.cs</include>
+				<include>Utility.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/test</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/db2</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mssql</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mysql</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/oracle</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/test</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+				<include>AllTest.sln</include> 
+				<include>AllTest.suo</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest</directory> 
+			<includes> 
+				<include>AllTest.cs</include> 
+				<include>AllTest.csproj</include> 
+				<include>App.config</include> 
+				<include>phresco-env-config.xml</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/bin/Debug</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.config</include> 
+				<include>AllTest.pdb</include> 
+				<include>nmock.dll</include> 
+				<include>nunit.core.dll</include> 
+				<include>nunit.framework.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.pdb</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.dll</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.pdb</include> 
+				<include>Castle.Core.dll</include> 
+				<include>Ionic.Zip.dll</include> 
+				<include>Newtonsoft.Json.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.pdb</include> 
+				<include>Selenium.WebDriverBackedSelenium.xml</include> 
+				<include>WebDriver.xml</include> 
+				<include>WebDriver.Support.xml</include> 
+				<include>WebDriver.Support.pdb</include> 
+				<include>WebDriver.Support.dll</include> 
+				<include>WebDriver.pdb</include> 
+				<include>WebDriver.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.xml</include> 
+				<include>System.Drawing.dll</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/bin/Release</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.config</include> 
+				<include>AllTest.dll.VisualState.xml</include> 
+				<include>AllTest.pdb</include> 
+				<include>nmock.dll</include> 
+				<include>nunit.core.dll</include> 
+				<include>nunit.framework.dll</include> 
+				<include>TestResult.xml</include> 
+				<include>ThoughtWorks.Selenium.Core.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.pdb</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.dll</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.pdb</include> 
+				<include>Castle.Core.dll</include> 
+				<include>WebDriver.xml</include> 
+				<include>WebDriver.Support.xml</include> 
+				<include>WebDriver.Support.pdb</include> 
+				<include>WebDriver.Support.dll</include> 
+				<include>WebDriver.pdb</include> 
+				<include>WebDriver.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.xml</include> 
+				<include>System.Drawing.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.xml</include> 
+				<include>Selenium.WebDriverBackedSelenium.pdb</include> 
+				<include>Selenium.WebDriverBackedSelenium.dll</include> 
+				<include>Newtonsoft.Json.dll</include> 
+				<include>Ionic.Zip.dll</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Debug</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Release</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include>
+				<include>AllTest.dll</include>
+				<include>AllTest.pdb</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Release/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+				<include>AllTest.sln</include> 
+				<include>AllTest.suo</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest</directory> 
+			<includes> 
+				<include>AllTest.cs</include> 
+				<include>AllTest.csproj</include>  
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/bin/Debug</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>nunit.framework.dll</include> 
+				<include>nunit.framework.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/bin/Release</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.VisualState.xml</include> 
+				<include>AllTest.pdb</include> 
+				<include>nunit.framework.dll</include> 
+				<include>nunit.framework.xml</include> 
+				<include>TestResult.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Debug</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Release</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Release/TempPE</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+	</fileSets> 
+</archetype-descriptor> 

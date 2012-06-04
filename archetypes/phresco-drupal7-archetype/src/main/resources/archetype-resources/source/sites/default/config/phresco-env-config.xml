@@ -1,0 +1,24 @@
+<environments>
+    <environment name="Production" default="true">
+        <Database name="mydb">
+            <host>localhost</host>
+            <port>3306</port>
+            <type>mysql</type>
+            <username>root</username>
+            <password></password>
+            <dbname>drupal-7.8</dbname>
+            <driver>com.mysql.jdbc.Driver</driver>
+            <table_prefix></table_prefix>
+        </Database>
+        <server name="myserver">
+            <host>localhost</host>
+            <port>8080</port>
+            <protocol>http</protocol>
+            <context>drupal-7.8</context>
+            <username>admin</username>
+            <password>admin</password>
+        </server>
+    </environment>
+</environments>
+
+

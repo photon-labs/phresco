@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules xmlns="http://www.example.org/Phresco">
+    <module required="false" core="false" version="1.0" name="login" id="mod_login_1.0">
+        <contentURL>/modules/tech-php/files/mod_login_1.0/1.0/mod_login_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Every user need to be authenticated. User need to enter user name and password to move over next page of the website .</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A simple home made PHP/MySQL login script to protect your web page content from spam and bot registrations so that only registered users can view the content of your site. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="shoutbox" id="mod_shoutbox_1.0">
+        <contentURL>/modules/tech-php/files/mod_shoutbox_1.0/1.0/mod_shoutbox_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Shoutbox is a PHP chat-box with integrated spam protection. It supports smilies,multiple languages and can be used with or without a MySQL database.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Shoutbox  is a PHP shoutbox script that lets visitors to your web site communicate quickly and easily. It's kind of like a chat room, but can be included on every page of your site and does not require special software like Java or Flash to load. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Weather" id="mod_weather_1.0">
+        <contentURL>/modules/tech-php/files/mod_weather_1.0/1.0/mod_weather_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PHP Weather makes it easy to show the current weather on your webpage.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The purpose of PHPWeatherLib is to provide web developers with an easy to use, lightweight, weather conditions library that pulls live conditions and weather data from the NOAA's[National Oceanic and Atmospheric Administration] public XML weather feeds.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Pagination" id="mod_pagination_1.0">
+        <contentURL>/modules/tech-php/files/mod_pagination_1.0/1.0/mod_pagination_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Pagination is the process of dividing information (content) into discrete pages.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>As your database grows, showing all the results of a query on a single page is no longer practical. This is where pagination comes in handy. You can display your results over a number of pages, each linked to the next, to allow your users to browse your content in bite sized pieces. </content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="List Files" id="mod_list_files_1.0">
+        <contentURL>/modules/tech-php/files/mod_list_files_1.0/1.0/mod_list_files_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>List all entries in the current directory and strip out .</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>List all entries in the current directory and strip out.The library is written in PHP, Using PHP4-friendly functions and object oriented design. Well under 10kb, the source files won't add bulk to your pages.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Auto Complete search" id="mod_auto_complete_search_1.0">
+        <contentURL>/modules/tech-php/files/mod_auto_complete_search_1.0/1.0/mod_auto_complete_search_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Autocomplete, when added to an input field, enables users to quickly find and select from a pre-populated list of values as they type.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Autocomplete is a feature provided by many web browsers, e-mail programs, search engine interfaces, source code editors, database query tools, word processors, and command line interpreters. Autocomplete involves the program predicting a word or phrase that the user wants to type in without the user actually typing it in completely. This feature is effective when it is easy to predict the word being typed based on those already typed, such as when there are a limited number of possible or commonly used words (as is the case with e-mail programs, web browsers, or command line interpreters), or when editing text written in a highly-structured, easy-to-predict language (as in source code editors). Autocomplete speeds up human-computer interactions in environments to which it is well suited. Autocomplete features are often enabled by default, and disabling or defeating them can sometimes be difficult for users to accomplish.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Blog" id="mod_blog_1.0">
+        <contentURL>/modules/tech-php/files/mod_blog_1.0/1.0/mod_blog_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Blog are mainly used to  post comments, create comments and to share the content.
+
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Blogger module to create a blogging server. Ablity of the user can post comments, reply for posted comments.
+
+Blog Features:
+1)Multiple language support.
+2)Simple css setup with unlimited visual combinations at your control.
+3)Installation is an easy single step process.
+4)Copy and paste only one line of code to insert the blog on your web page.
+5)Text/html editor for the post text.
+6)Image, flash and youtube clips supported in the post text.
+7)Search for posts option.
+8)Number of posts per page.
+9)Sort the order of comments.
+10)Server time offset for the comments time.
+11)Option to create a list with banned words.
+12)Prevention of HTML injections.
+13)Approve comments before having them listed.
+14)Email address where all new comments notifications will be sent to.
+15)Blog RSS Feed - validated by W3C.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Multiple Checkbox" id="mod_multiple_checkbox_1.0">
+        <contentURL>/modules/tech-php/files/mod_multiple_checkbox_1.0/1.0/mod_multiple_checkbox_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Multiple checkbox helps end user to select more than one option provided in web page.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Checkboxes is probably one of the most frequently used form controls which come handy in dealing with one to many relationships.The multiple selective nature of HTML form checkboxes require a convenient way for PHP to process multiple checkbox values, ideally in a single array.
+</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="ReportGenerator" id="mod_reportgenerator_1.0">
+        <contentURL>/modules/tech-php/files/mod_reportgenerator_1.0/1.0/mod_reportgenerator_1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PHP Report Generator is a powerful reporting tool that can generate dynamic PHP Web reports</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>PHP Report Maker is a powerful reporting tool that can generate dynamic PHP Web reports from MySQL, PostgreSQL, Microsoft Access, Microsoft SQL Server and Oracle database. You can instantly create live detail and summary reports or crosstabs reports for your Websites. Flash chart (column, bar, line, pie, area, doughnut, funnel, multi-series, stacked charts, Candlestick and Gantt) and JavaScript (HTML 5) chart are also supported. The generated Web pages are pure PHP, no server side or client-side is required. PHP Report Maker is designed for high flexibility, numerous options enable you to generate the reports that best suits your needs. The generated codes are clean and easy-to-customize. The PHP scripts can be run on Windows servers or Linux/Unix servers.PHP Report Generator can save you tons of time and is suitable for both beginners and experienced developers alike.</content>
+            </document>
+        </documents>
+    </module>
+    <module required="false" core="false" version="1.0" name="Commenting system." id="mod_commenting_system._1.0">
+        <contentURL>/modules/tech-php/files/mod_commenting_system._1.0/1.0/mod_commenting_system._1.0-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Comments system is mainly used to comment. There are two types of comments they are single line comment and Multi line comment.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Comments in PHP are similar to comments that are used in HTML. The PHP comment syntax always begins with a special character sequence and all text that appears between the start of the comment and the end will be ignored.The single line comment tells the interpreter to ignore everything that occurs on that line to the right of the comment.
+
+PHP commenting system has two types:
+The first type we will discuss is the single line comment.  To do a single line comment type &quot;//&quot; or &quot;#&quot; and all text to the right will be ignored by PHP interpreter.The multi-line PHP comment can be used to comment out large blocks of code or writing multiple line comments. The multiple line PHP comment begins with &quot; /* &quot; and ends with &quot; */ &quot;.
+</content>
+            </document>
+        </documents>
+    </module>
+</modules>

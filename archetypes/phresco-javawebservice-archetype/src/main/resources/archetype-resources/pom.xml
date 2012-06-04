@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.photon.phresco.service</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<packaging>war</packaging>
+	<name>${artifactId}</name>
+	<description>Sample Web Service(REST)</description>
+       
+    <properties>
+        <jersey-version>1.9-ea07</jersey-version>
+    </properties>
+	
+	<dependencies>
+	     <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
+
+	  	<dependency>
+        	<groupId>net.sf.json-lib</groupId>
+        	<artifactId>json-lib</artifactId>
+        	<version>0.9</version>
+        </dependency>
+		
+		<dependency>
+    		<groupId>javax.ws.rs</groupId>
+    		<artifactId>jsr311-api</artifactId>
+    		<version>1.1</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey-version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+		 <dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.0</version>
+		</dependency>
+    </dependencies>
+
+    <build>
+		<directory>do_not_checkin/target</directory>
+		<finalName>service</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.photon.phresco.plugins</groupId>
+				<artifactId>java-maven-plugin</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.t7mp</groupId>
+				<artifactId>maven-t7-plugin</artifactId>
+				<version>0.9.9</version>
+					<configuration>
+							<tomcatHttpPort>${server.port}</tomcatHttpPort>
+							<tomcatShutdownPort>${server.shutdown.port}</tomcatShutdownPort>
+							<tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
+							<tomcatVersion>7.0.6</tomcatVersion>
+							<tomcatSetAwait>true</tomcatSetAwait>
+							<webapps>
+								<webappArtifact>							  
+								   <groupId>${project.groupId}</groupId>
+								   <artifactId>${project.artifactId}</artifactId>
+								   <version>${project.version}</version>
+								   <contextPath>${project.build.finalName}</contextPath>
+								</webappArtifact>
+							</webapps>
+					</configuration>
+			</plugin>
+		</plugins>
+    </build>
+</project>

@@ -1,0 +1,5 @@
+D:\sourcecode\IPS_Phresco\source\src\Web\Estee.GlobalPricingSystem\bin\Estee.GloablPricing.BAL.Core.dll
+D:\sourcecode\IPS_Phresco\source\src\Web\Estee.GlobalPricingSystem\bin\Estee.GloablPricing.BAL.Core.pdb
+D:\sourcecode\IPS_Phresco\source\src\BAL\BAL.Core\obj\Debug\ResolveAssemblyReference.cache
+D:\sourcecode\IPS_Phresco\source\src\BAL\BAL.Core\obj\Debug\Estee.GloablPricing.BAL.Core.dll
+D:\sourcecode\IPS_Phresco\source\src\BAL\BAL.Core\obj\Debug\Estee.GloablPricing.BAL.Core.pdb

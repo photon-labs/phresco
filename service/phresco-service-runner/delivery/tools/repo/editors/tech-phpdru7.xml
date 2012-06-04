@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<editors xmlns="http://www.example.org/Phresco">
+    <editor id="1.0" version="1.06a">
+        <name>PHP Eclipse</name>
+    </editor>
+</editors>

@@ -1,0 +1,153 @@
+package com.photon.phresco.plugins;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.cli.Commandline;
+
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.SettingsInfo;
+import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.util.PluginUtils;
+
+/**
+ * Goal which builds the Java WebApp
+ * 
+ * @goal start
+ * 
+ */
+
+public class NodeJSStart extends AbstractMojo implements PluginConstants {
+
+	/**
+	 * The Maven project.
+	 * 
+	 * @parameter expression="${project}"
+	 * @required
+	 * @readonly
+	 */
+	protected MavenProject project;
+
+	/**
+	 * @parameter expression="${project.basedir}" required="true"
+	 * @readonly
+	 */
+	protected File baseDir;
+	
+	/**
+	 * @parameter expression="${environmentName}" required="true"
+	 */
+	protected String environmentName;
+
+	/**
+	 * @parameter expression="${importSql}" required="true"
+	 */
+	protected boolean importSql;
+	
+	
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		configure();
+		storeEnvName(environmentName);
+		createDb();
+		startNodeJS();
+	}
+	
+	private void configure() throws MojoExecutionException {
+		getLog().info("Configuring the project....");
+		File ConfigFile = new File(baseDir + NODE_CONFIG_FILE);
+		String basedir = baseDir.getName();
+		PluginUtils pu = new PluginUtils();
+		pu.executeUtil(environmentName, basedir, ConfigFile);
+	}
+
+	private void createDb() throws MojoExecutionException {
+		PluginUtils util = new PluginUtils();
+		try {
+			if (importSql) {
+				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_DB, baseDir
+						.getName(), environmentName);
+				for (SettingsInfo databaseDetails : settingsInfos) {
+				util.executeSql(databaseDetails,baseDir, NODE_SQL_DIR, NODE_SQL_FILE);
+					
+				}
+			}
+		} catch (PhrescoException e) {
+			getLog().info("server startup failed");
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
+
+	private void startNodeJS() throws MojoExecutionException {
+		BufferedReader br = null;
+		InputStreamReader isr = null;
+		FileWriter fileWriter = null;
+		try {
+			Commandline cl = new Commandline(NODE_CMD);
+			String[] args1 = { NODE_SERVER_FILE, environmentName };
+			cl.addArguments(args1);
+			cl.setWorkingDirectory(baseDir.getPath() + "/source");
+			Process proc = cl.execute();
+			getLog().info("server started");
+			File file = new File(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+
+			isr = new InputStreamReader(proc.getInputStream());
+			br = new BufferedReader(isr);
+			fileWriter = new FileWriter(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
+			LogWriter logWriter = new LogWriter();
+			logWriter.writeLog(br, fileWriter);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+				if (isr != null) {
+					isr.close();
+				}
+				if (fileWriter != null) {
+					fileWriter.close();
+				}
+			} catch (IOException e) {
+				getLog().info("server startup failed");
+				throw new MojoExecutionException(e.getMessage());
+			}
+		}
+	}
+	
+	private void storeEnvName(String envName) throws MojoExecutionException {
+		FileOutputStream fos = null;
+		File file = new File(baseDir.getPath() + File.separator + DOT_PHRESCO_FOLDER + File.separator + NODE_ENV_FILE);
+		try {
+			fos = new FileOutputStream(file, false);
+            fos.write(envName.getBytes());
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage());
+		}finally {
+			try {
+				if (fos != null) {
+					fos.close();
+				}
+			} catch (IOException e) {
+				throw new MojoExecutionException(e.getMessage());
+			}
+		}
+	}
+	
+}

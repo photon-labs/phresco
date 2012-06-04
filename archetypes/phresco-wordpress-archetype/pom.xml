@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>archetypes</groupId>
+  <artifactId>phresco-wordpress-archetype</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <name>Archetype - phresco-wordpress-archetype</name>
+  <url>http://maven.apache.org</url>
+	
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+     <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <site>
+            <id>phresco.archetype.wordpress</id>
+            <name>Phresco Archetypes - WordPress</name>
+            <url>scp://phresco.org/home/projects/archetypes/wordpress/public_html/</url>
+        </site>
+    </distributionManagement>
+
+
+
+
+	
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources/archetype-resources/.phresco</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/resources/META-INF/maven</directory>
+                                    <includes>
+                                        <include>archetype-metadata.xml</include>
+                                    </includes> 
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

@@ -1,0 +1,7 @@
+E:\Photon\unit\AllTest\AllTest\obj\Debug\ResolveAssemblyReference.cache
+E:\Photon\unit\AllTest\AllTest\bin\Debug\AllTest.dll
+E:\Photon\unit\AllTest\AllTest\bin\Debug\AllTest.pdb
+E:\Photon\unit\AllTest\AllTest\bin\Debug\nunit.framework.dll
+E:\Photon\unit\AllTest\AllTest\bin\Debug\nunit.framework.xml
+E:\Photon\unit\AllTest\AllTest\obj\Debug\AllTest.dll
+E:\Photon\unit\AllTest\AllTest\obj\Debug\AllTest.pdb
