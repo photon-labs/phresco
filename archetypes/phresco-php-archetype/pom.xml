@@ -1,35 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>archetypes</groupId>
-  <artifactId>phresco-php-archetype</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
-  <name>Archetype - phresco-php-archetype</name>
-  <url>http://maven.apache.org</url>  
 
-    <scm>
-        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/archetypes/phresco-php-archetype/trunk</connection>
-        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/archetypes/phresco-php-archetype/trunk</developerConnection>
-        <url>https://insight.photoninfotech.com/svn/repos/phresco/archetypes/phresco-php-archetype/trunk</url>
-    </scm>
+    <parent>
+        <groupId>com.photon.phresco.archetypes</groupId>
+        <artifactId>phresco-archetypes</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+  
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>archetypes</groupId>
+    <artifactId>phresco-php-archetype</artifactId>
+    <name>Archetype - phresco-php-archetype</name>
+    <url>http://www.phresco.org</url>  
     
      <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-        </repository>
         <site>
             <id>phresco.archetype.php</id>
             <name>Phresco Archetypes - PHP</name>
             <url>scp://phresco.org/home/projects/archetypes/php/public_html/</url>
         </site>
     </distributionManagement>
-
-
 
     <build>
         <plugins>

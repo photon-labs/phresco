@@ -1,30 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
+    <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
         <version>2.0.0-SNAPSHOT</version>
-  </parent>
+        <relativePath>../</relativePath>
+    </parent>
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 	<groupId>com.photon.phresco.pom</groupId>
 	<artifactId>phresco-pom</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
-	
-	<properties>
-        <jersey-version>1.9-ea07</jersey-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
+	<url>http://www.phresco.org</url>
+    
 	<distributionManagement>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>releases</id>
-			<url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-		</repository>
 		<site>
             <id>phresco.pom</id>
             <name>Phresco POM framework</name>
@@ -49,5 +37,5 @@
             <artifactId>junit</artifactId>
             <version>4.9</version>
         </dependency>
-        </dependencies>
+    </dependencies>
 </project>

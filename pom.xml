@@ -5,10 +5,18 @@
     <artifactId>phresco-parent</artifactId>
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <url>http://www.phresco.com</url>
+    <url>http://www.phresco.org</url>
     <name>Phresco Parent POM for repository and distribution management</name>
     
-   <modules>
+    <inceptionYear>2011</inceptionYear>
+    
+    <scm>
+        <connection>scm:git:git@github.com:phresco/phresco.git</connection>
+        <developerConnection>scm:git:git@github.com:phresco/phresco.git</developerConnection>
+        <url>https://github.com/phresco/phresco</url>
+    </scm>
+    
+    <modules>
         <module>commons</module>
         <module>framework</module>
         <module>service</module>
@@ -16,7 +24,7 @@
         <module>libraries</module>
         <module>plugins</module> 
 		<module>phresco-pom</module>
-    </modules>    
+    </modules>
 
      <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,7 +32,8 @@
         <maven-plugin-plugin.version>2.9</maven-plugin-plugin.version>
         <maven.api.version>3.0.3</maven.api.version>
         <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
-          <sitePluginVersion>3.1</sitePluginVersion>
+        <sitePluginVersion>3.1</sitePluginVersion>
+        <jersey-version>1.9-ea07</jersey-version>
     </properties>
 
     <repositories>

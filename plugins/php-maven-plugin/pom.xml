@@ -3,32 +3,18 @@
    <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.0</version>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
     
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.photon.phresco.plugins</groupId>
-  <artifactId>php-maven-plugin</artifactId>
-  <packaging>maven-plugin</packaging>
-  <version>2.0.0-SNAPSHOT</version>
-  <name>php-maven-plugin Maven Mojo</name>
-  <url>http://maven.apache.org</url>
-
-    <scm>
-        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/php-maven-plugin/trunk</connection>
-        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/php-maven-plugin/trunk</developerConnection>
-        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/php-maven-plugin/trunk</url>
-    </scm>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.plugins</groupId>
+    <artifactId>php-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <name>php-maven-plugin Maven Mojo</name>
+    <url>http://www.phresco.org</url>
    
-       <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-        </repository>
+    <distributionManagement>
         <site>
             <id>phresco.plugins.php</id>
             <name>Phresco Plugins - PHP</name>
@@ -36,13 +22,7 @@
         </site>
     </distributionManagement>   
 
- 
-    <properties>
-        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-  <dependencies>
+    <dependencies>
       <dependency>
         <groupId>com.photon.phresco.commons</groupId>
         <artifactId>phresco-commons</artifactId>

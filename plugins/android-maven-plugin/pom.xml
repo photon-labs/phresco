@@ -18,51 +18,25 @@
     <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.0</version>
-    </parent>   
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.photon.maven.plugins.android.generation2</groupId>
     <artifactId>android-maven-plugin</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Android Maven Plugin - android-maven-plugin</name>
     <description>Maven Plugin for Android Development</description>
-    <inceptionYear>2011</inceptionYear>
+	<url>http://www.phresco.org</url>
     
-    <scm>
-        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/android-maven-plugin/trunk</connection>
-        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/android-maven-plugin/trunk</developerConnection>
-        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/android-maven-plugin/trunk</url>
-    </scm>
-      
-
     <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <!-- <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url> -->
-            <url>http://172.16.18.178:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-            <!-- <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url> -->
-       <!--     <url>http://172.16.18.178:8080/nexus/content/repositories/snapshots/</url> -->
-       
-        </repository>
         <site>
             <id>phresco.plugins.android</id>
             <name>Phresco Plugins - Android</name>
             <url>scp://phresco.org/home/projects/plugins/android/public_html/</url>
         </site>
     </distributionManagement>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-plugin-plugin.version>2.8</maven-plugin-plugin.version>
-        <maven.api.version>3.0.3</maven.api.version>
-        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <prerequisites>
         <maven>[3.0.3,)</maven>

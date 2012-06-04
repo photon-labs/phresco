@@ -1,42 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
+    <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.0</version>
-  </parent> 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.photon.phresco.plugins.xcode</groupId>
-  <artifactId>xcode-maven-plugin</artifactId>
-  <packaging>maven-plugin</packaging>
-  <version>2.0.0-SNAPSHOT</version>
-  <name>Xcodebuild Command-Line Wrapper</name>
-
-    <scm>
-        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</connection>
-        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</developerConnection>
-        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/xcode-maven-plugin/trunk</url>
-    </scm>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent> 
+  
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco.plugins.xcode</groupId>
+    <artifactId>xcode-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <name>Xcodebuild Command-Line Wrapper</name>
+    <url>http://www.phresco.org</url>
   
      <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-        </repository>
         <site>
             <id>phresco.plugins.xcode</id>
             <name>Phresco Plugins - XCode</name>
             <url>scp://phresco.org/home/projects/plugins/xcode/public_html/</url>
         </site>
     </distributionManagement>
-
-    <properties>
-        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>

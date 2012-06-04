@@ -21,7 +21,6 @@
 	</parent>
 	
 	<artifactId>javascript-maven-plugin</artifactId>
-	<version>1.2.0.0-SNAPSHOT05-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Javascript Maven Plugin</name>

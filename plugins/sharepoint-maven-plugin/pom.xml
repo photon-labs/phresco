@@ -3,42 +3,24 @@
    <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.0</version>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
+    
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.photon.phresco.plugins</groupId>
   <artifactId>sharepoint-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>2.0.0-SNAPSHOT</version>
   <name>sharepoint-maven-plugin Maven Mojo</name>
-  <url>http://maven.apache.org</url>
+  <url>http://www.phresco.org</url>
 
-    <scm>
-        <connection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/sharepoint-maven-plugin/trunk</connection>
-        <developerConnection>scm:svn:https://insight.photoninfotech.com/svn/repos/phresco/plugins/sharepoint-maven-plugin/trunk</developerConnection>
-        <url>https://insight.photoninfotech.com/svn/repos/phresco/plugins/sharepoint-maven-plugin/trunk</url>
-    </scm>
-
-       <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-        </repository>
+   <distributionManagement>
         <site>
             <id>phresco.plugins.sharepoint</id>
             <name>Phresco Plugins - SharePoint</name>
             <url>scp://phresco.org/home/projects/plugins/sharepoint/public_html/</url>
         </site>
     </distributionManagement>
-    
-    <properties>
-        <phresco-commons-version>2.0.0-SNAPSHOT</phresco-commons-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
   <dependencies>
       <dependency>

@@ -4,7 +4,7 @@
 	<groupId>com.photon.phresco</groupId>
 	<artifactId>phresco-release</artifactId>
 	<version>1.1</version>
-        <packaging>pom</packaging>
+    <packaging>pom</packaging>
 	<url>http://www.phresco.com</url>
 	<name>Phresco Parent POM for repository and distribution management</name>
 
@@ -20,11 +20,8 @@
                 <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</next.version>
 -->
 
-
-
 	 	<current.version>1.1.16000-SNAPSHOT</current.version>
 		<next.version>2.0.0-SNAPSHOT</next.version>
-
 	</properties>
 
 <build>
