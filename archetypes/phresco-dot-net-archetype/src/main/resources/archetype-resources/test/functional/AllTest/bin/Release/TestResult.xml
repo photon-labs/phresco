@@ -1,4 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+  ###
+  Archetype - phresco-dot-net-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+
 <!--This file represents the results of running a test suite-->
 <test-results name="C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release\AllTest.dll" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-05-04" time="15:20:50">
   <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3625" os-version="Microsoft Windows NT 5.2.3790 Service Pack 2" platform="Win32NT" cwd="C:\Documents and Settings\Photon\My Documents\Downloads\phresco-framework-1.1.12000\phresco-framework-1.1.12000\phresco-framework\workspace\projects\PHR_aspnet\test\functional\AllTest\bin\Release" machine-name="PHOTON-C1BD88AF" user="Photon" user-domain="PHOTON-C1BD88AF" />

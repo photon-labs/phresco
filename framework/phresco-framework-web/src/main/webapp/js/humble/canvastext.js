@@ -1,7 +1,26 @@
+/*
+ * ###
+ * Framework Web Archive
+ * 
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
 /**
  * This code is released to the public domain by Jim Studt, 2007.
  * He may keep some sort of up to date copy at http://www.federated.com/~jim/canvastext/
- * It as been modified by Fabien Ménager to handle font style like size, weight, color and rotation. 
+ * It as been modified by Fabien Mï¿½nager to handle font style like size, weight, color and rotation. 
  * A partial support for special characters has been added too.
  */
 var CanvasText = {
@@ -108,69 +127,69 @@ var CanvasText = {
 		'~': { width: 24, points: [[3,6],[3,8],[4,11],[6,12],[8,12],[10,11],[14,8],[16,7],[18,7],[20,8],[21,10],null,[3,8],[4,10],[6,11],[8,11],[10,10],[14,7],[16,6],[18,6],[20,7],[21,10],[21,12]] },
 		
 		// Lower case Latin-1
-		'à': { diacritic: '`', letter: 'a' },
-		'á': { diacritic: '´', letter: 'a' },
-		'â': { diacritic: '^', letter: 'a' },
-		'ä': { diacritic: '¨', letter: 'a' },
+		'ï¿½': { diacritic: '`', letter: 'a' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'a' },
+		'ï¿½': { diacritic: '^', letter: 'a' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'a' },
 		
-		'è': { diacritic: '`', letter: 'e' },
-		'é': { diacritic: '´', letter: 'e' },
-		'ê': { diacritic: '^', letter: 'e' },
-		'ë': { diacritic: '¨', letter: 'e' },
+		'ï¿½': { diacritic: '`', letter: 'e' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'e' },
+		'ï¿½': { diacritic: '^', letter: 'e' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'e' },
 		
-		'ì': { diacritic: '`', letter: 'i' },
-		'í': { diacritic: '´', letter: 'i' },
-		'î': { diacritic: '^', letter: 'i' },
-		'ï': { diacritic: '¨', letter: 'i' },
+		'ï¿½': { diacritic: '`', letter: 'i' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'i' },
+		'ï¿½': { diacritic: '^', letter: 'i' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'i' },
 		
-		'ò': { diacritic: '`', letter: 'o' },
-		'ó': { diacritic: '´', letter: 'o' },
-		'ô': { diacritic: '^', letter: 'o' },
-		'ö': { diacritic: '¨', letter: 'o' },
-		'õ': { diacritic: '~', letter: 'o' },
+		'ï¿½': { diacritic: '`', letter: 'o' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'o' },
+		'ï¿½': { diacritic: '^', letter: 'o' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'o' },
+		'ï¿½': { diacritic: '~', letter: 'o' },
 		
-		'ù': { diacritic: '`', letter: 'u' },
-		'ú': { diacritic: '´', letter: 'u' },
-		'û': { diacritic: '^', letter: 'u' },
-		'ü': { diacritic: '¨', letter: 'u' },
+		'ï¿½': { diacritic: '`', letter: 'u' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'u' },
+		'ï¿½': { diacritic: '^', letter: 'u' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'u' },
 		
-		'ý': { diacritic: '´', letter: 'y' },
-		'ÿ': { diacritic: '¨', letter: 'y' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'y' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'y' },
 		
-		'ç': { diacritic: '¸', letter: 'c' },
-		'ñ': { diacritic: '~', letter: 'n' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'c' },
+		'ï¿½': { diacritic: '~', letter: 'n' },
     
 		// Upper case Latin-1
-		'À': { diacritic: '`', letter: 'A' },
-		'Á': { diacritic: '´', letter: 'A' },
-		'Â': { diacritic: '^', letter: 'A' },
-		'Ä': { diacritic: '¨', letter: 'A' },
+		'ï¿½': { diacritic: '`', letter: 'A' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'A' },
+		'ï¿½': { diacritic: '^', letter: 'A' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'A' },
 		
-		'È': { diacritic: '`', letter: 'E' },
-		'É': { diacritic: '´', letter: 'E' },
-		'Ê': { diacritic: '^', letter: 'E' },
-		'Ë': { diacritic: '¨', letter: 'E' },
+		'ï¿½': { diacritic: '`', letter: 'E' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'E' },
+		'ï¿½': { diacritic: '^', letter: 'E' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'E' },
     
-		'Ì': { diacritic: '`', letter: 'I' },
-		'Í': { diacritic: '´', letter: 'I' },
-		'Î': { diacritic: '^', letter: 'I' },
-		'Ï': { diacritic: '¨', letter: 'I' },
+		'ï¿½': { diacritic: '`', letter: 'I' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'I' },
+		'ï¿½': { diacritic: '^', letter: 'I' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'I' },
 		
-		'Ò': { diacritic: '`', letter: 'O' },
-		'Ó': { diacritic: '´', letter: 'O' },
-		'Ô': { diacritic: '^', letter: 'O' },
-		'Ö': { diacritic: '¨', letter: 'O' },
-		'Õ': { diacritic: '~', letter: 'O' },
+		'ï¿½': { diacritic: '`', letter: 'O' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'O' },
+		'ï¿½': { diacritic: '^', letter: 'O' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'O' },
+		'ï¿½': { diacritic: '~', letter: 'O' },
 		
-		'Ù': { diacritic: '`', letter: 'U' },
-		'Ú': { diacritic: '´', letter: 'U' },
-		'Û': { diacritic: '^', letter: 'U' },
-		'Ü': { diacritic: '¨', letter: 'U' },
+		'ï¿½': { diacritic: '`', letter: 'U' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'U' },
+		'ï¿½': { diacritic: '^', letter: 'U' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'U' },
 		
-		'Ý': { diacritic: '´', letter: 'Y' },
+		'ï¿½': { diacritic: 'ï¿½', letter: 'Y' },
 		
-		'Ç': { diacritic: '¸', letter: 'C' },
-		'Ñ': { diacritic: '~', letter: 'N' }
+		'ï¿½': { diacritic: 'ï¿½', letter: 'C' },
+		'ï¿½': { diacritic: '~', letter: 'N' }
 	},
 	
 	specialchars: {
@@ -179,11 +198,11 @@ var CanvasText = {
 	
 	/** Diacritics, used to draw accentuated letters */
 	diacritics: {
-		'¸': { entity: 'cedil', points: [[6,-4],[4,-6],[2,-7],[1,-7]] },
-		'´': { entity: 'acute', points: [[8,19],[13,22]] },
+		'ï¿½': { entity: 'cedil', points: [[6,-4],[4,-6],[2,-7],[1,-7]] },
+		'ï¿½': { entity: 'acute', points: [[8,19],[13,22]] },
 		'`': { entity: 'grave', points: [[7,22],[12,19]] },
 		'^': { entity: 'circ',	points: [[5.5,19],[9.5,23],[12.5,19]] },
-		'¨': { entity: 'trema', points: [[5,21],[6,20],[7,21],[6,22],[5,21],null,[12,21],[13,20],[14,21],[13,22],[12,21]] },
+		'ï¿½': { entity: 'trema', points: [[5,21],[6,20],[7,21],[6,22],[5,21],null,[12,21],[13,20],[14,21],[13,22],[12,21]] },
 		'~': { entity: 'tilde', points: [[4,18],[7,22],[10,18],[13,22]] }
 	},
 	

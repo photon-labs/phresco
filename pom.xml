@@ -8,8 +8,11 @@
     <url>http://www.phresco.org</url>
     <name>Phresco Parent POM for repository and distribution management</name>
     
-    <inceptionYear>2011</inceptionYear>
-    
+    <inceptionYear>1999</inceptionYear>
+    <organization>
+        <name>Photon Infotech Inc.</name>
+    </organization>
+
     <scm>
         <connection>scm:git:git@github.com:phresco/phresco.git</connection>
         <developerConnection>scm:git:git@github.com:phresco/phresco.git</developerConnection>
@@ -36,43 +39,86 @@
         <jersey-version>1.9-ea07</jersey-version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>Phresco Repository</name>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</url>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://172.16.18.178:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>releases</id>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-        </repository>
-        <site>
-            <id>phresco</id>
-            <name>Phresco</name>
-            <url>scp://phresco.org/home/public_html/</url>
-        </site>
-    </distributionManagement>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>dev-snapshots</id>
+                    <url>http://localhost:8080/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>dev-releases</id>
+                    <url>http://localhost:8080/nexus/content/repositories/releases/</url>
+                </repository>
+                 <site>
+                    <id>phresco</id>
+                    <name>Phresco</name>
+                    <url>scp://phresco.org/home/public_html/</url>
+                </site>
+            </distributionManagement>
+       </profile>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>Phresco Repository</name>
-            <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+     <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <distributionManagement>
+            <repository>
+                <id>test-release</id>
+                <url>http://456:8080/nexus/content/repositories/releases/</url>
+            </repository>
+             <site>
+                <id>phresco</id>
+                <name>Phresco</name>
+                <url>scp://phresco.org/home/public_html/</url>
+            </site>
+            </distributionManagement>
+     </profile>
+
+     <profile>
+            <id>stage</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <distributionManagement>
+            <repository>
+                <id>stage-release</id>
+                <url>http://456:8080/nexus/content/repositories/releases/</url>
+            </repository>
+                <site>
+                    <id>phresco</id>
+                    <name>Phresco</name>
+                    <url>scp://phresco.org/home/public_html/</url>
+               </site>
+            </distributionManagement>
+     </profile>
+     
+     <!-- Profile for Production deployment -->
+     <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <distributionManagement>
+            <repository>
+                <id>prod-release</id>
+                <url>http://456:8080/nexus/content/repositories/releases/</url>
+            </repository>
+             <site>
+                <id>phresco</id>
+                <name>Phresco</name>
+                <url>scp://phresco.org/home/public_html/</url>
+            </site>
+         </distributionManagement>
+     </profile>
+   </profiles>
+    
     <build>
         <pluginManagement>
             <plugins>
@@ -256,7 +302,20 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+        
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                   <verbose>false</verbose>
+                   <processStartTag>###</processStartTag>
+                   <processEndTag>###</processEndTag>
+                  <!-- <sectionDelimiter>" "</sectionDelimiter> -->
+                   <licenseName>apache_v2</licenseName>
+                </configuration>
+            </plugin>
+          </plugins>
     </build>
 
 
