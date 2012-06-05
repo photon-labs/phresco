@@ -4,11 +4,11 @@
 	<groupId>com.photon.phresco.framework</groupId>
 	<artifactId>PhrescoFrameworkRuntime</artifactId>
 	<packaging>pom</packaging>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>1.1.17000</version>
 	<name>Phresco Framework Web Application</name>
 
     <properties>
-		<phresco.framework.version>2.0.0-SNAPSHOT</phresco.framework.version>		
+		<phresco.framework.version>1.1.17000</phresco.framework.version>		
 	</properties>
 
 	<dependencies>
