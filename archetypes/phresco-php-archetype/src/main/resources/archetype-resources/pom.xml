@@ -30,7 +30,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>php-maven-plugin</artifactId>
-				<version>2.0.0-SNAPSHOT</version>
+				<version>1.2.0-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 		</plugins>
