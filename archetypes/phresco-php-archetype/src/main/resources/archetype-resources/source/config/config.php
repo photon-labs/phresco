@@ -20,13 +20,19 @@
 <?php
 
 function getConfigByName($currentEnv, $type, $name) {
-	$fileContents = file_get_contents("sites/default/config/phresco-env-config.xml");
+    $self = $_SERVER['PHP_SELF'];
+    $deploydir = explode("/", $self);
+
+    $host = "http://".$_SERVER["HTTP_HOST"]."/".$deploydir[1]."/";
+	
+	$fileContents = file_get_contents($host.'config/phresco-env-config.xml');
 	$file = getOriginalString($fileContents);
 	
 	$document = new DOMDocument();
 	$document->loadXML($file);
 	$xmlDoc = $document->documentElement;
 	$xml = simplexml_load_string($file);
+
 	foreach ($xmlDoc->childNodes AS $envNode) {
 		if ($envNode->nodeName == "environment") {
 			$env = $envNode->getAttribute("name");
