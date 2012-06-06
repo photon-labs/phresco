@@ -125,11 +125,16 @@ public class PhpPackage extends AbstractMojo implements PluginConstants {
 	}
 	
 	private void configure() throws MojoExecutionException {
+		try {
 		getLog().info("Configuring the project....");
 		File srcConfigFile = new File(baseDir + PHP_SOURCE_CONFIG_FILE);
 		String basedir = baseDir.getName();
 		PluginUtils pu = new PluginUtils();
 		pu.executeUtil(environmentName, basedir, srcConfigFile);
+		pu.encryptConfigFile(srcConfigFile.getPath());
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 	
 	private void createPackage() throws MojoExecutionException {
