@@ -247,7 +247,7 @@ $databases = array (
       'host'	 => $properties[0]->host,
       'port'	 => $properties[0]->port,
       'driver' 	 => $properties[0]->type,
-      'prefix' 	 => $properties[0]->table_prefix,
+      'prefix' 	 => '',
     ),
   ),
 );
