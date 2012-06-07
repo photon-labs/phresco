@@ -1,0 +1,81 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<baseDirectory>/</baseDirectory> 
+	<formats>
+		<format>war</format>
+	<!--<format>tar.gz</format> -->
+	</formats>
+
+	<fileSets>
+	
+		<!-- filter to copy the contents from the base directory -->
+		<fileSet>
+			<directory>do_not_checkin/target/classes</directory>
+			<outputDirectory>/WEB-INF/classes</outputDirectory>
+			<excludes>
+			    <exclude>/js/**</exclude>
+			    <exclude>/resources/**</exclude>
+			    <exclude>/css/**</exclude>
+				<exclude>/images/**</exclude>
+				<exclude>*.html</exclude>
+				<exclude>*.jsp</exclude>
+			</excludes>
+		</fileSet>
+		
+		<fileSet>
+			<directory>do_not_checkin/target/classes</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+			    <include>/js/**</include>
+			    <include>/resources/**</include>
+			    <include>/css/**</include>
+				<include>/images/**</include>
+				<include>*.html</include>
+				<include>*.jsp</include>
+			</includes>
+		</fileSet>
+	
+		<!-- filter to copy the contents from the base directory -->
+		<fileSet>
+			<directory>src/main/webapp</directory>
+			<outputDirectory>/</outputDirectory>
+		</fileSet>
+		
+		<fileSet>
+			<directory>do_not_checkin/target</directory>
+			<outputDirectory>/WEB-INF</outputDirectory>
+			<includes>
+			    <include>/lib/**</include>
+			</includes>
+		</fileSet>
+		
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>/WEB-INF/classes</outputDirectory>
+			<excludes>
+			    <exclude>/js/**</exclude>
+			    <exclude>/resources/**</exclude>
+			    <exclude>/css/**</exclude>
+				<exclude>*.html</exclude>
+				<exclude>*.jsp</exclude>
+			</excludes>
+		</fileSet>
+		
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>/resources</outputDirectory>
+			<includes>
+			    <include>*.xml</include>
+			</includes>
+			<excludes>
+			    <exclude>/js/**</exclude>
+			    <exclude>/resources/**</exclude>
+			    <exclude>/css/**</exclude>
+				<exclude>*.html</exclude>
+				<exclude>*.jsp</exclude>
+			</excludes>
+		</fileSet>
+	</fileSets>
+
+</assembly>	
