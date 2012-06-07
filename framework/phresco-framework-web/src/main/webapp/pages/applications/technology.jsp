@@ -297,7 +297,7 @@
 		params = params.concat('<%= projectCode %>');
 		
 		/* 
-			To check for the corressponding configuration of the item to be removed.
+			To check for the corresponding configuration of the item to be removed.
 			If it has configuration then the confirmation will be asked from the user regarding the deletion of the configuration 
 		*/
 		if (<%= StringUtils.isNotEmpty(fromPage) %>) {
@@ -499,15 +499,15 @@
 		} else if (pageUrl == "checkForRespectiveConfig") {
 			if (data.hasConfiguration) {
 				if (type == "Database") {
-					$("#confirmationText").html("Corressponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
 				} else {
-					$("#confirmationText").html("Corressponding " + type + " configurations will also be deleted. Do you like to continue ?");					
+					$("#confirmationText").html("corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
 				}
 			    dialog('block');
 			    escBlockPopup();
 			} else {
 				if (type == "Database") {
-					$("#confirmationText").html("Corressponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
 					dialog('block');
 				    escBlockPopup();
 				} else {
