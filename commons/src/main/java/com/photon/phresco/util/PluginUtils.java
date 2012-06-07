@@ -19,10 +19,14 @@
  */
 package com.photon.phresco.util;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,9 +37,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.FileUtils;
+import org.w3c.dom.Document;
 
 import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
@@ -207,6 +219,58 @@ public class PluginUtils {
 			FileUtils.fileWrite(configFile, content);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
+		}
+	}
+	public void encryptConfigFile(String fileName) throws PhrescoException {
+		InputStream inputStream = null;
+		try {
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			inputStream = new FileInputStream(new File(fileName));
+			Document doc = documentBuilderFactory.newDocumentBuilder().parse(inputStream);
+			StringWriter stw = new StringWriter();
+			Transformer serializer = TransformerFactory.newInstance().newTransformer();
+			serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+			serializer.transform(new DOMSource(doc), new StreamResult(stw));
+			encryptString encryptstring = new encryptString();
+			encryptstring.Crypto("D4:6E:AC:3F:F0:BE");
+			String encryptXmlString = encryptstring.encrypt(stw.toString());
+			writeXml(encryptXmlString, fileName);
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}  finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	}
+	
+	private void writeXml(String encrStr, String fileName) throws PhrescoException  {
+		DataOutputStream dos = null;
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(fileName);
+			dos = new DataOutputStream(fos);
+			dos.writeBytes(encrStr);
+		} catch (FileNotFoundException e) {
+			throw new PhrescoException(e);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} finally {
+			try {
+				if (dos != null) {
+					dos.close();
+				}
+				if (fos != null) {
+					fos.close();
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
 		}
 	}
 }
