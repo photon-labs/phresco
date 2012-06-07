@@ -199,7 +199,10 @@ public class Settings extends FrameworkBaseAction {
             
 	        List<SettingsTemplate> settingsTemplates = administrator.getSettingsTemplates();
 			administrator.createSetting(settingsInfo, environments.toString());
-			addActionMessage(getText(SUCCESS_SETTING, Collections.singletonList(settingsName)));
+			List<String> list = new ArrayList<String>();
+			list.add(settingsType);
+			list.add(settingsName);
+			addActionMessage(getText(SUCCESS_SETTING, list));
 			
 			getHttpRequest().setAttribute(SESSION_SETTINGS_TEMPLATES, settingsTemplates);
 			getHttpRequest().setAttribute(REQ_CONFIG_INFO, settingsInfo);

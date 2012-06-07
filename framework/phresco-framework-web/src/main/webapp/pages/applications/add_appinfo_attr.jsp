@@ -259,7 +259,7 @@ $(document).ready(function() {
 					continueAdd();
 				} else {
 					$('.popup_div').hide();
-					$("#confirmationText").html("Corressponding database SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("Corresponding database SQL files will also be deleted. Do you like to continue ?");
 					dialog('block');
 				    escBlockPopup();
 				    typeRemoveFlag = true;

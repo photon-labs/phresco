@@ -287,7 +287,7 @@
 			});
         
 		 
-		/** to display corressponding versions **/
+		/** to display Corresponding versions **/
 		$("#type").change(function() {
 			$('#deploy_dir').show();
 			if($(this).val() == "NodeJS") {
