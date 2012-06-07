@@ -103,19 +103,26 @@ public class PomProcessor {
 	 * @throws PhrescoPomException 
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope) throws JAXBException, PhrescoPomException {
-		if(isDependencyAvailable(groupId, artifactId)){
-			changeDependencyVersion(groupId, artifactId, version);
-			return;
-		}
-		Dependency dependency = new Dependency();
-		dependency.setArtifactId(artifactId);
-		dependency.setGroupId(groupId);
-		dependency.setVersion(version);
-		if(StringUtils.isNotBlank(scope)){
-			dependency.setScope(scope);
-		}
-		addDependency(dependency);
+		addDependency(groupId, artifactId, version, scope, null);
 	} 
+	
+	public void addDependency(String groupId, String artifactId, String version, String scope, String type) throws JAXBException, PhrescoPomException {
+        if(isDependencyAvailable(groupId, artifactId)){
+            changeDependencyVersion(groupId, artifactId, version);
+            return;
+        }
+        Dependency dependency = new Dependency();
+        dependency.setArtifactId(artifactId);
+        dependency.setGroupId(groupId);
+        dependency.setVersion(version);
+        if(StringUtils.isNotBlank(scope)){
+            dependency.setScope(scope);
+        }
+        if(StringUtils.isNotBlank(type)){
+            dependency.setType(type);
+        }
+        addDependency(dependency);
+    } 
 	
 	/**
 	 * @param groupId
