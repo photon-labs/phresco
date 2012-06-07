@@ -58,7 +58,11 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
 		super.process(info, path);
-		extractJsLibraries(path, info.getTechnology().getJsLibraries());
+		if (info.getTechnology().getId().equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
+		    updatePOMWithJsLibs(path, info.getTechnology().getJsLibraries());
+		} else {
+		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
+		}
 	}
 
 	@Override
