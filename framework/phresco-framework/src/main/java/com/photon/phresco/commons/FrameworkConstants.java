@@ -617,7 +617,7 @@ public interface FrameworkConstants {
     /*
      * Create Setting keys
      */
-    String SUCCESS_SETTING = "Setting {0} created successfully";
+    String SUCCESS_SETTING = "The {0} {1} has been created successfully";
     String FAILURE_SETTING = "Setting {0} creation failed";
     
     /*
