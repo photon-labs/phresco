@@ -205,7 +205,34 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 			throw new PhrescoException(e);
 		}
 	}
-
+	
+	protected void updatePOMWithJsLibs(File path, List<com.photon.phresco.model.ModuleGroup> jsLibs) throws PhrescoException{
+        try {
+            if (isDebugEnabled) {
+                S_LOGGER.debug("extractModules() path=" + path.getPath());
+            }
+            File pomFile = new File(path, "pom.xml");
+            if (pomFile.exists()) {
+                PomProcessor processor = new PomProcessor(pomFile);
+                for (com.photon.phresco.model.ModuleGroup jsLibrary : jsLibs) {
+                    if (jsLibrary != null) {
+                        String groupId = "jslibraries.files";
+                        String artifactId = "jslib_" + jsLibrary.getName().toLowerCase();
+                        processor.addDependency(groupId, artifactId, jsLibrary.getVersions()
+                                .get(0).getVersion(), "", "js");
+                    }
+                }
+                processor.save();
+            }
+        } catch (IOException e) {
+            throw new PhrescoException(e);
+        } catch (JAXBException e) {
+            throw new PhrescoException(e);
+        } catch (PhrescoPomException e) {
+            throw new PhrescoException(e);
+        }
+    }
+	
 	protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
 		String databaseType = "";
 		try {

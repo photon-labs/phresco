@@ -36,6 +36,10 @@ public class Library {
 	   private  List<String> dependentLibList;
 	   private int librariesId;
 	   private boolean required;
+	   private String artifactId;
+	   private String groupId;
+	   private String type;
+	   
 	    /**
 	 * @return the librariesId
 	 */
@@ -218,6 +222,24 @@ public class Library {
 		public void setRequired(boolean required) {
 			this.required = required;
 		}
+        public String getArtifactId() {
+            return artifactId;
+        }
+        public void setArtifactId(String artifactId) {
+            this.artifactId = artifactId;
+        }
+        public String getGroupId() {
+            return groupId;
+        }
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
+        }
+        public String getType() {
+            return type;
+        }
+        public void setType(String type) {
+            this.type = type;
+        }
 
 
 }
