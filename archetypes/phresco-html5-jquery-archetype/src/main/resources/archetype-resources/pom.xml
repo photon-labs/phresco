@@ -29,6 +29,15 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+    
+    <dependencies>
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.7</version>
+          <scope>test</scope>
+        </dependency>
+  </dependencies>
 	
     <build>
         <directory>do_not_checkin/target</directory>
@@ -37,7 +46,7 @@
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2-SNAPSHOT</version>
+				<version>1.2.0.1001</version>
 			</extension>
 		</extensions>
 			
@@ -82,7 +91,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.1.17000</version>
+                <version>1.2.0.1001</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
