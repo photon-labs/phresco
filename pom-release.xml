@@ -20,8 +20,8 @@
                 <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</next.version>
 -->
 
-	 	<current.version>1.2.0-SNAPSHOT</current.version>
-		<next.version>1.2.0.1000-SNAPSHOT</next.version>
+	 	<current.version>1.2.0.1000-SNAPSHOT</current.version>
+		<next.version>1.2.0.1001</next.version>
 	</properties>
 
 <build>
