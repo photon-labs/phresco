@@ -49,6 +49,50 @@
 	.testSuiteError {
 		margin-top: 5px;
 	}
+	
+		ul#display-inline-block-example,
+	ul#display-inline-block-example li {
+		/* Setting a common base */
+		/*margin-left: 7px;
+		margin-bottom: 7px;
+		padding: 0;*/
+		margin: 0px 0 1px 1px;
+	}
+	 
+	ul#display-inline-block-example {
+		width: 100%;
+	}
+	 
+	ul#display-inline-block-example li#first {
+		display: inline-block;
+		width: 12%;
+		min-height: 12%;
+		 
+		/* For IE 7 */
+		zoom: 1;
+		*display: inline;
+	}
+	
+	ul#display-inline-block-example li#label {
+		display: inline-block;
+		width: 12%;
+		min-height: 12%;
+		text-align: right;
+		 
+		/* For IE 7 */
+		zoom: 1;
+		*display: inline;
+	}
+
+	ul#display-inline-block-example li {
+		display: inline-block;
+		width: 25%;
+		min-height: 25%;
+		 
+		/* For IE 7 */
+		zoom: 1;
+		*display: inline;
+	}
 </style>
 
     <form action="functional" method="post" autocomplete="off" class="marginBottomZero">
@@ -64,12 +108,15 @@
 			   <%
 	            	}
 			   %>
-				<input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
 				<div class="icon_fun_div">
 					<a href="#" id="openFolder"><img id="folderIcon" src="images/icons/open-folder.png" title="Open folder" /></a>
 					<a href="#" id="copyPath"><img src="images/icons/copy-path.png" title="Copy path" /></a>
 				</div>
-		
+				<ul id="display-inline-block-example">
+					<li id="first">
+						<input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
+					</li>
+				
 		<!-- </div> -->
 	
     
@@ -175,54 +222,84 @@
 	        Set<String> testResultFiles = (Set<String>) request.getAttribute(FrameworkConstants.REQ_TEST_RESULT_FILE_NAMES);
 	        String selectedTestResultFile = (String) request.getAttribute(FrameworkConstants.REQ_SELECTED_TEST_RESULT_FILE);
 	        List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
+	        boolean buttonRow = false;
 	%>
         
-        <% if(CollectionUtils.isNotEmpty(projectModules)) { %>
-				
-				&nbsp;<strong><s:text name="label.module"/></strong> 
-				<select id="projectModule" class="funcModuleList" name="projectModule"> 
-					<% for(String projectModule : projectModules) { %>
-				  <option value="<%= projectModule %>" id="<%= projectModule %>" ><%= projectModule %> </option>
-				
-				<% 
-			        }
-				%>
-				</select>
-			<% 	} %>
+        <% 
+        	if(CollectionUtils.isNotEmpty(projectModules)) {
+        		buttonRow = true;
+        %>
+				<li id="label">
+					&nbsp;<strong><s:text name="label.module"/></strong> 
+				</li>
+				<li>
+					<select id="projectModule" name="projectModule"> <!-- class="funcModuleList"  -->
+						<% for(String projectModule : projectModules) { %>
+					  <option value="<%= projectModule %>" id="<%= projectModule %>" ><%= projectModule %> </option>
+					
+					<% 
+				        }
+					%>
+					</select>
+				</li>
+			<% 	}
+				if (buttonRow) {
+			%>
+				</ul>
+			<% } %>
 
         	<div class="alert-message block-message warning hideCtrl" id="errorDiv" style="margin: 5px 0 0 0;">
 				<center><label class="errorMsgLabel"></label></center>
 			</div>
 
 		<!-- <div class="functional_header testSuiteList testSuiteListAdj"> -->
-			&nbsp;<strong  class="hideCtrl"><s:text name="label.test.files"/></strong> 
-			<select id="testResultFile" name="testResultFile" class="funcList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testResultFiles)) {
-					for(String testResultFile : testResultFiles) {
-						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : "";
-				%>
-				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option>
+<%-- 			&nbsp;<strong  class="hideCtrl"><s:text name="label.test.files"/></strong>  --%>
+<%-- 			<select id="testResultFile" name="testResultFile" class="funcList">  --%>
+<%-- 				<%  --%>
+<!-- // 				if(CollectionUtils.isNotEmpty(testResultFiles)) { -->
+<!-- // 					for(String testResultFile : testResultFiles) { -->
+<!-- // 						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : ""; -->
+<%-- 				%> --%>
+<%-- 				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option> --%>
 				
-				<% 
-			        }
-				}
-				%>
-			</select>
-			
-			&nbsp;<strong><s:text name="label.test.suite"/></strong> 
-			<select id="testSuite" name="testSuite" class="funcList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testSuites)) {
-					for(TestSuite testSuiteDisplay : testSuites) {
-				%>
-				  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
-				
-				<% 
-			        }
-				}
-				%>
-			</select>
+<%-- 				<%  --%>
+<!-- // 			        } -->
+<!-- // 				} -->
+<%-- 				%> --%>
+<%-- 			</select> --%>
+			<% if (buttonRow) { %>
+			<ul id="display-inline-block-example">
+				<li id="first"></li>
+			<% } %>
+			<li id="label">
+				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong> 
+			</li>
+			<li>
+				<select id="testSuite" name="testSuite"> <!--  class="funcList" -->
+					<option value="All">All</option>
+					<% 
+					if(CollectionUtils.isNotEmpty(testSuites)) {
+						for(TestSuite testSuiteDisplay : testSuites) {
+					%>
+					  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
+					
+					<% 
+				        }
+					}
+					%>
+				</select>
+			</li>
+			<li id="label">
+<%-- 				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong>  --%>
+				&nbsp;<strong class="hideCtrl"><s:text name="label.test.result.view"/></strong> 
+			</li>
+			<li>
+				<select id="resultView" name="resultView" class="techList"> 
+					<option value="tabular" >Tabular View</option>
+					<option value="graphical" >Graphical View</option>
+				</select>
+			</li>
+			</ul>
 		</div>
 	</form>
 	
@@ -243,11 +320,16 @@
 
 // loadTestSuite();
 
-			$(document).ready(function(){
-				$("#testResultFile, #testSuite, #testSuiteDisplay, strong").hide();
+			$(document).ready(function() {
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView").hide();
+				
+				$('#resultView').change(function() {
+					changeView();
+				});
 			});
-
+			
 			loadTestResults();
+			
 			$('#projectModule').change(function() {
 				loadTestResults();
 			});
@@ -256,20 +338,20 @@
 				testReport();
 			});
 			
-			$('#testResultFile').change(function() {
-				changeTestResultFile();
-			});
+// 			$('#testResultFile').change(function() {
+// 				changeTestResultFile();
+// 			});
 			
-			function changeTestResultFile() {
-				var params = "";
-		    	if (!isBlank($('form').serialize())) {
-		    		params = $('form').serialize() + "&";
-		    	}
-				params = params.concat("testType=");
-				params = params.concat('<%= FrameworkConstants.FUNCTIONAL %>');
+// 			function changeTestResultFile() {
+// 				var params = "";
+// 		    	if (!isBlank($('form').serialize())) {
+// 		    		params = $('form').serialize() + "&";
+// 		    	}
+// 				params = params.concat("testType=");
+<%-- 				params = params.concat('<%= FrameworkConstants.FUNCTIONAL %>'); --%>
 
-				performAction('fillTestSuites', params, '', true);
-			}
+// 				performAction('fillTestSuites', params, '', true);
+// 			}
 
 			function loadTestResults() {
 				var params = "";
@@ -284,7 +366,8 @@
 					params = params.concat('<%= fromPage %>');
 				<% } %>
 
-				performAction('fillTestResultFiles', params, '', true);
+// 				performAction('fillTestResultFiles', params, '', true);
+				performAction('fillTestSuites', params, '', true);
 			}
 
 			function testReport() {
@@ -310,24 +393,41 @@
 							return validationError(data.showError);
 						}
 
-						var testResultFiles = data.testResultFiles;
-						if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
+// 						var testResultFiles = data.testResultFiles;
+// 						if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
+// 							$("#errorDiv").hide();
+// 							$("#testResultFile, #testSuite, #testSuiteDisplay, strong").show();
+// 							$('#testResultFile').empty();
+// 							for (i in testResultFiles) {
+// 								$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
+// 							}
+// 							changeTestResultFile();
+// 						}
+// 						var testSuites = data.testSuites;
+// 						if ((testSuites != undefined || !isBlank(testSuites))) {
+// 							$('#testSuite').empty();
+// 							for (i in testSuites) {
+// 								$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
+// 							}
+// 							testReport();
+// 						}
+
+// 						alert("Expected reached!!!!!!");
+						
+						var testSuiteNames = data.testSuiteNames;
+						if ((testSuiteNames != undefined || !isBlank(testSuiteNames))) {
 							$("#errorDiv").hide();
-							$("#testResultFile, #testSuite, #testSuiteDisplay, strong").show();
-							$('#testResultFile').empty();
-							for (i in testResultFiles) {
-								$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
-							}
-							changeTestResultFile();
-						}
-						var testSuites = data.testSuites;
-						if ((testSuites != undefined || !isBlank(testSuites))) {
+							$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView, strong").show();
+							$("#testResultFile").hide();
 							$('#testSuite').empty();
-							for (i in testSuites) {
-								$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
+							$('#testSuite').append($("<option></option>").attr("value", "All").text("All"));
+							for (i in testSuiteNames) {
+								$('#testSuite').append($("<option></option>").attr("value", testSuiteNames[i]).text(testSuiteNames[i]));
 							}
+// 							alert("tech report called from unit!!!");
 							testReport();
 						}
+					
 					}
 		    	}
 			}
@@ -335,9 +435,19 @@
 			function validationError(errMsg) {
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
-				$("#testResultFile, #testSuite, #testSuiteDisplay, strong").hide();
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView").hide();
 			}
 			
+			function changeView() {
+				var resultView = $('#resultView').val();
+				if (resultView == 'graphical') {
+					$("#graphicalView").show();
+					$("#tabularView").hide();
+				} else  {
+					$("#graphicalView").hide();
+					$("#tabularView").show();
+				}
+			}
 		</script>
     <% } %>
  

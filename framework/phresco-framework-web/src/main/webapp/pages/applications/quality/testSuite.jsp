@@ -136,12 +136,13 @@
         }
     </script>
 	
-        <div class="columnStyle" id="columnStyle">
-            <div class="columns">
-				<div class="table_div_unit">
+<!--         <div class="columnStyle tabularView" id="columnStyle"> -->
+<!--             <div class="columns"> -->
+				<div class="table_div_unit" id="tabularView" style="top : 0px;">
 	                <div class="fixed-table-container">
 	      				<div class="header-background"> </div>
 			      		<div class="fixed-table-container-inner">
+			      		<div style="overflow: auto;">
 					        <table cellspacing="0" class="zebra-striped">
 					          	<thead>
 						            <tr>
@@ -179,8 +180,8 @@
 										TestCaseError error = testCase.getTestCaseError(); 	
 								%>
 					            	<tr>
-					              		<td id="tstRst_td1" style="width: 25%;"><%= testCase.getName() %></td>
-					              		<td id="tstRst_td2" style="width: 25%;"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
+					              		<td style="width: 25%;"><%= testCase.getName() %></td>
+					              		<td style="width: 25%;"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
 					              		<td><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
 					              		<td  style="width: 15%;">
 					              			<% if (testCase.getTestCaseFailure() != null) { %>
@@ -224,11 +225,25 @@
 								%>	
 					          	</tbody>
 					        </table>
+					       
+					       </div>
+					    <div>
+							
+						</div>
 			      		</div>
     				</div>
-	            </div><!-- End column 1 -->
+	            </div>
+				
+
+<!-- 			</div> -->
+<!--     	</div> -->
+
+<!--  deleted -->
+<!-- 			      		</div> -->
+<!--     				</div> -->
+<!-- 	            </div>End column 1 -->
 	
-                <div class="canvas_div canvasDiv">
+                <div class="canvas_div canvasDiv" id="graphicalView">
                     <canvas id="pie2" width="350" height="300">[No canvas support]</canvas>
                 </div>
 			</div>
@@ -285,11 +300,13 @@
 		$(".table_data_div_unit").scrollbars();
 	}
     $(document).ready(function() {
-    	if ($.browser.safari && $.browser.version == 530.17)
-    	{
-    	$(".columns").show().css("float","left");
-    	$(".columnStyle").show().css("float","left");
-    	$(".canvasDiv").show().css("margin-top","29px");
+    	
+    	changeView();
+    	
+    	if ($.browser.safari && $.browser.version == 530.17) {
+	    	$(".columns").show().css("float","left");
+	    	$(".columnStyle").show().css("float","left");
+	    	$(".canvasDiv").show().css("margin-top","29px");
     	}
         $("td[id = 'tstRst_td1']").text(function(index) {
             return textTrim($(this));

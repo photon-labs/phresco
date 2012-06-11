@@ -203,8 +203,6 @@
 		});
 	</script>
 	
-	
-	
 	<% 
 	        List<TestSuite> testSuites = (List<TestSuite>) request.getAttribute(FrameworkConstants.REQ_TEST_SUITE);
 	        Set<String> testResultFiles = (Set<String>) request.getAttribute(FrameworkConstants.REQ_TEST_RESULT_FILE_NAMES);
@@ -262,43 +260,61 @@
 				<li id="first"></li>
 			<% } %>
 			<li id="label">
-				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.files"/></strong> 
+				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong> 
+<%-- 				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.files"/></strong>  --%>
 			</li>
 			<li>
-			<select id="testResultFile" name="testResultFile" class="techList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testResultFiles)) {
-					for(String testResultFile : testResultFiles) {
-						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : "";
-				%>
-				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option>
+				<select id="testSuite" name="testSuite" class="hideCtrl"> <!-- class="techList" --> 
+					<option value="All">All</option>
+					<% 
+					if(CollectionUtils.isNotEmpty(testSuites)) {
+						for(TestSuite testSuiteDisplay : testSuites) {
+					%>
+					  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
+					
+					<% 
+				        }
+					}
+					%>
+				</select>
+<%-- 			<select id="testResultFile" name="testResultFile" class="techList">  --%>
+<%-- 				<%  --%>
+<!-- // 				if(CollectionUtils.isNotEmpty(testResultFiles)) { -->
+<!-- // 					for(String testResultFile : testResultFiles) { -->
+<!-- // 						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : ""; -->
+<%-- 				%> --%>
+<%-- 				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option> --%>
 				
-				<% 
-			        }
-				}
-				%>
-			</select>
+<%-- 				<%  --%>
+<!-- // 			        } -->
+<!-- // 				} -->
+<%-- 				%> --%>
+<%-- 			</select> --%>
 			</li>
 			
 			<li id="label">
-				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong> 
+<%-- 				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong>  --%>
+				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.result.view"/></strong> 
 			</li>
 			<li>
-			<select id="testSuite" name="testSuite" class="techList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testSuites)) {
-					for(TestSuite testSuiteDisplay : testSuites) {
-				%>
-				  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
-				
-				<% 
-			        }
-				}
-				%>
-			</select>
+				<select id="resultView" name="resultView" class="techList hideCtrl"> 
+					<option value="tabular" >Tabular View</option>
+					<option value="graphical" >Graphical View</option>
+				</select>
 			</li>
 			</ul>
 		</div>
+		
+		<!-- 	<div class="noTestAvail perTabularView" id="dropdownDiv"> -->
+<!-- 		<div class="resultView" style="float: left;"> -->
+<%-- 			<select id="resultView" name="resultView232">  --%>
+<!-- 				<option value="tabular" >Tabular View</option> -->
+<!-- 				<option value="graphical" >Graphical View</option> -->
+<%-- 			</select> --%>
+<!-- 		</div> -->
+<!-- 	</div> -->
+
+
 	<!-- </div> -->
 	</form>
 		<!-- Test suite chart display starts -->
@@ -309,11 +325,16 @@
         <script type="text/javascript">
 			// loadTestSuite();
 
-			$(document).ready(function(){
-				$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl").hide();
+			$(document).ready(function() {
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView").hide();
+				
+				$('#resultView').change(function() {
+					changeView();
+				});
 			});
-
+			
 			loadTestResults();
+			
 			$('#projectModule, #techReport').change(function() {
 				loadTestResults();
 			});
@@ -322,20 +343,20 @@
 				testReport();
 			});
 			
-			$('#testResultFile').change(function() {
-				changeTestResultFile();
-			});
+// 			$('#testResultFile').change(function() {
+// 				changeTestResultFile();
+// 			});
 			
-			function changeTestResultFile() {
-				var params = "";
-		    	if (!isBlank($('form').serialize())) {
-		    		params = $('form').serialize() + "&";
-		    	}
-				params = params.concat("testType=");
-				params = params.concat('<%= FrameworkConstants.UNIT %>');
+// 			function changeTestResultFile() {
+// 				var params = "";
+// 		    	if (!isBlank($('form').serialize())) {
+// 		    		params = $('form').serialize() + "&";
+// 		    	}
+// 				params = params.concat("testType=");
+<%-- 				params = params.concat('<%= FrameworkConstants.UNIT %>'); --%>
 
-				performAction('fillTestSuites', params, '', true);
-			}
+// 				performAction('fillTestSuites', params, '', true);
+// 			}
 
 			function loadTestResults() {
 				var params = "";
@@ -350,7 +371,8 @@
 					params = params.concat('<%= fromPage %>');
 				<% } %>
 
-				performAction('fillTestResultFiles', params, '', true);
+// 				performAction('fillTestResultFiles', params, '', true);
+				performAction('fillTestSuites', params, '', true);
 			}
 
 			function testReport() {
@@ -364,37 +386,67 @@
 			}
 
 			function successEvent(pageUrl, data) {
+				console.log("pageUrl =====> "+pageUrl);
 				if ((data != undefined || !isBlank(data)) && data != "") {
+					console.log("Inside if!!!");
 					if (data.validated != undefined && data.validated) {
+						console.log("validate error called!!!!");
 						return validationError(data.showError);
 					}
 
-					var testResultFiles = data.testResultFiles;
-					if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
+// 					var testResultFiles = data.testResultFiles;
+// 					if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
+// 						$("#errorDiv").hide();
+// 						$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl").show();
+// 						$('#testResultFile').empty();
+// 						for (i in testResultFiles) {
+// 							$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
+// 						}
+// 						changeTestResultFile();
+// 					}
+// 					var testSuites = data.testSuites;
+// 					if ((testSuites != undefined || !isBlank(testSuites))) {
+// 						$('#testSuite').empty();
+// 						for (i in testSuites) {
+// 							$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
+// 						}
+// 						testReport();
+// 					}
+
+// 					alert("Expected reached!!!!!!");
+					
+					var testSuiteNames = data.testSuiteNames;
+					if ((testSuiteNames != undefined || !isBlank(testSuiteNames))) {
 						$("#errorDiv").hide();
-						$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl").show();
-						$('#testResultFile').empty();
-						for (i in testResultFiles) {
-							$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
-						}
-						changeTestResultFile();
-					}
-					var testSuites = data.testSuites;
-					if ((testSuites != undefined || !isBlank(testSuites))) {
+						$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView").show();
+						$("#testResultFile").hide();
 						$('#testSuite').empty();
-						for (i in testSuites) {
-							$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
+						$('#testSuite').append($("<option></option>").attr("value", "All").text("All"));
+						for (i in testSuiteNames) {
+							$('#testSuite').append($("<option></option>").attr("value", testSuiteNames[i]).text(testSuiteNames[i]));
 						}
+// 						alert("tech report called from unit!!!");
 						testReport();
 					}
+					
 				}
 			}
 
 			function validationError(errMsg) {
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
-				$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl").hide();
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView").hide();
 			}
 
+			function changeView() {
+				var resultView = $('#resultView').val();
+				if (resultView == 'graphical') {
+					$("#graphicalView").show();
+					$("#tabularView").hide();
+				} else  {
+					$("#graphicalView").hide();
+					$("#tabularView").show();
+				}
+			}
 		</script>
     

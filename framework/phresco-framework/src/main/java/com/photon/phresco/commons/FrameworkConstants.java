@@ -114,6 +114,7 @@ public interface FrameworkConstants {
     String DEPLOY_WEBSERVICE_PARAM = "webServiceName";
     String TEST_PARAM = "test=";
     String TEST_PARAM_VALUE = "AllTest";
+    String ALL_TEST_SUITES = "All";
     String KEY_QUOTES = "\"";
     String FROM_PAGE = "edit";
     String DEPLOY_BUILD_NAME = "buildName";
@@ -345,6 +346,7 @@ public interface FrameworkConstants {
     String REQ_TESTSUITE_FAILURES = "Failures";
     String REQ_TESTSUITE_ERRORS = "Errs";
     String REQ_TESTSUITE_TESTS = "Tests";
+    String REQ_ALL_TESTSUITE_MAP = "AllTestsMap";
     String REQ_TESTSUITES_CALL = "SettingInfoAndTestSuite";
     String REQ_LOGIN_ERROR = "loginErrors";
     String REQ_CORE_MODULES = "coreModules";
