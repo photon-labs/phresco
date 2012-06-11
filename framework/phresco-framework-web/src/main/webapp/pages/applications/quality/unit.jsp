@@ -240,7 +240,7 @@
 				&nbsp;<strong><s:text name="label.technolgies"/></strong> 
 			</li>
 			<li>
-				<select id="techReport" name="techReport" class="techList"> 
+				<select id="techReport" name="techReport"> 
 				  <option value="java" id="java" >Java</option>
 				  <option value="javascript" id="javascript" >Java Script</option>
 				</select>

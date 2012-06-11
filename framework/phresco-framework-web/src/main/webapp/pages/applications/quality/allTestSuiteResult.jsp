@@ -67,8 +67,8 @@
 										<th class="first"><div class="th-inner"><s:text name="label.testsuite.name"/></div></th>
 						              	<th class="second"><div class="th-inner"><s:text name="label.testsuite.total"/></div></th>
 						              	<th class="third"><div class="th-inner"><s:text name="label.testsuite.success"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.testsuite.error"/></div></th>
-						              	<th class="first"><div class="th-inner"><s:text name="label.testsuite.failure"/></div></th>
+						              	<th class="third"><div class="th-inner"><s:text name="label.testsuite.failure"/></div></th>
+						              	<th class="first"><div class="th-inner"><s:text name="label.testsuite.error"/></div></th>
 						            </tr>
 					          	</thead>
 					
@@ -109,8 +109,8 @@
 					              		</td>
 					              		<td style="width: 10%;"><%= (int)total %></td>
 					              		<td style="width: 10%;"><%= (int)success %></td>
-					              		<td style="width: 8%;"><%= (int)error %></td>
 					              		<td style="width: 8%;"><%= (int)failure %></td>
+					              		<td style="width: 8%;"><%= (int)error %></td>
 					            	</tr>
 					            <%
 					            	
@@ -128,8 +128,8 @@
 							              <td style="width: 10%;font-weight: bold">Total</td>
 							              <td style="width: 10%;font-weight: bold"><%= totalTstCases %></td>
 							              <td style="width: 10%;font-weight: bold"><%= totalSuccessTstCases %></td>
-							              <td style="width: 8%;font-weight: bold"><%= totalErrorTstCases %></td>
 							              <td style="width: 8%;font-weight: bold"><%= totalFailureTstCases %></td>
+							              <td style="width: 8%;font-weight: bold"><%= totalErrorTstCases %></td>
 					          	 	</tr>
 					          	 </tfoot>
 					        </table>

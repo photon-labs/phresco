@@ -182,7 +182,7 @@
 					            	<tr>
 					              		<td style="width: 25%;"><%= testCase.getName() %></td>
 					              		<td style="width: 25%;"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
-					              		<td><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
+					              		<td style="width: 15%;"><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
 					              		<td  style="width: 15%;">
 					              			<% if (testCase.getTestCaseFailure() != null) { %>
 												<img src="images/icons/failure.png" title="Failure">
