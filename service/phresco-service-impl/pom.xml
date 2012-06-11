@@ -19,7 +19,7 @@
         <site>
             <id>phresco.service.impl</id>
             <name>Phresco Service Implementation</name>
-            <url>scp://phresco.org/home/projects/service/impl/public_html/</url>
+            <url>${siteBaseUrl}/service/phresco-service-impl/</url>
         </site>
     </distributionManagement>
           

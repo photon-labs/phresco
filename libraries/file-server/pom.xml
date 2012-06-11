@@ -19,7 +19,7 @@
         <site>
             <id>phresco.libraries.fileserver</id>
             <name>Phresco Libraries - File Server</name>
-            <url>scp://phresco.org/home/projects/libraries/file_server/public_html/</url>
+            <url>${siteBaseUrl}/libraries/file-server/</url>
         </site>
     </distributionManagement>
 

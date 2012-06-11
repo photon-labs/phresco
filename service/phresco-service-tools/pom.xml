@@ -19,7 +19,7 @@
         <site>
             <id>phresco.service.tools</id>
             <name>Phresco Service Tools</name>
-            <url>scp://phresco.org/home/projects/service/tools/public_html/</url>
+            <url>${siteBaseUrl}/service/phresco-service-tools/</url>
         </site>
     </distributionManagement>
 

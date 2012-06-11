@@ -19,7 +19,7 @@
         <site>
             <id>phresco.framework.runner</id>
             <name>Phresco Framework Runner</name>
-            <url>scp://phresco.org/home/projects/framework/runner/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework-runner/</url>
         </site>
     </distributionManagement>
   

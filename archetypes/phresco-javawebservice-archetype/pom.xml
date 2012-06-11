@@ -13,12 +13,12 @@
     <artifactId>phresco-javawebservice-archetype</artifactId>
     <name>Archetype - phresco-javawebservice-archetype</name>
     <url>http://www.phresco.org</url>
-           
+    <description>phresco-javawebservice-archetype</description>
     <distributionManagement>
         <site>
             <id>phresco.archetype.jws</id>
             <name>Phresco Archetypes - Java WebService</name>
-            <url>scp://phresco.org/home/projects/archetypes/jws/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-javawebservice-archetype/</url>
         </site>
     </distributionManagement>
     

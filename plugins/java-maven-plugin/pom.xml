@@ -13,12 +13,12 @@
   <packaging>maven-plugin</packaging>
   <name>java-maven-plugin Maven Mojo</name>
   <url>http://www.phresco.org</url>
-   
+  <description>java-maven-plugin</description>
      <distributionManagement>
         <site>
             <id>phresco.plugins.java</id>
             <name>Phresco Plugins - Java</name>
-            <url>scp://phresco.org/home/projects/plugins/java/public_html/</url>
+            <url>${siteBaseUrl}/plugins/java-maven-plugin/</url>
         </site>
     </distributionManagement>
 

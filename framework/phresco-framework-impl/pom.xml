@@ -19,7 +19,7 @@
         <site>
             <id>phresco.framework.impl</id>
             <name>Phresco Framework Impl</name>
-            <url>scp://phresco.org/home/projects/framework/impl/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework-impl/</url>
         </site>
     </distributionManagement>
  

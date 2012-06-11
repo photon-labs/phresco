@@ -12,12 +12,12 @@
     <artifactId>phresco-dot-net-archetype</artifactId>
     <name>Archetype - phresco-dot-net-archetype</name>
     <url>http://www.phresco.org</url>
-
+	<description>phresco-dot-net-archetype</description>
    <distributionManagement>
         <site>
             <id>phresco.archetype.dotnet</id>
             <name>Phresco Archetypes - .NET</name>
-            <url>scp://phresco.org/home/projects/archetypes/dotnet/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-dot-net-archetype/</url>
         </site>
     </distributionManagement>
 	
