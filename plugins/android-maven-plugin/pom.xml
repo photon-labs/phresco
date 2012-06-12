@@ -197,37 +197,6 @@
             <artifactId>phresco-framework-impl</artifactId>
             <version>${phresco-commons-version}</version>
         </dependency>
-
-        <!-- Following 4 dependencies for multidevice performance testing -->
-        <dependency>
-            <groupId>com.google.sdk.tools</groupId>
-            <artifactId>chimpchat</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.sdk.tools</groupId>
-            <artifactId>ddmlib</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.sdk.tools</groupId>
-            <artifactId>guavalib</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.sdk.tools</groupId>
-            <artifactId>sdklib</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.android.prefs</groupId>
-            <artifactId>androidprefs</artifactId>
-            <version>r16</version>
-        </dependency>
         
     </dependencies>
 
