@@ -134,6 +134,7 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().getParameter(REQ_FROM_PAGE));
 		if (projectCode != null) {
 			try {
+				
 				getHttpSession().removeAttribute(projectCode);
 				ProjectAdministrator administrator = PhrescoFrameworkFactory
 						.getProjectAdministrator();
@@ -579,7 +580,13 @@ public class Applications extends FrameworkBaseAction {
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e)); 
 	    	svnImport = false;
-	    	svnImportMsg = getText(INVALID_FOLDER);
+	    	if(e.getMessage().indexOf(SVN_FAILED) != -1){
+	    		svnImportMsg = getText(INVALID_URL);
+	    	}else if(e.getMessage().indexOf(SVN_INTERNAL) != -1){
+	    		svnImportMsg = getText(INVALID_REVISION);
+	    	}else{
+	    		svnImportMsg = getText(INVALID_FOLDER);
+	    	}
 	    } catch(PhrescoException e){
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e));

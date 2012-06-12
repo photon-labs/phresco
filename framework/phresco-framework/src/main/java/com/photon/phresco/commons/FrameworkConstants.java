@@ -578,10 +578,14 @@ public interface FrameworkConstants {
     /*
      * Project Import keys
      */
+    String SVN_FAILED ="failed";
+    String SVN_INTERNAL ="Internal";	
     String IMPORT_PROJECT_FAIL ="import.project.fail";
     String INVALID_CREDENTIALS = "import.invalid.credential";
     String INVALID_FOLDER = "import.invalid.folder";
     String PROJECT_ALREADY = "import.project.already";
+    String INVALID_URL = "import.invalid.url";
+    String INVALID_REVISION="import.invalid.revision";
     /*
      * Delete Build keys
      */
