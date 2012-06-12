@@ -34,7 +34,7 @@
         <site>
             <id>phresco.plugins.android</id>
             <name>Phresco Plugins - Android</name>
-            <url>scp://phresco.org/home/projects/plugins/android/public_html/</url>
+            <url>${siteBaseUrl}/plugins/android-maven-plugin/</url>
         </site>
     </distributionManagement>
 

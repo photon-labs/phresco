@@ -13,12 +13,12 @@
     <artifactId>phresco-android-native-archetype</artifactId>
     <name>Archetype - phresco-android-native-archetype</name>
     <url>http://www.phresco.org</url>
-  
+	<description>phresco-android-native-archetype</description>
 	<distributionManagement>
         <site>
             <id>phresco.archetype.android</id>
             <name>Phresco Archetypes - Android</name>
-            <url>scp://phresco.org/home/projects/archetypes/android/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-android-archetype/</url>
         </site>
     </distributionManagement>
 	

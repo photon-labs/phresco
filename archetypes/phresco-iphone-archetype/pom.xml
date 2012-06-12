@@ -13,12 +13,12 @@
     <version>1.2.0.1001</version>
     <name>Archetype - phresco-iphone-native-archetype</name>
     <url>http://www.phresco.org</url>
-
+    <description>phresco-iphone-native-archetype</description>
     <distributionManagement>
         <site>
             <id>phresco.archetype.iphone</id>
             <name>Phresco Archetypes - iPhone</name>
-            <url>scp://phresco.org/home/projects/archetypes/iPhone/Native/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-iphone-native-archetype/</url>
         </site>
     </distributionManagement>
     
