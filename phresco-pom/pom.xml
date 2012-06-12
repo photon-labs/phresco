@@ -10,13 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.photon.phresco.pom</groupId>
 	<artifactId>phresco-pom</artifactId>
+	<name>Phresco Pom</name>
 	<url>http://www.phresco.org</url>
-    
+	<description>phresco-Pom</description>
+	
 	<distributionManagement>
 		<site>
             <id>phresco.pom</id>
             <name>Phresco POM framework</name>
-            <url>scp://phresco.org/home/projects/phrescopom/public_html/</url>
+            <url>${siteBaseUrl}/phresco-pom/</url>
         </site>
 	</distributionManagement>
 

@@ -27,6 +27,14 @@
 	<description>An extension that provides lifecycle binding, dependency, plugin and resource configuration suitable to most JS projects.</description>
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
 
+	<distributionManagement>
+        <site>
+            <id>phresco.plugins.javascript</id>
+            <name>Phresco Plugins - Javascript</name>
+            <url>${siteBaseUrl}/plugins/javascript-maven-plugin/</url>
+        </site>
+    </distributionManagement>
+	
 	<dependencies>
 
 		<!-- Compile -->

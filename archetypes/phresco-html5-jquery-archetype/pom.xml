@@ -12,12 +12,12 @@
     <artifactId>phresco-html5-jquery-archetype</artifactId>
     <name>Archetype - phresco-html5-jquery-archetype</name>
     <url>http://www.phresco.org</url>
-    
+    <description>phresco-html5-jquery-archetype</description>
     <distributionManagement>
         <site>
             <id>phresco.archetype.html5.jquery</id>
             <name>Phresco Archetypes - HTML5 and JQuery</name>
-            <url>scp://phresco.org/home/projects/archetypes/html5/jquery/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-html5-jquery-archetype/</url>
         </site>
     </distributionManagement>
      

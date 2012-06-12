@@ -13,12 +13,12 @@
     <packaging>maven-plugin</packaging>
     <name>wordpress-maven-plugin Maven Mojo</name>
     <url>http://www.phresco.org</url>
-     
+    <description>wordpress-maven-plugin</description>
      <distributionManagement>
         <site>
             <id>phresco.plugins.wordpress</id>
             <name>Phresco Plugins - Wordpress</name>
-            <url>scp://phresco.org/home/projects/plugins/wordpress/public_html/</url>
+            <url>${siteBaseUrl}/plugins/wordpress-maven-plugin/</url>
         </site>
     </distributionManagement>
  

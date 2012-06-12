@@ -13,12 +13,12 @@
   <packaging>maven-plugin</packaging>
   <name>sharepoint-maven-plugin Maven Mojo</name>
   <url>http://www.phresco.org</url>
-
+  <description>sharepoint-maven-plugin</description>
    <distributionManagement>
         <site>
             <id>phresco.plugins.sharepoint</id>
             <name>Phresco Plugins - SharePoint</name>
-            <url>scp://phresco.org/home/projects/plugins/sharepoint/public_html/</url>
+            <url>${siteBaseUrl}/plugins/sharepoint-maven-plugin/</url>
         </site>
     </distributionManagement>
 
