@@ -352,7 +352,7 @@
 		$('.responsiveFixedTableContainer').css("height", fixedTblheight+'%');
 		 
 		// jquery affects pie chart responsive
-		window.setTimeout(function () { $(".scroll-content").css("width", "100%"); }, 250);
+		window.setTimeout(function () { $(".scroll-content").css("width", "100%"); }, 350);
 	    	
     });
     
