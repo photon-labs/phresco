@@ -291,6 +291,7 @@
     $(document).ready(function() {
     	
     	changeView();
+    	escPopup();
     	
         $("td[id = 'tstRst_td1']").text(function(index) {
             return textTrim($(this));
