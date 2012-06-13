@@ -1,22 +1,3 @@
-/*
- * ###
- * Phresco Framework
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.commons;
 
 import java.io.File;
@@ -202,7 +183,8 @@ public interface FrameworkConstants {
     String CI_CREDENTIAL_XML = "hudson.scm.SubversionSCM.xml";
     String CI_MAILER_XML = "hudson.tasks.Mailer.xml";
     String CI_MAIL_EXT_PLUGIN = "email-ext.hpi";
-    
+    String CI_HUDSONURL = "hudsonUrl";
+    String CI = "ci";
     
     /***
      * Environment Constants
@@ -325,8 +307,8 @@ public interface FrameworkConstants {
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
-    String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
+	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
     String REQ_VIDEO = "video";
     String REQ_VIDEO_INFOS = "videoInfos";
     String REQ_VIDEO_TYPES = "videoTypes";
@@ -580,14 +562,14 @@ public interface FrameworkConstants {
     /*
      * Project Import keys
      */
-    String SVN_FAILED ="failed";
-    String SVN_INTERNAL ="Internal";	
     String IMPORT_PROJECT_FAIL ="import.project.fail";
     String INVALID_CREDENTIALS = "import.invalid.credential";
     String INVALID_FOLDER = "import.invalid.folder";
     String PROJECT_ALREADY = "import.project.already";
+    String SVN_FAILED ="failed";
+    String SVN_INTERNAL ="Internal";
     String INVALID_URL = "import.invalid.url";
-    String INVALID_REVISION="import.invalid.revision";
+    String INVALID_REVISION = "import.invalid.revision";
     /*
      * Delete Build keys
      */
@@ -623,9 +605,12 @@ public interface FrameworkConstants {
     /*
      * Create Setting keys
      */
-    String SUCCESS_SETTING = "The {0} {1} has been created successfully";
+    String SUCCESS_SERVER = "Server {0} created successfully";
+    String SUCCESS_DATABASE = "Database {0} created successfully";
+    String SUCCESS_WEBSERVICE = "Webservice {0} created successfully";
+    String SUCCESS_EMAIL = "Email {0} created successfully";
     String FAILURE_SETTING = "Setting {0} creation failed";
-    
+   
     /*
      * Check Box Info keys
      */
@@ -636,6 +621,7 @@ public interface FrameworkConstants {
      * login keys
      */
     String ERROR_LOGIN = "login.error.message";
+    String ERROR_LOGIN_INVALID = "login.error.invalid";
     String ERROR_LOGIN_ACCESS_DENIED = "login.error.access.denied.message";
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
@@ -652,8 +638,11 @@ public interface FrameworkConstants {
     String SUCCESS_SETTING_DELETE = "Settings deleted successfully";
     String FAILURE_SETTING_DELETE = "Settings deletion failed";
 
-    String SETTINGS_UPDATE_SUCCESS = "settings.update.success";
-
+    String SERVER_UPDATE_SUCCESS = "server.update.success";
+    String DATABASE_UPDATE_SUCCESS = "database.update.success";
+    String WEBSERVICE_UPDATE_SUCCESS = "webservice.update.success";
+    String EMAIL_UPDATE_SUCCESS = "email.update.success";
+    
     /*
      * Delete Configuration keys
      */
@@ -685,6 +674,7 @@ public interface FrameworkConstants {
     String ERROR_ENV_CONFIG = "{0} configuration is not available for the selected environment";
     String ERROR_ANDROID_DATA = "Data is not available";
     String ERROR_PORT = "Invalid Port Number";
+    String ERROR_EMAIL = "Enter Valid Email";
     
     /*
      * Delete Environment keys
@@ -961,6 +951,7 @@ public interface FrameworkConstants {
     String OS_ARCH = "os.arch";
     String WINDOWS = "Windows";
     String SERVER = "Server";
+    String DATABASE = "Database";
     String WINDOWS7 = "Windows 7";
     String MAC = "Mac";
     String LINUX = "Linux";
