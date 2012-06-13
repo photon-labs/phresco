@@ -1,0 +1,109 @@
+h1. Usage
+
+h2. PhantomJS
+Before being able to use the JS Test Runner you will need a headless browser. At present JS Test Runner supports
+PhantomJS which is a WebKit browser with a Command Line Interface (CLI). Please visit the PhantomJS website and
+install the PhantomJS binary on all of the machines that will be running JS Test Runner. The website:
+
+[http://www.phantomjs.org/]
+
+JS Test Runner needs to be able to locate the phantomjs executable to run. There are two ways to configure this,
+adding the phantomjs executable to the PATH or setting a java property.
+
+h3. Adding PhantomJS to the PATH
+
+If the {{phantomjs}} executable is available on the path, you will be able to run the executable from a command
+line (the command prompt in Windows, terminal is OS X, or a shell in Linux/Unix) and see output like this:
+
+{code}
+bjones@rama3 [10:09] ~$> phantomjs
+
+Usage: phantomjs [options] script.[js|coffee] [script argument [script argument ...]]
+
+Options:
+    --load-images=[yes|no]             Load all inlined images (default is 'yes').
+    --load-plugins=[yes|no]            Load all plugins (i.e. 'Flash', 'Silverlight', ...) (default is 'no').
+    --proxy=address:port               Set the network proxy.
+    --disk-cache=[yes|no]              Enable disk cache (at desktop services cache storage location, default is 'no').
+    --ignore-ssl-errors=[yes|no]       Ignore SSL errors (i.e. expired or self-signed certificate errors).
+{code}
+
+If you see an error instead of the phantomjs options, then phantomjs is not on your path.
+
+To add the phantomjs executable to your path, note the path of the directory which contains the {{phantomjs}}
+executable - i.e., the directory you extracted your download to - and follow the linked instructions appropriate for your platform below (or simply search for
+instructions for your platform - adding to the PATH is a common operating system operation and is not
+specific to JS Test Runner).
+
+* [Windows|http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx]
+* [OS X|http://www.noktec.be/archives/724]
+* [Linux/Unix|http://www.cs.purdue.edu/homes/cs348/unix\_path.html]
+
+h3. Setting the commandPattern property.
+
+The other option is to tell JS Test Runner the command line required to invoke it. This is
+done using a Java property. For example, on Mac OS X (depending on the path to PhantomJS):
+
+||Property||Value||
+|org.codehaus.jstestrunner.commandPattern|/Applications/phantomjs.app/Contents/MacOS/phantomjs '%1$s' %2$s|
+
+The first parameter (%1$s) allows JS Test Runner to provide a script that will open a set of urls that relate
+to QUnit tests. The set of urls is a comma separated list provided as parameter 2 (%2$s).
+
+When declaring the Java property from the command line on Unix you will need to escape the $ character and
+quote the entire string. For example, depending on where you install PhantomJS:
+
+{code}
+mvn test \
+ -Dorg.codehaus.jstestrunner.commandPattern=\
+ "/Applications/phantomjs.app/Contents/MacOS/phantomjs '%1\$s' %2\$s"
+{code}
+
+For windows it may look like this (again depending on where you install PhantomJS):
+
+{code}
+mvn test ^
+ -Dorg.codehaus.jstestrunner.commandPattern=^
+ "C:\Program Files\phantomjs-1.2.0-win32-dynamic\phantomjs.exe %1$s %2$s"
+{code}
+
+For Eclipse, you simply need to ensure that the property is declared under "Installed JREs" / "Default VM Arguments". You will
+not need to escape the $ there. For example:
+
+{code}
+-Dorg.codehaus.jstestrunner.commandPattern="/Applications/phantomjs.app/Contents/MacOS/phantomjs '%1$s' %2$s"
+{code}
+
+h2. Configuring Maven
+When used with Maven you will need to configure the [Surefire plugin|http://maven.apache.org/plugins/maven-surefire-plugin/] so that it can pass on the value of the
+commandPattern property. Here is a sample Surefire configuration for your POM file:
+
+{code}
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <version>2.9</version>
+  <configuration>
+    <systemPropertyVariables>
+      <org.codehaus.jstestrunner.commandPattern>${org.codehaus.jstestrunner.commandPattern}</org.codehaus.jstestrunner.commandPattern>
+    </systemPropertyVariables>
+  </configuration>
+  <executions>
+    <execution>
+      <goals>
+        <goal>test</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+{code}
+
+h2. Configuring JS Test Runner
+Configuration is performed using annotations below the @RunWith annotation. Here are the available options:
+
+* [\@ContextPath | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.ContextPath.html]
+* [\@Exclude | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.Exclude.html]
+* [\@Host | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.Host.html]
+* [\@Include | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.Include.html]
+* [\@ResourceBase | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.ResourceBase.html]
+* [\@ContextPath | apidocs/org/codehaus/jstestrunner/junit/JSTestSuiteRunner.TestRunnerFilePath.html]
