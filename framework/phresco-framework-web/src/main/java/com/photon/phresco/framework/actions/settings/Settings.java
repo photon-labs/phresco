@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.framework.actions.settings;
 
 import java.io.File;
@@ -27,6 +8,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,6 +64,7 @@ public class Settings extends FrameworkBaseAction {
 	private String remoteDeploy = null;
 
     private String envName = null;
+    private String emailError = null;
 	
 	Document dom;
     public Element rootEle;
@@ -199,11 +183,18 @@ public class Settings extends FrameworkBaseAction {
             
 	        List<SettingsTemplate> settingsTemplates = administrator.getSettingsTemplates();
 			administrator.createSetting(settingsInfo, environments.toString());
-			List<String> list = new ArrayList<String>();
-			list.add(settingsType);
-			list.add(settingsName);
-			addActionMessage(getText(SUCCESS_SETTING, list));
-			
+			if (SERVER.equals(settingsType)){
+				addActionMessage(getText(SUCCESS_SERVER, Collections.singletonList(settingsName)));
+			}
+			else if (DATABASE.equals(settingsType)) {
+				addActionMessage(getText(SUCCESS_DATABASE, Collections.singletonList(settingsName)));
+			}
+			else if (WEBSERVICE.equals(settingsType)) {
+				addActionMessage(getText(SUCCESS_WEBSERVICE, Collections.singletonList(settingsName)));
+			}
+			else {
+				addActionMessage(getText(SUCCESS_EMAIL, Collections.singletonList(settingsName)));
+			}
 			getHttpRequest().setAttribute(SESSION_SETTINGS_TEMPLATES, settingsTemplates);
 			getHttpRequest().setAttribute(REQ_CONFIG_INFO, settingsInfo);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, SETTINGS);
@@ -328,6 +319,17 @@ public class Settings extends FrameworkBaseAction {
 		   	}
 	   	}
 		
+		if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
+	   		String value = getHttpRequest().getParameter("emailid");
+	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
+	   		Matcher m=p.matcher(value);
+	   		boolean b=m.matches();
+	   		if(b==false)
+	   		{
+	   			setEmailError(ERROR_EMAIL);
+	   			validate = false;
+	   		}
+		}
 	   	return validate;
 	}
 	
@@ -415,8 +417,19 @@ public class Settings extends FrameworkBaseAction {
 			S_LOGGER.debug("Settings Info object value which going to be updated" + newSettingsInfo);
             String environment = getHttpRequest().getParameter(ENVIRONMENTS);
             administrator.updateSetting(environment, oldName, newSettingsInfo);
-			addActionMessage(getText(SETTINGS_UPDATE_SUCCESS,		
-					Collections.singletonList(settingsName)));
+            if (SERVER.equals(settingsType)){
+				addActionMessage(getText(SERVER_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else if (DATABASE.equals(settingsType)) {
+				addActionMessage(getText(DATABASE_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else if (WEBSERVICE.equals(settingsType)) {
+				addActionMessage(getText(WEBSERVICE_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else {
+				addActionMessage(getText(EMAIL_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}	
+					
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Settings.update()"+ FrameworkUtil.getStackTraceAsString(e));
         	new LogErrorReport(e, "Settings update");
@@ -549,10 +562,7 @@ public class Settings extends FrameworkBaseAction {
     	    String[] split = null;
     	    String envs = getHttpRequest().getParameter("envs");
     	    String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            if(StringUtils.isNotEmpty(selectedItems)){
-    	    	deleteSettingsEnvironment(selectedItems);
-    	    }
-
+            deleteSettingsEnvironment(selectedItems);
             List<Environment> environments = new ArrayList<Environment>();
             if(StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(Arrays.asList(envs.split("#SEP#")));
@@ -567,18 +577,12 @@ public class Settings extends FrameworkBaseAction {
             }
 	    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 	    	administrator.createEnvironments(environments);
-	    	if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
-	    		addActionMessage(getText(UPDATE_ENVIRONMENT));
-	    	} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
-	    		addActionMessage(getText(DELETE_ENVIRONMENT));
-	    	} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
-	    		addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
-		    }
+	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
     	} catch(PhrescoException e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -846,5 +850,13 @@ public class Settings extends FrameworkBaseAction {
 
 	public void setRemoteDeploy(String remoteDeploy) {
 		this.remoteDeploy = remoteDeploy;
+	}
+	
+	public String getEmailError() {
+		return emailError;
+	}
+
+	public void setEmailError(String emailError) {
+		this.emailError = emailError;
 	}
 }
