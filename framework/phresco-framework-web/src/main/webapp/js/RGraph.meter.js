@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -131,8 +112,6 @@
             'chart.tickmarks.small.color':    '#bbb',
             'chart.tickmarks.big.color':      'black',
             'chart.scale.decimals':           0,
-            'chart.scale.point':              '.',
-            'chart.scale.thousand':           ',',
             'chart.radius':                   null,
             'chart.centerx':                  null,
             'chart.centery':                  null,
@@ -553,17 +532,17 @@
         context.beginPath();
 
 
-        RGraph.Text(context,text_font,text_size,centerx - radius + (0.075 * radius),centery - (this.Get('chart.border') ? 10 : -5),RGraph.number_format(this, (min).toFixed(decimals),units_pre,units_post),'center', 'left', false, 270);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(0.62819 / 2) * (radius - (0.075 * radius)) ),centery - (Math.sin(0.682819 / 2) * (radius - (0.1587 * radius)) ),RGraph.number_format(this, (((max - min) * (1/10)) + min).toFixed(decimals), units_post, units_post),'center','center', false, 288);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(0.62819) * (radius - (0.07 * radius)) ),centery - (Math.sin(0.682819) * (radius - (0.15 * radius)) ),RGraph.number_format(this,(((max - min) * (2/10)) + min).toFixed(decimals), units_pre, units_post),'center','center', false, 306);
-        RGraph.Text(context, text_font, text_size,centerx - (Math.cos(0.95) * (radius - (0.085 * radius)) ),centery - (Math.sin(0.95) * (radius - (0.0785 * radius)) ),RGraph.number_format(this,(((max - min) * (3/10)) + min).toFixed(decimals), units_pre, units_post),'center', 'center', false, 320);
-        RGraph.Text(context, text_font, text_size,centerx - (Math.cos(1.2566) * (radius - (0.085 * radius)) ),centery - (Math.sin(1.2566) * (radius - (0.0785 * radius)) ),RGraph.number_format(this, (((max - min) * (4/10)) + min).toFixed(decimals), units_pre, units_post),'center', 'center', false, 342);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(1.57) * (radius - (0.075 * radius)) ),centery - (Math.sin(1.57) * (radius - (0.075 * radius)) ),RGraph.number_format(this, (((max - min) * (5/10)) + min).toFixed(decimals), units_pre, units_post),'center','center', false, 0);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(1.88495562) * (radius - (0.075 * radius)) ),centery - (Math.sin(1.88495562) * (radius - (0.075 * radius)) ),RGraph.number_format(this, (((max - min)* (6/10)) + min).toFixed(decimals), units_pre, units_post),'center','center', false, 18);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.1989) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.1989) * (radius - (0.075 * radius)) ),RGraph.number_format(this, (((max - min)* (7/10)) + min).toFixed(decimals), units_pre, units_post),'center','center', false, 36);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.51327416) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.51327416) * (radius - (0.075 * radius)) ), RGraph.number_format(this,(((max - min) * (8/10)) + min).toFixed(decimals), units_pre,units_post),'center','center', false, 54);
-        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.82764832) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.82764832) * (radius - (0.075 * radius)) ), RGraph.number_format(this,(((max - min) * (9/10)) + min).toFixed(decimals), units_pre, units_post),'center','center', false, 72);
-        RGraph.Text(context,text_font,text_size,centerx + radius - (0.075 * radius),centery - (!this.Get('chart.border') ? -5 : 10),RGraph.number_format(this,(max).toFixed(decimals),units_pre, units_post),'center', 'right', false, 90);
+        RGraph.Text(context,text_font,text_size,centerx - radius + (0.075 * radius),centery - (this.Get('chart.border') ? 10 : -5),units_pre + (min).toFixed(decimals) + units_post,'center', 'left', false, 270);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(0.62819 / 2) * (radius - (0.075 * radius)) ),centery - (Math.sin(0.682819 / 2) * (radius - (0.1587 * radius)) ),units_pre + (((max - min) * (1/10)) + min).toFixed(decimals) + units_post,'center','center', false, 288);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(0.62819) * (radius - (0.07 * radius)) ),centery - (Math.sin(0.682819) * (radius - (0.15 * radius)) ),units_pre + (((max - min) * (2/10)) + min).toFixed(decimals) + units_post,'center','center', false, 306);
+        RGraph.Text(context, text_font, text_size,centerx - (Math.cos(0.95) * (radius - (0.085 * radius)) ),centery - (Math.sin(0.95) * (radius - (0.0785 * radius)) ),units_pre + (((max - min) * (3/10)) + min).toFixed(decimals) + units_post,'center', 'center', false, 320);
+        RGraph.Text(context, text_font, text_size,centerx - (Math.cos(1.2566) * (radius - (0.085 * radius)) ),centery - (Math.sin(1.2566) * (radius - (0.0785 * radius)) ),units_pre + (((max - min) * (4/10)) + min).toFixed(decimals) + units_post,'center', 'center', false, 342);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(1.57) * (radius - (0.075 * radius)) ),centery - (Math.sin(1.57) * (radius - (0.075 * radius)) ),units_pre + (((max - min) * (5/10)) + min).toFixed(decimals) + units_post,'center','center', false, 0);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(1.88495562) * (radius - (0.075 * radius)) ),centery - (Math.sin(1.88495562) * (radius - (0.075 * radius)) ),units_pre + (((max - min)* (6/10)) + min).toFixed(decimals) + units_post,'center','center', false, 18);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.1989) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.1989) * (radius - (0.075 * radius)) ),units_pre + (((max - min)* (7/10)) + min).toFixed(decimals) + units_post,'center','center', false, 36);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.51327416) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.51327416) * (radius - (0.075 * radius)) ), units_pre + (((max - min) * (8/10)) + min).toFixed(decimals) + units_post,'center','center', false, 54);
+        RGraph.Text(context,text_font,text_size,centerx - (Math.cos(2.82764832) * (radius - (0.075 * radius)) ),centery - (Math.sin(2.82764832) * (radius - (0.075 * radius)) ),units_pre + (((max - min) * (9/10)) + min).toFixed(decimals) + units_post,'center','center', false, 72);
+        RGraph.Text(context,text_font,text_size,centerx + radius - (0.075 * radius),centery - (!this.Get('chart.border') ? -5 : 10),units_pre + (max).toFixed(decimals) + units_post,'center', 'right', false, 90);
 
         context.fill();
         context.stroke();

@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
         /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -40,18 +21,27 @@
     * Initialise the various objects
     */
     if (typeof(RGraph) == 'undefined') RGraph = {isRGraph:true,type:'common'};
-    
     RGraph.Effects = {}
-    RGraph.Effects.Fade           = {}; RGraph.Effects.jQuery         = {}
-    RGraph.Effects.jQuery.HBlinds = {}; RGraph.Effects.jQuery.VBlinds = {}
-    RGraph.Effects.jQuery.Slide   = {}; RGraph.Effects.Pie            = {}
-    RGraph.Effects.Bar            = {}; RGraph.Effects.Line           = {}
-    RGraph.Effects.Line.jQuery    = {}; RGraph.Effects.Fuel           = {}
-    RGraph.Effects.Rose           = {}; RGraph.Effects.Odo            = {}
-    RGraph.Effects.Gauge          = {}; RGraph.Effects.Meter          = {}
-    RGraph.Effects.HBar           = {}; RGraph.Effects.HProgress      = {}
-    RGraph.Effects.VProgress      = {}; RGraph.Effects.Radar          = {}
-    RGraph.Effects.Waterfall      = {}; RGraph.Effects.Gantt          = {}
+    RGraph.Effects.Fade           = {}
+    RGraph.Effects.jQuery         = {}
+    RGraph.Effects.jQuery.HBlinds = {}
+    RGraph.Effects.jQuery.VBlinds = {}
+    RGraph.Effects.jQuery.Slide   = {}
+    RGraph.Effects.Pie            = {}
+    RGraph.Effects.Bar            = {}
+    RGraph.Effects.Line           = {}
+    RGraph.Effects.Line.jQuery    = {}
+    RGraph.Effects.Fuel           = {}
+    RGraph.Effects.Rose           = {}
+    RGraph.Effects.Odo            = {}
+    RGraph.Effects.Gauge          = {}
+    RGraph.Effects.Meter          = {}
+    RGraph.Effects.HBar           = {}
+    RGraph.Effects.HProgress      = {}
+    RGraph.Effects.VProgress      = {}
+    RGraph.Effects.Radar          = {}
+    RGraph.Effects.Waterfall      = {}
+
 
     /**
     * Fadein
@@ -335,69 +325,6 @@
 
 
     /**
-    * Conceal
-    * 
-    * This effect is the reverse of the Reveal effect - instead of revealing the canvas it
-    * conceals it. Combined with the reveal effect would make for a nice wipe effect.
-    * 
-    * @param object obj The chart object
-    */
-    RGraph.Effects.jQuery.Conceal = function (obj)
-    {
-        var opts   = arguments[1] ? arguments[1] : null;
-        var delay  = 1000;
-        var canvas = obj.canvas;
-        var xy     = RGraph.getCanvasXY(obj.canvas);
-
-
-        var divs = [
-                    ['conceal_left', xy[0], xy[1], 0, obj.canvas.height],
-                    ['conceal_right',(xy[0] + obj.canvas.width),xy[1],0,obj.canvas.height],
-                    ['conceal_top',xy[0],xy[1],obj.canvas.width,0],
-                    ['conceal_bottom',xy[0],(xy[1] + obj.canvas.height),obj.canvas.width,0]
-                   ];
-        
-        for (var i=0; i<divs.length; ++i) {
-            var div = document.createElement('DIV');
-                div.id = divs[i][0];
-                div.style.width =  divs[i][3]+ 'px';
-                div.style.height = divs[i][4] + 'px';
-                div.style.left   = divs[i][1] + 'px';
-                div.style.top   = divs[i][2] + 'px';
-                div.style.position = 'absolute';
-                div.style.backgroundColor = opts && typeof(opts['color']) == 'string' ? opts['color'] : 'white';
-            document.body.appendChild(div);
-        }
-
-
-        $('#conceal_left').animate({width: '+=' + (obj.canvas.width / 2)}, delay);
-        $('#conceal_right').animate({left: '-=' + (obj.canvas.width / 2),width: (obj.canvas.width / 2)}, delay);
-        $('#conceal_top').animate({height: '+=' + (obj.canvas.height / 2)}, delay);
-        $('#conceal_bottom').animate({top: '-=' + (obj.canvas.height / 2),height: (obj.canvas.height / 2)}, delay);
-        
-        // Remove the DIVs from the DOM 100ms after the animation ends
-        setTimeout(
-            function ()
-            {
-                document.body.removeChild(document.getElementById("conceal_top"))
-                document.body.removeChild(document.getElementById("conceal_bottom"))
-                document.body.removeChild(document.getElementById("conceal_left"))
-                document.body.removeChild(document.getElementById("conceal_right"))
-            }
-            , delay);
-            
-        setTimeout(function () {RGraph.Clear(obj.canvas);}, delay);
-        
-        /**
-        * Callback
-        */
-        if (typeof(arguments[2]) == 'function') {
-            setTimeout(arguments[2], delay);
-        }
-    }
-
-
-    /**
     * Horizontal Blinds (open)
     * 
     * @params object obj The graph object
@@ -646,13 +573,13 @@
 
             for (var i=0; i<obj.data.length; ++i) {
                 if (RGraph.is_array(obj.data[i]) && obj.Get('chart.grouping') == 'stacked') {
-                    ymax = Math.max(ymax, Math.abs(RGraph.array_sum(obj.data[i])));
+                    ymax = Math.max(ymax, RGraph.array_sum(obj.data[i]));
                 } else {
-                    ymax = Math.max(ymax, Math.abs(obj.data[i]));
+                    ymax = Math.max(ymax, obj.data[i]);
                 }
             }
-
-            ymax = RGraph.getScale(ymax, obj)[4];
+            
+            ymax = RGraph.getScale(ymax)[4];
             
             obj.Set('chart.ymax', ymax);
         }
@@ -728,7 +655,7 @@
 
         // Default fallback to setTimeout
         } else {
-            setTimeout(func, 1000 / 60);
+            setTimeout(func, 16.666);
         }
     }
 
@@ -1339,7 +1266,7 @@
         var obj2 = new RGraph.Line(id, RGraph.array_clone(obj.original_data));
 
         for (i in obj.properties) {
-            if (typeof(i) == 'string') {
+            if (typeof(i) == 'string' && obj.properties[i]) {
                 obj2.Set(i, obj.properties[i]);
             }
         }
@@ -1352,8 +1279,9 @@
         obj2.Set('chart.title.xaxis', '');
         obj2.Set('chart.title.yaxis', '');
         obj2.Set('chart.filled.accumulative', obj.Get('chart.filled.accumulative'));
-        obj.Set('chart.key', []);
-
+        obj2.Set('chart.key.shadow', false);
+        obj2.Set('chart.key.position.gutter.boxed', obj.Get('chart.key.position.gutter.boxed'));
+        obj2.Set('chart.key.rounded', obj.Get('chart.key.rounded'));
         obj2.Draw();
 
         /**
@@ -1368,10 +1296,6 @@
 
         RGraph.Clear(obj.canvas);
         obj.Draw();
-
-        $('#' + div.id).animate({
-            width: obj.canvas.width + 'px'
-        }, arguments[2] ? arguments[2] : 1500, RGraph.Effects.Line.Trace_callback);
 
 
         /**
@@ -1396,6 +1320,11 @@
             RGraph.Clear(obj.canvas);
             obj.Draw();
         }
+
+
+        $('#' + div.id).animate({
+            width: obj.canvas.width + 'px'
+        }, arguments[2] ? arguments[2] : 1500, RGraph.Effects.Line.Trace_callback);
     }
 
 
@@ -1537,28 +1466,28 @@
     */
     RGraph.Effects.Radar.Grow = function (obj)
     {
-        var totalframes   = 30;
-        var framenum      = totalframes;
-        var data          = RGraph.array_clone(obj.data);
-        var callback      = arguments[2];
-        obj.original_data = RGraph.array_clone(obj.original_data);
+        var totalframes = 30;
+        var framenum    = totalframes;
+        var data        = obj.data;
+        var callback    = arguments[2];
+        obj.data        = [];
 
         function Grow_inner ()
         {
             for (var i=0; i<data.length; ++i) {
                 
-                if (obj.original_data[i] == null) {
-                    obj.original_data[i] = [];
+                if (obj.data[i] == null) {
+                    obj.data[i] = [];
                 }
 
                 for (var j=0; j<data[i].length; ++j) {
-                    obj.original_data[i][j] = ((totalframes - framenum)/totalframes)  * data[i][j];
+                    obj.data[i][j] = ((totalframes - framenum)/totalframes)  * data[i][j];
                 }
             }
 
             RGraph.Clear(obj.canvas);
             obj.Draw();
-
+            
             if (framenum > 0) {
                 framenum--;
                 RGraph.Effects.UpdateCanvas(Grow_inner);
@@ -1663,7 +1592,7 @@
              }
              
              var totalFrames = 25;
-             var delay       = 25;
+             var delay       = 20;
              
             setTimeout('RGraph.Effects.Bar.Wave_inner(' + i + ', ' + totalFrames + ', ' + delay + ')', i * 150);
         }
@@ -1803,198 +1732,4 @@
         
         RGraph.Clear(obj.canvas);
         obj.Draw();
-    }
-
-
-    /**
-    * Bar chart Wave2 effect - using the requestAnimationFrame function
-    * 
-    * @param object obj The chart object
-    */
-    RGraph.Effects.Bar.Wave2 = function (obj)
-    {
-        var callback = arguments[2] ? arguments[2] : null;
-    
-        var max = 0;
-        for (var i=0; i<obj.data.length; ++i) {
-            if (typeof(obj.data[i]) == 'number') {
-                max = Math.max(max, obj.data[i])
-            } else {
-                if (obj.Get('chart.grouping') == 'stacked') {
-                    max = Math.max(max, RGraph.array_sum(obj.data[i]))
-                } else {
-                    max = Math.max(max, RGraph.array_max(obj.data[i]))
-                }
-            }
-        }
-        var scale = RGraph.getScale(max);
-        obj.Set('chart.ymax', scale[4]);
-        
-        original_bar_data = RGraph.array_clone(obj.data);
-        __rgraph_bar_wave_object__ = obj;
-    
-        /**
-        * Zero all the bars
-        */
-        for (var i=0; i<obj.data.length; ++i) {
-             if (typeof(obj.data[i]) == 'number') {
-                obj.data[i] = 0;
-             } else {
-                obj.data[i] = new Array(obj.data[i].length);
-             }
-             
-            setTimeout('a = new RGraph.Effects.Bar.Wave2.Iterator(__rgraph_bar_wave_object__, ' + i + ', 45); a.Animate();', i * 150);
-        }
-    }
-
-    
-    /**
-    * The Iterator object that handles the individual animation frames
-    */
-    RGraph.Effects.Bar.Wave2.Iterator = function (obj, idx, frames)
-    {
-        this.obj    = obj;
-        this.idx    = idx;
-        this.frames = frames;
-        this.curFrame = 0;
-    }
-
-    RGraph.Effects.Bar.Wave2.Iterator.prototype.Animate = function ()
-    {
-        if (typeof(this.obj.data[this.idx]) == 'number') {
-            this.obj.data[this.idx] = (this.curFrame / this.frames) * original_bar_data[this.idx];
-        } else if (typeof(this.obj.data[this.idx]) == 'object') {
-            for (var j=0; j<this.obj.data[this.idx].length; ++j) {
-                this.obj.data[this.idx][j] = (this.curFrame / this.frames) * original_bar_data[this.idx][j];
-            }
-        }
-    
-        RGraph.Clear(this.obj.canvas);
-        this.obj.Draw();
-        
-        if (this.curFrame < this.frames) {
-            
-            this.curFrame += 1;
-    
-            RGraph.Effects.UpdateCanvas(this.Animate.bind(this));
-        }
-    }
-
-
-    /**
-    * Gantt chart Grow effect
-    * 
-    * @param object obj The chart object
-    */
-    RGraph.Effects.Gantt.Grow = function (obj)
-    {
-        var canvas       = obj.canvas;
-        var context      = obj.context;
-        var numFrames    = 30;
-        var currentFrame = 0
-        var callback     = arguments[2] ? arguments[2] : null;
-        var events       = obj.Get('chart.events');
-        
-        var original_events = RGraph.array_clone(events);
-
-        function Grow_gantt_inner ()
-        {
-            if (currentFrame < numFrames) {
-                // Update the events
-                for (var i=0; i<events.length; ++i) {
-                    if (typeof(events[i][0]) == 'object') {
-                        for (var j=0; j<events[i].length; ++j) {
-                            events[i][j][1] = (currentFrame / numFrames) * original_events[i][j][1];
-                        }
-                    } else {
-
-                        events[i][1] = (currentFrame / numFrames) * original_events[i][1];
-                    }
-                }
-
-                obj.Set('chart.events', events);
-
-                RGraph.Clear(obj.canvas);
-                obj.Draw();
-                
-                currentFrame++;
-                
-                RGraph.Effects.UpdateCanvas(Grow_gantt_inner);
-
-            } else if (callback) {            
-                callback(obj);
-            }
-        }
-        
-        RGraph.Effects.UpdateCanvas(Grow_gantt_inner);
-    }
-
-
-    /**
-    * This is a compatibility hack provided for Opera and Safari which
-    * don't support ther Javascript 1.8.5 function.bind()
-    */
-    if (!Function.prototype.bind) {  
-      Function.prototype.bind = function (oThis) {  
-        if (typeof this !== "function") {  
-          // closest thing possible to the ECMAScript 5 internal IsCallable function  
-          throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");  
-        }  
-      
-        var aArgs = Array.prototype.slice.call(arguments, 1),   
-            fToBind = this,   
-            fNOP = function () {},  
-            fBound = function () {  
-              return fToBind.apply(this instanceof fNOP  
-                                     ? this  
-                                     : oThis || window,  
-                                   aArgs.concat(Array.prototype.slice.call(arguments)));  
-            };  
-      
-        fNOP.prototype = this.prototype;  
-        fBound.prototype = new fNOP();  
-      
-        return fBound;  
-      };  
-    }
-
-
-    /**
-    * Rose chart explode
-    * 
-    * Explodes the Rose chart - gradually incrementing the size of the chart.explode property
-    * 
-    * @params object obj The graph object
-    */
-    RGraph.Effects.Rose.Explode = function (obj)
-    {
-        var canvas   = obj.canvas;
-        var opts     = arguments[1] ? arguments[1] : [];
-        var callback = arguments[2] ? arguments[2] : null;
-        var frames   = opts['frames'] ? opts['frames'] : 60;
-
-        obj.Set('chart.exploded', 0);
-
-        RGraph.Effects.Animate(obj, {'frames': frames, 'chart.exploded': Math.min(canvas.width, canvas.height)}, callback);
-    }
-
-
-    /**
-    * Rose chart implode
-    * 
-    * Implodes the Rose chart - gradually decreasing the size of the chart.explode property. It starts at the largest of
-    * the canvas width./height
-    * 
-    * @params object obj The graph object
-    */
-    RGraph.Effects.Rose.Implode = function (obj)
-    {
-        var canvas   = obj.canvas;
-        var opts     = arguments[1] ? arguments[1] : [];
-        var callback = arguments[2] ? arguments[2] : null;
-        var frames   = opts['frames'] ? opts['frames'] : 60;
-
-        obj.Set('chart.exploded', Math.min(canvas.width, canvas.height));
-
-        RGraph.Effects.Animate(obj, {'frames': frames, 'chart.exploded': 0}, callback);
     }

@@ -56,10 +56,10 @@
     	<script type="text/javascript">
 
 		</script>
-            <div class="table_div_unit" id="tabularView" style="top :0px;">
-            	<div class="fixed-table-container">
+            <div class="table_div_unit qtyTable_view" id="tabularView">
+            	<div class="fixed-table-container responsiveFixedTableContainer qtyFixedTblContainer">
 	      			<div class="header-background"> </div>
-		      		<div class="fixed-table-container-inner" >
+		      		<div class="fixed-table-container-inner">
 				        <div style="overflow: auto;">
 					        <table cellspacing="0" class="zebra-striped">
 					          	<thead>
@@ -87,9 +87,7 @@
 				            		
 					          		for (String key : keySet) {
 					          			String results = allTestSuiteReport.get(key);
-					          			System.out.println("All result data =====>  " + results);
 					          			String[] result = results.split(",");
-					          			System.out.println("result array =====>  " + Arrays.asList(result));
 					          			
 					          			float total = Float.parseFloat(result[0]);
 					          			float success = Float.parseFloat(result[1]);
@@ -104,13 +102,13 @@
 					            		testSuiteLabels = testSuiteLabels + "'" + key + "',";
 					          	%>
 					            	<tr>
-					              		<td style="width: 10%;">
+					              		<td class="width-ten-percent">
 					              			<a href="#" name="loadTestSuite" id="<%= key %>" ><%= key %></a>
 					              		</td>
-					              		<td style="width: 10%;"><%= (int)total %></td>
-					              		<td style="width: 10%;"><%= (int)success %></td>
-					              		<td style="width: 8%;"><%= (int)failure %></td>
-					              		<td style="width: 8%;"><%= (int)error %></td>
+					              		<td class="width-ten-percent"><%= (int)total %></td>
+					              		<td class="width-en-percent"><%= (int)success %></td>
+					              		<td class="width-eight-percent"><%= (int)failure %></td>
+					              		<td class="width-eight-percent"><%= (int)error %></td>
 					            	</tr>
 					            <%
 					            	
@@ -119,17 +117,15 @@
 									graphData = graphData.substring(0, graphData.length() - 1);
 					          		testSuiteLabels = testSuiteLabels.substring(0, testSuiteLabels.length() - 1);
 					          		testSuiteLabels = testSuiteLabels + FrameworkConstants.SQUARE_CLOSE;
-					          		System.out.println("Drawing graph data ======> " + graphData);
-					          		System.out.println("testSuiteLabels ======> " + testSuiteLabels);
 					            %>
 					          	</tbody>
 					          	 <tfoot>
 					          	 	<tr>
-							              <td style="width: 10%;font-weight: bold">Total</td>
-							              <td style="width: 10%;font-weight: bold"><%= totalTstCases %></td>
-							              <td style="width: 10%;font-weight: bold"><%= totalSuccessTstCases %></td>
-							              <td style="width: 8%;font-weight: bold"><%= totalFailureTstCases %></td>
-							              <td style="width: 8%;font-weight: bold"><%= totalErrorTstCases %></td>
+							              <td class="width-ten-percent loadTestPopupBold">Total</td>
+							              <td class="width-ten-percent loadTestPopupBold"><%= totalTstCases %></td>
+							              <td class="width-ten-percent loadTestPopupBold"><%= totalSuccessTstCases %></td>
+							              <td class="width-eight-percent loadTestPopupBold"><%= totalFailureTstCases %></td>
+							              <td class="width-eight-percent loadTestPopupBold"><%= totalErrorTstCases %></td>
 					          	 	</tr>
 					          	 </tfoot>
 					        </table>
@@ -141,7 +137,7 @@
     			</div>
     		</div>
             <div class="graph_div" id="graphicalView" style="padding-left: 15px; display:none; text-align: center;">
-                <canvas id="bar" width="620" height="350">[No canvas support]</canvas>               
+                <canvas id="bar" width="620" height="335">[No canvas support]</canvas>               
             </div>
    
 
@@ -149,7 +145,7 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
-		$(".jmtable_data_div").scrollbars();
+		$("#graphicalView").scrollbars();
 	}
 	
 	$(document).ready(function() {
@@ -163,9 +159,16 @@
 		 
 		 // display report based on testsuite name selection
 		 $('a[name="loadTestSuite"]').click(function() {
-			 $('#testSuite option[value='+ this.id +']').attr('selected', 'selected');
+			 $('#testSuite option[value="'+ this.id +'"]').attr('selected', 'selected');
 			 testReport();
 		 });
+		 
+		// table resizing
+		 var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
+		 $('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
+			
+		 var fixedTblheight = ((($('#tabularView').height() - 30) / $('#tabularView').height()) * 100);
+		 $('.responsiveFixedTableContainer').css("height", fixedTblheight+'%');
 	});
 	
 	function canvasInit() {
@@ -184,8 +187,8 @@
 	        chartAxisColor = "white"; // axis color
 	        chartBarColor = "#B1121D"; //Bar color
 	        //line chart color
-	      	successColor = "#FF9900";
-	      	failureColor = "#B2B2FF";
+	      	successColor = "#6f6";
+	      	failureColor = "orange";
 	      	errorColor = "red";
 		} else {
 	        chartTextColor = "#4C4C4C";
@@ -193,8 +196,8 @@
 	        chartAxisColor = "#4C4C4C";
 	        chartBarColor = "#00A8F0";
 	      //line chart color
-	      	successColor = "#00A8F0";
-	      	failureColor = "#008000";
+	      	successColor = "#6f6";
+	      	failureColor = "orange";
 	      	errorColor = "red";
 		}
 		
@@ -206,20 +209,23 @@
          bar1.Set('chart.key.position.y', 35);
          bar1.Set('chart.key.position', 'gutter');
          bar1.Set('chart.colors', [successColor, failureColor, errorColor]);
-         bar1.Set('chart.shadow', true);
+         bar1.Set('chart.shadow', false);
          bar1.Set('chart.shadow.blur', 0);
          bar1.Set('chart.shadow.offsetx', 0);
          bar1.Set('chart.shadow.offsety', 0);
          bar1.Set('chart.key.linewidth', 0);
          bar1.Set('chart.yaxispos', 'left');
          bar1.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-         bar1.Set('chart.gutter.left', 5);
-         bar1.Set('chart.gutter.right', 55);
          bar1.Set('chart.text.angle', 45);
          bar1.Set('chart.text.color', chartTextColor);
          bar1.Set('chart.axis.color', chartAxisColor);
-         bar1.Set('chart.gutter.left', 70);
+         bar1.Set('chart.gutter.left', 60);
+//          bar1.Set('chart.gutter.right', 1);
          bar1.Set('chart.gutter.bottom', 100);
+         bar1.Set('chart.background.grid.autofit',true);
+         // size above bars dispalyed
+         // bar1.Set('chart.labels.above', true);
+<%--          bar1.Set('chart.ymax', <%= totalSuccessTstCases + totalFailureTstCases + totalErrorTstCases%>); --%>
          bar1.Draw();
 	}
 	

@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -272,15 +253,11 @@
                 e = RGraph.FixEventObject(e);
                 
                 var coords  = RGraph.getMouseXY(e);
-                var obj     = e.target.__object__;
                 var canvas  = e.target;
                 var context = canvas.getContext('2d');
-                var cursor  = canvas.style.cursor;
+                //var orig_cursor = canvas.style.cursor; // Used for playing well with tooltips
 
-                // Save the original cursor
-                if (!RGraph.Resizing.original_cursor) {
-                    RGraph.Resizing.original_cursor = cursor;
-                }
+                RGraph.Resizing.title = canvas.title;
                 
                 if (   (coords[0] > (canvas.width - resizeHandle)
                     && coords[0] < canvas.width
@@ -288,6 +265,10 @@
                     && coords[1] < canvas.height)) {
                         
                         canvas.style.cursor = 'move';
+                        
+                        if (navigator.userAgent.indexOf('Chrome') > 0 || document.all) {
+                            canvas.title = 'Resize the graph';
+                        }
 
                 } else if (   coords[0] > (canvas.width - resizeHandle - resizeHandle)
                            && coords[0] < canvas.width - resizeHandle
@@ -295,14 +276,16 @@
                            && coords[1] < canvas.height) {
                     
                     canvas.style.cursor = 'pointer';
+    
+                    if (navigator.userAgent.indexOf('Chrome') > 0 || document.all) {
+                        canvas.title = 'Reset graph to original size';
+                    }
 
                 } else {
-                    if (RGraph.Resizing.original_cursor) {
-                        canvas.style.cursor = RGraph.Resizing.original_cursor;
-                        RGraph.Resizing.original_cursor = null;
-                    } else {
-                        canvas.style.cursor = 'default';
-                    }
+
+                    // orig_cursor
+                    canvas.style.cursor = 'default';
+                    canvas.title = '';
                 }
             }
             canvas.addEventListener('mousemove', canvas_onmousemove, false);

@@ -44,60 +44,7 @@
 	String path = (String) request.getAttribute(FrameworkConstants.PATH);
 	String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
 %>
-
-<style>	
-	.testSuiteError {
-		margin-top: 5px;
-	}
-	
-		ul#display-inline-block-example,
-	ul#display-inline-block-example li {
-		/* Setting a common base */
-		/*margin-left: 7px;
-		margin-bottom: 7px;
-		padding: 0;*/
-		margin: 0px 0 1px 1px;
-	}
-	 
-	ul#display-inline-block-example {
-		width: 100%;
-	}
-	 
-	ul#display-inline-block-example li#first {
-		display: inline-block;
-		width: 12%;
-		min-height: 12%;
-		 
-		/* For IE 7 */
-		zoom: 1;
-		*display: inline;
-	}
-	
-	ul#display-inline-block-example li#label {
-		display: inline-block;
-		width: 12%;
-		min-height: 12%;
-		text-align: right;
-		 
-		/* For IE 7 */
-		zoom: 1;
-		*display: inline;
-	}
-
-	ul#display-inline-block-example li {
-		display: inline-block;
-		width: 25%;
-		min-height: 25%;
-		 
-		/* For IE 7 */
-		zoom: 1;
-		*display: inline;
-	}
-</style>
-
-    <form action="functional" method="post" autocomplete="off" class="marginBottomZero">
-		<!-- <div class="frame-header frameHeaderPadding btnTestPadding"> -->
-			<!-- <div class="test_btn_div"> -->
+    <form action="functional" method="post" autocomplete="off" class="marginBottomZero" id="form_test">
 			<div class="operation">
 	            <%
 	            	if ((Boolean)request.getAttribute(FrameworkConstants.REQ_BUILD_WARNING)) {
@@ -116,15 +63,9 @@
 					<li id="first">
 						<input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
 					</li>
-				
-		<!-- </div> -->
-	
-    
-   <!--  <div class="popup_div" id="generateTest">
-    </div> -->
     
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 			
 			$('#closeGenerateTest, #closeGenTest').click(function() {
 				changeTesting("functional", "testGenerated");
@@ -251,26 +192,12 @@
         	<div class="alert-message block-message warning hideCtrl" id="errorDiv" style="margin: 5px 0 0 0;">
 				<center><label class="errorMsgLabel"></label></center>
 			</div>
-
-		<!-- <div class="functional_header testSuiteList testSuiteListAdj"> -->
-<%-- 			&nbsp;<strong  class="hideCtrl"><s:text name="label.test.files"/></strong>  --%>
-<%-- 			<select id="testResultFile" name="testResultFile" class="funcList">  --%>
-<%-- 				<%  --%>
-<!-- // 				if(CollectionUtils.isNotEmpty(testResultFiles)) { -->
-<!-- // 					for(String testResultFile : testResultFiles) { -->
-<!-- // 						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : ""; -->
-<%-- 				%> --%>
-<%-- 				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option> --%>
-				
-<%-- 				<%  --%>
-<!-- // 			        } -->
-<!-- // 				} -->
-<%-- 				%> --%>
-<%-- 			</select> --%>
+			
 			<% if (buttonRow) { %>
 			<ul id="display-inline-block-example">
 				<li id="first"></li>
 			<% } %>
+			
 			<li id="label">
 				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong> 
 			</li>
@@ -290,11 +217,10 @@
 				</select>
 			</li>
 			<li id="label">
-<%-- 				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong>  --%>
-				&nbsp;<strong class="hideCtrl"><s:text name="label.test.result.view"/></strong> 
+				&nbsp;<strong id="view" class="hideCtrl"><s:text name="label.test.result.view"/></strong> 
 			</li>
 			<li>
-				<select id="resultView" name="resultView" class="techList"> 
+				<select id="resultView" name="resultView" class="techList selectDefaultWidth"> 
 					<option value="tabular" >Tabular View</option>
 					<option value="graphical" >Graphical View</option>
 				</select>
@@ -303,29 +229,21 @@
 		</div>
 	</form>
 	
-	<div id="testSuiteDisplay" class="testSuiteDisplay">
+	<div id="testSuiteDisplay" class="testSuiteDisplay responsiveTableDisplay" style="height: 87%;">
 	</div>
 		
         <script type="text/javascript">
-			
-        	/*generateTest('testSuite', 'testSuiteDisplay'); // load testSuite
-        	
-			$('#testSuites').change(function(){
-				generateTest('testSuite', 'testSuiteDisplay');
-			});
-			
-			$('#testResultFiles').change(function(){
-				generateTest('testType', 'subTabcontainer', 'testResultFiles');
-			});*/
-
-// loadTestSuite();
 
 			$(document).ready(function() {
-				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView").hide();
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
 				
 				$('#resultView').change(function() {
 					changeView();
 				});
+				
+				// table resize
+				var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
+				$('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
 			});
 			
 			loadTestResults();
@@ -337,21 +255,6 @@
 			$('#testSuite').change(function() {
 				testReport();
 			});
-			
-// 			$('#testResultFile').change(function() {
-// 				changeTestResultFile();
-// 			});
-			
-// 			function changeTestResultFile() {
-// 				var params = "";
-// 		    	if (!isBlank($('form').serialize())) {
-// 		    		params = $('form').serialize() + "&";
-// 		    	}
-// 				params = params.concat("testType=");
-<%-- 				params = params.concat('<%= FrameworkConstants.FUNCTIONAL %>'); --%>
-
-// 				performAction('fillTestSuites', params, '', true);
-// 			}
 
 			function loadTestResults() {
 				var params = "";
@@ -366,7 +269,6 @@
 					params = params.concat('<%= fromPage %>');
 				<% } %>
 
-// 				performAction('fillTestResultFiles', params, '', true);
 				performAction('fillTestSuites', params, '', true);
 			}
 
@@ -392,28 +294,6 @@
 						if (data.validated != undefined && data.validated) {
 							return validationError(data.showError);
 						}
-
-// 						var testResultFiles = data.testResultFiles;
-// 						if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
-// 							$("#errorDiv").hide();
-// 							$("#testResultFile, #testSuite, #testSuiteDisplay, strong").show();
-// 							$('#testResultFile').empty();
-// 							for (i in testResultFiles) {
-// 								$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
-// 							}
-// 							changeTestResultFile();
-// 						}
-// 						var testSuites = data.testSuites;
-// 						if ((testSuites != undefined || !isBlank(testSuites))) {
-// 							$('#testSuite').empty();
-// 							for (i in testSuites) {
-// 								$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
-// 							}
-// 							testReport();
-// 						}
-
-// 						alert("Expected reached!!!!!!");
-						
 						var testSuiteNames = data.testSuiteNames;
 						if ((testSuiteNames != undefined || !isBlank(testSuiteNames))) {
 							$("#errorDiv").hide();
@@ -424,7 +304,6 @@
 							for (i in testSuiteNames) {
 								$('#testSuite').append($("<option></option>").attr("value", testSuiteNames[i]).text(testSuiteNames[i]));
 							}
-// 							alert("tech report called from unit!!!");
 							testReport();
 						}
 					
@@ -435,7 +314,7 @@
 			function validationError(errMsg) {
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
-				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView").hide();
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
 			}
 			
 			function changeView() {

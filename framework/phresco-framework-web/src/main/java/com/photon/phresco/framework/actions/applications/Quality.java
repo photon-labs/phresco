@@ -470,70 +470,46 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     }
 	
 	public String fillTestSuites() {
-		
-//		beginign
+		S_LOGGER.debug("Entering Method Quality.fillTestSuites");
 		try {
-		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-    	Project project = administrator.getProject(projectCode);
-    	Map<String, NodeList> mapTestResultName = null;
-    	mapTestResultName = testSuiteMap.get(projectCode + testType + projectModule + techReport);
-    	
-		String testResultPath = getTestResultPath(project, null);
-    	if (MapUtils.isEmpty(mapTestResultName) || StringUtils.isNotEmpty(fromPage)) {
-    		System.out.println("Inside if!!!!!!");
-    		File[] resultFiles = getTestResultFiles(testResultPath);
-    		if (resultFiles != null) {
-    			QualityUtil.sortResultFile(resultFiles);
-    			updateCache(resultFiles);
-    		} else {
-    			setValidated(true);
-    			if(UNIT.equals(testType)) {
-    				setShowError(ERROR_UNIT_TEST);
-    			} else {
-    				setShowError(ERROR_FUNCTIONAL_TEST);
-    			}
-    			return SUCCESS;
-    		}
-
-        	String testSuitesMapKey = projectCode + testType + projectModule + techReport;
-        	System.out.println("Getting value =====> " + testSuitesMapKey);
-        	mapTestResultName = testSuiteMap.get(testSuitesMapKey);
-    	} 
-    	
-    	
-    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
-    	for (String resultTestSuiteName : resultTestSuiteNames) {
-			System.out.println("Test suite name =====> " + resultTestSuiteName);
-		}
-    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
-    		setValidated(true);
-			setShowError(ERROR_TEST_SUITE);
-			return SUCCESS;
-    	}
-    	
-    	setTestType(testType);
-    	setTestSuiteNames(resultTestSuiteNames);
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	    	Project project = administrator.getProject(projectCode);
+	    	Map<String, NodeList> mapTestResultName = null;
+	    	mapTestResultName = testSuiteMap.get(projectCode + testType + projectModule + techReport);
+	    	
+			String testResultPath = getTestResultPath(project, null);
+	    	if (MapUtils.isEmpty(mapTestResultName) || StringUtils.isNotEmpty(fromPage)) {
+	    		File[] resultFiles = getTestResultFiles(testResultPath);
+	    		if (resultFiles != null) {
+	    			QualityUtil.sortResultFile(resultFiles);
+	    			updateCache(resultFiles);
+	    		} else {
+	    			setValidated(true);
+	    			if(UNIT.equals(testType)) {
+	    				setShowError(ERROR_UNIT_TEST);
+	    			} else {
+	    				setShowError(ERROR_FUNCTIONAL_TEST);
+	    			}
+	    			return SUCCESS;
+	    		}
+	
+	        	String testSuitesMapKey = projectCode + testType + projectModule + techReport;
+	        	mapTestResultName = testSuiteMap.get(testSuitesMapKey);
+	    	} 
+	    	
+	    	
+	    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
+	    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
+	    		setValidated(true);
+				setShowError(ERROR_TEST_SUITE);
+				return SUCCESS;
+	    	}
+	    	
+	    	setTestType(testType);
+	    	setTestSuiteNames(resultTestSuiteNames);
 		} catch (Exception e) {
-			e.printStackTrace();
+			S_LOGGER.error("Entered into catch block of Quality.fillTestSuites()"+ e);
 		}
-//    	end
-    	
-    	
-//    	Map<String, NodeList> mapTestResultName = null;
-//    	mapTestResultName = testSuiteMap.get(projectCode + testType + projectModule + techReport);
-//    	
-//    	if (StringUtils.isNotEmpty(testResultFile)) {
-//    		try {
-//        		NodeList testSuiteNodes = mapTestResultName.get(testResultFile);
-//				List<TestSuite> testSuites = getTestSuite(testSuiteNodes);
-//				setTestSuites(testSuites);
-//			} catch (PhrescoException e) {
-//				e.printStackTrace();
-//			} catch (TransformerException e) {
-//				e.printStackTrace();
-//			}
-//    	}
-
 		return SUCCESS;
 	}
     
@@ -1496,40 +1472,15 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         return osType;
     }
 
-//    public String testReport() {
-//    	S_LOGGER.debug("Entering Method Quality.testSuite()");
-//        
-//    	try {
-//    		String testSuitesMapKey = projectCode + testType + projectModule + techReport;
-//        	Map<String, NodeList> testResultNameMap = testSuiteMap.get(testSuitesMapKey);
-//            NodeList testSuites = testResultNameMap.get(testResultFile);
-//            if (testSuites.getLength() > 0 ) {
-//            	List<TestCase> testCases = getTestCases(testSuites);
-//            	if (CollectionUtils.isEmpty(testCases)) {
-//            		getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_CASE);
-//            	} else {
-//            		getHttpRequest().setAttribute(REQ_TESTCASES, testCases);
-//            	}
-//            }
-//        } catch (Exception e) {
-//        	S_LOGGER.error("Entered into catch block of Quality.testSuite()"+ e);
-//        }
-//
-//        getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
-//		return APP_TEST_REPORT; //APP_QUALITY_TESTSUITE;
-//    }
     public String testReport() {
-    	S_LOGGER.debug("Entering Method Quality.testSuite()");
-        System.out.println("Kalees test suite !!!!!!!!"+ testSuite);
+    	S_LOGGER.debug("Entering Method Quality.testReport()");
     	try {
     		String testSuitesMapKey = projectCode + testType + projectModule + techReport;
         	Map<String, NodeList> testResultNameMap = testSuiteMap.get(testSuitesMapKey);
 //            NodeList testSuites = testResultNameMap.get(testResultFile); //testSuite
-        	System.out.println("testResultNameMap size =====> " + testResultNameMap.size());
             NodeList testSuites = testResultNameMap.get(testSuite);
     		
     		if (ALL_TEST_SUITES.equals(testSuite)) {
-    			System.out.println("Inside all test suite report!!!!!");
     			Map<String, String> testSuitesResultMap = new HashMap<String, String>();
     			float totalTestSuites = 0;
     			float successTestSuites = 0;
@@ -1581,20 +1532,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     				            errorTestSuites = errorTestSuites + errors;
     				            successTestSuites = successTestSuites + success;
     				            String rstValues = tests + "," + success + "," + failures + "," + errors;
-    				            System.out.println("Testsuite name ====> " + tstSuite.getName() + "rst values ====> " + rstValues );
     				            testSuitesResultMap.put(tstSuite.getName(), rstValues);
     						}
     	    			}
         			}
 				}
-    			
-//    			System.out.println("testSuite name FFFFFfffffffffffffff=====> " + tstSuite.getName());
-    			System.out.println("totalTestSuites   ======> " + totalTestSuites);
-    			System.out.println("successTestSuites =====> " + successTestSuites);
-    			System.out.println("failureTestSuites ======> " + failureTestSuites);
-    			System.out.println("errorTestSuites=  =======> " + errorTestSuites);
-//    			String allValues = totalTestSuites + "," + failureTestSuites + "," + errorTestSuites + "," + successTestSuites;
-
     			getHttpRequest().setAttribute(REQ_ALL_TESTSUITE_MAP, testSuitesResultMap);
 				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
     			return APP_ALL_TEST_REPORT; 
@@ -1609,8 +1551,6 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	            }
     		}
         } catch (Exception e) {
-        	System.out.println("Exception caught here!!!!");
-        	e.printStackTrace();
         	S_LOGGER.error("Entered into catch block of Quality.testSuite()"+ e);
         }
 
