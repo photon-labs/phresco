@@ -549,7 +549,10 @@ public class Settings extends FrameworkBaseAction {
     	    String[] split = null;
     	    String envs = getHttpRequest().getParameter("envs");
     	    String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteSettingsEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+    	    	deleteSettingsEnvironment(selectedItems);
+    	    }
+
             List<Environment> environments = new ArrayList<Environment>();
             if(StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(Arrays.asList(envs.split("#SEP#")));
@@ -564,12 +567,18 @@ public class Settings extends FrameworkBaseAction {
             }
 	    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 	    	administrator.createEnvironments(environments);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+	    		addActionMessage(getText(UPDATE_ENVIRONMENT));
+	    	} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+	    		addActionMessage(getText(DELETE_ENVIRONMENT));
+	    	} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+	    		addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+		    }
     	} catch(PhrescoException e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
