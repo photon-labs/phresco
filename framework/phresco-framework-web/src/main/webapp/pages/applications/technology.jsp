@@ -516,7 +516,6 @@
 			}
 		} else if (pageUrl == "technology") {
 			techVersions();    	
-		    $("#name").focus();
 		}
 	}
 	
