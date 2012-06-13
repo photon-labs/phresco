@@ -133,6 +133,7 @@
             } else {
                 RGraph.Effects.Pie.RoundRobin(pie2);
             }
+        }
     </script>
 	
 				<div class="table_div_unit qtyTable_view" id="tabularView">
