@@ -153,7 +153,7 @@ h1 {margin-bottom: 0;}
 		<div class="clearfix">
 			<s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 			<div class="input new-input">
-				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="Description of the Configuration"><%= description %></textarea>
+				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="Description of the configuration"><%= description %></textarea>
 			</div>
 		</div>
 		<!--  Description ends -->
