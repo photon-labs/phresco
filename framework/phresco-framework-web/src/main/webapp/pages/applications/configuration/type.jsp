@@ -301,26 +301,26 @@
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		
-        $('#Port').live('input paste', function (e) { 	//Port validation
+        $('#Port').bind('input propertychange', function (e) { 	//Port validation
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
          });
         
-        $("#xlInput").live('input paste',function(e){ 	//Name validation
+        $("#xlInput").bind('input propertychange',function(e){ 	//Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	$(this).val(name);
         });
         
-        $("input[name='dbname']").live('input paste',function(e){ 
+        $("input[name='dbname']").bind('input propertychange',function(e){ 
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
         });
         
-        $("input[name='context']").live('input paste',function(e){	//Con
+        $("input[name='context']").bind('input propertychange',function(e){	//Root Context validation
         	var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
