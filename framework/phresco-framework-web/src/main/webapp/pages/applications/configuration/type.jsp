@@ -183,7 +183,7 @@
     
 		<% if (masterKey.equals("Server")) { %>
 			    <div id="remoteDeployDiv" class="clearfix" >
-			    	<label for="xlInput" class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
+			    	<label class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
 				    <div class="input new-input">
 				        <input type="checkbox" id="remoteDeploy" name="remoteDeploy" value="true" style = "margin-top: 8px;">
 				    </div>
@@ -287,7 +287,7 @@
 			});
         
 		 
-		/** to display Corresponding versions **/
+		/** to display corressponding versions **/
 		$("#type").change(function() {
 			$('#deploy_dir').show();
 			if($(this).val() == "NodeJS") {
