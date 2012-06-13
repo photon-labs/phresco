@@ -114,7 +114,7 @@
 									for (Environment environment : environments) {
 										if(environment.isDefaultEnv()) {
 											defaultEnv = environment.getName();
-											selectedStr = "checked";
+											selectedStr = "Disabled Checked";
 										} else {
 											selectedStr = "";
 										}
@@ -386,6 +386,7 @@
 		var from = $("#from").val();
 		if (from == "generateBuild") {
 			$("input[value='<%= defaultEnv %>']").attr("checked", "checked");
+			$("input[value='<%= defaultEnv %>']").attr("disabled", "disabled");
 		}
 	}
 </script>

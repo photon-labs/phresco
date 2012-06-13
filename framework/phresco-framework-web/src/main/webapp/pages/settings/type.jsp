@@ -177,7 +177,7 @@
     </div> <!-- /clearfix -->
     	<% if (masterKey.equals("Server")) { %>
 			    <div id="remoteDeployDiv" class="clearfix">
-			    	<label for="xlInput" class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
+			    	<label class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
 				    <div class="input new-input">
 				        <input type="checkbox" id="remoteDeploy" name="remoteDeploy" value="true" style = "margin-top: 8px;">
 				    </div>
@@ -283,7 +283,6 @@
 	}
 	
 	$(document).ready(function() {
-		
 		<%
 		if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
 	%>
@@ -370,26 +369,26 @@
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		
-		$('#Port').live('input paste', function (e) { //Port validation
+		$('#Port').bind('input propertychange', function (e) { //Port validation
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
          });
         
-		$("#xlInput").live('input paste',function(e) { //Name validation
+		$("#xlInput").bind('input propertychange',function(e) { //Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	$(this).val(name);
         });
 		
-		$("input[name='dbname']").live('input paste',function(e){ 	//DB_Name validation
+		$("input[name='dbname']").bind('input propertychange',function(e){ 	//DB_Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
         });
 		
-		$("input[name='context']").live('input paste',function(e){ 	//Context validation
+		$("input[name='context']").bind('input propertychange',function(e){ 	//Context validation
         	var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);

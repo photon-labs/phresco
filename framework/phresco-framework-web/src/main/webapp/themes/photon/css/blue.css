@@ -1350,9 +1350,20 @@ table tr {
 #errorMsg {
 	color:red;
 }
+
 #errMsg {
 	color:red;
 }
+
+#logimErrMesg {
+	color: #1AA6DB;
+    float: left;
+    font-weight: bold;
+    padding-bottom: 9px;
+    width: 195%;
+    margin-top: -8px;
+}
+
 #reportMsg {
     color:green;
 }
