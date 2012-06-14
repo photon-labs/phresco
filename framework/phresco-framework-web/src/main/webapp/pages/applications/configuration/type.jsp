@@ -209,6 +209,7 @@
 	}
 
 	$(document).ready(function() {
+		enableScreen();
 		
 		/** To display projectInfo servers starts **/
 		<%

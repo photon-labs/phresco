@@ -85,6 +85,7 @@
 <body>
 	<div class="wel_come"></div>
 	<div class="errorOverlay"></div>
+	<div id="loadingIconDiv"></div>
 	
 	<!-- In Progress starts -->
 	<div id="progressbar" class="progressPosition">

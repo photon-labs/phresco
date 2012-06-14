@@ -241,6 +241,7 @@
 		});*/
 		
 		changeView (); // when graph is loaded base on selection of list box(tabular / list) it do automatically
+		enableScreen();
 	});
 	
 	$('#resultView').change(function() {
