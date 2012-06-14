@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="jchav-example" default="default" basedir=".">
+
+	<target name="default" depends="run-jmeter,run-jchav"
+		description="Run Jmeter test plan and generate  reports" />
+
+	<target name="init">
+		<echo>Loading properties from build.properties</echo>
+		<property file="build.properties" />
+		
+		<tstamp description="Produce a build id. If using a continuous build process inherit the build. id from that">
+			<format property="build.id" pattern="dMMhhmmss" locale="en"/>
+		</tstamp>
+
+		<property description="The location of the install of JMeter" 
+			name="jmeter.install.dir" value="${jmeter.result.dir}" />
+
+		<property description="The directory containing the jchav jars" 
+			name="jchav.libs.dir" value="${jmeter.install.dir}/" />
+	
+		<property description="The JMeter test plan script we want to run" 
+			name="jmeter.testplan" value="tests/PhrescoFrameWork_TestPlan.jmx" />
+
+		<property description="The location to store the per run files" 
+			name="jmeter.result.dir" value="results/jmeter" />
+
+		<property description="The resulting file location, make sure this is unique for each build" 
+			name="jmeter.result.file" value="${jmeter.result.dir}/TestsResults${build.id}.xml" />
+
+		<property description="The location to generate the html and charts to. " 
+			name="jchav.result.dir" value="results/jchav" />
+	</target>
+			
+	<target name="run-jmeter" depends="init"
+			description="Execute the JMeter test plan, recording the results to a file.">		
+
+		<echo message="${jmeter.install.dir}"/>
+		
+		 <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask">
+			<classpath>
+				<fileset dir="${jmeter.install.dir}/extras">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		 </taskdef>
+				
+		<jmeter			
+			jmeterhome="${jmeter.install.dir}"
+			testplan="${jmeter.testplan}"
+			resultlog="${jmeter.result.file}">
+			<property name="jmeter.save.saveservice.output_format" value="xml"/>
+		</jmeter>
+		
+	</target>
+			
+	
+	<target name="run-jchav" depends="init"
+			description="Produce JChav report from the JMeter results">
+		
+		<mkdir dir="${jchav.libs.dir}/"/>
+		
+		 <taskdef name="jchav" classname="com.googlecode.jchav.ant.JChavTask">
+			<classpath>
+				<fileset dir="${jchav.libs.dir}/">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		 </taskdef>
+		
+		<jchav srcdir="${jmeter.result.dir}" destdir="${jchav.result.dir}" 
+			reporttitle="Performance Test Results"
+			uniformyaxis="true"  />
+		
+		<echo>Now open ${jchav.result.dir}/index.html</echo>
+	
+	</target>
+	
+</project>
+
