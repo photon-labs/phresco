@@ -93,8 +93,10 @@ import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model.Modules;
 import com.phresco.pom.util.PomProcessor;
@@ -1814,6 +1816,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 				// Get xcode targets
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
+				// get list of sdks
+				List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
+				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
             }
         } catch (Exception e) {
                S_LOGGER.error("Entered into catch block of Quality.testIPhone()"+ e);
