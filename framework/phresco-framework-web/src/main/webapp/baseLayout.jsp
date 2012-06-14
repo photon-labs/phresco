@@ -27,7 +27,7 @@
 <link REL="SHORTCUT ICON" HREF="images/favicon.ico">
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css" id="phresco" >
-<link type="text/css" rel="stylesheet" href="themes/photon/css/red.css" class="changeme">
+<link type="text/css" rel="stylesheet" class="changeme" title="phresco">
 <!--<link type="text/css" rel="stylesheet" href="themes/photon/css/blue.css">-->
 <!-- media queries css -->
 <link type="text/css" rel="stylesheet" href="themes/photon/css/media-queries.css">
@@ -69,17 +69,24 @@
 <!-- Window Resizer -->
 
 <script type="text/javascript">
-	if($.cookie("css")) {
-		 $("link.changeme").attr("href",$.cookie("css"));
-    }
+	if (localStorage["color"] != null) {
+		$("link[title='phresco']").attr("href", localStorage["color"]);
+	} else {
+		$("link[title='phresco']").attr("href", "themes/photon/css/red.css");
+	}
 	
-	/* function resize(){  
-		var frame = document.getElementById("wrapper");  
-		var htmlheight = document.body.parentNode.scrollHeight;  
-		var windowheight = window.innerHeight;  
-		if ( htmlheight < windowheight ) { document.body.style.height = windowheight + "px"; frame.style.height = windowheight + "px"; }  
-		else { document.body.style.height = htmlheight + "px"; frame.style.height = htmlheight + "px"; }  
-		} */
+	$(document).ready(function() {
+		 $(".styles").click(function() {
+	  		 localStorage.clear();
+	  		 var key = $(this).attr("id");
+	  		 var value = $(this).attr("rel");
+	  		 localStorage["color"]= value;
+	  		 localstore = localStorage["color"];
+	  		 $("link[title='phresco']").attr("href",localstore);
+	  		showHeaderImage();
+	  	 });
+	});
+	
 </script>
 </head>
 <body>
