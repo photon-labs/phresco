@@ -240,8 +240,7 @@
 	         });
 		});*/
 		
-		changeView(); // when graph is loaded base on selection of list box(tabular / list) it do automatically
-		
+		changeView (); // when graph is loaded base on selection of list box(tabular / list) it do automatically
 		enableScreen();
 	});
 	
@@ -282,7 +281,7 @@
 		var data = <%= graphData %>;
         var bar = new RGraph.Bar('myCanvas', data);
         
-		var theme = $.cookie("css");
+		var theme = localStorage["color"];
         var chartTextColor = "";
         var chartGridColor = "";
         var chartAxisColor = "";
