@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -123,19 +104,12 @@
             'chart.resizable':              false,
             'chart.resize.handle.adjust':   [0,0],
             'chart.resize.handle.background': null,
-            'chart.strokestyle':            '#333',
-            'chart.events.mousemove':       null,
-            'chart.events.click':           null
+            'chart.strokestyle':            '#333'
         }
 
         // Pad the arrays so they're the same size
         while (this.left.length < this.right.length) this.left.push(0);
         while (this.left.length > this.right.length) this.right.push(0);
-        
-        /**
-        * Add the common .getShape() method
-        */
-        this.getShape = this.getBar;
     }
 
 
@@ -221,13 +195,6 @@
 
 
         /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
-
-        /**
         * Install the on* event handlers
         */
         if (this.Get('chart.tooltips')) {
@@ -235,8 +202,6 @@
 
             // Register the object so that it gets redrawn
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
 
             /**
@@ -284,10 +249,25 @@
                     var height = obj.coords[i][3];
 
                     if (mouseX >= left && mouseX <= (left + width ) && mouseY >= top && mouseY <= (top + height) ) {
+                        /**
+                        * Get the tooltip text
+                        */
+                        if (typeof(obj.Get('chart.tooltips')) == 'function') {
+                            var text = obj.Get('chart.tooltips')(i);
+
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object' && typeof(obj.Get('chart.tooltips')[i]) == 'function') {
+                            var text = obj.Get('chart.tooltips')[i](i);
                         
-                        var text   = RGraph.parseTooltipText(obj.Get('chart.tooltips'), i);
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object') {
+                            var text = obj.Get('chart.tooltips')[i];
+
+                        } else {
+                            var text = '';
+                        }
                         
-                        canvas.style.cursor = text ? 'pointer' : 'default';
+                        if (text) {
+                            canvas.style.cursor = 'pointer';
+                        }
                         return;
                     }
                 }
@@ -339,8 +319,22 @@
                     */
                     if (obj.Get('chart.tooltips')) {
 
-                        var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), index);
+                        /**
+                        * Get the tooltip text
+                        */
+                        if (typeof(obj.Get('chart.tooltips')) == 'function') {
+                            var text = obj.Get('chart.tooltips')(index);
 
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object' && typeof(obj.Get('chart.tooltips')[index]) == 'function') {
+                            var text = obj.Get('chart.tooltips')[index](index);
+                        
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object') {
+                            var text = obj.Get('chart.tooltips')[index];
+
+                        } else {
+                            var text = '';
+                        }
+                        
                         // Only now show a tooltip if one has been set
                         if (text) {
                             obj.context.beginPath();
@@ -394,6 +388,11 @@
         if (this.Get('chart.resizable')) {
             RGraph.AllowResizing(this);
         }
+        
+        /**
+        * Add the common .getShape() method
+        */
+        this.getShape = this.getBar;
         
         /**
         * Fire the RGraph ondraw event
@@ -588,8 +587,8 @@
                 }
     
                 
-                this.context.strokeRect(AA(this, coords[0]), AA(this, coords[1]), coords[2], coords[3]);
-                this.context.fillRect(AA(this, coords[0]), AA(this, coords[1]), coords[2], coords[3]);
+                this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
+                this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
 
             this.context.stroke();
             this.context.fill();
@@ -633,26 +632,26 @@
         for (var i=0; i<this.right.length; ++i) {
             this.context.beginPath();
 
-                // Set the colour
-                if (this.Get('chart.colors')[i]) {
-                    this.context.fillStyle = this.Get('chart.colors')[i];
+            // Set the colour
+            if (this.Get('chart.colors')[i]) {
+                this.context.fillStyle = this.Get('chart.colors')[i];
+            }
+
+
+            var width = ( (this.right[i] / this.max) * this.axisWidth);
+            var coords = [
+                          this.gutterLeft + this.axisWidth + this.Get('chart.gutter.center'),
+                          this.Get('chart.margin') + (i * (this.axisHeight / this.right.length)) + this.gutterTop,
+                          width,
+                          this.barHeight
+                        ];
+
+                // Draw the IE shadow if necessary
+                if (RGraph.isOld() && this.Get('chart.shadow')) {
+                    this.DrawIEShadow(coords);
                 }
-    
-    
-                var width = ( (this.right[i] / this.max) * this.axisWidth);
-                var coords = [
-                              this.gutterLeft + this.axisWidth + this.Get('chart.gutter.center'),
-                              this.Get('chart.margin') + (i * (this.axisHeight / this.right.length)) + this.gutterTop,
-                              width,
-                              this.barHeight
-                            ];
-    
-                    // Draw the IE shadow if necessary
-                    if (RGraph.isOld() && this.Get('chart.shadow')) {
-                        this.DrawIEShadow(coords);
-                    }
-                this.context.strokeRect(AA(this, coords[0]), AA(this, coords[1]), coords[2], coords[3]);
-                this.context.fillRect(AA(this, coords[0]), AA(this, coords[1]), coords[2], coords[3]);
+            this.context.strokeRect(coords[0], coords[1], coords[2], coords[3]);
+            this.context.fillRect(coords[0], coords[1], coords[2], coords[3]);
 
             this.context.closePath();
             

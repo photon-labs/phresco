@@ -1,22 +1,3 @@
-<%--
-  ###
-  Framework Web Archive
-  
-  Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-       http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  ###
-  --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@	page import="org.apache.commons.lang.StringUtils"%>
@@ -486,6 +467,7 @@
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
+		$("#svnurl").focus();
 		$("#configs").hide();
 		$("#actionBtn").hide();
 		$("#preBtn").hide();
@@ -494,18 +476,19 @@
 			var svnurl= $("#svnurl").val();
 			var username= $("#username").val();
 			var password= $("#password").val();
-			if(svnurl == "") {
+			if(isValidUrl(svnurl)){
 				$("#errMsg").html("Enter SVN URL");
 				$("#svnurl").focus();
-				return;
+				$("#svnurl").val("");
+				return false;
 			}
 			
-			if(username == "") {
+			if(isBlank($.trim($("input[name= username]").val()))){
 				$("#errMsg").html("Enter UserName");
 				$("#username").focus();
-				return;
+				$("#username").val("");
+				return false;
 			}
-			
 			if(password == "") {
 				$("#errMsg").html("Enter Password");
 				$("#password").focus();
@@ -522,6 +505,7 @@
 			
 			if( $("[name=triggers]:checked").length == 0 ) {
 				$("#errMsg").html("Enter Build Triggers");
+				$("#buildPeriodically").focus();
 				return false;
 			} else {
 				$("#errMsg").empty();

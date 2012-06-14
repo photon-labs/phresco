@@ -35,6 +35,7 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -128,6 +129,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String caption = null;
     private List<String> testResultFiles = null;
     private List<TestSuite> testSuites = null;
+    private List<String> testSuiteNames = null;
     private boolean validated = false;
 	private String testResultsType = null;
 
@@ -468,32 +470,60 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     }
 	
 	public String fillTestSuites() {
-    	Map<String, NodeList> mapTestResultName = null;
-    	mapTestResultName = testSuiteMap.get(projectCode + testType + projectModule + techReport);
-    	
-    	if (StringUtils.isNotEmpty(testResultFile)) {
-    		try {
-        		NodeList testSuiteNodes = mapTestResultName.get(testResultFile);
-				List<TestSuite> testSuites = getTestSuite(testSuiteNodes);
-				setTestSuites(testSuites);
-			} catch (PhrescoException e) {
-				e.printStackTrace();
-			} catch (TransformerException e) {
-				e.printStackTrace();
-			}
-    	}
-
+		S_LOGGER.debug("Entering Method Quality.fillTestSuites");
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	    	Project project = administrator.getProject(projectCode);
+	    	Map<String, NodeList> mapTestResultName = null;
+	    	mapTestResultName = testSuiteMap.get(projectCode + testType + projectModule + techReport);
+	    	
+			String testResultPath = getTestResultPath(project, null);
+	    	if (MapUtils.isEmpty(mapTestResultName) || StringUtils.isNotEmpty(fromPage)) {
+	    		File[] resultFiles = getTestResultFiles(testResultPath);
+	    		if (resultFiles != null) {
+	    			QualityUtil.sortResultFile(resultFiles);
+	    			updateCache(resultFiles);
+	    		} else {
+	    			setValidated(true);
+	    			if(UNIT.equals(testType)) {
+	    				setShowError(ERROR_UNIT_TEST);
+	    			} else {
+	    				setShowError(ERROR_FUNCTIONAL_TEST);
+	    			}
+	    			return SUCCESS;
+	    		}
+	
+	        	String testSuitesMapKey = projectCode + testType + projectModule + techReport;
+	        	mapTestResultName = testSuiteMap.get(testSuitesMapKey);
+	    	} 
+	    	
+	    	
+	    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
+	    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
+	    		setValidated(true);
+				setShowError(ERROR_TEST_SUITE);
+				return SUCCESS;
+	    	}
+	    	
+	    	setTestType(testType);
+	    	setTestSuiteNames(resultTestSuiteNames);
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Quality.fillTestSuites()"+ e);
+		}
 		return SUCCESS;
 	}
     
-    private void updateCache(File[] resultFiles) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException {
+    private void updateCache(File[] resultFiles) throws FileNotFoundException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		Map<String, NodeList> mapTestSuites = new HashMap<String, NodeList>(10);
     	for (File resultFile : resultFiles) {
     		Document doc = getDocument(resultFile);
 			try {
 				NodeList testSuiteNodeList = evaluateTestSuite(doc);
 				if (testSuiteNodeList.getLength() > 0) {
-					mapTestSuites.put(resultFile.getName(), testSuiteNodeList);
+					List<TestSuite> testSuites = getTestSuite(testSuiteNodeList);
+					for (TestSuite testSuite : testSuites) {
+						mapTestSuites.put(testSuite.getName(), testSuiteNodeList);
+					}
 				}
 			} catch (PhrescoException e) {
 				// continue the loop to filter the testResultFile
@@ -1443,20 +1473,83 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     }
 
     public String testReport() {
-    	S_LOGGER.debug("Entering Method Quality.testSuite()");
-        
+    	S_LOGGER.debug("Entering Method Quality.testReport()");
     	try {
     		String testSuitesMapKey = projectCode + testType + projectModule + techReport;
         	Map<String, NodeList> testResultNameMap = testSuiteMap.get(testSuitesMapKey);
-            NodeList testSuites = testResultNameMap.get(testResultFile);
-            if (testSuites.getLength() > 0 ) {
-            	List<TestCase> testCases = getTestCases(testSuites);
-            	if (CollectionUtils.isEmpty(testCases)) {
-            		getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_CASE);
-            	} else {
-            		getHttpRequest().setAttribute(REQ_TESTCASES, testCases);
-            	}
-            }
+//            NodeList testSuites = testResultNameMap.get(testResultFile); //testSuite
+            NodeList testSuites = testResultNameMap.get(testSuite);
+    		
+    		if (ALL_TEST_SUITES.equals(testSuite)) {
+    			Map<String, String> testSuitesResultMap = new HashMap<String, String>();
+    			float totalTestSuites = 0;
+    			float successTestSuites = 0;
+    			float failureTestSuites = 0;
+    			float errorTestSuites = 0;
+    			// get all nodelist of testType of a project
+    			Collection<NodeList> allTestResultNodeLists = testResultNameMap.values();
+    			for (NodeList allTestResultNodeList : allTestResultNodeLists) {
+        			if (allTestResultNodeList.getLength() > 0 ) {
+    	    			List<TestSuite> allTestSuites = getTestSuite(allTestResultNodeList);
+    	    			if (CollectionUtils.isNotEmpty(allTestSuites)) {
+    		    			for (TestSuite tstSuite : allTestSuites) {
+    		    				//testsuite values are set before calling getTestCases value
+    							testSuite = tstSuite.getName();
+    				            List<TestCase> testCases = getTestCases(allTestResultNodeList);
+    				            float tests = 0;
+    				            float failures = 0;
+    				            float errors = 0;
+    				            tests = Float.parseFloat((String) getHttpRequest().getAttribute(REQ_TESTSUITE_TESTS));
+    				            failures = Float.parseFloat((String) getHttpRequest().getAttribute(REQ_TESTSUITE_FAILURES));
+    				            errors = Float.parseFloat((String) getHttpRequest().getAttribute(REQ_TESTSUITE_ERRORS));
+    				            float success = 0;
+    				            
+    				            if (failures != 0 && errors == 0) {
+    				                if (failures > tests) {
+    				                    success = failures - tests;
+    				                } else {
+    				                    success = tests - failures;
+    				                }
+    				            } else if (failures == 0 && errors != 0) {
+    				                if (errors > tests) {
+    				                    success = errors - tests;
+    				                } else {
+    				                    success = tests - errors;
+    				                }
+    				            } else if (failures != 0 && errors != 0) {
+    				                float failTotal = (failures + errors);
+    				                if (failTotal > tests) {
+    				                    success = failTotal - tests;
+    				                } else {
+    				                    success = tests - failTotal;
+    				                }
+    				            } else {
+    				            	success = tests;
+    				            }
+    				            
+    				            totalTestSuites = totalTestSuites + tests;
+    				            failureTestSuites = failureTestSuites + failures;
+    				            errorTestSuites = errorTestSuites + errors;
+    				            successTestSuites = successTestSuites + success;
+    				            String rstValues = tests + "," + success + "," + failures + "," + errors;
+    				            testSuitesResultMap.put(tstSuite.getName(), rstValues);
+    						}
+    	    			}
+        			}
+				}
+    			getHttpRequest().setAttribute(REQ_ALL_TESTSUITE_MAP, testSuitesResultMap);
+				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+    			return APP_ALL_TEST_REPORT; 
+    		} else {
+	            if (testSuites.getLength() > 0 ) {
+	            	List<TestCase> testCases = getTestCases(testSuites);
+	            	if (CollectionUtils.isEmpty(testCases)) {
+	            		getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_CASE);
+	            	} else {
+	            		getHttpRequest().setAttribute(REQ_TESTCASES, testCases);
+	            	}
+	            }
+    		}
         } catch (Exception e) {
         	S_LOGGER.error("Entered into catch block of Quality.testSuite()"+ e);
         }
@@ -1464,7 +1557,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		return APP_TEST_REPORT; //APP_QUALITY_TESTSUITE;
     }
-
+    
     public String testAndroid(){
         HttpServletRequest request = getHttpRequest();
         String testType = request.getParameter("testType");
@@ -2116,5 +2209,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setPerformanceDetails(PerformanceDetails performanceDetails) {
 		this.performanceDetails = performanceDetails;
+	}
+	
+	public List<String> getTestSuiteNames() {
+		return testSuiteNames;
+	}
+
+	public void setTestSuiteNames(List<String> testSuiteNames) {
+		this.testSuiteNames = testSuiteNames;
 	}
 }

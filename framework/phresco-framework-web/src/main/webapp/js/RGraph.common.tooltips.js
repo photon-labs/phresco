@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -498,13 +479,10 @@
     */
     RGraph.getTooltipTextFromDIV = function (text)
     {
-        // This regex is duplicated firher down on roughly line 888
         var result = /^id:(.*)/.exec(text);
 
         if (result && result[1] && document.getElementById(result[1])) {
             text = document.getElementById(result[1]).innerHTML;
-        } else if (result && result[1]) {
-            text = '';
         }
         
         return text;
@@ -519,7 +497,7 @@
         // Get the tooltip text
         if (typeof(tooltips) == 'function') {
             var text = tooltips(idx);
-
+        
         } else if (typeof(tooltips) == 'object' && tooltips && typeof(tooltips[idx]) == 'function') {
             var text = tooltips[idx](idx);
         
@@ -529,14 +507,12 @@
         } else {
             var text = '';
         }
-
+        
         if (text == 'undefined') {
-            text = '';
-        } else if (text == 'null') {
             text = '';
         }
 
-        return RGraph.getTooltipTextFromDIV(text);
+        return text;
     }
 
 
@@ -623,6 +599,7 @@
                 */
                 var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), barCoords[5]);
 
+    
                 if (text) {
                     canvas.style.cursor = 'pointer';
                 } else {
@@ -766,7 +743,7 @@
     */
     RGraph.InstallLineTooltipEventListeners = function (obj)
     {
-        var canvas_onclick_func = function (e)
+        var canvas_onmousemove_func = function (e)
         {
             e = RGraph.FixEventObject(e);
     
@@ -798,14 +775,18 @@
                 if ((obj.Get('chart.tooltips')[idx] || typeof(obj.Get('chart.tooltips')) == 'function')) {
     
                     var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
+    
+    
+                    // No tooltip text - do nada
+                    if (text.match(/^id:(.*)$/) && RGraph.getTooltipTextFromDIV(text).substring(0,3) == 'id:') {
+                        return;
+                    }
 
                     // Change the pointer to a hand
                     if (   mouseX > (xCoord - 5)
                         && mouseX < (xCoord + 5)
                         && mouseY > (yCoord - 5)
-                        && mouseY < (yCoord + 5)
-                        && text) {
-
+                        && mouseY < (yCoord + 5) ) {
                         canvas.style.cursor = 'pointer';
                     } else {
                         canvas.style.cursor = 'default';
@@ -840,39 +821,36 @@
                     // SHOW THE CORRECT TOOLTIP
                     RGraph.Tooltip(canvas, text, e.pageX, obj.Get('chart.tooltips.hotspot.xonly') ? (point[2] + RGraph.getCanvasXY(canvas)[1]) : e.pageY, idx);
     
-                    // Store the tooltip index on the tooltip object if it exists (because of override)
-                    if (typeof(obj.Get('chart.tooltips.override')) != 'function') {
-                        RGraph.Registry.Get('chart.tooltip').__index__ = Number(idx);
+                    // Store the tooltip index on the tooltip object
+                    RGraph.Registry.Get('chart.tooltip').__index__ = Number(idx);
     
-                        /**
-                        * This converts idx into the index that is not greater than the
-                        * number of items in the data array
-                        */
-                        while (idx >= obj.data[0].length) {
-                            idx -= obj.data[0].length
-                        }
+                    /**
+                    * This converts idx into the index that is not greater than the
+                    * number of items in the data array
+                    */
+                    while (idx >= obj.data[0].length) {
+                        idx -= obj.data[0].length
+                    }
     
-                        RGraph.Registry.Get('chart.tooltip').__index2__ = idx;
+                    RGraph.Registry.Get('chart.tooltip').__index2__ = idx;
                     
-                        /**
-                        * Set the source event
-                        */
-                        RGraph.Registry.Get('chart.tooltip').__event__ = 'mousemove';
-
+                    /**
+                    * Set the source event
+                    */
+                    RGraph.Registry.Get('chart.tooltip').__event__ = 'mousemove';
     
-                        /**
-                        * Highlight the graph
-                        */
-                        if (obj.Get('chart.tooltips.highlight')) {
-                        
-                            context.beginPath();
-                            context.moveTo(xCoord, yCoord);
-                            context.arc(xCoord, yCoord, 2, 0, 6.28, 0);
-                            context.strokeStyle = obj.Get('chart.highlight.stroke');
-                            context.fillStyle = obj.Get('chart.highlight.fill');
-                            context.stroke();
-                            context.fill();
-                        }
+                    /**
+                    * Highlight the graph
+                    */
+                    if (obj.Get('chart.tooltips.highlight')) {
+                    
+                        context.beginPath();
+                        context.moveTo(xCoord, yCoord);
+                        context.arc(xCoord, yCoord, 2, 0, 6.28, 0);
+                        context.strokeStyle = obj.Get('chart.highlight.stroke');
+                        context.fillStyle = obj.Get('chart.highlight.fill');
+                        context.stroke();
+                        context.fill();
                     }
                     
                     e.stopPropagation();
@@ -885,115 +863,6 @@
             */
             canvas.style.cursor = 'default';
         }
-        obj.canvas.addEventListener('click', canvas_onclick_func, false);
-        RGraph.AddEventListener(obj.id, 'click', canvas_onclick_func);
-        
-        /**
-        * The onmousemove by default shows the tooltips, but using the new chart.tooltips.event property
-        * you can change this to the click event
-        * 
-        * @param obj e The event object
-        */
-        if (obj.Get('chart.tooltips.event') == 'onmousemove') {
-            var canvas_onmousemove_func = function (e)
-            {
-                e = RGraph.FixEventObject(e);
-        
-                var canvas  = e.target;
-                var context = canvas.getContext('2d');
-                var obj     = canvas.__object__;
-                var point   = obj.getPoint(e);
-                
-                if (point && point.length > 0) {
-                
-                    var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), point[3]);
-
-                    // This regex is a duplicate of one further up on roughly line 482
-                    if (text) {
-                        canvas.style.cursor = 'pointer';
-                        canvas_onclick_func(e);
-                    }
-                } else {
-                    canvas.style.cursor = 'default';
-                }
-            }
-            obj.canvas.addEventListener('mousemove', canvas_onmousemove_func, false);
-            RGraph.AddEventListener(obj.id, 'mousemove', canvas_onmousemove_func);
-        
-        // Just do the mouse pointer
-        } else {
-            var canvas_onmousemove_func = function (e)
-            {
-                e = RGraph.FixEventObject(e);
-        
-                var canvas  = e.target;
-                var context = canvas.getContext('2d');
-                var obj     = canvas.__object__;
-                var point   = obj.getPoint(e);
-                
-                if (point && point.length > 0) {
-                    
-                    var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), point[3]);
-
-                    if (text) {
-                        canvas.style.cursor = 'pointer';
-                    }
-                } else {
-                    canvas.style.cursor = 'default';
-                }
-            }
-            obj.canvas.addEventListener('mousemove', canvas_onmousemove_func, false);
-            RGraph.AddEventListener(obj.id, 'mousemove', canvas_onmousemove_func);
-        }
-    }
-
-
-    /**
-    * This (as the name suggests preloads any images it can find in the tooltip text
-    * 
-    * @param object obj The chart object
-    */
-    RGraph.PreLoadTooltipImages = function (obj)
-    {
-        var tooltips = obj.Get('chart.tooltips');
-        
-        if (obj.type == 'rscatter') {
-            tooltips = [];
-            for (var i=0; i<obj.data.length; ++i) {
-                tooltips.push(obj.data[3]);
-            }
-        }
-        
-        for (var i=0; i<tooltips.length; ++i) {
-            // Add the text to an offscreen DIV tag
-            var div = document.createElement('DIV');
-                div.style.position = 'absolute';
-                div.style.opacity = 0;
-                div.style.top = '-100px';
-                div.style.left = '-100px';
-                div.innerHTML  = tooltips[i];
-            document.body.appendChild(div);
-            
-            // Now get the IMG tags and create them
-            var img_tags = div.getElementsByTagName('IMG');
-
-            // Create the image in an off-screen image tag
-            for (var j=0; j<img_tags.length; ++j) {
-                    if (img_tags && img_tags[i]) {
-                    var img = document.createElement('IMG');
-                        img.style.position = 'absolute';
-                        img.style.opacity = 0;
-                        img.style.top = '-100px';
-                        img.style.left = '-100px';
-                        img.src = img_tags[i].src
-                    document.body.appendChild(img);
-                    
-                    setTimeout(function () {document.body.removeChild(img);}, 250);
-                }
-            }
-
-            // Now remove the div
-            document.body.removeChild(div);
-        }
-        
+        obj.canvas.addEventListener('mousemove', canvas_onmousemove_func, false);
+        RGraph.AddEventListener(obj.id, 'mousemove', canvas_onmousemove_func);
     }

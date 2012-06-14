@@ -196,7 +196,7 @@
            	}
         });
 		
-		$("#envName").live('input paste',function(e){ 	//envName validation
+		$("#envName").bind('input propertychange',function(e){ 	//envName validation
 	     	var name = $(this).val();
 	     	name = checkForSplChr(name);
 	     	$(this).val(name);

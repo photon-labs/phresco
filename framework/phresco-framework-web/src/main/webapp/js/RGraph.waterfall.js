@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -126,9 +107,9 @@
             'chart.contextmenu':            null,
             'chart.units.pre':              '',
             'chart.units.post':             '',
-            'chart.scale.decimals':         0,
-            'chart.scale.point':            '.',
-            'chart.scale.thousand':         ',',
+        //'chart.scale.decimals':         0,
+        //'chart.scale.point':            '.',
+        //'chart.scale.thousand':         ',',
         //'chart.scale.formatter':        null,
             'chart.crosshairs':             false,
             'chart.crosshairs.color':       '#333',
@@ -157,9 +138,7 @@
             'chart.axis.color':             'black',
             'chart.total':                  true,
             'chart.multiplier.x':           1,
-            'chart.multiplier.w':           1,
-            'chart.events.click':           null,
-            'chart.events.mousemove':       null
+            'chart.multiplier.w':           1
         }
 
         // Check for support
@@ -323,13 +302,6 @@
         if (this.Get('chart.resizable')) {
             RGraph.AllowResizing(this);
         }
-
-
-        /**
-        * Install the click and mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
         
         /**
         * Tooltips
@@ -337,8 +309,6 @@
         if (this.Get('chart.tooltips')) {
         
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             /**
             * Install the onclick event handler for the tooltips
@@ -397,12 +367,9 @@
                     */
                     var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), bar[5]);
                     
-                    if (text) {
-                        canvas.style.cursor = 'pointer';
-                        RGraph.Tooltip(canvas, text, e.pageX, e.pageY, bar[5]);
-                    } else {
-                        canvas.style.pointer = 'default';
-                    }
+                    canvas.style.cursor = text ? 'pointer' : 'default';
+
+                    RGraph.Tooltip(canvas, text, e.pageX, e.pageY, bar[5]);
                 }
 
                 /**
@@ -437,9 +404,11 @@
                 /**
                 * Loop through the bars determining if the mouse is over a bar
                 */
-                if (bar && obj.Get('chart.tooltips')[bar[5]]) {
-                    canvas.style.cursor = 'pointer';
-                    e.stopPropagation();
+                if (bar) {
+                   if (obj.Get('chart.tooltips')[bar[5]]) {                       
+                        canvas.style.cursor = 'pointer';
+                        e.stopPropagation();
+                    }
 
                    return;
                 }
@@ -455,6 +424,19 @@
             }
             this.canvas.addEventListener('mousemove', canvas_onmousemove_func, false);
             RGraph.AddEventListener(this.id, 'mousemove', canvas_onmousemove_func);
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         

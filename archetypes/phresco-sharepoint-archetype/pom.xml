@@ -13,12 +13,12 @@
     <artifactId>phresco-sharepoint-archetype</artifactId>
     <name>Archetype - Sharepoint</name>
     <url>http://www.phresco.org</url>
-  
+	<description>phresco-sharepoint-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.sharepoint</id>
             <name>Phresco Archetypes - SharePoint</name>
-            <url>scp://phresco.org/home/projects/archetypes/sharepoint/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-sharepoint-archetype/</url>
         </site>
     </distributionManagement>
 

@@ -197,7 +197,7 @@
 			getConfigNames();
 		});
 		 
-	    $("#testName").live('input paste',function(e) { 	//testName validation
+	    $("#testName").bind('input propertychange',function(e) { 	//testName validation
 	     	var name = $(this).val();
 	     	name = isContainSpace(name);
 	     	$(this).val(name);

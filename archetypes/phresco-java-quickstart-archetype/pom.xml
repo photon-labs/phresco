@@ -21,7 +21,7 @@
         <site>
             <id>phresco.archetype.java</id>
             <name>Phresco Archetypes - Java</name>
-            <url>scp://phresco.org/home/projects/archetypes/java/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-java-quickstart-archetype/</url>
         </site>
     </distributionManagement>
 	
