@@ -75,7 +75,9 @@
 			});
 			
 			$('#testbtn').click(function() {
+				$("#popup_div").empty();
 				showPopup();
+				
 			 	<% 
 			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) { 
 			 	%>
@@ -139,7 +141,6 @@
 			params = params.concat(tests);
 			params = params.concat("&selectedTestResultFileName=");
 			params = params.concat(selectedTestResultFile);
-			showLoadingIcon($('#'+ container)); // Loading Icon
 			performAction(urlAction, params, $('#'+ container));
 		    escPopup()
 		}
@@ -315,6 +316,7 @@
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
 				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
+				enableScreen();
 			}
 			
 			function changeView() {

@@ -216,6 +216,8 @@
          });
         
 		$('form').submit(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
@@ -267,7 +269,8 @@
     }
     
     function validationError(data) {
-    	$(".clearfix").removeClass("error");
+    	enableScreen();
+		$(".clearfix").removeClass("error");
     	$(".help-inline").text("");
     	if (data.nameError != undefined) {
     		$("#nameErrMsg").text(data.nameError);

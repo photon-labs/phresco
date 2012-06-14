@@ -209,6 +209,7 @@
 	}
 
 	$(document).ready(function() {
+		enableScreen();
 		
 		/** To display projectInfo servers starts **/
 		<%
@@ -287,7 +288,7 @@
 			});
         
 		 
-		/** to display corresponding versions **/
+		/** to display Corresponding versions **/
 		$("#type").change(function() {
 			$('#deploy_dir').show();
 			if($(this).val() == "NodeJS") {

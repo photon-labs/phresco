@@ -283,21 +283,20 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+
 		<%
-		if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
-	%>
+			if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
+		%>
 			$('#type').find('option').remove();
 			<%
 				for(Server projectInfoServer : projectInfoServers) {
 					String serverName = projectInfoServer.getName();
-					//List<String> versions = projectInfoServer.getVersions();
-					//for(String version : versions) {
 			%>
 						$('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
-	<%
-					//}
+			<%
 				}
-	%>
+			%>
 			getCurrentVersions('');
 			$("#type").change(function() {
 				 var server = $('#type').val();
@@ -320,14 +319,11 @@
 			<%
 				for(Database projectInfoDatabase : projectInfoDatabases) {
 					String databaseName = projectInfoDatabase.getName();
-					//List<String> versions = projectInfoDatabase.getVersions();
-					//for(String version : versions) {
 			%>
 						$('#type').append($("<option></option>").attr("value", '<%= databaseName %>').text('<%= databaseName %>'));
-	<%
-					//}
+			<%
 				}
-	%>
+			%>
 			getCurrentVersions('');
 	<%
 		}

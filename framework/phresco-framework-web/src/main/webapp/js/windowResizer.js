@@ -69,6 +69,15 @@ $(document).ready(function() {
 		var newHeight_sttngs_div = $(".settings_add_form").height();
 		$(".settings_div").css("height", newHeight_sttngs_div - 30);
 		
+		/* Build page */
+		var newHeight_appInfTabBuild = $(".appInfoTabDiv").height();
+		$(".buildDiv").css("height",newHeight_appInfTabBuild - 15); 
+		
+		var newHeight_build_left_container = $(".buildDiv").height();
+		$(".build_detail_div").css("height",newHeight_build_left_container - 23);
+		$(".build_progress_div").css("height",newHeight_build_left_container - 23);
+		
+		
 		var newHeight_tabledatadiv = $(".table_div").height();
 		$(".table_data_div").css("height",newHeight_tabledatadiv - heightDiff_tabledatadiv);
 

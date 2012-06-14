@@ -69,6 +69,10 @@
 		<center><label class="errorMsgLabel"><%= testError %></label></center>
 	</div>
 	
+	<script type="text/javascript">
+		enableScreen();
+		$("#loadingIconDiv").empty();
+	</script>
 <% } else {
         File[] files = (File[])request.getAttribute(FrameworkConstants.REQ_JMETER_REPORT_FILES); 
 %>
