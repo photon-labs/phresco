@@ -46,7 +46,7 @@
 	// Loading icon    
     function showLoadingIcon(tagControl) {
 		var src = "themes/photon/images/loading_blue.gif";
-    	var theme = $.cookie("css");
+    	var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	src = "themes/photon/images/loading_red.gif";
         }
@@ -156,7 +156,7 @@
     }
     
     function getCurrentCSS() {
-        var theme = $.cookie("css");
+        var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
