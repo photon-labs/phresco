@@ -4,7 +4,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.0.1001</version>
+        <version>1.2.0.2000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
@@ -19,7 +19,7 @@
         <site>
             <id>phresco.framework.impl</id>
             <name>Phresco Framework Impl</name>
-            <url>scp://phresco.org/home/projects/framework/impl/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework-impl/</url>
         </site>
     </distributionManagement>
  

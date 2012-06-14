@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.1001</version>
+        <version>1.2.0.2000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -13,12 +13,12 @@
     <artifactId>phresco-nodejs-archetype</artifactId>
     <name>Archetype - phresco-nodejs-archetype</name>
     <url>http://www.phresco.org</url>
-    
+    <description>phresco-nodejs-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.nodejs</id>
             <name>Phresco Archetypes - NodeJs</name>
-            <url>scp://phresco.org/home/projects/archetypes/nodejs/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-nodejs-archetype/</url>
         </site>
     </distributionManagement>
 

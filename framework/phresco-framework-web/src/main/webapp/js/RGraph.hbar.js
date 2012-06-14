@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -166,9 +147,7 @@
             'chart.scale.point':            '.',
             'chart.scale.thousand':         ',',
             'chart.scale.decimals':         null,
-            'chart.noredraw':               false,
-            'chart.events.click':           null,
-            'chart.events.mousemove':       null
+            'chart.noredraw':               false
         }
 
         // Check for support
@@ -284,13 +263,6 @@
             RGraph.DrawKey(this, this.Get('chart.key'), this.Get('chart.colors'));
         }
 
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
         /**
         * Install the event handlers for tooltips
         */
@@ -298,8 +270,6 @@
 
             // Need to register this object for redrawing
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             /**
             * Install the window onclick handler
@@ -328,21 +298,15 @@
                 */
                 var mouseCoords = RGraph.getMouseXY(e);
 
-                if (bar) {
+                if (bar && (typeof(obj.Get('chart.tooltips')) == 'function' || obj.Get('chart.tooltips')[bar[4]]) ) {
 
+                    canvas.style.cursor = 'pointer';
                     
                     var left   = bar[0];
                     var top    = bar[1];
                     var width  = bar[2];
                     var height = bar[3];
                     var idx    = bar[4];
-                    var text   = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
-
-                    if (!text) {
-                        return;
-                    }
-
-                    canvas.style.cursor = 'pointer';
                     
                     /**
                     * Show the tooltip if the event is onmousemove
@@ -350,6 +314,22 @@
                     if (obj.Get('chart.tooltips.event') == 'onmousemove') {
                     
                         var tooltipObj = RGraph.Registry.Get('chart.tooltip');
+
+                        /**
+                        * Get the tooltip text
+                        */
+                        if (typeof(obj.Get('chart.tooltips')) == 'function') {
+                            var text = obj.Get('chart.tooltips')(idx);
+                        
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object' && typeof(obj.Get('chart.tooltips')[idx]) == 'function') {
+                            var text = obj.Get('chart.tooltips')[idx](idx);
+                        
+                        } else if (typeof(obj.Get('chart.tooltips')) == 'object') {
+                            var text = obj.Get('chart.tooltips')[idx];
+
+                        } else {
+                            var text = null;
+                        }
 
                         if (text) {
                             if (!tooltipObj || tooltipObj.__index__ != idx) {
@@ -413,10 +393,20 @@
                     var height = bar[3];
                     var idx    = bar[4];
 
-                    text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
+                    /**
+                    * Get the tooltip text
+                    */
+                    if (typeof(obj.Get('chart.tooltips')) == 'function') {
+                        var text = obj.Get('chart.tooltips')(idx);
                     
-                    if (!text) {
-                        return;
+                    } else if (typeof(obj.Get('chart.tooltips')) == 'object' && typeof(obj.Get('chart.tooltips')[idx]) == 'function') {
+                        var text = obj.Get('chart.tooltips')[idx](idx);
+                    
+                    } else if (typeof(obj.Get('chart.tooltips')) == 'object') {
+                        var text = obj.Get('chart.tooltips')[idx];
+
+                    } else {
+                        var text = null;
                     }
 
                     /**
@@ -749,12 +739,6 @@
                     if (this.Get('chart.yaxispos') == 'center') {
                         barWidth /= 2;
                         barX += halfwidth;
-                        
-                        if (this.data[i] < 0) {
-                            barWidth = (Math.abs(this.data[i]) - this.Get('chart.xmin')) / (this.max - this.Get('chart.xmin'));
-                            barWidth = barWidth * (this.graphwidth / 2);
-                            barX = ((this.graphwidth / 2) + this.gutterLeft) - barWidth;
-                        }
                     }
 
                     // Set the fill color
@@ -984,51 +968,4 @@
                 return [left, top, width, height, idx];
             }
         }
-    }
-
-
-    /**
-    * When you click on the chart, this method can return the X value at that point. It works for any point on the
-    * chart (that is inside the gutters) - not just points within the Bars.
-    * 
-    * @param object e The event object
-    */
-    RGraph.HBar.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-        
-        if (   mouseY < this.Get('chart.gutter.top')
-            || mouseY > (this.canvas.height - this.Get('chart.gutter.bottom'))
-            || mouseX < this.Get('chart.gutter.left')
-            || mouseX > (this.canvas.width - this.Get('chart.gutter.right'))
-           ) {
-            return null;
-        }
-        
-        if (this.Get('chart.yaxispos') == 'center') {
-            var value = ((mouseX - this.Get('chart.gutter.left')) / (this.graphwidth / 2)) * (this.max - this.Get('chart.xmin'));
-                value = value - this.max
-                
-                // Special case if xmin is defined
-                if (this.Get('chart.xmin') > 0) {
-                    value = ((mouseX - this.Get('chart.gutter.left') - (this.graphwidth / 2)) / (this.graphwidth / 2)) * (this.max - this.Get('chart.xmin'));
-                    value += this.Get('chart.xmin');
-                    
-                    if (mouseX < (this.gutterLeft + (this.graphwidth / 2))) {
-                        value -= (2 * this.Get('chart.xmin'));
-                    }
-                }
-        } else {
-            var value = ((mouseX - this.Get('chart.gutter.left')) / this.graphwidth) * (this.max - this.Get('chart.xmin'));
-                value += this.Get('chart.xmin');
-        }
-
-        return value;
     }

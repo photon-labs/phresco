@@ -59,13 +59,14 @@
 	            %>
 	            
 	                    <a href="#" title="<%= videoName %>">
-	                    <div class="listindex" id="listindex<%= i %>" title="imageDiv" >
-	                        <div class="imgblock" id="<%= videoName %>" ><img src="<%=imageUrl%>"></div>
-	                        <div class="vidcontent">
-	                            <div class="vidcontent-title"><%= videoName%></div>
-	                                <input type="hidden" name="videoName" value="<%= videoName%>"> 
-	                        </div>
-	                    </div></a>
+		                    <div class="listindex" id="listindex<%= i %>">
+		                        <div class="imgblock" id="<%= videoName %>" ><img src="<%=imageUrl%>"></div>
+		                        <div class="vidcontent">
+		                            <div class="vidcontent-title"><%= videoName%></div>
+		                                <input type="hidden" name="videoName" value="<%= videoName%>"> 
+		                        </div>
+		                    </div>
+	                    </a>
 	                    <% i++;
 	                    }
 	                } else { %>
@@ -92,7 +93,8 @@
             for(VideoInfo videoDetail : videoInfos) {
         %>      
                 $("a[title='<%= videoDetail.getName() %>']").click(function() {
-                    $("div[title='imageDiv']").attr("class", "listindex");
+                	$(".listindex-active").removeClass('listindex-active').addClass("listindex");
+					<%-- $("div[title='<%= videoDetail.getName() %>']").attr("class", "listindex"); --%>
                     changeVideo('<%= videoDetail.getName() %>');
                     var selectedList = '#listindex' + '<%= j %>';
                     $(selectedList).attr("class", "listindex-active");

@@ -4442,3 +4442,76 @@ div[class*='display_msg'] {
     width:auto;
     padding: 0;
 }
+
+.selectDefaultWidth {
+	width: 210px !important;
+}
+
+.qtyTable_view {
+	top : 0px !important; 
+	height: 100% !important;
+}
+
+.qtyFixedTblContainer {
+	height: 92%;
+}
+
+ul#display-inline-block-example,
+ul#display-inline-block-example li {
+	/* Setting a common base */
+	/*margin-left: 7px;
+	margin-bottom: 7px;
+	padding: 0;*/
+	margin: 0px 0 1px 1px;
+}
+ 
+ul#display-inline-block-example {
+	width: 100%;
+}
+ 
+ul#display-inline-block-example li#first {
+	display: inline-block;
+	width: 12%;
+	min-height: 12%;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+ul#display-inline-block-example li#label {
+	display: inline-block;
+	width: 12%;
+	min-height: 12%;
+	text-align: right;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+ul#display-inline-block-example li {
+	display: inline-block;
+	width: 25%;
+	min-height: 25%;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+.width-eight-percent {
+	width: 8% !important;
+}
+
+.width-ten-percent {
+	width: 10% !important;
+}
+
+.width-fifteen-percent {
+	width: 15% !important;
+}
+
+.width-twenty-five-percent {
+	width: 25% !important;
+}

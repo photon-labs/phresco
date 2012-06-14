@@ -71,7 +71,7 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
 <form action="deleteSettings" name="myform" method="post" id="deleteObjects" class="settings_list_form" >
     <div class="operation">
         <input id="addButton" type="button" value="<s:text name="label.add"/>" class="btn primary"/>
-        <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled"/>
+        <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
         <input id="environmentButton" type="button" value="<s:text name="label.environment"/>" class="btn primary" />
         <s:if test="hasActionMessages()">
             <span class="alert-message success"  id="successmsg">

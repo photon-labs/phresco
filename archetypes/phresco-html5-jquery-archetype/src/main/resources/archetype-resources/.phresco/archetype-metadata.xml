@@ -24,6 +24,7 @@
 			<includes> 
 				<include>archetype-metadata.xml</include> 
 				<include>excludefiles.txt</include> 
+				<include>war-config.xml</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -42,38 +43,28 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp</directory> 
-			<includes>
-				<include>index.html</include>
-				<include>environment.jsp</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/css</directory> 
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/html</directory> 
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/js/controller</directory> 
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/js/widgets</directory> 
+			<directory>src/main/js/HelloWorld/widgets</directory> 
 			<includes>
 				<include>HelloWorldWidget.js</include>
+				<include>Init.js</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/lib/others</directory> 
+			<directory>src/main/resources</directory> 
+			<includes>
+				<include>environment.jsp</include>
+				<include>index.html</include>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/resources/css</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/resources/images</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
@@ -85,16 +76,21 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/images</directory> 
+			<directory>src/test/java/com/photon/phresco</directory> 
+			<includes>
+				<include>TestCase.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/test/js</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/resources</directory> 
+			<directory>src/test/resources</directory> 
 			<includes>
-				<include>ws-config.json</include>
-				<include>phresco-env-config.xml</include>
+				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -226,11 +222,5 @@
 				<include>PhrescoFrameWork_TestPlan.jmx</include>
 			</includes>
 		</fileSet>		
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/java/com/photon/phresco/</directory> 
-			<includes>
-				<include>TestCase.java</include>
-			</includes>
-		</fileSet>
 	</fileSets>
 </archetype-descriptor>

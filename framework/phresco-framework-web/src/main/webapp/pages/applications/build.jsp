@@ -113,7 +113,7 @@
     <div class="operation">
 		<div class="build_delete_btn_div">
 		    <input id="generatebtn" type="button" value="<s:text name="label.generatebuild"/>" class="primary btn env_btn">
-		    <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled"/>
+		    <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 		</div> 
 		<div style="float: right;width: auto;">
 		<%

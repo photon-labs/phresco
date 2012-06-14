@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.1001</version>
+        <version>1.2.0.2000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -13,12 +13,12 @@
   <artifactId>phresco-android-hybrid-archetype</artifactId>
   <name>Archetype - phresco-android-hybrid-archetype</name>
   <url>http://www.phresco.org</url>
-
+  <description>phresco-android-hybrid-archetype</description>
       <distributionManagement>
         <site>
             <id>phresco.archetype.android</id>
             <name>Phresco Archetypes - Android Hybird</name>
-            <url>scp://phresco.org/home/projects/archetypes/android/hybrid/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-android-hybrid-archetype/</url>
         </site>
     </distributionManagement>
     

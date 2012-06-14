@@ -78,12 +78,12 @@ public class Login extends FrameworkBaseAction {
 		// When the user hits login button it ll come here
 		if (fromPage.equals("login")) {
 	        if (isInvalid(getUsername())) {
-	        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+	        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_INVALID));
 	        	return LOGIN_FAILURE;
 	        }
 	
 	        if (isInvalid(getPassword())) {
-	        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+	        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_INVALID));
 	        	return LOGIN_FAILURE;
 	        }
 	        try {

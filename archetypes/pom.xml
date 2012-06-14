@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.1001</version>
+        <version>1.2.0.2000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -14,7 +14,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <packaging>pom</packaging>
     <name>Phresco Archetypes</name>
     <url>http://www.phresco.org</url>
-
+	<description>Phresco-Archetypes</description>
+	<distributionManagement>
+        <site>
+            <id>phresco.archetypes</id>
+            <name>Phresco Archetypes</name>
+            <url>${siteBaseUrl}/archetypes/</url>
+        </site>
+    </distributionManagement>
+	
     <modules>
         <module>phresco-android-archetype</module>
         <module>phresco-android-hybrid-archetype</module>
@@ -32,13 +40,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>phresco-java-quickstart-archetype</module>
 		<module>phresco-html5-jquery-archetype</module>
     </modules>
-	
-    <distributionManagement>
-        <site>
-            <id>phresco.archetypes</id>
-            <name>Phresco Archetypes</name>
-            <url>scp://phresco.org/home/projects/archetypes/public_html/</url>
-        </site>
-    </distributionManagement>
     
 </project>

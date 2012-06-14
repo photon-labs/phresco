@@ -77,5 +77,12 @@ $(document).ready(function() {
 		
 		var newHeight_tabledatadiv = $(".table_div").height();
 		$(".table_data_div").css("height",newHeight_tabledatadiv - heightDiff_tabledatadiv);
+		
+		/* Quality tab unit and functional table list resize */
+		var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
+		$('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
+		var responsiveFixedTblhight = ((($('#tabularView').height() - 30) / $('#tabularView').height()) * 100);
+		$('.responsiveFixedTableContainer').css("height", responsiveFixedTblhight+'%');
+		
 	}
 });

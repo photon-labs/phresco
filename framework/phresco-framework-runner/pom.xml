@@ -3,7 +3,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.0.1001</version>
+        <version>1.2.0.2000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
@@ -19,7 +19,7 @@
         <site>
             <id>phresco.framework.runner</id>
             <name>Phresco Framework Runner</name>
-            <url>scp://phresco.org/home/projects/framework/runner/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework-runner/</url>
         </site>
     </distributionManagement>
   

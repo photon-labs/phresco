@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -76,11 +57,6 @@
             'chart.background.grid.autofit':true,
             'chart.background.grid.autofit.numhlines': 5,
             'chart.background.grid.autofit.numvlines': 20,
-            'chart.background.image':       null,
-            'chart.background.image.stretch': true,
-            'chart.background.image.x':     null,
-            'chart.background.image.y':     null,
-            'chart.background.image.align': null,
             'chart.text.size':              10,
             'chart.text.angle':             0,
             'chart.text.color':             'black',
@@ -201,9 +177,7 @@
             'chart.xscale.numlabels':       10,
             'chart.xscale.formatter':       null,
             'chart.noendxtick':             false,
-            'chart.noendytick':             true,
-            'chart.events.mousemove':       null,
-            'chart.events.click':           null
+            'chart.noendytick':             true
         }
 
         // Handle multiple datasets being given as one argument
@@ -460,13 +434,6 @@
             RGraph.ShowContext(this);
         }
 
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
         /**
         * Install the event handler for tooltips
         */
@@ -476,8 +443,6 @@
             * Register all charts
             */
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             var overHotspot = false;
 
@@ -498,15 +463,11 @@
                     var __index__   = point[3];
                     var __text__    = point[4];
                     var overHotspot = true;
-                    
-                    /**
-                    * Get the tooltip text
-                    */
-                    var text = RGraph.parseTooltipText(obj.data[__dataset__][__index__], 3);
 
 
 
                     if (point[4]) {
+                        canvas.style.cursor = 'pointer';
 
                         if (
                             !RGraph.Registry.Get('chart.tooltip') ||
@@ -518,16 +479,19 @@
                             if (obj.Get('chart.tooltips.highlight')) {
                                 RGraph.Redraw();
                             }
-
+    
                             /**
-                            * Show the tooltip
+                            * Get the tooltip text
                             */
-                            if (text) {
-                                canvas.style.cursor = 'pointer';
-                                RGraph.Tooltip(canvas, text, e.pageX, e.pageY, __index__);
-                                RGraph.Registry.Get('chart.tooltip').__text__ = obj.data[__dataset__][__index__][3];
-                            } 
-
+                            if (typeof(__text__) == 'function') {
+                                var text = String(__text__(i));
+    
+                            } else {
+                                var text = String(__text__);
+                            }
+    
+                            RGraph.Tooltip(canvas, text, e.pageX, e.pageY, __index__);
+                            
                             RGraph.Registry.Get('chart.tooltip').__index__ = __index__;
                             
                             if (RGraph.Registry.Get('chart.tooltip')) {
@@ -554,9 +518,6 @@
                                 context.arc(point[0], point[1], 3, 0, 6.28, 0);
                                 context.fill();
                             }
-                        // Just change the mouse pointer
-                        } else if (point[4] && text) {
-                            e.target.style.cursor = 'pointer';
                         }
                     }
                 }
@@ -1705,47 +1666,4 @@
                             'rgba(255, 255, 255, 0.7)');
             }
         }
-    }
-
-
-    /**
-    * When you click on the chart, this method can return the Y value at that point. It works for any point on the
-    * chart (that is inside the gutters) - not just points within the Bars.
-    * 
-    * @param object e The event object
-    */
-    RGraph.Scatter.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-        var obj = this;
-        
-        if (   mouseY < obj.Get('chart.gutter.top')
-            || mouseY > (obj.canvas.height - obj.Get('chart.gutter.bottom'))
-            || mouseX < obj.Get('chart.gutter.left')
-            || mouseX > (obj.canvas.width - obj.Get('chart.gutter.right'))
-           ) {
-            return null;
-        }
-        
-        if (obj.Get('chart.xaxispos') == 'center') {
-            var value = (((obj.grapharea / 2) - (mouseY - obj.Get('chart.gutter.top'))) / obj.grapharea) * (obj.max - obj.min)
-            value *= 2;
-            if (value >= 0) {
-                value += obj.min
-            } else {
-                value -= obj.min
-            }
-        } else {
-            var value = ((obj.grapharea - (mouseY - obj.Get('chart.gutter.top'))) / obj.grapharea) * (obj.max - obj.min)
-            value += obj.min;
-        }
-
-        return value;
     }
