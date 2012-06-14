@@ -195,11 +195,12 @@
 		});
 		
 		$('#add').click(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-			showLoadingIcon($("#container")); // Loading Icon
 	        performAction('applicationDetails', params, $('#container'));
 	    });
 		
@@ -223,8 +224,9 @@
 	    });
 		
 		$("a[name='edit']").click(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 	        var projectCode = $(this).attr("id");
-// 	        bacgroundValidate("validateProject", projectCode); // background validate on edit
 	        var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
@@ -233,7 +235,6 @@
 			params = params.concat(projectCode);
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
-			showLoadingIcon($("#container")); // Loading Icon
 	        performAction('applicationDetails', params, $('#container'));
 	    });
 	});

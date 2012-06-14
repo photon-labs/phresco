@@ -152,6 +152,7 @@
 		// based on view show the list(table/graph)
 		changeView();
 		canvasInit();
+		enableScreen();
 		
 		 $(".styles").click(function() {
 			 canvasInit();

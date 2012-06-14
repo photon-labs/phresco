@@ -255,8 +255,8 @@ var refreshCi = false;
 
 $(document).ready(function() {
 	$("#popup_div").css("display","none");
-	changeStyle("ci");
 	enableScreen();
+		
     $('#configure').click(function() {
         showCI();
     });

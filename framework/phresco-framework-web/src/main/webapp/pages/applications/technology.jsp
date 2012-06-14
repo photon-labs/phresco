@@ -215,6 +215,8 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+		
 		/** To construct the div during the project edit **/
 		<%
 			String name = null;

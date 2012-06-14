@@ -65,7 +65,7 @@
 	    <center><s:label key="configuration.info.message" cssClass="errorMsgLabel"/></center>
 	</div>
 <% } else { %>
-		<div class="table_div">
+		<div class="build_table_div">
 			<div class="fixed-table-container">
 	      		<div class="header-background"> </div>
 	      		<div class="fixed-table-container-inner">

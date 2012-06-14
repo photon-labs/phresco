@@ -130,7 +130,6 @@
     	}
 		params = params.concat("fromPage=");
 		params = params.concat('<%= fromPage %>');
-    	showLoadingIcon($("#tabDiv")); // Loading Icon
 		performAction(selectedTab, params, $("#tabDiv"));
 		
         $("a[name='appTabs']").click(function() {
@@ -139,16 +138,22 @@
         	var alreadySelectedTab = $(this).attr("class");
         	if ($.trim(alreadySelectedTab) != "selected" || $.trim(selectedTab) == "configuration" || $.trim(selectedTab) == "ci") {
         		bacgroundValidate("validateProject", $('#projectCode').val());
+        		
+        		/* Loading icon & selected tab should be enabled only if we click another tab */
+        		if (alreadySelectedTab != selectedTab) {
+        			if(selectedTab != "features"){
+        				changeStyle(selectedTab);        				
+        			}
+					disableScreen();
+					showLoadingIcon($("#loadingIconDiv"));
+				}
+        		
 				var params = "";
 		    	if (!isBlank($('form').serialize())) {
 		    		params = $('form').serialize() + "&";
 		    	}
 				params = params.concat("fromPage=");
 				params = params.concat('<%= fromPage %>');
-// 				showLoadingIcon($("#tabDiv")); // Loading Icon
-				if($.trim(alreadySelectedTab) != "features" && $.trim(selectedTab) != "features") {
-		    		showLoadingIcon($("#tabDiv")); // Loading Icon
-		    	}
         		performAction(selectedTab, params, $("#tabDiv"));
         	}
         });

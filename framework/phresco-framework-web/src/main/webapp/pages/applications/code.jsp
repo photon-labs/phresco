@@ -55,9 +55,9 @@
 
 <script>
     $(document).ready(function() {
-    	changeStyle("code");
     	sonarReport();
-    	
+    	enableScreen();
+		
         $('#validate').click(function() {
         	<% 	
         		if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)){
