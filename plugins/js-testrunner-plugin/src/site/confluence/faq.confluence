@@ -1,0 +1,51 @@
+h1. Frequently asked questions
+
+h2. My unit test works in the browser but not via JS Test Runner
+One issue that we have encountered is when a test does not clean up after itself; particularly with regards to XMLHttpRequest. Test toolkits such as [SinonJs|http://sinonjs.org/] allow you to mock XMLHttpRequest e.g.:
+
+{code}
+test("should fetch comments from server", function () {
+    var xhr = this.sandbox.useFakeXMLHttpRequest();
+    var requests = this.requests = [];
+
+    xhr.onCreate = function (request) {
+        requests.push(request);
+    };
+
+    var callback = this.spy();
+    myLib.getCommentsFor("/some/article", callback);
+    equals(1, this.requests.length);
+
+    requests[0].respond(200, { "Content-Type": "application/json" },
+                             '[{ id: 12, comment: "Hey there" }]');
+    ok(callback.calledWith([{ id: 12, comment: "Hey there" }]));
+});
+{code}
+
+The problem with the code above is that it does not restore XMLHttpRequest. JS Test Runner uses XMLHttpRequest to communicate test results back to its internal http server. Therefore if XMLHttpRequest is not restored by your test then JS Test Runner will timeout.
+
+We recommend that you always clean up after your tests whether JS Test Runner is used or not. This will reduce potential side effects in your code. By way of example, consider using a try/finally block:
+
+{code}
+test("should fetch comments from server", function () {
+    var xhr = this.sandbox.useFakeXMLHttpRequest();
+    try {
+        var requests = this.requests = [];
+
+        xhr.onCreate = function (request) {
+            requests.push(request);
+        };
+
+        var callback = this.spy();
+        myLib.getCommentsFor("/some/article", callback);
+        equals(1, this.requests.length);
+
+        requests[0].respond(200, { "Content-Type": "application/json" },
+                                 '[{ id: 12, comment: "Hey there" }]');
+        ok(callback.calledWith([{ id: 12, comment: "Hey there" }]));
+        
+    } finally {
+        xhr.restore();
+    }
+});
+{code}

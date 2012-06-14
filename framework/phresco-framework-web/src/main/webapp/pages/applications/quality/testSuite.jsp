@@ -126,7 +126,7 @@
             pie2.Set('chart.shadow.offsety', 0);
             pie2.Set('chart.shadow.blur', 25);
             pie2.Set('chart.radius', 100);
-			
+            pie2.Set('chart.background.grid.autofit',true);
 			/* console.info(pie2); */
             if (RGraph.isIE8()) {
                 pie2.Draw();
@@ -136,12 +136,11 @@
         }
     </script>
 	
-        <div class="columnStyle" id="columnStyle">
-            <div class="columns">
-				<div class="table_div_unit">
-	                <div class="fixed-table-container">
+				<div class="table_div_unit qtyTable_view" id="tabularView">
+	                <div class="fixed-table-container responsiveFixedTableContainer qtyFixedTblContainer">
 	      				<div class="header-background"> </div>
 			      		<div class="fixed-table-container-inner">
+			      		<div style="overflow: auto;">
 					        <table cellspacing="0" class="zebra-striped">
 					          	<thead>
 						            <tr>
@@ -163,7 +162,7 @@
 						              	<% 
 						              		if(FrameworkConstants.FUNCTIONAL.equals(testType)) { 
 						              	%>
-						              	<th class="third">
+						              	<th class="width-ten-percent">
 						                	<div class="th-inner"><s:text name="label.screenshot"/></div>
 						              	</th>
 						              	<% 
@@ -179,10 +178,10 @@
 										TestCaseError error = testCase.getTestCaseError(); 	
 								%>
 					            	<tr>
-					              		<td id="tstRst_td1" style="width: 25%;"><%= testCase.getName() %></td>
-					              		<td id="tstRst_td2" style="width: 25%;"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
-					              		<td><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
-					              		<td  style="width: 15%;">
+					              		<td id="tstRst_td1" class="width-twenty-five-percent"><%= testCase.getName() %></td>
+					              		<td id="tstRst_td2" class="width-twenty-five-percent"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
+					              		<td class="width-fifteen-percent"><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
+					              		<td class="width-fifteen-percent">
 					              			<% if (testCase.getTestCaseFailure() != null) { %>
 												<img src="images/icons/failure.png" title="Failure">
 											<% } else if (testCase.getTestCaseError() != null) { %>
@@ -191,7 +190,7 @@
 												<img src="images/icons/success.png" title="Success">
 											<% } %>  
 					              		</td>
-					              		<td style="width: 10%;">
+					              		<td class="width-ten-percent">
 					              			<% if (testCase.getTestCaseFailure() != null) { %>
 												<input type="hidden" name="<%= testCase.getName() %>" value="<%= testCase.getTestCaseFailure().getFailureType()%>,<%= testCase.getTestCaseFailure().getDescription()%>" id="<%= testCase.getName() %>">
 												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
@@ -205,7 +204,7 @@
 					             		<% 
 						              		if(FrameworkConstants.FUNCTIONAL.equals(testType)) { 
 						              	%>
-					            		<td style="width: 20%;">
+					            		<td class="width-ten-percent">
 					            			<% 
 					            				if(testCase.getTestCaseFailure() != null || testCase.getTestCaseError() != null)  { 
 					            			%>
@@ -224,12 +223,17 @@
 								%>	
 					          	</tbody>
 					        </table>
+					       
+					       </div>
+					    <div>
+							
+						</div>
 			      		</div>
     				</div>
-	            </div><!-- End column 1 -->
+	            </div>
 	
-                <div class="canvas_div canvasDiv">
-                    <canvas id="pie2" width="350" height="300">[No canvas support]</canvas>
+                <div class="canvas_div canvasDiv" id="graphicalView">
+                    <canvas id="pie2" width="620" height="335">[No canvas support]</canvas>
                 </div>
 			</div>
     	</div>
@@ -265,7 +269,7 @@
 		</div>
 		<div class="abt_div">
 			<div id="testCaseDesc" class="testCaseImg">
-					<div id="imgNotFoundErr" style="display: none;"><b>Screenshot is not available</b></div>
+					<div id="imgNotFoundErr" style="hideContenthideContenthideContenthideContenthideContenthideContenthideContent"><b>Screenshot is not available</b></div>
 					<img class="testCaseImg" id="screenShotImgSrc" src="" title="screenShot"  height= "100px" width= "100px"></img>
 			</div>
 		</div>
@@ -280,17 +284,16 @@
 	
 	<script type="text/javascript">
 	/* To check whether the divice is ipad or not */
-	if(!isiPad()){
+	if(!isiPad()) {
 		/* JQuery scroll bar */
-		$(".table_data_div_unit").scrollbars();
+		$("#graphicalView").scrollbars();
 	}
+	
     $(document).ready(function() {
-    	if ($.browser.safari && $.browser.version == 530.17)
-    	{
-    	$(".columns").show().css("float","left");
-    	$(".columnStyle").show().css("float","left");
-    	$(".canvasDiv").show().css("margin-top","29px");
-    	}
+    	
+    	changeView();
+    	escPopup();
+    	
         $("td[id = 'tstRst_td1']").text(function(index) {
             return textTrim($(this));
         });
@@ -341,6 +344,16 @@
     		funcPopUp('none', 'testCaseScreenShotPopUp');
     	});
     	
+    	// table resizing
+		var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
+		$('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
+		
+		var fixedTblheight = ((($('#tabularView').height() - 30) / $('#tabularView').height()) * 100);
+		$('.responsiveFixedTableContainer').css("height", fixedTblheight+'%');
+		 
+		// jquery affects pie chart responsive
+		window.setTimeout(function () { $(".scroll-content").css("width", "100%"); }, 350);
+	    	
     });
     
     function showImageIsNotLoaded() {
@@ -361,7 +374,7 @@
         $(obj).attr("title", val);
         var len = val.length;
         if(len > 10) {
-            val = val.substr(0, 10) + "...";
+            val = val.substr(0, 30) + "...";
             return val;
         }
         return val;

@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.framework.actions.applications;
 
 import java.util.ArrayList;
@@ -26,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -72,7 +55,7 @@ public class Configurations extends FrameworkBaseAction {
     private String oldConfigType = null;
 	private String envError = null;
 	private String remoteDeploy = null;
-    
+	private String emailError = null;
 
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -197,7 +180,18 @@ public class Configurations extends FrameworkBaseAction {
                 sb.append(envs);
             }
             administrator.createConfiguration(settingsInfo, sb.toString(), project);
-            addActionMessage(getText(SUCCESS_CONFIGURATION, Collections.singletonList(configName)));
+            if (SERVER.equals(configType)){
+				addActionMessage(getText(SUCCESS_SERVER, Collections.singletonList(configName)));
+			}
+			else if (DATABASE.equals(configType)) {
+				addActionMessage(getText(SUCCESS_DATABASE, Collections.singletonList(configName)));
+			}
+			else if (WEBSERVICE.equals(configType)) {
+				addActionMessage(getText(SUCCESS_WEBSERVICE, Collections.singletonList(configName)));
+			}
+			else {
+				addActionMessage(getText(SUCCESS_EMAIL, Collections.singletonList(configName)));
+			}
             getHttpSession().removeAttribute(ERROR_SETTINGS);
         } catch (Exception e) {
         	if (debugEnabled) {
@@ -416,6 +410,18 @@ public class Configurations extends FrameworkBaseAction {
 			   	setPortError(ERROR_PORT);
 			   	validate = false;
 		   	}
+	   	}
+	   	
+	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
+	   		String value = getHttpRequest().getParameter("emailid");
+	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
+	   		Matcher m=p.matcher(value);
+	   		boolean b=m.matches();
+	   		if(b==false)
+	   		{
+	   			setEmailError(ERROR_EMAIL);
+	   			validate = false;
+	   		}
 	   	}
 
 	   	return validate;
@@ -784,5 +790,13 @@ public class Configurations extends FrameworkBaseAction {
 
 	public void setRemoteDeploy(String remoteDeploy) {
 		this.remoteDeploy = remoteDeploy;
+	}
+	
+	public String getEmailError() {
+		return emailError;
+	}
+
+	public void setEmailError(String emailError) {
+		this.emailError = emailError;
 	}
 }

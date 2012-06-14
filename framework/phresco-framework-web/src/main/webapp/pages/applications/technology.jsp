@@ -297,7 +297,11 @@
 		params = params.concat('<%= projectCode %>');
 		
 		/* 
+<<<<<<< HEAD
 			To check for the corresponding configuration of the item to be removed.
+=======
+			To check for the Corresponding configuration of the item to be removed.
+>>>>>>> remotes/origin/boston
 			If it has configuration then the confirmation will be asked from the user regarding the deletion of the configuration 
 		*/
 		if (<%= StringUtils.isNotEmpty(fromPage) %>) {
@@ -499,15 +503,25 @@
 		} else if (pageUrl == "checkForRespectiveConfig") {
 			if (data.hasConfiguration) {
 				if (type == "Database") {
+<<<<<<< HEAD
 					$("#confirmationText").html("corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
 				} else {
 					$("#confirmationText").html("corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
+=======
+					$("#confirmationText").html("Corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
+				} else {
+					$("#confirmationText").html("Corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
+>>>>>>> remotes/origin/boston
 				}
 			    dialog('block');
 			    escBlockPopup();
 			} else {
 				if (type == "Database") {
+<<<<<<< HEAD
 					$("#confirmationText").html("corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+=======
+					$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+>>>>>>> remotes/origin/boston
 					dialog('block');
 				    escBlockPopup();
 				} else {
@@ -516,7 +530,6 @@
 			}
 		} else if (pageUrl == "technology") {
 			techVersions();    	
-		    $("#name").focus();
 		}
 	}
 	

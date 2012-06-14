@@ -72,7 +72,7 @@
     <div class="operation">
         <%-- <a href="<s:url action='addConfiguration'/>" class="btn primary">Add</a> --%>
         <a href="#" class="btn primary" id="addConfiguration"><s:text name="label.add"/></a>
-        <input id="deleteButton" type="button" value="Delete" class="btn disabled" />
+        <input id="deleteButton" type="button" value="Delete" class="btn disabled" disabled="disabled"/>
         <input id="environmentButton" type="button" value="Environments" class="btn primary" />
     </div>
     

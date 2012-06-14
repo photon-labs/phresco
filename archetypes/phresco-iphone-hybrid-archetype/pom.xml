@@ -12,12 +12,12 @@
     <artifactId>phresco-iphone-hybrid-archetype</artifactId>
     <name>Archetype - phresco-iphone-hybrid-archetype</name>
     <url>http://www.phresco.org</url>
-	
+	<description>phresco-iphone-hybrid-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.iphone.hybrid</id>
             <name>Phresco Archetypes - iPhone Hybrid</name>
-            <url>scp://phresco.org/home/projects/archetypes/iphone/hybrid/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-iphone-hybrid-archetype/</url>
         </site>
     </distributionManagement>
 	

@@ -12,12 +12,12 @@
     <artifactId>phresco-commons</artifactId>
     <url>http://www.phresco.org</url>
     <name>Phresco Commons</name>
-	
+	<description>phresco-commons</description>
      <distributionManagement>
         <site>
             <id>phresco.commons</id>
             <name>Phresco commons</name>
-             <url>scp://phresco.org/home/projects/commons/public_html/</url>
+             <url>${siteBaseUrl}/commons/</url>
         </site>
      </distributionManagement>
 

@@ -19,7 +19,7 @@
         <site>
             <id>phresco.service.auth</id>
             <name>Phresco Service Authentication</name>
-            <url>scp://phresco.org/home/projects/service/auth/public_html/</url>
+            <url>${siteBaseUrl}/service/phresco-service-auth/</url>
         </site>
     </distributionManagement>
 

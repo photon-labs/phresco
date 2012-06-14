@@ -82,7 +82,7 @@
 		    <div class="input new-input">
 		        <input class="xlarge" id="name" name="name" maxlength="30" title="30 Characters only"
 		            type="text"  value ="<%= selectedInfo == null ? "" : selectedInfo.getName() %>" 
-		            autofocus="autofocus" placeholder="Name of the Project" <%= disabled %> />
+		            autofocus="autofocus" placeholder="Name of the project" <%= disabled %> />
 		        <span class="help-inline" id="nameErrMsg">
 		           
 		        </span>
@@ -98,7 +98,7 @@
 		        <%-- <input class="xlarge" id="internalCode" name="internalCode"
 		            type="text"  value ="<%= selectedInfo == null ? codePrefix : selectedInfo.getCode() %>" disabled /> --%>
 				<input class="xlarge" id="externalCode" name="externalCode"
-		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" placeholder="Project Code"/>
+		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" placeholder="Project code"/>
 		    </div>
 		</div>
 		<!--  Code Ends -->
@@ -108,7 +108,7 @@
 		    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 		    <div class="input new-input">
 		        <textarea class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" 
-		        name="description" placeholder="Description of the Project"> <%= selectedInfo == null 
+		        name="description" placeholder="Description of the project"><%= selectedInfo == null 
 		        ? "" : selectedInfo.getDescription() %></textarea>
 		    </div>
 		</div>
@@ -198,6 +198,7 @@
 	}
 	
     $(document).ready(function() {
+		$("#name").focus();
     	escPopup();
         checkDefault();
         changeStyle("appinfo");
@@ -207,7 +208,7 @@
         
         // To restrict the user in typing the special charaters
         
-        $('#name').live('input paste', function (e) {
+        $('#name').bind('input propertychange', function (e) {
         	var projNname = $(this).val();
         	projNname = checkForSplChr(projNname);
         	$(this).val(projNname);
@@ -279,13 +280,13 @@
     	}
     }
     
-    $("#externalCode").live('input paste',function(e){ 
+    $("#externalCode").bind('input propertychange',function(e){ 
     	var name = $(this).val();
     	name = checkForCode(name);
     	$(this).val(name);
      });
     
-    $('#projectVersion').live('input paste', function (e) { 	
+    $('#projectVersion').bind('input propertychange', function (e) { 	
     	var version = $(this).val();
     	version = checkForVersion(version);
     	$(this).val(version);

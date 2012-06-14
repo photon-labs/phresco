@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 /**
 /**
     * o------------------------------------------------------------------------------o
@@ -82,10 +63,6 @@
             'chart.background.grid.autofit.numvlines': 20,
             'chart.background.hbars':       null,
             'chart.background.image':       null,
-            'chart.background.image.stretch': true,
-            'chart.background.image.x':     null,
-            'chart.background.image.y':     null,
-            'chart.background.image.align': null,
             'chart.labels':                 null,
             'chart.labels.ingraph':         null,
             'chart.labels.above':           false,
@@ -145,7 +122,6 @@
             'chart.tooltips.hotspot.xonly': false,
             'chart.tooltips.effect':        'fade',
             'chart.tooltips.css.class':     'RGraph_tooltip',
-            'chart.tooltips.event':         'onmousemove',
             'chart.tooltips.highlight':     true,
             'chart.highlight.stroke':       '#999',
             'chart.highlight.fill':         'white',
@@ -225,9 +201,7 @@
             'chart.animation.unfold.initial': 2,
             'chart.curvy':                    false,
             'chart.curvy.factor':             0.25,
-            'chart.line.visible':             true,
-            'chart.events.click':             null,
-            'chart.events.mousemove':         null
+            'chart.line.visible':             true
         }
 
         /**
@@ -297,8 +271,8 @@
     RGraph.Line.prototype.Set = function (name, value)
     {
         // Consolidate the tooltips
-        if (name == 'chart.tooltips' && typeof value == 'object' && value) {
-
+        if (name == 'chart.tooltips') {
+        
             var tooltips = [];
 
             for (var i=1; i<arguments.length; i++) {
@@ -365,13 +339,6 @@
         if (name == 'chart.curvy.factor' && (value < 0 || value > 0.5)) {
             alert('[LINE] chart.curvy.factor should be between 0 and 0.5 - setting it to 0.25');
             value = 0.25;
-        }
-        
-        /**
-        * chart.xticks is now calledchart.numxticks
-        */
-        if (name == 'chart.numxticks') {
-            name = 'chart.xticks';
         }
 
         this.properties[name] = value;
@@ -665,7 +632,7 @@
                           this.GetLineWidth(j),
                            tickmarks,
                            i);
-
+                           
             this.context.stroke();
         }
 
@@ -682,7 +649,7 @@
 
             for (var j=0; j<this.coords2[i].length; ++j) {
 
-                if (j == 0 || this.coords2[i][j][1] == null || (this.coords2[i][j - 1] && this.coords2[i][j - 1][1] == null)) {
+                if (j == 0) {
                     this.context.moveTo(this.coords2[i][j][0], this.coords2[i][j][1]);
                 } else {
                     if (this.Get('chart.stepped')) {
@@ -742,16 +709,6 @@
 
 
 
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
-
-
-
-
 
         /**
         * If tooltips are defined, handle them
@@ -762,8 +719,6 @@
             if (this.Get('chart.tooltips.highlight')) {
                 RGraph.Register(this);
             }
-            
-            RGraph.PreLoadTooltipImages(this);
 
             RGraph.InstallLineTooltipEventListeners(this);
             
@@ -901,8 +856,6 @@
         if (this.Get('chart.adjustable')) {
             RGraph.AllowAdjusting(this);
         }
-
-
         
         /**
         * Fire the RGraph ondraw event
@@ -1408,28 +1361,23 @@
         // Draw the X axis labels
         if (this.Get('chart.labels') && this.Get('chart.labels').length > 0) {
 
-            var yOffset  = 5;
+
+            var yOffset  = 13;
             var bordered = false;
             var bgcolor  = null;
-
-            /**
-            * Text angle
-            */
-            var angle  = 0;
-            var valign = 'top';
-            var halign = 'center';
 
             if (this.Get('chart.xlabels.inside')) {
                 yOffset = -5;
                 bordered = true;
                 bgcolor  = this.Get('chart.xlabels.inside.color');
-                valign = 'bottom';
             }
-            
-            if (this.Get('chart.xaxispos') == 'top') {
-                valign = 'bottom';
-                yOffset += 2;
-            }
+
+            /**
+            * Text angle
+            */
+            var angle  = 0;
+            var valign = null;
+            var halign = 'center';
 
             if (typeof(this.Get('chart.text.angle')) == 'number' && this.Get('chart.text.angle') > 0) {
                 angle   = -1 * this.Get('chart.text.angle');
@@ -1547,7 +1495,6 @@
             if (this.Get('chart.xaxispos') == 'center') {
                 yPos = (yPos - this.gutterBottom - this.gutterTop) / 2;
                 yPos = yPos + this.gutterTop;
-
             
             // TODO Check this
             } else if (this.Get('chart.xaxispos') == 'top') {
@@ -1628,14 +1575,6 @@
 
         var isStepped = this.Get('chart.stepped');
         var isFilled = this.Get('chart.filled');
-        
-        if (this.Get('chart.xaxispos') == 'top') {
-            var xAxisPos = this.gutterTop;
-        } else if (this.Get('chart.xaxispos') == 'center') {
-            var xAxisPos = this.gutterTop + (this.grapharea / 2);
-        } else if (this.Get('chart.xaxispos') == 'bottom') {
-            var xAxisPos = this.canvas.height - this.gutterBottom;
-        }
 
 
         for (var i=0; i<lineCoords.length; ++i) {
@@ -1658,15 +1597,15 @@
 
                 if (this.Get('chart.filled') && !this.Get('chart.filled.range')) {
 
-                    this.context.moveTo(xPos + 1, xAxisPos);
-
+                    this.context.moveTo(xPos + 1, this.canvas.height - this.gutterBottom - (this.Get('chart.xaxispos') == 'center' ? (this.canvas.height - this.gutterTop - this.gutterBottom) / 2 : 0) - 1);
+                    
                     // This facilitates the X axis being at the top
                     // NOTE: Also done below
                     if (this.Get('chart.xaxispos') == 'top') {
-                        this.context.moveTo(xPos + 1, xAxisPos);
+                        this.context.moveTo(xPos + 1, this.Get('chart.gutter.top'));
                     }
 
-                    this.context.lineTo(xPos, yPos);
+                    this.context.lineTo(xPos + 1, yPos);
 
                 } else {
 
@@ -1676,7 +1615,7 @@
                         this.context.moveTo(xPos + 1, yPos);
                     }
                 }
-
+                
                 if (yPos == null) {
                     penUp = true;
 
@@ -1703,7 +1642,7 @@
                         this.context.lineTo(xPos, yPos);
                         
                         if (isFilled && lineCoords[i+1] && lineCoords[i+1][1] == null) {
-                            this.context.lineTo(xPos, xAxisPos);
+                            this.context.lineTo(xPos, this.canvas.height - this.gutterBottom);
                         }
                     
                     // Added August 2010
@@ -1719,9 +1658,6 @@
             }
         }
 
-        /**
-        * Draw a line to the X axis if the chart is filled
-        */
         if (this.Get('chart.filled') && !this.Get('chart.filled.range')) {
 
             // Is this needed ??
@@ -1733,24 +1669,19 @@
             * lines use the prevLineCoords array
             */
             if (index > 0 && this.Get('chart.filled.accumulative')) {
-                
                 this.context.lineTo(xPos, prevLineCoords ? prevLineCoords[i - 1][1] : (this.canvas.height - this.gutterBottom - 1 + (this.Get('chart.xaxispos') == 'center' ? (this.canvas.height - this.gutterTop - this.gutterBottom) / 2 : 0)));
             
                 for (var k=(i - 1); k>=0; --k) {
                     this.context.lineTo(k == 0 ? prevLineCoords[k][0] + 1: prevLineCoords[k][0], prevLineCoords[k][1]);
                 }
             } else {
-
                 // Draw a line down to the X axis
                 if (this.Get('chart.xaxispos') == 'top') {
                     this.context.lineTo(xPos, this.Get('chart.gutter.top') +  1);
                     this.context.lineTo(lineCoords[0][0],this.Get('chart.gutter.top') + 1);
-                } else if (typeof(lineCoords[i - 1][1]) == 'number') {
-
-                    var yPosition = this.Get('chart.xaxispos') == 'center' ? ((this.canvas.height - this.gutterTop - this.gutterBottom) / 2) + this.gutterTop : this.canvas.height - this.gutterBottom;
-
-                    this.context.lineTo(xPos,yPosition);
-                    this.context.lineTo(lineCoords[0][0],yPosition);
+                } else {
+                    this.context.lineTo(xPos,this.canvas.height - this.gutterBottom + (this.Get('chart.xaxispos') == 'center' ? (this.canvas.height - this.gutterTop - this.gutterBottom) / 2 : 0));
+                    this.context.lineTo(lineCoords[0][0],this.canvas.height - this.Get('chart.gutter.bottom') - (this.Get('chart.xaxispos') == 'center' ? (this.canvas.height - this.gutterTop - this.gutterBottom) / 2 : 0));
                 }
             }
 
@@ -1758,7 +1689,6 @@
 
             this.context.fill();
             this.context.beginPath();
-
         }
 
         /**
@@ -2011,8 +1941,6 @@
 
             var x = Math.abs(xPos - prevX);
             var y = Math.abs(yPos - prevY);
-            
-            var orig_linewidth = this.context.lineWidth;
 
             if (yPos < prevY) {
                 var a = Math.atan(x / y) + 1.57;
@@ -2026,11 +1954,9 @@
 
                 this.context.moveTo(xPos, yPos);
                 this.context.arc(xPos, yPos, 7, a + 0.5 + (document.all ? 0.1 : 0.01), a + 0.5, true);
+
+
             this.context.stroke();
-            this.context.fill();
-            
-            // Revert to original lineWidth
-            this.context.lineWidth = orig_linewidth;
         
         /**
         * Custom tick drawing function
@@ -2372,47 +2298,4 @@
             }
 
         co.stroke();
-    }
-
-
-    /**
-    * When you click on the chart, this method can return the Y value at that point. It works for any point on the
-    * chart (that is inside the gutters) - not just points on the Line.
-    * 
-    * @param object e The event object
-    */
-    RGraph.Line.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-
-        var obj = this;
-        
-        if (   mouseY < obj.Get('chart.gutter.top')
-            || mouseY > (obj.canvas.height - obj.Get('chart.gutter.bottom'))
-            || mouseX < obj.Get('chart.gutter.left')
-            || mouseX > (obj.canvas.width - obj.Get('chart.gutter.right'))
-           ) {
-            return null;
-        }
-        
-        if (this.Get('chart.xaxispos') == 'center') {
-            var value = (( (obj.grapharea / 2) - (mouseY - obj.Get('chart.gutter.top'))) / obj.grapharea) * (obj.max - obj.min);
-            value *= 2;
-            return value;
-        } else if (this.Get('chart.xaxispos') == 'top') {
-            var value = ((obj.grapharea - (mouseY - obj.Get('chart.gutter.top'))) / obj.grapharea) * (obj.max - obj.min);
-            value = Math.abs(obj.max - value) * -1;
-            return value;
-        } else {
-            var value = ((obj.grapharea - (mouseY - obj.Get('chart.gutter.top'))) / obj.grapharea) * (obj.max - obj.min)
-            value += obj.min;
-            return value;
-        }
     }

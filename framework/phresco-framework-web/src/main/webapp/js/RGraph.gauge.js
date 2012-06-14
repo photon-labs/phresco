@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -80,29 +61,15 @@
             'chart.gutter.top':    5,
             'chart.gutter.bottom': 5,
             'chart.border.width':  10,
-
-            'chart.title.top':     '',
-            'chart.title.top.font':'Arial',
-            'chart.title.top.size':14,
-            'chart.title.top.color':'#333',
-            'chart.title.top.bold':false,
-            'chart.title.top.pos': null,
-
-            'chart.title.bottom':  '',
-            'chart.title.bottom.font':'Arial',
-            'chart.title.bottom.size':14,
-            'chart.title.bottom.color':'#333',
-            'chart.title.bottom.bold':false,
-            'chart.title.bottom.pos':null,
-
-            'chart.text.align':    'top',
-            'chart.text.x':         null,
-            'chart.text.y':         null,
+            'chart.title':         '',
+            'chart.title.font':    'Arial',
+            'chart.title.size':    14,
+            'chart.title.color':   '#333',
+            'chart.title.bold':    false,
+            'chart.text.font':     'Arial',
             'chart.text.color':     '#666',
             'chart.text.size':      10,
             'chart.scale.decimals': 0,
-            'chart.scale.point':    '.',
-            'chart.scale.thousand': ',',
             'chart.units.pre':      '',
             'chart.units.post':     '',
             'chart.red.start':      0.9 * this.max,
@@ -114,16 +81,13 @@
             'chart.needle.color':    '#D5604D',
             'chart.border.outer':   '#ccc',
             'chart.border.inner':   '#f1f1f1',
-            'chart.centerpin.color':        'blue',
-            'chart.centerpin.radius':       null,
+            'chart.centerpin.color':'blue',
             'chart.zoom.mode':              'canvas',
             'chart.zoom.thumbnail.width':   75,
             'chart.zoom.thumbnail.height':  75,
             'chart.zoom.thumbnail.fixed':   false,
             'chart.zoom.background':        true,
-            'chart.zoom.action':            'zoom',
-            'chart.tickmarks.small':        25,
-            'chart.tickmarks.big':          5
+            'chart.zoom.action':            'zoom'
         }
     }
 
@@ -137,15 +101,6 @@
     */
     RGraph.Gauge.prototype.Set = function (name, value)
     {
-        /**
-        * Title compatibility
-        */
-        if (name == 'chart.title')       name = 'chart.title.top';
-        if (name == 'chart.title.font')  name = 'chart.title.top.font';
-        if (name == 'chart.title.size')  name = 'chart.title.top.size';
-        if (name == 'chart.title.color') name = 'chart.title.top.color';
-        if (name == 'chart.title.bold')  name = 'chart.title.top.bold';
-
         this.properties[name] = value;
     }
 
@@ -207,10 +162,6 @@
         
         // This has to be in the constructor
         this.centerpinRadius = 0.16 * this.radius;
-        
-        if (typeof(this.Get('chart.centerpin.radius')) == 'number') {
-            this.centerpinRadius = this.Get('chart.centerpin.radius');
-        }
 
 
         /**
@@ -228,10 +179,7 @@
         this.DrawSmallTickmarks();
         this.DrawBigTickmarks();
         this.DrawLabels();
-
-        this.DrawTopTitle();
-        this.DrawBottomTitle();
-
+        this.DrawTitle();
         this.DrawNeedle();
         this.DrawCenterpin();
 
@@ -324,7 +272,7 @@
     */
     RGraph.Gauge.prototype.DrawSmallTickmarks = function ()
     {
-        var numTicks = this.Get('chart.tickmarks.small');
+        var numTicks = 25;
 
         for (var i=0; i<=numTicks; ++i) {
             this.context.beginPath();
@@ -342,7 +290,7 @@
     */
     RGraph.Gauge.prototype.DrawBigTickmarks = function ()
     {
-        var numTicks = this.Get('chart.tickmarks.big');
+        var numTicks = 5;
         this.context.lineWidth = 3;
         this.context.lineCap   = 'round';
 
@@ -383,79 +331,51 @@
         this.context.fillStyle = this.Get('chart.text.color');
 
         this.context.beginPath();
-            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery + Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')), RGraph.number_format(this, this.min.toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')), 'bottom', 'left');
-            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - this.radius + 25 + this.Get('chart.border.width'), this.centery,RGraph.number_format(this, (((this.max - this.min) * 0.2) + this.min).toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),'center', 'left');
-            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery - Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),RGraph.number_format(this, (((this.max - this.min) * 0.4) + this.min).toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),'top', 'center');
-            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery - Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),RGraph.number_format(this, (((this.max - this.min) * 0.6) + this.min).toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),'top', 'center');
-            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + this.radius - 25 - this.Get('chart.border.width'), this.centery,RGraph.number_format(this, (((this.max - this.min) * 0.8) + this.min).toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),'center', 'right');
-            RGraph.Text(this.context,this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery + Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),RGraph.number_format(this, this.max.toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),'bottom', 'right');
+            // First label
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery + Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')), this.Get('chart.units.pre') + String(this.min.toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),'bottom', 'left');
+            
+            // Second label
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - this.radius + 25 + this.Get('chart.border.width'), this.centery,this.Get('chart.units.pre') + String((((this.max - this.min) * 0.2) + this.min).toFixed(this.Get('chart.scale.decimals')) + this.Get('chart.units.post')),'center', 'left');
+
+            // Third label
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx - Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery - Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.Get('chart.units.pre') + String((((this.max - this.min) * 0.4) + this.min).toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),'top', 'center');
+
+            // Fourth label
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery - Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.Get('chart.units.pre') + String((((this.max - this.min) * 0.6) + this.min).toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),'top', 'center');
+            
+            // Fifth label
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + this.radius - 25 - this.Get('chart.border.width'), this.centery, this.Get('chart.units.pre') + String((((this.max - this.min) * 0.8) + this.min).toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),'center', 'right');
+
+            // Sixth (last) label
+            RGraph.Text(this.context,this.Get('chart.text.font'), this.Get('chart.text.size'), this.centerx + Math.sin(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.centery + Math.cos(0.52) * (this.radius - 25 - this.Get('chart.border.width')),this.Get('chart.units.pre') + String(this.max.toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),'bottom', 'right');
         this.context.fill();
     }
 
 
     /**
-    * This function draws the top title
+    * This function draws the title
     */
-    RGraph.Gauge.prototype.DrawTopTitle = function ()
+    RGraph.Gauge.prototype.DrawTitle = function ()
     {
-        var x = this.centerx;
-        var y = this.centery - 25;
-        
-        // Totally override the calculated positioning
-        if (typeof(this.Get('chart.title.top.pos')) == 'number') {
-            y = this.centery - (this.radius * this.Get('chart.title.top.pos'));
-        }
+        var title = this.Get('chart.title');
 
-        if (this.Get('chart.title.top')) {
-            this.context.fillStyle = this.Get('chart.title.top.color');
+        if (title) {
+
+            this.context.fillStyle = this.Get('chart.title.color');
 
             this.context.beginPath();
                 RGraph.Text(this.context,
-                            this.Get('chart.title.top.font'),
-                            this.Get('chart.title.top.size'),
-                            x,
-                            y,
-                            String(this.Get('chart.title.top')),
-                            'bottom',
+                            this.Get('chart.title.font'),
+                            this.Get('chart.title.size'),
+                            this.centerx,
+                            this.centery - 35,
+                            String(this.Get('chart.title')),
+                            'center',
                             'center',
                             null,
                             null,
                             null,
-                            this.Get('chart.title.top.bold'));
-            this.context.fill();
-        }
-    }
-
-
-    /**
-    * This function draws the bottom title
-    */
-    RGraph.Gauge.prototype.DrawBottomTitle = function ()
-    {
-        var x = this.centerx;
-        var y = this.centery + this.centerpinRadius + 10;
-
-        // Totally override the calculated positioning
-        if (typeof(this.Get('chart.title.bottom.pos')) == 'number') {
-            y = this.centery + (this.radius * this.Get('chart.title.bottom.pos'));
-        }
-
-        if (this.Get('chart.title.bottom')) {
-            this.context.fillStyle = this.Get('chart.title.bottom.color');
-
-            this.context.beginPath();
-                RGraph.Text(this.context,
-                            this.Get('chart.title.bottom.font'),
-                            this.Get('chart.title.bottom.size'),
-                            x,
-                            y,
-                            String(this.Get('chart.title.bottom')),
-                            'top',
-                            'center',
-                            null,
-                            null,
-                            null,
-                            this.Get('chart.title.bottom.bold'));
+                            this.Get('chart.title.bold'));
             this.context.fill();
         }
     }
