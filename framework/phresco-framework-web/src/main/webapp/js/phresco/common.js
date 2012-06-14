@@ -1,3 +1,4 @@
+
 	// Enables button
 	function enableControl(tagControl, css) {
 		tagControl.attr("class", css);
@@ -346,4 +347,3 @@
 	    	$('#siteaccordion_active').attr("id", "");   	
 	    });
 	}
-	
