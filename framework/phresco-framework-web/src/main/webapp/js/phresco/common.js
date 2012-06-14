@@ -26,6 +26,7 @@
     // This function to enable the screen
     function enableScreen() {
         $(".wel_come").show().css("display", "none");
+        $("#loadingIconDiv").empty();
     }
     
     // This function to disable the screen
@@ -50,7 +51,7 @@
         	src = "themes/photon/images/loading_red.gif";
         }
      	tagControl.empty();
-    	tagControl.html("<div><img class='loadingIcon' src='"+ src +"' style='display: block'></div>");
+    	tagControl.html("<img class='loadingIcon' src='"+ src +"' style='display: block'>");
     }
     
     //hide the progress bar
@@ -98,7 +99,10 @@
             			$(".intro_container").hide();
             	    	$(".errorOverlay").show().css("display", "none");
             		}
-	                hideProgessBar();
+            		if((pageUrl == "save" || pageUrl == "update" || pageUrl == "delete" || pageUrl == "deleteConfigurations" || pageUrl == "deleteSettings" || pageUrl == "deleteBuild" || pageUrl == "CIBuildDelete")) {
+            			hideProgessBar();
+            		} 
+            		
 	                tagControl.empty();
 	                tagControl.html(data);
 	           	}
