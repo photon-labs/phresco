@@ -58,6 +58,11 @@
 	        <artifactId>trilead-ssh2</artifactId>
             <version>build212-hudson-5</version>
         </dependency>
+		<dependency>
+            <groupId>com.photon.phresco.pom</groupId>
+            <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 	
     <build>
