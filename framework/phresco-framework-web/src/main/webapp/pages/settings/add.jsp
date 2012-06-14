@@ -91,7 +91,7 @@
 	                    	<div class="typeFields">
 		                        <input class="xlarge settings_text" id="xlInput" name="settingsName"
 		                            type="text" maxlength="30" title="30 Characters only" value ="<%= name%>" autofocus="true" 
-		                            onfocus="showToolTip('nameHelpTxt_Stg');" placeholder="Name of the Setting"/>
+		                            onfocus="showToolTip('nameHelpTxt_Stg');" placeholder="<s:text name="label.name.config.placeholder"/>"/>
 	                        </div>
 	                        
 	                        <div>
@@ -112,7 +112,7 @@
 	                <div class="clearfix">
 	                    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 	                    <div class="input new-input">
-	                        <textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Stg');" placeholder="Description of the Setting"><%=description%></textarea>
+	                        <textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Stg');" placeholder="<s:text name="label.description.config.placeholder"/>"><%=description%></textarea>
 	                    </div>
 	                    
 	                    <!-- <div class="twipsy bootstrap-right" id="descHelpTxt_Stg">
