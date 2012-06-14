@@ -81,8 +81,34 @@ public class Code extends FrameworkBaseAction {
         	Project project = administrator.getProject(projectCode); 
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(APPLICATION_PROJECT, project);
-            
-    	}  catch (Exception e) {
+      		FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+            String serverUrl = "";
+    	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
+    	    	serverUrl = frameworkConfig.getSonarUrl();
+    	    } else {
+    	    	serverUrl = getHttpRequest().getRequestURL().toString();
+    	    	StringBuilder tobeRemoved = new StringBuilder();
+    	    	tobeRemoved.append(getHttpRequest().getContextPath());
+    	    	tobeRemoved.append(getHttpRequest().getServletPath());
+    	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
+    	    	Matcher matcher = pattern.matcher(serverUrl);
+    	    	serverUrl = matcher.replaceAll("");
+    	    }
+    	    String sonarReportPath = frameworkConfig.getSonarReportPath();
+    	    String[] sonar = sonarReportPath.split("/");
+    	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar[1]);
+    	    URL sonarURL = new URL(serverUrl);
+			HttpURLConnection connection = null;
+    	    try {
+    	    	connection = (HttpURLConnection) sonarURL.openConnection();
+    	    	int responseCode = connection.getResponseCode();
+    	    	if (responseCode != 200) {
+    	    		getHttpRequest().setAttribute(REQ_ERROR, getText(SONAR_NOT_STARTED));
+                }
+    	    } catch(Exception e) {
+    	    	getHttpRequest().setAttribute(REQ_ERROR, getText(SONAR_NOT_STARTED));
+    	    }
+    	} catch (Exception e) {
     		S_LOGGER.error("Entered into catch block of Code.view()"+ FrameworkUtil.getStackTraceAsString(e));
     		new LogErrorReport(e, "Code view");
         }

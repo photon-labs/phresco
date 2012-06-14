@@ -77,7 +77,7 @@
          	}
         });
         
-        $('#revisionVal').live('input paste', function (e) { 
+        $('#revisionVal').bind('input propertychange', function (e) { 
         	var revisionVal = $(this).val();
         	revisionVal = checkForRevision(revisionVal);
         	$(this).val(revisionVal);
@@ -95,7 +95,7 @@
 		    $('#revisionVal').attr("disabled", "disabled");
 		});
 		
-		$("#userName").live('input paste',function(e){ 	//envName validation
+		$("#userName").bind('input propertychange',function(e){ 	//envName validation
 	     	var name = $(this).val();
 	     	name = isContainSpace(name);
 	     	$(this).val(name);
