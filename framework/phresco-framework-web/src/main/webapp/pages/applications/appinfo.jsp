@@ -82,7 +82,7 @@
 		    <div class="input new-input">
 		        <input class="xlarge" id="name" name="name" maxlength="30" title="30 Characters only"
 		            type="text"  value ="<%= selectedInfo == null ? "" : selectedInfo.getName() %>" 
-		            autofocus="autofocus" placeholder="Name of the project" <%= disabled %> />
+		            autofocus="autofocus" placeholder="<s:text name="label.name.placeholder"/>" <%= disabled %> />
 		        <span class="help-inline" id="nameErrMsg">
 		           
 		        </span>
@@ -98,7 +98,7 @@
 		        <%-- <input class="xlarge" id="internalCode" name="internalCode"
 		            type="text"  value ="<%= selectedInfo == null ? codePrefix : selectedInfo.getCode() %>" disabled /> --%>
 				<input class="xlarge" id="externalCode" name="externalCode"
-		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" placeholder="Project code"/>
+		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" placeholder="<s:text name="label.code.placeholder"/>"/>
 		    </div>
 		</div>
 		<!--  Code Ends -->
@@ -108,7 +108,7 @@
 		    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 		    <div class="input new-input">
 		        <textarea class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" 
-		        name="description" placeholder="Description of the project"><%= selectedInfo == null 
+		        name="description" placeholder="<s:text name="label.description.placeholder"/>"><%= selectedInfo == null 
 		        ? "" : selectedInfo.getDescription() %></textarea>
 		    </div>
 		</div>
