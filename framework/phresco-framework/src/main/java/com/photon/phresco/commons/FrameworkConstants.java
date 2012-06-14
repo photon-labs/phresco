@@ -581,6 +581,7 @@ public interface FrameworkConstants {
      * Code keys
      */
     String FAILURE_CODE_REVIEW = "Code review is not available";
+	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
      * Application Redirection keys
@@ -601,8 +602,18 @@ public interface FrameworkConstants {
     /*
      * Create Environment keys
      */
-    String SUCCESS_ENVIRONMENT = "environment.create.success";
-    String FAILURE_ENVIRONMENT = "environment.create.fail";
+    String CREATE_SUCCESS_ENVIRONMENT = "environment.create.success";
+    String CREATE_FAILURE_ENVIRONMENT = "environment.create.fail";
+    
+    /*
+     * Update Environment keys
+     */
+    String UPDATE_ENVIRONMENT = "environment.update.success";
+    
+    /*
+     * Delete Environment keys
+     */
+    String DELETE_ENVIRONMENT = "environment.deleted.success";
     /*
      * Create Setting keys
      */
