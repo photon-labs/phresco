@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 import com.phresco.pom.model.ReportPlugin;
-import com.phresco.pom.site.SiteConstants;
+import com.phresco.pom.site.Reports;
 
 /**
  * @author suresh_ma
@@ -17,7 +17,7 @@ public class SiteConfigurator {
 	/**
 	 * @param constants
 	 */
-	public void addReportPlugin(SiteConstants constants,File file) {
+	public void addReportPlugin(Reports constants,File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
 			ReportPlugin reportPlugin = new ReportPlugin();
@@ -36,22 +36,22 @@ public class SiteConfigurator {
 	/**
 	 * @param constants
 	 */
-	public void addReportPlugin(SiteConstants[] constants,File file){
-		for (SiteConstants siteConstants : constants) {
-			addReportPlugin(siteConstants,file);
+	public void addReportPlugin(Reports[] constants,File file){
+		for (Reports Reports : constants) {
+			addReportPlugin(Reports,file);
 		}
 	}
 	
 	/**
 	 * @param constants
 	 */
-	public void removeReportPlugin(SiteConstants[] constants,File file){
+	public void removeReportPlugin(Reports[] constants,File file){
 		
 		try {
 			PomProcessor processor = new PomProcessor(file);
-			for (SiteConstants siteConstants : constants) {
-				String groupId = siteConstants.getGroupId();
-				String artifactId = siteConstants.getArtifactId();
+			for (Reports Reports : constants) {
+				String groupId = Reports.getGroupId();
+				String artifactId = Reports.getArtifactId();
 				processor.removeSitePlugin(groupId,artifactId);
 				processor.save();
 			}
