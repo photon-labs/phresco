@@ -280,7 +280,7 @@
 		var data = <%= graphData %>;
         var bar = new RGraph.Bar('myCanvas', data);
         
-		var theme = $.cookie("css");
+		var theme = localStorage["color"];
         var chartTextColor = "";
         var chartGridColor = "";
         var chartAxisColor = "";
