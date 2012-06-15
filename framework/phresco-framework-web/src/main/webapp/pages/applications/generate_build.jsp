@@ -238,7 +238,7 @@
 								<input type="checkbox" id="hideLog" name="hideLogChk" value="hidelog" >
 								<span class="textarea_span popup-span"><s:text name="label.hide.log"/></span>
 							<% } %>
-							<% if (!from.equals("generateBuild") && project.getProjectInfo().getTechnology().getDatabases() != null) {%>
+							<% if (!from.equals("generateBuild") && CollectionUtils.isNotEmpty(project.getProjectInfo().getTechnology().getDatabases())) {%>
 								<input type="checkbox" id="importSql" name="importSqlChk" <%= checkImportSql%> >
 								<span class="textarea_span popup-span"><s:text name="label.import.sql"/></span>
 							<% } %>
