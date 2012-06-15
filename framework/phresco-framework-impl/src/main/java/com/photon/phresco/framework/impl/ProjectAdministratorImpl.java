@@ -37,8 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -65,7 +63,6 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.configuration.Configuration;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.CIManager;
 import com.photon.phresco.framework.api.Project;
@@ -100,10 +97,8 @@ import com.photon.phresco.util.Utility;
 import com.phresco.pom.model.Model;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants {
 
@@ -241,6 +236,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (response.getStatus() != 200) {
 				throw new PhrescoException("Project updation failed");
 			}
+		}
+		if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
+			createSqlFolder(delta, path);
 		}
 		updatePomProject(delta,projectInfoClone);
 		try {
@@ -1946,6 +1944,46 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 throw new PhrescoException(e);
 		 }
 	 }
+	 
+	 protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
+			String databaseType = "";
+			try {
+				String parentFile = path.getParentFile().getParent();
+				List<Database> databaseList = info.getTechnology().getDatabases();
+				String techId = info.getTechnology().getId();
+				if (databaseList == null || databaseList.size() == 0) {
+					return;
+				}
+				File mysqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
+				File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
+				for (Database db : databaseList) {
+					databaseType = db.getName().toLowerCase();
+					List<String> versions = db.getVersions();
+					for (String version : versions) {
+						String sqlPath = databaseType + File.separator + version.trim();
+						File sqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + sqlPath);
+						sqlFolder.mkdirs();
+						if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
+								&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
+							FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
+						} else {
+							File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
+							sqlFile.createNewFile();
+						}
+					}
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	 
+		private File getMysqlVersionFolder(File mysqlFolder) {
+			File[] mysqlFolderFiles = mysqlFolder.listFiles();
+			if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
+				return mysqlFolderFiles[0];
+			}
+			return null;
+		}
 
 	@Override
 	public void getReports(ProjectInfo projectInfo) throws PhrescoException {
