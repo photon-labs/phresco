@@ -1,3 +1,5 @@
+<%@page import="com.photon.phresco.framework.PhrescoFrameworkFactory"%>
+<%@page import="com.photon.phresco.framework.FrameworkConfiguration"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%--
 	private static final org.apache.log4j.Logger S_LOGGER = org.apache.log4j.Logger.getLogger("Tweeter");
@@ -41,6 +43,10 @@ if(responseString!=null && !responseString.isEmpty() && !responseString.contains
 	}
 }
 --%>
+<% 
+FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+String path = frameworkConfig.getServerPath() + "/news/jsonp"; 
+%>
 
 <aside id="sidebar">
 	<section>
@@ -73,7 +79,7 @@ if(responseString!=null && !responseString.isEmpty() && !responseString.contains
 	
 	$(document).ready(function() {
 		$.ajax({
-		    url: 'http://localhost:3030/service/news/jsonp', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
+		    url: '<%=path%>', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
 		    type: 'GET',
 		    dataType: 'jsonp',
 		    jsonp: 'callback',
@@ -94,7 +100,7 @@ if(responseString!=null && !responseString.isEmpty() && !responseString.contains
 	function filter(){
 		var value = document.getElementById('search').value;
 		$.ajax({
-		    url: 'http://localhost:3030/service/news/jsonp', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
+		    url: '<%=path%>', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
 		    type: 'GET',
 		    dataType: 'jsonp',
 		    jsonp: 'callback',
