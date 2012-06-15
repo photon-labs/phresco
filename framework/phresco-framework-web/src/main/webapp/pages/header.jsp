@@ -59,10 +59,10 @@
 		<div class="nav_slider">
 			<div class="headerInnerTop">
 				<ul>
-					<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="home"><s:text name="label.hdr.home"/></a></li>
-					<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="applications"><s:text name="label.appln"/></a></li>
-					<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="settings"><s:text name="label.hdr.settings"/></a></li>
-					<li class="wid_help"><a href="#" class="inactive" name="headerMenu" id="forum"><s:text name="label.help"/></a></li>
+					<li class="wid_home"><a href="#" class="inactive" name="headerMenu" oncontextmenu="localStorage.menuSelected = 'home';" id="home"><s:text name="label.hdr.home"/></a></li>
+					<li class="wid_app"><a href="#" class="inactive" name="headerMenu" oncontextmenu="localStorage.menuSelected = 'applications';" id="applications"><s:text name="label.appln"/></a></li>
+					<li class="wid_set"><a href="#" class="inactive" name="headerMenu" oncontextmenu="localStorage.menuSelected = 'settings';" id="settings"><s:text name="label.hdr.settings"/></a></li>
+					<li class="wid_help"><a href="#" class="inactive" name="headerMenu" oncontextmenu="localStorage.menuSelected = 'forum';"  id="forum"><s:text name="label.help"/></a></li>
 				</ul>
 				<div class="close_links" id="close_links">
 					<a href="JavaScript:void(0);">
@@ -99,6 +99,7 @@
 		<div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:text name="label.signout"/></a></div>
       </li>
 </div>
+
 <!-- Sign out ends -->	
 
 <%
@@ -113,7 +114,7 @@
     	showHeaderImage();
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
-
+		
         $("a[name='headerMenu']").click(function() {
 			$("a[name='headerMenu']").attr("class", "inactive");
 			$(this).attr("class", "active");
@@ -121,13 +122,17 @@
             if (selectedMenu == "applications") {
             	bacgroundValidate("validateFramework");
             }
+            
             performAction(selectedMenu, '', $("#container"));
         });
+        
+      
         
         $("#goToHome").click(function() {
         	$("a[name='headerMenu']").attr("class", "inactive");
 			$("#home").attr("class", "active");
             var selectedMenu = "home";
+           
             performAction(selectedMenu, '', $("#container"));
         });
         
@@ -163,6 +168,7 @@
 		
 		// to show user info on mouse over
         $('#signOut li').mouseenter(function(){
+        	localStorage.clear();  
          	$("div li.usersettings div").hide(0);
          	$(this).children("div li.usersettings div").show(0);
      	}).mouseleave(function(){
