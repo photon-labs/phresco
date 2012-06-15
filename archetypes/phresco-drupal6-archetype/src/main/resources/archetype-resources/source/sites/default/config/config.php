@@ -18,7 +18,11 @@
  * ###
  */ ?>
 <?php
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> remotes/origin/boston
 function getConfigByName($currentEnv, $type, $name) {
 	$fileContents = file_get_contents("sites/default/config/phresco-env-config.xml");
 	$file = getOriginalString($fileContents);

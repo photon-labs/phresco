@@ -41,7 +41,7 @@
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
     </properties>
-  
+
 	<build>
 		<sourceDirectory>source</sourceDirectory>
 		<plugins>

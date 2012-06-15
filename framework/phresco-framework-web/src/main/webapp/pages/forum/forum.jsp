@@ -49,6 +49,9 @@
  %>
 
 <script>
+	var localstore = $("link[title='phresco']").attr("href");
+	localStorage["color"] =localstore;
+	
     $("a[id='home']").attr("class", "inActive");
     $("a[id='forum']").attr("class", "active");
 
@@ -60,7 +63,7 @@
 	});
 	
 	function reloadIframe() {
-		var theme = $.cookie("css");
+		var theme = localStorage["color"];
 		if(theme == undefined) {
 			 theme = "themes/photon/css/red.css";
 		}

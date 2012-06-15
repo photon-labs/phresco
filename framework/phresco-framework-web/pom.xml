@@ -20,7 +20,7 @@
         <site>
             <id>phresco.framework.web</id>
             <name>Phresco Framework</name>
-            <url>scp://phresco.org/home/projects/framework/web/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework-web/</url>
         </site>
     </distributionManagement>
 

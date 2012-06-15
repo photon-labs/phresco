@@ -215,6 +215,8 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+		
 		/** To construct the div during the project edit **/
 		<%
 			String name = null;
@@ -297,7 +299,7 @@
 		params = params.concat('<%= projectCode %>');
 		
 		/* 
-			To check for the corresponding configuration of the item to be removed.
+			To check for the Corresponding configuration of the item to be removed.
 			If it has configuration then the confirmation will be asked from the user regarding the deletion of the configuration 
 		*/
 		if (<%= StringUtils.isNotEmpty(fromPage) %>) {
@@ -499,15 +501,15 @@
 		} else if (pageUrl == "checkForRespectiveConfig") {
 			if (data.hasConfiguration) {
 				if (type == "Database") {
-					$("#confirmationText").html("corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("Corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
 				} else {
-					$("#confirmationText").html("corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
+					$("#confirmationText").html("Corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
 				}
 			    dialog('block');
 			    escBlockPopup();
 			} else {
 				if (type == "Database") {
-					$("#confirmationText").html("corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
 					dialog('block');
 				    escBlockPopup();
 				} else {
@@ -516,7 +518,6 @@
 			}
 		} else if (pageUrl == "technology") {
 			techVersions();    	
-		    $("#name").focus();
 		}
 	}
 	

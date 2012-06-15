@@ -1,3 +1,4 @@
+
 /*
  * ###
  * Framework Web Archive
@@ -17,6 +18,7 @@
  * limitations under the License.
  * ###
  */
+
 package com.photon.phresco.framework.actions.applications;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -71,8 +75,10 @@ public class Configurations extends FrameworkBaseAction {
     private String configType = null;
     private String oldConfigType = null;
 	private String envError = null;
-	private String remoteDeploy = null;
+	private String emailError = null;
+	private String remoteDeployment = null;
     
+
 
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -165,6 +171,9 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment") && value == null){
+                     		value="false";
+                     }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -197,7 +206,18 @@ public class Configurations extends FrameworkBaseAction {
                 sb.append(envs);
             }
             administrator.createConfiguration(settingsInfo, sb.toString(), project);
-            addActionMessage(getText(SUCCESS_CONFIGURATION, Collections.singletonList(configName)));
+            if (SERVER.equals(configType)){
+				addActionMessage(getText(SUCCESS_SERVER, Collections.singletonList(configName)));
+			}
+			else if (DATABASE.equals(configType)) {
+				addActionMessage(getText(SUCCESS_DATABASE, Collections.singletonList(configName)));
+			}
+			else if (WEBSERVICE.equals(configType)) {
+				addActionMessage(getText(SUCCESS_WEBSERVICE, Collections.singletonList(configName)));
+			}
+			else {
+				addActionMessage(getText(SUCCESS_EMAIL, Collections.singletonList(configName)));
+			}
             getHttpSession().removeAttribute(ERROR_SETTINGS);
         } catch (Exception e) {
         	if (debugEnabled) {
@@ -218,7 +238,10 @@ public class Configurations extends FrameworkBaseAction {
             Project project = administrator.getProject(projectCode);
             String envs = getHttpRequest().getParameter(ENVIRONMENT_VALUES);
             String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+            	deleteEnvironment(selectedItems);
+    	    }
+            
             List<Environment> environments = new ArrayList<Environment>();
             if (StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(
@@ -234,12 +257,19 @@ public class Configurations extends FrameworkBaseAction {
                 }
             }
 	    	administrator.createEnvironments(project, environments, false);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	
+			if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+				addActionMessage(getText(UPDATE_ENVIRONMENT));
+			} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+				addActionMessage(getText(DELETE_ENVIRONMENT));
+			} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+				addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+			}
     	} catch(Exception e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -387,7 +417,7 @@ public class Configurations extends FrameworkBaseAction {
             	isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
-            boolean remoteDeply = Boolean.parseBoolean(remoteDeploy);
+            boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
             if(remoteDeply){
                 if ("admin_username".equals(key) || "admin_password".equals(key)) {
                 	isRequired = true;
@@ -416,6 +446,18 @@ public class Configurations extends FrameworkBaseAction {
 			   	setPortError(ERROR_PORT);
 			   	validate = false;
 		   	}
+	   	}
+	   	
+	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
+	   		String value = getHttpRequest().getParameter("emailid");
+	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
+	   		Matcher m=p.matcher(value);
+	   		boolean b=m.matches();
+	   		if(b==false)
+	   		{
+	   			setEmailError(ERROR_EMAIL);
+	   			validate = false;
+	   		}
 	   	}
 
 	   	return validate;
@@ -482,6 +524,9 @@ public class Configurations extends FrameworkBaseAction {
 					}
             	} else {
 	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
+   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
+                        		value="false";
+                        }
 	                value = value.trim();
 	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
@@ -778,11 +823,19 @@ public class Configurations extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
+	}
+	
+	public String getEmailError() {
+		return emailError;
+	}
+
+	public void setEmailError(String emailError) {
+		this.emailError = emailError;
 	}
 }

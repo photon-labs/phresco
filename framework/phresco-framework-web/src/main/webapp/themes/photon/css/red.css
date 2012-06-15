@@ -17,6 +17,7 @@
  * limitations under the License.
  * ###
  */
+
 a:focus {
   outline: none;
 }
@@ -705,6 +706,10 @@ div.vjs-big-play-button span {
 	border: 1px solid #3A090B;
 }
 
+.build_table_div {
+	border: 1px solid #3A090B;
+}
+
 .settingsList_table_div {
 	border: 1px solid #3A090B;
 }
@@ -1361,6 +1366,16 @@ background-color: #ffffff;
 #errMsg {
 	color:red;
 }
+
+#logimErrMesg {
+	color: #FF0000;
+    float: left;
+    font-weight: bold;
+    padding-bottom: 9px;
+    width: 195%;
+    margin-top: -8px;
+}
+
 #reportMsg {
     color:green;
 }
@@ -1392,4 +1407,15 @@ background-color: #ffffff;
 .editFeatures_td2 a:hover {
 	color: #ffffff;
 	text-decoration: none;
+}
+
+.lgnBtn:hover {
+	background: #5b0a0e; /* Old browsers */
+	background: -moz-linear-gradient(top,  #5b0a0e 0%, #630a0a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5b0a0e), color-stop(100%,#630a0a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* IE10+ */
+	background: linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b0a0e', endColorstr='#630a0a',GradientType=0 ); /* IE6-9 */
 }

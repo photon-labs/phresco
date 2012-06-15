@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -36,8 +17,6 @@
     /**
     * The chart constructor. This function sets up the object. It takes the ID (the HTML attribute) of the canvas as the
     * first argument and the data as the second. If you need to change this, you can.
-    * 
-    * NB: If tooltips are ever implemented they must go below the use event listeners!!
     * 
     * @param string id    The canvas tag ID
     * @param number min   The minimum value
@@ -102,13 +81,10 @@
             'chart.adjustable':             false,
             'chart.value.label':            true,
             'chart.scale.visible':          false,
-            'chart.scale.decimals':         0,
-            'chart.ylabels.count':          5,
+            'chart.scale.decimals':          0,
+            'chart.ylabels.count':          10,
             'chart.annotatable':            false,
-            'chart.annotate.color':         'black',
-            'chart.scale.decimals':         0,
-            'chart.scale.point':            '.',
-            'chart.scale.thousand':         ','
+            'chart.annotate.color':         'black'
         }
 
         /**
@@ -118,8 +94,6 @@
             alert('[THERMOMETER] No canvas support');
             return;
         }
-        
-        this.getShape = this.getBar;
     }
 
 
@@ -247,13 +221,6 @@
         }
 
 
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
-
 
         
         /**
@@ -369,9 +336,7 @@
             this.context.beginPath();
                 this.context.fillStyle = this.Get('chart.text.color');
 
-                var text = this.Get('chart.scale.visible') ? 
-                
-                RGraph.number_format(this, this.value.toFixed(this.Get('chart.scale.decimals'))) : RGraph.number_format(this, this.value.toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post'));
+                var text = this.Get('chart.scale.visible') ? String(this.value) : this.Get('chart.units.pre') + String(this.value) + this.Get('chart.units.post');
 
                 RGraph.Text(this.context,
                             this.Get('chart.text.font'),
@@ -440,104 +405,25 @@
     */
     RGraph.Thermometer.prototype.DrawScale = function ()
     {
-        var numLabels = this.Get('chart.ylabels.count'); // The -1 is so that  the number of labels tallies with what is displayed
+        var numLabels = this.Get('chart.ylabels.count') - 1; // The -1 is so that  the number of labels tallies with what is displayed
         var step      = (this.max - this.min) / numLabels;
         
         this.context.fillStyle = this.Get('chart.text.color');
-        
-        var font      = this.Get('chart.text.font');
-        var size       = this.Get('chart.text.size');
-        var units_pre  = this.Get('chart.units.pre');
-        var units_post = this.Get('chart.units.post');
-        var decimals   = this.Get('chart.scale.decimals');
 
         this.context.beginPath();
-            for (var i=1; i<=numLabels; ++i) {
+            for (var i=0; i<=numLabels; ++i) {
 
-                var x          = this.canvas.width - this.gutterRight;
-                var y          = this.canvas.height - this.gutterBottom - (2 * this.bulbRadius) - ((this.graphArea[3] / numLabels) * i);
-                var text       = RGraph.number_format(this, String((this.min + (i * step)).toFixed(decimals)), units_pre, units_post);
+                var text = this.Get('chart.units.pre') + (i == 0 ? String(this.min.toFixed(this.Get('chart.scale.decimals'))) : String((this.min + (i * step)).toFixed(this.Get('chart.scale.decimals')))) + this.Get('chart.units.post');
+                var x    = this.canvas.width - this.gutterRight;
+                var y    = this.canvas.height - this.gutterBottom - (2 * this.bulbRadius) - ((this.graphArea[3] / numLabels) * i);
 
                 RGraph.Text(this.context,
-                            font,
-                            size,
+                            this.Get('chart.text.font'),
+                            this.Get('chart.text.size'),
                             x - 6,
                             y,
                             text,
                             'center');
             }
-            
-            // Draw zero            
-            RGraph.Text(this.context,
-                        font,
-                        size,
-                        x - 6,
-                        this.canvas.height - this.gutterBottom - (2 * this.bulbRadius),
-                        RGraph.number_format(this, (0).toFixed(decimals), units_pre, units_post),
-                        'center');
         this.context.fill();
-    }
-
-
-    /**
-    * Returns the focused/clicked bar
-    * 
-    * @param event e The event object
-    */
-    RGraph.Thermometer.prototype.getBar = function (e)
-    {
-        var obj         = e.target.__object__;
-        var mouseCoords = RGraph.getMouseXY(e)
-
-        for (var i=0; i<obj.coords.length; i++) {
-
-            var mouseCoords = RGraph.getMouseXY(e);
-            var mouseX = mouseCoords[0];
-            var mouseY = mouseCoords[1];
-            var left   = obj.coords[0];
-            var top    = obj.coords[1];
-            var width  = obj.coords[2];
-            var height = obj.coords[3];
-
-            if (mouseX >= left && mouseX <= (left + width) && mouseY >= top && mouseY <= (top + height) ) {
-                return [obj, left, top, width, height];
-            }
-        }
-    }
-
-
-    /**
-    * This function returns the value that the mouse is positioned t, regardless of
-    * the actual indicated value.
-    * 
-    * @param object e The event object
-    */
-    RGraph.Thermometer.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-
-        var canvas  = this.canvas;
-        var context = this.context;
-        
-        if (
-               mouseX < this.graphArea[0]
-            || mouseX > (this.graphArea[0] + this.graphArea[2])
-            || mouseY < this.graphArea[1]
-            || mouseY > (this.graphArea[1] + this.graphArea[3])
-           ) {
-            return null;
-        }
-        
-        var value = this.graphArea[3] - (mouseY - this.graphArea[1]);
-            value = (value / this.graphArea[3]) * (this.max - this.min);
-            value = value + this.min;
-
-        return value;
     }

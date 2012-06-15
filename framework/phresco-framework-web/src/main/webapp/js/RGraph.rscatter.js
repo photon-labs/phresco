@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -127,13 +108,7 @@
             'chart.tickmarks':              'cross',
             'chart.ticksize':               3,
             'chart.scale.decimals':         null,
-            'chart.scale.point':            '.',
-            'chart.scale.thousand':         ',',
-            'chart.scale.round':            false,
-            'chart.units.pre':              '',
-            'chart.units.post':             '',
-            'chart.events.mousemove':       null,
-            'chart.events.click':           null
+            'chart.scale.round':            false
         }
 
 
@@ -251,9 +226,6 @@
                 }
             }
         }
-        
-        // This resets the chart drawing state
-        this.context.beginPath();
 
         this.DrawBackground();
         this.DrawRscatter();
@@ -266,13 +238,6 @@
             RGraph.ShowContext(this);
         }
 
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
         /**
         * Tooltips
         */
@@ -282,8 +247,6 @@
             * Register this object for redrawing
             */
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
             
             /**
             * The onmousemove event
@@ -302,38 +265,35 @@
                 if (point) {
 
                     overHotspot = true;
-                    var text = RGraph.parseTooltipText(obj.data[point[3]], 3);
+                    canvas.style.cursor = 'pointer';
+                    var tooltip = obj.data[point[3]][3];
 
-                    if (text) {
-                        canvas.style.cursor = 'pointer';
-                    }
-
-                    if (!RGraph.Registry.Get('chart.tooltip') || RGraph.Registry.Get('chart.tooltip').__text__ != text) {
+                    if (!RGraph.Registry.Get('chart.tooltip') || RGraph.Registry.Get('chart.tooltip').__text__ != tooltip) {
 
                         if (obj.Get('chart.tooltips.highlight')) {
                             RGraph.Redraw();
                         }
 
-                        if (text) {
+                        /**
+                        * Get the tooltip text
+                        */
+                        if (typeof(tooltip) == 'function') {
+                            var text = String(tooltip(i));
 
-                            RGraph.Tooltip(canvas, text, e.pageX + 5, e.pageY - 5, point[3]);
+                        } else {
+                            var text = String(tooltip);
+                        }
 
-                            /**
-                            * Highlight the tickmark
-                            */
-                            if (obj.Get('chart.tooltips.highlight')) {
-                                context.beginPath();
-                                    context.strokeStyle = 'red';
-                                    context.fillStyle = 'rgba(255,255,255,0.5)';
+                        RGraph.Tooltip(canvas, text, e.pageX + 5, e.pageY - 5, point[3]);
 
-                                    context.moveTo(point[1], point[2]);
-                                    context.arc(point[1], point[2], 3, 0, 6.2830, 0);
-
-                                context.closePath();
-                                context.fill();
-                                
-                                context.moveTo(obj.centerx, obj.centery);
-                            }
+                        /**
+                        * Highlight the tickmark
+                        */
+                        if (obj.Get('chart.tooltips.highlight')) {
+                            context.beginPath();
+                            context.fillStyle = 'rgba(255,255,255,0.5)';
+                            context.arc(point[1], point[2], 3, 0, 6.2830, 0);
+                            context.fill();
                         }
                     }
                 }
@@ -470,8 +430,8 @@
             var y   = Math.cos(a) * r;
             var color = data[i][2] ? data[i][2] : this.Get('chart.colors.default');
             var tooltip = data[i][3] ? data[i][3] : null;
-
-            if (tooltip && String(tooltip).length) {
+            
+            if (tooltip && tooltip.length) {
                 this.hasTooltips = true;
             }
 
@@ -502,15 +462,12 @@
         this.context.fillStyle = 'black';
         this.context.strokeStyle = 'black';
         
-        var r          = this.radius;
-        var color      = this.Get('chart.text.color');
-        var font_face  = this.Get('chart.text.font');
-        var font_size  = this.Get('chart.text.size');
-        var context    = this.context;
-        var axes       = this.Get('chart.labels.axes').toLowerCase();
-        var units_pre  = this.Get('chart.units.pre');
-        var units_post = this.Get('chart.units.post');
-        var decimals   = this.Get('chart.scale.decimals');
+        var r         = this.radius;
+        var color     = this.Get('chart.text.color');
+        var font_face = this.Get('chart.text.font');
+        var font_size = this.Get('chart.text.size');
+        var context   = this.context;
+        var axes      = this.Get('chart.labels.axes').toLowerCase();
         
         this.context.fillStyle = this.Get('chart.text.color');
 
@@ -524,53 +481,43 @@
 
         // The "North" axis labels
         if (axes.indexOf('n') > -1) {
-            RGraph.Text(context,font_face,font_size,this.centerx,this.centery - ((r) * 0.2),RGraph.number_format(this, Number(this.scale[0]).toFixed(decimals), units_pre, units_post),'center','center',true,false,color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.4), RGraph.number_format(this, Number(this.scale[1]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.6), RGraph.number_format(this, Number(this.scale[2]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.8), RGraph.number_format(this, Number(this.scale[3]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - r, RGraph.number_format(this, Number(this.scale[4]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
+            RGraph.Text(context,font_face,font_size,this.centerx,this.centery - ((r) * 0.2),String(this.scale[0]),'center','center',true,false,color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.4), String(this.scale[1]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.6), String(this.scale[2]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - ((r) * 0.8), String(this.scale[3]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery - r, String(this.scale[4]), 'center', 'center', true, false, color);
         }
 
         // The "South" axis labels
         if (axes.indexOf('s') > -1) {
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.2), RGraph.number_format(this, Number(this.scale[0]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.4), RGraph.number_format(this, Number(this.scale[1]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.6), RGraph.number_format(this, Number(this.scale[2]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.8), RGraph.number_format(this, Number(this.scale[3]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + r, RGraph.number_format(this, Number(this.scale[4]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.2), String(this.scale[0]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.4), String(this.scale[1]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.6), String(this.scale[2]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + ((r) * 0.8), String(this.scale[3]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx, this.centery + r, String(this.scale[4]), 'center', 'center', true, false, color);
         }
         
         // The "East" axis labels
         if (axes.indexOf('e') > -1) {
-            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.2), this.centery, RGraph.number_format(this, Number(this.scale[0]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.4), this.centery, RGraph.number_format(this, Number(this.scale[1]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.6), this.centery, RGraph.number_format(this, Number(this.scale[2]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.8), this.centery, RGraph.number_format(this, Number(this.scale[3]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx + r, this.centery, RGraph.number_format(this, Number(this.scale[4]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.2), this.centery, String(this.scale[0]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.4), this.centery, String(this.scale[1]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.6), this.centery, String(this.scale[2]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx + ((r) * 0.8), this.centery, String(this.scale[3]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx + r, this.centery, String(this.scale[4]), 'center', 'center', true, false, color);
         }
 
         // The "West" axis labels
         if (axes.indexOf('w') > -1) {
-            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.2), this.centery, RGraph.number_format(this, Number(this.scale[0]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.4), this.centery, RGraph.number_format(this, Number(this.scale[1]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.6), this.centery, RGraph.number_format(this, Number(this.scale[2]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.8), this.centery, RGraph.number_format(this, Number(this.scale[3]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
-            RGraph.Text(context, font_face, font_size, this.centerx - r, this.centery, RGraph.number_format(this, Number(this.scale[4]).toFixed(decimals), units_pre, units_post), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.2), this.centery, String(this.scale[0]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.4), this.centery, String(this.scale[1]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.6), this.centery, String(this.scale[2]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx - ((r) * 0.8), this.centery, String(this.scale[3]), 'center', 'center', true, false, color);
+            RGraph.Text(context, font_face, font_size, this.centerx - r, this.centery, String(this.scale[4]), 'center', 'center', true, false, color);
         }
         
         // Draw the center minimum value (but only if there's at least one axes labels stipulated)
         if (this.Get('chart.labels.axes').length > 0) {
-            RGraph.Text(context,
-                        font_face,
-                        font_size,
-                        this.centerx,
-                        this.centery,
-                        RGraph.number_format(this, Number(this.Get('chart.ymin')).toFixed(this.Get('chart.scale.decimals')), units_pre, units_post),
-                        'center',
-                        'center',
-                        true,
-                        false,
-                        color);
+            RGraph.Text(context, font_face, font_size, this.centerx,  this.centery, this.Get('chart.ymin') > 0 ? String(this.Get('chart.ymin').toFixed(this.Get('chart.scale.decimals'))) : '0', 'center', 'center', true, false, color);
         }
 
         /**
@@ -697,7 +644,9 @@
                         mouseX < (x + offset) &&
                         mouseX > (x - offset) &&
                         mouseY < (y + offset) &&
-                        mouseY > (y - offset)
+                        mouseY > (y - offset) &&
+                        typeof(tooltip) == 'string' &&
+                        tooltip.length > 0
                        ) {
                         
                         return [obj, x, y, i];

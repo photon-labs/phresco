@@ -497,6 +497,7 @@
         
         <action name="testReport" method="testReport" class="com.photon.phresco.framework.actions.applications.Quality">
         	<result name="testReport">/pages/applications/quality/testSuite.jsp</result>
+            <result name="allTestReport">/pages/applications/quality/allTestSuiteResult.jsp</result>
         </action>
         
         <action name="generateJmeter" method="generateJmeter" class="com.photon.phresco.framework.actions.applications.Quality">

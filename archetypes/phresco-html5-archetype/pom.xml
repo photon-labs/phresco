@@ -12,12 +12,12 @@
     <artifactId>phresco-html5-archetype</artifactId>
     <name>Archetype - phresco-html5-archetype</name>
     <url>http://www.phresco.org</url>
-  
+    <description>phresco-html5-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.html5</id>
             <name>Phresco Archetypes - HTML5</name>
-            <url>scp://phresco.org/home/projects/archetypes/html5/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-html5-archetype/</url>
         </site>
     </distributionManagement>
    
