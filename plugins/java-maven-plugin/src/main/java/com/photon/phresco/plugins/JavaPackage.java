@@ -40,8 +40,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -223,23 +221,20 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		BufferedReader in = null;
 		try {
 			getLog().info("Packaging the project...");
-			StringBuilder sb = new StringBuilder();
-			sb.append(MVN_CMD);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_CLEAN);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_PACKAGE);
-			sb.append(" -DskipTests=true -e");
-
-			Commandline cl = new Commandline(sb.toString());
-			Process process = cl.execute();
+			String mavenHome = System.getProperty(MVN_HOME);
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(MVN_PHASE_CLEAN);
+			commands.add(MVN_PHASE_PACKAGE);
+			commands.add(SKIP_TESTS);
+			pb.directory(baseDir);
+			Process process = pb.start();
 			in = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
@@ -264,7 +259,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		getLog().info("Configuring the project....");
 		adaptDbConfig();
 		adaptSourceConfig();
-		//getEnvironmentName(environmentName);
 	}
 
 	private void adaptSourceConfig() {
@@ -292,35 +286,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			PluginUtils pu = new PluginUtils();
 			pu.executeUtil(environmentName, basedir, sourceConfigXML);
 		}
-	}
-
-	private void getEnvironmentName(String environmentType) {
-		try {
-			String envType = null;
-			String[] temp = null;
-			String delimiter = ",";
-			temp = environmentType.split(delimiter);
-			for (int i = 0; i < temp.length; i++) {
-				envType = temp[i];
-				File newFile = new File(baseDir +"/src/main/resources/spring-hibernate" + "_" + envType + ".xml");
-				renameByEnvName(newFile);
-			}
-		} catch (JDOMException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}		
-
-	private void renameByEnvName(File newFile) throws JDOMException, IOException {
-		SAXBuilder builder = new SAXBuilder();
-		File oldFile = new File(baseDir +"/src/main/resources/spring-hibernate.xml");
-		Document doc = (Document) builder.build(oldFile);
-		File newXmlFile = new File(newFile.getPath());
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		xmlOutput.output(doc, new FileWriter(newXmlFile));
-	
 	}
 
 	private void createPackage() throws MojoExecutionException, IOException {
