@@ -30,8 +30,8 @@
 			<directory>docs</directory> 
 			<includes> 
 				<include>PHTN_Reference_Guide.doc</include> 
-				<include>PHTN_Release_Notes.doc</include>
-				<include>README.txt</include> 	
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

@@ -78,7 +78,7 @@
 		<input id="add" type="button" value="<s:text name="label.addappln"/>" class="btn primary"/>
 		<!-- <a href="#" class="btn primary" id="discover">Discover</a> -->
 		<a href="#" class="btn primary" id="import"><s:text name="label.import.from.svn"/></a>
-		<input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled"/>
+		<input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 	</div>
 	
 	<div class="table_div">
@@ -195,11 +195,12 @@
 		});
 		
 		$('#add').click(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-			showLoadingIcon($("#container")); // Loading Icon
 	        performAction('applicationDetails', params, $('#container'));
 	    });
 		
@@ -223,8 +224,9 @@
 	    });
 		
 		$("a[name='edit']").click(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 	        var projectCode = $(this).attr("id");
-// 	        bacgroundValidate("validateProject", projectCode); // background validate on edit
 	        var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
@@ -233,7 +235,6 @@
 			params = params.concat(projectCode);
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
-			showLoadingIcon($("#container")); // Loading Icon
 	        performAction('applicationDetails', params, $('#container'));
 	    });
 	});

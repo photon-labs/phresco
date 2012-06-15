@@ -1,0 +1,27 @@
+<environments>
+    
+
+<environment default="true" desc="Production Environment is used for Development purpose only" name="Production">
+        <Server appliesTo="tech-html5-widget" desc="" name="server">
+            <protocol>http</protocol>
+            <host>localhost</host>
+            <port>8080</port>
+            <admin_username/>
+            <admin_password/>
+            <remoteDeployment/>
+            <type>Apache Tomcat</type>
+            <version>7.0.x</version>
+            <deploy_dir>D:\Softwares\apache-tomcat-7.0.26\webapps</deploy_dir>
+            <context>yui</context>
+            <additional_context>/</additional_context>
+        </Server>
+    <WebService appliesTo="tech-html5-widget" desc="" name="webservice">
+            <protocol>http</protocol>
+            <host>172.16.17.180</host>
+            <port>2020</port>
+            <username/>
+            <password/>
+            <context>yui</context>
+        </WebService>
+    </environment>
+</environments>

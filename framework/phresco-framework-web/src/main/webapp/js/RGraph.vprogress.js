@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -83,14 +64,9 @@
             'chart.title.hpos':         null,
             'chart.title.vpos':         null,
             'chart.title.bold':         true,
-            'chart.title.font':         null,
-            
-            'chart.title.side':         null,
-            'chart.title.side.font':    'Arial',
-            'chart.title.side.size':    12,
-            'chart.title.side.color':   'black',
-            'chart.title.side.bold':    true,
-            
+            'chart.title.font':             null,
+            'chart.width':              0,
+            'chart.height':             0,
             'chart.text.size':          10,
             'chart.text.color':         'black',
             'chart.text.font':          'Arial',
@@ -127,8 +103,6 @@
             'chart.adjustable':         false,
             'chart.min':                0,
             'chart.scale.decimals':     0,
-            'chart.scale.thousand':     ',',
-            'chart.scale.point':        '.',
             'chart.key':                [],
             'chart.key.background':     'white',
             'chart.key.position':       'graph',
@@ -144,9 +118,7 @@
             'chart.key.color.shape':    'square',
             'chart.key.rounded':        true,
             'chart.key.linewidth':      1,
-            'chart.key.colors':         null,
-            'chart.events.click':       null,
-            'chart.events.mousemove':   null
+            'chart.key.colors':         null
         }
 
         // Check for support
@@ -216,8 +188,8 @@
         this.gutterBottom = this.Get('chart.gutter.bottom');
 
         // Figure out the width and height
-        this.width  = this.canvas.width - this.gutterLeft - this.gutterRight;
-        this.height = this.canvas.height - this.gutterTop - this.gutterBottom;
+        this.width  = RGraph.GetWidth(this) - this.gutterLeft - this.gutterRight;
+        this.height = RGraph.GetHeight(this) - this.gutterTop - this.gutterBottom;
         this.coords = [];
 
         this.Drawbar();
@@ -233,15 +205,7 @@
         if (this.Get('chart.contextmenu')) {
             RGraph.ShowContext(this);
         }
-
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
-
+        
         /**
         * Alternatively, show the tooltip if requested
         */
@@ -249,8 +213,6 @@
 
             // Need to register this object for redrawing
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             /**
             * Install the window onclick handler
@@ -528,17 +490,7 @@
         if (this.Get('chart.label.inner')) {
             this.context.beginPath();
             this.context.fillStyle = 'black';
-            RGraph.Text(this.context,
-                        this.Get('chart.text.font'),
-                        this.Get('chart.text.size'),
-                        ((this.canvas.width - this.gutterLeft - this.gutterRight) / 2) + this.gutterLeft,
-                        this.canvas.height - this.gutterBottom - barHeight - 5,
-                        RGraph.number_format(this, (this.value).toFixed(this.Get('chart.scale.decimals'))),
-                        'bottom',
-                        'center',
-                        true,
-                        null,
-                        'white');
+            RGraph.Text(this.context, this.Get('chart.text.font'), this.Get('chart.text.size') + 2, RGraph.GetWidth(this) / 2, RGraph.GetHeight(this) - this.gutterBottom - barHeight - 5, String(this.Get('chart.units.pre') + this.value + this.Get('chart.units.post')), 'bottom', 'center');
             this.context.fill();
         }
 
@@ -586,22 +538,21 @@
         var units_post = this.Get('chart.units.post');
         var text_size  = this.Get('chart.text.size');
         var text_font  = this.Get('chart.text.font');
-        var decimals   = this.Get('chart.scale.decimals');
         
         if (this.Get('chart.tickmarks')) {
             
             for (var i=0; i<count ; ++i) {
 
                 var text = String(
-                                  ((( (this.max - this.Get('chart.min')) / count) * (count - i)) + this.Get('chart.min')).toFixed(decimals)
+                                  ((( (this.max - this.Get('chart.min')) / count) * (count - i)) + this.Get('chart.min')).toFixed(this.Get('chart.scale.decimals'))
                                  );
 
                 RGraph.Text(context,
                             text_font,
                             text_size,
-                            position == 'left' ? (this.gutterLeft - 5) : (this.canvas.width - this.gutterRight + 5),
-                            (((this.canvas.height - this.gutterTop - this.gutterBottom) / count) * i) + this.gutterTop,
-                            RGraph.number_format(this, text, units_pre, units_post),
+                            position == 'left' ? (this.gutterLeft - 5) : (RGraph.GetWidth(this) - this.gutterRight + 5),
+                            (((RGraph.GetHeight(this) - this.gutterTop - this.gutterBottom) / count) * i) + this.gutterTop,
+                            units_pre + text + units_post,
                             yAlignment,
                             xAlignment);
             }
@@ -613,9 +564,8 @@
                 RGraph.Text(context,
                             text_font,
                             text_size,
-                            position == 'left' ? (this.gutterLeft - 5) : (this.canvas.width - this.gutterRight + 5),
-                            this.canvas.height - this.gutterBottom,
-                            RGraph.number_format(this, this.Get('chart.min').toFixed(decimals), units_pre, units_post),
+                            position == 'left' ? (this.gutterLeft - 5) : (RGraph.GetWidth(this) - this.gutterRight + 5),
+                            RGraph.GetHeight(this) - this.gutterBottom, units_pre + String(this.Get('chart.min').toFixed(this.Get('chart.scale.decimals'))) + units_post,
                             yAlignment,
                             xAlignment);
             }
@@ -628,8 +578,7 @@
                             text_font,
                             text_size,
                             position == 'left' ? (this.gutterLeft - 5) : (RGraph.GetWidth(this) - this.gutterRight + 5),
-                            this.canvas.height - this.gutterBottom,
-                            RGraph.number_format(this, this.Get('chart.min').toFixed(decimals), units_pre, units_post),
+                            RGraph.GetHeight(this) - this.gutterBottom, units_pre + String(this.Get('chart.min').toFixed(this.Get('chart.scale.decimals'))) + units_post,
                             yAlignment,
                             xAlignment);
             }
@@ -638,36 +587,13 @@
         // Draw the title text
         if (this.Get('chart.title')) {
             RGraph.Text(context,
-                        this.Get('chart.title.font') ? this.Get('chart.title.font') : text_font,
+                        text_font,
                         text_size + 2,
                         this.gutterLeft + ((this.canvas.width - this.gutterLeft - this.gutterRight) / 2), // X
                         this.gutterTop - text_size, // Y
                         this.Get('chart.title'),
                         null,
-                        'center',
-                        null,
-                        null,
-                        null,
-                        this.Get('chart.title.bold'));
-        }
-        
-        // Draw side title
-        if (typeof(this.Get('chart.title.side')) == 'string') {
-
-            this.context.fillStyle = this.Get('chart.title.side.color');
-
-            RGraph.Text(context,
-                        this.Get('chart.title.side.font'),
-                        this.Get('chart.title.side.size'),
-                        this.Get('chart.labels.position') == 'right' ? this.gutterLeft - 10 : (this.canvas.width - this.gutterRight) + 10,
-                        this.Get('chart.gutter.top') + (this.height / 2), // Y
-                        this.Get('chart.title.side'),
-                        'bottom',
-                        'center',
-                        null,
-                        this.Get('chart.labels.position') == 'right' ? 270 : 90,
-                        null,
-                        this.Get('chart.title.side.bold'));
+                        'center',null, null, null, true);
         }
     }
 
@@ -697,41 +623,4 @@
                 return [obj, left, top, width, height, idx];
             }
         }
-    }
-
-
-    /**
-    * This function returns the value that the mouse is positioned at, regardless of
-    * the actual indicated value.
-    * 
-    * @param object e The event object
-    */
-    RGraph.VProgress.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-
-        var canvas  = this.canvas;
-        var context = this.context;
-        
-        if (
-               mouseX > (this.canvas.width - this.gutterRight - this.Get('chart.margin'))
-            || mouseX < (this.gutterLeft + this.Get('chart.margin'))
-            || mouseY > (this.canvas.height - this.gutterBottom)
-            || mouseY < (this.gutterTop)
-           ) {
-            return null;
-        }
-
-        var value = (this.height - (mouseY - this.gutterTop)) / this.height;
-            value *= this.max - this.Get('chart.min');
-            value += this.Get('chart.min');
-
-        return value;
     }

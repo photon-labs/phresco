@@ -2,7 +2,7 @@
     <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0.1000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent> 
   
@@ -12,12 +12,12 @@
     <packaging>maven-plugin</packaging>
     <name>Xcodebuild Command-Line Wrapper</name>
     <url>http://www.phresco.org</url>
-  
+	<description>xcode-maven-plugin</description>
      <distributionManagement>
         <site>
             <id>phresco.plugins.xcode</id>
             <name>Phresco Plugins - XCode</name>
-            <url>scp://phresco.org/home/projects/plugins/xcode/public_html/</url>
+            <url>${siteBaseUrl}/plugins/xcode-maven-plugin/</url>
         </site>
     </distributionManagement>
 

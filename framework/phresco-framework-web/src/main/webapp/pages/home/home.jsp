@@ -40,13 +40,14 @@
 
 <script type="text/javascript">
 <!--
-if($.cookie("welcome")) {
-    $(".errorOverlay").show().css("display","none");
-    $(".intro_container").show().css("display","none");
- } else {
-     $(".errorOverlay").show().css("display","<%= showWelcome %>");
-     $(".intro_container").show().css("display","<%= showWelcome %>");
- }
+	if(localStorage["welcome"]) {
+		$(".errorOverlay").show().css("display","none");
+		$(".intro_container").show().css("display","none");
+	 }
+	else {
+		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
+		 $(".intro_container").show().css("display","<%= showWelcome %>");
+	}
 //-->
 </script>
     <div class="intro_container_left">
@@ -55,8 +56,8 @@ if($.cookie("welcome")) {
             The Next Generation Internet Accelerating Innovation.We have traversed across ecommerce 
             and dynamic website design in the early days to Web2.0, Social Media and Mobile applications 
             in recent times. Now we are stepping into Advance generation of Frame work architecture called 
-            PHRESCO embedded with all platforms and there corresponding technologies. PHRESCO will guide
-            each and every individual to follow its own quality measure and standards as specified.
+            PHRESCO embedded with all platforms and their corresponding technologies. PHRESCO will guide
+            each and every individual to follow their own quality measure and standards as specified.
         </p>
         <p class="p_align">
             The main idea of PHRESCO is to form a basic structure for projects which are newly created.
@@ -138,7 +139,7 @@ $(document).ready(function() {
 
     $("#dontShowCheck").click(function() { 
          if ($(this).is(":checked"))
-            $.cookie("welcome", "no", {expires: 7});
+            localStorage["welcome"] = false ;
     });
  
     $(".homegostart").click(function () {

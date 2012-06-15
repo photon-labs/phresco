@@ -49,6 +49,8 @@ import com.phresco.pom.model.Model.Properties;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Profile;
+import com.phresco.pom.model.ReportPlugin;
+import com.phresco.pom.model.Reporting;
 
 
 /**
@@ -103,19 +105,26 @@ public class PomProcessor {
 	 * @throws PhrescoPomException 
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope) throws JAXBException, PhrescoPomException {
-		if(isDependencyAvailable(groupId, artifactId)){
-			changeDependencyVersion(groupId, artifactId, version);
-			return;
-		}
-		Dependency dependency = new Dependency();
-		dependency.setArtifactId(artifactId);
-		dependency.setGroupId(groupId);
-		dependency.setVersion(version);
-		if(StringUtils.isNotBlank(scope)){
-			dependency.setScope(scope);
-		}
-		addDependency(dependency);
+		addDependency(groupId, artifactId, version, scope, null);
 	} 
+	
+	public void addDependency(String groupId, String artifactId, String version, String scope, String type) throws JAXBException, PhrescoPomException {
+        if(isDependencyAvailable(groupId, artifactId)){
+            changeDependencyVersion(groupId, artifactId, version);
+            return;
+        }
+        Dependency dependency = new Dependency();
+        dependency.setArtifactId(artifactId);
+        dependency.setGroupId(groupId);
+        dependency.setVersion(version);
+        if(StringUtils.isNotBlank(scope)){
+            dependency.setScope(scope);
+        }
+        if(StringUtils.isNotBlank(type)){
+            dependency.setType(type);
+        }
+        addDependency(dependency);
+    } 
 	
 	/**
 	 * @param groupId
@@ -607,11 +616,44 @@ public class PomProcessor {
 		}
 		return null;
 	}
+	
+	
 	/**
-	 * @throws PhrescoPomException 
+	 * @param reportPlugin
+	 */
+	
+	public void siteConfig(ReportPlugin reportPlugin){
+		com.phresco.pom.model.Reporting.Plugins plugins = new com.phresco.pom.model.Reporting.Plugins();
+		if(model.getReporting()==null){
+			model.setReporting(new Reporting());
+			model.getReporting().setPlugins(plugins);
+		}
+		model.getReporting().getPlugins().getPlugin().add(reportPlugin);
+	}
+	
+	/**
+	 * @param groupId
+	 * @param artifactId
+	 */
+	public void removeSitePlugin(String groupId,String artifactId) {
+		com.phresco.pom.model.Reporting.Plugins plugins = model.getReporting().getPlugins();
+		if(plugins.getPlugin()==null){
+			return;
+		}
+		for (ReportPlugin plugin : plugins.getPlugin()) {
+			if(groupId.equals(plugin.getGroupId()) && artifactId.equals(plugin.getArtifactId())){
+				plugins.getPlugin().remove(plugin);
+				if(model.getReporting().getPlugins().getPlugin().isEmpty()){
+					model.setReporting(null);
+				}
+				return;
+			}	
+		}
+	}
+
+	/**
 	 * @throws JAXBException
 	 */
-
 	public void save() throws JAXBException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(Model.class);
 		Marshaller marshal = jaxbContext.createMarshaller();

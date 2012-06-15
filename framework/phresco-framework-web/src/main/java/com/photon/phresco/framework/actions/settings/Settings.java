@@ -1,3 +1,4 @@
+
 /*
  * ###
  * Framework Web Archive
@@ -17,6 +18,7 @@
  * limitations under the License.
  * ###
  */
+
 package com.photon.phresco.framework.actions.settings;
 
 import java.io.File;
@@ -27,6 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,9 +82,10 @@ public class Settings extends FrameworkBaseAction {
 	private String appliesToError = null;
 	private boolean isValidated = false;
 	private List<String> projectInfoVersions = null;
-	private String remoteDeploy = null;
+	private String remoteDeployment = null;
 
     private String envName = null;
+    private String emailError = null;
 	
 	Document dom;
     public Element rootEle;
@@ -164,6 +169,9 @@ public class Settings extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment") && value == null){
+                      		value="false";
+                      }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -199,8 +207,20 @@ public class Settings extends FrameworkBaseAction {
             
 	        List<SettingsTemplate> settingsTemplates = administrator.getSettingsTemplates();
 			administrator.createSetting(settingsInfo, environments.toString());
-			addActionMessage(getText(SUCCESS_SETTING, Collections.singletonList(settingsName)));
+
 			
+			if (SERVER.equals(settingsType)){
+				addActionMessage(getText(SUCCESS_SERVER, Collections.singletonList(settingsName)));
+			}
+			else if (DATABASE.equals(settingsType)) {
+				addActionMessage(getText(SUCCESS_DATABASE, Collections.singletonList(settingsName)));
+			}
+			else if (WEBSERVICE.equals(settingsType)) {
+				addActionMessage(getText(SUCCESS_WEBSERVICE, Collections.singletonList(settingsName)));
+			}
+			else {
+				addActionMessage(getText(SUCCESS_EMAIL, Collections.singletonList(settingsName)));
+			}
 			getHttpRequest().setAttribute(SESSION_SETTINGS_TEMPLATES, settingsTemplates);
 			getHttpRequest().setAttribute(REQ_CONFIG_INFO, settingsInfo);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, SETTINGS);
@@ -294,7 +314,7 @@ public class Settings extends FrameworkBaseAction {
             }
 			
             // check Remotedeployment username and password mandatory
-			boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeploy);
+			boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeployment);
 			if(remoteDeplyVal) {
 				if ("admin_username".equals(key) || "admin_password".equals(key)) {
 					isRequired = true;
@@ -325,6 +345,17 @@ public class Settings extends FrameworkBaseAction {
 		   	}
 	   	}
 		
+		if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
+	   		String value = getHttpRequest().getParameter("emailid");
+	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
+	   		Matcher m=p.matcher(value);
+	   		boolean b=m.matches();
+	   		if(b==false)
+	   		{
+	   			setEmailError(ERROR_EMAIL);
+	   			validate = false;
+	   		}
+		}
 	   	return validate;
 	}
 	
@@ -391,6 +422,9 @@ public class Settings extends FrameworkBaseAction {
 	            	} else {
 	            		key = propertyTemplate.getKey();
 	            		value = getHttpRequest().getParameter(key);
+	            		if(key.equals("remoteDeployment") && value == null){
+	                     		value="false";
+	                     }
 	                    value = value.trim();
 	                    propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
 	            	}
@@ -412,8 +446,19 @@ public class Settings extends FrameworkBaseAction {
 			S_LOGGER.debug("Settings Info object value which going to be updated" + newSettingsInfo);
             String environment = getHttpRequest().getParameter(ENVIRONMENTS);
             administrator.updateSetting(environment, oldName, newSettingsInfo);
-			addActionMessage(getText(SETTINGS_UPDATE_SUCCESS,		
-					Collections.singletonList(settingsName)));
+            if (SERVER.equals(settingsType)){
+				addActionMessage(getText(SERVER_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else if (DATABASE.equals(settingsType)) {
+				addActionMessage(getText(DATABASE_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else if (WEBSERVICE.equals(settingsType)) {
+				addActionMessage(getText(WEBSERVICE_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}
+			else {
+				addActionMessage(getText(EMAIL_UPDATE_SUCCESS, Collections.singletonList(settingsName)));
+			}	
+					
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Settings.update()"+ FrameworkUtil.getStackTraceAsString(e));
         	new LogErrorReport(e, "Settings update");
@@ -546,7 +591,10 @@ public class Settings extends FrameworkBaseAction {
     	    String[] split = null;
     	    String envs = getHttpRequest().getParameter("envs");
     	    String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteSettingsEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+    	    	deleteSettingsEnvironment(selectedItems);
+    	    }
+
             List<Environment> environments = new ArrayList<Environment>();
             if(StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(Arrays.asList(envs.split("#SEP#")));
@@ -561,12 +609,18 @@ public class Settings extends FrameworkBaseAction {
             }
 	    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 	    	administrator.createEnvironments(environments);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    		if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+	    		addActionMessage(getText(UPDATE_ENVIRONMENT));
+	    	} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+	    		addActionMessage(getText(DELETE_ENVIRONMENT));
+	    	} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+	    		addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+		    }
     	} catch(PhrescoException e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -828,11 +882,19 @@ public class Settings extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
+	}
+
+	public String getEmailError() {
+		return emailError;
+	}
+
+	public void setEmailError(String emailError) {
+		this.emailError = emailError;
 	}
 }

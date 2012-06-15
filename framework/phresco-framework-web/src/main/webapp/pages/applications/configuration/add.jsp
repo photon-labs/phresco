@@ -17,6 +17,7 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ page import="java.util.List"%>
@@ -138,7 +139,7 @@ h1 {margin-bottom: 0;}
 			<div class="input new-input">
 				<div class="typeFields">
 					<input class="xlarge settings_text" id="xlInput" name="configName" type="text" maxlength="30" title="30 Characters only" value ="<%=name%>" 
-					autofocus onfocus="showToolTip('nameHelpTxt_Conf');" placeholder="Name of the configuration"/>
+					autofocus onfocus="showToolTip('nameHelpTxt_Conf');" placeholder="<s:text name="label.name.config.placeholder"/>"/>
 				</div>
 				<div>
 					<div class="lblDesc configSettingHelp-block" id="nameErrMsg">
@@ -153,7 +154,7 @@ h1 {margin-bottom: 0;}
 		<div class="clearfix">
 			<s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 			<div class="input new-input">
-				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="Description of the Configuration"><%= description %></textarea>
+				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="<s:text name="label.description.config.placeholder"/>"><%= description %></textarea>
 			</div>
 		</div>
 		<!--  Description ends -->
@@ -288,9 +289,9 @@ h1 {margin-bottom: 0;}
 		
 		$('#save').click(function() {
 			var params = "";
-		    params = params.concat("&remoteDeploy=");
-			params = params.concat($("#remoteDeploy").prop("checked")); 
-		    
+		     params = params.concat("&remoteDeployment=");
+			 params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
+		     
 			if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
@@ -303,7 +304,8 @@ h1 {margin-bottom: 0;}
 			%>
 					performAction("updateConfiguration", params, $('#tabDiv'));
 			<% } %>
-		});
+			
+	    });
 		window.setTimeout(function () { document.getElementById('xlInput').focus(); }, 250);
 	});
 	
@@ -365,6 +367,11 @@ h1 {margin-bottom: 0;}
 		if(data.portError != null) {
 			$("div[id='port']").addClass("error");
         	$("div[id='portErrorDiv']").html(data.portError);
+        }
+		
+		if(data.emailError != null) {
+			$("div[id='emailid']").addClass("error");
+        	$("div[id='emailidErrorDiv']").html(data.emailError);
         }
     }
 	

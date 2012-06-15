@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -138,9 +119,7 @@
             'chart.variant':                'pie',
             'chart.variant.donut.color':    'white',
             'chart.exploded':               [],
-            'chart.effect.roundrobin.multiplier': 1,
-            'chart.events.click':             null,
-            'chart.events.mousemove':         null
+            'chart.effect.roundrobin.multiplier': 1
         }
 
         /**
@@ -244,16 +223,6 @@
         }
 
         /**
-        * Draw the title
-        */
-
-        RGraph.DrawTitle(this.canvas,
-                         this.Get('chart.title'),
-                         (this.canvas.height / 2) - this.radius - 5,
-                         this.centerx,
-                         this.Get('chart.title.size') ? this.Get('chart.title.size') : this.Get('chart.text.size') + 2);
-
-        /**
         * Draw the shadow if required
         */
         if (this.Get('chart.shadow') && 0) {
@@ -353,6 +322,25 @@
         * Draw the labels
         */
         this.DrawLabels();
+
+        /**
+        * Draw the title
+        */
+        if (this.Get('chart.align') == 'left') {
+            var centerx = this.radius + this.Get('chart.gutter.left');
+
+        } else if (this.Get('chart.align') == 'right') {
+            var centerx = RGraph.GetWidth(this) - (this.radius + this.gutterRight);
+
+        } else {
+            var centerx = null;
+        }
+
+        RGraph.DrawTitle(this.canvas,
+                         this.Get('chart.title'),
+                         (this.canvas.height / 2) - this.radius - 5,
+                         centerx,
+                         this.Get('chart.title.size') ? this.Get('chart.title.size') : this.Get('chart.text.size') + 2);
         
         
         /**
@@ -363,12 +351,6 @@
         }
 
         /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
-        /**
         * Tooltips
         */
         if (this.Get('chart.tooltips').length) {
@@ -377,8 +359,6 @@
             * Register this object for redrawing
             */
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
         
             /**
             * The onclick event
@@ -414,7 +394,6 @@
                 var hStyle  = obj.Get('chart.highlight.style');
                 var segment = obj.getSegment(e);
 
-
                 if (segment) {
 
                     var x     = mouseCoords[0] - segment[0];
@@ -433,89 +412,83 @@
                         RGraph.Redraw();
                     }
 
+
+                    if (hStyle == '2d') {
+                        
+                        obj.highlight_segment(segment);
+
+                    } else if (hStyle == 'explode') {
+
+                        
+                       obj.Explode(segment[5], 25);
+
+                        setTimeout(function () {obj.Set('chart.exploded', []);}, document.all ? 1000 : 500);
+                        
+                        e.stopPropagation();
+                        e.cancelBubble = true;
+                        //return false;
+
+                    } else {
+
+                        context.lineWidth = 2;
+
+                        /**
+                        * Draw a white segment where the one that has been clicked on was
+                        */
+                        context.fillStyle = 'white';
+                        context.strokeStyle = 'white';
+                        context.beginPath();
+                            //context.moveTo(segment[0], segment[1]);
+                            context.arc(segment[0], segment[1], segment[2], obj.angles[segment[5]][0], obj.angles[segment[5]][1], false);
+                            obj.Get('chart.variant') == 'donut' ? context.arc(segment[0], segment[1], segment[2] / 2, obj.angles[segment[5]][1], obj.angles[segment[5]][0], true) : context.lineTo(segment[0], segment[1]);
+                        context.stroke();
+                        context.fill();
+
+                        context.lineWidth = 1;
+
+                        context.shadowColor   = '#666';
+                        context.shadowBlur    = 3;
+                        context.shadowOffsetX = 3;
+                        context.shadowOffsetY = 3;
+
+                        // Draw the new segment
+                        context.beginPath();
+                            context.fillStyle   = obj.Get('chart.colors')[segment[5]];
+                            context.strokeStyle = obj.Get('chart.strokestyle');
+                            context.arc(segment[0] - 3, segment[1] - 3, segment[2], obj.angles[segment[5]][0], obj.angles[segment[5]][1], false);
+                            obj.Get('chart.variant') == 'donut' ? context.arc(segment[0] - 3, segment[1] - 3, segment[2] / 2, obj.angles[segment[5]][1], obj.angles[segment[5]][0], true) : context.lineTo(segment[0], segment[1]);
+                        context.closePath();
+                        
+                        context.stroke();
+                        context.fill();
+                        
+                        // Turn off the shadow
+                        RGraph.NoShadow(obj);
+                        
+                        /**
+                        * If a border is defined, redraw that
+                        */
+                        if (obj.Get('chart.border')) {
+                            context.beginPath();
+                            context.strokeStyle = obj.Get('chart.border.color');
+                            context.lineWidth = 5;
+                            context.arc(segment[0] - 3, segment[1] - 3, obj.radius - 2, obj.angles[i][0], obj.angles[i][1], 0);
+                            context.stroke();
+                        }
+                    }
+                        
                     /**
                     * If a tooltip is defined, show it
                     */
-    
+
                     /**
                     * Get the tooltip text
                     */
                     var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), segment[5]);
-    
+
                     if (text) {
                         RGraph.Tooltip(canvas, text, e.pageX, e.pageY, segment[5]);
                     }
-
-
-                    /**
-                    * Do the highlighting
-                    */
-                    if (text) {
-                        if (hStyle == '2d') {
-                            
-                            obj.highlight_segment(segment);
-    
-                        } else if (hStyle == 'explode') {
-    
-                            
-                           obj.Explode(segment[5], 25);
-    
-                            setTimeout(function () {obj.Set('chart.exploded', []);}, document.all ? 1000 : 500);
-                            
-                            e.stopPropagation();
-                            e.cancelBubble = true;
-                            //return false;
-    
-                        } else {
-    
-                            context.lineWidth = 2;
-    
-                            /**
-                            * Draw a white segment where the one that has been clicked on was
-                            */
-                            context.fillStyle = 'white';
-                            context.strokeStyle = 'white';
-                            context.beginPath();
-                                //context.moveTo(segment[0], segment[1]);
-                                context.arc(segment[0], segment[1], segment[2], obj.angles[segment[5]][0], obj.angles[segment[5]][1], false);
-                                obj.Get('chart.variant') == 'donut' ? context.arc(segment[0], segment[1], segment[2] / 2, obj.angles[segment[5]][1], obj.angles[segment[5]][0], true) : context.lineTo(segment[0], segment[1]);
-                            context.stroke();
-                            context.fill();
-    
-                            context.lineWidth = 1;
-    
-                            context.shadowColor   = '#666';
-                            context.shadowBlur    = 3;
-                            context.shadowOffsetX = 3;
-                            context.shadowOffsetY = 3;
-    
-                            // Draw the new segment
-                            context.beginPath();
-                                context.fillStyle   = obj.Get('chart.colors')[segment[5]];
-                                context.strokeStyle = obj.Get('chart.strokestyle');
-                                context.arc(segment[0] - 3, segment[1] - 3, segment[2], obj.angles[segment[5]][0], obj.angles[segment[5]][1], false);
-                                obj.Get('chart.variant') == 'donut' ? context.arc(segment[0] - 3, segment[1] - 3, segment[2] / 2, obj.angles[segment[5]][1], obj.angles[segment[5]][0], true) : context.lineTo(segment[0], segment[1]);
-                            context.closePath();
-                            
-                            context.stroke();
-                            context.fill();
-                            
-                            // Turn off the shadow
-                            RGraph.NoShadow(obj);
-                            
-                            /**
-                            * If a border is defined, redraw that
-                            */
-                            if (obj.Get('chart.border')) {
-                                context.beginPath();
-                                context.strokeStyle = obj.Get('chart.border.color');
-                                context.lineWidth = 5;
-                                context.arc(segment[0] - 3, segment[1] - 3, obj.radius - 2, obj.angles[i][0], obj.angles[i][1], 0);
-                                context.stroke();
-                            }
-                        }
-                    }
-
 
                     /**
                     * Need to redraw the key?
@@ -555,12 +528,9 @@
                 var segment = obj.getSegment(e);
 
                 if (segment) {
-                    var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), segment[5]);
-                    
-                    if (text) {
-                        e.target.style.cursor = 'pointer';
-                        return;
-                    }
+                    e.target.style.cursor = 'pointer';
+
+                    return;
                 }
 
                 /**
@@ -650,8 +620,7 @@
         if (this.Get('chart.resizable')) {
             RGraph.AllowResizing(this);
         }
-
-
+        
         /**
         * Fire the RGraph ondraw event
         */
