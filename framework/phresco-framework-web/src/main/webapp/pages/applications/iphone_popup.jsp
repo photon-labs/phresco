@@ -36,6 +36,9 @@
     List<BuildInfo> buildInfos = (List<BuildInfo>) request.getAttribute(FrameworkConstants.REQ_TEST_BUILD_INFOS);
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
+   	// mac sdks
+   	List<String> macSimulatorSdkVersions = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
+   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 <div id="tests">
     <form action="" method="post" autocomplete="off" class="build_form">
@@ -63,10 +66,12 @@
 								<div>
 									<select id="simulatorVersion" name="simulatorVersion" class="medium">
 										<%
-										    for (int i = 0; i < XCodeConstants.SUPPORTED_SIMULATOR_VERSIONS.length; i++) {
+										    if (macSimulatorSdkVersions != null) {
+										    	for (String simulatorVersion : macSimulatorSdkVersions) {
 										%>
-										     <option value="<%=XCodeConstants.SUPPORTED_SIMULATOR_VERSIONS[i]%>"><%=XCodeConstants.SUPPORTED_SIMULATOR_VERSIONS[i]%></option>
+										     <option value="<%= simulatorVersion %>"><%= simulatorVersion %></option>
 										<%
+										    	}
 										    }
 										%>
 									</select>
@@ -110,10 +115,14 @@
 						<div class="input">
 							<select id="sdk" name="sdk" class="xlarge" >
 								<%
-									for (int i = 0; i < XCodeConstants.SUPPORTED_SDKS.length; i++) {
+									if (macSdks != null) {
+										for (String sdk : macSdks) {
 								%>
-									<option value="<%= XCodeConstants.SUPPORTED_SDKS[i] %>"><%= XCodeConstants.SUPPORTED_SDKS[i] %></option>
-								<% } %>
+									<option value="<%= sdk %>"><%= sdk %></option>
+								<% 
+										} 
+									}
+								%>
 							</select>
 						</div>
 					</div>

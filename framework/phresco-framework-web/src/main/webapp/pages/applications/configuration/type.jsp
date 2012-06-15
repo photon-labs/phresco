@@ -145,11 +145,19 @@
 	                		
 	                		</select>		                		
                 		</div>
+                <%
+		        	} else if ("remoteDeployment".equals(key)) {
+		        		 boolean remoteDeply = Boolean.parseBoolean(value);
+		        		 String checkedStr = "";
+		        		 if (remoteDeply) {
+		        			 checkedStr = "checked";
+		        		 }
+		        %>		
+		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
 		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
-		        
 		        <% 	} else { %>
 	        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth" onfocus="showDesc(this);">
 	        				<option disabled="disabled" selected="selected" value="" style="color: #BFBFBF;"><%= desc %></option>
@@ -180,15 +188,6 @@
        		
         </div>
     </div> <!-- /clearfix -->
-    
-		<% if (masterKey.equals("Server")) { %>
-			    <div id="remoteDeployDiv" class="clearfix" >
-			    	<label class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
-				    <div class="input new-input">
-				        <input type="checkbox" id="remoteDeploy" name="remoteDeploy" value="true" style = "margin-top: 8px;">
-				    </div>
-				</div>
-		<% } %>
 <%
     	}
     }
@@ -221,26 +220,34 @@
 					for(Server projectInfoServer : projectInfoServers) {
 						 serverName = projectInfoServer.getName();
 						%>
-							$('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
-							var server = $('#type').val();
-							if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
-								 $("#remoteDeployDiv").show();	
-						     } else {
-						    	 $("#remoteDeployDiv").hide();
-						     }
+						
+						  $('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
+							
 		<%
              }
 		%>
 				getCurrentVersions('');
 				
+				var server = $('#type').val();
+				if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
+					 $('#remoteDeployment').show(); 
+			     } else {
+			    	  hideRemoteDeply(); 
+			     }
+				
 				$("#type").change(function() {
 				 var server = $('#type').val();
 				 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
-					 $("#remoteDeployDiv").show();	
+					 $('#remoteDeployment').show();	 
 			     } else {
-			    	 $("#remoteDeployDiv").hide();
+			    	  hideRemoteDeply(); 
 			     }
-				
+				 remoteDeplyChecked();
+				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
+					 $("input[name='remoteDeployment']").attr("checked",false);
+					 $("#admin_username label").html('Admin Username');
+					 $("#admin_password label").html('Admin Password'); 
+				 }  
 			});   
 		<%
 			}
@@ -274,8 +281,8 @@
 		
 		// hide deploy dir if remote Deployment selected
 		 
-         $('#remoteDeploy').change(function() {
-				var isChecked = $('#remoteDeploy').is(":checked");
+         $("input[name='remoteDeployment']").change(function() {
+				var isChecked = $("input[name='remoteDeployment']").is(":checked");
 				if (isChecked) {
 					hideDeployDir();
 					$("#admin_username label").html('<span class="red">* </span>Admin Username');
@@ -335,8 +342,14 @@
 			}
 			// When editing nodejs server config, hide deploy directory field
 			if ('<%= selectedValue %>' == "NodeJS") {
-				$('#deploy_dir').hide();
+				 $('#deploy_dir').hide(); 
 			}
+			if( '<%= selectedValue %>' == "Apache Tomcat" || '<%= selectedValue %>' == "JBoss" || '<%= selectedValue %>' == "WebLogic"){
+				 $('#remoteDeployment').show(); 
+		     } else {
+		    	  hideRemoteDeply(); 
+		     }
+			remoteDeplyChecked();
 		});
 	}
 	
@@ -348,8 +361,25 @@
 		});
 	}
 	
+	
 	function hideDeployDir() {
 		$("input[name='deploy_dir']").val("");
 		$('#deploy_dir').hide();
-	}	
+	}
+
+	function hideRemoteDeply() {
+		$('#remoteDeployment').hide();
+	}
+
+	function remoteDeplyChecked() {
+		var isRemoteChecked = $("input[name='remoteDeployment']")
+				.is(":checked");
+		if (isRemoteChecked) {
+			hideDeployDir();
+			$("#admin_username label").html('<span class="red">* </span>Admin Username');
+			$("#admin_password label").html('<span class="red">* </span>Admin Password');  
+		} else {
+			$('#deploy_dir').show();
+		}
+	}
 </script>

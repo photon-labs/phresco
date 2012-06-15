@@ -51,11 +51,12 @@ public class Configurations extends FrameworkBaseAction {
     private String dynamicError = "";
     private boolean isValidated = false;
     private String envName = null;
-    private String configType = null;
+	private String configType = null;
     private String oldConfigType = null;
 	private String envError = null;
-	private String remoteDeploy = null;
 	private String emailError = null;
+	private String remoteDeployment = null;
+   
 
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -148,6 +149,9 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment") && value == null){
+                     		value="false";
+                     }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -391,7 +395,7 @@ public class Configurations extends FrameworkBaseAction {
             	isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
-            boolean remoteDeply = Boolean.parseBoolean(remoteDeploy);
+            boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
             if(remoteDeply){
                 if ("admin_username".equals(key) || "admin_password".equals(key)) {
                 	isRequired = true;
@@ -498,6 +502,9 @@ public class Configurations extends FrameworkBaseAction {
 					}
             	} else {
 	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
+   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
+                        		value="false";
+                        }
 	                value = value.trim();
 	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
@@ -794,14 +801,15 @@ public class Configurations extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
 	}
 	
+
 	public String getEmailError() {
 		return emailError;
 	}
@@ -809,4 +817,5 @@ public class Configurations extends FrameworkBaseAction {
 	public void setEmailError(String emailError) {
 		this.emailError = emailError;
 	}
+
 }
