@@ -39,8 +39,9 @@
 <script type="text/javascript" src="../../js/phresco/common.js"></script>
 
 <script type="text/javascript">
+
 <!--
-if($.cookie("welcome")) {
+if(localStorage.welcome) {
     $(".errorOverlay").show().css("display","none");
     $(".intro_container").show().css("display","none");
  } else {
@@ -138,7 +139,7 @@ $(document).ready(function() {
 
     $("#dontShowCheck").click(function() { 
          if ($(this).is(":checked"))
-            $.cookie("welcome", "no", {expires: 7});
+        	 localStorage.welcome = no;
     });
  
     $(".homegostart").click(function () {
@@ -164,6 +165,17 @@ $(document).ready(function() {
     	$(".loadingIcon").show();
     	getCurrentCSS();
     })
+    
+    if(localStorage.menuSelected){
+    	$("a[name='navMenu']").attr("class", "inactive");
+		$(this).attr("class", "active");
+        var selectedNav = localStorage.menuSelected;
+        if (selectedNav == "applications") {
+        	bacgroundValidate("validateFramework", "true");
+        }
+          performAction(selectedNav, '', $("#container"));
+   }
+      
 });
 	
 </script>
