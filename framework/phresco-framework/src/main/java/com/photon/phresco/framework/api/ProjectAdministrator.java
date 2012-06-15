@@ -563,5 +563,8 @@ public interface ProjectAdministrator {
 	 * @return 
 	 * @throws PhrescoException
 	 */
-	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException; 
+	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
+
+	void getReports(ProjectInfo projectInfo)throws PhrescoException;
+	 
 }

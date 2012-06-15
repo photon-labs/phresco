@@ -212,7 +212,10 @@ public class Configurations extends FrameworkBaseAction {
             Project project = administrator.getProject(projectCode);
             String envs = getHttpRequest().getParameter(ENVIRONMENT_VALUES);
             String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+            	deleteEnvironment(selectedItems);
+    	    }
+            
             List<Environment> environments = new ArrayList<Environment>();
             if (StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(
@@ -228,12 +231,19 @@ public class Configurations extends FrameworkBaseAction {
                 }
             }
 	    	administrator.createEnvironments(project, environments, false);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	
+			if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+				addActionMessage(getText(UPDATE_ENVIRONMENT));
+			} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+				addActionMessage(getText(DELETE_ENVIRONMENT));
+			} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+				addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+			}
     	} catch(Exception e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }

@@ -263,11 +263,13 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
 		});
 		
 		$('#addButton').click(function() {
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
+			
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-			showLoadingIcon($("#container")); // Loading Icon
             performAction("addSettings", params, $('#container'));
         });
 		
@@ -281,26 +283,14 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
             return false;
         });
 		
-	    /*$("a[name='edit']").click(function() {
-	        var oldName = $(this).attr("id");
-	        loadContent("editSetting", "", oldName);
-// 			var params = "oldName=";
-// 			params = params.concat(oldName);
-// 			params = params.concat("&fromPage=");
-// 			params = params.concat("edit");
-//          formSubmit2('editSetting', params);
-	    });
-
-	    });*/
-	    
 	    $('#environmentButton').click(function() {
 			openEnvironmentPopup();
 		});
     });
     
     function editSetting(configName, envName) {
-//         var params = configName + "&envName=" + envName
-//         loadContent("editSetting", "", params);
+    	disableScreen();
+		showLoadingIcon($("#loadingIconDiv"));
     	var params = "";
     	if (!isBlank($('form').serialize())) {
     		params = $('form').serialize() + "&";
@@ -309,7 +299,6 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
     	params = params.concat(configName);
     	params = params.concat("&envName=");
     	params = params.concat(envName);
-    	showLoadingIcon($("#tabDiv")); // Loading Icon
     	performAction("editSetting", params, $('#container'));
     }
 </script>

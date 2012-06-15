@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.photon.phresco</groupId>
     <artifactId>phresco-parent</artifactId>
-    <version>1.2.0.2000-SNAPSHOT</version>
+    <version>1.2.0.2001-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://www.phresco.org</url>
     <name>Phresco Parent POM for repository and distribution management</name>
@@ -41,10 +41,10 @@
 
      <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <phresco-commons-version>1.2.0.1001</phresco-commons-version>
+        <phresco-commons-version>1.2.0.2000</phresco-commons-version>
         <maven-plugin-plugin.version>2.9</maven-plugin-plugin.version>
         <maven.api.version>3.0.3</maven.api.version>
-        <phresco-commons-version>1.2.0.1001</phresco-commons-version>
+        <phresco-commons-version>1.2.0.2000</phresco-commons-version>
         <sitePluginVersion>3.1</sitePluginVersion>
         <jersey-version>1.9-ea07</jersey-version>
 		<siteBaseUrl>file://C:/apache-tomcat-7.0.26/webapps/ROOT/phresco-site/</siteBaseUrl>
@@ -60,7 +60,7 @@
             <properties>
                 <phresco.service.url>http://localhost/service-testing</phresco.service.url>
                 <phresco.repo.url>http://localhost:8080/nexus/content/groups/public/</phresco.repo.url>
-                <phresco.server.dependency.config.file>/config/dependency/1.2.0.1000/dependency-1.2.0.1000.properties</phresco.server.dependency.config.file>
+                <phresco.server.dependency.config.file>/config/dependency/1.2.0.2000/dependency-1.2.0.2000.properties</phresco.server.dependency.config.file>
                 <phresco.ldap.url>ldap://localhost:389</phresco.ldap.url>
                 <phresco.ldap.basedn>ou=users,o=photon,dc=photoninfotech,dc=com</phresco.ldap.basedn>
                 <phresco.ldap.login.attribute>uid</phresco.ldap.login.attribute>

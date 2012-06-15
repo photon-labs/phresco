@@ -2275,7 +2275,9 @@ fieldset {
     border-radius: 0 0 6px 6px;
     height: 89%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-left:10px;
+    margin-top: 0px;
 }
 
 .bordered-table {
@@ -4514,4 +4516,26 @@ ul#display-inline-block-example li {
 
 .width-twenty-five-percent {
 	width: 25% !important;
+}
+
+#loadingIconDiv {
+	position: relative;
+    text-align: center;
+    top: 46%;
+    z-index: 6;
+}
+
+.alert-message.warning.sonar {
+	position:absolute;
+    left:34%;
+    text-align: center;
+    width: 35%;
+    height: 15px;
+    margin-top: -28px;
+}
+
+.sonarLabelWarn {
+	color:#000000;
+    padding: 0;
+    width: 100%;
 }

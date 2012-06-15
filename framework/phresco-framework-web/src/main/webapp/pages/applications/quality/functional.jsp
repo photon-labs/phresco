@@ -75,6 +75,7 @@
 			});
 			
 			$('#testbtn').click(function() {
+				$("#popup_div").empty();
 				showPopup();
 			 	<% 
 			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) { 
@@ -315,6 +316,7 @@
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
 				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
+				enableScreen();
 			}
 			
 			function changeView() {

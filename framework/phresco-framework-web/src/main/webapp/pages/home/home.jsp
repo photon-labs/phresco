@@ -40,13 +40,14 @@
 
 <script type="text/javascript">
 <!--
-if($.cookie("welcome")) {
-    $(".errorOverlay").show().css("display","none");
-    $(".intro_container").show().css("display","none");
- } else {
-     $(".errorOverlay").show().css("display","<%= showWelcome %>");
-     $(".intro_container").show().css("display","<%= showWelcome %>");
- }
+	if(localStorage["welcome"]) {
+		$(".errorOverlay").show().css("display","none");
+		$(".intro_container").show().css("display","none");
+	 }
+	else {
+		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
+		 $(".intro_container").show().css("display","<%= showWelcome %>");
+	}
 //-->
 </script>
     <div class="intro_container_left">
@@ -138,7 +139,7 @@ $(document).ready(function() {
 
     $("#dontShowCheck").click(function() { 
          if ($(this).is(":checked"))
-            $.cookie("welcome", "no", {expires: 7});
+            localStorage["welcome"] = false ;
     });
  
     $(".homegostart").click(function () {
