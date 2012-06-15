@@ -31,6 +31,7 @@
 		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
 		<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
 		<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
+		<sonar.phpCodesniffer.skip>true</sonar.phpCodesniffer.skip> 
 		<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
 		<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
 		<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
