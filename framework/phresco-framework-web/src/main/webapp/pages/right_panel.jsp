@@ -1,48 +1,6 @@
 <%@page import="com.photon.phresco.framework.PhrescoFrameworkFactory"%>
 <%@page import="com.photon.phresco.framework.FrameworkConfiguration"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%--
-	private static final org.apache.log4j.Logger S_LOGGER = org.apache.log4j.Logger.getLogger("Tweeter");
-%>
-
-<% 
-String responseString = "hariharan";
-java.io.FileWriter fw = null;
-java.io.File resultJson = null;
-try {
-	com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
-	com.sun.jersey.api.client.WebResource webResource = client.resource("http://localhost:3030/service/news");
-	responseString = webResource.get(String.class);
-	System.out.println("info :: " + responseString);
-} catch (java.lang.Exception e) {
-	S_LOGGER.error("Exception while retreiving the Tweeter Message :: " + e.getMessage());
-	e.printStackTrace();
-}
-%>
-
-
-if(responseString!=null && !responseString.isEmpty() && !responseString.contains("Rate limit exceeded. Clients may not make more than 150 requests per hour.")){
-	try {
-		responseString = responseString.replace("([", "[");
-		responseString = responseString.replace("]);", "]");
-		String path = request.getSession().getServletContext().getRealPath("") + "/result.json";
-		resultJson = new java.io.File(path);
-		fw = new java.io.FileWriter(resultJson);
-		fw.write(responseString);
-	} catch (java.lang.Exception e) {
-		S_LOGGER.error("Exception while writing Tweeter Message to a local file :: " + e.getMessage());
-	} finally {
-		if (fw != null) {
-			try {
-				fw.flush();
-				fw.close();
-			} catch (java.lang.Exception e) {
-				S_LOGGER.error("Exception while closing local file after writing Tweeter Message :: " + e.getMessage());
-			}
-		}
-	}
-}
---%>
 <% 
 FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
 String path = frameworkConfig.getServerPath() + "/news/jsonp"; 
