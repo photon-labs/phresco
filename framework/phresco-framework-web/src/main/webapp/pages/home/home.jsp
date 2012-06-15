@@ -38,6 +38,19 @@
 <!-- Phresco js -->
 <script type="text/javascript" src="../../js/phresco/common.js"></script>
 
+<!-- 
+<script type="text/javascript">
+
+<!--
+if(localStorage.welcome) {
+    $(".errorOverlay").show().css("display","none");
+    $(".intro_container").show().css("display","none");
+ } else {
+     $(".errorOverlay").show().css("display","<%= showWelcome %>");
+     $(".intro_container").show().css("display","<%= showWelcome %>");
+ }
+-->
+
 <script type="text/javascript">
 <!--
 	if(localStorage["welcome"]) {
@@ -127,6 +140,60 @@
 
 <img class="loadingIcon">
 
+<<<<<<< HEAD
+<script type="text/javascript">
+$(document).ready(function() {
+	bacgroundValidate("validateFramework", '');
+	var params = "fromPage=";
+	params = params.concat("home");
+	performAction('home', params, $("#container"));
+	$(".mycube_slides").show().css("border","none");
+    // for navigation to page
+    $("a[id='<%= selectedNav%>']").attr("class", "active"); 
+
+    $("#dontShowCheck").click(function() { 
+         if ($(this).is(":checked"))
+        	 localStorage.welcome = no;
+    });
+ 
+    $(".homegostart").click(function () {
+        $(".intro_container").slideUp(3000);
+        setInterval(function() {
+            $(".mycube_slides").show().css("border","block");  
+        }, 3000);
+        $(".errorOverlay").show().css("display", "none");
+    });
+	// for navigation to page
+    $("a[name='navMenu']").click(function() {
+		$("a[name='navMenu']").attr("class", "inactive");
+		$(this).attr("class", "active");
+        var selectedNav = $(this).attr("id");
+        if (selectedNav == "applications") {
+        	bacgroundValidate("validateFramework", "true");
+        }
+          performAction(selectedNav, '', $("#container"));
+    });
+	
+ 	// shows preloader until page loads
+    $("a[id='forum']").click(function(){
+    	$(".loadingIcon").show();
+    	getCurrentCSS();
+    })
+    
+    if(localStorage.menuSelected){
+    	$("a[name='navMenu']").attr("class", "inactive");
+		$(this).attr("class", "active");
+        var selectedNav = localStorage.menuSelected;
+        if (selectedNav == "applications") {
+        	bacgroundValidate("validateFramework", "true");
+        }
+          performAction(selectedNav, '', $("#container"));
+   }
+      
+});
+	
+</script>
+=======
 <script type="text/javascript">
 $(document).ready(function() {
 	bacgroundValidate("validateFramework", '');
@@ -168,3 +235,4 @@ $(document).ready(function() {
 });
 	
 </script>
+>>>>>>> 9a4af96ec239431edc044d72fff2765b9d9c6ab0

@@ -61,6 +61,8 @@ import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.util.AndroidConstants;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.photon.phresco.util.XCodeConstants;
@@ -222,6 +224,11 @@ public class Build extends FrameworkBaseAction {
 					S_LOGGER.debug("Iphone technology terget name" + xcodeConfig.getName());
 				}
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
+				// get list of sdks
+				List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
+				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 			
 			projectModules = projectModuleMap.get(projectCode);
@@ -629,6 +636,9 @@ public class Build extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_HIDE_DEPLOY_TO_SIMULATOR, new Boolean(!createIpa && !deviceDeploy ? true : false));
 			getHttpRequest().setAttribute(REQ_HIDE_DEPLOY_TO_DEVICE, new Boolean(createIpa && deviceDeploy ? true : false));
 			getHttpRequest().setAttribute(REQ_FROM_TAB, REQ_FROM_TAB_DEPLOY);
+			// get list of sdk versions
+			List<String> iphoneSimulatorSdks = IosSdkUtil.getMacSdksVersions(MacSdkType.iphonesimulator);
+			getHttpRequest().setAttribute(REQ_IPHONE_SIMULATOR_SDKS, iphoneSimulatorSdks);
 		} catch (Exception e) {
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Build.Iphone()"

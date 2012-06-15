@@ -269,9 +269,9 @@ h1 {margin-bottom: 0;}
 		
 		$('#save').click(function() {
 			var params = "";
-		    params = params.concat("&remoteDeploy=");
-			params = params.concat($("#remoteDeploy").prop("checked")); 
-		    
+		     params = params.concat("&remoteDeployment=");
+			 params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
+		     
 			if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
@@ -282,7 +282,7 @@ h1 {margin-bottom: 0;}
 			<%
 			   } else {
 			%>
-					performAction("updateConfiguration", params, $('#tabDiv'));
+			       performAction("updateConfiguration", params, $('#tabDiv'));
 			<% } %>
 			
 	    });
