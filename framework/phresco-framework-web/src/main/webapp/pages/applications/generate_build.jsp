@@ -58,6 +58,8 @@
    	List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
    	List<String> buildInfoEnvs = (List<String>) request.getAttribute(FrameworkConstants.BUILD_INFO_ENVS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
+   	// mac sdks
+   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
@@ -187,10 +189,14 @@
 				<div class="input">
 					<select id="sdk" name="sdk" class="xlarge" >
 						<%
-							for (int i = 0; i < XCodeConstants.SUPPORTED_SDKS.length; i++) {
+							if (macSdks != null) {
+								for (String sdk : macSdks) {
 						%>
-							<option value="<%= XCodeConstants.SUPPORTED_SDKS[i] %>"><%= XCodeConstants.SUPPORTED_SDKS[i] %></option>
-						<% } %>
+							<option value="<%= sdk %>"><%= sdk %></option>
+						<% 
+								} 
+							}
+						%>
 					</select>
 				</div>
 			</div>

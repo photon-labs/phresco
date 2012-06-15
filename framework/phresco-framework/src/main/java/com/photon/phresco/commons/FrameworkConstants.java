@@ -448,6 +448,11 @@ public interface FrameworkConstants {
 	String DOT = ".";
 	String SERIAL_NUMBER = "serialNumber";
 	String REQ_XCODE_CONFIGS = "xCodeConfigs";
+	String REQ_IPHONE_SDKS = "iphoneSdks";
+	String REQ_IPHONE_SIMULATOR_SDKS = "iphoneSimulatorSdks";
+	String MAC_OS_SDKS = "macosx";
+	String MAC_DEVICE_SDKS = "iphoneos";
+	String MAC_SIMULATOR_SDKS = "iphonesimulator";
 	
 	String REQ_SERVER_DOWNLOAD_INFO = "serverDownloadInfos";
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";

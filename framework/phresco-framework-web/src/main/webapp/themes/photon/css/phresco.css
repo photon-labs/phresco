@@ -4532,11 +4532,12 @@ ul#display-inline-block-example li {
     text-align: center;
     width: 35%;
     height: 15px;
-    margin-top: -28px;
+    margin-top: -34px;
 }
 
 .sonarLabelWarn {
 	color:#000000;
     padding: 0;
     width: 100%;
+    text-align: center;
 }
