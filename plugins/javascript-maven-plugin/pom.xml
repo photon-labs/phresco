@@ -27,7 +27,7 @@
 	<description>An extension that provides lifecycle binding, dependency, plugin and resource configuration suitable to most JS projects.</description>
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
 
-    <distributionManagement>
+	<distributionManagement>
         <repository>
             <id>${releases.repo.id}</id>
             <url>${releases.repo.url}</url>
@@ -78,5 +78,4 @@
 			</resource>
 		</resources>
 	</build>
-   
 </project>
