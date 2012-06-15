@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -14,7 +14,7 @@
     <url>http://www.phresco.org</url>
     <packaging>pom</packaging>
     <name>Phresco libraries</name>
-    
+    <description>phresco-libraries</description>  
 
     <modules>
 <!--             <module>phresco-tools</module> -->
@@ -26,7 +26,7 @@
         <site>
             <id>phresco.libraries</id>
             <name>Phresco Libraries</name>
-            <url>scp://phresco.org/home/projects/libraries/public_html/</url>
+            <url>${siteBaseUrl}/libraries/</url>
         </site>
     </distributionManagement>
     

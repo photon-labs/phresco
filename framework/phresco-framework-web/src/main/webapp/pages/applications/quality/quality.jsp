@@ -82,8 +82,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    	changeStyle("quality");
 		var testType = "<%= testTypeSelected%>"
+		
 		if(testType == "null"){
 			testType = "unit";
 			$("a[title='unit']").attr("class", "selected");	
@@ -97,6 +97,8 @@
 			$("a[name='quality']").attr("class", "unselected");
 			$(this).attr("class", "selected");
 			var testingType = $(this).attr("title");
+			disableScreen();
+			showLoadingIcon($("#loadingIconDiv"));
 			changeTesting(testingType);
 		});
 

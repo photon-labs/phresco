@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -19,7 +19,7 @@
         <site>
             <id>phresco.service.impl</id>
             <name>Phresco Service Implementation</name>
-            <url>scp://phresco.org/home/projects/service/impl/public_html/</url>
+            <url>${siteBaseUrl}/service/phresco-service-impl/</url>
         </site>
     </distributionManagement>
           

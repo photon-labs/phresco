@@ -3,7 +3,7 @@
    <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -13,12 +13,12 @@
     <packaging>maven-plugin</packaging>
     <name>php-maven-plugin Maven Mojo</name>
     <url>http://www.phresco.org</url>
-   
+	<description>php-maven-plugin</description>
     <distributionManagement>
         <site>
             <id>phresco.plugins.php</id>
             <name>Phresco Plugins - PHP</name>
-            <url>scp://phresco.org/home/projects/plugins/php/public_html/</url>
+            <url>${siteBaseUrl}/plugins/php-maven-plugin/</url>
         </site>
     </distributionManagement>   
 

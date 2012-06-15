@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -12,12 +12,12 @@
     <artifactId>phresco-drupal6-archetype</artifactId>
     <name>Archetype - phresco-drupal6-archetype</name>
     <url>http://www.phresco.org</url>
-
+	<description>phresco-drupal6-archetype</description>
    <distributionManagement>
         <site>
             <id>phresco.archetype.drupal6</id>
             <name>Phresco Archetypes - Drupal 6</name>
-            <url>scp://phresco.org/home/projects/archetypes/drupal6/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-drupal6-archetype/</url>
         </site>
     </distributionManagement>
 

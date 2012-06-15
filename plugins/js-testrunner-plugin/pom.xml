@@ -1,0 +1,324 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.codehaus.jstestrunner</groupId>
+	<artifactId>jstestrunner-junit</artifactId>
+	<version>1.2.0.2001-SNAPSHOT</version>
+	<name>JS Test Runner for JUnit</name>
+	<description>Runs JavaScript headlessly and reports details of the test back through JUnit.</description>
+
+	<parent>
+		<groupId>org.codehaus</groupId>
+		<artifactId>codehaus-parent</artifactId>
+		<version>4</version>
+	</parent>
+
+	<ciManagement>
+		<system>Bamboo</system>
+		<url>http://bamboo.ci.codehaus.org/browse/JSTR</url>
+	</ciManagement>
+	
+	<developers>
+		<developer>
+			<id>huntc</id>
+			<name>Christopher Hunt</name>
+			<organization>Class Action PL</organization>
+			<organizationUrl>http://www.classactionpl.com/</organizationUrl>
+			<roles>
+				<role>Despot</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>10</timezone>
+			<url>http://christopherhunt-software.blogspot.com/</url>
+		</developer>
+		<developer>
+			<id>johnomalley</id>
+			<name>John O' Malley</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<name>Ben Jones</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>10</timezone>
+			<url>http://octopod.org</url>
+		</developer>
+	</developers>
+	
+	<distributionManagement>
+		<downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
+		<site>
+			<id>org.codehaus.js-testrunner</id>
+			<name>Website</name>
+			<url>dav:https://dav.codehaus.org/js-testrunner/</url>
+		</site>
+	</distributionManagement>
+	
+	<inceptionYear>2011</inceptionYear>
+	
+	<issueManagement>
+		<system>JIRA</system>
+		<url>http://jira.codehaus.org/browse/JSTR</url>
+	</issueManagement>
+	
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+	
+	<mailingLists>
+		<mailingList>
+			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.user</archive>
+			<name>user@js-testrunner.codehaus.org</name>
+		</mailingList>
+		<mailingList>
+			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.dev</archive>
+			<name>dev@js-testrunner.codehaus.org</name>
+		</mailingList>
+		<mailingList>
+			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.announce</archive>
+			<name>announce@js-testrunner.codehaus.org</name>
+		</mailingList>
+		<mailingList>
+			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.scm</archive>
+			<name>scm@js-testrunner.codehaus.org</name>
+		</mailingList>
+	</mailingLists>
+	
+	<organization>
+		<name>Class Action PL</name>
+		<url>http://www.classactionpl.com/</url>
+	</organization>
+
+	<scm>
+		<connection>scm:git:git://git.codehaus.org/js-testrunner.git</connection>
+		<developerConnection>scm:git:ssh://git@git.codehaus.org/js-testrunner.git</developerConnection>
+		<url>http://git.codehaus.org/gitweb.cgi?p=js-testrunner.git</url>
+	</scm>
+	
+	<url>http://js-testrunner.codehaus.org/</url>
+
+	<dependencies>
+		<!-- compile dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>1.5.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>7.4.2.v20110526</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jcl</artifactId>
+			<version>1.6.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/js</directory>
+				<includes>
+					<include>**/*.js</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jslint-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>jslint</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<systemPropertyVariables>
+						<org.codehaus.jstestrunner.commandPattern>${org.codehaus.jstestrunner.commandPattern}</org.codehaus.jstestrunner.commandPattern>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-module-confluence</artifactId>
+						<version>1.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludeModules>apt</excludeModules>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>findbugs-maven-plugin</artifactId>
+							<version>2.3.1</version>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>cobertura-maven-plugin</artifactId>
+							<version>2.4</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.7</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>2.2</version>
+							<configuration>
+								<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+		</plugins>
+		
+		<extensions> 
+			<extension> 
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version> 
+			</extension> 
+		</extensions> 
+		
+	</build>
+	
+	<repositories>		<!-- For developing against latest Spring milestones -->
+		<repository>
+			<id>org.springframework.maven.milestone</id>
+			<name>Spring Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories><!-- For using MOJO snapshots -->
+		<pluginRepository>
+			<id>snapshots</id>
+			<url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	
+   <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>dev-snapshots</id>
+                    <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>dev-releases</id>
+                    <url>http://23.21.177.233:8080/nexus/content/repositories/releases/</url>
+                </repository>
+                 <site>
+                    <id>phresco</id>
+                    <name>Phresco</name>
+                    <url>scp://phresco.org/home/public_html/</url>
+                </site>
+            </distributionManagement>
+       </profile>
+	</profiles>
+	
+</project>

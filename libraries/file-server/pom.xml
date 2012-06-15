@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.photon.phresco.libraries</groupId>
         <artifactId>phresco-libraries</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -19,7 +19,7 @@
         <site>
             <id>phresco.libraries.fileserver</id>
             <name>Phresco Libraries - File Server</name>
-            <url>scp://phresco.org/home/projects/libraries/file_server/public_html/</url>
+            <url>${siteBaseUrl}/libraries/file-server/</url>
         </site>
     </distributionManagement>
 

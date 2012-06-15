@@ -338,22 +338,12 @@
 											checkedStr = "checked";
 											disabledStr = "disabled";
 										}
-										if (MapUtils.isNotEmpty(pilotJsLibs) && StringUtils.isNotEmpty(pilotJsLibs.get(rightModule.getId()))) {
-											pilotVersion = pilotJsLibs.get(rightModule.getId());
-											checkedStr = "checked";
-											disabledStr = "disabled";
-										}
 										if (MapUtils.isNotEmpty(selectedJsLibs) && selectedJsLibs.get(rightModule.getId()) != null) {
 											checkedStr = "checked";
 										}
 									} else {
 										if (MapUtils.isNotEmpty(alreadySelectedModules) && StringUtils.isNotEmpty(alreadySelectedModules.get(rightModule.getId()))) {
 											pilotVersion = alreadySelectedModules.get(rightModule.getId());
-											checkedStr = "checked";
-											disabledStr = "disabled";
-										}
-										if (MapUtils.isNotEmpty(pilotModules) && StringUtils.isNotEmpty(pilotModules.get(rightModule.getId()))) {
-											pilotVersion = pilotModules.get(rightModule.getId());
 											checkedStr = "checked";
 											disabledStr = "disabled";
 										}
@@ -478,6 +468,10 @@
 </div>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		enableScreen();
+	});
+	
 	$('#projectCode').val('<%= projectCode %>'); //this is for changing the sub-tab.
 	$('#fromPage').val('<%= fromPage %>'); //this is for changing the sub-tab.
 </script>

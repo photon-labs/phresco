@@ -215,6 +215,8 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+		
 		/** To construct the div during the project edit **/
 		<%
 			String name = null;
@@ -516,7 +518,6 @@
 			}
 		} else if (pageUrl == "technology") {
 			techVersions();    	
-		    $("#name").focus();
 		}
 	}
 	

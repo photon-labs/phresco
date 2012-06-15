@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -21,7 +21,7 @@
         <site>
             <id>phresco.archetype.java</id>
             <name>Phresco Archetypes - Java</name>
-            <url>scp://phresco.org/home/projects/archetypes/java/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-java-quickstart-archetype/</url>
         </site>
     </distributionManagement>
 	

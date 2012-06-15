@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -14,12 +14,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <packaging>pom</packaging>
     <name>Phresco Service Root</name>
 	<url>http://www.phresco.org</url>
-
+	<description>phresco-service-root</description>
     <distributionManagement>
         <site>
             <id>phresco.service.root</id>
             <name>Phresco Service Root</name>
-            <url>scp://phresco.org/home/projects/service/</url>
+            <url>${siteBaseUrl}/service/</url>
         </site>
     </distributionManagement>
 

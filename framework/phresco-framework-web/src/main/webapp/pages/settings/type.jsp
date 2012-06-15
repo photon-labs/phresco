@@ -142,6 +142,15 @@
 	                		
 	                		</select>		                		
                 		</div>
+                 <%
+		        	} else if ("remoteDeployment".equals(key)) {
+		        		 boolean remoteDeply = Boolean.parseBoolean(value);
+		        		 String checkedStr = "";
+		        		 if (remoteDeply) {
+		        			 checkedStr = "checked";
+		        		 }
+		        %>		
+		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">		
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
@@ -175,14 +184,7 @@
        		
         </div>
     </div> <!-- /clearfix -->
-    	<% if (masterKey.equals("Server")) { %>
-			    <div id="remoteDeployDiv" class="clearfix">
-			    	<label for="xlInput" class="new-xlInput" id="remoteDeployLbl"><s:text name="label.remote.deploy"/></label>
-				    <div class="input new-input">
-				        <input type="checkbox" id="remoteDeploy" name="remoteDeploy" value="true" style = "margin-top: 8px;">
-				    </div>
-				</div>
-		<% } %>
+
 <%
     	}
     }	
@@ -283,30 +285,34 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
 		
 		<%
-		if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
-	%>
+			if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
+		%>
 			$('#type').find('option').remove();
 			<%
 				for(Server projectInfoServer : projectInfoServers) {
 					String serverName = projectInfoServer.getName();
-					//List<String> versions = projectInfoServer.getVersions();
-					//for(String version : versions) {
 			%>
 						$('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
-	<%
-					//}
+			<%
 				}
-	%>
+			%>
 			getCurrentVersions('');
 			$("#type").change(function() {
 				 var server = $('#type').val();
 				 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
-					 $("#remoteDeployDiv").show();	
+					 $('#remoteDeployment').show();
 			     } else {
-			    	 $("#remoteDeployDiv").hide();
+			    	 hideRemoteDeply();
 			     }
+				 remoteDeplyChecked();
+				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
+					 $("input[name='remoteDeployment']").attr("checked",false);
+					 $("#admin_username label").html('Admin Username');
+					 $("#admin_password label").html('Admin Password'); 
+				 } 
 				
 			});   
 	<%
@@ -321,14 +327,11 @@
 			<%
 				for(Database projectInfoDatabase : projectInfoDatabases) {
 					String databaseName = projectInfoDatabase.getName();
-					//List<String> versions = projectInfoDatabase.getVersions();
-					//for(String version : versions) {
 			%>
 						$('#type').append($("<option></option>").attr("value", '<%= databaseName %>').text('<%= databaseName %>'));
-	<%
-					//}
+			<%
 				}
-	%>
+			%>
 			getCurrentVersions('');
 	<%
 		}
@@ -336,17 +339,17 @@
 	
 	var server = $('#type').val();
 	if (server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic") {
-		 $("#remoteDeployDiv").show();	
+		$('#remoteDeployment').show();	
     } else {
-    	 $("#remoteDeployDiv").hide();
+    	hideRemoteDeply();
     }
 	
 	/** To display projectInfo databases ends **/
 	
 		// hide deploy dir if remote Deployment selected
 		 
-         $('#remoteDeploy').change(function() {
-				var isChecked = $('#remoteDeploy').is(":checked");
+         $("input[name='remoteDeployment']").change(function() {
+				var isChecked = $("input[name='remoteDeployment']").is(":checked");
 				if (isChecked) {
 					hideDeployDir();
 					$("#admin_username label").html('<span class="red">* </span>Admin Username');
@@ -370,26 +373,26 @@
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		
-		$('#Port').live('input paste', function (e) { //Port validation
+		$('#Port').bind('input propertychange', function (e) { //Port validation
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
          });
         
-		$("#xlInput").live('input paste',function(e) { //Name validation
+		$("#xlInput").bind('input propertychange',function(e) { //Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	$(this).val(name);
         });
 		
-		$("input[name='dbname']").live('input paste',function(e){ 	//DB_Name validation
+		$("input[name='dbname']").bind('input propertychange',function(e){ 	//DB_Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
         });
 		
-		$("input[name='context']").live('input paste',function(e){ 	//Context validation
+		$("input[name='context']").bind('input propertychange',function(e){ 	//Context validation
         	var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
@@ -401,6 +404,16 @@
 			if ($(this).val().trim().toLowerCase() == '<%= selectedValue.toLowerCase() %>') {
 				$(this).prop("selected", "selected");
 			}
+			// When editing nodejs server config, hide deploy directory field
+			if ('<%= selectedValue %>' == "NodeJS") {
+				$('#deploy_dir').hide();
+			}
+			if( '<%= selectedValue %>' == "Apache Tomcat" || '<%= selectedValue %>' == "JBoss" || '<%= selectedValue %>' == "WebLogic"){
+				 $('#remoteDeployment').show(); 
+		     } else {
+		    	  hideRemoteDeply(); 
+		     }
+			remoteDeplyChecked();
 		});
 	}
 	
@@ -415,5 +428,21 @@
 	function hideDeployDir() {
 		$("input[name='deploy_dir']").val("");
 		$('#deploy_dir').hide();
-	}	
+	}
+	
+	function hideRemoteDeply() {
+		$('#remoteDeployment').hide();
+	}
+	
+	function remoteDeplyChecked() {
+		var isRemoteChecked = $("input[name='remoteDeployment']")
+				.is(":checked");
+		if (isRemoteChecked) {
+			hideDeployDir();
+			$("#admin_username label").html('<span class="red">* </span>Admin Username');
+			$("#admin_password label").html('<span class="red">* </span>Admin Password'); 
+		} else {
+			$('#deploy_dir').show();
+		}
+	}
 </script>

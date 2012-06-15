@@ -44,16 +44,7 @@
 	String path = (String) request.getAttribute(FrameworkConstants.PATH);
 	String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
 %>
-
-<style>	
-	.testSuiteError {
-		margin-top: 5px;
-	}
-</style>
-
-    <form action="functional" method="post" autocomplete="off" class="marginBottomZero">
-		<!-- <div class="frame-header frameHeaderPadding btnTestPadding"> -->
-			<!-- <div class="test_btn_div"> -->
+    <form action="functional" method="post" autocomplete="off" class="marginBottomZero" id="form_test">
 			<div class="operation">
 	            <%
 	            	if ((Boolean)request.getAttribute(FrameworkConstants.REQ_BUILD_WARNING)) {
@@ -64,20 +55,17 @@
 			   <%
 	            	}
 			   %>
-				<input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
 				<div class="icon_fun_div">
 					<a href="#" id="openFolder"><img id="folderIcon" src="images/icons/open-folder.png" title="Open folder" /></a>
 					<a href="#" id="copyPath"><img src="images/icons/copy-path.png" title="Copy path" /></a>
 				</div>
-		
-		<!-- </div> -->
-	
-    
-   <!--  <div class="popup_div" id="generateTest">
-    </div> -->
+				<ul id="display-inline-block-example">
+					<li id="first">
+						<input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
+					</li>
     
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 			
 			$('#closeGenerateTest, #closeGenTest').click(function() {
 				changeTesting("functional", "testGenerated");
@@ -87,6 +75,7 @@
 			});
 			
 			$('#testbtn').click(function() {
+				$("#popup_div").empty();
 				showPopup();
 			 	<% 
 			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) { 
@@ -175,79 +164,91 @@
 	        Set<String> testResultFiles = (Set<String>) request.getAttribute(FrameworkConstants.REQ_TEST_RESULT_FILE_NAMES);
 	        String selectedTestResultFile = (String) request.getAttribute(FrameworkConstants.REQ_SELECTED_TEST_RESULT_FILE);
 	        List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
+	        boolean buttonRow = false;
 	%>
         
-        <% if(CollectionUtils.isNotEmpty(projectModules)) { %>
-				
-				&nbsp;<strong><s:text name="label.module"/></strong> 
-				<select id="projectModule" class="funcModuleList" name="projectModule"> 
-					<% for(String projectModule : projectModules) { %>
-				  <option value="<%= projectModule %>" id="<%= projectModule %>" ><%= projectModule %> </option>
-				
-				<% 
-			        }
-				%>
-				</select>
-			<% 	} %>
+        <% 
+        	if(CollectionUtils.isNotEmpty(projectModules)) {
+        		buttonRow = true;
+        %>
+				<li id="label">
+					&nbsp;<strong><s:text name="label.module"/></strong> 
+				</li>
+				<li>
+					<select id="projectModule" name="projectModule"> <!-- class="funcModuleList"  -->
+						<% for(String projectModule : projectModules) { %>
+					  <option value="<%= projectModule %>" id="<%= projectModule %>" ><%= projectModule %> </option>
+					
+					<% 
+				        }
+					%>
+					</select>
+				</li>
+			<% 	}
+				if (buttonRow) {
+			%>
+				</ul>
+			<% } %>
 
         	<div class="alert-message block-message warning hideCtrl" id="errorDiv" style="margin: 5px 0 0 0;">
 				<center><label class="errorMsgLabel"></label></center>
 			</div>
-
-		<!-- <div class="functional_header testSuiteList testSuiteListAdj"> -->
-			&nbsp;<strong  class="hideCtrl"><s:text name="label.test.files"/></strong> 
-			<select id="testResultFile" name="testResultFile" class="funcList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testResultFiles)) {
-					for(String testResultFile : testResultFiles) {
-						String selectedStr = testResultFile.equals(selectedTestResultFile) ? "selected" : "";
-				%>
-				  <option value="<%= testResultFile %>" id="<%= testResultFile %>" <%= selectedStr %>><%= testResultFile %> </option>
-				
-				<% 
-			        }
-				}
-				%>
-			</select>
 			
-			&nbsp;<strong><s:text name="label.test.suite"/></strong> 
-			<select id="testSuite" name="testSuite" class="funcList"> 
-				<% 
-				if(CollectionUtils.isNotEmpty(testSuites)) {
-					for(TestSuite testSuiteDisplay : testSuites) {
-				%>
-				  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
-				
-				<% 
-			        }
-				}
-				%>
-			</select>
+			<% if (buttonRow) { %>
+			<ul id="display-inline-block-example">
+				<li id="first"></li>
+			<% } %>
+			
+			<li id="label">
+				&nbsp;<strong class="hideCtrl" id="testResultLbl"><s:text name="label.test.suite"/></strong> 
+			</li>
+			<li>
+				<select id="testSuite" name="testSuite"> <!--  class="funcList" -->
+					<option value="All">All</option>
+					<% 
+					if(CollectionUtils.isNotEmpty(testSuites)) {
+						for(TestSuite testSuiteDisplay : testSuites) {
+					%>
+					  <option value="<%= testSuiteDisplay.getName() %>" id="<%= testSuiteDisplay.getFailures() %>,<%= testSuiteDisplay.getErrors() %>,<%= testSuiteDisplay.getTests() %>,<%= selectedTestResultFile %>" ><%= testSuiteDisplay.getName() %> </option>
+					
+					<% 
+				        }
+					}
+					%>
+				</select>
+			</li>
+			<li id="label">
+				&nbsp;<strong id="view" class="hideCtrl"><s:text name="label.test.result.view"/></strong> 
+			</li>
+			<li>
+				<select id="resultView" name="resultView" class="techList selectDefaultWidth"> 
+					<option value="tabular" >Tabular View</option>
+					<option value="graphical" >Graphical View</option>
+				</select>
+			</li>
+			</ul>
 		</div>
 	</form>
 	
-	<div id="testSuiteDisplay" class="testSuiteDisplay">
+	<div id="testSuiteDisplay" class="testSuiteDisplay responsiveTableDisplay" style="height: 87%;">
 	</div>
 		
         <script type="text/javascript">
-			
-        	/*generateTest('testSuite', 'testSuiteDisplay'); // load testSuite
-        	
-			$('#testSuites').change(function(){
-				generateTest('testSuite', 'testSuiteDisplay');
+
+			$(document).ready(function() {
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
+				
+				$('#resultView').change(function() {
+					changeView();
+				});
+				
+				// table resize
+				var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
+				$('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
 			});
 			
-			$('#testResultFiles').change(function(){
-				generateTest('testType', 'subTabcontainer', 'testResultFiles');
-			});*/
-
-// loadTestSuite();
-
-			$(document).ready(function(){
-				$("#testResultFile, #testSuite, #testSuiteDisplay, strong").hide();
-			});
-
 			loadTestResults();
+			
 			$('#projectModule').change(function() {
 				loadTestResults();
 			});
@@ -255,21 +256,6 @@
 			$('#testSuite').change(function() {
 				testReport();
 			});
-			
-			$('#testResultFile').change(function() {
-				changeTestResultFile();
-			});
-			
-			function changeTestResultFile() {
-				var params = "";
-		    	if (!isBlank($('form').serialize())) {
-		    		params = $('form').serialize() + "&";
-		    	}
-				params = params.concat("testType=");
-				params = params.concat('<%= FrameworkConstants.FUNCTIONAL %>');
-
-				performAction('fillTestSuites', params, '', true);
-			}
 
 			function loadTestResults() {
 				var params = "";
@@ -284,7 +270,7 @@
 					params = params.concat('<%= fromPage %>');
 				<% } %>
 
-				performAction('fillTestResultFiles', params, '', true);
+				performAction('fillTestSuites', params, '', true);
 			}
 
 			function testReport() {
@@ -309,25 +295,19 @@
 						if (data.validated != undefined && data.validated) {
 							return validationError(data.showError);
 						}
-
-						var testResultFiles = data.testResultFiles;
-						if ((testResultFiles != undefined || !isBlank(testResultFiles))) {
+						var testSuiteNames = data.testSuiteNames;
+						if ((testSuiteNames != undefined || !isBlank(testSuiteNames))) {
 							$("#errorDiv").hide();
-							$("#testResultFile, #testSuite, #testSuiteDisplay, strong").show();
-							$('#testResultFile').empty();
-							for (i in testResultFiles) {
-								$('#testResultFile').append($("<option></option>").attr("value", testResultFiles[i]).text(testResultFiles[i]));
-							}
-							changeTestResultFile();
-						}
-						var testSuites = data.testSuites;
-						if ((testSuites != undefined || !isBlank(testSuites))) {
+							$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView, strong").show();
+							$("#testResultFile").hide();
 							$('#testSuite').empty();
-							for (i in testSuites) {
-								$('#testSuite').append($("<option></option>").attr("value", testSuites[i].name).text(testSuites[i].name));
+							$('#testSuite').append($("<option></option>").attr("value", "All").text("All"));
+							for (i in testSuiteNames) {
+								$('#testSuite').append($("<option></option>").attr("value", testSuiteNames[i]).text(testSuiteNames[i]));
 							}
 							testReport();
 						}
+					
 					}
 		    	}
 			}
@@ -335,9 +315,20 @@
 			function validationError(errMsg) {
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
-				$("#testResultFile, #testSuite, #testSuiteDisplay, strong").hide();
+				$("#testResultFile, #testSuite, #testSuiteDisplay, #resultView, #testResultLbl, #view").hide();
+				enableScreen();
 			}
 			
+			function changeView() {
+				var resultView = $('#resultView').val();
+				if (resultView == 'graphical') {
+					$("#graphicalView").show();
+					$("#tabularView").hide();
+				} else  {
+					$("#graphicalView").hide();
+					$("#tabularView").show();
+				}
+			}
 		</script>
     <% } %>
  

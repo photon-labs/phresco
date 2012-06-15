@@ -176,6 +176,6 @@ if(!isiPad()){
 
 $(document).ready(function(){
 	accordion();
-	changeStyle("download");
+	enableScreen();
 });
 </script>

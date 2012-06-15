@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
@@ -18,7 +18,7 @@
         <site>
             <id>phresco.framework</id>
             <name>Phresco Framework</name>
-            <url>scp://phresco.org/home/projects/framework/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework/</url>
         </site>
     </distributionManagement>
 
@@ -57,6 +57,11 @@
             <groupId>org.jvnet.hudson</groupId>
 	        <artifactId>trilead-ssh2</artifactId>
             <version>build212-hudson-5</version>
+        </dependency>
+		<dependency>
+            <groupId>com.photon.phresco.pom</groupId>
+            <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 	

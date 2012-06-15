@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.1000-SNAPSHOT</version>
+        <version>1.2.0.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -12,12 +12,12 @@
     <artifactId>phresco-html5-archetype</artifactId>
     <name>Archetype - phresco-html5-archetype</name>
     <url>http://www.phresco.org</url>
-  
+    <description>phresco-html5-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.html5</id>
             <name>Phresco Archetypes - HTML5</name>
-            <url>scp://phresco.org/home/projects/archetypes/html5/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-html5-archetype/</url>
         </site>
     </distributionManagement>
    

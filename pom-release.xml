@@ -9,19 +9,8 @@
 	<name>Phresco Parent POM for repository and distribution management</name>
 
 	<properties>
-
-<!--
-             <current.version>http://23.21.177.233:8080/nexus/content/repositories/releases/</current.version>
-             <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/releases/</next.version>
--->
-<!--
-
- 		<current.version>http://23.21.177.233:8080/nexus/content/groups/prod/</current.version>
-                <next.version>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</next.version>
--->
-
-	 	<current.version>1.2.0-SNAPSHOT</current.version>
-		<next.version>1.2.0.1000-SNAPSHOT</next.version>
+                <current.version>1.2.0.2000</current.version>
+		<next.version>1.2.0.2001-SNAPSHOT</next.version>
 	</properties>
 
 <build>

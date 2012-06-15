@@ -191,7 +191,7 @@
     		params = $('form').serialize() + "&";
     	}
     	getCurrentCSS();
-        $('#popup_div').show();
+    	showPopup();
 		performAction('generateJmeter', params, $('#popup_div'));
   		$(document).keydown(function(e) {
 			// ESCAPE key pressed
@@ -209,7 +209,6 @@
     	if (!isBlank($('form').serialize())) {
     		params = $('form').serialize() + "&";
     	}
-	    showLoadingIcon($('#testResultDisplay')); // Loading Icon	
 		performAction('performanceTestResult', params, $('#testResultDisplay'));
     }
 	
@@ -225,11 +224,10 @@
     
     function successIsResultFileAvailable(data) {
        	if (data == false) {
-       		$('.errorMsgLabel').empty();
-       		$('.errorMsgLabel').html("Performance test not yet executed");
        		$("#noFiles").show();
        		testResultNotAvail();
-       	} else {
+       		enableScreen();
+		} else {
        		testResultAvailShowList();
        		performanceTestResultsFiles();
        	}

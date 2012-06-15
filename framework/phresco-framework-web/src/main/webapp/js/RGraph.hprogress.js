@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -119,8 +100,6 @@
             'chart.label.inner':           false,
             'chart.adjustable':            false,
             'chart.scale.decimals':     0,
-            'chart.scale.point':        '.',
-            'chart.scale.thousand':     ',',
             'chart.key':                [],
             'chart.key.background':     'white',
             'chart.key.position':       'gutter',
@@ -138,9 +117,7 @@
             'chart.key.linewidth':      1,
             'chart.key.colors':         null,
             'chart.key.color.shape':    'square',
-            'chart.labels.position':     'bottom',
-            'chart.events.mousemove':    null,
-            'chart.events.click':        null
+            'chart.labels.position':     'bottom'
         }
 
         // Check for support
@@ -227,14 +204,6 @@
         if (this.Get('chart.contextmenu')) {
             RGraph.ShowContext(this);
         }
-
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
         
         /**
         * Alternatively, show the tooltip if requested
@@ -243,8 +212,6 @@
 
             // Need to register this object for redrawing
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             /**
             * Install the window onclick handler
@@ -277,7 +244,6 @@
                 if (bar) {
 
                     var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), bar[5]);
-
 
                     /**
                     * Show a tooltip if it's defined
@@ -367,7 +333,6 @@
         if (this.Get('chart.adjustable')) {
             RGraph.AllowAdjusting(this);
         }
-
         
         /**
         * Fire the RGraph ondraw event
@@ -574,11 +539,7 @@
                 var valign = 'top';
             }
                 
-            RGraph.Text(this.context,font,size,x,y,
-
-RGraph.number_format(this, (((this.max - this.Get('chart.min')) / this.Get('chart.numticks')) * (i + 1) + this.Get('chart.min')).toFixed(this.Get('chart.scale.decimals')), this.Get('chart.units.pre'), this.Get('chart.units.post')),
-
-valign,'center');
+            RGraph.Text(this.context,font,size,x,y,this.Get('chart.units.pre') + String((((this.max - this.Get('chart.min')) / this.Get('chart.numticks') ) * (i + 1) + this.Get('chart.min')).toFixed(this.Get('chart.scale.decimals'))) + this.Get('chart.units.post'),valign,'center');
         }
 
         if (this.Get('chart.tickmarks.zerostart')) {
@@ -633,41 +594,4 @@ valign,'center');
                 return [obj, left, top, width, height, idx];
             }
         }
-    }
-
-
-    /**
-    * This function returns the value that the mouse is positioned at, regardless of
-    * the actual indicated value.
-    * 
-    * @param object e The event object
-    */
-    RGraph.HProgress.prototype.getValue = function (arg)
-    {
-        if (arg.length == 2) {
-            var mouseX = arg[0];
-            var mouseY = arg[1];
-        } else {
-            var mouseCoords = RGraph.getMouseXY(arg);
-            var mouseX      = mouseCoords[0];
-            var mouseY      = mouseCoords[1];
-        }
-
-        var canvas  = this.canvas;
-        var context = this.context;
-        
-        if (
-               mouseX > (this.canvas.width - this.gutterRight - this.Get('chart.margin'))
-            || mouseX < (this.gutterLeft + this.Get('chart.margin'))
-            || mouseY > (this.canvas.height - this.gutterBottom)
-            || mouseY < (this.gutterTop)
-           ) {
-            return null;
-        }
-
-        var value = (mouseX - this.gutterLeft) / this.width;
-            value *= this.max - this.Get('chart.min');
-            value += this.Get('chart.min');
-
-        return value;
     }
