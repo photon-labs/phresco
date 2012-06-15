@@ -24,7 +24,7 @@ Event.observe(document, 'dom:loaded', function() {
         
         var x = Math.floor(obj.x);
         var data = jsonData[x];
-        var text = data.timeStamp + " Sucess: " + data.success + " Elapsed Time: " + data.time;
+        var text = data.timeStamp + " Success: " + data.success + " Elapsed Time: " + data.time;
         
         return text;
     };

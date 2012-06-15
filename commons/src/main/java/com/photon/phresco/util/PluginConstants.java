@@ -47,8 +47,12 @@ public interface PluginConstants {
      String MVN_PHASE_PACKAGE			= "package";
 	 String MVN_PHASE_VERIFY			= "verify";
 	 String MVN_PHASE_INSTALL			= "install";
+	 String JAVA_LIB_PATH				= "java.library.path";
     
 	// Constants for Php maven plugin
+	 String JAVA_CMD					= "java";
+	 String JAR_PATH					= "/lib/driver/";
+	 String JAVA_JAR_CMD				= "-jar";
 	 String PHP_SOURCE_DIR				= "/source";
      String PHP_TEST_CONFIG_FILE 		= "/test/functional/src/test/php/phresco/tests/" + CONFIG_FILE;
      String PHP_SOURCE_CONFIG_FILE 		= "/source/config/" + CONFIG_FILE;
@@ -62,6 +66,9 @@ public interface PluginConstants {
      String BINARIES_DIR				= "/do_not_checkin/binaries";
     
     //Constants for Java Plugin
+     String MVN_HOME 					= "maven.home";
+     String MVN_EXE_PATH				= "\\bin\\mvn.bat";
+     String SKIP_TESTS					= "-DskipTests=true";
      String JAVA_TEST_CONFIG_FILE 		= "/test/functional/src/main/resources/" + CONFIG_FILE;
 	 String JAVA_CONFIG_FILE 			= "/src/main/resources/" + CONFIG_FILE;
 	 String JAVA_WEBAPP_CONFIG_FILE 	= "/src/main/webapp/resources/" + CONFIG_FILE;
@@ -92,6 +99,8 @@ public interface PluginConstants {
 	 String SERVER_SHUTDOWN_PORT		= "-Dserver.shutdown.port=";
 	
 	//Constants for NodeJs Plugin
+	 String NODE_EXE_PATH				= "\\node.exe";
+	 String NODEJS_DIR_NAME				= "NodeJS";
 	 String NODE_CONFIG_FILE 			= "/source/public/resources/" + CONFIG_FILE;
 	 String NODE_CMD		 			= "node";
 	 String NODE_SERVER_FILE			= "server.js";
@@ -105,6 +114,8 @@ public interface PluginConstants {
 	 String NODE_SQL_FILE 				= "/site.sql";
 	
 	//Constants for SharePoint Plugin
+	 String STSADM_PATH					= "\\Program Files\\Common Files\\Microsoft Shared\\Web Server Extensions\\12\\BIN\\STSADM.EXE";
+	 String SP_DIR_NAME					= "system32";
 	 String SHAREPOINT_STSADM 			= "stsadm";
 	 String SHAREPOINT_RESTORE 			= " restore";
 	 String SHAREPOINT_ADDSOLUTION 		= "addsolution";

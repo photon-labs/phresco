@@ -25,13 +25,14 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -114,12 +115,40 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 		InputStreamReader isr = null;
 		FileWriter fileWriter = null;
 		try {
-			Commandline cl = new Commandline(NODE_CMD);
-			String[] args1 = { NODE_SERVER_FILE, environmentName };
-			cl.addArguments(args1);
-			cl.setWorkingDirectory(baseDir.getPath() + "/source");
-			Process proc = cl.execute();
-			getLog().info("server started");
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			String path = "";
+			boolean tempConnectionAlive = false;
+			String mavenHome = System.getProperty(JAVA_LIB_PATH);
+			String[] split = mavenHome.split(";");
+			for (int i = 0; i < split.length; i++) {
+				path = split[i];
+				if (path.indexOf(NODEJS_DIR_NAME) != -1) {
+					break;
+				}
+			}
+
+			ProcessBuilder pb = new ProcessBuilder(path + NODE_EXE_PATH);
+			File workingDirectory = new File(baseDir + FORWARD_SLASH
+					+ PROJECT_FOLDER);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(NODE_SERVER_FILE);
+			commands.add(environmentName);
+			pb.directory(workingDirectory);
+			Process proc = pb.start();
+			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
+					.getName(), environmentName);
+			for (SettingsInfo serverDetails : settingsInfos) {
+				String serverhost = serverDetails.getPropertyInfo(Constants.SERVER_HOST).getValue();
+				int serverport = Integer.parseInt(serverDetails.getPropertyInfo(Constants.SERVER_PORT).getValue());
+				String serverProtocol = serverDetails.getPropertyInfo(Constants.SERVER_PROTOCOL).getValue();
+				 tempConnectionAlive =isConnectionAlive(serverProtocol, serverhost, serverport);
+			}
+			if(!tempConnectionAlive) {
+				getLog().info("server startup failed");
+			} else {
+				getLog().info("server started");
+			}
 			File file = new File(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY);
 			if (!file.exists()) {
 				file.mkdirs();
@@ -127,10 +156,12 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 
 			isr = new InputStreamReader(proc.getInputStream());
 			br = new BufferedReader(isr);
-			fileWriter = new FileWriter(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
+			fileWriter = new FileWriter(baseDir.getPath()
+					+ NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
 			LogWriter logWriter = new LogWriter();
 			logWriter.writeLog(br, fileWriter);
 		} catch (Exception e) {
+			getLog().info("server startup failed");
 			throw new MojoExecutionException(e.getMessage());
 		} finally {
 			try {
@@ -149,7 +180,7 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 			}
 		}
 	}
-	
+
 	private void storeEnvName(String envName) throws MojoExecutionException {
 		FileOutputStream fos = null;
 		File file = new File(baseDir.getPath() + File.separator + DOT_PHRESCO_FOLDER + File.separator + NODE_ENV_FILE);
@@ -167,6 +198,18 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 				throw new MojoExecutionException(e.getMessage());
 			}
 		}
+	}
+	
+	public static boolean isConnectionAlive(String protocol, String host, int port) {
+		boolean isAlive = true;
+		try {
+			URL url = new URL(protocol, host, port, "");
+			URLConnection connection = url.openConnection();
+			connection.connect();
+		} catch (Exception e) {
+			isAlive = false;
+		}
+		return isAlive;
 	}
 	
 }
