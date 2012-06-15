@@ -16,6 +16,22 @@
 		<system>Bamboo</system>
 		<url>http://bamboo.ci.codehaus.org/browse/JSTR</url>
 	</ciManagement>
+    
+    <distributionManagement>
+        <repository>
+            <id>${releases.repo.id}</id>
+            <url>${releases.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${snapshots.repo.id}</id>
+            <url>${snapshots.repo.url}</url>
+        </snapshotRepository>
+        <site>
+            <id>phresco</id>
+            <name>Phresco</name>
+            <url>scp://phresco.org/home/public_html/</url>
+        </site>
+    </distributionManagement>
 	
 	<developers>
 		<developer>
