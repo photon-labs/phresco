@@ -95,6 +95,7 @@ import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
@@ -236,6 +237,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException("Project updation failed");
 			}
 		}
+		if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
+			createSqlFolder(delta, path);
+		}
 		updatePomProject(delta,projectInfoClone);
 		try {
 			if (flag) {
@@ -249,29 +253,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			throw new PhrescoException(e);
 		}
 		return new ProjectImpl(delta);
-	}
-
-	/**
-	 * Update PDF document with the selected Modules
-	 * @param projectInfo
-	 * @param path
-	 * @throws PhrescoException
-	 */
-	private void updateDocument(ProjectInfo projectInfo, File path) throws PhrescoException {
-		List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
-		List<ModuleGroup> jsLibraries = projectInfo.getTechnology().getJsLibraries();
-		if(modules != null || jsLibraries != null) {
-			ProjectInfo selectecdModule = SelectecdModule(projectInfo,path);
-			ClientResponse updateDocumentResponse = PhrescoFrameworkFactory.getServiceManager().updateDocumentProject(selectecdModule);
-			if (updateDocumentResponse.getStatus() != 200) {
-				throw new PhrescoException("Project updation failed");
-			}
-			try {
-				extractArchive(updateDocumentResponse, projectInfo);
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
-		}
 	}
 
 	/**
@@ -1920,6 +1901,46 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 throw new PhrescoException(e);
 		 }
 	 }
+	 
+	 protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
+			String databaseType = "";
+			try {
+				String parentFile = path.getParentFile().getParent();
+				List<Database> databaseList = info.getTechnology().getDatabases();
+				String techId = info.getTechnology().getId();
+				if (databaseList == null || databaseList.size() == 0) {
+					return;
+				}
+				File mysqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
+				File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
+				for (Database db : databaseList) {
+					databaseType = db.getName().toLowerCase();
+					List<String> versions = db.getVersions();
+					for (String version : versions) {
+						String sqlPath = databaseType + File.separator + version.trim();
+						File sqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + sqlPath);
+						sqlFolder.mkdirs();
+						if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
+								&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
+							FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
+						} else {
+							File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
+							sqlFile.createNewFile();
+						}
+					}
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	 
+		private File getMysqlVersionFolder(File mysqlFolder) {
+			File[] mysqlFolderFiles = mysqlFolder.listFiles();
+			if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
+				return mysqlFolderFiles[0];
+			}
+			return null;
+		}
 
 	 /**
 	/* Delete the Sql Folder 

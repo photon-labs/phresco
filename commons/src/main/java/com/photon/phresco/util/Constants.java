@@ -115,4 +115,6 @@ public interface Constants {
 
     //Action constants
     String TEST_FUNCTIONAL = "Functional";
+	String SITE_SQL = "site.sql";
+	String DB_MYSQL   = "mysql";
 }
