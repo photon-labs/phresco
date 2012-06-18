@@ -155,6 +155,5 @@ public interface ServerConstants {
 
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "This operation is not allowed";
 	
-	String SITE_SQL = "site.sql";
-	String DB_MYSQL   = "mysql";
+
 }

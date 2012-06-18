@@ -30,9 +30,9 @@
             <id>phresco</id>
             <name>Phresco</name>
             <url>scp://phresco.org/home/public_html/</url>
-        </site>
+       </site>
     </distributionManagement>
-	
+   	
 	<developers>
 		<developer>
 			<id>huntc</id>
@@ -312,29 +312,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 	
-   <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>dev-snapshots</id>
-                    <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-                </snapshotRepository>
-                <repository>
-                    <id>dev-releases</id>
-                    <url>http://23.21.177.233:8080/nexus/content/repositories/releases/</url>
-                </repository>
-                 <site>
-                    <id>phresco</id>
-                    <name>Phresco</name>
-                    <url>scp://phresco.org/home/public_html/</url>
-                </site>
-            </distributionManagement>
-       </profile>
-	</profiles>
-	
+   
+                 
+   
 </project>
