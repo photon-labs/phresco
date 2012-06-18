@@ -338,7 +338,8 @@ public interface FrameworkConstants {
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
     String REQ_ANDROID_DEVICE = "device";
-    String REQ_IPHONE_DEVICE = "device"; 
+    String REQ_IPHONE_DEVICE = "device";
+    String REQ_IPHONE_SIMULATOR = "simulator";
     String REQ_ANDROID_DEFAULT = "default";
     String REQ_FROM_TAB = "fromTab";
     String REQ_FROM_TAB_TEST = "Test";
@@ -636,6 +637,11 @@ public interface FrameworkConstants {
      */
     String HIDE_LOG_MSG ="Only Error Messages will be displayed";
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
+    
+    /*
+     * Quality Info keys
+     */
+    String MSG_IPHONE_DEPLOY ="Project will be deployed to device, which is connected first.";
     
     /*
      * login keys

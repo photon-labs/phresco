@@ -505,11 +505,11 @@ public class Build extends FrameworkBaseAction {
 			String techId = project.getProjectInfo().getTechnology().getId();
 			if (TechnologyTypes.IPHONES.contains(techId)) {
 				valuesMap.put(IPHONE_BUILD_NAME, buildInfo.getBuildName());
-				//if deploy to device is selected we have to pass device deploy param as additional param
-				if(StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_DEVICE)) {
-					valuesMap.put(DEVICE_DEPLOY, TRUE);
-				} else {
+				//if deploy to device is selected we have to pass device deploy param as additional param				
+				if (StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_SIMULATOR)) {
 					valuesMap.put(IPHONE_SIMULATOR_VERSION, simulatorVersion);
+				} else {
+					valuesMap.put(DEVICE_DEPLOY, TRUE);
 				}
 			} else {
 				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
