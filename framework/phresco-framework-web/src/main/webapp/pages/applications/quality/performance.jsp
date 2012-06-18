@@ -91,7 +91,9 @@
 	</div>
 		
 	<div class="noTestAvail perTabularView" id="dropdownDiv">
-		<div class="resultView" style="float: left;">
+		
+		<div class="resultView" style="float: left;" >
+			<strong class="noTestAvail" id="dropdownDiv"><s:text name="label.test.result.view"/></strong> 
 			<select id="resultView" name="resultView232"> 
 				<option value="tabular" >Tabular View</option>
 				<option value="graphical" >Graphical View</option>
