@@ -22,10 +22,12 @@ package com.photon.phresco.framework.commons;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,8 +35,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
@@ -48,6 +48,8 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
@@ -65,6 +67,7 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.exception.PhrescoPomException;
+import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
@@ -541,6 +544,35 @@ public class ApplicationsUtil implements FrameworkConstants {
         S_LOGGER.debug("Going to return from applications util");
 		return targets;
     }
-}
-
 	
+	public static void storeAsJSON(File file, List<Reports> reports) throws PhrescoException {
+		try {
+			Gson gson = new Gson();
+			String json = gson.toJson(reports);
+            FileOutputStream fos = new FileOutputStream(file, false);
+            fos.write(json.getBytes());
+            fos.close();
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
+	
+	public static List<Reports> readReportConfig(File file) throws PhrescoException {
+		try {
+			BufferedReader reader = null;
+			if (file.exists()) {
+				Gson gson = new Gson();
+				reader = new BufferedReader(new FileReader(file));
+				Type type = new TypeToken<List<Reports>>(){}.getType();
+				List<Reports> reports = gson.fromJson(reader, type);
+				reader.close();
+				
+				return reports;
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		
+		return null;
+	}
+}

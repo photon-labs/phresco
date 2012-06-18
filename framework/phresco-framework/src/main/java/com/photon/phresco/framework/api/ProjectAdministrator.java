@@ -45,6 +45,7 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.Reports;
 
 public interface ProjectAdministrator {
 
@@ -565,6 +566,6 @@ public interface ProjectAdministrator {
 	 */
 	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
 
-	void getReports(ProjectInfo projectInfo)throws PhrescoException;
+	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
 	 
 }

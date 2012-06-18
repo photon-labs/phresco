@@ -1985,8 +1985,11 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			return null;
 		}
 
-	@Override
-	public void getReports(ProjectInfo projectInfo) throws PhrescoException {
-		List<Reports> reports = PhrescoFrameworkFactory.getServiceManager().getReports(projectInfo.getTechnology().getId());
+	public List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException {
+		try {
+			return PhrescoFrameworkFactory.getServiceManager().getReports(projectInfo.getTechnology().getId());
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
 	}
 }

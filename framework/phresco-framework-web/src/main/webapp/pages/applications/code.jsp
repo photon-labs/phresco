@@ -17,7 +17,6 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.util.TechnologyTypes"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ include file="progress.jsp" %>

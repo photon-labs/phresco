@@ -458,6 +458,7 @@
 			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
 			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
 			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+			<input type="hidden" name="fromTab" value="features">
 	</div>
     </form>
     

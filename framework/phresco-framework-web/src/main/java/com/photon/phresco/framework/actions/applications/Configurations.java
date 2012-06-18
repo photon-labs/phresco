@@ -51,7 +51,7 @@ public class Configurations extends FrameworkBaseAction {
     private String dynamicError = "";
     private boolean isValidated = false;
     private String envName = null;
-	private String configType = null;
+    private String configType = null;
     private String oldConfigType = null;
 	private String envError = null;
 	private String emailError = null;
@@ -128,6 +128,10 @@ public class Configurations extends FrameworkBaseAction {
         try {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
+            if(!validate(administrator, null)) {
+                isValidated = true;
+                return Action.SUCCESS;
+            }
             SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
             List<PropertyInfo> propertyInfoList = new ArrayList<PropertyInfo>();
             List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
@@ -173,11 +177,6 @@ public class Configurations extends FrameworkBaseAction {
             getHttpRequest().setAttribute(REQ_PROJECT, project);
             String[] environments = getHttpRequest().getParameterValues(ENVIRONMENTS);
 
-            if(!validate(administrator, null)) {
-                isValidated = true;
-                return Action.SUCCESS;
-            }
-            
             StringBuilder sb = new StringBuilder();
             for (String envs : environments) { 
                 if (sb.length() > 0) sb.append(',');
@@ -333,6 +332,11 @@ public class Configurations extends FrameworkBaseAction {
 		}
     	boolean validate = true;
     	String[] environments = getHttpRequest().getParameterValues(ENVIRONMENTS);
+    	
+    	if (StringUtils.isEmpty(configType)) {
+    		setTypeError(getText(NO_CONFIG_TYPE));
+    		return false;
+    	}
     	
     	if (StringUtils.isEmpty(configName.trim())) {
 	   		setNameError(ERROR_NAME);

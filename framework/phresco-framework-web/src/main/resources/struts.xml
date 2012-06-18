@@ -144,10 +144,6 @@
             <result name="openAttrPopup">/pages/applications/add_appinfo_attr.jsp</result>
         </action>
         
-        <action name="updateHiddenFields" method="updateHiddenFields" class="com.photon.phresco.framework.actions.applications.Applications">
-            <result type="json" />
-        </action>
-        
         <action name="quality" method="quality" class="com.photon.phresco.framework.actions.applications.Quality">
             <result name="quality">/pages/applications/quality/quality.jsp</result>
         </action>
@@ -605,5 +601,26 @@
         </action>
         
         <action name="getScreenshot" method="getScreenshot" class="com.photon.phresco.framework.actions.applications.ImgStreaming"/>
+        
+        <!-- Site Report  -->
+        <action name="veiwSiteReport" method="viewSiteReport" class="com.photon.phresco.framework.actions.applications.SiteReport">
+            <result name="siteReport">/pages/applications/siteReport/site_report.jsp</result>
+        </action>
+        
+        <action name="checkForSiteReport" method="checkForSiteReport" class="com.photon.phresco.framework.actions.applications.SiteReport">
+            <result name="siteReport">/pages/applications/siteReport/iframe.jsp</result>
+        </action>
+        
+        <action name="siteConfigure" method="configure" class="com.photon.phresco.framework.actions.applications.SiteReport">
+            <result name="configure">/pages/applications/siteReport/configure.jsp</result>
+        </action>
+        
+        <action name="generateReport" method="generateSiteReport" class="com.photon.phresco.framework.actions.applications.SiteReport">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="createReportConfig" method="createReportConfig" class="com.photon.phresco.framework.actions.applications.SiteReport">
+<!--             <result name="configure">/pages/applications/siteReport/configure.jsp</result> -->
+        </action>
     </package>
 </struts>

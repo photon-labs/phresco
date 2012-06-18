@@ -8,6 +8,7 @@ public interface FrameworkConstants {
     /*
      * Common constants
      */
+	String FEATURES = "features"; 
     int JOB_STATUS_NOTOK = -1;
     String FOLDER_DOT_PHRESCO = ".phresco";
     String PHRESCO_HOME = "PHRESCO_HOME";
@@ -139,6 +140,7 @@ public interface FrameworkConstants {
     String MVN_IPHONE_FUNCTIONAL_COMMAND = "mvn xcode:instruments"; // IPhone functional test command
     String MVN_IPHONE_NATIVE_UNITTEST = "mvn xcode:xcodebuild"; // IPhone unit test command
     String MVN_IPHONE_CODE_VALIDATE = "mvn xcode:codevalidate"; // IPhone code validate command
+    String MVN_SITE_COMMAND = "mvn site";
     String PHRESCO_FILE_SERVER_PORT_NO = "phresco.file.server.port";
     String APPLICATIONS = "applications";
     String SETTINGS = "settings";
@@ -604,6 +606,7 @@ public interface FrameworkConstants {
     String FAILURE_CONFIGURATION = "Configuration {0} creation failed";
     String CONFIG_ALREADY_EXIST = "Configuration type already created for this environment";
     String SETTINGS_ALREADY_EXIST = "Settings type already created for this environment";
+    String NO_CONFIG_TYPE = "configuration.type.info";
     /*
      * Create Environment keys
      */
@@ -1003,4 +1006,9 @@ public interface FrameworkConstants {
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
+   
+   /* Site report */
+   String REQ_SITE_REPORT = "siteReport";
+   String REQ_SITE_REPORT_PATH = "siteReportPath";
+   String SITE_TARGET = "target/site";
   }
