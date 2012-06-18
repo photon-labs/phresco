@@ -1,74 +1,55 @@
-<?php /*
- * ###
- * Archetype - phresco-php-archetype
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */ ?>
 <?php
 /*	Author by {phresco} QA Automation Team	*/
 
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Autoload.php';
 include 'phresco/tests/basescreen.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+require_once 'phresco/tests/phpwebdriver/RequiredFunction.php';
 
-class PhpCommonFun extends PHPUnit_Extensions_SeleniumTestCase
+class PhpCommonFun extends RequiredFunction
 {
-	private $properties;
 	private $host;
 	private $port;
 	private $context;
 	private $protocol;
 	private $serverUrl;
+	private $browser;
 	private $screenShotsPath;
 	
     protected function setUp(){ 
-    	 $doc = new DOMDocument();
-		$doc->load('src/test/php/phresco/tests/phresco-env-config.xml');
-		$environment = $doc->getElementsByTagName("Server");
-		foreach( $environment as $Server )
-		{
-			$protocols= $Server->getElementsByTagName("protocol");
-			$protocol = $protocols->item(0)->nodeValue;
-			
-			$hosts = $Server->getElementsByTagName("host");
-			$host = $hosts->item(0)->nodeValue;
-			
-			$ports = $Server->getElementsByTagName("port");
-			$port = $ports->item(0)->nodeValue;
-			
-			$contexts = $Server->getElementsByTagName("context");
-			$context = $contexts->item(0)->nodeValue;
-		}
-			$config = $doc->getElementsByTagName("Browser");
-			$browser = $config->item(0)->nodeValue;
-		
-		$this->setBrowser('*' . $browser);
-		$serverUrl = $protocol . ':'.'//' . $host . ':' . $port . '/'. $context . '/';
-		echo $serverUrl;
-		$this->setBrowserUrl($serverUrl);
-		$screenShotsPath = getcwd()."//"."target\surefire-reports\screenshots";
-		if (!file_exists($screenShotsPath)) {
-			mkdir($screenShotsPath);
-		}
-    }
-    public function Browser(){  
+	
 		$doc = new DOMDocument();
-		$doc->load('src/test/php/phresco/tests/phresco-env-config.xml');
-		$environment = $doc->getElementsByTagName("Server");
-		foreach( $environment as $Server )
+		
+		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
+		
+		$configuration = $doc->getElementsByTagName("Server");
+		
+		$config = $doc->getElementsByTagName("Browser");
+		$browser = $config->item(0)->nodeValue;
+		
+    	$this->webdriver = new WebDriver("localhost", 4444); 
+		
+       	$this->webdriver->connect($browser);
+		
+		//$this->webdriver->selectWindow("login");
+		
+        $screenShotsPath = getcwd()."/surefire-reports/screenshots";
+		
+		if (!file_exists($screenShotsPath)) {
+		
+			mkdir($screenShotsPath);
+		
+		}
+    
+	}
+    public function Browser(){  
+	
+		$doc = new DOMDocument();
+		
+		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
+		
+		$configuration = $doc->getElementsByTagName("Server");
+		
+		foreach( $configuration as $Server )
 		{
 			$protocols= $Server->getElementsByTagName("protocol");
 			$protocol = $protocols->item(0)->nodeValue;
@@ -81,13 +62,14 @@ class PhpCommonFun extends PHPUnit_Extensions_SeleniumTestCase
 			
 			$contexts = $Server->getElementsByTagName("context");
 			$context = $contexts->item(0)->nodeValue;
-		}
-		$serverUrl = $protocol .':'. '//' . $host . ':' . $port . '/'. $context . '/';
-		$this->open($serverUrl);
-		$this->waitForPageToLoad(WAIT_FOR_NEXT_PAGES);
-		$this->windowMaximize();
-		$this->windowFocus();
-		sleep(WAIT_FOR_NEXT_LINE);
+		}	
+    	
+        $serverUrl = $protocol . ':'.'//' . $host . ':' . $port . '/'. $context . '/';
+		
+		$this->webdriver->get($serverUrl);
+		
     }
-}
+
+}	
+
 ?>
