@@ -56,6 +56,7 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.site.Reports;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -576,6 +577,17 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
     	ServiceManagerCache.getInstance().remove(APPTYPES_FILE);
     	initCache();
     }
+
+    @Override
+	public List<Reports> getReports(String techId) throws PhrescoException {
+		Client client = ClientHelper.createClient();
+		FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+		WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_REPORTS + "/" + techId);
+		Builder builder = resource.accept(MediaType.APPLICATION_JSON);
+		GenericType<List<Reports>> genericType = new GenericType<List<Reports>>() {};
+		List<Reports> reportList = builder.get(genericType);
+		return reportList;
+	}
 }
 
 class ServiceManagerCache {

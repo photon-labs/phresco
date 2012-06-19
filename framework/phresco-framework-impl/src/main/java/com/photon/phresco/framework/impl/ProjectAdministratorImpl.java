@@ -255,6 +255,30 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return new ProjectImpl(delta);
 	}
 
+
+	/**
+	 * Update PDF document with the selected Modules
+	 * @param projectInfo
+	 * @param path
+	 * @throws PhrescoException
+	 */
+	private void updateDocument(ProjectInfo projectInfo, File path) throws PhrescoException {
+		List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
+		List<ModuleGroup> jsLibraries = projectInfo.getTechnology().getJsLibraries();
+		if(modules != null || jsLibraries != null) {
+			ProjectInfo selectecdModule = SelectecdModule(projectInfo,path);
+			ClientResponse updateDocumentResponse = PhrescoFrameworkFactory.getServiceManager().updateDocumentProject(selectecdModule);
+			if (updateDocumentResponse.getStatus() != 200) {
+				throw new PhrescoException("Project updation failed");
+			}
+			try {
+				extractArchive(updateDocumentResponse, projectInfo);
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	}
+	
 	/**
 	 * Update dependency as selected Module in the pom file
 	 * @param delta

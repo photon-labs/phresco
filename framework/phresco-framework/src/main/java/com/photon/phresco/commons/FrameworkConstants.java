@@ -476,6 +476,7 @@ public interface FrameworkConstants {
     String PHRESCO_JFORUM_URL = "phresco.JForum.url";
     
     String REST_APPS_PATH = "/apps";
+    String REST_REPORTS = "/reports";
     String REST_APPS_UPDATE_PATH = "/apps/update";
     String REST_APPS_UPDATEPOM_PATH= "/apps/updatepom";
     String REST_APPS_UPDATEDOC_PATH = "/apps/updatedocs";
