@@ -14,13 +14,13 @@ class WordPressCommonFun extends RequiredFunction
 	private $browser;
 	private $screenShotsPath;
 	
-	protected function setUp()
-	{
+	protected function setUp(){
+	
 		$doc = new DOMDocument();
 		
 		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		
-		$configuration = $doc->getElementsByTagName("Server");
+		$environment = $doc->getElementsByTagName("Server");
 		
 		$config = $doc->getElementsByTagName("Browser");
 		$browser = $config->item(0)->nodeValue;
@@ -39,15 +39,15 @@ class WordPressCommonFun extends RequiredFunction
 	}
 	
 	
-	public function Title()
-	{
+	public function Title(){
+	
 		$doc = new DOMDocument();
 		
 		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		
-		$configuration = $doc->getElementsByTagName("Server");
+		$environment = $doc->getElementsByTagName("Server");
 		
-		foreach( $configuration as $Server )
+		foreach( $environment as $Server )
 		{
 			$protocols= $Server->getElementsByTagName("protocol");
 			$protocol = $protocols->item(0)->nodeValue;
@@ -60,7 +60,7 @@ class WordPressCommonFun extends RequiredFunction
 			
 			$contexts = $Server->getElementsByTagName("context");
 			$context = $contexts->item(0)->nodeValue;
-		}	
+		}
     	
         $serverUrl = $protocol . ':'.'//' . $host . ':' . $port . '/'. $context . '/';
 		

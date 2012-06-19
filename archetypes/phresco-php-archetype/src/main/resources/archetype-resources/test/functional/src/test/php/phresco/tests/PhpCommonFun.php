@@ -21,7 +21,7 @@ class PhpCommonFun extends RequiredFunction
 		
 		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		
-		$configuration = $doc->getElementsByTagName("Server");
+		$environment = $doc->getElementsByTagName("Server");
 		
 		$config = $doc->getElementsByTagName("Browser");
 		$browser = $config->item(0)->nodeValue;
@@ -29,8 +29,6 @@ class PhpCommonFun extends RequiredFunction
     	$this->webdriver = new WebDriver("localhost", 4444); 
 		
        	$this->webdriver->connect($browser);
-		
-		//$this->webdriver->selectWindow("login");
 		
         $screenShotsPath = getcwd()."/surefire-reports/screenshots";
 		
@@ -47,9 +45,9 @@ class PhpCommonFun extends RequiredFunction
 		
 		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		
-		$configuration = $doc->getElementsByTagName("Server");
+		$environment = $doc->getElementsByTagName("Server");
 		
-		foreach( $configuration as $Server )
+		foreach( $environment as $Server )
 		{
 			$protocols= $Server->getElementsByTagName("protocol");
 			$protocol = $protocols->item(0)->nodeValue;
@@ -62,7 +60,7 @@ class PhpCommonFun extends RequiredFunction
 			
 			$contexts = $Server->getElementsByTagName("context");
 			$context = $contexts->item(0)->nodeValue;
-		}	
+		}
     	
         $serverUrl = $protocol . ':'.'//' . $host . ':' . $port . '/'. $context . '/';
 		
