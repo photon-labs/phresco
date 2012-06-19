@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.jstestrunner</groupId>
 	<artifactId>jstestrunner-junit</artifactId>
-	<version>1.2.0.2001-SNAPSHOT</version>
+	<version>1.2.0.3001-SNAPSHOT</version>
 	<name>JS Test Runner for JUnit</name>
 	<description>Runs JavaScript headlessly and reports details of the test back through JUnit.</description>
 
@@ -27,7 +27,13 @@
             <id>${snapshots.repo.id}</id>
             <url>${snapshots.repo.url}</url>
         </snapshotRepository>
-    </distributionManagement>
+          <downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
+                <site>
+                        <id>org.codehaus.js-testrunner</id>
+                        <name>Website</name>
+                        <url>dav:https://dav.codehaus.org/js-testrunner/</url>
+                </site>
+        </distributionManagement>
 	
 	<developers>
 		<developer>
@@ -59,15 +65,6 @@
 			<url>http://octopod.org</url>
 		</developer>
 	</developers>
-	
-	<distributionManagement>
-		<downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
-		<site>
-			<id>org.codehaus.js-testrunner</id>
-			<name>Website</name>
-			<url>dav:https://dav.codehaus.org/js-testrunner/</url>
-		</site>
-	</distributionManagement>
 	
 	<inceptionYear>2011</inceptionYear>
 	
