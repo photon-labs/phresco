@@ -266,8 +266,11 @@
         });
     });
     
+ 	// Its used by iphone alone
     function deploy(obj) {
+    	$('#popup_div').empty();
         $("#build-output").empty();
+        $("#build-output").html('<%= FrameworkConstants.MSG_IPHONE_DEPLOY %>');
         var currentId = obj.id;
         var idArray = currentId.split('#');
         var buildNumber = idArray[1];

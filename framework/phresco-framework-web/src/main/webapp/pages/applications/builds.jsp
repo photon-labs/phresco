@@ -116,9 +116,11 @@
 		                            </a>
 		                            
 		                            <% 
+		                            	boolean createIpa = false;
+		                            	boolean deviceDeploy = false;
 		                            	if (TechnologyTypes.IPHONES.contains(technology)) {
-		                            		boolean createIpa = MapUtils.getBooleanValue(buildInfo.getOptions(), "canCreateIpa");
-		                            		boolean deviceDeploy = MapUtils.getBooleanValue(buildInfo.getOptions(), "deviceDeploy");
+		                            		createIpa = MapUtils.getBooleanValue(buildInfo.getOptions(), "canCreateIpa");
+		                            		deviceDeploy = MapUtils.getBooleanValue(buildInfo.getOptions(), "deviceDeploy");
 		                            		if (createIpa && deviceDeploy)  {
 		                            %>
 		                                <a href="<s:url action='downloadBuildIpa'> 
@@ -138,10 +140,14 @@
 		                                <a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="deployAndroid(this);">
 		                                    <img src="images/icons/deploy.png" />
 		                                </a>
+		                            <% } else if (TechnologyTypes.IPHONES.contains(technology) && createIpa && deviceDeploy) { %>
+		                                <a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="deploy(this);">
+		                                 <img src="images/icons/deploy.png" />  
+		                                </a>    
 		                            <% } else if (TechnologyTypes.IPHONES.contains(technology)) { %>
 		                                <a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="deployIphone(this);">
 		                                 <img src="images/icons/deploy.png" />  
-		                                </a>    
+		                                </a>   
 		                            <% } else if (!TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
 				       	  				<a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="generateBuild('<%= projectCode %>', 'deploy', this);">			       	  				
 				       	  					<img src="images/icons/deploy.png" />
