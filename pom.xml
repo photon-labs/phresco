@@ -30,13 +30,14 @@
     </scm>
     
     <modules>
+        <module>phresco-pom</module>
         <module>commons</module>
         <module>framework</module>
         <module>service</module>
+        <module>service-client</module>
         <module>archetypes</module>
         <module>libraries</module>
         <module>plugins</module>  
-		<module>phresco-pom</module> 
     </modules>
 
      <properties>
