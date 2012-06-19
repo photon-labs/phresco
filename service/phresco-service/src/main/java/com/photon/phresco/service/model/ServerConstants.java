@@ -154,11 +154,15 @@ public interface ServerConstants {
 	String REST_API_QUERY_PARAM_OFFSET = "offset";
 
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "This operation is not allowed";
-		
+	
 	 /*
      * Constants for MongoDB Collections
      */
-	
+
+	String CUSTOMERS_COLLECTION_NAME = "customers";
+	String VIDEOS_COLLECTION_NAME = "videos";
+	String USERS_COLLECTION_NAME = "users";
+	String DOWNLOAD_COLLECTION_NAME = "downloads";
 	String MODULES_COLLECTION_NAME = "modules";
 	String APPTYPES_COLLECTION_NAME = "apptypes";
 	String PILOTS_COLLECTION_NAME = "pilots";
