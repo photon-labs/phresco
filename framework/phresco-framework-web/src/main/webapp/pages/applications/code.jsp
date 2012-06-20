@@ -34,16 +34,27 @@
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 
 <script src="js/reader.js" ></script>
+<script type="text/javascript" src="js/home-header.js" ></script>
 
 <%
 	String projectCode = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
 	Project project = (Project)request.getAttribute(FrameworkConstants.REQ_PROJECT);
 	String technology = (String)project.getProjectInfo().getTechnology().getId();
+	String sonarError = (String)request.getAttribute(FrameworkConstants.REQ_ERROR);
+	String disabledStr = "";
+	if (StringUtils.isNotEmpty(sonarError)) {
+		disabledStr = "disabled";
+	}
 %>
 
 <div class="operation">
-    <input id="validate" type="button" value="Validate" class="primary btn">
+    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
 </div>
+<% if (StringUtils.isNotEmpty(sonarError)) { %>
+	<div class="alert-message warning sonar">
+		<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+	</div>
+<% } %>
  
 <div id="sonar_report" class="sonar_report">
 
@@ -55,9 +66,19 @@
 
 <script>
     $(document).ready(function() {
+		/** To enable/disable the validate button based on the sonar startup **/
+    	<% if (StringUtils.isNotEmpty(sonarError)) { %>
+    			$("#validate").removeClass("primary");	
+    			$("#validate").addClass("disabled");
+    	<% } else { %>
+    			$("#validate").addClass("primary");	
+				$("#validate").removeClass("disabled");
+    	<% } %>
+
     	changeStyle("code");
     	sonarReport();
-    	
+    	enableScreen();
+		
         $('#validate').click(function() {
         	<% 	
         		if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)){

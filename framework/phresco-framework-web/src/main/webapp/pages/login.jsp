@@ -14,7 +14,7 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet" href="themes/photon/css/red.css" class="changeme">
+<link type="text/css" rel="stylesheet"  class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -62,17 +62,22 @@ $(document).ready(function() {
 } */
 
 function showWelcomeImage() {
-    var theme = $.cookie("css");
+   
+ 	if (localStorage["color"] != null) {
+		$("link[id='theme']").attr("href", localStorage["color"]);
+	} else {
+		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+	}
+ 	
+ 	var theme = localStorage["color"]; 
+
     if(theme == "themes/photon/css/blue.css") {
         $('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
         $('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
         $('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
     }
-}
 
-if($.cookie("css")) {
-	 $("link.changeme").attr("href",$.cookie("css"));
-	}
+}
 
 </script>
 </head>

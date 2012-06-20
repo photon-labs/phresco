@@ -32,6 +32,7 @@ import com.photon.phresco.util.SizeConstants;
 public class SettingsTemplate implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    String id;
     //Database, Server, Email
     private String type;
     //List of properties available for the template
@@ -50,7 +51,15 @@ public class SettingsTemplate implements Serializable {
         this.appliesTo = appliesTo;
     }
 
-    public String getType() {
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
         return type;
     }
 

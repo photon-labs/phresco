@@ -304,6 +304,7 @@
 				$(".errorMsgLabel").html(errMsg);
 				$("#errorDiv").show();
 				$("#testResultFile, #testSuite, #testSuiteDisplay, #testResultLbl, #resultView").hide();
+				enableScreen();
 			}
 
 			function changeView() {

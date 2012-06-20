@@ -37,6 +37,7 @@ import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.Reports;
 import com.sun.jersey.api.client.ClientResponse;
 
 /**
@@ -196,6 +197,6 @@ public interface ServiceManager {
 	
 	// To reset the AppTypes in cache
 	void reSetCacheAppTypes() throws PhrescoException;
-
-
+	
+	List<Reports> getReports(String techId) throws PhrescoException; 
 }

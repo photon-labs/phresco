@@ -119,6 +119,7 @@
 			<directory>test/functional</directory> 
 			<includes>
 				<include>TestSuite.js</include>
+				<include>HelloWorld.js</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

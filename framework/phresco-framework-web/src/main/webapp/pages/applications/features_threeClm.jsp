@@ -139,7 +139,6 @@
         session.setAttribute(projectInfo.getCode(), projectInfo);
         projectCode = projectInfo.getCode();
     }
-    
     String configServerNames = (String) request.getAttribute(FrameworkConstants.REQ_CONFIG_SERVER_NAMES);
     String configDbNames = (String) request.getAttribute(FrameworkConstants.REQ_CONFIG_DB_NAMES);
     
@@ -204,15 +203,9 @@
 									for (ModuleGroup coreModule : coreModules) {
 										disabledStr = "";
 										checkedStr = "";
-									    
 									    String pilotVersion = "";
 										if (MapUtils.isNotEmpty(alreadySelectedModules) && StringUtils.isNotEmpty(alreadySelectedModules.get(coreModule.getId()))) {
 											pilotVersion = alreadySelectedModules.get(coreModule.getId());
-											checkedStr = "checked";
-											disabledStr = "disabled";
-										}
-										if (MapUtils.isNotEmpty(pilotModules) && StringUtils.isNotEmpty(pilotModules.get(coreModule.getId()))) {
-											pilotVersion = pilotModules.get(coreModule.getId());
 											checkedStr = "checked";
 											disabledStr = "disabled";
 										}
@@ -220,6 +213,7 @@
 											checkedStr = "checked";
 										} 
 								%>
+								
 					                <span class="siteaccordion closereg">
 					                	<span>
 					                		<input type="checkbox" class="<%= FrameworkConstants.REQ_CORE_MODULE %>" name="<%= FrameworkConstants.REQ_SELECTEDMODULES %>" 
@@ -319,11 +313,6 @@
 											String pilotVersion = "";
 											if (MapUtils.isNotEmpty(alreadySelectedJsLibs) && StringUtils.isNotEmpty(alreadySelectedJsLibs.get(jslibrary.getId()))) {
 												pilotVersion = alreadySelectedJsLibs.get(jslibrary.getId());
-												checkedStr = "checked";
-												disabledStr = "disabled";
-											}
-											if (MapUtils.isNotEmpty(pilotJsLibs) && StringUtils.isNotEmpty(pilotJsLibs.get(jslibrary.getId()))) {
-												pilotVersion = pilotJsLibs.get(jslibrary.getId());
 												checkedStr = "checked";
 												disabledStr = "disabled";
 											}
@@ -434,11 +423,7 @@
 												checkedStr = "checked";
 												disabledStr = "disabled";
 											}
-											if (MapUtils.isNotEmpty(pilotModules) && StringUtils.isNotEmpty(pilotModules.get(customModule.getId()))) {
-												pilotVersion = pilotModules.get(customModule.getId());
-												checkedStr = "checked";
-												disabledStr = "disabled";
-											}
+											
 											if (MapUtils.isNotEmpty(selectedModules) && selectedModules.get(customModule.getId()) != null) {
 												checkedStr = "checked";
 											} 
@@ -545,6 +530,9 @@
 </div>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		enableScreen();
+	});
 	$('#projectCode').val('<%= projectCode %>'); //this is for changing the sub-tab.
 	$('#fromPage').val('<%= fromPage %>'); //this is for changing the sub-tab.
 </script>

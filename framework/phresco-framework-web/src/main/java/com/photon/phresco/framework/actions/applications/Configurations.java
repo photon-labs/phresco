@@ -1,3 +1,24 @@
+
+/*
+ * ###
+ * Framework Web Archive
+ * 
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
+
 package com.photon.phresco.framework.actions.applications;
 
 import java.util.ArrayList;
@@ -54,8 +75,10 @@ public class Configurations extends FrameworkBaseAction {
     private String configType = null;
     private String oldConfigType = null;
 	private String envError = null;
-	private String remoteDeploy = null;
 	private String emailError = null;
+	private String remoteDeployment = null;
+    
+
 
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -148,6 +171,9 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment") && value == null){
+                     		value="false";
+                     }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -212,7 +238,10 @@ public class Configurations extends FrameworkBaseAction {
             Project project = administrator.getProject(projectCode);
             String envs = getHttpRequest().getParameter(ENVIRONMENT_VALUES);
             String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+            	deleteEnvironment(selectedItems);
+    	    }
+            
             List<Environment> environments = new ArrayList<Environment>();
             if (StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(
@@ -228,12 +257,19 @@ public class Configurations extends FrameworkBaseAction {
                 }
             }
 	    	administrator.createEnvironments(project, environments, false);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	
+			if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+				addActionMessage(getText(UPDATE_ENVIRONMENT));
+			} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+				addActionMessage(getText(DELETE_ENVIRONMENT));
+			} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+				addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+			}
     	} catch(Exception e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -381,7 +417,7 @@ public class Configurations extends FrameworkBaseAction {
             	isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
-            boolean remoteDeply = Boolean.parseBoolean(remoteDeploy);
+            boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
             if(remoteDeply){
                 if ("admin_username".equals(key) || "admin_password".equals(key)) {
                 	isRequired = true;
@@ -488,6 +524,9 @@ public class Configurations extends FrameworkBaseAction {
 					}
             	} else {
 	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
+   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
+                        		value="false";
+                        }
 	                value = value.trim();
 	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
@@ -784,12 +823,12 @@ public class Configurations extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
 	}
 	
 	public String getEmailError() {

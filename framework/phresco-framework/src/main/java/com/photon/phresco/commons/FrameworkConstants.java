@@ -167,6 +167,7 @@ public interface FrameworkConstants {
     String POST = "POST";
     String GET = "GET";
 	String SKIPTESTS = "skipTests";
+	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
     
@@ -306,6 +307,7 @@ public interface FrameworkConstants {
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
+    String REQ_ANDROID_PROFILE_DET = "androidProfileDetails";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
 	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
@@ -336,7 +338,8 @@ public interface FrameworkConstants {
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
     String REQ_ANDROID_DEVICE = "device";
-    String REQ_IPHONE_DEVICE = "device"; 
+    String REQ_IPHONE_DEVICE = "device";
+    String REQ_IPHONE_SIMULATOR = "simulator";
     String REQ_ANDROID_DEFAULT = "default";
     String REQ_FROM_TAB = "fromTab";
     String REQ_FROM_TAB_TEST = "Test";
@@ -448,6 +451,11 @@ public interface FrameworkConstants {
 	String DOT = ".";
 	String SERIAL_NUMBER = "serialNumber";
 	String REQ_XCODE_CONFIGS = "xCodeConfigs";
+	String REQ_IPHONE_SDKS = "iphoneSdks";
+	String REQ_IPHONE_SIMULATOR_SDKS = "iphoneSimulatorSdks";
+	String MAC_OS_SDKS = "macosx";
+	String MAC_DEVICE_SDKS = "iphoneos";
+	String MAC_SIMULATOR_SDKS = "iphonesimulator";
 	
 	String REQ_SERVER_DOWNLOAD_INFO = "serverDownloadInfos";
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
@@ -470,6 +478,7 @@ public interface FrameworkConstants {
     String PHRESCO_JFORUM_URL = "phresco.JForum.url";
     
     String REST_APPS_PATH = "/apps";
+    String REST_REPORTS = "/reports";
     String REST_APPS_UPDATE_PATH = "/apps/update";
     String REST_APPS_UPDATEPOM_PATH= "/apps/updatepom";
     String REST_APPS_UPDATEDOC_PATH = "/apps/updatedocs";
@@ -580,6 +589,7 @@ public interface FrameworkConstants {
      * Code keys
      */
     String FAILURE_CODE_REVIEW = "Code review is not available";
+	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
      * Application Redirection keys
@@ -600,8 +610,18 @@ public interface FrameworkConstants {
     /*
      * Create Environment keys
      */
-    String SUCCESS_ENVIRONMENT = "environment.create.success";
-    String FAILURE_ENVIRONMENT = "environment.create.fail";
+    String CREATE_SUCCESS_ENVIRONMENT = "environment.create.success";
+    String CREATE_FAILURE_ENVIRONMENT = "environment.create.fail";
+    
+    /*
+     * Update Environment keys
+     */
+    String UPDATE_ENVIRONMENT = "environment.update.success";
+    
+    /*
+     * Delete Environment keys
+     */
+    String DELETE_ENVIRONMENT = "environment.deleted.success";
     /*
      * Create Setting keys
      */
@@ -616,6 +636,11 @@ public interface FrameworkConstants {
      */
     String HIDE_LOG_MSG ="Only Error Messages will be displayed";
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
+    
+    /*
+     * Quality Info keys
+     */
+    String MSG_IPHONE_DEPLOY ="Project will be deployed to device, which is connected first.";
     
     /*
      * login keys

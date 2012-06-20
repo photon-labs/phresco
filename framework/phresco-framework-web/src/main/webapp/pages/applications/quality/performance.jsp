@@ -91,7 +91,9 @@
 	</div>
 		
 	<div class="noTestAvail perTabularView" id="dropdownDiv">
+
 		<div class="resultView" style="float: left;">
+		<strong class="noTestAvail" id="dropdownDiv"><s:text name="label.test.result.view"/></strong> 
 			<select id="resultView" name="resultView232"> 
 				<option value="tabular" >Tabular View</option>
 				<option value="graphical" >Graphical View</option>
@@ -191,7 +193,7 @@
     		params = $('form').serialize() + "&";
     	}
     	getCurrentCSS();
-        $('#popup_div').show();
+    	showPopup();
 		performAction('generateJmeter', params, $('#popup_div'));
   		$(document).keydown(function(e) {
 			// ESCAPE key pressed
@@ -209,7 +211,6 @@
     	if (!isBlank($('form').serialize())) {
     		params = $('form').serialize() + "&";
     	}
-	    showLoadingIcon($('#testResultDisplay')); // Loading Icon	
 		performAction('performanceTestResult', params, $('#testResultDisplay'));
     }
 	
@@ -225,11 +226,10 @@
     
     function successIsResultFileAvailable(data) {
        	if (data == false) {
-       		$('.errorMsgLabel').empty();
-       		$('.errorMsgLabel').html("Performance test not yet executed");
        		$("#noFiles").show();
        		testResultNotAvail();
-       	} else {
+       		enableScreen();
+		} else {
        		testResultAvailShowList();
        		performanceTestResultsFiles();
        	}

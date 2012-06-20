@@ -77,6 +77,10 @@ public class ServerConfiguration {
 	private static final String AUTHENTICATION_SERVICE_URL = "phresco.authenticate.url";
 	private static final String EMAIL_EXT_FILE = "phresco.ci.emailext.file";
 	private static final String PHRESCO_SERVER_CONTEXT_NAME = "phresco.server.context.name";
+	private static final String PHRESCO_DB_HOST = "db.host";
+	private static final String PHRESCO_DB_PORT = "db.port";
+	private static final String PHRESCO_DB_NAME = "db.name";
+	private static final String PHRESCO_DB_COLLECTION = "db.defaultcollection";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -87,7 +91,11 @@ public class ServerConfiguration {
 	private String credentialurl;
 	private String authenticateurl;
 	private String serviceContextName;
-
+	private String dbHost;
+	private String dbPort;
+	private String dbName;
+	private String dbDefaultCollectionName;
+	
 	public ServerConfiguration(String fileName) throws PhrescoException {
 		initServerConfig(fileName);
 		initDependencyConfig();
@@ -121,7 +129,7 @@ public class ServerConfiguration {
 			is = this.getClass().getClassLoader().getResourceAsStream(fileName);
 			serverProps = new Properties();
 			serverProps.load(is);
-
+			
 			// Initialize the Server URL
 			this.repositoryURL = serverProps.getProperty(KEY_PHRESCO_MAVEN_REPOSITORY_URL);
 			this.repositoryUser = serverProps.getProperty(KEY_PHRESCO_MAVEN_REPOSITORY_USER);
@@ -131,6 +139,10 @@ public class ServerConfiguration {
 			this.credentialurl = serverProps.getProperty(KEY_CREDENTIAL_URL);
 			this.authenticateurl= serverProps.getProperty(AUTHENTICATION_SERVICE_URL);
 			this.serviceContextName = serverProps.getProperty(PHRESCO_SERVER_CONTEXT_NAME);
+			this.dbHost = serverProps.getProperty(PHRESCO_DB_HOST);
+			this.dbPort = serverProps.getProperty(PHRESCO_DB_PORT);
+			this.dbName = serverProps.getProperty(PHRESCO_DB_NAME);
+			this.dbDefaultCollectionName = serverProps.getProperty(PHRESCO_DB_COLLECTION);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
@@ -251,5 +263,21 @@ public class ServerConfiguration {
 
 	public String getEmailExtFile() {
 		return dependencyConfig.getProperty(EMAIL_EXT_FILE);
+	}
+	
+	public String getDbHost() {
+		return dbHost;
+	}
+	
+	public int getDbPort() {
+		return Integer.parseInt(dbPort);
+	}
+	
+	public String getDbName() {
+		return dbName;
+	}
+	
+	public String getDbCollection() {
+		return dbDefaultCollectionName;
 	}
 }

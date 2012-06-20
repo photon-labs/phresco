@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public class SiteMessages {
 	
-	private static final String BUNDLE_NAME = "com.phresco.pom.site.SiteMessages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "com.phresco.pom.site.siteMessages"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 

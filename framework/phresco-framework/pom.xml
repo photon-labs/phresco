@@ -28,7 +28,11 @@
             <artifactId>phresco-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+		 <dependency>
+            <groupId>com.photon.phresco.pom</groupId>
+            <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>

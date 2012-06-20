@@ -290,7 +290,6 @@
 	}
 	
     $(document).ready(function() {
-    	
     	changeView();
     	escPopup();
     	

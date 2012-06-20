@@ -42,6 +42,7 @@
 
   <build>
 	<directory>do_not_checkin/target</directory>
+	 <finalName>service</finalName>
 	<plugins>
 		<plugin>
 			<groupId>com.photon.phresco.plugins</groupId>

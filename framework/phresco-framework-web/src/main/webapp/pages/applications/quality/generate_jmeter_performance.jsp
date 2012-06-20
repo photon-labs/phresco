@@ -478,7 +478,7 @@
 		} else {
 			var validator = true;
 		    if($('#testName').val() == null || $('#testName').val().trim() == "") {
-		        showErrorMsg('errMsg', "Enter Test Name");
+		        showErrorMsg('errMsg', "Enter Test Result Name");
 			    $("#testName").val("");
 			   	$("#testName").focus();
 				return false;
