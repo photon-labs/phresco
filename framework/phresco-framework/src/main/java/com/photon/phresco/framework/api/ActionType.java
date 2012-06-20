@@ -34,6 +34,7 @@ import com.photon.phresco.framework.actions.JenkinsStart;
 import com.photon.phresco.framework.actions.JenkinsStop;
 import com.photon.phresco.framework.actions.MobileCommand;
 import com.photon.phresco.framework.actions.SharepointNUnitTest;
+import com.photon.phresco.framework.actions.SiteReport;
 import com.photon.phresco.framework.actions.Sonar;
 import com.photon.phresco.framework.actions.StartServer;
 import com.photon.phresco.framework.actions.StopSeleniumServer;
@@ -62,6 +63,7 @@ public interface ActionType {
     ActionType IPHONE_FUNCTIONAL_COMMAND = new IPhoneFunctionalCommand();
     ActionType IPHONE_BUILD_UNIT_TEST = new IphoneBuildAndUnitTest();
     ActionType IPHONE_CODE_VALIDATE = new IphoneCodeValidate();
+    ActionType SITE_REPORT = new SiteReport();
     
     StringBuilder getCommand();
     

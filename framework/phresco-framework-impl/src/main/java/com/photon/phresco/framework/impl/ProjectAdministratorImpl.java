@@ -99,6 +99,7 @@ import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
+import com.phresco.pom.util.SiteConfigurator;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants {
 
@@ -111,7 +112,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
-
+	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
 
 	private static void initializeSqlMap() {
 		// TODO: This should come from database
@@ -255,7 +256,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return new ProjectImpl(delta);
 	}
 
-
 	/**
 	 * Update PDF document with the selected Modules
 	 * @param projectInfo
@@ -278,7 +278,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			}
 		}
 	}
-	
+
 	/**
 	 * Update dependency as selected Module in the pom file
 	 * @param delta
@@ -1925,6 +1925,26 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 throw new PhrescoException(e);
 		 }
 	 }
+
+	 /**
+	/* Delete the Sql Folder 
+	  */
+	 public void deleteSqlFolder(List<String> dbList , ProjectInfo projectInfo) throws PhrescoException {
+		 initializeSqlMap();
+		 try {
+			 File sqlPath = new File(Utility.getProjectHome() + File.separator
+					 + projectInfo.getCode() + File.separator
+					 + sqlFolderPathMap.get(projectInfo.getTechnology().getId()));
+			 if (CollectionUtils.isNotEmpty(dbList)) {
+				 for (String dbVersion : dbList) {
+					 File dbVersionFolder = new File(sqlPath, dbVersion.toLowerCase());
+					 FileUtils.deleteDirectory(dbVersionFolder);
+				 }
+			 }
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
 	 
 	 protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
 			String databaseType = "";
@@ -1966,23 +1986,32 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			return null;
 		}
 
-	 /**
-	/* Delete the Sql Folder 
-	  */
-	 public void deleteSqlFolder(List<String> dbList , ProjectInfo projectInfo) throws PhrescoException {
-		 initializeSqlMap();
-		 try {
-			 File sqlPath = new File(Utility.getProjectHome() + File.separator
-					 + projectInfo.getCode() + File.separator
-					 + sqlFolderPathMap.get(projectInfo.getTechnology().getId()));
-			 if (CollectionUtils.isNotEmpty(dbList)) {
-				 for (String dbVersion : dbList) {
-					 File dbVersionFolder = new File(sqlPath, dbVersion.toLowerCase());
-					 FileUtils.deleteDirectory(dbVersionFolder);
-				 }
-			 }
-		 } catch (Exception e) {
-			 throw new PhrescoException(e);
-		 }
-	 }
+	public List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException {
+		try {
+			List<Reports> reports = siteReportMap.get(projectInfo.getTechnology().getId());
+			if (CollectionUtils.isEmpty(reports)) {
+				reports = PhrescoFrameworkFactory.getServiceManager().getReports(projectInfo.getTechnology().getId());
+				siteReportMap.put(projectInfo.getTechnology().getId(), reports);
+			}
+			
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
+				configurator.addReportPlugin(reportsToBeAdded, file);
+			}
+			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
+				configurator.removeReportPlugin(reportsToBeRemoved, file);
+			}
+		} catch (Exception e) {
+			throw new PhrescoException();
+		}
+	}
 }

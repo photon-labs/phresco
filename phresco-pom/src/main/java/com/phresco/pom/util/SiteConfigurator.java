@@ -2,6 +2,7 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -17,7 +18,7 @@ public class SiteConfigurator {
 	/**
 	 * @param constants
 	 */
-	public void addReportPlugin(Reports constants,File file) {
+	private void addReportPlugin(Reports constants, File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
 			ReportPlugin reportPlugin = new ReportPlugin();
@@ -36,7 +37,7 @@ public class SiteConfigurator {
 	/**
 	 * @param constants
 	 */
-	public void addReportPlugin(Reports[] constants,File file){
+	public void addReportPlugin(List<Reports> constants,File file){
 		for (Reports siteConstants : constants) {
 			addReportPlugin(siteConstants,file);
 		}
@@ -45,7 +46,7 @@ public class SiteConfigurator {
 	/**
 	 * @param constants
 	 */
-	public void removeReportPlugin(Reports[] constants,File file){
+	public void removeReportPlugin(List<Reports> constants,File file){
 		
 		try {
 			PomProcessor processor = new PomProcessor(file);
