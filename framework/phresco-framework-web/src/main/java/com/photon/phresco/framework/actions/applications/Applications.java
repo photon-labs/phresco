@@ -73,6 +73,7 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+import org.apache.commons.codec.binary.Base64;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -105,6 +106,8 @@ public class Applications extends FrameworkBaseAction {
 	private boolean svnImport = false;
 	private String svnImportMsg = null;
 	List<String> deletableDbs = new ArrayList<String>();
+	//svn info
+	private String credential = null;
 	
 	public String list() {
 		long start = System.currentTimeMillis();
@@ -564,6 +567,11 @@ public class Applications extends FrameworkBaseAction {
 			 * byte[] decodedBytes = Base64.decodeBase64(password); password =
 			 * new String(decodedBytes);
 			 */
+			if (StringUtils.isEmpty(credential)) {
+				String decryptedPass = new String(Base64.decodeBase64(password));
+				password = decryptedPass;
+			}
+
 			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName,password);
 			S_LOGGER.debug("Import Application repository Url"
 						+ repositoryUrl + " Username " + userName);
@@ -1328,6 +1336,14 @@ public class Applications extends FrameworkBaseAction {
 
 	public void setSvnImportMsg(String svnImportMsg) {
 		this.svnImportMsg = svnImportMsg;
+	}
+
+	public String getCredential() {
+		return credential;
+	}
+
+	public void setCredential(String credential) {
+		this.credential = credential;
 	}
 	
 }
