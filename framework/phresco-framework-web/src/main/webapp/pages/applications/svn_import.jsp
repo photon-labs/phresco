@@ -3,7 +3,9 @@
 <%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 
-<div class="popup_Modal" id="repoDet">
+<% UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); %>
+
+<div class="popup_Modal topFifty" id="repoDet">
     <form name="repoDetails" action="import" method="post" autocomplete="off" class="repo_form">
         <div class="modal-header">
             <h3><s:text name="label.repository"/></h3>
@@ -14,7 +16,14 @@
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.repository.url"/></label>
 				<div class="input">
-					<input type="text" name="repourl" id="repoUrl">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
+					<input type="text" class="svnUrlTxtBox" name="repourl" id="repoUrl">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"> <s:text name="label.other.credential"/></label>
+				<div class="input checkFn">
+				   <input type="checkbox" name = "credential" class = "credentials" id="credentials" style="margin-top:8px;" />
 				</div>
 			</div>
 			
@@ -57,24 +66,29 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
 		$("#repoUrl").focus();
+		
+		// svn import already selected value display 
+		if(localStorage["svnImport"] != null && !isBlank(localStorage["svnImport"])) {
+			$('#credentials').attr("checked", true);
+			svnCredentialMark();
+		} else {
+			svnCredentialMark();
+		}
+		
         $("#repoUrl").keyup(function(event) {
          	var repoUrl = $("input[name='repourl']").val();
-         });
+        });
         
         $("#repoUrl").blur(function(event) {
          	var repoUrl = $("input[name='repourl']").val();
-         	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
-         		//$("input[name='password']").attr('disabled',true);
-         		//$("input[name='username']").attr('disabled',true);
-         		<% UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); %> 
-				//$("input[name='username']").val('<%= userInfo.getDisplayName() %>');
-         		//$("input[name='password']").val('<%= userInfo.getCredentials().getPassword() %>');
-         	} else {
-         		$("input[name='password']").removeAttr("disabled");
-         		$("input[name='username']").removeAttr("disabled");
-         	}
+           	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
+           		$('#credentials').attr("checked", false);
+           		svnCredentialMark();
+           	} else if(!isBlank(repoUrl)) {
+           		$('#credentials').attr("checked", true);
+           		svnCredentialMark();
+           	}
         });
         
         $('#revisionVal').bind('input propertychange', function (e) { 
@@ -130,6 +144,8 @@
 				$("#revisionVal").val("");
 				return false;
 			}
+			// before form submit enable textboxes
+			enableSvnFormDet();
 			$('.popupLoadingIcon').show();
 			getCurrentCSS();
 			var params = "";
@@ -138,6 +154,11 @@
 	    	}
             performAction('importcredentialdetails', params, '', true);
 		});
+		
+ 		$('#credentials').click(function() {
+ 			svnCredentialMark();
+ 		});
+ 		
 	});
 	
 	function svnImportError(id, errMsg){
@@ -163,5 +184,29 @@
 		if(pageUrl == "importcredentialdetails"){
 			fetchJSONData(data);
 		}
+	}
+	
+	function svnCredentialMark() {
+		if($('#credentials').is(':checked')) {
+			enableSvnFormDet();
+			$("#userName").val('');
+	 		$("#password").val('');
+	 		localStorage["svnImport"] = "credentials";
+	 	} else {
+ 			$("#userName").val('<%= userInfo.getCredentials().getUsername() %>');
+ 			$("#password").val('<%= userInfo.getCredentials().getPassword() %>');
+ 			disableSvnFormDet();
+ 			localStorage["svnImport"] = "";
+	 	}
+	}
+	
+	function enableSvnFormDet() {
+ 		enableControl($("input[name='password']"), "");
+ 		enableControl($("input[name='username']"), "");
+	}
+	
+	function disableSvnFormDet() {
+ 		disableControl($("input[name='password']"), "");
+ 		disableControl($("input[name='username']"), "");
 	}
 </script>
