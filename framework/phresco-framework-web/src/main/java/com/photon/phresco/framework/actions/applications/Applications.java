@@ -73,6 +73,7 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+import org.apache.commons.codec.binary.Base64;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -106,6 +107,8 @@ public class Applications extends FrameworkBaseAction {
 	private String svnImportMsg = null;
 	List<String> deletableDbs = new ArrayList<String>();
 	private String fromTab = null;
+	//svn info
+	private String credential = null;
 	
 	public String list() {
 		long start = System.currentTimeMillis();
@@ -562,7 +565,12 @@ public class Applications extends FrameworkBaseAction {
 			 * byte[] decodedBytes = Base64.decodeBase64(password); password =
 			 * new String(decodedBytes);
 			 */
-			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName,password);
+			if (StringUtils.isEmpty(credential)) {
+				String decryptedPass = new String(Base64.decodeBase64(password));
+				password = decryptedPass;
+			}
+
+			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
 			S_LOGGER.debug("Import Application repository Url"
 						+ repositoryUrl + " Username " + userName);
 			revision = !"HEAD".equals(revision) ? revisionVal : revision;
@@ -578,11 +586,11 @@ public class Applications extends FrameworkBaseAction {
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e)); 
 	    	svnImport = false;
-	    	if(e.getMessage().indexOf(SVN_FAILED) != -1){
+	    	if(e.getMessage().indexOf(SVN_FAILED) != -1) {
 	    		svnImportMsg = getText(INVALID_URL);
-	    	}else if(e.getMessage().indexOf(SVN_INTERNAL) != -1){
+	    	} else if(e.getMessage().indexOf(SVN_INTERNAL) != -1) {
 	    		svnImportMsg = getText(INVALID_REVISION);
-	    	}else{
+	    	} else {
 	    		svnImportMsg = getText(INVALID_FOLDER);
 	    	}
 	    } catch(PhrescoException e){
@@ -1312,4 +1320,13 @@ public class Applications extends FrameworkBaseAction {
 	public void setFromTab(String fromTab) {
 		this.fromTab = fromTab;
 	}
+
+	public String getCredential() {
+		return credential;
+	}
+
+	public void setCredential(String credential) {
+		this.credential = credential;
+	}
+	
 }

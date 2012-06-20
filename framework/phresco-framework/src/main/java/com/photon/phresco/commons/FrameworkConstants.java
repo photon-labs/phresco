@@ -169,6 +169,7 @@ public interface FrameworkConstants {
     String POST = "POST";
     String GET = "GET";
 	String SKIPTESTS = "skipTests";
+	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
     
@@ -308,6 +309,7 @@ public interface FrameworkConstants {
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
+    String REQ_ANDROID_PROFILE_DET = "androidProfileDetails";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
 	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
