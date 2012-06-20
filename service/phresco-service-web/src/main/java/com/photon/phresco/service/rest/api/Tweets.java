@@ -20,9 +20,7 @@
 package com.photon.phresco.service.rest.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,8 +45,8 @@ import twitter4j.TwitterFactory;
 
 import com.photon.phresco.commons.model.Tweet;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.model.ServerConstants;
 
 @Path(ServerConstants.REST_API_TWEETS)
