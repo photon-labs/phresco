@@ -129,6 +129,7 @@
 
     Map<String, String> pilotJsLibs = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_PILOT_JSLIBS);
     Map<String, String> alreadySelectedJsLibs = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_ALREADY_SELECTED_JSLIBS);
+    
     Map<String, String> selectedModules = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_TEMP_SELECTEDMODULES);
     Map<String, String> selectedJsLibs = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_TEMP_SELECTED_JSLIBS);
 
@@ -457,6 +458,7 @@
 			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
 			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
 			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+			<input type="hidden" name="fromTab" value="features">
 	</div>
     </form>
     

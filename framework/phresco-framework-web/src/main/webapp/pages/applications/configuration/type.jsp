@@ -158,7 +158,6 @@
 		        	} else if (possibleValues == null) {
 		        %>
 		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
-		        
 		        <% 	} else { %>
 	        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth" onfocus="showDesc(this);">
 	        				<option disabled="disabled" selected="selected" value="" style="color: #BFBFBF;"><%= desc %></option>
@@ -189,7 +188,6 @@
        		
         </div>
     </div> <!-- /clearfix -->
-    
 <%
     	}
     }
@@ -222,20 +220,21 @@
 					for(Server projectInfoServer : projectInfoServers) {
 						 serverName = projectInfoServer.getName();
 						%>
-							$('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
+						
+						  $('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
 							
 		<%
              }
 		%>
 				getCurrentVersions('');
 				
-             	var server = $('#type').val();
+				var server = $('#type').val();
 				if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
 					 $('#remoteDeployment').show(); 
 			     } else {
 			    	  hideRemoteDeply(); 
 			     }
-
+				
 				$("#type").change(function() {
 				 var server = $('#type').val();
 				 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
@@ -296,7 +295,7 @@
 			});
         
 		 
-		/** to display Corresponding versions **/
+		/** to display corressponding versions **/
 		$("#type").change(function() {
 			$('#deploy_dir').show();
 			if($(this).val() == "NodeJS") {
@@ -343,7 +342,7 @@
 			}
 			// When editing nodejs server config, hide deploy directory field
 			if ('<%= selectedValue %>' == "NodeJS") {
-				$('#deploy_dir').hide();
+				 $('#deploy_dir').hide(); 
 			}
 			if( '<%= selectedValue %>' == "Apache Tomcat" || '<%= selectedValue %>' == "JBoss" || '<%= selectedValue %>' == "WebLogic"){
 				 $('#remoteDeployment').show(); 
@@ -361,6 +360,7 @@
 			}
 		});
 	}
+	
 	
 	function hideDeployDir() {
 		$("input[name='deploy_dir']").val("");

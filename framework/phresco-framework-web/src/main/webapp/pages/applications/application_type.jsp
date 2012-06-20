@@ -119,6 +119,7 @@
 	});
 	    
 	function techDependencies() {
+		$("#alreadyConstructed").val("");
 	    var technology = $("#technology").val();
 	    var params = '<%= FrameworkConstants.REQ_APPLICATION_TYPE %>';
 	    params = params.concat("=");

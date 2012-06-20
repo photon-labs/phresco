@@ -139,6 +139,7 @@
         session.setAttribute(projectInfo.getCode(), projectInfo);
         projectCode = projectInfo.getCode();
     }
+    
     String configServerNames = (String) request.getAttribute(FrameworkConstants.REQ_CONFIG_SERVER_NAMES);
     String configDbNames = (String) request.getAttribute(FrameworkConstants.REQ_CONFIG_DB_NAMES);
     
@@ -203,6 +204,7 @@
 									for (ModuleGroup coreModule : coreModules) {
 										disabledStr = "";
 										checkedStr = "";
+									    
 									    String pilotVersion = "";
 										if (MapUtils.isNotEmpty(alreadySelectedModules) && StringUtils.isNotEmpty(alreadySelectedModules.get(coreModule.getId()))) {
 											pilotVersion = alreadySelectedModules.get(coreModule.getId());
@@ -213,7 +215,6 @@
 											checkedStr = "checked";
 										} 
 								%>
-								
 					                <span class="siteaccordion closereg">
 					                	<span>
 					                		<input type="checkbox" class="<%= FrameworkConstants.REQ_CORE_MODULE %>" name="<%= FrameworkConstants.REQ_SELECTEDMODULES %>" 
@@ -520,6 +521,7 @@
 			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
 			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
 			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+			<input type="hidden" name="fromTab" value="features">
 	</div>
     </form>
     

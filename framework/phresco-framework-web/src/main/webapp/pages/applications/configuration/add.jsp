@@ -225,7 +225,7 @@ h1 {margin-bottom: 0;}
 								%>
 							</select>
 						</div>
-						<div>
+						<div style="float: left; width: 58%;">
 							<div class="lblDesc configSettingHelp-block" id="configTypeErrMsg"></div>
 						</div>
 					</div>
@@ -302,7 +302,7 @@ h1 {margin-bottom: 0;}
 			<%
 			   } else {
 			%>
-					performAction("updateConfiguration", params, $('#tabDiv'));
+			       performAction("updateConfiguration", params, $('#tabDiv'));
 			<% } %>
 			
 	    });
