@@ -1017,4 +1017,7 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORT = "siteReport";
    String REQ_SITE_REPORT_PATH = "siteReportPath";
    String SITE_TARGET = "target/site";
+   String REQ_SITE_REPORTS = "reports";
+   String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
+   String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
   }

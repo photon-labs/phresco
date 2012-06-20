@@ -568,4 +568,5 @@ public interface ProjectAdministrator {
 
 	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
 	 
+	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
 }

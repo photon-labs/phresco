@@ -62,7 +62,7 @@
     boolean isEmailSupportSelected = false;
     String selectedPilotProj = null;
     String projectInfoDbNames = "";
-	if(selectedInfo != null) {
+	if(selectedInfo != null && appType.equals(selectedInfo.getApplication()) && selectedTechnology.getId().equals(selectedInfo.getTechnology().getId())) {
 		projectCode = selectedInfo.getCode();
 		selectedServers =  selectedInfo.getTechnology().getServers();
 		selectedDatabases =  selectedInfo.getTechnology().getDatabases();

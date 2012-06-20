@@ -23,10 +23,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils"%>
 <%@ page import="com.phresco.pom.site.Reports"%>
+<%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 
 <%
-	List<Reports> reports = (List<Reports>) request.getAttribute("reports");
-	List<String> selectedReportNames = (List<String>) request.getAttribute("selectedReportNames");
+	List<Reports> reports = (List<Reports>) request.getAttribute(FrameworkConstants.REQ_SITE_REPORTS);
+	List<String> selectedReportNames = (List<String>) request.getAttribute(FrameworkConstants.REQ_SITE_SLECTD_RPT_NMS);
+	String strSelectedReportNames = "";
 %>
 
 <div class="popup_Modal" id="configure-popup">
@@ -69,6 +71,15 @@
 				<input type="button" id="actionBtn" class="btn primary" value="<s:text name="label.ok"/>">
 			</div>
 		</div>
+		<%
+			if (CollectionUtils.isNotEmpty(selectedReportNames)) {
+				for (String selectedReportName : selectedReportNames) {
+					strSelectedReportNames = strSelectedReportNames + selectedReportName + ",";
+				}
+				strSelectedReportNames = strSelectedReportNames.trim().substring(0, strSelectedReportNames.length() - 1);
+			}
+		%>
+		<input type="hidden" name="alreadySelectedRptNames" value="<%= strSelectedReportNames %>">
 	</form>
 </div>
 
