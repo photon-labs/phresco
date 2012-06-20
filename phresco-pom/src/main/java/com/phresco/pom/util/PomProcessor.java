@@ -35,6 +35,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import com.phresco.pom.android.AndroidProfile;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.Build;
@@ -48,8 +50,12 @@ import com.phresco.pom.model.Model.Profiles;
 import com.phresco.pom.model.Model.Properties;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
+import com.phresco.pom.model.PluginExecution;
 import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
+import com.phresco.pom.model.ReportPlugin.ReportSets;
+import com.phresco.pom.model.ReportSet;
+import com.phresco.pom.model.ReportSet.Reports;
 import com.phresco.pom.model.Reporting;
 
 
@@ -622,7 +628,7 @@ public class PomProcessor {
 	 * @param reportPlugin
 	 */
 	
-	public void siteConfig(ReportPlugin reportPlugin){
+	public void siteReportConfig(ReportPlugin reportPlugin){
 		com.phresco.pom.model.Reporting.Plugins plugins = new com.phresco.pom.model.Reporting.Plugins();
 		if(model.getReporting()==null){
 			model.setReporting(new Reporting());
@@ -659,5 +665,25 @@ public class PomProcessor {
 		Marshaller marshal = jaxbContext.createMarshaller();
 		marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshal.marshal(model, file);
+	}
+	
+	public static void main(String[] args) throws JAXBException, IOException, PhrescoPomException {
+		PomProcessor processor = new PomProcessor(new File("D:\\pom\\pom.xml"));
+		Profile profile = processor.getProfile("sign");
+		
+		List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+		for (Plugin plugin2 : plugin) {
+			List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+			for (PluginExecution pluginExecution : execution) {
+					List<Element> any = pluginExecution.getConfiguration().getAny();
+						for (Element element : any) {
+//							if(element.getTagName().equals("keystore")){
+//								System.out.println(element.getTextContent());
+//							}
+						
+							
+						}
+			}
+		}
 	}
 }
