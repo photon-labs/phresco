@@ -4241,7 +4241,7 @@ form div.error {
 	left : 0%; 
 	margin-top : 0px; 
 	margin-bottom : 0px; 
-	width: 62%; 
+	width: 53%; 
 	height : 8px; 
 	margin-left : 4%; 
 	padding-top : 6px; 
@@ -4540,4 +4540,12 @@ ul#display-inline-block-example li {
     padding: 0;
     width: 100%;
     text-align: center;
+}
+
+.topFifty {
+	top: 50%;
+}
+
+.svnUrlTxtBox {
+	width: 306px;
 }

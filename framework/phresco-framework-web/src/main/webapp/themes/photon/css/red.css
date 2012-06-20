@@ -1363,7 +1363,7 @@ background-color: #ffffff;
 	color:red;
 }
 
-#errMsg {
+#errMsg, #advSettingsErrMsg {
 	color:red;
 }
 
