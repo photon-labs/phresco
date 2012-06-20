@@ -23,6 +23,8 @@ public abstract class AbstractActionType implements ActionType {
     public String workingDirectory = null;
     public boolean hideLog = false;
     public boolean showError = false;
+	public boolean skipTest = false;
+    public boolean showDebug = false;
     
     public String getWorkingDirectory() {
         return workingDirectory;
@@ -46,5 +48,21 @@ public abstract class AbstractActionType implements ActionType {
     
     public void setHideLog(boolean showLog) {
         this.hideLog = showLog;
+    }
+
+	public boolean canSkipTest() {
+        return skipTest;
+    }
+    
+    public void setSkipTest(boolean skipTest) {
+        this.skipTest = skipTest;
+    }
+    
+    public boolean canShowDebug() {
+        return showDebug;
+    }
+    
+    public void setShowDebug(boolean showDebug) {
+        this.showDebug = showDebug;
     }
 }

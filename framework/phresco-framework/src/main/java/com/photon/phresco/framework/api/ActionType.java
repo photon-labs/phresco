@@ -69,19 +69,21 @@ public interface ActionType {
     
     String getName();
     
-    String getType();
-    
+    String getType();   
     void setType(String type);
     
-    String getWorkingDirectory();
-    
+    String getWorkingDirectory();   
     void setWorkingDirectory(String workingDirectory);
     
-    boolean canHideLog();
-    
+    boolean canHideLog();   
     void setHideLog(boolean hideLog);
     
-    boolean canShowError();
-    
+    boolean canShowError();  
     void setShowError(boolean showError);
+	
+	boolean canSkipTest();
+    void setSkipTest(boolean skipTest);
+    
+    boolean canShowDebug();
+    void setShowDebug(boolean showDebug);
 }
