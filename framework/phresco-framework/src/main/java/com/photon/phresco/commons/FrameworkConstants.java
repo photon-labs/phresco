@@ -87,6 +87,8 @@ public interface FrameworkConstants {
     String MODULE_NAME = "moduleName";
     String SHOW_ERROR = "showerror";
     String HIDE_LOG = "hidelog";
+    String SHOW_DEBUG = "showdebug";
+    String SKIP_TEST = "skiptest";
     String DEPLOY = "deploy";
     String BUILD_INFO_ENVS = "buildInfoEnvs";
     String DEPLOY_IMPORT_SQL = "importSql";

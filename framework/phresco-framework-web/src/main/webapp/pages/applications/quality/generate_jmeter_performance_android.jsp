@@ -101,6 +101,8 @@
 						<span class="textarea_span popup-span"><s:text name="label.show.error"/></span>
 						<input type="checkbox" id="hideLog" name="hideLog" value="hidelog" >
 						<span class="textarea_span popup-span"><s:text name="label.hide.log"/></span>
+						<input type="checkbox" id="showDebug" name="showDebug" value="showdebug">
+						<span class="textarea_span popup-span"><s:text name="label.show.debug"/></span>
 					</li>
 				</ul>	
 				<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">

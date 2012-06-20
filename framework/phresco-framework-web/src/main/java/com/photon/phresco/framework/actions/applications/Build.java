@@ -80,6 +80,8 @@ public class Build extends FrameworkBaseAction {
 	private String importSql = null;
 	private String showError = null;
 	private String hideLog = null;
+	private String skipTest = null;
+	private String showDebug = null;
 	private InputStream fileInputStream;
 	private String fileName = "";
 	private String connectionAlive = "false";
@@ -337,6 +339,8 @@ public class Build extends FrameworkBaseAction {
 			}
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project, actionType, settingsInfoMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_BUILD, reader);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -571,6 +575,8 @@ public class Build extends FrameworkBaseAction {
 			actionType.setWorkingDirectory(builder.toString());
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project,
 					actionType, valuesMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_FROM_TAB_DEPLOY,
@@ -1488,5 +1494,21 @@ public class Build extends FrameworkBaseAction {
 
 	public void setDeployTo(String deployTo) {
 		this.deployTo = deployTo;
+	}
+	
+	public String getSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
+	}
+
+	public String getShowDebug() {
+		return showDebug;
+	}
+
+	public void setShowDebug(String showDebug) {
+		this.showDebug = showDebug;
 	}
 }

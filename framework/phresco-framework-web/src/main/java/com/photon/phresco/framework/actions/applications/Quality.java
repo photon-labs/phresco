@@ -122,6 +122,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String testModule = null;
 	private String showError = null;
     private String hideLog = null;
+    private String showDebug = null;
     
 	private List<String> configName = null;
 	private List<String> buildInfoEnvs = null;
@@ -949,6 +950,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             	} else {
             		actionType.setHideLog(false);
             	}
+                
+                if (SHOW_DEBUG.equals(showDebug)) {
+                	actionType.setShowDebug(true);
+            	} else {
+            		actionType.setShowDebug(false);
+            	}
+                
                 
                    S_LOGGER.debug("Load method ANDROIDS type settingsInfoMap value " + settingsInfoMap);
                    S_LOGGER.debug("Performance test method ANDROIDS type settingsInfoMap value " + settingsInfoMap);
@@ -2238,4 +2246,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	public void setTestSuiteNames(List<String> testSuiteNames) {
 		this.testSuiteNames = testSuiteNames;
 	}
+	
+	public String getShowDebug() {
+		return showDebug;
+	}
+
+	public void setShowDebug(String showDebug) {
+		this.showDebug = showDebug;
+	}
+
 }

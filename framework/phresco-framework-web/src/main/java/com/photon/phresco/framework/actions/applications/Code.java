@@ -53,6 +53,7 @@ public class Code extends FrameworkBaseAction {
     private static final Logger S_LOGGER = Logger.getLogger(Code.class);
     
     private String projectCode = null;
+	private String skipTest = null;
     private String codeTechnology = null;
     private String target = null;
     
@@ -210,6 +211,7 @@ public class Code extends FrameworkBaseAction {
             if(!StringUtils.isEmpty(codeTechnology)) { // if js is selected in popup , have to pass setting map to form mvn command
             	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
+            actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -265,5 +267,13 @@ public class Code extends FrameworkBaseAction {
 
 	public void setTarget(String target) {
 		this.target = target;
+	}
+	
+	public String getSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
 	}
 }
