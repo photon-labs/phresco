@@ -61,13 +61,20 @@
     List<WebService> selectedWebServices = null;
     boolean isEmailSupportSelected = false;
     String selectedPilotProj = null;
-	if(selectedInfo != null) {
+    String projectInfoDbNames = "";
+	if(selectedInfo != null && appType.equals(selectedInfo.getApplication()) && selectedTechnology.getId().equals(selectedInfo.getTechnology().getId())) {
 		projectCode = selectedInfo.getCode();
 		selectedServers =  selectedInfo.getTechnology().getServers();
 		selectedDatabases =  selectedInfo.getTechnology().getDatabases();
 		selectedWebServices =  selectedInfo.getTechnology().getWebservices();
 		isEmailSupportSelected = selectedInfo.getTechnology().isEmailSupported();
 		selectedPilotProj = selectedInfo.getPilotProjectName();
+		if (CollectionUtils.isNotEmpty(selectedDatabases)) {
+			for (Database selectedDatabase : selectedDatabases) {
+				projectInfoDbNames = projectInfoDbNames + selectedDatabase.getName() + ",";
+			}
+			projectInfoDbNames = projectInfoDbNames.substring(0, projectInfoDbNames.length() - 1);
+		}
 	}
 	
 	Collection<String> pilotProjectNames = (Collection<String>) request.getAttribute(FrameworkConstants.REQ_PILOTS_NAMES);
@@ -131,7 +138,6 @@
 	    
 	    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
 	    
-	    <input type="hidden" id="tempSelectedServer" name="tempSelectedServers" value="">
 	    <input type="hidden" id="selectedServer" name="selectedServers" value="">
 	</div>
 	<!-- Servers are loaded here ends -->
@@ -145,7 +151,6 @@
 	    
 	    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
 	    
-	    <input type="hidden" id="tempSelectedDatabase" name="tempSelectedDatabases" value="">
 	    <input type="hidden" id="selectedDatabase" name="selectedDatabases" value="">
 	</div>
 </form>
@@ -206,43 +211,55 @@
 </div>
 <!-- Email ends -->
 
-<!-- <div class="popup_div" id="tech_popup"> -->
+<input type="hidden" id="projectInfoDbNames" value="<%= StringUtils.isNotEmpty(projectInfoDbNames) ? projectInfoDbNames : "" %>">
 
 <script>
-	if(!isiPad()){
+	if(!isiPad()) {
 		/* JQuery scroll bar */
 		$("#multilist-scroller").scrollbars();
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+		
 		/** To construct the div during the project edit **/
 		<%
 			String name = null;
 			List<String> versions = new ArrayList<String>(2);
-			if(selectedServers != null) {
-				for(Server server : selectedServers) {
+			if (selectedServers != null) {
+				for (Server server : selectedServers) {
+					String csvVersion = "";
 					name = server.getName();
-					versions.clear();
 					for (String version : server.getVersions()) {
-						versions.add(version.trim());
+						if (csvVersion != "") {
+							csvVersion = version + ", " + csvVersion;
+						} else {
+							csvVersion = version + ", ";
+						}
 					}
+					csvVersion = csvVersion.trim();
+					csvVersion = csvVersion.substring(0, csvVersion.length() - 1);
 		%>
-					constructElements("Server", '<%= name %>', '<%= versions %>', "dispServer");
+					constructElements("Server", '<%= name %>', '<%= csvVersion %>', "dispServer");
 		<%
-					versions.clear();
 				}
 			}
-			if(selectedDatabases != null) {
-				for(Database database : selectedDatabases) {
+			if (selectedDatabases != null) {
+				for (Database database : selectedDatabases) {
+					String csvVersion = "";
 					name = database.getName();
-					versions.clear();
 					for (String version : database.getVersions()) {
-						versions.add(version.trim());
+						if (csvVersion != "") {
+							csvVersion = version + ", " + csvVersion;
+						} else {
+							csvVersion = version + ", ";
+						}
 					}
+					csvVersion = csvVersion.trim();
+					csvVersion = csvVersion.substring(0, csvVersion.length() - 1);
 		%>
-					constructElements("Database", '<%= name %>', '<%= versions %>', "dispDatabase");
+					constructElements("Database", '<%= name %>', '<%= csvVersion %>', "dispDatabase");
 		<%
-					versions.clear();
 				}
 			}
 		%>
@@ -262,32 +279,84 @@
 	});
 	
 	/** To retain values during project edit, previous and next **/
-	function constructElements(type, name, versions, appendTo) {
+	function constructElements(type, name, versions, appendTo, from) {
+		var isAlreadyAdded = false;
+		var alreadyAddedDetails = "";
+		var alreadyAddedVersions = new Array();
+		var newVersions;
 		var eleAttr = name.replace(/\s+/g, '');
-		var newVersions = versions.slice(0,-1)
-		newVersions = newVersions.substring(1, newVersions.length);
-		var tempHiddenVal = $("#tempSelected"+type).val();
-		$("#tempSelected"+type).val(tempHiddenVal + name + " , ");
+		
+		/** To append the version to the existing versions if the pilot server/db and the already selected server/db are same **/
+		if ("showPilotProjectConfigs" == from) {
+			if (type == "Server") {
+				alreadyAddedDetails = $("#selectedServer").val();
+			} else if (type == "Database") {
+				alreadyAddedDetails = $("#selectedDatabase").val();
+			}
+			var nameSep = new Array();
+			nameSep = alreadyAddedDetails.split("#SEP#");
+			for (var i=0; i < nameSep.length; i++) {
+				var addedName = nameSep[i].split("#VSEP#");
+				if (addedName[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+					if (addedName[1].indexOf(",") != -1) {
+						alreadyAddedVersions = addedName[1].split(",");
+					} else {
+						alreadyAddedVersions[0] = addedName[1];
+					}
+					isAlreadyAdded = true;
+					break;
+				}
+			}
+			
+			var arrayVersions = new Array();
+			if (versions.indexOf(",") != -1) {
+				arrayVersions = versions.split(",");
+			} else {
+				arrayVersions[0] = versions;
+			}
+			newVersions = versions;
+			
+			if (isAlreadyAdded) {
+				deleteThis(type, name, "", name);
+				var isVersionAlreadyExists = false;
+				for (var i=0; i < alreadyAddedVersions.length; i++) {
+					for (var j=0; j < arrayVersions.length; j++) {
+						if (arrayVersions[j] == alreadyAddedVersions[i]) {
+							isVersionAlreadyExists = true;
+							break;
+						}
+					}
+					if (isVersionAlreadyExists) {
+						break;
+					}
+				}
+				if (!isVersionAlreadyExists) {
+					newVersions = newVersions + ", " + alreadyAddedVersions;				
+				} else {
+					newVersions = alreadyAddedVersions;
+				}
+			}
+		} else { // This is for adding the new server/db
+			newVersions = versions;
+		}
+		
 		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 						+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 						+ name + " [ " + newVersions + " ] " + '</div></div>');
 		$("#"+type).css("margin-left", "320px");
-		updateHiddenFields(type, name, newVersions, "");
+		
+		updateHiddenFields(type, name, newVersions, from);			
 	}
 	
 	/** To delete the currently selected item **/
 	var deleteId = "";
 	var type = "";
 	var name = "";
-	var tempSelectedServers = "";
-	var tempSelectedDatabases = "";
 	
 	function deleteEle(obj) {
 		deleteId = obj.id;
 		type = $(obj).prop("name");
 		name = $(obj).prop("title");
-		tempSelectedServers = $("#tempSelectedServer").val();
-		tempSelectedDatabases = $("#tempSelectedDatabase").val();
 		
 		var params = "selectedAttrType=";
 		params = params.concat(type);
@@ -323,47 +392,138 @@
 	}
 	
 	function removeDiv() {
-		if (tempSelectedServers != "" && type == "Server") {
-			deleteThis(type, deleteId, tempSelectedServers, name);
+		if (type == "Server") {
+			deleteThis(type, deleteId, "", name);
 		}
-		if (tempSelectedDatabases != "" && type == "Database") {
-			deleteThis(type, deleteId, tempSelectedDatabases, name);
+		if (type == "Database") {
+			deleteThis(type, deleteId, "", name);
 		}
 	}
 	
-	function deleteThis(type, deleteId, tempSelected, name) {
+	function deleteThis(type, deleteId, tempSelected, name, from) {
 		$("#"+deleteId).remove();
+		var pilotVersions = "";
+		
+		/** This is to remove only the pilot server/db version other than the already selected versions during none project selection **/
+		if ("removePilotProjConfig" == from) {
+			var alreadyAddedVersions = new Array();
+			var arrayPilotVersions = new Array();
+			if (type == "Server") { // To check whether the already added server verions contains the pilot server versions
+				var alreadySelectedServers = $("#selectedServer").val();
+				var pilotServerConfigDet = $("#pilotServerConfigDet").val();
+				var nameSep = new Array();
+				nameSep = alreadySelectedServers.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var addedServers = nameSep[i].split("#VSEP#");
+					if (addedServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+						if (addedServers[1].indexOf(",") != -1) {
+							alreadyAddedVersions = addedServers[1].split(",");
+							
+						} else {
+							alreadyAddedVersions[0] = addedServers[1];
+						}
+						break;
+					}
+				}
+				
+				var pilotNameSep = new Array();
+				pilotNameSep = pilotServerConfigDet.split("#SEP#");
+				for (var i=0; i < pilotNameSep.length; i++) {
+					var pilotServers = pilotNameSep[i].split("#VSEP#");
+					if (pilotServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+						if (pilotServers[1].indexOf(",") != -1) {
+							arrayPilotVersions = pilotServers[1].split(",");
+						} else {
+							arrayPilotVersions[0] = pilotServers[1];
+						}
+						break;
+					}
+				}
+				
+				for (var i=0; i < arrayPilotVersions.length; i++) {
+					for (var j=0; j < alreadyAddedVersions.length; j++) {
+						if (jQuery.trim(alreadyAddedVersions[j]) == jQuery.trim(arrayPilotVersions[i])) {
+							delete alreadyAddedVersions[j];
+						}
+					}
+				}
+				
+				for (var i=0; i < alreadyAddedVersions.length; i++) {
+					if (alreadyAddedVersions[i] != undefined && alreadyAddedVersions[i].trim() != "") {
+						pilotVersions = pilotVersions + alreadyAddedVersions[i].trim() + ", ";						
+					}
+				}
+				pilotVersions = pilotVersions.trim();
+				pilotVersions = pilotVersions.substring(0, pilotVersions.length - 1);
+				if (pilotVersions != "" && pilotVersions != undefined) {
+					constructElements("Server", name, pilotVersions, "dispServer", from);					
+				}
+			}
+			if (type == "Database") { // To check whether the already added db verions contains the pilot db versions
+				var alreadySelectedDbs = $("#selectedDatabase").val();
+				var pilotDbConfigDet = $("#pilotDbConfigDet").val();
+				var nameSep = new Array();
+				nameSep = alreadySelectedDbs.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var addedDbs = nameSep[i].split("#VSEP#");
+					if (addedDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+						if (addedDbs[1].indexOf(",") != -1) {
+							alreadyAddedVersions = addedDbs[1].split(",");
+						} else {
+							alreadyAddedVersions[0] = addedDbs[1];
+						}
+						break;
+					}
+				}
+				var pilotNameSep = new Array();
+				pilotNameSep = pilotDbConfigDet.split("#SEP#");
+				for (var i=0; i < pilotNameSep.length; i++) {
+					var pilotDbs = pilotNameSep[i].split("#VSEP#");
+					if (pilotDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+						if (pilotDbs[1].indexOf(",") != -1) {
+							arrayPilotVersions = pilotDbs[1].split(",");
+						} else {
+							arrayPilotVersions[0] = pilotDbs[1];
+						}
+						break;
+					}
+				}
+				
+				for (var i=0; i < arrayPilotVersions.length; i++) {
+					for (var j=0; j < alreadyAddedVersions.length; j++) {
+						if (jQuery.trim(alreadyAddedVersions[j]) == jQuery.trim(arrayPilotVersions[i])) {
+							delete alreadyAddedVersions[j];
+						}
+					}
+				}
+				
+				for (var i=0; i < alreadyAddedVersions.length; i++) {
+					if (alreadyAddedVersions[i] != undefined && alreadyAddedVersions[i].trim() != "") {
+						pilotVersions = pilotVersions + alreadyAddedVersions[i].trim() + ", ";						
+					}
+				}
+				pilotVersions = pilotVersions.trim();
+				pilotVersions = pilotVersions.substring(0, pilotVersions.length - 1);
+				if (pilotVersions != "" && pilotVersions != undefined) {
+					constructElements("Database", name, pilotVersions, "dispDatabase", from);					
+				}
+			}
+		}
 		var serverDispDivConts = $("#dispServer").text();
 		var dbDispDivConts = $("#dispDatabase").text();
+		
 		if ($.trim(serverDispDivConts) == "") {
 			$("#Server").css("margin-left", "20px");
 		}
 		if($.trim(dbDispDivConts) == "") {
 			$("#Database").css("margin-left", "20px");
 		}
-		updateTempHiddenFields(type, tempSelected, deleteId);
-		updateHiddenFields(type, name, "", "delete");
-	}
-	
-	/** To update the temporary hidden field **/
-	function updateTempHiddenFields(type, tempSelected, deleteId) {
-		params = "type=";
-		params = params.concat(type);
-		params = params.concat("&tempSelected=");
-		params = params.concat(tempSelected);
-		params = params.concat("&deleteId=");
-		params = params.concat(deleteId);
-		performAction('updateHiddenFields', params, '', true);
-	}
-	
-	/** Data are returned from success event of perform action**/
-	function successUpdateTempHiddenFileds(data) {
-	    if (data.selectedAttrType == "Server") {
-    		$("#tempSelectedServer").val(data.hiddenFieldValue);
-    	}
-    	else if (data.selectedAttrType == "Database") {
-			$("#tempSelectedDatabase").val(data.hiddenFieldValue);
-    	}	
+		
+		if ("removePilotProjConfig" == from && alreadyAddedVersions != "") {
+			updateHiddenFields(type, name, pilotVersions, "edit"); // To remove only the pilot server/db versions
+		} else {
+			updateHiddenFields(type, name, "", "delete");
+		}
 	}
 	
 	/** To open the select popup **/
@@ -373,8 +533,7 @@
 		$('#popup_div').empty();
 		showPopup();
 		var from = "";
-		var tempSelectedServers = $("#tempSelectedServer").val();
-		var tempSelectedDatabases = $("#tempSelectedDatabase").val();
+		
 		/** For edit **/
 		var selectedVersions;
 		var attrName;
@@ -425,34 +584,49 @@
 		var selectedValues = $("#selected"+type).val();
 		var nameSep = new Array();
 		var finalValue = "";
-		if(from == "delete") { //During delete
+		
+		if (from == "delete") { //During delete
 			nameSep = selectedValues.split("#SEP#");
-			for(var i=0; i < nameSep.length; i++) {
+			for (var i=0; i < nameSep.length; i++) {
 				var name = nameSep[i].split("#VSEP#");
-				if (name[0].replace(/\s/g,'') == selectedName.replace(/\s/g,'')) {
+				if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
 					delete nameSep[i];
-					//nameSep.splice(i,1);
+					//nameSep.splice(i, 1);
 				} else {
 					if(nameSep[i] != "") {
 						finalValue = finalValue + nameSep[i] + "#SEP#";
 					}
 				}
 			}
-		} else if(from == "edit") { //During edit
+		} else if (from == "edit") { //During edit
 			nameSep = selectedValues.split("#SEP#");
-			for(var i=0; i < nameSep.length; i++) {
+			for (var i=0; i < nameSep.length; i++) {
 				var name = nameSep[i].split("#VSEP#");
-				if (name[0].replace(/\s/g,'') == selectedName.replace(/\s/g,'')) {
+				if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '') && selectedVersions != "") {
 					var newVal = selectedName + "#VSEP#" + selectedVersions;
+					delete nameSep[i];
 					nameSep[i] = newVal;
 				}
 				if(nameSep[i] != "") {
-				finalValue = finalValue + nameSep[i] + "#SEP#";
-			  }
+					finalValue = finalValue + nameSep[i] + "#SEP#";
+			  	}
 			}
-		} else { //During add
+		} else if (from == "removePilotProjConfig") { //During add
+			nameSep = selectedValues.split("#SEP#");
+			for (var i=0; i < nameSep.length; i++) {
+				var servers = nameSep[i].split("#VSEP#");
+				var availName = servers[0]; 
+				var availVersions = servers[1];
+				if (availName.replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
+					finalValue = finalValue + availName + "#VSEP#" + selectedVersions + "#SEP#";
+				} else if (nameSep[i] != "") {
+					finalValue = finalValue + nameSep[i] + "#SEP#";
+				}
+			}
+		} else {
 			finalValue = $("#selected"+type).val() + selectedName + "#VSEP#" + selectedVersions + "#SEP#";
 		}
+		
 		$("#selected" + type).val(finalValue);
 		var updatedVal = $("#selected" + type).val();
 		enableDisableSelectBtn(type, $("#selected"+type).val());
@@ -485,8 +659,6 @@
 			if (fillCheckBoxVersion(versionFor, data.versions)) {
 				makeVersionsSelected();
 			}
-		} else if (pageUrl == "updateHiddenFields") {
-			successUpdateTempHiddenFileds(data);
 		} else if (pageUrl == "techVersions") {
 			if (data.techVersions != undefined) {
 				$("#technologyVersionDiv").show();
@@ -507,17 +679,33 @@
 			    escBlockPopup();
 			} else {
 				if (type == "Database") {
-					$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
-					dialog('block');
-				    escBlockPopup();
+					if (checkForProjectInfoDb()) {
+						$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+						dialog('block');
+					    escBlockPopup();						
+					} else {
+						removeDiv();
+					}
 				} else {
 					removeDiv();					
 				}
 			}
 		} else if (pageUrl == "technology") {
 			techVersions();    	
-		    $("#name").focus();
 		}
+	}
+	
+	function checkForProjectInfoDb() {
+		var arrayProjectInfoDbNames = new Array();
+		var projectInfoDbNames = $("#projectInfoDbNames").val()
+		arrayProjectInfoDbNames = projectInfoDbNames.split(",");
+		for (var i=0; i < arrayProjectInfoDbNames.length; i++) {
+			if (arrayProjectInfoDbNames[i].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/** To show/hide the pilot project configurations when the pilot project is selected **/
@@ -529,18 +717,28 @@
 		
 		var pilotProject = $(obj).val();
 		var alreadyConstructed = $("#alreadyConstructed").val();// This alreadyConstructed hidded field is in the application.jsp
+		
 		if (pilotProject != undefined && pilotProject != "" && alreadyConstructed == "") { //To show the pilot project configurations
 			/** For Server **/
 			<%
 				if (CollectionUtils.isNotEmpty(pilotProjectServers)) {
-					for(Server pilotProjectServer : pilotProjectServers) {
+					String pilotServerConfigDet = "";
+					for (Server pilotProjectServer : pilotProjectServers) {
+						String csvVersion = "";
 						name = pilotProjectServer.getName();
-						versions.clear();
 						for (String version : pilotProjectServer.getVersions()) {
-							versions.add(version.trim());
+							if (csvVersion != "") {
+								csvVersion = version + ", " + csvVersion;	
+							} else {
+								csvVersion = version + ", ";
+							}
 						}
+						csvVersion = csvVersion.trim();
+						csvVersion = csvVersion.substring(0, csvVersion.length() - 1);
+						pilotServerConfigDet = pilotServerConfigDet + (name + "#VSEP#" + csvVersion + "#SEP#");
 			%>
-						constructElements("Server", '<%= name %>', '<%= versions %>', "dispServer");
+						$("#pilotServerConfigDet").val('<%= pilotServerConfigDet %>');
+						constructElements("Server", '<%= name %>', '<%= csvVersion %>', "dispServer", "showPilotProjectConfigs");
 			<%
 					}
 				}
@@ -549,14 +747,23 @@
 			/** For Database **/
 			<%
 				if (CollectionUtils.isNotEmpty(pilotProjectDbs)) {
-					for(Database pilotProjectDb : pilotProjectDbs) {
+					String pilotDbConfigDet = "";
+					for (Database pilotProjectDb : pilotProjectDbs) {
+						String csvVersion = "";
 						name = pilotProjectDb.getName();
-						versions.clear();
 						for (String version : pilotProjectDb.getVersions()) {
-							versions.add(version.trim());
+							if (csvVersion != "") {
+								csvVersion = version + ", " + csvVersion;
+							} else {
+								csvVersion = version + ", ";
+							}
 						}
+						csvVersion = csvVersion.trim();
+						csvVersion = csvVersion.substring(0, csvVersion.length() - 1);
+						pilotDbConfigDet = pilotDbConfigDet + (name + "#VSEP#" + csvVersion + "#SEP#");
 			%>
-						constructElements("Database", '<%= name %>', '<%= versions %>', "dispDatabase");
+						$("#pilotDbConfigDet").val('<%= pilotDbConfigDet %>');
+						constructElements("Database", '<%= name %>', '<%= csvVersion %>', "dispDatabase", "showPilotProjectConfigs");
 			<%
 					}
 				}
@@ -593,61 +800,61 @@
 			$("#alreadyConstructed").val("alreadyConstructed");
 		} else {
 			$("#alreadyConstructed").val("");
-			if (alreadyConstructed != "") { //To hide the pilot project configurations
-				tempSelectedServers = $("#tempSelectedServer").val();
-				tempSelectedDatabases = $("#tempSelectedDatabase").val();
-				/** To remove servers **/
-				<%
-					if (CollectionUtils.isNotEmpty(pilotProjectServers)) {
-						for(Server pilotProjectServer : pilotProjectServers) {
-							String deleteId = pilotProjectServer.getName().replaceAll("\\s", "");
-				%>
-							deleteThis("Server", '<%= deleteId %>', tempSelectedServers, '<%= pilotProjectServer.getName() %>');
-				<%
-						}
+			
+			/** To remove servers **/
+			<%
+				if (CollectionUtils.isNotEmpty(pilotProjectServers)) {
+					for (Server pilotProjectServer : pilotProjectServers) {
+						String deleteId = pilotProjectServer.getName().replaceAll("\\s", "");
+			%>
+						deleteThis("Server", '<%= deleteId %>', "", '<%= pilotProjectServer.getName() %>', "removePilotProjConfig");
+			<%
 					}
-				%>
-				
-				/** To remove databases **/
-				<%
-					if (CollectionUtils.isNotEmpty(pilotProjectDbs)) {
-						for(Database pilotProjectDb : pilotProjectDbs) {
-							String deleteId = pilotProjectDb.getName().replaceAll("\\s", "");
-				%>
-							deleteThis("Database", '<%= deleteId %>', tempSelectedDatabases, '<%= pilotProjectDb.getName() %>');
-				<%
-						}
+				}
+			%>
+			$("#pilotServerConfigDet").val("");
+			
+			/** To remove databases **/
+			<%
+				if (CollectionUtils.isNotEmpty(pilotProjectDbs)) {
+					for (Database pilotProjectDb : pilotProjectDbs) {
+						String deleteId = pilotProjectDb.getName().replaceAll("\\s", "");
+			%>
+						deleteThis("Database", '<%= deleteId %>', "", '<%= pilotProjectDb.getName() %>', "removePilotProjConfig");
+			<%
 					}
-				%>
-				
-				/** To unselect the webservices **/
-				<%
-					if (CollectionUtils.isNotEmpty(pilotProjectWebServices)) {
-				%>
-						$("input:checkbox[name=webservices]").each(function() {
-							<% 
-								for (WebService pilotProjectWebService : pilotProjectWebServices) {
-							%>
-									if ($(this).val() == '<%= pilotProjectWebService.getId() %>') {
-										$(this).removeAttr("checked");
-									}
-							<% 
+				}
+			%>
+			$("#pilotDbConfigDet").val("");
+			
+			/** To unselect the webservices **/
+			<%
+				if (CollectionUtils.isNotEmpty(pilotProjectWebServices)) {
+			%>
+					$("input:checkbox[name=webservices]").each(function() {
+						<% 
+							for (WebService pilotProjectWebService : pilotProjectWebServices) {
+						%>
+								if ($(this).val() == '<%= pilotProjectWebService.getId() %>') {
+									$(this).removeAttr("checked");
 								}
-							%>
-						});
-				<%
-					}
-				%> 
-				
-				/** To uncheck email supported **/
-				<%
-					if (isPilotEmailSupported) {
-				%>
-						$("input:checkbox[name=emailSupported]").removeAttr("checked");	
-				<%
-					}
-				%>
-			}
+						<% 
+							}
+						%>
+					});
+			<%
+				}
+			%> 
+			
+			/** To uncheck email supported **/
+			<%
+				if (isPilotEmailSupported) {
+			%>
+					$("input:checkbox[name=emailSupported]").removeAttr("checked");	
+			<%
+				}
+			%>
+
 			/** To reload all the versions when none project is selected for android native technology **/
 			if ('<%= TechnologyTypes.ANDROID_NATIVE %>' == currentTechnology) {
 				techVersions();

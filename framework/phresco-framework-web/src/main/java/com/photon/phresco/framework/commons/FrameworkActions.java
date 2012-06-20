@@ -66,6 +66,7 @@ public interface FrameworkActions {
 	String APP_GENERATE_TEST = "generateTest";
 	String APP_GENERATE_UNIT_TEST = "generateUnitTest";
     String APP_TEST_REPORT = "testReport";
+    String APP_ALL_TEST_REPORT = "allTestReport";
 	String APP_QUALITY_TESTSUITE = "testSuite";
 	String APP_DEPLOY_ANDROID = "deployAndroid";
 	String APP_DEPLOY_IPHONE = "deployIphone";
@@ -85,7 +86,9 @@ public interface FrameworkActions {
     String APP_VALIDATE_PROJECT = "validateProject";
     String APP_SHOW_FRAMEWORK_VLDT_RSLT = "showFrameworkVldtRslt";
     String APP_SHOW_PROJECT_VLDT_RSLT = "showProjectVldtRslt";
-    String APP_SHOW_CODE_VALIDATE_POPUP="showCodeValidatePopUp";
+    String APP_SHOW_CODE_VALIDATE_POPUP = "showCodeValidatePopUp";
+    String APP_SITE_REPORT_VIEW = "siteReport";
+    String APP_SITE_REPORT_CONFIGURE = "configure";
 
     /*****************************
      * Settings Action path

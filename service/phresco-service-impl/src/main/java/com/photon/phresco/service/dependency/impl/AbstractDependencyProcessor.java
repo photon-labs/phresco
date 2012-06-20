@@ -59,7 +59,7 @@ import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;
-
+import com.photon.phresco.util.Constants;
 /**
  * Abstract dependency processor has methods to get the binaries from
  * dependencies.
@@ -241,7 +241,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 			if (databaseList == null || databaseList.size() == 0) {
 				return;
 			}
-			File mysqlFolder = new File(path, sqlFolderPathMap.get(techId) + ServerConstants.DB_MYSQL);
+			File mysqlFolder = new File(path, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
 			File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
 			for (Database db : databaseList) {
 				databaseType = db.getName().toLowerCase();
@@ -250,11 +250,11 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 					String sqlPath = databaseType + File.separator + version.trim();
 					File sqlFolder = new File(path, sqlFolderPathMap.get(techId) + sqlPath);
 					sqlFolder.mkdirs();
-					if (databaseType.equals(ServerConstants.DB_MYSQL) && mysqlVersionFolder != null
+					if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
 							&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
 						FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
 					} else {
-						File sqlFile = new File(sqlFolder, ServerConstants.SITE_SQL);
+						File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
 						sqlFile.createNewFile();
 					}
 				}

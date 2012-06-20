@@ -678,6 +678,10 @@ div.vjs-big-play-button span {
 	border: 1px solid #CCCCCC;
 }
 
+.build_table_div {
+	border: 1px solid #CCCCCC;
+}
+
 .settingsList_table_div {
 	border: 1px solid #CCCCCC;
 }
@@ -1350,9 +1354,20 @@ table tr {
 #errorMsg {
 	color:red;
 }
-#errMsg {
+
+#errMsg, #advSettingsErrMsg {
 	color:red;
 }
+
+#logimErrMesg {
+	color: #1AA6DB;
+    float: left;
+    font-weight: bold;
+    padding-bottom: 9px;
+    width: 195%;
+    margin-top: -8px;
+}
+
 #reportMsg {
     color:green;
 }

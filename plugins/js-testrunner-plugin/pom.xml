@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.jstestrunner</groupId>
 	<artifactId>jstestrunner-junit</artifactId>
-	<version>1.2.0.1001</version>
+	<version>1.2.0.3001-SNAPSHOT</version>
 	<name>JS Test Runner for JUnit</name>
 	<description>Runs JavaScript headlessly and reports details of the test back through JUnit.</description>
 
@@ -16,6 +16,24 @@
 		<system>Bamboo</system>
 		<url>http://bamboo.ci.codehaus.org/browse/JSTR</url>
 	</ciManagement>
+    
+    
+	<distributionManagement>
+        <repository>
+            <id>${releases.repo.id}</id>
+            <url>${releases.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${snapshots.repo.id}</id>
+            <url>${snapshots.repo.url}</url>
+        </snapshotRepository>
+          <downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
+                <site>
+                        <id>org.codehaus.js-testrunner</id>
+                        <name>Website</name>
+                        <url>dav:https://dav.codehaus.org/js-testrunner/</url>
+                </site>
+        </distributionManagement>
 	
 	<developers>
 		<developer>
@@ -47,15 +65,6 @@
 			<url>http://octopod.org</url>
 		</developer>
 	</developers>
-	
-	<distributionManagement>
-		<downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
-		<site>
-			<id>org.codehaus.js-testrunner</id>
-			<name>Website</name>
-			<url>dav:https://dav.codehaus.org/js-testrunner/</url>
-		</site>
-	</distributionManagement>
 	
 	<inceptionYear>2011</inceptionYear>
 	
@@ -295,30 +304,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
-   <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>dev-snapshots</id>
-                    <url>http://dev-repo.photoninfotech.com:8080/nexus/content/repositories/snapshots/</url>
-                </snapshotRepository>
-                <repository>
-                    <id>dev-releases</id>
-                    <url>http://23.21.177.233:8080/nexus/content/repositories/releases/</url>
-                </repository>
-                 <site>
-                    <id>phresco</id>
-                    <name>Phresco</name>
-                    <url>scp://phresco.org/home/public_html/</url>
-                </site>
-            </distributionManagement>
-       </profile>
-	</profiles>
-	
 </project>

@@ -22,12 +22,20 @@
 	
 	<artifactId>javascript-maven-plugin</artifactId>
 	<packaging>jar</packaging>
-    <version>1.2.0.1001</version>
+    <version>1.2.0.3001-SNAPSHOT</version>
 	<name>Javascript Maven Plugin</name>
 	<description>An extension that provides lifecycle binding, dependency, plugin and resource configuration suitable to most JS projects.</description>
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
 
 	<distributionManagement>
+        <repository>
+            <id>${releases.repo.id}</id>
+            <url>${releases.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${snapshots.repo.id}</id>
+            <url>${snapshots.repo.url}</url>
+        </snapshotRepository>
         <site>
             <id>phresco.plugins.javascript</id>
             <name>Phresco Plugins - Javascript</name>
@@ -70,12 +78,5 @@
 			</resource>
 		</resources>
 	</build>
-    
-     <distributionManagement>
-            <repository>
-                <id>dev-releases</id>
-                <url>http://172.16.18.178:8080/nexus/content/repositories/releases/</url>
-            </repository>
-          
-    </distributionManagement>
+   
 </project>

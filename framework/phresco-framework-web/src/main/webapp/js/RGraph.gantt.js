@@ -1,23 +1,4 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
-    /**
+7    /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
     * |                                                                              |
@@ -68,7 +49,7 @@
             'chart.background.grid.hlines': true,
             'chart.background.grid.vlines': true,
             'chart.background.grid.border': true,
-            'chart.background.grid.autofit':true,
+            'chart.background.grid.autofit':false,
             'chart.background.grid.autofit.numhlines': 7,
             'chart.background.grid.autofit.numvlines': 20,
             'chart.background.vbars':       [],
@@ -80,7 +61,6 @@
             'chart.gutter.top':             35,
             'chart.gutter.bottom':          25,
             'chart.labels':                 [],
-            'chart.labels.align':           'bottom',
             'chart.margin':                 2,
             'chart.title':                  '',
             'chart.title.background':       null,
@@ -89,14 +69,13 @@
             'chart.title.bold':             true,
             'chart.title.font':             null,
             'chart.title.yaxis':            '',
-            'chart.title.yaxis.bold':        true,
             'chart.title.yaxis.pos':        null,
             'chart.title.yaxis.position':   'right',
             'chart.events':                 [],
             'chart.borders':                true,
             'chart.defaultcolor':           'white',
             'chart.coords':                 [],
-            'chart.tooltips':               null,
+            'chart.tooltips':               [],
             'chart.tooltips.effect':         'fade',
             'chart.tooltips.css.class':      'RGraph_tooltip',
             'chart.tooltips.highlight':     true,
@@ -124,9 +103,7 @@
             'chart.resizable':              false,
             'chart.resize.handle.adjust':   [0,0],
             'chart.resize.handle.background': null,
-            'chart.adjustable':             false,
-            'chart.events.click':           null,
-            'chart.events.mousemove':       null
+            'chart.adjustable':             false
         }
 
 
@@ -199,19 +176,23 @@
         RGraph.background.Draw(this);
         
         /**
+        * Draw a space for the left hand labels
+        */
+        //this.context.beginPath();
+            //this.context.lineWidth   = 1;
+            //this.context.strokeStyle = this.Get('chart.background.grid.color');
+            //this.context.fillStyle   = 'white';
+            //this.context.fillRect(0,gutter - 5,gutter * 3, RGraph.GetHeight(this) - (2 * gutter) + 10);
+            //this.context.moveTo(gutter * 3, gutter);
+            //this.context.lineTo(gutter * 3, RGraph.GetHeight(this) - gutter);
+        //this.context.stroke();
+        //this.context.fill();
+        
+        /**
         * Draw the labels at the top
         */
         this.DrawLabels();
-
-
-
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
-
+        
         /**
         * Draw the events
         */
@@ -274,46 +255,23 @@
         /**
         * Draw the X labels at the top of the chart.
         */
-        var labels = this.Get('chart.labels');
-        var labelSpace = (this.graphArea) / labels.length;
-        var x      = this.gutterLeft + (labelSpace / 2);
-        var y      = this.gutterTop - (this.Get('chart.text.size') / 2) - 5;
-        var font   = this.Get('chart.text.font');
-        var size   = this.Get('chart.text.size');
-
+        var labelSpace = (this.graphArea) / this.Get('chart.labels').length;
+        var xPos       = this.gutterLeft + (labelSpace / 2);
         this.context.strokeStyle = 'black'
+
+        for (i=0; i<this.Get('chart.labels').length; ++i) {
+            RGraph.Text(this.context,this.Get('chart.text.font'),this.Get('chart.text.size'),xPos + (i * labelSpace),this.gutterTop - (this.Get('chart.text.size') / 2) - 5,String(this.Get('chart.labels')[i]),'center','center');
+        }
         
-        /**
-        * This facilitates chart.labels.align
-        */
-        if (this.Get('chart.labels.align') == 'bottom') {
-            y = this.canvas.height - this.gutterBottom + size;
-        }
-
-        /**
-        * Draw the horizontal labels
-        */
-        for (i=0; i<labels.length; ++i) {
-            RGraph.Text(this.context,
-                        font,
-                        size,
-                        x + (i * labelSpace),
-                        y,
-                        String(labels[i]),
-                        'center',
-                        'center');
-        }
-
         // Draw the vertical labels
         for (var i=0; i<this.Get('chart.events').length; ++i) {
-            
             var ev = this.Get('chart.events')[i];
             var x  = this.gutterLeft;
             var y  = this.gutterTop + this.halfBarHeight + (i * this.barHeight);
 
             RGraph.Text(this.context,
-                        font,
-                        size,
+                        this.Get('chart.text.font'),
+                        this.Get('chart.text.size'),
                         x - 5, y,
                         RGraph.is_array(ev[0]) ? String(ev[0][3]) : String(ev[3]),
                         'center',
@@ -384,86 +342,74 @@
 
             // Register the object for redrawing
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             /**
             * If the cursor is over a hotspot, change the cursor to a hand
             */
-            var canvas_onmousemove_func = function (e)
+            var canvas_onmousemove_func = function (eventObj)
             {
-                e               = RGraph.FixEventObject(e);
-                var canvas      = e.target;
+                eventObj        = RGraph.FixEventObject(eventObj);
+                var canvas      = eventObj.target;
                 var obj         = canvas.__object__;
                 var len         = obj.coords.length;
-                var mouseCoords = RGraph.getMouseXY(e);
-                var bar         = obj.getBar(e);
+                var mouseCoords = RGraph.getMouseXY(eventObj);
+                var bar         = obj.getBar(eventObj);
 
                 /**
                 * Loop through the bars determining if the mouse is over a bar
                 */
                 if (bar) {
-                    var text = obj.Get('chart.tooltips')[bar[5]];
-                        text = RGraph.getTooltipTextFromDIV(obj.Get('chart.tooltips')[bar[5]]);
-                        
-                    if (text) {
-                        canvas.style.cursor = 'pointer';
-                    }
-                    
-                    /**
-                    * Facilitate chart.tooltips.event
-                    */
-                    if (obj.Get('chart.tooltips.event') == 'onmousemove' && (!RGraph.Registry.Get('chart.tooltip') || bar[5] != RGraph.Registry.Get('chart.tooltip').__index__)) {
-                        canvas_onclick_func(e);
-                    }
-                } else {
-                    canvas.style.cursor = 'default';
+                    canvas.style.cursor = 'pointer';
+                    return;
                 }
+
+                canvas.style.cursor = 'default';
             }
             this.canvas.addEventListener('mousemove', canvas_onmousemove_func, false);
             RGraph.AddEventListener(this.id, 'mousemove', canvas_onmousemove_func);
 
 
-            var canvas_onclick_func = function (e)
+            var canvas_onclick_func = function (eventObj)
             {
-                e = RGraph.FixEventObject(e);
+                eventObj = RGraph.FixEventObject(eventObj);
 
-                var canvas      = e.target;
-                var context     = canvas.getContext('2d');
-                var obj         = canvas.__object__;
-                var mouseCoords = RGraph.getMouseXY(e);
+                var canvas  = eventObj.target;
+                var context = canvas.getContext('2d');
+                var obj     = canvas.__object__;
+                var mouseCoords = RGraph.getMouseXY(eventObj);
                 var mouseX      = mouseCoords[0];
                 var mouseY      = mouseCoords[1];
-                var bar         = obj.getBar(e);
+                var bar         = obj.getBar(eventObj);
                 
                 if (bar) {
                 
                     var idx = bar[5];
 
-                    // Get the tooltip text
-                    var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
-                        
-                    if (!text) {
-                        return;
-                    }
-
                    // Redraw the graph
                     RGraph.Redraw();
+                    
+                    // Get the tooltip text
+                    var text = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
 
                     if (String(text).length && text != '') {
 
                         // SHOW THE CORRECT TOOLTIP
-                        RGraph.Tooltip(canvas, text, e.pageX, e.pageY, idx);
+                        RGraph.Tooltip(canvas, text, eventObj.pageX, eventObj.pageY, idx);
                         
                         /**
                         * Draw a rectangle around the correct bar, in effect highlighting it
                         */
+
                         context.lineWidth = 1;
                         context.strokeStyle = obj.Get('chart.highlight.stroke');
                         context.fillStyle   = obj.Get('chart.highlight.fill');
                         context.strokeRect(bar[1], bar[2], bar[3], bar[4]);
                         context.fillRect(bar[1], bar[2], bar[3], bar[4]);
+
+                        eventObj.stopPropagation();
                     }
+
+                    return;
                 }
             }
             this.canvas.addEventListener('click', canvas_onclick_func, false);
@@ -503,7 +449,7 @@
                 && mouseX <= (left + width)
                 && mouseY >= top
                 && mouseY <= (top + height)
-               ) {
+                && (typeof(obj.Get('chart.tooltips')) == 'function' || obj.Get('chart.tooltips')[i]) ) {
                 
                 return [obj, left, top, width, height, i];
             }
@@ -515,7 +461,7 @@
     * Draws a single event
     */
     RGraph.Gantt.prototype.DrawSingleEvent = function ()
-    {
+    {        
         var min     = this.Get('chart.xmin');
         var context = this.context;
         var ev      = RGraph.array_clone(arguments[0]);
@@ -524,26 +470,18 @@
         context.strokeStyle = 'black';
         context.fillStyle = ev[4] ? ev[4] : this.Get('chart.defaultcolor');
 
-        var barStartX  = AA(this, this.gutterLeft + (((ev[0] - min) / (this.Get('chart.xmax') - min)) * this.graphArea));
-        var barStartY  = AA(this, this.gutterTop + (i * this.barHeight));
+        var barStartX  = this.gutterLeft + (((ev[0] - min) / (this.Get('chart.xmax') - min)) * this.graphArea);
+        //barStartX += this.margin;
+        var barStartY  = this.gutterTop + (i * this.barHeight);
         var barWidth   = (ev[1] / (this.Get('chart.xmax') - min) ) * this.graphArea;
 
         /**
         * If the width is greater than the graph atrea, curtail it
         */
-        if ( (barStartX + barWidth) > (this.canvas.width - this.gutterRight) ) {
-            barWidth = this.canvas.width - this.gutterRight - barStartX;
+        if ( (barStartX + barWidth) > (RGraph.GetWidth(this) - this.gutterRight) ) {
+            barWidth = RGraph.GetWidth(this) - this.gutterRight - barStartX;
         }
-        
-        // This helps anti-aliasing
-        //
-        // 9/1/2012 
-        //
-        //The width is now rounded to the nearest pixel. This helps with antialiasing (because the start value is
-        // rounded to the nearest .5 value.
-        barWidth       = Math.round(barWidth);
-        this.barHeight = Math.round(this.barHeight)
-        
+
         /**
         *  Draw the actual bar storing store the coordinates
         */

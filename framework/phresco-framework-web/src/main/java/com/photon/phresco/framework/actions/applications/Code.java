@@ -19,22 +19,10 @@
  */
 package com.photon.phresco.framework.actions.applications;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.HttpURLConnection;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +30,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -56,11 +41,9 @@ import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.api.ProjectRuntimeManager;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
-import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
-import com.photon.phresco.framework.commons.filter.FileListFilter;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.util.PomProcessor;
@@ -81,8 +64,34 @@ public class Code extends FrameworkBaseAction {
         	Project project = administrator.getProject(projectCode); 
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(APPLICATION_PROJECT, project);
-            
-    	}  catch (Exception e) {
+      		FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+            String serverUrl = "";
+    	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
+    	    	serverUrl = frameworkConfig.getSonarUrl();
+    	    } else {
+    	    	serverUrl = getHttpRequest().getRequestURL().toString();
+    	    	StringBuilder tobeRemoved = new StringBuilder();
+    	    	tobeRemoved.append(getHttpRequest().getContextPath());
+    	    	tobeRemoved.append(getHttpRequest().getServletPath());
+    	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
+    	    	Matcher matcher = pattern.matcher(serverUrl);
+    	    	serverUrl = matcher.replaceAll("");
+    	    }
+    	    String sonarReportPath = frameworkConfig.getSonarReportPath();
+    	    String[] sonar = sonarReportPath.split("/");
+    	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar[1]);
+    	    URL sonarURL = new URL(serverUrl);
+			HttpURLConnection connection = null;
+    	    try {
+    	    	connection = (HttpURLConnection) sonarURL.openConnection();
+    	    	int responseCode = connection.getResponseCode();
+    	    	if (responseCode != 200) {
+    	    		getHttpRequest().setAttribute(REQ_ERROR, getText(SONAR_NOT_STARTED));
+                }
+    	    } catch(Exception e) {
+    	    	getHttpRequest().setAttribute(REQ_ERROR, getText(SONAR_NOT_STARTED));
+    	    }
+    	} catch (Exception e) {
     		S_LOGGER.error("Entered into catch block of Code.view()"+ FrameworkUtil.getStackTraceAsString(e));
     		new LogErrorReport(e, "Code view");
         }

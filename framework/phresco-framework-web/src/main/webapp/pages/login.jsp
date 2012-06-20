@@ -1,22 +1,3 @@
-<%--
-  ###
-  Framework Web Archive
-  
-  Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-       http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  ###
-  --%>
 <!doctype html>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <html>
@@ -33,20 +14,33 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet" href="themes/photon/css/red.css" class="changeme">
+<link type="text/css" rel="stylesheet"  class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
     showWelcomeImage();
-    
+
     <%
 		String cmdLogin = (String) request.getAttribute("cmdLogin");
 		if (cmdLogin != null) {
 	%>
 		createBookmarkLink('Phresco', '<%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= request.getContextPath() %>');
 	<% } %>
+	/* $('#Login').click(function() {
+		$("#logimErrMesg").html("");
+		if(isBlank($.trim($("input[name='username']").val()))){
+			$("#logimErrMesg").html("Enter the Username");
+			$("#username").focus();
+			$("#username").val("");
+			return false;
+		}
+		if(isBlank($.trim($("input[name='password']").val()))){
+			$("#logimErrMesg").html("Enter the Password");
+			$("#password").focus();
+			return false;
+		}
+	}); */
 });
-
 
 /* function createBookmarkLink(title, url) {
 	if (window.sidebar)  {							// firefox
@@ -68,17 +62,22 @@ $(document).ready(function() {
 } */
 
 function showWelcomeImage() {
-    var theme = $.cookie("css");
+   
+ 	if (localStorage["color"] != null) {
+		$("link[id='theme']").attr("href", localStorage["color"]);
+	} else {
+		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+	}
+ 	
+ 	var theme = localStorage["color"]; 
+
     if(theme == "themes/photon/css/blue.css") {
         $('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
         $('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
         $('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
     }
-}
 
-if($.cookie("css")) {
-	 $("link.changeme").attr("href",$.cookie("css"));
-	}
+}
 
 </script>
 </head>
@@ -96,19 +95,22 @@ if($.cookie("css")) {
              </div> 
 	    <div class="lgnintro_container_left">
 	    <h1 class="l_align">Login</h1><h1 class="lp_align"></h1>    
-	       
+			<%
+			     String loginError = (String)request.getAttribute(FrameworkConstants.REQ_LOGIN_ERROR);
+			%>
+			&nbsp;&nbsp;&nbsp;<div id="logimErrMesg" class="lgnError"><%= loginError == null?"":loginError %></div>  
             <form name="login" action="login" method="post" class="marginBottomZero">
 				<!--  UserName starts -->
 				<div class="clearfix" >
 				     <label class="labellg" for="xlInput" class="lgnfieldLb1">Username:</label>
-				     <input class="xlarge settings_text lgnField" id="xlInput" name="username" type="text" autofocus="" maxlength="63" title="63 Characters only" placeholder="Enter Your Insight User Name" />
+				     <input class="xlarge settings_text lgnField" id="xlInput" id="username" name="username" type="text" autofocus="" maxlength="63" title="63 Characters only" placeholder="Enter the username" />
 				    </div>
 				<!--  UserName ends -->
 		              
 	            <!--  Password starts -->
 	            <div class="clearfix" >
 	                <label class="labellg" for="xlInput" class="lgnFieldLbl">Password:</label>
-	                <input class="xlarge settings_text lgnField" id="xlInput" name="password" type="password"  maxlength="63" title="63 Characters only" value =""/>
+	                <input class="xlarge settings_text lgnField" id="xlInput" id="password" name="password" type="password"  maxlength="63" title="63 Characters only" value =""/>
 	            </div>
 	            <!--  Password ends -->
 		              
@@ -123,12 +125,12 @@ if($.cookie("css")) {
                 
 	        	<div class="clearfix">
 	                <div class="input lgnBtnLabel">
-	                    <input type="submit" value="Login" class="primary btn lgnBtn">
-	                    <%
+	                    <input type="submit" value="Login" class="primary btn lgnBtn" id="Login">
+	                    <%-- <%
 	                         String loginError = (String)request.getAttribute(FrameworkConstants.REQ_LOGIN_ERROR);
 	                    %>
-	                    &nbsp;&nbsp;&nbsp;<div class="lgnError"><%= loginError == null?"":loginError %></div>
-	                </div>
+	                    &nbsp;&nbsp;&nbsp;<div id="logimErrMesg" class="lgnError"><%= loginError == null?"":loginError %></div> --%>
+	            </div>
 	            </div>
 	            <input type="hidden" name="fromPage" value="login"/>
 			</form>
@@ -148,5 +150,6 @@ if($.cookie("css")) {
 	     </div>
 	   </footer>
 	</div>
+	
 </body>
 </html>

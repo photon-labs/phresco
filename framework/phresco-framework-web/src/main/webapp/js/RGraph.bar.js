@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -568,7 +549,7 @@
 
                 if (yaxispos == 'left' && !noEndXTick && x > this.gutterLeft) {
                     this.context.moveTo(AA(this, x), yStart);
-                    this.context.lineTo(AA(this, x), yEnd);
+                    this.context.lineTo(AA(this, x), yEnd + 5); // tick mark height
                 
                 } else if (yaxispos == 'left' && noEndXTick && x > this.gutterLeft && x < (this.canvas.width - this.gutterRight) ) {
                     this.context.moveTo(AA(this, x), yStart);
@@ -724,10 +705,6 @@
             }
 
             var x = (i * width) + this.gutterLeft;
-            if (width > 67) {
-            	x = x + ((width - 67) / 2);
-            }
-            
             var y = xaxispos == 'center' ? ((this.canvas.height - this.gutterTop - this.gutterBottom) / 2) + this.gutterTop - height
                                          : this.canvas.height - height - this.gutterBottom;
 
@@ -760,9 +737,6 @@
                 if (typeof(this.data[i]) == 'number') {
                     
                     var barWidth = width - (2 * hmargin);
-                    if (barWidth > 57) {
-                    	barWidth = 57;
-                    }
 
                     // Set the fill color
                     this.context.strokeStyle = strokeStyle;
@@ -1467,13 +1441,8 @@ if (this.Get('chart.labels.above')) {
             // Draw the X tickmarks
             var i=0;
             var font = this.Get('chart.text.font');
-            
+
             for (x=this.gutterLeft + (xTickGap / 2); x<=RGraph.GetWidth(this) - this.gutterRight; x+=xTickGap) {
-            	
-            	/*if (barWidth > 67) {
-            		x = x - 15;
-            	}*/
-            	
                 RGraph.Text(context, font,
                                       text_size,
                                       x + (this.Get('chart.text.angle') == 90 ? 0 : 0),

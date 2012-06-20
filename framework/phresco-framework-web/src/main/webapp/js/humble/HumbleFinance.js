@@ -134,8 +134,7 @@ var HumbleFinance = {
      * @param Array summaryData
      */
     init: function(id, priceData, volumeData, summaryData) {
-	
-    	var theme = getCookie("css");
+		var theme = localStorage["color"];
     	if(theme == undefined || theme == "themes/photon/css/red.css") {
     		Flotr.defaultOptions.colors =  ['#B1121D', '#C0D800', '#CB4B4B', '#4DA74D', '#9440ED'];
     	}
