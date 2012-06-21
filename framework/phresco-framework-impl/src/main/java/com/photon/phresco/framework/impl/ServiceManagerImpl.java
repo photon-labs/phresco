@@ -47,6 +47,7 @@ import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
@@ -166,16 +167,17 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return builder.get(genericType);
     }
     
-    public List<DownloadInfo> getDownloadsFromService() throws PhrescoException {
+    public List<DownloadInfo> getDownloadsFromService(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
         if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.loadVideosFromService()");
 		}
         FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
         Client client = ClientHelper.createClient();
-        WebResource resource = client.resource(configuration.getServerPath() + REST_DOWNLOADS_PATH + "/" + findOS() );
-        Builder builder = resource.accept(MediaType.APPLICATION_JSON_TYPE);
+        WebResource resource = client.resource(configuration.getServerPath() + REST_DOWNLOADS_PATH);
+        ClientResponse response = resource.type(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class, downloadPropertyInfo);
         GenericType<List<DownloadInfo>> genericType = new GenericType<List<DownloadInfo>>() {};
-        return builder.get(genericType);
+        List<DownloadInfo> downloadInfo = response.getEntity(genericType);
+        return downloadInfo;
     }
     
     public List<Server> getServers() throws PhrescoException {
@@ -200,29 +202,6 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         Builder builder = resource.accept(MediaType.APPLICATION_JSON_TYPE);
         GenericType<List<Database>> genericType = new GenericType<List<Database>>() {};
         return builder.get(genericType);
-    }
-    
-    private String findOS() {
-    	String osName = System.getProperty(OS_NAME);
-    	String osBit = System.getProperty(OS_ARCH);
-    	if (osName.contains(WINDOWS)) {
-			osName = WINDOWS;
-		} else if (osName.contains(LINUX)) {
-			osName = LINUX;
-		} else if (osName.contains(MAC)) {
-			osName = MAC;
-		} else if (osName.contains(SERVER)) {
-			osName = SERVER;
-		} else if (osName.contains(WINDOWS7)) {
-			osName = WINDOWS7.replace(" ", "");
-		}
-			
-    	if (osBit.contains(OS_BIT64)) {
-    		osBit = OS_BIT64;
-    	} else {
-    		osBit = OS_BIT86;
-    	}
-    	return osName.concat(osBit);
     }
     
     private void writeToFile(String fileName, List jsonObjects) throws PhrescoException {

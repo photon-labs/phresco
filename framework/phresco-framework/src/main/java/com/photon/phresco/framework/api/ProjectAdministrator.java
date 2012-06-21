@@ -34,6 +34,7 @@ import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -344,21 +345,21 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getServerDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getServerDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns Database DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDbDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getDbDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns editor DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getEditorDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns the jForum path from the service
