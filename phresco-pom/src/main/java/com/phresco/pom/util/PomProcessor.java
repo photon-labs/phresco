@@ -22,6 +22,7 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -339,18 +340,36 @@ public class PomProcessor {
 	 * @param pluginGroupId
 	 * @param pluginArtifactId
 	 * @param configList
+	 * @return
 	 * @throws PhrescoPomException
 	 */
 	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList) throws PhrescoPomException {
+		return addConfiguration(pluginGroupId, pluginArtifactId, configList, false);
+	}
+	
+	
+	/**
+	 * @param pluginGroupId
+	 * @param pluginArtifactId
+	 * @param configList
+	 * @param overwrite
+	 * @return
+	 * @throws PhrescoPomException
+	 */
+	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList, boolean overwrite) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
-		//TODO: duplicate needs to be avoided.
 		Configuration configuration = plugin.getConfiguration();
 		
 		if (configuration == null) {
 			configuration = new Configuration();
 			plugin.setConfiguration(configuration);
 		}
-		configuration.getAny().addAll(configList);	
+		if (overwrite) {
+			configuration.getAny().addAll(configList);
+		} else {			
+			plugin.getConfiguration().getAny().clear();
+			configuration.getAny().addAll(configList);
+			}
 		return configuration;
 	}
 
@@ -570,7 +589,6 @@ public class PomProcessor {
 			if(tmpProfile.getId().equals(id)){
 				profile = tmpProfile;
 				break;
-//				throw new PhrescoPomException(POMErrorCode.PROFILE_ID_EXIST);
 			}
 		}
 		
@@ -656,7 +674,14 @@ public class PomProcessor {
 			}	
 		}
 	}
-
+	
+	/**
+	 * @param finalName
+	 */
+	public void setFinalName(String finalName){
+		model.getBuild().setFinalName(finalName);
+	}
+	
 	/**
 	 * @throws JAXBException
 	 */
@@ -665,25 +690,5 @@ public class PomProcessor {
 		Marshaller marshal = jaxbContext.createMarshaller();
 		marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshal.marshal(model, file);
-	}
-	
-	public static void main(String[] args) throws JAXBException, IOException, PhrescoPomException {
-		PomProcessor processor = new PomProcessor(new File("D:\\pom\\pom.xml"));
-		Profile profile = processor.getProfile("sign");
-		
-		List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
-		for (Plugin plugin2 : plugin) {
-			List<PluginExecution> execution = plugin2.getExecutions().getExecution();
-			for (PluginExecution pluginExecution : execution) {
-					List<Element> any = pluginExecution.getConfiguration().getAny();
-						for (Element element : any) {
-//							if(element.getTagName().equals("keystore")){
-//								System.out.println(element.getTextContent());
-//							}
-						
-							
-						}
-			}
-		}
 	}
 }

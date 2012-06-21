@@ -78,26 +78,24 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @throws PhrescoPomException
 	 * @throws ParserConfigurationException
 	 */
-	public void addAndroidProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
+	public void setProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
 			AndroidProfile androidProfile, PluginExecution execution,
 			Element goalElement, List<Element> additionalConfig) throws JAXBException,
 			PhrescoPomException, ParserConfigurationException {
 		
-		if(model.getProfiles()!= null) {
-			for(Profile profile : model.getProfiles().getProfile()){
-				if(profileId.equals(profile.getId())) {
-					model.setProfiles(null);
-				}	
-			}
-		}
-			
 		BuildBase base = new BuildBase();
 		Plugins plugins = new Plugins();
 		Executions executions = new Executions();
 		Goals goals = new Goals();
-//		Configuration configuration = new Configuration();
 		Activation activation = new Activation();
 		
+		if(model.getProfiles()!= null) {
+			for(Profile profile : model.getProfiles().getProfile()){
+				if(profileId.equals(profile.getId())) {
+					 model.setProfiles(null);	 
+				}	
+			}
+		}
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
