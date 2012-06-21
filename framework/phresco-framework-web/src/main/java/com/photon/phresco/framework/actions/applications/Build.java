@@ -96,6 +96,8 @@ public class Build extends FrameworkBaseAction {
 	private String projectModule = null;
 	//Iphone deploy option
 	private String deployTo = "";
+	private String buildName = null;
+	private String newBuildNumber = null;
 
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
 
@@ -298,6 +300,14 @@ public class Build extends FrameworkBaseAction {
 			
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
+			}
+			
+			if (StringUtils.isNotEmpty(buildName)) {
+				settingsInfoMap.put(BUILD_NAME, buildName);
+			}
+			
+			if (StringUtils.isNotEmpty(newBuildNumber)) {
+				settingsInfoMap.put(BUILD_NUMBER, newBuildNumber);
 			}
 
 			if (StringUtils.isNotEmpty(androidVersion)) {
@@ -1496,6 +1506,7 @@ public class Build extends FrameworkBaseAction {
 		this.deployTo = deployTo;
 	}
 	
+   
 	public String getSkipTest() {
 		return skipTest;
 	}
@@ -1510,5 +1521,22 @@ public class Build extends FrameworkBaseAction {
 
 	public void setShowDebug(String showDebug) {
 		this.showDebug = showDebug;
+	}
+
+	public String getBuildName() {
+		return buildName;
+	}
+
+	public void setBuildName(String buildName) {
+		this.buildName = buildName;
+	}
+	
+	public String getNewBuildNumber() {
+		return newBuildNumber;
+	}
+
+	public void setNewBuildNumber(String newBuildNumber) {
+		this.newBuildNumber = newBuildNumber;
+     
 	}
 }
