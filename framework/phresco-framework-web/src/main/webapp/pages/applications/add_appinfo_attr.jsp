@@ -23,6 +23,7 @@
 <%@ page import="org.apache.commons.collections.CollectionUtils"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList"%>
 
 <%@ page import="com.photon.phresco.model.Technology"%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
@@ -34,9 +35,6 @@
 	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_TEST_SERVERS);
 	List<Database> databases = (List<Database>) request.getAttribute(FrameworkConstants.REQ_DATABASES);
 
-	List<String> tempListSelectedServers = (List<String>) request.getAttribute(FrameworkConstants.REQ_TEMPLIST_SELECTEDSERVERS);
-	List<String> tempListSelectedDatabases = (List<String>) request.getAttribute(FrameworkConstants.REQ_TEMPLIST_SELECTEDDATABASES);
-	
 	List<Integer> listSelectedServerIds = (List<Integer>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_SERVERIDS);
 	List<Integer> listSelectedDatabaseIds = (List<Integer>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_DATABASEIDS);
 	
@@ -127,7 +125,11 @@
 		<div class="action popup-action">
 			<div id="errMsg"></div>
 			<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
-			<input type="button" class="btn primary" value="<s:text name="label.add"/>" id="add">
+			<% if ("Edit".equals(headerType)) { %>
+					<input type="button" class="btn primary" value="<s:text name="label.update"/>" id="add">		
+			<% } else { %>
+					<input type="button" class="btn primary" value="<s:text name="label.add"/>" id="add">
+			<% } %>
 		</div>
 	</div>
 </div>
@@ -200,6 +202,7 @@ $(document).ready(function() {
 	/** To get the versions of the default option **/
 	var serverSelectBox = $("#allServers").val();
 	var databaseSelectBox = $("#allDatabases").val();
+	
 	if(serverSelectBox != undefined || serverSelectBox == "") {
 		getAllVersions("Server", serverSelectBox);
 	} else if(databaseSelectBox != undefined || serverSelectBox == "") {
@@ -259,7 +262,7 @@ $(document).ready(function() {
 					continueAdd();
 				} else {
 					$('.popup_div').hide();
-					$("#confirmationText").html("corresponding database SQL files will also be deleted. Do you like to continue ?");
+					$("#confirmationText").html("Corresponding database SQL files will also be deleted. Do you like to continue ?");
 					dialog('block');
 				    escBlockPopup();
 				    typeRemoveFlag = true;
@@ -276,8 +279,6 @@ $(document).ready(function() {
 });
 
 function continueAdd() {
-	var selectedServers = $("#tempSelectedServer").val();
-	var selectedDatabases = $("#tempSelectedDatabase").val();
 	var paramName = "";
 	
 	if(<%= "Server".equals(header) %>) {
@@ -306,13 +307,11 @@ function continueAdd() {
         	} else {
             	if(data.selectedAttrType == "Server") {
             		$("#Server").css("margin-left", "320px");
-            		$("#tempSelectedServer").val(selectedServers + data.selectedParamName + ",");
             		$("#dispServer").append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 											+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ data.selectedParamName +'" onclick="deleteEle(this);">&times;</a><div id="'+data.selectedVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
             								+ data.selectedParamName + " [ " + data.selectedVersions + " ] " + '</div></div>');
             	} else {
             		$("#Database").css("margin-left", "320px");
-            		$("#tempSelectedDatabase").val(selectedDatabases + data.selectedParamName + ",");
             		$("#dispDatabase").append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 											+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ data.selectedParamName +'" onclick="deleteEle(this);">&times;</a><div id="'+data.selectedVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%;  line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 											+ data.selectedParamName + " [ " + data.selectedVersions + " ] " + '</div></div>');

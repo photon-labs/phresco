@@ -8,6 +8,7 @@ public interface FrameworkConstants {
     /*
      * Common constants
      */
+	String FEATURES = "features"; 
     int JOB_STATUS_NOTOK = -1;
     String FOLDER_DOT_PHRESCO = ".phresco";
     String PHRESCO_HOME = "PHRESCO_HOME";
@@ -86,6 +87,8 @@ public interface FrameworkConstants {
     String MODULE_NAME = "moduleName";
     String SHOW_ERROR = "showerror";
     String HIDE_LOG = "hidelog";
+	String SHOW_DEBUG = "showdebug";
+    String SKIP_TEST = "skiptest";
     String DEPLOY = "deploy";
     String BUILD_INFO_ENVS = "buildInfoEnvs";
     String DEPLOY_IMPORT_SQL = "importSql";
@@ -139,6 +142,7 @@ public interface FrameworkConstants {
     String MVN_IPHONE_FUNCTIONAL_COMMAND = "mvn xcode:instruments"; // IPhone functional test command
     String MVN_IPHONE_NATIVE_UNITTEST = "mvn xcode:xcodebuild"; // IPhone unit test command
     String MVN_IPHONE_CODE_VALIDATE = "mvn xcode:codevalidate"; // IPhone code validate command
+    String MVN_SITE_COMMAND = "mvn site";
     String PHRESCO_FILE_SERVER_PORT_NO = "phresco.file.server.port";
     String APPLICATIONS = "applications";
     String SETTINGS = "settings";
@@ -167,9 +171,11 @@ public interface FrameworkConstants {
     String POST = "POST";
     String GET = "GET";
 	String SKIPTESTS = "skipTests";
+	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
-    
+    String BUILD_NAME = "buildName";
+	String BUILD_NUMBER = "buildNumber";
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
     String JFORUM_USERNAME = "&username=";
     String JFORUM_PASSWORD = "&password=";
@@ -306,6 +312,7 @@ public interface FrameworkConstants {
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
+    String REQ_ANDROID_PROFILE_DET = "androidProfileDetails";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
 	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
@@ -605,6 +612,7 @@ public interface FrameworkConstants {
     String FAILURE_CONFIGURATION = "Configuration {0} creation failed";
     String CONFIG_ALREADY_EXIST = "Configuration type already created for this environment";
     String SETTINGS_ALREADY_EXIST = "Settings type already created for this environment";
+    String NO_CONFIG_TYPE = "configuration.type.info";
     /*
      * Create Environment keys
      */
@@ -711,7 +719,8 @@ public interface FrameworkConstants {
     String BROWSER_FIREFOX_VALUE = "Firefox";
     String BROWSER_CHROME_VALUE = "Chrome";
     String BROWSER_INTERNET_EXPLORER_VALUE = "Internet Explorer";
-    String BROWSER_SAFARI = "Safari";
+    String BROWSER_SAFARI_VALUE = "Safari";
+    String BROWSER_OPERA_VALUE = "Opera";
     
     /*
      * Browser keys for windows
@@ -720,6 +729,9 @@ public interface FrameworkConstants {
     String WIN_BROWSER_CHROME_KEY = "googlechrome";
     String WIN_BROWSER_INTERNET_EXPLORER_KEY = "iexplore";
     String WIN_BROWSER_SAFARI_KEY = "safari";
+    String WIN_BROWSER_OPERA_KEY = "opera";
+    // web driver ie key
+    String WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY = "internet explorer";
 
     
     /*
@@ -727,7 +739,8 @@ public interface FrameworkConstants {
      */
     String MAC_BROWSER_FIREFOX_KEY = "firefox";
     String MAC_BROWSER_CHROME_KEY = "googlechrome";
-    String MAC_BROWSER_SAFARI = "safari";
+    String MAC_BROWSER_SAFARI_KEY = "safari";
+    String MAC_BROWSER_OPERA_KEY = "opera";
 
     /*
      * Browser keys for Linux
@@ -735,6 +748,7 @@ public interface FrameworkConstants {
     String LINUX_BROWSER_FIREFOX_KEY = "firefox";
     String LINUX_BROWSER_CHROME_KEY = "googlechrome";
     String LINUX_BROWSER_SAFARI_KEY = "safari";
+    String LINUX_BROWSER_OPERA_KEY = "opera";
     
     String PROJECT_VERSION = "1.0.0";
 	String VERSION = "version";
@@ -1009,4 +1023,12 @@ public interface FrameworkConstants {
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
+   
+   /* Site report */
+   String REQ_SITE_REPORT = "siteReport";
+   String REQ_SITE_REPORT_PATH = "siteReportPath";
+   String SITE_TARGET = "target/site";
+   String REQ_SITE_REPORTS = "reports";
+   String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
+   String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
   }

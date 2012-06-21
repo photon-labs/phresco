@@ -17,7 +17,6 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.util.TechnologyTypes"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ include file="progress.jsp" %>
@@ -35,6 +34,7 @@
 
 <script src="js/reader.js" ></script>
 <script type="text/javascript" src="js/home-header.js" ></script>
+<script type="text/javascript" src="js/phresco/common.js"></script>
 
 <%
 	String projectCode = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
@@ -59,7 +59,24 @@
 <div id="sonar_report" class="sonar_report">
 
 </div>
-
+<form id="codeForm">
+	<input type="hidden" name="skipTest"/>
+	<div id="codeConfirm" class="modal confirm">
+		<div class="modal-header">
+			<h3><s:text name="label.skiptest.confirm"/></h3>
+			<a id="close" href="#" class="close">&times;</a>
+		</div>
+		
+		<div class="modal-body">
+			<p id="confirmationText">Do you want to select skiptest?</p>
+		</div>
+		
+		<div class="modal-footer">
+			<input id="no" type="button" value="<s:text name="label.no"/>" class="btn primary"/>
+			<input type="button" value="<s:text name="label.yes"/>" class="btn primary" id="yes" />
+		</div>
+	</div>
+</form>
 <!--  Validate popup Start -->
 <!-- <div class="popup_div" id="code_validate_pop_up"></div> -->
 <!--  Validate popup Start -->
@@ -87,7 +104,9 @@
         	<% 
         		} else {
         	%>
-        		progress();
+        			disableScreen();
+        			$('#codeConfirm').show();    
+        			escBlockPopup();
 	        <% 
         		}
         	%>
@@ -97,9 +116,23 @@
        		closePopup();
        		sonarReport();
         });
+		$('#yes').click(function() {
+       		$('#codeConfirm').hide();
+       		$("input[name='skipTest']").val("true");
+       		progress();
+    		return false;
+        });
+       	
+       	$('#no').click(function() {
+       		$('#codeConfirm').hide();    
+       		$("input[name='skipTest']").val("false");
+       		progress();
+    		return false;
+        });		
     });
     
     function progress(codeTech) {
+		$('#codeConfirm').hide(); 
     	getCurrentCSS();
     	$('#loadingDiv').show();
     	$('#build-output').empty();

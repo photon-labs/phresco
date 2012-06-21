@@ -123,23 +123,23 @@ public interface ServerConstants {
 	  //Authentication Constants
 	 String AUTHENTICATE = "/authenticate";
 
-
+	String REST_API_COMPONENT =  "/component";
 	String REST_API_CUSTOMERS = "admin/customers";
-	String REST_API_APPTYPES = "component/apptypes";
-	String REST_API_CONFIG_TEMPLATES= "component/configtemplates";
-	String REST_API_MODULES= "component/modules";
-	String REST_API_PILOTS = "component/pilots";
-	String REST_API_SERVERS = "component/servers";
-	String REST_API_DATABASES = "component/databases";
-	String REST_API_WEBSERVICES = "component/webservices";
-	String REST_API_TECHNOLOGIES= "component/technologies";
+	String REST_API_APPTYPES = "apptypes/";
+	String REST_API_CONFIG_TEMPLATES= "configtemplates";
+	String REST_API_MODULES= "modules/";
+	String REST_API_PILOTS = "pilot/";
+	String REST_API_SERVERS = "servers/";
+	String REST_API_DATABASES = "databases/";
+	String REST_API_WEBSERVICES = "webservices/";
+	String REST_API_TECHNOLOGIES= "technologies/";
 	String REST_API_DOWNLOADS = "admin/downloads";
 	String REST_API_VIDEOS = "admin/videos";
 	String REST_API_USERS = "admin/users";
 	String REST_API_ROLES = "admin/roles";
 	String REST_API_PERMISSIONS = "admin/permissions";
 	String REST_API_LDAP = "settings/ldap";
-	String REST_API_SETTINGS = "settings_temp";
+	String REST_API_SETTINGS = "settings_temp/";
 	String REST_API_TWEETS = "tweets";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
@@ -155,5 +155,20 @@ public interface ServerConstants {
 
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "This operation is not allowed";
 	
+	 /*
+     * Constants for MongoDB Collections
+     */
 
+	String CUSTOMERS_COLLECTION_NAME = "customers";
+	String VIDEOS_COLLECTION_NAME = "videos";
+	String USERS_COLLECTION_NAME = "users";
+	String DOWNLOAD_COLLECTION_NAME = "downloads";
+	String MODULES_COLLECTION_NAME = "modules";
+	String APPTYPES_COLLECTION_NAME = "apptypes";
+	String PILOTS_COLLECTION_NAME = "pilots";
+	String SERVERS_COLLECTION_NAME = "servers";
+	String DATABASES_COLLECTION_NAME = "databases";
+	String WEBSERVICES_COLLECTION_NAME = "webservices";
+	String SETTINGS_COLLECTION_NAME = "settings";
+	String TECHNOLOGIES_COLLECTION_NAME = "technologies";
 }

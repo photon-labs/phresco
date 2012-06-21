@@ -66,6 +66,7 @@
             <li><a href="#" class="unselected" name="appTabs" id="buildView"><s:text name="label.editappln.build"/></a></li>
             <li><a href="#" class="unselected" name="appTabs" id="quality"><s:text name="label.editappln.quality"/></a></li>
             <li><a href="#" class="unselected" name="appTabs" id="ci"><s:text name="label.editappln.cntusintgrn"/></a></li>
+            <li><a href="#" class="unselected" name="appTabs" id="veiwSiteReport"><s:text name="label.editappln.site.report"/></a></li>
             <li><a href="#" class="unselected" name="appTabs" id="download"><s:text name="label.editappln.download"/></a></li>
         </ul>
 <%
@@ -91,6 +92,8 @@
 <!--  Heading Ends-->
 
 <input type="hidden" name="alreadyConstructed" id="alreadyConstructed" value="">
+<input type="hidden" id="pilotServerConfigDet">
+<input type="hidden" id="pilotDbConfigDet">
 
 <div class="tabDiv appInfoTabDiv" id="tabDiv">
 </div>
@@ -104,11 +107,10 @@
     var isCiRefresh = false; // for ci page use
     
 	$(document).ready(function() {
-		
 		// When project is loaded, project related validation has to be loaded
 		bacgroundValidate("validateProject", '<%= projectCode %>');
-		
-		<% 
+
+		<%
 			if (session.getAttribute(projectCode + FrameworkConstants.SESSION_PRJT_VLDT_STATUS) != null) {
 				String projectValidationStatus = (String)session.getAttribute(projectCode + FrameworkConstants.SESSION_PRJT_VLDT_STATUS);
 				if (projectValidationStatus == "ERROR") {
@@ -118,7 +120,7 @@
 	    <%		} else { %>
 	    			$("#validationErr_validateProject").hide();
 	    			$("#validationSuccess_validateProject").css("display", "block");
-	   	<% 		} 
+	   	<% 		}
 			}
 	   	%>
 		
@@ -165,15 +167,15 @@
     }
     
     function openFolder(path) {
-         var params = "path=";
-         params = params.concat(path);
-         performAction('openFolder', params, '');
+		var params = "path=";
+		params = params.concat(path);
+		performAction('openFolder', params, '');
     }
     
     function copyPath(path) {
-         var params = "path=";
-         params = params.concat(path);
-         performAction('copyPath', params, '');
+		var params = "path=";
+		params = params.concat(path);
+		performAction('copyPath', params, '');
 	}
     
     function copyToClipboard(data) {

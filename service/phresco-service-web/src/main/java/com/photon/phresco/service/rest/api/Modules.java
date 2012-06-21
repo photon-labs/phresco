@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -36,14 +37,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 import org.apache.log4j.Logger;
+
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Documentation;
+import com.photon.phresco.model.Documentation.DocumentationType;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.Documentation.DocumentationType;
+import com.photon.phresco.service.api.ComponentManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.data.api.ComponentManager;
 import com.photon.phresco.service.model.ServerConstants;
 
 @Path(ServerConstants.REST_API_MODULES)
