@@ -656,7 +656,7 @@ public class Applications extends FrameworkBaseAction {
 		return APP_SHOW_FRAMEWORK_VLDT_RSLT;
 	}
 
-	public String validateProject() {
+	public String validateProject() { 
 		S_LOGGER.debug("Entering Method  Applications.validateProject()");
 		
 		try {
