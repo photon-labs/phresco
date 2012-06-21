@@ -100,6 +100,21 @@
 				</div>
             </div>
         <% } %>
+        
+        <% if (from.equals("generateBuild")) { %>
+		        <div class="clearfix">
+				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge" id="buildName" name="buildName" maxlength="20" title="20 Characters only"/>
+				    </div>
+				</div>
+				<div class="clearfix">
+				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge" id="newBuildNumber" name="newBuildNumber" maxlength="20" title="10 Characters only"/>
+				    </div>
+				</div>
+		<% } %>
 
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
