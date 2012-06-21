@@ -87,6 +87,8 @@ public interface FrameworkConstants {
     String MODULE_NAME = "moduleName";
     String SHOW_ERROR = "showerror";
     String HIDE_LOG = "hidelog";
+    String SHOW_DEBUG = "showdebug";
+    String SKIP_TEST = "skiptest";
     String DEPLOY = "deploy";
     String BUILD_INFO_ENVS = "buildInfoEnvs";
     String DEPLOY_IMPORT_SQL = "importSql";
@@ -172,6 +174,8 @@ public interface FrameworkConstants {
 	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
+	String BUILD_NAME = "buildName";
+	String BUILD_NUMBER = "buildNumber";
     
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
     String JFORUM_USERNAME = "&username=";
@@ -716,7 +720,8 @@ public interface FrameworkConstants {
     String BROWSER_FIREFOX_VALUE = "Firefox";
     String BROWSER_CHROME_VALUE = "Chrome";
     String BROWSER_INTERNET_EXPLORER_VALUE = "Internet Explorer";
-    String BROWSER_SAFARI = "Safari";
+    String BROWSER_SAFARI_VALUE = "Safari";
+    String BROWSER_OPERA_VALUE = "Opera";
     
     /*
      * Browser keys for windows
@@ -725,14 +730,17 @@ public interface FrameworkConstants {
     String WIN_BROWSER_CHROME_KEY = "googlechrome";
     String WIN_BROWSER_INTERNET_EXPLORER_KEY = "iexplore";
     String WIN_BROWSER_SAFARI_KEY = "safari";
-
+    String WIN_BROWSER_OPERA_KEY = "opera";
+    // web driver ie key
+    String WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY = "internet explorer";
     
     /*
      * Browser keys for Mac
      */
     String MAC_BROWSER_FIREFOX_KEY = "firefox";
     String MAC_BROWSER_CHROME_KEY = "googlechrome";
-    String MAC_BROWSER_SAFARI = "safari";
+    String MAC_BROWSER_SAFARI_KEY = "safari";
+    String MAC_BROWSER_OPERA_KEY = "opera";
 
     /*
      * Browser keys for Linux
@@ -740,6 +748,7 @@ public interface FrameworkConstants {
     String LINUX_BROWSER_FIREFOX_KEY = "firefox";
     String LINUX_BROWSER_CHROME_KEY = "googlechrome";
     String LINUX_BROWSER_SAFARI_KEY = "safari";
+    String LINUX_BROWSER_OPERA_KEY = "opera";
     
     String PROJECT_VERSION = "1.0.0";
 	String VERSION = "version";

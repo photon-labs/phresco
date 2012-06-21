@@ -223,10 +223,12 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		String serverpassword = info.getPropertyInfo(Constants.SERVER_ADMIN_PASSWORD).getValue();
 		String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
 		String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
+		String context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
 		String mavenHome = System.getProperty(MVN_HOME);
 
 		// no remote deployment
 		if (serverusername.isEmpty() && serverpassword.isEmpty()) {
+			renameWar(context);
 			deploy();
 			return;
 		}
@@ -245,6 +247,21 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		}
 	}
 
+	private void renameWar(String context) throws MojoExecutionException {
+		String contextName = context + ".war";
+		String warFileName = "";
+		String[] list = tempDir.list(new JDWarFileNameFilter());
+		if (list.length > 0) {
+			warFileName = list[0];
+			if (!warFileName.contains(contextName)) {
+				File oldWar = new File(tempDir.getPath() + "/" + warFileName);
+				File newWar = new File(tempDir.getPath() + "/" + contextName);
+				oldWar.renameTo(newWar);
+			}
+		}
+	}
+	
+	
 	private void deployToTomcatServer(String serverhost, String serverport, String serverusername,
 			String serverpassword, String mavenHome) throws MojoExecutionException {
 		try {
@@ -350,5 +367,12 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
+	}
+}
+
+class JDWarFileNameFilter implements FilenameFilter {
+
+	public boolean accept(File dir, String name) {
+		return name.endsWith(".war");
 	}
 }
