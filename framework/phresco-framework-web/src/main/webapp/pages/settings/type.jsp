@@ -137,7 +137,7 @@
 	                	</select>
 	        			
 	        			<div class="versionDiv">
-							<label for="xlInput" id="versionsLbl" class="versionsLbl"><s:text name="label.version"/></label>&nbsp;&nbsp;&nbsp;
+							<label id="versionsLbl" class="versionsLbl"><s:text name="label.version"/></label>&nbsp;&nbsp;&nbsp;
 	                		<select id="version" name="version" class="app_type_version_select">
 	                		
 	                		</select>		                		
@@ -207,7 +207,7 @@
 	%>
 	
 	<div class="clearfix" id="appliesToErrDiv">
-		<label for="xlInput" class="new-xlInput"><span class="red">*</span>
+		<label class="new-xlInput"><span class="red">*</span>
 			<s:text name="label.applies.to" />
 		</label>
 		<div class="input new-input">

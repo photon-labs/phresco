@@ -140,7 +140,7 @@
 	                	</select>
 	        			    
 	        			<div class="versionDiv">
-							<label for="xlInput" id="versionsLbl" class="versionsLbl"><s:text name="label.version"/></label>&nbsp;&nbsp;&nbsp;
+							<label id="versionsLbl" class="versionsLbl"><s:text name="label.version"/></label>&nbsp;&nbsp;&nbsp;
 	                		<select id="version" name="version" class="config_version_select">
 	                		
 	                		</select>		                		
