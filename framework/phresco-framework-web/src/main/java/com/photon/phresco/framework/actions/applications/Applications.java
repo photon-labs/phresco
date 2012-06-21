@@ -136,7 +136,7 @@ public class Applications extends FrameworkBaseAction {
 
 		getHttpRequest().setAttribute(REQ_FROM_PAGE,
 				getHttpRequest().getParameter(REQ_FROM_PAGE));
-		if (projectCode != null) {
+		if (projectCode != null && !StringUtils.isEmpty(projectCode)) {
 			try {
 				getHttpSession().removeAttribute(projectCode);
 				ProjectAdministrator administrator = PhrescoFrameworkFactory
@@ -669,16 +669,19 @@ public class Applications extends FrameworkBaseAction {
 				getHttpSession().removeAttribute(projectCode + SESSION_PRJT_VLDT_RSLT);
 				getHttpSession().removeAttribute(projectCode + SESSION_PRJT_VLDT_STATUS);
 				ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-				Project project = administrator.getProject(projectCode);
-				List<ValidationResult> validationResults = administrator.validate(project);
 				String validationStatus = null;
-				for (ValidationResult validationResult : validationResults) {
-					validationStatus = validationResult.getStatus().toString();
-					if (validationStatus == "ERROR") {
-						getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_STATUS, "ERROR");
+				if (!StringUtils.isEmpty(projectCode)) {
+					Project project = administrator.getProject(projectCode);
+					List<ValidationResult> validationResults = administrator.validate(project);
+					for (ValidationResult validationResult : validationResults) {
+						validationStatus = validationResult.getStatus().toString();
+						if (validationStatus == "ERROR") {
+							getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_STATUS, "ERROR");
+						}
 					}
+					getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_RSLT,	validationResults);
 				}
-				getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_RSLT,	validationResults);
+				
 				if (validateInBg.equals("true")) {
 					setGlobalValidationStatus(validationStatus);
 					return Action.SUCCESS;
