@@ -86,7 +86,7 @@
             	<div class="settings_div">
 	                <!--  Name starts -->
 	                <div class="clearfix" id="nameErrDiv" style="padding: 0;">
-	                    <label for="xlInput" class="new-xlInput"><span class="red">*</span> <s:text name="label.name"/></label>
+	                    <label class="new-xlInput"><span class="red">*</span> <s:text name="label.name"/></label>
 	                    <div class="input new-input"  style="padding-top:5px;">
 	                    	<div class="typeFields">
 		                        <input class="xlarge settings_text" id="xlInput" name="settingsName"
@@ -110,7 +110,7 @@
 	                
 	                <!--  Description starts -->
 	                <div class="clearfix">
-	                    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
+	                    <s:label key="label.description" theme="simple" cssClass="new-xlInput"/>
 	                    <div class="input new-input">
 	                        <textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Stg');" placeholder="<s:text name="label.description.config.placeholder"/>"><%=description%></textarea>
 	                    </div>
@@ -123,7 +123,7 @@
 	                <!--  Description ends -->
 	                
 	                <div class="clearfix" id="envDiv">
-            			<label for="xlInput" class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
+            			<label class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
             			<div class="input new-input"> 
             				<div class="typeFields">
 		                        <select id="environments" name="environments" class="selectEqualWidth"  onfocus="showToolTip('envHelpTxt_Stg');">
@@ -158,7 +158,7 @@
 	                    
                     <!--  SettingTemplate starts -->
                     <div class="clearfix" id="settingTypeDiv">
-                        <label for="type" class="new-xlInput"><s:text name="label.type"/></label>
+                        <label class="new-xlInput"><s:text name="label.type"/></label>
                         <div class="input new-input">
                         	<div class="typeFields">
 	                            <select id="settingsType" name="settingsType" class="selectEqualWidth" onfocus="showToolTip('typeHelpTxt_Stg');">
@@ -292,12 +292,10 @@ function settingsType() {
 
 function successSettingType(data) {
 	$("#type-child-container").html(data);
-    if (selectedType == "Server") {
-    	$("#xlInput").focus();            	
-    } else {
-        $("#Host").focus();
-        $("#Protocol").focus();
-    }
+	if (fromPage != undefined) {
+    	$("#Host").focus();
+        $("#Protocol").focus();     	
+    } 
 }
 
 function addType() {
