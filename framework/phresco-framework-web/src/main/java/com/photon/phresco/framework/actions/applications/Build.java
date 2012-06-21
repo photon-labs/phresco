@@ -80,6 +80,8 @@ public class Build extends FrameworkBaseAction {
 	private String importSql = null;
 	private String showError = null;
 	private String hideLog = null;
+	private String skipTest = null;
+	private String showDebug = null;
 	private InputStream fileInputStream;
 	private String fileName = "";
 	private String connectionAlive = "false";
@@ -94,6 +96,8 @@ public class Build extends FrameworkBaseAction {
 	private String projectModule = null;
 	//Iphone deploy option
 	private String deployTo = "";
+	private String buildName = null;
+	private String newBuildNumber = null;
 
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
 
@@ -297,6 +301,14 @@ public class Build extends FrameworkBaseAction {
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
+			
+			if (StringUtils.isNotEmpty(buildName)) {
+				settingsInfoMap.put(BUILD_NAME, buildName);
+			}
+			
+			if (StringUtils.isNotEmpty(newBuildNumber)) {
+				settingsInfoMap.put(BUILD_NUMBER, newBuildNumber);
+			}
 
 			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,	androidVersion);
@@ -337,6 +349,8 @@ public class Build extends FrameworkBaseAction {
 			}
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project, actionType, settingsInfoMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_BUILD, reader);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -571,6 +585,8 @@ public class Build extends FrameworkBaseAction {
 			actionType.setWorkingDirectory(builder.toString());
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project,
 					actionType, valuesMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_FROM_TAB_DEPLOY,
@@ -1488,5 +1504,39 @@ public class Build extends FrameworkBaseAction {
 
 	public void setDeployTo(String deployTo) {
 		this.deployTo = deployTo;
+	}
+	
+   
+	public String getSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
+	}
+
+	public String getShowDebug() {
+		return showDebug;
+	}
+
+	public void setShowDebug(String showDebug) {
+		this.showDebug = showDebug;
+	}
+
+	public String getBuildName() {
+		return buildName;
+	}
+
+	public void setBuildName(String buildName) {
+		this.buildName = buildName;
+	}
+	
+	public String getNewBuildNumber() {
+		return newBuildNumber;
+	}
+
+	public void setNewBuildNumber(String newBuildNumber) {
+		this.newBuildNumber = newBuildNumber;
+     
 	}
 }

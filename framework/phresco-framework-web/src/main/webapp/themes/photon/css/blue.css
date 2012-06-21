@@ -1355,7 +1355,7 @@ table tr {
 	color:red;
 }
 
-#errMsg {
+#errMsg, #advSettingsErrMsg {
 	color:red;
 }
 
