@@ -19,9 +19,10 @@
  */
 package com.photon.phresco.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Module {
+public class Module implements Serializable {
 
 	 private String id;
 	 private String contentType;
