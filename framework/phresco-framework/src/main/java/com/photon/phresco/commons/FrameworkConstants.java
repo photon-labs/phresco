@@ -174,6 +174,8 @@ public interface FrameworkConstants {
 	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
+	String BUILD_NAME = "buildName";
+	String BUILD_NUMBER = "buildNumber";
     
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
     String JFORUM_USERNAME = "&username=";
