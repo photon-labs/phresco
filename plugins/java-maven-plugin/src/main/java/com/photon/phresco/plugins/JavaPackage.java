@@ -34,22 +34,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
@@ -63,6 +61,7 @@ import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.util.PomProcessor;
 
 /**
  * Goal which builds the Java WebApp
@@ -96,6 +95,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	/**
 	 * @parameter expression="${moduleName}" required="true"
 	 */
+
 	protected String moduleName;
 
 	/**
@@ -108,8 +108,16 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected String buildNumber;
 
-	protected int buildNo;
-
+	/**
+	 * @parameter expression="${mainClassName}" required="true"
+	 */
+	protected String mainClassName;
+	
+	/**
+	 * @parameter expression="${jarName}" required="true"
+	 */
+	protected String jarName;
+	
 	private File targetDir;
 	private File buildDir;
 	private File buildInfoFile;
@@ -119,8 +127,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	private String zipName;
 	private Date currentDate;
 	private String context;
-	
-	private static final String finalName = "finalName";
+	protected int buildNo;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();	
@@ -178,55 +185,65 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
-			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			String envName = environmentName;
-			if (environmentName.indexOf(',') > -1) { // multi-value
-				envName = projAdmin.getDefaultEnvName(baseDir.getName());
+			if (!getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
+				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+				String envName = environmentName;
+				if (environmentName.indexOf(',') > -1) { // multi-value
+					envName = projAdmin.getDefaultEnvName(baseDir.getName());
+				}
+				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER,
+						baseDir.getName(), envName);
+				for (SettingsInfo settingsInfo : settingsInfos) {
+					context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+					break;
+				}
+			} else {
+				context = jarName;
+				updatemainClassName();
 			}
-			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
-					.getName(), envName);
-			for (SettingsInfo settingsInfo : settingsInfos) {
-				context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
-				break;
+			if (StringUtils.isEmpty(context)) {
+				return;
 			}
 			File pom = project.getFile();
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(pom);
-			Element projectNode = doc.getRootElement();
-			Element buildNode = projectNode.getChild(JAVA_POM_BUILD_NAME, projectNode.getNamespace());
-			Element finalNameElement = buildNode.getChild(JAVA_POM_FINAL_NAME, buildNode.getNamespace());
-			if (finalNameElement == null) {
-				finalNameElement = new Element(finalName);
-				finalNameElement.setText(context);
-				buildNode.addContent(finalNameElement);
-			} else {
-				finalNameElement.setText(context);
-			}
-			savePOMFile(doc, pom);
-		} catch (JDOMException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			PomProcessor pomprocessor = new PomProcessor(pom);
+			pomprocessor.setFinalName(context);
+			pomprocessor.save();
 		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
-	private void savePOMFile(Document document, File xmlFile) throws IOException {
-		FileWriter writer = null;
+	
+	private void updatemainClassName() throws MojoExecutionException {
 		try {
-			writer = new FileWriter(FrameworkConstants.POM_FILE);
-			if (xmlFile.exists()) {
-				XMLOutputter xmlOutput = new XMLOutputter();
-				xmlOutput.setFormat(Format.getPrettyFormat());
-				xmlOutput.output(document, writer);
+			if (StringUtils.isEmpty(mainClassName)) {
+				return;
 			}
-		} finally {
-			if (writer != null) {
-				writer.close();
-			}
+			File pom = project.getFile();
+			List<Element> configList = new ArrayList<Element>();
+			PomProcessor pomprocessor = new PomProcessor(pom);
+			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element archive = doc.createElement(JAVA_POM_ARCHIVE);
+			Element manifest = doc.createElement(JAVA_POM_MANIFEST);
+			Element addClasspath = doc.createElement(JAVA_POM_ADD_PATH);
+			addClasspath.setTextContent("true");
+			manifest.appendChild(addClasspath);
+			Element mainClass = doc.createElement(JAVA_POM_MAINCLASS);
+			mainClass.setTextContent(mainClassName);
+			manifest.appendChild(addClasspath);
+			manifest.appendChild(mainClass);
+			archive.appendChild(manifest);
+			configList.add(archive);
+
+			pomprocessor.addConfiguration(JAR_PLUGIN_GROUPID, JAR_PLUGIN_ARTIFACT_ID, configList, false);
+			pomprocessor.save();
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 

@@ -330,22 +330,63 @@ public class PomProcessor {
 	}
 
 	/**
-	 * @param pluginGroupId
-	 * @param pluginArtifactId
-	 * @param configList
-	 * @throws PhrescoPomException
+	 * Adds the configuration.
+	 *
+	 * @param pluginGroupId the plugin group id
+	 * @param pluginArtifactId the plugin artifact id
+	 * @param configList the config list
+	 * @return the configuration
+	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList) throws PhrescoPomException {
+	public Configuration addConfiguration(String pluginGroupId, String pluginArtifactId, List<Element> configList)
+			throws PhrescoPomException {
+		return addConfiguration(pluginGroupId, pluginArtifactId, configList, false);
+	}
+
+	/**
+	 * Adds the configuration.
+	 *
+	 * @param pluginGroupId the plugin group id
+	 * @param pluginArtifactId the plugin artifact id
+	 * @param configList the config list
+	 * @param overwrite the overwrite
+	 * @return the configuration
+	 * @throws PhrescoPomException the phresco pom exception
+	 */
+	public Configuration addConfiguration(String pluginGroupId, String pluginArtifactId, List<Element> configList,
+			boolean overwrite) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
-		//TODO: duplicate needs to be avoided.
 		Configuration configuration = plugin.getConfiguration();
-		
+
 		if (configuration == null) {
 			configuration = new Configuration();
 			plugin.setConfiguration(configuration);
 		}
-		configuration.getAny().addAll(configList);	
+		if (overwrite) {
+			configuration.getAny().addAll(configList);
+		} else {
+			plugin.getConfiguration().getAny().clear();
+			configuration.getAny().addAll(configList);
+		}
 		return configuration;
+	}
+
+	/**
+	 * Sets the final name.
+	 *
+	 * @param finalName the new final name
+	 */
+	public void setFinalName(String finalName) {
+		model.getBuild().setFinalName(finalName);
+	}
+
+	/**
+	 * Gets the final name.
+	 *
+	 * @return the final name
+	 */
+	public String getFinalName() {
+		return model.getBuild().getFinalName();
 	}
 
 	/**

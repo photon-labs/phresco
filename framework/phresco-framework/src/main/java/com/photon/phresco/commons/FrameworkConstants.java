@@ -82,7 +82,13 @@ public interface FrameworkConstants {
     String TEMP_FOLDER ="temp";
     String NODEJS_RUN_AGAINST = "nodeJS_runAgnSrc";
     String JAVA_RUN_AGAINST = "runAgnSrc";
-    
+	
+	String JAVA_POM_MANIFEST = "manifest";
+	String JAVA_POM_MAINCLASS = "mainClass";
+	String FINAL_NAME = "finalName";
+	String MAIN_CLASS_VALUE ="mainClassValue";
+	String JARNAME = "jarName";
+    String MAINCLASSNAME = "mainClassName";
     String ENVIRONMENT_NAME = "environmentName";
     String MODULE_NAME = "moduleName";
     String SHOW_ERROR = "showerror";
