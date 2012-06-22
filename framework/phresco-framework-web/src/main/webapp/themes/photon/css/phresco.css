@@ -4541,10 +4541,16 @@ ul#display-inline-block-example li {
     text-align: center;
 }
 
+
 .topFifty {
 	top: 50%;
 }
 
 .svnUrlTxtBox {
 	width: 306px;
+}
+
+input.xlarge.javastd {
+	 width: 73%;
+}
 }

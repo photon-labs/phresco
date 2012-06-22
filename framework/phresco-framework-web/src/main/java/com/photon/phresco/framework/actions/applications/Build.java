@@ -36,10 +36,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.photon.phresco.configuration.Environment;
@@ -66,6 +76,7 @@ import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.photon.phresco.util.XCodeConstants;
+import com.phresco.pom.util.PomProcessor;
 
 public class Build extends FrameworkBaseAction {
 
@@ -94,6 +105,8 @@ public class Build extends FrameworkBaseAction {
 	private String serialNumber = null;
 	private String proguard = null;
 	private String projectModule = null;
+	private String mainClassName = null;
+	private String jarName = null;
 	//Iphone deploy option
 	private String deployTo = "";
 	private String buildName = null;
@@ -241,6 +254,10 @@ public class Build extends FrameworkBaseAction {
 				projectModuleMap.put(projectCode, projectModules);
 			}
 			
+			if (TechnologyTypes.JAVA_STANDALONE.equals(technology)) {
+				getValueFromJavaStdAlonePom();
+			}
+			
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Build.generateBuild()"
 						+ FrameworkUtil.getStackTraceAsString(e));
@@ -249,7 +266,7 @@ public class Build extends FrameworkBaseAction {
         if (CollectionUtils.isNotEmpty(projectModules)) {
         	getHttpRequest().setAttribute(REQ_PROJECT_MODULES, projectModules);
         }
-
+        
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -302,6 +319,7 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
 			
+
 			if (StringUtils.isNotEmpty(buildName)) {
 				settingsInfoMap.put(BUILD_NAME, buildName);
 			}
@@ -310,10 +328,16 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(BUILD_NUMBER, newBuildNumber);
 			}
 
+
 			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,	androidVersion);
 			}
 
+			if(TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
+				settingsInfoMap.put(MAINCLASSNAME, mainClassName);
+				settingsInfoMap.put(JARNAME, jarName);
+			}
+			
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
@@ -1341,6 +1365,39 @@ public class Build extends FrameworkBaseAction {
 
 		return env;
 	}
+	
+	private void getValueFromJavaStdAlonePom() throws PhrescoException {
+		try {
+			File file = new File(Utility.getProjectHome() + File.separator + projectCode + File.separator + POM_FILE);
+			PomProcessor pomProcessor = new PomProcessor(file);
+			String finalName = pomProcessor.getFinalName();
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document document = dBuilder.parse(file);
+			document.getDocumentElement().normalize();
+			NodeList nodeList = document.getElementsByTagName(JAVA_POM_MANIFEST);
+			String mainClassValue = "";
+			for (int temp = 0; temp < nodeList.getLength(); temp++) {
+				Node node = nodeList.item(temp);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element mainClassElement = (Element) node;
+					mainClassValue = mainClassElement.getElementsByTagName(JAVA_POM_MAINCLASS).item(0).getTextContent();
+					break;
+				}
+			}
+			getHttpRequest().setAttribute(FINAL_NAME, finalName);
+			getHttpRequest().setAttribute(MAIN_CLASS_VALUE, mainClassValue);
+
+		} catch (JAXBException e) {
+			throw new PhrescoException(e);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} catch (ParserConfigurationException e) {
+			throw new PhrescoException(e);
+		} catch (SAXException e) {
+			throw new PhrescoException(e);
+		}
+	}
 
 	public String getShowSettings() {
 		return showSettings;
@@ -1537,6 +1594,22 @@ public class Build extends FrameworkBaseAction {
 
 	public void setNewBuildNumber(String newBuildNumber) {
 		this.newBuildNumber = newBuildNumber;
-     
+	}
+
+	public String getMainClassName() {
+		return mainClassName;
+	}
+
+	public void setMainClassName(String mainClassName) {
+		this.mainClassName = mainClassName;
+	}
+
+	public String getJarName() {
+		return jarName;
+	}
+
+	public void setJarName(String jarName) {
+		this.jarName = jarName;
+
 	}
 }

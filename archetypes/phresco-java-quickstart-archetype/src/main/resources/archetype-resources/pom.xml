@@ -42,7 +42,7 @@
 
   <build>
 	<directory>do_not_checkin/target</directory>
-	<finalName>service</finalName>
+	<finalName>HelloWorld</finalName>
 	<plugins>
 		<plugin>
 			<groupId>com.photon.phresco.plugins</groupId>
@@ -50,6 +50,19 @@
 			<version>1.2.0.3001-SNAPSHOT</version>
 			<extensions>true</extensions>
 		</plugin>
+		 <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.photon.phresco.HelloWorld</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
 	</plugins>
     <pluginManagement>
       <plugins>
