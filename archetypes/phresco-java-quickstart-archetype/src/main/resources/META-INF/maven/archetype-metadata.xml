@@ -37,15 +37,15 @@
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/java</directory> 
+			<directory>src/main/java/com/photon/phresco</directory> 
 			<includes> 
-				<include>App.java</include> 
+				<include>HelloWorld.java</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/test/java</directory> 
 			<includes> 
-				<include>AppTest.java</include> 
+				<include>HelloWorld.java</include> 
 			</includes> 
 		</fileSet>
   </fileSets>

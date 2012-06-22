@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -144,19 +145,21 @@ public class FrameworkBaseAction extends ActionSupport implements FrameworkConst
     
     protected List<String> getWarProjectModules(String projectCode) throws JAXBException, IOException, ArrayIndexOutOfBoundsException, PhrescoPomException {
     	List<String> projectModules = getProjectModules(projectCode);
-    	List<String> warModules = new ArrayList<String>(projectModules.size());
-    	for (String projectModule : projectModules) {
-    		StringBuilder pathBuilder = getProjectHome(projectCode);
-    		pathBuilder.append(File.separatorChar);
-    		pathBuilder.append(projectModule);
-    		pathBuilder.append(File.separatorChar);
-    		pathBuilder.append(POM_XML);
-    		PomProcessor processor = new PomProcessor(new File(pathBuilder.toString()));
-    		String packaging = processor.getModel().getPackaging();
-			if (StringUtils.isNotEmpty(packaging) && WAR.equalsIgnoreCase(packaging)) {
-    			warModules.add(projectModule);
-    		}
-		}
+    	List<String> warModules = new ArrayList<String>(5);
+    	if (CollectionUtils.isNotEmpty(projectModules)) {
+	    	for (String projectModule : projectModules) {
+	    		StringBuilder pathBuilder = getProjectHome(projectCode);
+	    		pathBuilder.append(File.separatorChar);
+	    		pathBuilder.append(projectModule);
+	    		pathBuilder.append(File.separatorChar);
+	    		pathBuilder.append(POM_XML);
+	    		PomProcessor processor = new PomProcessor(new File(pathBuilder.toString()));
+	    		String packaging = processor.getModel().getPackaging();
+				if (StringUtils.isNotEmpty(packaging) && WAR.equalsIgnoreCase(packaging)) {
+	    			warModules.add(projectModule);
+	    		}
+			}
+    	}
     	return warModules;
     }
 
