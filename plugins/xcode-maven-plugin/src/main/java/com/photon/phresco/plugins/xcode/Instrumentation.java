@@ -1,22 +1,3 @@
-/*
- * ###
- * Xcodebuild Command-Line Wrapper
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 /*******************************************************************************
  * Copyright (c)  2012 Photon infotech.
  * 
@@ -35,17 +16,49 @@
  ******************************************************************************/
 package com.photon.phresco.plugins.xcode;
 
+
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.plist.XMLPropertyListConfiguration;
+import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+
+import org.w3c.dom.*;
+
+import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
+import com.photon.phresco.plugins.xcode.utils.XMLConstants;
+
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+import javax.xml.transform.dom.*;
+
+
+
+
 /**
  * APP instrumentation
  * @goal instruments
@@ -66,7 +79,7 @@ public class Instrumentation extends AbstractXcodeMojo {
 	protected MavenProject project;
 	
 	/**
-	 * @parameter expression="${template}" default-value="/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"
+	 * @parameter expression="${template}" default-value="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"
 	 */
 	private String template;
 	
@@ -92,15 +105,29 @@ public class Instrumentation extends AbstractXcodeMojo {
 	private String appPath;
 	
 	/**
-	 * @parameter expression="${script.name}" default-value="test/functional/tests/TestSuite.js"
+	 * @parameter expression="${script.name}" default-value="test/functional/src/AllTests.js"
 	 */
 	private String script;
+	
+	/**
+	 * @parameter expression="${script.name}" default-value="Run 1/Automation Results.plist"
+	 */
+	private String plistResult;
+	
+	/**
+	 * @parameter expression="${script.name}" default-value="do_not_checkin/functional.xml"
+	 */
+	public String xmlResult;
 	
 	/**
 	 * @parameter 
 	 */
 	private String outputFolder;
 	
+	/**
+	 * @parameter 
+	 */
+	private static XMLPropertyListConfiguration config;
 	
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -166,17 +193,156 @@ public class Instrumentation extends AbstractXcodeMojo {
 					}
 										
 				}
+		
 			};
 			
+		   
+		   
 			Thread t = new Thread(runnable, "iPhoneSimulator");
 			t.start();
 			getLog().info("Thread started");
 			try {
-				Thread.sleep(5000);
+				//Thread.sleep(5000);
+				t.join();
+				t.join();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
+			preparePlistResult();
+			generateXMLReport(project.getBasedir().getAbsolutePath()+File.separator+plistResult);
+	}
+
+			
+
+	private void preparePlistResult() throws MojoExecutionException {
+
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			Document xmldoc = dbf.newDocumentBuilder().parse(
+					new File(project.getBasedir().getAbsolutePath()+File.separator+plistResult));
+			Element root = xmldoc.getDocumentElement();
+
+			Node pi = xmldoc.createProcessingInstruction
+					("DOCTYPE plist SYSTEM \\", "file://localhost/System/Library/DTDs/PropertyList.dtd>");
+			xmldoc.insertBefore(pi, root);
+
+			StreamResult out = new StreamResult(project.getBasedir().getAbsolutePath()+File.separator+plistResult);
+			
+			DOMSource domSource = new DOMSource(xmldoc);
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer transformer = tf.newTransformer();
+			transformer.transform(domSource , out);
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+		}
+	}
+
+	private void generateXMLReport(String location) {
+
+		try {
+			String startTime = "";
+			int total,pass,fail;
+			total=pass=fail=0;
+			config = new XMLPropertyListConfiguration(location);
+			ArrayList list =  (ArrayList) config.getRoot().getChild(0).getValue();
+			String key;
+
+
+			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+
+
+			Element root = doc.createElement(XMLConstants.TESTSUITES_NAME);
+			doc.appendChild(root);
+			Element testSuite = doc.createElement(XMLConstants.TESTSUITE_NAME);
+			testSuite.setAttribute(XMLConstants.NAME, "FunctionalTestSuite");
+			root.appendChild(testSuite);
+
+
+			for (Object object : list) {
+
+				XMLPropertyListConfiguration config = (XMLPropertyListConfiguration) object;
+
+				startTime = config.getRoot().getChild(2).getValue().toString();
+
+				break;
+			}
+
+			for (Object object : list) {
+
+				XMLPropertyListConfiguration config = (XMLPropertyListConfiguration) object;
+
+				ConfigurationNode con = config.getRoot().getChild(0);
+				key = con.getName();
+
+				if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.PASS)){
+					pass++;total++;
+					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
+					child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
+					child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
+
+					String endTime = config.getRoot().getChild(2).getValue().toString();
+					
+					long differ = getTimeDiff(startTime, endTime);
+					startTime = endTime;
+					child1.setAttribute(XMLConstants.TIME, differ+"");
+					testSuite.appendChild(child1);
+				}
+				else if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.ERROR)){
+					fail++;total++;
+					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
+					child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
+					child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
+					
+					String endTime = config.getRoot().getChild(2).getValue().toString();
+					
+					long differ = getTimeDiff(startTime, endTime);
+					startTime = endTime;
+					child1.setAttribute(XMLConstants.TIME, differ+"");
+					testSuite.appendChild(child1);
+				}
+
+			}
+			
+			testSuite.setAttribute(XMLConstants.TESTS, String.valueOf(total));
+			testSuite.setAttribute(XMLConstants.SUCCESS, String.valueOf(pass));
+			testSuite.setAttribute(XMLConstants.FAILURES, String.valueOf(fail));
+
+			TransformerFactory transfac = TransformerFactory.newInstance();
+			Transformer trans = transfac.newTransformer();
+			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+
+			
+			File file = new File(project.getBasedir().getAbsolutePath()+File.separator+xmlResult);
+			Writer bw = new BufferedWriter(new FileWriter(file));
+			StreamResult result = new StreamResult(bw);
+			DOMSource source = new DOMSource(doc);
+			trans.transform(source, result);
+
+		}
+		catch (Exception e) {
+			getLog().error("Interrupted while generating XML file");
+		}
+	}
+
+	private long getTimeDiff(String dateStart, String dateStop) {
+		//TODO try to get the system time format.
+		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");  
+		Date d1 = null;
+		Date d2 = null;
+		try {
+			d1 = format.parse(dateStart);
+			d2 = format.parse(dateStop);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}    
+
+		long diff = d2.getTime() - d1.getTime();
+		return diff;
 	}
 }
+
+
