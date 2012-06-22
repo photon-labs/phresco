@@ -1,3 +1,4 @@
+
 	// Enables button
 	function enableControl(tagControl, css) {
 		tagControl.attr("class", css);
@@ -25,6 +26,7 @@
     // This function to enable the screen
     function enableScreen() {
         $(".wel_come").show().css("display", "none");
+        $("#loadingIconDiv").empty();
     }
     
     // This function to disable the screen
@@ -44,12 +46,12 @@
 	// Loading icon    
     function showLoadingIcon(tagControl) {
 		var src = "themes/photon/images/loading_blue.gif";
-    	var theme = $.cookie("css");
+    	var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	src = "themes/photon/images/loading_red.gif";
         }
      	tagControl.empty();
-    	tagControl.html("<div><img class='loadingIcon' src='"+ src +"' style='display: block'></div>");
+    	tagControl.html("<img class='loadingIcon' src='"+ src +"' style='display: block'>");
     }
     
     //hide the progress bar
@@ -97,7 +99,10 @@
             			$(".intro_container").hide();
             	    	$(".errorOverlay").show().css("display", "none");
             		}
-	                hideProgessBar();
+            		if((pageUrl == "save" || pageUrl == "update" || pageUrl == "delete" || pageUrl == "deleteConfigurations" || pageUrl == "deleteSettings" || pageUrl == "deleteBuild" || pageUrl == "CIBuildDelete")) {
+            			hideProgessBar();
+            		} 
+            		
 	                tagControl.empty();
 	                tagControl.html(data);
 	           	}
@@ -151,7 +156,7 @@
     }
     
     function getCurrentCSS() {
-        var theme = $.cookie("css");
+        var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
@@ -346,4 +351,3 @@
 	    	$('#siteaccordion_active').attr("id", "");   	
 	    });
 	}
-	

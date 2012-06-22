@@ -95,9 +95,11 @@ import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
+import com.phresco.pom.util.SiteConfigurator;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants {
 
@@ -110,7 +112,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
-
+	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
 
 	private static void initializeSqlMap() {
 		// TODO: This should come from database
@@ -235,6 +237,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (response.getStatus() != 200) {
 				throw new PhrescoException("Project updation failed");
 			}
+		}
+		if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
+			createSqlFolder(delta, path);
 		}
 		updatePomProject(delta,projectInfoClone);
 		try {
@@ -1940,4 +1945,73 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 throw new PhrescoException(e);
 		 }
 	 }
+	 
+	 protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
+			String databaseType = "";
+			try {
+				String parentFile = path.getParentFile().getParent();
+				List<Database> databaseList = info.getTechnology().getDatabases();
+				String techId = info.getTechnology().getId();
+				if (databaseList == null || databaseList.size() == 0) {
+					return;
+				}
+				File mysqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
+				File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
+				for (Database db : databaseList) {
+					databaseType = db.getName().toLowerCase();
+					List<String> versions = db.getVersions();
+					for (String version : versions) {
+						String sqlPath = databaseType + File.separator + version.trim();
+						File sqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + sqlPath);
+						sqlFolder.mkdirs();
+						if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
+								&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
+							FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
+						} else {
+							File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
+							sqlFile.createNewFile();
+						}
+					}
+				}
+			} catch (IOException e) {
+				throw new PhrescoException(e);
+			}
+		}
+	 
+		private File getMysqlVersionFolder(File mysqlFolder) {
+			File[] mysqlFolderFiles = mysqlFolder.listFiles();
+			if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
+				return mysqlFolderFiles[0];
+			}
+			return null;
+		}
+
+	public List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException {
+		try {
+			List<Reports> reports = siteReportMap.get(projectInfo.getTechnology().getId());
+			if (CollectionUtils.isEmpty(reports)) {
+				reports = PhrescoFrameworkFactory.getServiceManager().getReports(projectInfo.getTechnology().getId());
+				siteReportMap.put(projectInfo.getTechnology().getId(), reports);
+			}
+			
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
+				configurator.addReportPlugin(reportsToBeAdded, file);
+			}
+			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
+				configurator.removeReportPlugin(reportsToBeRemoved, file);
+			}
+		} catch (Exception e) {
+			throw new PhrescoException();
+		}
+	}
 }

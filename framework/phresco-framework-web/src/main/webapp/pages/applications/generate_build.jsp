@@ -58,9 +58,11 @@
    	List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
    	List<String> buildInfoEnvs = (List<String>) request.getAttribute(FrameworkConstants.BUILD_INFO_ENVS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
+   	// mac sdks
+   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 
-<form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
+<form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm"> 
 <div class="popup_Modal" id="generateBuild_Modal">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
@@ -98,6 +100,21 @@
 				</div>
             </div>
         <% } %>
+        
+        <% if (from.equals("generateBuild")) { %>
+		        <div class="clearfix">
+				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge" id="buildName" name="buildName" maxlength="20" title="20 Characters only"/>
+				    </div>
+				</div>
+				<div class="clearfix">
+				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge" id="newBuildNumber" name="newBuildNumber" maxlength="20" title="10 Characters only"/>
+				    </div>
+				</div>
+		<% } %>
 
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
@@ -187,10 +204,14 @@
 				<div class="input">
 					<select id="sdk" name="sdk" class="xlarge" >
 						<%
-							for (int i = 0; i < XCodeConstants.SUPPORTED_SDKS.length; i++) {
+							if (macSdks != null) {
+								for (String sdk : macSdks) {
 						%>
-							<option value="<%= XCodeConstants.SUPPORTED_SDKS[i] %>"><%= XCodeConstants.SUPPORTED_SDKS[i] %></option>
-						<% } %>
+							<option value="<%= sdk %>"><%= sdk %></option>
+						<% 
+								} 
+							}
+						%>
 					</select>
 				</div>
 			</div>
@@ -232,14 +253,20 @@
 								<input type="checkbox" id="showSettings" name="showSettings" value="showsettings">
 								<span class="textarea_span popup-span"><s:text name="label.show.setting"/></span>
 							<% } %>
-							<% if (from.equals("generateBuild") || from.equals(FrameworkConstants.DEPLOY)) { %>
-								<input type="checkbox" id="showError" name="showErrorChk" value="showerror" >
-								<span class="textarea_span popup-span"><s:text name="label.show.error"/></span>
-								<input type="checkbox" id="hideLog" name="hideLogChk" value="hidelog" >
-								<span class="textarea_span popup-span"><s:text name="label.hide.log"/></span>
+							<% if (from.equals("generateBuild")) { %>
+								<input type="checkbox" id="skipTest" name="skipTest" value="true">
+								<span class="textarea_span popup-span"><s:text name="label.skiptest"/></span>
 							<% } %>
-							<% if (!from.equals("generateBuild") && project.getProjectInfo().getTechnology().getDatabases() != null) {%>
-								<input type="checkbox" id="importSql" name="importSqlChk" <%= checkImportSql%> >
+							<% if (from.equals("generateBuild") || from.equals(FrameworkConstants.DEPLOY)) { %>
+								<input type="checkbox" id="showError" name="showError" value="true">
+								<span class="textarea_span popup-span"><s:text name="label.show.error"/></span>
+								<input type="checkbox" id="hideLog" name="hideLog" value="true">
+								<span class="textarea_span popup-span"><s:text name="label.hide.log"/></span>
+								<input type="checkbox" id="showDebug" name="showDebug" value="true">
+								<span class="textarea_span popup-span"><s:text name="label.show.debug"/></span>
+							<% } %>
+							<% if (!from.equals("generateBuild") && CollectionUtils.isNotEmpty(project.getProjectInfo().getTechnology().getDatabases())) {%>
+								<input type="checkbox" id="importSql" name="importSql" value="true" <%= checkImportSql%> >
 								<span class="textarea_span popup-span"><s:text name="label.import.sql"/></span>
 							<% } %>
 							<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %>
@@ -270,7 +297,7 @@
 		</div>
 	</div>
 </div>
-</form>
+</form> 
 
 <script type="text/javascript">
     
@@ -370,12 +397,7 @@
 	}
 	
 	function performUrlActions(url, testType) {
-		var params = "showError=";
-		params = params.concat($("#showError").prop("checked"));
-		params = params.concat("&importSql=");
-		params = params.concat($("#importSql").prop("checked"));
-		params = params.concat("&hideLog=");
-		params = params.concat($("#hideLog").prop("checked"));
+		var params = "";
 		params = params.concat("&environments=");
 		params = params.concat(getSelectedEnvs());
 		readerHandlerSubmit(url, '<%= projectCode %>', testType, params, true);

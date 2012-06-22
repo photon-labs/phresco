@@ -61,7 +61,7 @@ public class Settings extends FrameworkBaseAction {
 	private String appliesToError = null;
 	private boolean isValidated = false;
 	private List<String> projectInfoVersions = null;
-	private String remoteDeploy = null;
+	private String remoteDeployment = null;
 
     private String envName = null;
     private String emailError = null;
@@ -148,6 +148,11 @@ public class Settings extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment")){
+                      	if(value == null){
+                      		value="false";
+                      	}
+                      }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -288,7 +293,7 @@ public class Settings extends FrameworkBaseAction {
             }
 			
             // check Remotedeployment username and password mandatory
-			boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeploy);
+			boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeployment);
 			if(remoteDeplyVal) {
 				if ("admin_username".equals(key) || "admin_password".equals(key)) {
 					isRequired = true;
@@ -396,6 +401,11 @@ public class Settings extends FrameworkBaseAction {
 	            	} else {
 	            		key = propertyTemplate.getKey();
 	            		value = getHttpRequest().getParameter(key);
+	            		if(key.equals("remoteDeployment")){
+	                     	if(value == null){
+	                     		value="false";
+	                     	}
+	                     }
 	                    value = value.trim();
 	                    propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
 	            	}
@@ -562,7 +572,10 @@ public class Settings extends FrameworkBaseAction {
     	    String[] split = null;
     	    String envs = getHttpRequest().getParameter("envs");
     	    String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteSettingsEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+    	    	deleteSettingsEnvironment(selectedItems);
+    	    }
+
             List<Environment> environments = new ArrayList<Environment>();
             if(StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(Arrays.asList(envs.split("#SEP#")));
@@ -577,12 +590,19 @@ public class Settings extends FrameworkBaseAction {
             }
 	    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 	    	administrator.createEnvironments(environments);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+	    		addActionMessage(getText(UPDATE_ENVIRONMENT));
+	    	} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+	    		addActionMessage(getText(DELETE_ENVIRONMENT));
+	    	} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+	    		addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+		    }
+	    	
     	} catch(PhrescoException e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -844,12 +864,12 @@ public class Settings extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
 	}
 	
 	public String getEmailError() {

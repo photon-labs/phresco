@@ -51,6 +51,14 @@
     	margin-top: 5px;
     } 
     
+    .build_table_div {
+	    margin-top: 5px;
+	    border-radius: 6px 6px 6px 6px;
+	    margin-left: 6px;
+	    margin-right: 6px;
+		height:98%
+	}
+    
     /* .build_detail_div {
     	margin-top:5px;
     } */
@@ -152,7 +160,7 @@
 		</div>
 
 		<div class="build_progress_div">
-			<div class="table_div">
+			<div class="build_table_div">
     			<!-- Command Display Heading starts -->
 				<div class="tblheader" style="height: 29px;">
 					<table class="zebra-striped" style="height: 29px;"> 
@@ -202,10 +210,11 @@
 	%>
 	
     $(document).ready(function() {
+    	enableScreen();
+    	
     	if ($.browser.safari && $.browser.version == 530.17) {
     		$(".buildDiv").show().css("float","left");
     	}
-    	changeStyle("buildView");
     	
     	refreshTable('<%= projectCode %>');
     	
@@ -257,8 +266,11 @@
         });
     });
     
+    // Its used by iphone alone
     function deploy(obj) {
+    	$('#popup_div').empty();
         $("#build-output").empty();
+    	$("#build-output").html('<%= FrameworkConstants.MSG_IPHONE_DEPLOY %>');
         var currentId = obj.id;
         var idArray = currentId.split('#');
         var buildNumber = idArray[1];

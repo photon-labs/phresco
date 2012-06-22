@@ -2275,7 +2275,9 @@ fieldset {
     border-radius: 0 0 6px 6px;
     height: 89%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-left:10px;
+    margin-top: 0px;
 }
 
 .bordered-table {
@@ -2364,7 +2366,7 @@ fieldset {
 .popup_Modal {
     top: 55%; 
     left: 50%;
-    width: 560px; 
+    width: 660px; 
     position: fixed;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -2375,7 +2377,7 @@ fieldset {
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding-box;
     background-clip: padding-box;
-    margin-left: -280px;
+    margin-left: -347px;
     margin-top: -160px;
     z-index: 60002;
 }
@@ -4239,7 +4241,7 @@ form div.error {
 	left : 0%; 
 	margin-top : 0px; 
 	margin-bottom : 0px; 
-	width: 62%; 
+	width: 53%; 
 	height : 8px; 
 	margin-left : 4%; 
 	padding-top : 6px; 
@@ -4514,4 +4516,35 @@ ul#display-inline-block-example li {
 
 .width-twenty-five-percent {
 	width: 25% !important;
+}
+
+#loadingIconDiv {
+	position: relative;
+    text-align: center;
+    top: 46%;
+    z-index: 6;
+}
+
+.alert-message.warning.sonar {
+	position:absolute;
+    left:34%;
+    text-align: center;
+    width: 35%;
+    height: 15px;
+    margin-top: -34px;
+}
+
+.sonarLabelWarn {
+	color:#000000;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.topFifty {
+	top: 50%;
+}
+
+.svnUrlTxtBox {
+	width: 306px;
 }

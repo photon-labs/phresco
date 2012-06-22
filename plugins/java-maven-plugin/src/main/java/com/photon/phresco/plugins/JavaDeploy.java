@@ -30,8 +30,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -219,110 +217,108 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		if (info == null) {
 			return;
 		}
-			String serverhost = info.getPropertyInfo(Constants.SERVER_HOST).getValue();
-			String serverport = info.getPropertyInfo(Constants.SERVER_PORT).getValue();
-			String serverusername = info.getPropertyInfo(Constants.SERVER_ADMIN_USERNAME).getValue();
-			String serverpassword = info.getPropertyInfo(Constants.SERVER_ADMIN_PASSWORD).getValue();
-			String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
-			String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
-			
-		//no remote deployment
+		String serverhost = info.getPropertyInfo(Constants.SERVER_HOST).getValue();
+		String serverport = info.getPropertyInfo(Constants.SERVER_PORT).getValue();
+		String serverusername = info.getPropertyInfo(Constants.SERVER_ADMIN_USERNAME).getValue();
+		String serverpassword = info.getPropertyInfo(Constants.SERVER_ADMIN_PASSWORD).getValue();
+		String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
+		String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
+		String context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+		String mavenHome = System.getProperty(MVN_HOME);
+
+		// no remote deployment
 		if (serverusername.isEmpty() && serverpassword.isEmpty()) {
+			renameWar(context);
 			deploy();
 			return;
 		}
-		
-		//remote deployment
-		if (servertype.contains(TYPE_TOMCAT) && ((version.equals("7.0.x")) || (version.equals("7.1.x")) || (version.equals("6.0.x")))) {
-			deployToTomcatServer(serverhost, serverport, serverusername, serverpassword);
+
+		// remote deployment
+		if (servertype.contains(TYPE_TOMCAT)
+				&& ((version.equals("7.0.x")) || (version.equals("7.1.x")) || (version.equals("6.0.x")))) {
+			deployToTomcatServer(serverhost, serverport, serverusername, serverpassword, mavenHome);
 		} else if (servertype.contains(TYPE_JBOSS) && (version.equals("7.0.x"))) {
-			deployToJbossServer(serverhost, serverusername, serverpassword);
+			deployToJbossServer(serverhost, serverusername, serverpassword, mavenHome);
 		} else if (servertype.contains(TYPE_WEBLOGIC) && (version.equals("12c(12.1.1)"))) {
-			deployToWeblogicServer(serverhost, serverport, serverusername, serverpassword);
+			deployToWeblogicServer(serverhost, serverport, serverusername, serverpassword, mavenHome);
 		} else {
-			//for other servers
+			// for other servers
 			deploy();
 		}
 	}
-	
-	private void deployToTomcatServer(String serverhost, String serverport, String serverusername, String serverpassword) throws MojoExecutionException {
-		try {
-		getLog().info("project is deploying ......");
-		StringBuilder sb = new StringBuilder();
-		sb.append(MVN_CMD);
-		sb.append(STR_SPACE);
-		sb.append(TOMCAT_GOAL);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_HOST);
-		sb.append(serverhost);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_PORT);
-		sb.append(serverport);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_USERNAME);
-		sb.append(serverusername);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_PASSWORD);
-		sb.append(serverpassword);
-		Commandline cl = new Commandline(sb.toString());
-		cl.setWorkingDirectory(baseDir);
-			Process process = cl.execute();
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+
+	private void renameWar(String context) throws MojoExecutionException {
+		String contextName = context + ".war";
+		String warFileName = "";
+		String[] list = tempDir.list(new JDWarFileNameFilter());
+		if (list.length > 0) {
+			warFileName = list[0];
+			if (!warFileName.contains(contextName)) {
+				File oldWar = new File(tempDir.getPath() + "/" + warFileName);
+				File newWar = new File(tempDir.getPath() + "/" + contextName);
+				oldWar.renameTo(newWar);
+			}
 		}
 	}
 	
-	private void deployToJbossServer(String serverhost, String serverusername, String serverpassword) throws MojoExecutionException {
-		try {
-		getLog().info("project is deploying ......");
-		StringBuilder sb = new StringBuilder();
-		sb.append(MVN_CMD);
-		sb.append(STR_SPACE);
-		sb.append(JBOSS_GOAL);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_HOST);
-		sb.append(serverhost);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_USERNAME);
-		sb.append(serverusername);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_PASSWORD);
-		sb.append(serverpassword);
-		Commandline cl = new Commandline(sb.toString());
-		cl.setWorkingDirectory(baseDir);
-			Process process = cl.execute();
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}	
 	
-	private void deployToWeblogicServer(String serverhost, String serverport, String serverusername, String serverpassword) throws MojoExecutionException {
+	private void deployToTomcatServer(String serverhost, String serverport, String serverusername,
+			String serverpassword, String mavenHome) throws MojoExecutionException {
 		try {
-		getLog().info("project is deploying ......");
-		StringBuilder sb = new StringBuilder();
-		sb.append(MVN_CMD);
-		sb.append(STR_SPACE);
-		sb.append(WEBLOGIC_GOAL);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_HOST);
-		sb.append(serverhost);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_PORT);
-		sb.append(serverport);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_USERNAME);
-		sb.append(serverusername);
-		sb.append(STR_SPACE);
-		sb.append(SERVER_PASSWORD);
-		sb.append(serverpassword);
-		Commandline cl = new Commandline(sb.toString());
-		cl.setWorkingDirectory(baseDir);
-			Process process = cl.execute();
-		} catch (CommandLineException e) {
+			getLog().info("project is deploying ......");
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(TOMCAT_GOAL);
+			commands.add(SERVER_HOST + serverhost);
+			commands.add(SERVER_PORT + serverport);
+			commands.add(SERVER_USERNAME + serverusername);
+			commands.add(SERVER_PASSWORD + serverpassword);
+			pb.directory(baseDir);
+			Process process = pb.start();
+		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	
+
+	private void deployToJbossServer(String serverhost, String serverusername, String serverpassword, String mavenHome)
+			throws MojoExecutionException {
+		try {
+			getLog().info("project is deploying ......");
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(JBOSS_GOAL);
+			commands.add(SERVER_HOST + serverhost);
+			commands.add(SERVER_USERNAME + serverusername);
+			commands.add(SERVER_PASSWORD + serverpassword);
+			pb.directory(baseDir);
+			Process process = pb.start();
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+
+	private void deployToWeblogicServer(String serverhost, String serverport, String serverusername,
+			String serverpassword, String mavenHome) throws MojoExecutionException {
+		try {
+			getLog().info("project is deploying ......");
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(WEBLOGIC_GOAL);
+			commands.add(SERVER_HOST + serverhost);
+			commands.add(SERVER_PORT + serverport);
+			commands.add(SERVER_USERNAME + serverusername);
+			commands.add(SERVER_PASSWORD + serverpassword);
+			pb.directory(baseDir);
+			Process process = pb.start();
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+
 	private File getProjectRoot(File childDir) {
 		File[] listFiles = childDir.listFiles(new PhrescoDirFilter());
 		if (listFiles != null && listFiles.length > 0) {
@@ -371,5 +367,12 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
+	}
+}
+
+class JDWarFileNameFilter implements FilenameFilter {
+
+	public boolean accept(File dir, String name) {
+		return name.endsWith(".war");
 	}
 }

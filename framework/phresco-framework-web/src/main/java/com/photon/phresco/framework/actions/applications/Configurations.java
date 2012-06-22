@@ -54,8 +54,9 @@ public class Configurations extends FrameworkBaseAction {
     private String configType = null;
     private String oldConfigType = null;
 	private String envError = null;
-	private String remoteDeploy = null;
 	private String emailError = null;
+	private String remoteDeployment = null;
+   
 
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -127,6 +128,10 @@ public class Configurations extends FrameworkBaseAction {
         try {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
+            if(!validate(administrator, null)) {
+                isValidated = true;
+                return Action.SUCCESS;
+            }
             SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
             List<PropertyInfo> propertyInfoList = new ArrayList<PropertyInfo>();
             List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
@@ -148,6 +153,9 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
+            		 if(key.equals("remoteDeployment") && value == null){
+                     		value="false";
+                     }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -169,11 +177,6 @@ public class Configurations extends FrameworkBaseAction {
             getHttpRequest().setAttribute(REQ_PROJECT, project);
             String[] environments = getHttpRequest().getParameterValues(ENVIRONMENTS);
 
-            if(!validate(administrator, null)) {
-                isValidated = true;
-                return Action.SUCCESS;
-            }
-            
             StringBuilder sb = new StringBuilder();
             for (String envs : environments) { 
                 if (sb.length() > 0) sb.append(',');
@@ -212,7 +215,10 @@ public class Configurations extends FrameworkBaseAction {
             Project project = administrator.getProject(projectCode);
             String envs = getHttpRequest().getParameter(ENVIRONMENT_VALUES);
             String selectedItems = getHttpRequest().getParameter("deletableEnvs");
-            deleteEnvironment(selectedItems);
+            if(StringUtils.isNotEmpty(selectedItems)){
+            	deleteEnvironment(selectedItems);
+    	    }
+            
             List<Environment> environments = new ArrayList<Environment>();
             if (StringUtils.isNotEmpty(envs)) {
                 List<String> listSelectedEnvs = new ArrayList<String>(
@@ -228,12 +234,19 @@ public class Configurations extends FrameworkBaseAction {
                 }
             }
 	    	administrator.createEnvironments(project, environments, false);
-	    	addActionMessage(getText(SUCCESS_ENVIRONMENT));
+	    	
+			if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isNotEmpty(environments)) {
+				addActionMessage(getText(UPDATE_ENVIRONMENT));
+			} else if(StringUtils.isNotEmpty(selectedItems) && CollectionUtils.isEmpty(environments)){
+				addActionMessage(getText(DELETE_ENVIRONMENT));
+			} else if(CollectionUtils.isNotEmpty(environments) && StringUtils.isEmpty(selectedItems)) {
+				addActionMessage(getText(CREATE_SUCCESS_ENVIRONMENT));
+			}
     	} catch(Exception e) {
     		if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Configurations.createEnvironment()" + FrameworkUtil.getStackTraceAsString(e));
      		}
-    		addActionMessage(getText(FAILURE_ENVIRONMENT));
+    		addActionMessage(getText(CREATE_FAILURE_ENVIRONMENT));
     	}
     	return list();
     }
@@ -320,6 +333,11 @@ public class Configurations extends FrameworkBaseAction {
     	boolean validate = true;
     	String[] environments = getHttpRequest().getParameterValues(ENVIRONMENTS);
     	
+    	if (StringUtils.isEmpty(configType)) {
+    		setTypeError(getText(NO_CONFIG_TYPE));
+    		return false;
+    	}
+    	
     	if (StringUtils.isEmpty(configName.trim())) {
 	   		setNameError(ERROR_NAME);
 	   		validate = false;
@@ -381,7 +399,7 @@ public class Configurations extends FrameworkBaseAction {
             	isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
-            boolean remoteDeply = Boolean.parseBoolean(remoteDeploy);
+            boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
             if(remoteDeply){
                 if ("admin_username".equals(key) || "admin_password".equals(key)) {
                 	isRequired = true;
@@ -488,6 +506,9 @@ public class Configurations extends FrameworkBaseAction {
 					}
             	} else {
 	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
+   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
+                        		value="false";
+                        }
 	                value = value.trim();
 	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
@@ -784,14 +805,15 @@ public class Configurations extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeploy() {
-		return remoteDeploy;
+	public String getRemoteDeployment() {
+		return remoteDeployment;
 	}
 
-	public void setRemoteDeploy(String remoteDeploy) {
-		this.remoteDeploy = remoteDeploy;
+	public void setRemoteDeployment(String remoteDeployment) {
+		this.remoteDeployment = remoteDeployment;
 	}
 	
+
 	public String getEmailError() {
 		return emailError;
 	}
@@ -799,4 +821,5 @@ public class Configurations extends FrameworkBaseAction {
 	public void setEmailError(String emailError) {
 		this.emailError = emailError;
 	}
+
 }

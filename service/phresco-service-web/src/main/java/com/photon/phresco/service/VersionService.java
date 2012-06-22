@@ -166,6 +166,14 @@ public class VersionService implements ServerConstants {
 		while (lvst.hasMoreTokens()) {
 			latestVersionList.add(lvst.nextToken());
 		}
+		
+		//Below condition solves the major release vs minor release
+		// For Ex: if we release the major release as 1.2.0 and the previous
+		// minor release as 1.2.0.16000 then the below condition provides
+		// the update available option
+		if (latestVersionList.size() < currentVersionList.size()) {
+			return true;
+		}
 
 		alignVersionSize(currentVersionList, latestVersionList);
 

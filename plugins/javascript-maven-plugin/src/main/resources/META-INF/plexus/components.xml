@@ -210,7 +210,7 @@
 			<configuration>
 				<groupId>org.codehaus.jstestrunner</groupId>
 				<artifactId>jstestrunner-junit</artifactId>
-				<version>${jstestrunnerVersion}</version>
+				<version>1.2.0.3001-SNAPSHOT</version>
 			</configuration>
 		</component>
 

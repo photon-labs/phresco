@@ -79,6 +79,10 @@
     	width: 99.4%;
 	}
 	
+	#coremodule_accordion_container {
+		height:84%;
+	}
+	
 </style>
 
 <script type="text/javascript" src="js/loading.js"></script>
@@ -194,22 +198,12 @@
 											checkedStr = "checked";
 											disabledStr = "disabled";
 										}
-										if (MapUtils.isNotEmpty(pilotJsLibs) && StringUtils.isNotEmpty(pilotJsLibs.get(module.getId()))) {
-											pilotVersion = pilotJsLibs.get(module.getId());
-											checkedStr = "checked";
-											disabledStr = "disabled";
-										}
 										if (MapUtils.isNotEmpty(selectedJsLibs) && selectedJsLibs.get(module.getId()) != null) {
 											checkedStr = "checked";
 										}
 									} else {
 										if (MapUtils.isNotEmpty(alreadySelectedModules) && StringUtils.isNotEmpty(alreadySelectedModules.get(module.getId()))) {
 											pilotVersion = alreadySelectedModules.get(module.getId());
-											checkedStr = "checked";
-											disabledStr = "disabled";
-										}
-										if (MapUtils.isNotEmpty(pilotModules) && StringUtils.isNotEmpty(pilotModules.get(module.getId()))) {
-											pilotVersion = pilotModules.get(module.getId());
 											checkedStr = "checked";
 											disabledStr = "disabled";
 										}
@@ -325,6 +319,7 @@
 			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
 			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
 			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+			<input type="hidden" name="fromTab" value="features">
 	</div>
     </form>
     
@@ -335,7 +330,9 @@
 </div>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		enableScreen();
+	});
 	$('#projectCode').val('<%= projectCode %>'); //this is for changing the sub-tab.
 	$('#fromPage').val('<%= fromPage %>'); //this is for changing the sub-tab.
-	
 </script>

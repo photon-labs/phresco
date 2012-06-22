@@ -93,6 +93,20 @@
 				<include>basescreen.php</include>
 			</includes> 
 		</fileSet>
+        <fileSet filtered="false"> 
+			<directory>test/functional/src/main/php/phresco/tests/phpwebdriver</directory> 
+			<includes> 
+				<include>Keys.php</include>
+				<include>LocatorStrategy.php</include>
+				<include>NoSuchElementException.php</include>
+				<include>RequiredFunction.php</include>
+				<include>WebDriver.php</include>
+				<include>WebDriverBase.php</include>
+				<include>WebDriverException.php</include>
+				<include>WebDriverResponseStatus.php</include>
+				<include>WebElement.php</include>
+			</includes> 
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src/site/doxygen</directory> 
 			<includes> 

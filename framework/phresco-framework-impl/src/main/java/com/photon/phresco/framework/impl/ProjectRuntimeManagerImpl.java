@@ -266,6 +266,19 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         
         if (actionType.canShowError()) {
             builder.append("-e");
+            builder.append(Constants.SPACE);
+        }
+        
+        if (actionType.canShowDebug()) {
+            builder.append("-X");
+            builder.append(Constants.SPACE);
+        }
+        
+        if (actionType.canSkipTest()) {
+            builder.append("-DskipTests=true");
+            builder.append(Constants.SPACE);
+        } else {
+        	builder.append("-DskipTests=false");
         }
         
         if (DebugEnabled) {

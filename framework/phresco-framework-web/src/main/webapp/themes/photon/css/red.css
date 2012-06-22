@@ -686,6 +686,10 @@ div.vjs-big-play-button span {
 	border: 1px solid #3A090B;
 }
 
+.build_table_div {
+	border: 1px solid #3A090B;
+}
+
 .settingsList_table_div {
 	border: 1px solid #3A090B;
 }
@@ -879,7 +883,6 @@ label {
 
 /*** build starts ***/
 .build_cmd_div {
-	margin-top: -2px;
     /* border: 1px solid #3A090B; */
     color: #FFFFFF;
 }
@@ -1339,7 +1342,7 @@ background-color: #ffffff;
 	color:red;
 }
 
-#errMsg {
+#errMsg, #advSettingsErrMsg {
 	color:red;
 }
 

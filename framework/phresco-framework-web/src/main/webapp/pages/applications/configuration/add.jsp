@@ -115,11 +115,11 @@ h1 {margin-bottom: 0;}
 	<div class="config_div">
 	    <!--  Name starts -->
 		<div class="clearfix" id="nameErrDiv">
-			<label for="xlInput" class="new-xlInput"><span class="red">*</span> <s:text name="label.name"/> </label>
+			<label class="new-xlInput"><span class="red">*</span> <s:text name="label.name"/> </label>
 			<div class="input new-input">
 				<div class="typeFields">
 					<input class="xlarge settings_text" id="xlInput" name="configName" type="text" maxlength="30" title="30 Characters only" value ="<%=name%>" 
-					autofocus onfocus="showToolTip('nameHelpTxt_Conf');" placeholder="Name of the configuration"/>
+					autofocus onfocus="showToolTip('nameHelpTxt_Conf');" placeholder="<s:text name="label.name.config.placeholder"/>"/>
 				</div>
 				<div>
 					<div class="lblDesc configSettingHelp-block" id="nameErrMsg">
@@ -132,15 +132,15 @@ h1 {margin-bottom: 0;}
 
 		<!--  Description starts -->
 		<div class="clearfix">
-			<s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
+			<s:label key="label.description" theme="simple" cssClass="new-xlInput"/>
 			<div class="input new-input">
-				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="Description of the Configuration"><%= description %></textarea>
+				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="<s:text name="label.description.config.placeholder"/>"><%= description %></textarea>
 			</div>
 		</div>
 		<!--  Description ends -->
         
         <div class="clearfix" id="envDiv">
-      		<label for="xlInput" class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
+      		<label class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
 			<div class="input new-input">
            		<div class="typeFields">
 					<select id="environments" name="environments" class="selectEqualWidth"  onfocus="showToolTip('envHelpTxt_Stg');">
@@ -176,7 +176,7 @@ h1 {margin-bottom: 0;}
 		
 		<!--  SettingTemplate starts -->
 				<div class="clearfix" id="configTypeDiv">
-					<label for="type" class="new-xlInput"><s:text name="label.type"/></label>
+					<label class="new-xlInput"><s:text name="label.type"/></label>
 					<div class="input new-input">
 						<div class="typeFields">
 							<select id="configType" name="configType" class="selectEqualWidth" onfocus="showToolTip('typeHelpTxt_Conf');">
@@ -205,7 +205,7 @@ h1 {margin-bottom: 0;}
 								%>
 							</select>
 						</div>
-						<div>
+						<div style="float: left; width: 58%;">
 							<div class="lblDesc configSettingHelp-block" id="configTypeErrMsg"></div>
 						</div>
 					</div>
@@ -269,9 +269,9 @@ h1 {margin-bottom: 0;}
 		
 		$('#save').click(function() {
 			var params = "";
-		    params = params.concat("&remoteDeploy=");
-			params = params.concat($("#remoteDeploy").prop("checked")); 
-		    
+		     params = params.concat("&remoteDeployment=");
+			 params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
+		     
 			if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
@@ -282,7 +282,7 @@ h1 {margin-bottom: 0;}
 			<%
 			   } else {
 			%>
-					performAction("updateConfiguration", params, $('#tabDiv'));
+			       performAction("updateConfiguration", params, $('#tabDiv'));
 			<% } %>
 			
 	    });

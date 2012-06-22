@@ -137,7 +137,7 @@
     			</div>
     		</div>
             <div class="graph_div" id="graphicalView" style="padding-left: 15px; display:none; text-align: center;">
-                <canvas id="bar" width="620" height="335">[No canvas support]</canvas>               
+                <canvas id="bar" width="620" height="400">[No canvas support]</canvas>               
             </div>
    
 
@@ -152,6 +152,7 @@
 		// based on view show the list(table/graph)
 		changeView();
 		canvasInit();
+		enableScreen();
 		
 		 $(".styles").click(function() {
 			 canvasInit();
@@ -172,7 +173,7 @@
 	});
 	
 	function canvasInit() {
-		var theme = $.cookie("css");
+		var theme = localStorage["color"];
         var chartTextColor = "";
         var chartGridColor = "";
         var chartAxisColor = "";
@@ -220,8 +221,9 @@
          bar1.Set('chart.text.color', chartTextColor);
          bar1.Set('chart.axis.color', chartAxisColor);
          bar1.Set('chart.gutter.left', 60);
+         bar1.Set('chart.background.grid.color', chartGridColor);
 //          bar1.Set('chart.gutter.right', 1);
-         bar1.Set('chart.gutter.bottom', 100);
+         bar1.Set('chart.gutter.bottom', 175);
          bar1.Set('chart.background.grid.autofit',true);
          // size above bars dispalyed
          // bar1.Set('chart.labels.above', true);

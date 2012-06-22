@@ -46,7 +46,6 @@ function readerHandler(data, projectCode, testType) {
 	   }
 	   return;
    }
-   
    $("#build-output").append(data + '<br>');
    $('#build-output').prop('scrollTop', $('#build-output').prop('scrollHeight'));
    asyncHandler(projectCode, testType);

@@ -40,8 +40,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -99,7 +97,19 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	 * @parameter expression="${moduleName}" required="true"
 	 */
 	protected String moduleName;
-	
+
+	/**
+	 * @parameter expression="${buildName}" required="true"
+	 */
+	protected String buildName;
+
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+
+	protected int buildNo;
+
 	private File targetDir;
 	private File buildDir;
 	private File buildInfoFile;
@@ -147,33 +157,34 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	
+
 	private File getProjectRoot(File childDir) {
 		File[] listFiles = childDir.listFiles(new PhrescoDirFilter());
 		if (listFiles != null && listFiles.length > 0) {
 			return childDir;
 		}
 		if (childDir.getParentFile() != null) {
-			return getProjectRoot(childDir.getParentFile()); 
+			return getProjectRoot(childDir.getParentFile());
 		}
 		return null;
 	}
-	
+
 	public class PhrescoDirFilter implements FilenameFilter {
 
-        public boolean accept(File dir, String name) {
-            return name.equals(DOT_PHRESCO_FOLDER);
-        }
-    }
+		public boolean accept(File dir, String name) {
+			return name.equals(DOT_PHRESCO_FOLDER);
+		}
+	}
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
 			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
 			String envName = environmentName;
-			if (environmentName.indexOf(',') > -1) { //multi-value
-				envName = projAdmin.getDefaultEnvName(baseDir.getName());				 
+			if (environmentName.indexOf(',') > -1) { // multi-value
+				envName = projAdmin.getDefaultEnvName(baseDir.getName());
 			}
-			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir.getName(), envName);
+			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
+					.getName(), envName);
 			for (SettingsInfo settingsInfo : settingsInfos) {
 				context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
 				break;
@@ -218,28 +229,24 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			}
 		}
 	}
-	
+
 	private void executeMvnPackage() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			getLog().info("Packaging the project...");
-			StringBuilder sb = new StringBuilder();
-			sb.append(MVN_CMD);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_CLEAN);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_PACKAGE);
-			sb.append(" -DskipTests=true -e");
-
-			Commandline cl = new Commandline(sb.toString());
-			Process process = cl.execute();
-			in = new BufferedReader(new InputStreamReader(
-					process.getInputStream()));
+			String mavenHome = System.getProperty(MVN_HOME);
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(MVN_PHASE_CLEAN);
+			commands.add(MVN_PHASE_PACKAGE);
+			commands.add(SKIP_TESTS);
+			pb.directory(baseDir);
+			Process process = pb.start();
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
@@ -259,12 +266,11 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		}
 		return isBuildSuccess;
 	}
-	
+
 	private void configure() throws MojoExecutionException {
 		getLog().info("Configuring the project....");
 		adaptDbConfig();
 		adaptSourceConfig();
-		//getEnvironmentName(environmentName);
 	}
 
 	private void adaptSourceConfig() {
@@ -280,6 +286,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			pu.executeUtil(environmentName, basedir, sourceConfigXML);
 		}
 	}
+
 	private void adaptDbConfig() {
 		String basedir = baseDir.getName();
 		String modulePath = "";
@@ -294,48 +301,27 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void getEnvironmentName(String environmentType) {
-		try {
-			String envType = null;
-			String[] temp = null;
-			String delimiter = ",";
-			temp = environmentType.split(delimiter);
-			for (int i = 0; i < temp.length; i++) {
-				envType = temp[i];
-				File newFile = new File(baseDir +"/src/main/resources/spring-hibernate" + "_" + envType + ".xml");
-				renameByEnvName(newFile);
-			}
-		} catch (JDOMException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}		
-
-	private void renameByEnvName(File newFile) throws JDOMException, IOException {
-		SAXBuilder builder = new SAXBuilder();
-		File oldFile = new File(baseDir +"/src/main/resources/spring-hibernate.xml");
-		Document doc = (Document) builder.build(oldFile);
-		File newXmlFile = new File(newFile.getPath());
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		xmlOutput.output(doc, new FileWriter(newXmlFile));
-	
-	}
-
 	private void createPackage() throws MojoExecutionException, IOException {
 		try {
-			String zipNameWithoutExt = PROJECT_CODE + nextBuildNo
-					+ STR_UNDERSCORE + getTimeStampForBuildName(currentDate);
-			zipName = zipNameWithoutExt + ".zip";
+			if (buildName != null) {
+				zipName = buildName + ".zip";
+			} else {
+				if (buildNumber != null) {
+					zipName = PROJECT_CODE + buildNumber + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				} else {
+					zipName = PROJECT_CODE + nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				}
+			}
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
-			if(getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
+			String zipNameWithoutExt = zipName.substring(0, zipName.lastIndexOf('.'));
+			if (getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
 				copyJarToPackage(zipNameWithoutExt);
 			} else {
 				copyWarToPackage(zipNameWithoutExt, context);
 			}
-			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath,
-					ArchiveType.ZIP);
+			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath, ArchiveType.ZIP);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
@@ -344,27 +330,21 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	private void copyJarToPackage(String zipNameWithoutExt) throws IOException {
 		String[] list = targetDir.list(new JarFileNameFilter());
 		if (list.length > 0) {
-			File jarFile = new File(targetDir.getPath() + File.separator
-					+ list[0]);
-			tempDir = new File(buildDir.getPath() + File.separator
-					+ zipNameWithoutExt);
+			File jarFile = new File(targetDir.getPath() + File.separator + list[0]);
+			tempDir = new File(buildDir.getPath() + File.separator + zipNameWithoutExt);
 			tempDir.mkdir();
 			FileUtils.copyFileToDirectory(jarFile, tempDir);
 		}
 	}
 
-	private void copyWarToPackage(String zipNameWithoutExt, String context)
-			throws MojoExecutionException {
+	private void copyWarToPackage(String zipNameWithoutExt, String context) throws MojoExecutionException {
 		try {
 			String[] list = targetDir.list(new WarFileNameFilter());
 			if (list.length > 0) {
-				File warFile = new File(targetDir.getPath() + File.separator
-						+ list[0]);
-				tempDir = new File(buildDir.getPath() + File.separator
-						+ zipNameWithoutExt);
+				File warFile = new File(targetDir.getPath() + File.separator + list[0]);
+				tempDir = new File(buildDir.getPath() + File.separator + zipNameWithoutExt);
 				tempDir.mkdir();
-				File contextWarFile = new File(targetDir.getPath()
-						+ File.separator + context + ".war");
+				File contextWarFile = new File(targetDir.getPath() + File.separator + context + ".war");
 				warFile.renameTo(contextWarFile);
 				FileUtils.copyFileToDirectory(contextWarFile, tempDir);
 			} else {
@@ -375,20 +355,26 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void writeBuildInfo(boolean isBuildSuccess)
-			throws MojoExecutionException {
+	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus(SUCCESS);
 			} else {
 				buildInfo.setBuildStatus(FAILURE);
 			}
-			buildInfo.setBuildName(zipName);			
+			buildInfo.setBuildName(zipName);
 			buildInfo.setContext(context);
 			buildInfo.setEnvironments(envList);
 			if (StringUtils.isNotEmpty(moduleName)) {
@@ -406,15 +392,13 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	}
 
 	private String getTimeStampForDisplay(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
 
 	private String getTimeStampForBuildName(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd-MMM-yyyy-HH-mm-ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
@@ -455,7 +439,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	
+
 	private String getTechId() throws IOException {
 		File projectInfoFile = new File(baseDir.getPath() + File.separator + DOT_PHRESCO_FOLDER, PROJECT_INFO_FILE);
 		BufferedReader reader = new BufferedReader(new FileReader(projectInfoFile));
@@ -465,7 +449,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		String techId = projectInfo.getTechnology().getId();
 		return techId;
 	}
-	
+
 }
 
 class WarFileNameFilter implements FilenameFilter {

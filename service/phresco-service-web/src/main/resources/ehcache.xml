@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache name="WidgetCache">
+  <defaultCache
+      maxElementsInMemory="10000"
+      eternal="false"
+      timeToIdleSeconds="0"
+      timeToLiveSeconds="0"
+      overflowToDisk="true"
+      diskPersistent="false"
+      diskExpiryThreadIntervalSeconds="0"
+      memoryStoreEvictionPolicy="LRU"/>
+
+  <cache name="widgets"
+         maxElementsInMemory="10000"
+         eternal="false"
+         timeToIdleSeconds="0"
+         timeToLiveSeconds="0"
+         memoryStoreEvictionPolicy="LFU">
+  </cache>
+
+</ehcache>
