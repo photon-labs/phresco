@@ -77,6 +77,18 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected String environmentName;
 
+	/**
+	 * @parameter expression="${buildName}" required="true"
+	 */
+	protected String buildName;
+
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+
+	protected int buildNo;
+
 	private File targetDir;
 	private File srcDir;
 	private File buildDir;
@@ -85,7 +97,7 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 	private int nextBuildNo;
 	private String zipName;
 	private Date currentDate;
-	
+
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();
 		boolean buildStatus = build();
@@ -94,9 +106,9 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
-			buildInfoList = new ArrayList<BuildInfo>(); //initialization
+			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			srcDir = new File(baseDir.getPath() + File.separator + DRUPAL_SOURCE_DIR);
-			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);			
+			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			if (!buildDir.exists()) {
 				buildDir.mkdir();
 				getLog().info("Build directory created..." + buildDir.getPath());
@@ -111,7 +123,7 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private boolean build() throws MojoExecutionException{
+	private boolean build() throws MojoExecutionException {
 		boolean isBuildSuccess = true;
 		try {
 			configure();
@@ -126,34 +138,52 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 
 	private void configure() throws MojoExecutionException {
 		try {
-		getLog().info("Configuring the project....");
-		File srcConfigFile = new File(baseDir + DRUPAL_SOURCE_CONFIG_FILE);
-		String basedir = baseDir.getName();
-		PluginUtils pu = new PluginUtils();
-		pu.executeUtil(environmentName, basedir, srcConfigFile);
-		pu.encryptConfigFile(srcConfigFile.getPath());
+			getLog().info("Configuring the project....");
+			File srcConfigFile = new File(baseDir + DRUPAL_SOURCE_CONFIG_FILE);
+			String basedir = baseDir.getName();
+			PluginUtils pu = new PluginUtils();
+			pu.executeUtil(environmentName, basedir, srcConfigFile);
+			pu.encryptConfigFile(srcConfigFile.getPath());
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
-
 	private void createPackage() throws MojoExecutionException {
 		try {
-			zipName = PROJECT_CODE	+ nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate) + ".zip";
+			if (buildName != null) {
+				zipName = buildName + ".zip";
+			} else {
+				if (buildNumber != null) {
+					zipName = PROJECT_CODE + buildNumber + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				} else {
+					zipName = PROJECT_CODE + nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				}
+			}
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
-			ArchiveUtil.createArchive(targetDir.getPath(), zipFilePath,	ArchiveType.ZIP);
+			ArchiveUtil.createArchive(targetDir.getPath(), zipFilePath, ArchiveType.ZIP);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
 
-	private void writeBuildInfo(boolean isBuildSuccess)throws MojoExecutionException {
-		try{
+	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
+
+		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
+
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus(SUCCESS);
@@ -167,21 +197,19 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 			FileWriter writer = new FileWriter(buildInfoFile);
 			gson.toJson(buildInfoList, writer);
 			writer.close();
-		} catch(IOException e) {
-			throw new MojoExecutionException(e.getMessage(),e);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
 	private String getTimeStampForDisplay(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
 
 	private String getTimeStampForBuildName(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd-MMM-yyyy-HH-mm-ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
