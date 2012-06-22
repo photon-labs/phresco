@@ -1,22 +1,3 @@
-/*
- * ###
- * Phresco Framework
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.commons;
 
 import java.io.File;
@@ -27,6 +8,7 @@ public interface FrameworkConstants {
     /*
      * Common constants
      */
+	String FEATURES = "features"; 
     int JOB_STATUS_NOTOK = -1;
     String FOLDER_DOT_PHRESCO = ".phresco";
     String PHRESCO_HOME = "PHRESCO_HOME";
@@ -100,11 +82,19 @@ public interface FrameworkConstants {
     String TEMP_FOLDER ="temp";
     String NODEJS_RUN_AGAINST = "nodeJS_runAgnSrc";
     String JAVA_RUN_AGAINST = "runAgnSrc";
-    
+	
+	String JAVA_POM_MANIFEST = "manifest";
+	String JAVA_POM_MAINCLASS = "mainClass";
+	String FINAL_NAME = "finalName";
+	String MAIN_CLASS_VALUE ="mainClassValue";
+	String JARNAME = "jarName";
+    String MAINCLASSNAME = "mainClassName";
     String ENVIRONMENT_NAME = "environmentName";
     String MODULE_NAME = "moduleName";
     String SHOW_ERROR = "showerror";
     String HIDE_LOG = "hidelog";
+	String SHOW_DEBUG = "showdebug";
+    String SKIP_TEST = "skiptest";
     String DEPLOY = "deploy";
     String BUILD_INFO_ENVS = "buildInfoEnvs";
     String DEPLOY_IMPORT_SQL = "importSql";
@@ -114,6 +104,7 @@ public interface FrameworkConstants {
     String DEPLOY_WEBSERVICE_PARAM = "webServiceName";
     String TEST_PARAM = "test=";
     String TEST_PARAM_VALUE = "AllTest";
+    String ALL_TEST_SUITES = "All";
     String KEY_QUOTES = "\"";
     String FROM_PAGE = "edit";
     String DEPLOY_BUILD_NAME = "buildName";
@@ -157,6 +148,7 @@ public interface FrameworkConstants {
     String MVN_IPHONE_FUNCTIONAL_COMMAND = "mvn xcode:instruments"; // IPhone functional test command
     String MVN_IPHONE_NATIVE_UNITTEST = "mvn xcode:xcodebuild"; // IPhone unit test command
     String MVN_IPHONE_CODE_VALIDATE = "mvn xcode:codevalidate"; // IPhone code validate command
+    String MVN_SITE_COMMAND = "mvn site";
     String PHRESCO_FILE_SERVER_PORT_NO = "phresco.file.server.port";
     String APPLICATIONS = "applications";
     String SETTINGS = "settings";
@@ -185,9 +177,11 @@ public interface FrameworkConstants {
     String POST = "POST";
     String GET = "GET";
 	String SKIPTESTS = "skipTests";
+	String PROFILE = "profile";
 	String CAN_CREATE_IPA = "canCreateIpa";
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
-    
+    String BUILD_NAME = "buildName";
+	String BUILD_NUMBER = "buildNumber";
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
     String JFORUM_USERNAME = "&username=";
     String JFORUM_PASSWORD = "&password=";
@@ -201,7 +195,8 @@ public interface FrameworkConstants {
     String CI_CREDENTIAL_XML = "hudson.scm.SubversionSCM.xml";
     String CI_MAILER_XML = "hudson.tasks.Mailer.xml";
     String CI_MAIL_EXT_PLUGIN = "email-ext.hpi";
-    
+    String CI_HUDSONURL = "hudsonUrl";
+    String CI = "ci";
     
     /***
      * Environment Constants
@@ -323,9 +318,10 @@ public interface FrameworkConstants {
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
+    String REQ_ANDROID_PROFILE_DET = "androidProfileDetails";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
-    String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
+	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
     String REQ_VIDEO = "video";
     String REQ_VIDEO_INFOS = "videoInfos";
     String REQ_VIDEO_TYPES = "videoTypes";
@@ -345,6 +341,7 @@ public interface FrameworkConstants {
     String REQ_TESTSUITE_FAILURES = "Failures";
     String REQ_TESTSUITE_ERRORS = "Errs";
     String REQ_TESTSUITE_TESTS = "Tests";
+    String REQ_ALL_TESTSUITE_MAP = "AllTestsMap";
     String REQ_TESTSUITES_CALL = "SettingInfoAndTestSuite";
     String REQ_LOGIN_ERROR = "loginErrors";
     String REQ_CORE_MODULES = "coreModules";
@@ -352,7 +349,8 @@ public interface FrameworkConstants {
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
     String REQ_ANDROID_DEVICE = "device";
-    String REQ_IPHONE_DEVICE = "device"; 
+    String REQ_IPHONE_DEVICE = "device";
+    String REQ_IPHONE_SIMULATOR = "simulator";
     String REQ_ANDROID_DEFAULT = "default";
     String REQ_FROM_TAB = "fromTab";
     String REQ_FROM_TAB_TEST = "Test";
@@ -464,6 +462,11 @@ public interface FrameworkConstants {
 	String DOT = ".";
 	String SERIAL_NUMBER = "serialNumber";
 	String REQ_XCODE_CONFIGS = "xCodeConfigs";
+	String REQ_IPHONE_SDKS = "iphoneSdks";
+	String REQ_IPHONE_SIMULATOR_SDKS = "iphoneSimulatorSdks";
+	String MAC_OS_SDKS = "macosx";
+	String MAC_DEVICE_SDKS = "iphoneos";
+	String MAC_SIMULATOR_SDKS = "iphonesimulator";
 	
 	String REQ_SERVER_DOWNLOAD_INFO = "serverDownloadInfos";
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
@@ -486,6 +489,7 @@ public interface FrameworkConstants {
     String PHRESCO_JFORUM_URL = "phresco.JForum.url";
     
     String REST_APPS_PATH = "/apps";
+    String REST_REPORTS = "/reports";
     String REST_APPS_UPDATE_PATH = "/apps/update";
     String REST_APPS_UPDATEPOM_PATH= "/apps/updatepom";
     String REST_APPS_UPDATEDOC_PATH = "/apps/updatedocs";
@@ -582,6 +586,10 @@ public interface FrameworkConstants {
     String INVALID_CREDENTIALS = "import.invalid.credential";
     String INVALID_FOLDER = "import.invalid.folder";
     String PROJECT_ALREADY = "import.project.already";
+    String SVN_FAILED ="failed";
+    String SVN_INTERNAL ="Internal";
+    String INVALID_URL = "import.invalid.url";
+    String INVALID_REVISION = "import.invalid.revision";
     /*
      * Delete Build keys
      */
@@ -592,6 +600,7 @@ public interface FrameworkConstants {
      * Code keys
      */
     String FAILURE_CODE_REVIEW = "Code review is not available";
+	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
      * Application Redirection keys
@@ -609,17 +618,31 @@ public interface FrameworkConstants {
     String FAILURE_CONFIGURATION = "Configuration {0} creation failed";
     String CONFIG_ALREADY_EXIST = "Configuration type already created for this environment";
     String SETTINGS_ALREADY_EXIST = "Settings type already created for this environment";
+    String NO_CONFIG_TYPE = "configuration.type.info";
     /*
      * Create Environment keys
      */
-    String SUCCESS_ENVIRONMENT = "environment.create.success";
-    String FAILURE_ENVIRONMENT = "environment.create.fail";
+    String CREATE_SUCCESS_ENVIRONMENT = "environment.create.success";
+    String CREATE_FAILURE_ENVIRONMENT = "environment.create.fail";
+    
+    /*
+     * Update Environment keys
+     */
+    String UPDATE_ENVIRONMENT = "environment.update.success";
+    
+    /*
+     * Delete Environment keys
+     */
+    String DELETE_ENVIRONMENT = "environment.deleted.success";
     /*
      * Create Setting keys
      */
-    String SUCCESS_SETTING = "The {0} {1} has been created successfully";
+    String SUCCESS_SERVER = "Server {0} created successfully";
+    String SUCCESS_DATABASE = "Database {0} created successfully";
+    String SUCCESS_WEBSERVICE = "Webservice {0} created successfully";
+    String SUCCESS_EMAIL = "Email {0} created successfully";
     String FAILURE_SETTING = "Setting {0} creation failed";
-    
+   
     /*
      * Check Box Info keys
      */
@@ -627,9 +650,15 @@ public interface FrameworkConstants {
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
     
     /*
+     * Quality Info keys
+     */
+    String MSG_IPHONE_DEPLOY ="Project will be deployed to device, which is connected first.";
+    
+    /*
      * login keys
      */
     String ERROR_LOGIN = "login.error.message";
+    String ERROR_LOGIN_INVALID = "login.error.invalid";
     String ERROR_LOGIN_ACCESS_DENIED = "login.error.access.denied.message";
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
@@ -646,8 +675,11 @@ public interface FrameworkConstants {
     String SUCCESS_SETTING_DELETE = "Settings deleted successfully";
     String FAILURE_SETTING_DELETE = "Settings deletion failed";
 
-    String SETTINGS_UPDATE_SUCCESS = "settings.update.success";
-
+    String SERVER_UPDATE_SUCCESS = "server.update.success";
+    String DATABASE_UPDATE_SUCCESS = "database.update.success";
+    String WEBSERVICE_UPDATE_SUCCESS = "webservice.update.success";
+    String EMAIL_UPDATE_SUCCESS = "email.update.success";
+    
     /*
      * Delete Configuration keys
      */
@@ -679,6 +711,7 @@ public interface FrameworkConstants {
     String ERROR_ENV_CONFIG = "{0} configuration is not available for the selected environment";
     String ERROR_ANDROID_DATA = "Data is not available";
     String ERROR_PORT = "Invalid Port Number";
+    String ERROR_EMAIL = "Enter Valid Email";
     
     /*
      * Delete Environment keys
@@ -692,7 +725,8 @@ public interface FrameworkConstants {
     String BROWSER_FIREFOX_VALUE = "Firefox";
     String BROWSER_CHROME_VALUE = "Chrome";
     String BROWSER_INTERNET_EXPLORER_VALUE = "Internet Explorer";
-    String BROWSER_SAFARI = "Safari";
+    String BROWSER_SAFARI_VALUE = "Safari";
+    String BROWSER_OPERA_VALUE = "Opera";
     
     /*
      * Browser keys for windows
@@ -701,6 +735,9 @@ public interface FrameworkConstants {
     String WIN_BROWSER_CHROME_KEY = "googlechrome";
     String WIN_BROWSER_INTERNET_EXPLORER_KEY = "iexplore";
     String WIN_BROWSER_SAFARI_KEY = "safari";
+    String WIN_BROWSER_OPERA_KEY = "opera";
+    // web driver ie key
+    String WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY = "internet explorer";
 
     
     /*
@@ -708,7 +745,8 @@ public interface FrameworkConstants {
      */
     String MAC_BROWSER_FIREFOX_KEY = "firefox";
     String MAC_BROWSER_CHROME_KEY = "googlechrome";
-    String MAC_BROWSER_SAFARI = "safari";
+    String MAC_BROWSER_SAFARI_KEY = "safari";
+    String MAC_BROWSER_OPERA_KEY = "opera";
 
     /*
      * Browser keys for Linux
@@ -716,6 +754,7 @@ public interface FrameworkConstants {
     String LINUX_BROWSER_FIREFOX_KEY = "firefox";
     String LINUX_BROWSER_CHROME_KEY = "googlechrome";
     String LINUX_BROWSER_SAFARI_KEY = "safari";
+    String LINUX_BROWSER_OPERA_KEY = "opera";
     
     String PROJECT_VERSION = "1.0.0";
 	String VERSION = "version";
@@ -955,6 +994,7 @@ public interface FrameworkConstants {
     String OS_ARCH = "os.arch";
     String WINDOWS = "Windows";
     String SERVER = "Server";
+    String DATABASE = "Database";
     String WINDOWS7 = "Windows 7";
     String MAC = "Mac";
     String LINUX = "Linux";
@@ -989,4 +1029,12 @@ public interface FrameworkConstants {
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
+   
+   /* Site report */
+   String REQ_SITE_REPORT = "siteReport";
+   String REQ_SITE_REPORT_PATH = "siteReportPath";
+   String SITE_TARGET = "target/site";
+   String REQ_SITE_REPORTS = "reports";
+   String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
+   String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
   }

@@ -12,12 +12,12 @@
     <artifactId>phresco-drupal6-archetype</artifactId>
     <name>Archetype - phresco-drupal6-archetype</name>
     <url>http://www.phresco.org</url>
-
+	<description>phresco-drupal6-archetype</description>
    <distributionManagement>
         <site>
             <id>phresco.archetype.drupal6</id>
             <name>Phresco Archetypes - Drupal 6</name>
-            <url>scp://phresco.org/home/projects/archetypes/drupal6/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-drupal6-archetype/</url>
         </site>
     </distributionManagement>
 

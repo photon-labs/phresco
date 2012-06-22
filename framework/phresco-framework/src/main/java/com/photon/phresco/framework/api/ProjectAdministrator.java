@@ -34,6 +34,7 @@ import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -45,6 +46,7 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.Reports;
 
 public interface ProjectAdministrator {
 
@@ -343,21 +345,21 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getServerDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getServerDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns Database DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDbDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getDbDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns editor DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getEditorDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns the jForum path from the service
@@ -563,5 +565,9 @@ public interface ProjectAdministrator {
 	 * @return 
 	 * @throws PhrescoException
 	 */
-	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException; 
+	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
+
+	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
+	 
+	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
 }

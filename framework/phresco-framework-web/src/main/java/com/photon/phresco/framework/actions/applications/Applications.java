@@ -73,6 +73,7 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+import org.apache.commons.codec.binary.Base64;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -105,6 +106,9 @@ public class Applications extends FrameworkBaseAction {
 	private boolean svnImport = false;
 	private String svnImportMsg = null;
 	List<String> deletableDbs = new ArrayList<String>();
+	private String fromTab = null;
+	//svn info
+	private String credential = null;
 	
 	public String list() {
 		long start = System.currentTimeMillis();
@@ -132,7 +136,7 @@ public class Applications extends FrameworkBaseAction {
 
 		getHttpRequest().setAttribute(REQ_FROM_PAGE,
 				getHttpRequest().getParameter(REQ_FROM_PAGE));
-		if (projectCode != null) {
+		if (projectCode != null && !StringUtils.isEmpty(projectCode)) {
 			try {
 				getHttpSession().removeAttribute(projectCode);
 				ProjectAdministrator administrator = PhrescoFrameworkFactory
@@ -141,8 +145,7 @@ public class Applications extends FrameworkBaseAction {
 					ProjectInfo projectInfo = administrator.getProject(
 							projectCode).getProjectInfo();
 					S_LOGGER.debug("project info value"+ projectInfo.toString());
-					getHttpRequest()
-							.setAttribute(REQ_PROJECT_INFO, projectInfo);
+					getHttpRequest().setAttribute(REQ_PROJECT_INFO, projectInfo);
 				}
 				if (StringUtils.isNotEmpty(fromPage)) {
 					getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
@@ -157,9 +160,8 @@ public class Applications extends FrameworkBaseAction {
 	}
 
 	public String appInfo() {
-		
 		S_LOGGER.debug("Entering Method  Applications.add()");
-		
+
 		try {
 			if (StringUtils.isNotEmpty(fromPage)) {
 				getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
@@ -168,18 +170,17 @@ public class Applications extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
 					.getProjectAdministrator();
-			ProjectInfo projectInfo = (ProjectInfo) getHttpSession()
-					.getAttribute(projectCode);
-
+			ProjectInfo projectInfo = null;
+			if (FEATURES.equals(fromTab)) {
+				projectInfo = (ProjectInfo) getHttpSession().getAttribute(projectCode);
+			}
 			if (StringUtils.isNotEmpty(fromPage) && projectInfo == null) {
-				projectInfo = administrator.getProject(projectCode)
-						.getProjectInfo();
+				projectInfo = administrator.getProject(projectCode).getProjectInfo();
 				getHttpSession().setAttribute(projectCode, projectInfo);
 			}
-
+			
 			getHttpRequest().setAttribute(REQ_TEMP_SELECTED_PILOT_PROJ, getHttpRequest().getParameter(REQ_SELECTED_PILOT_PROJ));
-			String[] modules = getHttpRequest().getParameterValues(
-					REQ_SELECTEDMODULES);
+			String[] modules = getHttpRequest().getParameterValues(REQ_SELECTEDMODULES);
 			if (modules != null && modules.length > 0) {
 				Map<String, String> mapModules = ApplicationsUtil
 						.getIdAndVersionAsMap(getHttpRequest(), modules);
@@ -296,6 +297,7 @@ public class Applications extends FrameworkBaseAction {
 
 	public String previous() throws PhrescoException {
 		S_LOGGER.debug("Entered previous()");
+
 		try {
 			HttpServletRequest request = getHttpRequest();
 			getHttpRequest().setAttribute("projectCode", projectCode);
@@ -563,7 +565,12 @@ public class Applications extends FrameworkBaseAction {
 			 * byte[] decodedBytes = Base64.decodeBase64(password); password =
 			 * new String(decodedBytes);
 			 */
-			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName,password);
+			if (StringUtils.isEmpty(credential)) {
+				String decryptedPass = new String(Base64.decodeBase64(password));
+				password = decryptedPass;
+			}
+
+			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
 			S_LOGGER.debug("Import Application repository Url"
 						+ repositoryUrl + " Username " + userName);
 			revision = !"HEAD".equals(revision) ? revisionVal : revision;
@@ -579,7 +586,13 @@ public class Applications extends FrameworkBaseAction {
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e)); 
 	    	svnImport = false;
-	    	svnImportMsg = getText(INVALID_FOLDER);
+	    	if(e.getMessage().indexOf(SVN_FAILED) != -1) {
+	    		svnImportMsg = getText(INVALID_URL);
+	    	} else if(e.getMessage().indexOf(SVN_INTERNAL) != -1) {
+	    		svnImportMsg = getText(INVALID_REVISION);
+	    	} else {
+	    		svnImportMsg = getText(INVALID_FOLDER);
+	    	}
 	    } catch(PhrescoException e){
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e));
@@ -643,7 +656,7 @@ public class Applications extends FrameworkBaseAction {
 		return APP_SHOW_FRAMEWORK_VLDT_RSLT;
 	}
 
-	public String validateProject() {
+	public String validateProject() { 
 		S_LOGGER.debug("Entering Method  Applications.validateProject()");
 		
 		try {
@@ -656,16 +669,19 @@ public class Applications extends FrameworkBaseAction {
 				getHttpSession().removeAttribute(projectCode + SESSION_PRJT_VLDT_RSLT);
 				getHttpSession().removeAttribute(projectCode + SESSION_PRJT_VLDT_STATUS);
 				ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-				Project project = administrator.getProject(projectCode);
-				List<ValidationResult> validationResults = administrator.validate(project);
 				String validationStatus = null;
-				for (ValidationResult validationResult : validationResults) {
-					validationStatus = validationResult.getStatus().toString();
-					if (validationStatus == "ERROR") {
-						getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_STATUS, "ERROR");
+				if (!StringUtils.isEmpty(projectCode)) {
+					Project project = administrator.getProject(projectCode);
+					List<ValidationResult> validationResults = administrator.validate(project);
+					for (ValidationResult validationResult : validationResults) {
+						validationStatus = validationResult.getStatus().toString();
+						if (validationStatus == "ERROR") {
+							getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_STATUS, "ERROR");
+						}
 					}
+					getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_RSLT,	validationResults);
 				}
-				getHttpSession().setAttribute(projectCode + SESSION_PRJT_VLDT_RSLT,	validationResults);
+				
 				if (validateInBg.equals("true")) {
 					setGlobalValidationStatus(validationStatus);
 					return Action.SUCCESS;
@@ -759,33 +775,34 @@ public class Applications extends FrameworkBaseAction {
 			applicationType = ApplicationsUtil.getApplicationType(getHttpRequest(), appType);
 			Technology techonology = applicationType.getTechonology(techId);
 			String attrName = null;
-	
 			if (Constants.SETTINGS_TEMPLATE_SERVER.equals(type)) {
-				List<String> tempListSelectedServers = null;
 				List<Integer> listSelectedServerIds = null;
 				List<Server> servers = techonology.getServers();
 				if(StringUtils.isEmpty(from)) {
-					String selectedServers = getHttpRequest().getParameter("tempSelectedServers");
-					if(selectedServers.length() > 0 ) {
-						selectedServers = selectedServers.trim();
-						selectedServers = selectedServers.substring(0, selectedServers.length()-1);
-						tempListSelectedServers = new ArrayList<String>(Arrays.asList(selectedServers.split(" , ")));
+					List<String> listSelectedServers = null;
+					List<String> listSelectedServerNames = null;
+					String selectedServers = getHttpRequest().getParameter("selectedServers");
+					if (StringUtils.isNotEmpty(selectedServers)) {
+						listSelectedServerNames = new ArrayList<String>();
+						listSelectedServers = new ArrayList<String>(Arrays.asList(selectedServers.split("#SEP#")));
+						for (String listSelectedServer : listSelectedServers) {
+							String[] split = listSelectedServer.split("#VSEP#");
+							listSelectedServerNames.add(split[0].trim());
+						}
 						listSelectedServerIds = new ArrayList<Integer>(2);
-						for (String listSelectedServer : tempListSelectedServers) {
-							for (Server server : servers) {
-								if((listSelectedServer).trim().equals(server.getName())) {
-									listSelectedServerIds.add(server.getId());
-								}
+						for (Server server : servers) {
+							if(listSelectedServerNames.contains(server.getName())) {
+								listSelectedServerIds.add(server.getId());
 							}
 						}
-						getHttpRequest().setAttribute("tempListSelectedServers", tempListSelectedServers);
-						getHttpRequest().setAttribute("listSelectedServerIds", listSelectedServerIds);
 					}
+					getHttpRequest().setAttribute("listSelectedServerIds", listSelectedServerIds);
 					getHttpRequest().setAttribute(REQ_HEADER_TYPE, "Select");
 				} else {
 					attrName = getHttpRequest().getParameter("attrName");
 					String selectedVersions = getHttpRequest().getParameter("selectedVersions");
-					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(", ")));
+					selectedVersions = selectedVersions.replaceAll(" ", "");
+					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
 					listSelectedServerIds = new ArrayList<Integer>(2);
 					for (Server server : servers) {
 						String serverName = server.getName().trim();
@@ -801,29 +818,30 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().setAttribute("servers", servers);
 			}
 			if (Constants.SETTINGS_TEMPLATE_DB.equals(type)) {
-				List<String> tempListSelectedDatabases = null;
 				List<Integer> listSelectedDatabaseIds = null;
 				List<Database> databases = techonology.getDatabases();
 				if(StringUtils.isEmpty(from)) {
-					String selectedDatabases = getHttpRequest().getParameter("tempSelectedDatabases");
-					if(selectedDatabases.length() > 0 ) {
-						selectedDatabases = selectedDatabases.trim();
-						selectedDatabases = selectedDatabases.substring(0, selectedDatabases.length()-1);
-						tempListSelectedDatabases = new ArrayList<String>(Arrays.asList(selectedDatabases.split(" , ")));
-						listSelectedDatabaseIds = new ArrayList<Integer>(2);
-						for (String listSelectedDatabase : tempListSelectedDatabases) {
-							for (Database database : databases) {
-								if((listSelectedDatabase).trim().equals(database.getName())) {
-									listSelectedDatabaseIds.add(database.getId());
-								}
+					List<String> listSelectedDbs = null;
+					List<String> listSelectedDbNames = null;
+					List<Integer> listSelectedDbIds = null;
+					String selectedDatabases = getHttpRequest().getParameter("selectedDatabases");
+					if (StringUtils.isNotEmpty(selectedDatabases)) {
+						listSelectedDbNames = new ArrayList<String>();
+						listSelectedDbs = new ArrayList<String>(Arrays.asList(selectedDatabases.split("#SEP#")));
+						for (String listSelectedDb : listSelectedDbs) {
+							String[] split = listSelectedDb.split("#VSEP#");
+							listSelectedDbNames.add(split[0].trim());
+						}
+						listSelectedDbIds = new ArrayList<Integer>(2);
+						for (Database database : databases) {
+							if(listSelectedDbNames.contains(database.getName())) {
+								listSelectedDbIds.add(database.getId());
 							}
 						}
-						getHttpRequest().setAttribute("tempListSelectedDatabases", tempListSelectedDatabases);
-						getHttpRequest().setAttribute("listSelectedDatabaseIds", listSelectedDatabaseIds);
 					}
+					getHttpRequest().setAttribute("listSelectedDatabaseIds", listSelectedDbIds);
 					getHttpRequest().setAttribute(REQ_HEADER_TYPE, "Select");
-				}
-				else {
+				} else {
 					attrName = getHttpRequest().getParameter("attrName");
 					ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 					if (StringUtils.isNotEmpty(projectCode)) {
@@ -851,7 +869,8 @@ public class Applications extends FrameworkBaseAction {
 						}
 					}
 					String selectedVersions = getHttpRequest().getParameter("selectedVersions");
-					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(", ")));
+					selectedVersions = selectedVersions.replaceAll(" ", "");
+					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
 					listSelectedDatabaseIds = new ArrayList<Integer>(2);
 					for (Database database : databases) {
 						String databaseName = database.getName().trim();
@@ -866,8 +885,8 @@ public class Applications extends FrameworkBaseAction {
 				}
 				getHttpRequest().setAttribute("databases", databases);
 			}
-			getHttpRequest().setAttribute("attrName", attrName);
 			
+			getHttpRequest().setAttribute("attrName", attrName);
 			getHttpRequest().setAttribute("header", type);
 			getHttpRequest().setAttribute(REQ_FROM, from);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
@@ -938,32 +957,6 @@ public class Applications extends FrameworkBaseAction {
 		return retString.toString();
 	}
 	
-	public String updateHiddenFields() {
-		String type = getHttpRequest().getParameter("type");
-		String tempSelected = getHttpRequest().getParameter("tempSelected");
-		String deleteId = getHttpRequest().getParameter("deleteId");
-		tempSelected = tempSelected.trim();
-		tempSelected = tempSelected.substring(0, tempSelected.length()-1);
-		List<String> listTempSelected = new ArrayList<String>(Arrays.asList(tempSelected.split(" , ")));
-		for (String selected : listTempSelected) {
-			String selectedOgnl = selected;
-			selected = selected.trim();
-			selected = selected.replaceAll("\\s+", "");
-			if((selected).equals(deleteId)) {
-				listTempSelected.remove(selectedOgnl);
-				break;
-			}
-		}
-		String listString = "";
-		for (String string : listTempSelected) {
-		    listString += string + " , ";
-		}
-		setSelectedAttrType(type);
-		setHiddenFieldValue(listString);
-		
-		return SUCCESS;
-	}
-	
 	public String checkForRespectiveConfig() throws PhrescoException {
 		try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
@@ -1001,7 +994,7 @@ public class Applications extends FrameworkBaseAction {
 		}
 	}
 	
-	private void deleteConfigurations (String type, String configName) throws PhrescoException{
+	private void deleteConfigurations (String type, String configName) throws PhrescoException {
 		try {
 		    String [] items = configName.split(",");
 		    List<String> deleteConfigNames = Arrays.asList(items);
@@ -1321,6 +1314,22 @@ public class Applications extends FrameworkBaseAction {
 
 	public void setSvnImportMsg(String svnImportMsg) {
 		this.svnImportMsg = svnImportMsg;
+	}
+
+	public String getFromTab() {
+		return fromTab;
+	}
+
+	public void setFromTab(String fromTab) {
+		this.fromTab = fromTab;
+	}
+
+	public String getCredential() {
+		return credential;
+	}
+
+	public void setCredential(String credential) {
+		this.credential = credential;
 	}
 	
 }

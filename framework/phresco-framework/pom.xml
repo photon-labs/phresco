@@ -18,7 +18,7 @@
         <site>
             <id>phresco.framework</id>
             <name>Phresco Framework</name>
-            <url>scp://phresco.org/home/projects/framework/public_html/</url>
+            <url>${siteBaseUrl}/framework/phresco-framework/</url>
         </site>
     </distributionManagement>
 
@@ -28,7 +28,11 @@
             <artifactId>phresco-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+		 <dependency>
+            <groupId>com.photon.phresco.pom</groupId>
+            <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>

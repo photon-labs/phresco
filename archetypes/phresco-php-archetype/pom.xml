@@ -13,12 +13,12 @@
     <artifactId>phresco-php-archetype</artifactId>
     <name>Archetype - phresco-php-archetype</name>
     <url>http://www.phresco.org</url>  
-    
+    <description>phresco-php-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.php</id>
             <name>Phresco Archetypes - PHP</name>
-            <url>scp://phresco.org/home/projects/archetypes/php/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-php-archetype/</url>
         </site>
     </distributionManagement>
 

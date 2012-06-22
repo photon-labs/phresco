@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -134,9 +115,7 @@
             'chart.zoom.background':        true,
             'chart.zoom.action':            'zoom',
             'chart.resizable':              false,
-            'chart.taper':                  true,
-            'chart.events.click':           null,
-            'chart.events.mousemove':       null
+            'chart.taper':                  true
         }
 
         // Store the data
@@ -209,13 +188,6 @@
         if (this.Get('chart.contextmenu')) {
             RGraph.ShowContext(this);
         }
-
-
-        /**
-        * Install the clickand mousemove event listeners
-        */
-        RGraph.InstallUserClickListener(this, this.Get('chart.events.click'));
-        RGraph.InstallUserMousemoveListener(this, this.Get('chart.events.mousemove'));
         
         /**
         * The tooltip handler
@@ -223,8 +195,6 @@
         if (this.Get('chart.tooltips')) {
         
             RGraph.Register(this);
-            
-            RGraph.PreLoadTooltipImages(this);
 
             var canvas_onclick_func = function (e)
             {
@@ -242,12 +212,11 @@
                 var segment     = obj.getSegment(e);
                 
                 if (segment) {
-
+                
                     var idx = segment[2];
-                    var text   = RGraph.parseTooltipText(obj.Get('chart.tooltips'), idx);
 
                     // Is there a tooltip defined?
-                    if ( !text) {
+                    if (!obj.Get('chart.tooltips')[idx] && typeof(obj.Get('chart.tooltips')) != 'function') {
                         return;
                     }
 
@@ -266,22 +235,20 @@
 
                     context.stroke();
                     context.fill();
-
+                
                     /**
                     * Draw the key again for in-graph keys so they don't appear "under" the highlight
                     */
                     if (obj.Get('chart.key').length && obj.Get('chart.key.position') == 'graph') {
                         RGraph.DrawKey(obj, obj.Get('chart.key'), obj.Get('chart.colors'));
                     }
-
+                    
                     /**
                     * Redraw the labels if necessary
-                    * 
-                    * 12-01-2001 Removed
                     */
-                    //if (obj.Get('chart.labels')) {
-                    //    obj.DrawLabels();
-                    //}
+                    if (obj.Get('chart.labels')) {
+                        obj.DrawLabels();
+                    }
 
                     /**
                     * Get the tooltip text
@@ -329,11 +296,10 @@
 
                 if (segment) {
                 
-                    var idx  = segment[2];
-                    var text = RGraph.getTooltipTextFromDIV(obj.Get('chart.tooltips')[idx]);
-
+                    var idx = segment[2];
+                    
                     // Is there a tooltip defined?
-                    if ( (obj.Get('chart.tooltips')[idx] || typeof(obj.Get('chart.tooltips')) == 'function') && text) {
+                    if (obj.Get('chart.tooltips')[idx] || typeof(obj.Get('chart.tooltips')) == 'function') {
 
                         overFunnel = true;
                         canvas.style.cursor = 'pointer';
@@ -380,7 +346,6 @@
         if (this.Get('chart.resizable')) {
             RGraph.AllowResizing(this);
         }
-
         
         /**
         * Fire the RGraph ondraw event

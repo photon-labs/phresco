@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -733,16 +714,15 @@
                     
                     var dataset = mouseDown[0];
                     var index   = mouseDown[1];
-
                     var dx      = mouseCoords[0] - obj.centerx;
                     var dy      = mouseCoords[1] - obj.centery;
                     var hyp     = Math.sqrt((dx * dx) + (dy * dy));
                     var newvalue = (hyp / (obj.size / 2)) * obj.max;
-
+                    
                     newvalue = Math.min(obj.max, newvalue);
                     newvalue = Math.max(0, newvalue);
 
-                    obj.original_data[mouseDown[0]][mouseDown[1]] = newvalue;
+                    obj.data[mouseDown[0]][mouseDown[1]] = newvalue;
                     RGraph.Clear(canvas);
                     obj.Draw();
 
@@ -788,6 +768,7 @@
                 var context     = obj.context;
                 var mouseCoords = RGraph.getMouseXY(e);
 
+
                 // Determine if the mouse is near a point
                 for (var j=0; j<obj.coords.length; ++j) {
                     for (var i=0; i<obj.coords[j].length; ++i) {
@@ -795,8 +776,8 @@
                         var dx = Math.abs(mouseCoords[0] - obj.coords[j][i][0]);
                         var dy = Math.abs(mouseCoords[1] - obj.coords[j][i][1]);
                         var a  = Math.atan(dy / dx);
-
-
+    
+                        
                         var hyp = Math.sqrt((dx * dx) + (dy * dy));
     
                         if (hyp <= 5) {

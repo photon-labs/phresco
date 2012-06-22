@@ -49,6 +49,8 @@ import com.phresco.pom.model.Model.Properties;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Profile;
+import com.phresco.pom.model.ReportPlugin;
+import com.phresco.pom.model.Reporting;
 
 
 /**
@@ -328,22 +330,63 @@ public class PomProcessor {
 	}
 
 	/**
-	 * @param pluginGroupId
-	 * @param pluginArtifactId
-	 * @param configList
-	 * @throws PhrescoPomException
+	 * Adds the configuration.
+	 *
+	 * @param pluginGroupId the plugin group id
+	 * @param pluginArtifactId the plugin artifact id
+	 * @param configList the config list
+	 * @return the configuration
+	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList) throws PhrescoPomException {
+	public Configuration addConfiguration(String pluginGroupId, String pluginArtifactId, List<Element> configList)
+			throws PhrescoPomException {
+		return addConfiguration(pluginGroupId, pluginArtifactId, configList, false);
+	}
+
+	/**
+	 * Adds the configuration.
+	 *
+	 * @param pluginGroupId the plugin group id
+	 * @param pluginArtifactId the plugin artifact id
+	 * @param configList the config list
+	 * @param overwrite the overwrite
+	 * @return the configuration
+	 * @throws PhrescoPomException the phresco pom exception
+	 */
+	public Configuration addConfiguration(String pluginGroupId, String pluginArtifactId, List<Element> configList,
+			boolean overwrite) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
-		//TODO: duplicate needs to be avoided.
 		Configuration configuration = plugin.getConfiguration();
-		
+
 		if (configuration == null) {
 			configuration = new Configuration();
 			plugin.setConfiguration(configuration);
 		}
-		configuration.getAny().addAll(configList);	
+		if (overwrite) {
+			configuration.getAny().addAll(configList);
+		} else {
+			plugin.getConfiguration().getAny().clear();
+			configuration.getAny().addAll(configList);
+		}
 		return configuration;
+	}
+
+	/**
+	 * Sets the final name.
+	 *
+	 * @param finalName the new final name
+	 */
+	public void setFinalName(String finalName) {
+		model.getBuild().setFinalName(finalName);
+	}
+
+	/**
+	 * Gets the final name.
+	 *
+	 * @return the final name
+	 */
+	public String getFinalName() {
+		return model.getBuild().getFinalName();
 	}
 
 	/**
@@ -614,11 +657,44 @@ public class PomProcessor {
 		}
 		return null;
 	}
+	
+	
 	/**
-	 * @throws PhrescoPomException 
+	 * @param reportPlugin
+	 */
+	
+	public void siteConfig(ReportPlugin reportPlugin){
+		com.phresco.pom.model.Reporting.Plugins plugins = new com.phresco.pom.model.Reporting.Plugins();
+		if(model.getReporting()==null){
+			model.setReporting(new Reporting());
+			model.getReporting().setPlugins(plugins);
+		}
+		model.getReporting().getPlugins().getPlugin().add(reportPlugin);
+	}
+	
+	/**
+	 * @param groupId
+	 * @param artifactId
+	 */
+	public void removeSitePlugin(String groupId,String artifactId) {
+		com.phresco.pom.model.Reporting.Plugins plugins = model.getReporting().getPlugins();
+		if(plugins.getPlugin()==null){
+			return;
+		}
+		for (ReportPlugin plugin : plugins.getPlugin()) {
+			if(groupId.equals(plugin.getGroupId()) && artifactId.equals(plugin.getArtifactId())){
+				plugins.getPlugin().remove(plugin);
+				if(model.getReporting().getPlugins().getPlugin().isEmpty()){
+					model.setReporting(null);
+				}
+				return;
+			}	
+		}
+	}
+
+	/**
 	 * @throws JAXBException
 	 */
-
 	public void save() throws JAXBException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(Model.class);
 		Marshaller marshal = jaxbContext.createMarshaller();

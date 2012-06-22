@@ -427,7 +427,7 @@
 			checkForConfigType($('input:radio[name=jmeterTestAgainst]:checked').val());
 		});
 	    
-	    $("#testName").live('input paste',function(e) { 	//testName validation
+	    $("#testName").bind('input propertychange',function(e) { 	//testName validation
 	     	var name = $(this).val();
 	     	name = isContainSpace(name);
 	     	$(this).val(name);
@@ -478,7 +478,7 @@
 		} else {
 			var validator = true;
 		    if($('#testName').val() == null || $('#testName').val().trim() == "") {
-		        showErrorMsg('errMsg', "Enter Test Name");
+		        showErrorMsg('errMsg', "Enter Test Result Name");
 			    $("#testName").val("");
 			   	$("#testName").focus();
 				return false;

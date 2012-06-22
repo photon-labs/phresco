@@ -17,7 +17,6 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.util.TechnologyTypes"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ include file="progress.jsp" %>
@@ -34,30 +33,69 @@
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 
 <script src="js/reader.js" ></script>
+<script type="text/javascript" src="js/home-header.js" ></script>
+<script type="text/javascript" src="js/phresco/common.js"></script>
 
 <%
 	String projectCode = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
 	Project project = (Project)request.getAttribute(FrameworkConstants.REQ_PROJECT);
 	String technology = (String)project.getProjectInfo().getTechnology().getId();
+	String sonarError = (String)request.getAttribute(FrameworkConstants.REQ_ERROR);
+	String disabledStr = "";
+	if (StringUtils.isNotEmpty(sonarError)) {
+		disabledStr = "disabled";
+	}
 %>
 
 <div class="operation">
-    <input id="validate" type="button" value="Validate" class="primary btn">
+    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
 </div>
+<% if (StringUtils.isNotEmpty(sonarError)) { %>
+	<div class="alert-message warning sonar">
+		<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+	</div>
+<% } %>
  
 <div id="sonar_report" class="sonar_report">
 
 </div>
-
+<form id="codeForm">
+	<input type="hidden" name="skipTest"/>
+	<div id="codeConfirm" class="modal confirm">
+		<div class="modal-header">
+			<h3><s:text name="label.skiptest.confirm"/></h3>
+			<a id="close" href="#" class="close">&times;</a>
+		</div>
+		
+		<div class="modal-body">
+			<p id="confirmationText">Do you want to select skiptest?</p>
+		</div>
+		
+		<div class="modal-footer">
+			<input id="no" type="button" value="<s:text name="label.no"/>" class="btn primary"/>
+			<input type="button" value="<s:text name="label.yes"/>" class="btn primary" id="yes" />
+		</div>
+	</div>
+</form>
 <!--  Validate popup Start -->
 <!-- <div class="popup_div" id="code_validate_pop_up"></div> -->
 <!--  Validate popup Start -->
 
 <script>
     $(document).ready(function() {
+		/** To enable/disable the validate button based on the sonar startup **/
+    	<% if (StringUtils.isNotEmpty(sonarError)) { %>
+    			$("#validate").removeClass("primary");	
+    			$("#validate").addClass("disabled");
+    	<% } else { %>
+    			$("#validate").addClass("primary");	
+				$("#validate").removeClass("disabled");
+    	<% } %>
+
     	changeStyle("code");
     	sonarReport();
-    	
+    	enableScreen();
+		
         $('#validate').click(function() {
         	<% 	
         		if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)){
@@ -66,7 +104,9 @@
         	<% 
         		} else {
         	%>
-        		progress();
+        			disableScreen();
+        			$('#codeConfirm').show();    
+        			escBlockPopup();
 	        <% 
         		}
         	%>
@@ -76,9 +116,23 @@
        		closePopup();
        		sonarReport();
         });
+		$('#yes').click(function() {
+       		$('#codeConfirm').hide();
+       		$("input[name='skipTest']").val("true");
+       		progress();
+    		return false;
+        });
+       	
+       	$('#no').click(function() {
+       		$('#codeConfirm').hide();    
+       		$("input[name='skipTest']").val("false");
+       		progress();
+    		return false;
+        });		
     });
     
     function progress(codeTech) {
+		$('#codeConfirm').hide(); 
     	getCurrentCSS();
     	$('#loadingDiv').show();
     	$('#build-output').empty();

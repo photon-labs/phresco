@@ -42,8 +42,8 @@ import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.model.ServerConstants;
 
 @Path(ServerConstants.REST_API_DOWNLOADS)

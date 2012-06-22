@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -817,7 +798,7 @@
 
         // Y axis title
         if (typeof(obj.Get('chart.title.yaxis')) == 'string' && obj.Get('chart.title.yaxis').length) {
-
+        
             var size            = obj.Get('chart.text.size') + 2;
             var font            = obj.Get('chart.text.font');
             var angle           = 270;
@@ -839,8 +820,7 @@
 
             if (obj.Get('chart.title.yaxis.align') == 'right' || obj.Get('chart.title.yaxis.position') == 'right') {
                 angle = 90;
-                yaxis_title_pos = obj.Get('chart.title.yaxis.pos') ? obj.Get('chart.title.yaxis.pos') * obj.Get('chart.gutter.right') :
-                                                                     obj.canvas.width - obj.Get('chart.gutter.right') + obj.Get('chart.text.size') + 5;
+                yaxis_title_pos = obj.canvas.width - yaxis_title_pos;
             } else {
                 yaxis_title_pos = yaxis_title_pos;
             }
@@ -1137,10 +1117,7 @@ if (typeof(obj.Get('chart.scale.formatter')) == 'function') {
         }
 
         // Tidy up
-        //output = output.replace(/^-,/, '-');
-        if (output.indexOf('-' + obj.Get('chart.scale.thousand')) == 0) {
-            output = '-' + output.substr(('-' + obj.Get('chart.scale.thousand')).length);
-        }
+        output = output.replace(/^-,/, '-');
 
         // Reappend the decimal
         if (decimal.length) {
@@ -1559,6 +1536,7 @@ if (typeof(obj.Get('chart.scale.formatter')) == 'function') {
                             }
                             
                             // Convert the X/Y pixel coords to correspond to the scale
+                            
                             div.style.opacity = 1;
                             div.style.display = 'inline';
 
@@ -2099,6 +2077,7 @@ if (typeof(obj.Get('chart.scale.formatter')) == 'function') {
         for (var i=0; i<RGraph.Registry.Get('chart.event.handlers').length; ++i) {
 
             var el = RGraph.Registry.Get('chart.event.handlers')[i];
+
             if (el && (el[0] == id || el[0] == ('window_' + id))) {
                 if (el[0].substring(0, 7) == 'window_') {
                     window.removeEventListener(el[1], el[2], false);
@@ -2255,37 +2234,10 @@ if (typeof(obj.Get('chart.scale.formatter')) == 'function') {
             var gutterRight  = obj.Get('chart.gutter.right');
             var gutterTop    = obj.Get('chart.gutter.top');
             var gutterBottom = obj.Get('chart.gutter.bottom');
-            var stretch      = obj.Get('chart.background.image.stretch');
-            var align        = obj.Get('chart.background.image.align');
-            
-            // Handle chart.background.image.align
-            if (typeof(align) == 'string') {
-                if (align.indexOf('right') != -1) {
-                    var x = obj.canvas.width - this.width - gutterRight;
-                } else {
-                    var x = gutterLeft;
-                }
-
-                if (align.indexOf('bottom') != -1) {
-                    var y = obj.canvas.height - this.height - gutterBottom;
-                } else {
-                    var y = gutterTop;
-                }
-            } else {
-                var x = gutterLeft;
-                var y = gutterTop;
-            }
-            
-            // X/Y coords take precedence over the align
-            var x = typeof(obj.Get('chart.background.image.x')) == 'number' ? obj.Get('chart.background.image.x') : x;
-            var y = typeof(obj.Get('chart.background.image.y')) == 'number' ? obj.Get('chart.background.image.y') : y;
-            var w = stretch ? obj.canvas.width - gutterLeft - gutterRight : this.width;
-            var h = stretch ? obj.canvas.height - gutterTop - gutterBottom : this.height;
 
             RGraph.Clear(obj.canvas);
 
-            obj.context.drawImage(this,x,y,w, h);
-
+            obj.context.drawImage(this,gutterLeft,gutterTop, RGraph.GetWidth(obj) - gutterLeft - gutterRight, RGraph.GetHeight(obj) - gutterTop - gutterBottom);
 
             // Draw the graph
             obj.Draw();
@@ -2323,62 +2275,4 @@ if (typeof(obj.Get('chart.scale.formatter')) == 'function') {
         var newvalue = Number(value) + 0.5;
         
         return (newvalue - value) >= 0 ? newvalue : Math.floor(value);
-    }
-
-    /**
-    * Facilitates easier event handling with chart.events.click
-    * 
-    * @param object   obj  The chart object
-    * @param function func The function to attach to the click event
-    */
-    RGraph.InstallUserClickListener = function (obj, func)
-    {
-        if (typeof(func) == 'function') {
-            function UserClickListener (e)
-            {
-                var obj   = e.target.__object__;
-                var shape = obj.getShape(e);
-
-                if (shape) {
-                    func(e, shape);
-                }
-            }
-            obj.canvas.addEventListener('click', UserClickListener, false);
-            RGraph.AddEventListener(obj.id, 'click', UserClickListener);
-        }
-    }
-
-
-    /**
-    * Facilitates easier event handling with chart.events.mousemove
-    * 
-    * @param object   obj  The chart object
-    * @param function func The function to call when the event fires
-    */
-    RGraph.InstallUserMousemoveListener = function (obj, func)
-    {
-        if (typeof(func) == 'function') {
-            function UserMousemoveHandler (e)
-            {
-                var obj   = e.target.__object__;
-                var shape = obj.getShape(e);
-                
-                /**
-                * This bit saves the current pointer style if there isn't one already saved
-                */
-                if (shape && typeof(func) == 'function') {
-                    if (obj.Get('chart.events.mousemove.revertto') == null) {
-                        obj.Set('chart.events.mousemove.revertto', e.target.style.cursor);
-                    }
-                    func(e, shape)
-
-                } else if (typeof(obj.Get('chart.events.mousemove.revertto')) == 'string') {
-
-                    e.target.style.cursor = obj.Get('chart.events.mousemove.revertto');
-                    obj.Set('chart.events.mousemove.revertto', null);
-                }
-            }
-            obj.canvas.addEventListener('mousemove', UserMousemoveHandler, false);
-            RGraph.AddEventListener(obj.id, 'mousemove', UserMousemoveHandler);
-        }
     }
