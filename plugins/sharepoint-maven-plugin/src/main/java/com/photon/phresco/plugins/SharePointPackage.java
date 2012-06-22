@@ -81,11 +81,23 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 	 * @readonly
 	 */
 	protected File baseDir;
-	
+
 	/**
 	 * @parameter expression="${environmentName}" required="true"
 	 */
 	protected String environmentName;
+
+	/**
+	 * @parameter expression="${buildName}" required="true"
+	 */
+	protected String buildName;
+
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+
+	protected int buildNo;
 
 	private File wspDir;
 	private File buildDir;
@@ -95,7 +107,6 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 	private int nextBuildNo;
 	private String zipName;
 	private Date currentDate;
-	private String context;
 	private String sourceDirectory = "/source";
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -124,18 +135,16 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-    private void replaceValue() throws MojoExecutionException {
+	private void replaceValue() throws MojoExecutionException {
 		SAXBuilder builder = new SAXBuilder();
 		FileWriter writer = null;
 		try {
-			File xmlFile = new File(baseDir.getPath() + sourceDirectory
-					+ SHAREPOINT_WSP_CONFIG_FILE);
+			File xmlFile = new File(baseDir.getPath() + sourceDirectory + SHAREPOINT_WSP_CONFIG_FILE);
 			Document doc = (Document) builder.build(xmlFile);
 			Element rootNode = doc.getRootElement();
 			Element appSettings = getNode(xmlFile, rootNode, SHAREPOINT_APPSETTINGS);
 			if (appSettings != null) {
-				List children = appSettings.getChildren(SHAREPOINT_ADD,
-						appSettings.getNamespace());
+				List children = appSettings.getChildren(SHAREPOINT_ADD, appSettings.getNamespace());
 				for (Object object : children) {
 					Element dependent = (Element) object;
 					String keyValue = dependent.getAttributeValue(SHAREPOINT_KEY);
@@ -169,35 +178,27 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("static-access")
-    private Element getNode(File pomFile, Element rootNode, String nodeName)
-			throws JDOMException, IOException {
+	private Element getNode(File pomFile, Element rootNode, String nodeName) throws JDOMException, IOException {
 		POMProcessor pomProc = new POMProcessor(pomFile);
 		return pomProc.getNode(rootNode, nodeName);
-		/*if (pomFile == null) {
-			throw new IllegalArgumentException("pom file should not be null");
-		}
-		if (!pomFile.exists()) {
-			throw new FileNotFoundException("File doesn't exist");
-		}
-		SAXBuilder builder = new SAXBuilder();
-		Document document = builder.build(pomFile);
-		rootNode = document.getRootElement();
-		Element dependencies = rootNode.getChild(nodeName, rootNode.getNamespace());
-		// sometime, this doesn't work. So as workaround this stint.
-		if (dependencies == null) {
-			List children = rootNode.getChildren();
-			for (Object object : children) {
-				if ((object instanceof Element) && ((Element) object).getName().equals(nodeName)) {
-					dependencies = (Element) object;
-					break;
-				}
-			}
-		}
-		return dependencies;*/
+		/*
+		 * if (pomFile == null) { throw new
+		 * IllegalArgumentException("pom file should not be null"); } if
+		 * (!pomFile.exists()) { throw new
+		 * FileNotFoundException("File doesn't exist"); } SAXBuilder builder =
+		 * new SAXBuilder(); Document document = builder.build(pomFile);
+		 * rootNode = document.getRootElement(); Element dependencies =
+		 * rootNode.getChild(nodeName, rootNode.getNamespace()); // sometime,
+		 * this doesn't work. So as workaround this stint. if (dependencies ==
+		 * null) { List children = rootNode.getChildren(); for (Object object :
+		 * children) { if ((object instanceof Element) && ((Element)
+		 * object).getName().equals(nodeName)) { dependencies = (Element)
+		 * object; break; } } } return dependencies;
+		 */
 	}
-	
+
 	private void executeExe() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
@@ -246,31 +247,35 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 
 	private void createPackage() throws MojoExecutionException {
 		try {
-			context = baseDir.getName();
-			String zipNameWithoutExt = PROJECT_CODE + nextBuildNo
-					+ STR_UNDERSCORE + getTimeStampForBuildName(currentDate);
-			zipName = zipNameWithoutExt + ".zip";
+			String context = baseDir.getName();
+			if (buildName != null) {
+				zipName = buildName + ".zip";
+			} else {
+				if (buildNumber != null) {
+					zipName = PROJECT_CODE + buildNumber + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				} else {
+					zipName = PROJECT_CODE + nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				}
+			}
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
+			String zipNameWithoutExt = zipName.substring(0, zipName.lastIndexOf('.'));
 			copyWspToPackage(zipNameWithoutExt, context);
-			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath,
-					ArchiveType.ZIP);
+			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath, ArchiveType.ZIP);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
 
-	private void copyWspToPackage(String zipNameWithoutExt, String context)
-			throws MojoExecutionException {
+	private void copyWspToPackage(String zipNameWithoutExt, String context) throws MojoExecutionException {
 		try {
 			String[] list = wspDir.list(new WarFileNameFilter());
 			if (list.length > 0) {
-				File warFile = new File(wspDir.getPath() + File.separator
-						+ list[0]);
-				tempDir = new File(buildDir.getPath() + File.separator
-						+ zipNameWithoutExt);
+				File warFile = new File(wspDir.getPath() + File.separator + list[0]);
+				tempDir = new File(buildDir.getPath() + File.separator + zipNameWithoutExt);
 				tempDir.mkdir();
-				File contextWarFile = new File(wspDir.getPath()
-						+ File.separator + context + ".wsp");
+				File contextWarFile = new File(wspDir.getPath() + File.separator + context + ".wsp");
 				warFile.renameTo(contextWarFile);
 				FileUtils.copyFileToDirectory(contextWarFile, tempDir);
 			} else {
@@ -281,13 +286,20 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void writeBuildInfo(boolean isBuildSuccess)
-			throws MojoExecutionException {
+	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
+
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus(SUCCESS);
@@ -308,15 +320,13 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 	}
 
 	private String getTimeStampForDisplay(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
 
 	private String getTimeStampForBuildName(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd-MMM-yyyy-HH-mm-ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
