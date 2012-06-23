@@ -21,10 +21,10 @@ package com.photon.phresco.framework.api;
 
 import java.util.List;
 
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.CIBuild;
 import com.sun.jersey.api.client.ClientResponse;
 
 

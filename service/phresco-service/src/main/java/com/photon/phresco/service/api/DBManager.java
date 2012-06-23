@@ -26,7 +26,6 @@ import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.commons.model.Element;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.model.Documentation;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.Module;
@@ -35,6 +34,7 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.service.model.DocumentTypes;
 
 public interface DBManager {
 
@@ -225,7 +225,7 @@ public interface DBManager {
 	 * @throws PhrescoException
 	 */
 
-	void addModules(List<com.photon.phresco.model.Modules> modules) throws PhrescoException;
+	void addModules(List<com.photon.phresco.service.model.Modules> modules) throws PhrescoException;
 	/**
 	 * Adds the Technologies
 	 * @param applicationTypes
@@ -260,9 +260,9 @@ public interface DBManager {
 
 	List<DocumentTypes> getDocumentType()throws PhrescoException;
 
-	void addDocument(List<com.photon.phresco.model.Document> documentsList) throws PhrescoException;
+	void addDocument(List<com.photon.phresco.service.model.Document> documentsList) throws PhrescoException;
 
-	void addDocuments(List<com.photon.phresco.model.Documents> documentsList)throws PhrescoException;
+	void addDocuments(List<com.photon.phresco.service.model.Documents> documentsList)throws PhrescoException;
 
 	void addModule(List<Module> moduleDataList) throws PhrescoException;
 

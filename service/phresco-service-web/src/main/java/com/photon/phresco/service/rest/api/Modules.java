@@ -52,7 +52,7 @@ import com.photon.phresco.service.model.ServerConstants;
 @Path(ServerConstants.REST_API_MODULES)
 public class Modules implements ServerConstants {
 
-	private static final Logger S_LOGGER = Logger.getLogger(com.photon.phresco.model.Modules.class);
+	private static final Logger S_LOGGER = Logger.getLogger(com.photon.phresco.service.model.Modules.class);
 //	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static ComponentManager componentManager = PhrescoServerFactory.getComponentManager();
 	private static Map<String, ModuleGroup> infoMap = new HashMap<String, ModuleGroup>();
@@ -134,7 +134,7 @@ public class Modules implements ServerConstants {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void create(List<com.photon.phresco.model.Modules> modules) throws PhrescoException {
+	public void create(List<com.photon.phresco.service.model.Modules> modules) throws PhrescoException {
 		componentManager.createModules(modules);
 	}
 

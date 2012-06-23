@@ -508,7 +508,7 @@ public interface FrameworkConstants {
     String REST_CI_MAILER_HOME = "/repo/ci/mailxml";
     String REST_CI_MAIL_PLUGIN = "/repo/ci/emailext";
     String REST_ENVE_PATH = "/settings/env";
-    String REST_SERVERS_PATH = "/component/servers";
+    String REST_SERVERS_PATH = "/servers";
     String REST_DATABASE_PATH = "/component/databases";
 
     String ATTR_TIME 	= "time";

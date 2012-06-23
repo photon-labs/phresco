@@ -25,13 +25,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;

@@ -56,7 +56,7 @@ import org.codehaus.plexus.archiver.zip.ZipArchiver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
-import com.photon.phresco.model.BuildInfo;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.util.PluginUtils;
 
 /**

@@ -25,7 +25,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
-<%@ page import="com.photon.phresco.model.BuildInfo"%>
+<%@ page import="com.photon.phresco.commons.BuildInfo"%>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.util.Constants"%>
