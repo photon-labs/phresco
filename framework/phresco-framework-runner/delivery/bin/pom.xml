@@ -40,6 +40,20 @@
 		<version>2.5.1</version>
 		<type>zip</type>
 	  </dependency>
+      
+      <dependency>
+		<groupId>softwares.iphone.files</groupId>
+		<artifactId>checker-267</artifactId>
+		<version>0.1</version>
+		<type>zip</type>
+	  </dependency>
+      
+     <dependency>
+          <groupId>softwares.iphone.files</groupId>
+          <artifactId>device-deploy</artifactId>
+          <version>1.0</version>
+          <type>zip</type>
+      </dependency>
 	  
 	  <dependency>
 		<groupId>com.photon.phresco.file.server</groupId>
@@ -107,6 +121,26 @@
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+                                
+                                <!-- extracting checkers zip file -->
+								<artifactItem>
+									<groupId>softwares.iphone.files</groupId>
+                                    <artifactId>checker-267</artifactId>
+                                    <version>0.1</version>
+                                    <type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+                                
+                                <!-- extracting chief zip file -->
+								<artifactItem>
+									<groupId>softwares.iphone.files</groupId>
+                                    <artifactId>device-deploy</artifactId>
+                                    <version>1.0</version>
+                                    <type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools/chief</outputDirectory>
 								</artifactItem>
 								
 								<!-- extracting JMeter zip file -->
