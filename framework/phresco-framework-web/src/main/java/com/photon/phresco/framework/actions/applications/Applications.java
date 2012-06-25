@@ -65,6 +65,7 @@ import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Utility;
@@ -351,7 +352,8 @@ public class Applications extends FrameworkBaseAction {
 			setFeatures(administrator, projectInfo);
 			S_LOGGER.debug("Going to create project, Project info values "
 						+ projectInfo.toString());
-			administrator.createProject(projectInfo, null);
+			UserInfo userInfo = (UserInfo) getHttpSession().getAttribute(REQ_USER_INFO);
+			administrator.createProject(projectInfo, null, userInfo);
 			addActionMessage(getText(SUCCESS_PROJECT,
 					Collections.singletonList(projectInfo.getName())));
 		} catch (Exception e) {
@@ -428,7 +430,8 @@ public class Applications extends FrameworkBaseAction {
 				}
 				
 				administrator.deleteSqlFolder(deletableDbs, projectInfo);
-				administrator.updateProject(projectInfo, originalinfo, projectPath);
+				UserInfo userInfo = (UserInfo) getHttpSession().getAttribute(REQ_USER_INFO);
+				administrator.updateProject(projectInfo, originalinfo, projectPath,userInfo);
 				removeConfiguration();
 				addActionMessage(getText(UPDATE_PROJECT,Collections.singletonList(projectInfo.getName())));
 			} catch (Exception e) {
