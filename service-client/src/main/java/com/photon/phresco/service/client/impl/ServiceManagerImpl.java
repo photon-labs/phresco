@@ -34,6 +34,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public <E> RestClient<E> getRestClient(String contextPath) throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.getRestClient(String contextPath)");
 		StringBuilder builder = new StringBuilder();
 		builder.append(serverPath);
 		builder.append("/");
@@ -42,6 +43,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
 
     public UserInfo getUserInfo() throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.getUserInfo())");
 		return userInfo;
 	}
 
@@ -57,6 +59,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
 	
     private void doLogin(String username, String password) throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.doLogin(String username, String password)");
     	Credentials credentials = new Credentials(username, password); 
     	Client client = ClientHelper.createClient();
         WebResource resource = client.resource(serverPath + "/login");

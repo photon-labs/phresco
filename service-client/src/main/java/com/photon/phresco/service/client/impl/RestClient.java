@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.sun.jersey.api.client.Client;
@@ -17,7 +19,8 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class RestClient<E> {
-
+	
+	private static final Logger S_LOGGER= Logger.getLogger(RestClient.class);
 	private WebResource resource = null;
 	private Builder builder = null;
 
@@ -31,6 +34,7 @@ public class RestClient<E> {
 	 * @param id
 	 */
 	public void setPath(String path) {
+		S_LOGGER.debug("Entered into RestClient.setPath(String path)" + path);
 		resource = resource.path(path);
 	}
 	
@@ -40,6 +44,7 @@ public class RestClient<E> {
 	 * @param value
 	 */
 	public void addHeader(String key, String value) {
+		S_LOGGER.debug("Entered into RestClient.addHeader(String key, String value)");
 		resource.header(key, value);
 	}
 	
@@ -49,6 +54,7 @@ public class RestClient<E> {
 	 * @param value
 	 */
 	public void addQueryString(String key, String value) {
+		S_LOGGER.debug("Entered into RestClient.addQueryString(String key, String value)");
 		resource.queryParam(key, value);
 	}
 	
@@ -57,6 +63,7 @@ public class RestClient<E> {
 	 * @param headers
 	 */
 	public void addQueryStrings(Map<String, String> headers) {
+		S_LOGGER.debug("Entered into RestClient.addQueryStrings(Map<String, String> headers)");
 		Set<String> keySet = headers.keySet();
 		MultivaluedMap<String, String> queryStrings = new MultivaluedMapImpl();
 		for (String key : keySet) {
@@ -70,6 +77,7 @@ public class RestClient<E> {
 	 * @param mediaType
 	 */
 	public void setAccept(String mediaType) {
+		S_LOGGER.debug("Entered into RestClient.setAccept(String mediaType)" + mediaType);
 		builder = resource.accept(mediaType);
 	}
 	
@@ -78,6 +86,7 @@ public class RestClient<E> {
 	 * @param mediaType
 	 */
 	public void setType(String mediaType) {
+		S_LOGGER.debug("Entered into RestClient.setType(String mediaType)" + mediaType);
 		builder = builder.type(mediaType);
 	}
 	
@@ -88,6 +97,7 @@ public class RestClient<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<E> get(Type type) {
+		S_LOGGER.debug("Entered into RestClient.get(Type type)");
 		String jsonObject = builder.get(String.class);
 		return (List<E>) new Gson().fromJson(jsonObject, type);
 	}
@@ -99,6 +109,7 @@ public class RestClient<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public E getById(GenericType<?> genericType) {
+		S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
 		return (E) builder.get(genericType);
 	}
 	
@@ -108,6 +119,7 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public void create(List<E> infos) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
 		ClientResponse clientResponse = builder.post(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
 	}
@@ -121,6 +133,7 @@ public class RestClient<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<E> update(List<E> infos, Type type) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
 		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
 		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
@@ -135,6 +148,7 @@ public class RestClient<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public E updateById(E obj, Type type) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.updateById(E obj, Type type)");
 		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(obj));
 		isErrorThrow(clientResponse);
 		return (E) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
@@ -146,6 +160,7 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public void delete(List<E> infos) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.delete(List<E> infos)");
 		ClientResponse clientResponse = builder.delete(ClientResponse.class, infos);
 		isErrorThrow(clientResponse);
 	}
@@ -156,6 +171,7 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	private void isErrorThrow(ClientResponse clientResponse) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.isErrorThrow(ClientResponse clientResponse)");
 		int status = clientResponse.getStatus();
 		if (status == ClientResponse.Status.ACCEPTED.getStatusCode() || 
 				status == ClientResponse.Status.OK.getStatusCode()) {
@@ -180,6 +196,7 @@ public class RestClient<E> {
 	 * Delete the object by given id parameter
 	 */
 	public ClientResponse deleteById() {
+		S_LOGGER.debug("Entered into RestClient.deleteById()");
 		return resource.delete(ClientResponse.class);
 	}
 
