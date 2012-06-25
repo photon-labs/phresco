@@ -1,12 +1,13 @@
 package com.photon.phresco.service.client.impl;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.photon.phresco.commons.model.Role;
+import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -24,23 +25,37 @@ public class RestClient<E> {
 		Client client = ClientHelper.createClient();
 		resource = client.resource(serverUrl);
 	}
-
-	public void setAccept(String mediaType) {
-		resource.accept(mediaType);
+	
+	/**
+	 * Given additional path added to the URI of the web resource 
+	 * @param id
+	 */
+	public void setPath(String path) {
+		resource = resource.path(path);
 	}
-
-	public void setType(String mediaType) {
-		builder = resource.type(mediaType);
-	}
-
+	
+	/**
+	 * Add an HTTP header and value
+	 * @param key
+	 * @param value
+	 */
 	public void addHeader(String key, String value) {
 		resource.header(key, value);
 	}
-
+	
+	/**
+	 * Create a new WebResource from this web resource with an additional query parameter added to the URI of this web resource
+	 * @param key
+	 * @param value
+	 */
 	public void addQueryString(String key, String value) {
 		resource.queryParam(key, value);
 	}
-
+	
+	/**
+	 * Create a new WebResource from this web resource with additional query parameters added to the URI of this web resource
+	 * @param headers
+	 */
 	public void addQueryStrings(Map<String, String> headers) {
 		Set<String> keySet = headers.keySet();
 		MultivaluedMap<String, String> queryStrings = new MultivaluedMapImpl();
@@ -49,38 +64,107 @@ public class RestClient<E> {
 		}
 		resource.queryParams(queryStrings);
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<E> get(GenericType<?> genericType) {
-		return (List<E>) builder.get(genericType);
+	
+	/**
+	 * Add acceptable media types
+	 * @param mediaType
+	 */
+	public void setAccept(String mediaType) {
+		builder = resource.accept(mediaType);
 	}
-
+	
+	/**
+	 * Set the media type
+	 * @param mediaType
+	 */
+	public void setType(String mediaType) {
+		builder = builder.type(mediaType);
+	}
+	
+	/**
+	 * Get List of objects for the specified generic type object
+	 * @param genericType
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<E> get(Type type) {
+		String jsonObject = builder.get(String.class);
+		return (List<E>) new Gson().fromJson(jsonObject, type);
+	}
+	
+	/**
+	 * Get object for the specified generic type object using the given id 
+	 * @param genericType
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public E getById(GenericType<?> genericType) {
+		return (E) builder.get(genericType);
+	}
+	
+	/**
+	 * Creates List of objects
+	 * @param infos
+	 * @throws PhrescoException
+	 */
 	public void create(List<E> infos) throws PhrescoException {
-		ClientResponse clientResponse = builder.post(ClientResponse.class, infos);
+		ClientResponse clientResponse = builder.post(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
 	}
 	
+	/**
+	 * Updates List of objects for the given type 
+	 * @param infos
+	 * @param type
+	 * @return
+	 * @throws PhrescoException
+	 */
 	@SuppressWarnings("unchecked")
-	public List<E> update(List<E> infos, GenericType<?> genericType) throws PhrescoException {
-		ClientResponse clientResponse = builder.put(ClientResponse.class, infos);
+	public List<E> update(List<E> infos, Type type) throws PhrescoException {
+		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
-		return (List<E>) clientResponse.getEntity(genericType);
+		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
 	}
-
+	
+	/**
+	 * Update the given object by using the type given
+	 * @param obj
+	 * @param type
+	 * @return
+	 * @throws PhrescoException
+	 */
+	@SuppressWarnings("unchecked")
+	public E updateById(E obj, Type type) throws PhrescoException {
+		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(obj));
+		isErrorThrow(clientResponse);
+		return (E) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
+	}
+	
+	/**
+	 * Deletes the List of objects
+	 * @param infos
+	 * @throws PhrescoException
+	 */
 	public void delete(List<E> infos) throws PhrescoException {
 		ClientResponse clientResponse = builder.delete(ClientResponse.class, infos);
 		isErrorThrow(clientResponse);
 	}
 	
+	/**
+	 * Throws exception when status not equal to Accepted and Ok status codes
+	 * @param clientResponse
+	 * @throws PhrescoException
+	 */
 	private void isErrorThrow(ClientResponse clientResponse) throws PhrescoException {
 		int status = clientResponse.getStatus();
-		if (status != ClientResponse.Status.ACCEPTED.getStatusCode()
-				|| status != ClientResponse.Status.OK.getStatusCode()) {
+		if (status == ClientResponse.Status.ACCEPTED.getStatusCode() || 
+				status == ClientResponse.Status.OK.getStatusCode()) {
+		} else {
 			throw new PhrescoException("Not able to Create");
 		}
 	}
 
-	public void create(String infos) {
+	/*public void create(String infos) {
 		ClientResponse clientResponse = builder.post(ClientResponse.class, infos);
 	}
 	
@@ -90,13 +174,13 @@ public class RestClient<E> {
 
 	public void updatebyId(Role infos) {
 		ClientResponse clientResponse = builder.put(ClientResponse.class, infos);
+	}*/
+	
+	/**
+	 * Delete the object by given id parameter
+	 */
+	public ClientResponse deleteById() {
+		return resource.delete(ClientResponse.class);
 	}
 
-	public void delete(String id) {
-		resource.path(id).delete(ClientResponse.class);
-	}
-
-	public void setPath(String id) {
-		resource.path(id);
-	}
 }
