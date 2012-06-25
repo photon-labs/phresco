@@ -130,7 +130,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 *
 	 * @return Project based on the given information
 	 */
-	public Project createProject(ProjectInfo info, File path) throws PhrescoException {
+	public Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.createProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("createProject() > info name : " + info.getName());
@@ -140,7 +140,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (StringUtils.isEmpty(info.getVersion())) {
 			info.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
-		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info);
+		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info,userInfo);
 
 		S_LOGGER.debug("createProject response code " + response.getStatus());
 
@@ -153,6 +153,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			} catch (IOException e) {
 				throw new PhrescoException(e);
 			}
+		 }  else if(response.getStatus() == 401){
+			 throw new PhrescoException("Session Expired ! Please Relogin.");
 		} else {
 			throw new PhrescoException("Project creation failed");
 		}
@@ -213,7 +215,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 * @return Project based on the given information
 	 */
 
-	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path) throws PhrescoException {
+	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path,UserInfo userInfo) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.updateProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("updateProject() > info name : " + delta.getName());
@@ -230,8 +232,11 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(projectInfo, path);
-		if (flag) {
-			response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta);
+		response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta,userInfo);
+		 if(response.getStatus() == 401){
+			 throw new PhrescoException("Session Expired ! Please Relogin.");
+		 }
+		 else if (flag) {
 			if (response.getStatus() != 200) {
 				throw new PhrescoException("Project updation failed");
 			}

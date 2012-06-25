@@ -33,13 +33,13 @@ public class UserInfo {
 	private Credentials credentials;
 	private String displayName;	
 	private String mail;
+	private String token;
 
 	private boolean phrescoEnabled;
 	private List<String> roles;	
 	private List<String> permissions;
 	private List<String> customerNames;
 	
-
 	public UserInfo() {
 		//for jaxb
 	}
@@ -154,5 +154,14 @@ public class UserInfo {
 	public void setCustomerNames(List<String> customerNames) {
 		this.customerNames = customerNames;
 	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 
 }
