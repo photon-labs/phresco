@@ -77,6 +77,7 @@ public class ServerConfiguration {
 	private static final String AUTHENTICATION_SERVICE_URL = "phresco.authenticate.url";
 	private static final String EMAIL_EXT_FILE = "phresco.ci.emailext.file";
 	private static final String PHRESCO_SERVER_CONTEXT_NAME = "phresco.server.context.name";
+	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -87,6 +88,7 @@ public class ServerConfiguration {
 	private String credentialurl;
 	private String authenticateurl;
 	private String serviceContextName;
+	private String twitterServiceURL; 
 
 	public ServerConfiguration(String fileName) throws PhrescoException {
 		initServerConfig(fileName);
@@ -131,6 +133,7 @@ public class ServerConfiguration {
 			this.credentialurl = serverProps.getProperty(KEY_CREDENTIAL_URL);
 			this.authenticateurl= serverProps.getProperty(AUTHENTICATION_SERVICE_URL);
 			this.serviceContextName = serverProps.getProperty(PHRESCO_SERVER_CONTEXT_NAME);
+			this.twitterServiceURL = serverProps.getProperty(PHRESCO_TWITTER_SERVICE_URL);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
@@ -197,6 +200,10 @@ public class ServerConfiguration {
 	
 	public String getServerContextName() {
         return serviceContextName;
+	}
+	
+	public String getTwitterServiceURL() {
+        return twitterServiceURL;
 	}
 	
 	public String getCiConfigFile() {

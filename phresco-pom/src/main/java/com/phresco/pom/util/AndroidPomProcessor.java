@@ -21,6 +21,7 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -30,17 +31,21 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import com.phresco.pom.android.AndroidProfile;
 import com.phresco.pom.android.PomConstants;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.BuildBase;
 import com.phresco.pom.model.BuildBase.Plugins;
+import com.phresco.pom.model.Model.Profiles;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Plugin.Executions;
 import com.phresco.pom.model.Plugin.Goals;
 import com.phresco.pom.model.PluginExecution;
+import com.phresco.pom.model.Profile;
 
 /**
  * @author suresh_ma
@@ -73,18 +78,24 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @throws PhrescoPomException
 	 * @throws ParserConfigurationException
 	 */
-	public void addAndroidProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
+	public void setProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
 			AndroidProfile androidProfile, PluginExecution execution,
 			Element goalElement, List<Element> additionalConfig) throws JAXBException,
 			PhrescoPomException, ParserConfigurationException {
-
+		
 		BuildBase base = new BuildBase();
 		Plugins plugins = new Plugins();
 		Executions executions = new Executions();
 		Goals goals = new Goals();
-		Configuration configuration = new Configuration();
 		Activation activation = new Activation();
 		
+		if(model.getProfiles()!= null) {
+			for(Profile profile : model.getProfiles().getProfile()){
+				if(profileId.equals(profile.getId())) {
+					 model.setProfiles(null);	 
+				}	
+			}
+		}
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
@@ -112,9 +123,13 @@ public class AndroidPomProcessor extends PomProcessor {
 			plugin.setExecutions(executions);
 			plugin.setGoals(goals);
 			plugin.getGoals().getAny().add(goalElement);
+			if(plugin.getGoals().getAny().isEmpty()) {
+				plugin.setGoals(null);
+			}
+			execution.getConfiguration().getAny().addAll(additionalConfig);
 			plugin.getExecutions().getExecution().add(execution);
-			plugin.setConfiguration(configuration);
-			plugin.getConfiguration().getAny().addAll(additionalConfig);
+//			plugin.setConfiguration(configuration);
+//			plugin.getConfiguration().getAny().addAll(additionalConfig);
 			plugins.getPlugin().add(plugin);
 			base.setPlugins(plugins);
 			
@@ -144,6 +159,46 @@ public class AndroidPomProcessor extends PomProcessor {
 			save();
 		} else {
 			throw new PhrescoPomException(POMErrorCode.PROFILE_ID_NOT_FOUND);
+		}
+	}
+
+	public boolean hasSigning() {
+		Profiles profiles = model.getProfiles();
+		if(profiles!=null) {
+			for(Profile profile : model.getProfiles().getProfile()){
+				if(profile.getId().equals("sign")) {
+					return true;
+				}
+			}
+		}return false;
+	}
+	
+	public AndroidProfile getProfileElement(String id) throws PhrescoPomException{
+		Profile profile = getProfile(id);
+		AndroidProfile androidProfile = new AndroidProfile();
+		List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+		for (Plugin plugin2 : plugin) {
+			List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+			for (PluginExecution pluginExecution : execution) {
+				List<Element> any = pluginExecution.getConfiguration().getAny();
+				processProfiles(androidProfile, any);
+			}
+		}
+		return androidProfile;
+	}
+
+	private void processProfiles(AndroidProfile androidProfile, List<Element> any) {
+		for (Element element : any) {
+			String tagName = element.getTagName();
+			if(tagName.equals("keystore")) {
+				androidProfile.setKeystore(element.getTextContent());
+			} else if(tagName.equals("storepass")) {
+				androidProfile.setStorepass(element.getTextContent());
+			} else if(tagName.equals("keypass")) {
+				androidProfile.setKeypass(element.getTextContent());
+			} else if(tagName.equals("alias")) {
+				androidProfile.setAlias(element.getTextContent());
+			}
 		}
 	}
 }

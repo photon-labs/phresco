@@ -54,6 +54,7 @@ import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Credentials;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.site.Reports;
@@ -400,7 +401,7 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return (List<VideoInfo>) cache.get(VIDEOS_FILE);
     }
 
-    public ClientResponse createProject(ProjectInfo info) throws PhrescoException {
+    public ClientResponse createProject(ProjectInfo info, UserInfo userInfo) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.createProject(ProjectInfo info)");
 		}
@@ -411,12 +412,11 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         if (debugEnabled) {
 			S_LOGGER.debug("createProject() ProjectName = "+ info.getName());
 		}
-        ClientResponse response = resource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, info);
-//        reSetCacheAppTypes();
+        ClientResponse response = resource.header(Constants.AUTH_TOKEN, userInfo.getToken()).type(MediaType.APPLICATION_JSON).post(ClientResponse.class, info);
         return response;
     }
 
-    public ClientResponse updateProject(ProjectInfo info) throws PhrescoException {
+    public ClientResponse updateProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.updateProject(ProjectInfo info)");
 		}
@@ -427,8 +427,7 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         if (debugEnabled) {
 			S_LOGGER.debug("updateProject() ProjectName = "+ info.getName());
 		}
-        ClientResponse response = resource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, info);
-//        reSetCacheAppTypes();
+        ClientResponse response = resource.header(Constants.AUTH_TOKEN, userInfo.getToken()).type(MediaType.APPLICATION_JSON).post(ClientResponse.class, info);
         return response;
     }
     
@@ -572,12 +571,6 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return response;
     }
     
-	// To reset the AppTypes in cache
-    public void reSetCacheAppTypes() throws PhrescoException {
-    	ServiceManagerCache.getInstance().remove(APPTYPES_FILE);
-    	initCache();
-    }
-
 	@Override
 	public List<Reports> getReports(String techId) throws PhrescoException {
 		Client client = ClientHelper.createClient();

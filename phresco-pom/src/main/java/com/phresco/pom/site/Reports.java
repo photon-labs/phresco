@@ -1,6 +1,7 @@
 package com.phresco.pom.site;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -131,4 +132,16 @@ public class Reports implements Serializable{
 			SiteMessages.getString("SiteConstants.jxr.artifact.id"),
 			SiteMessages.getString("SiteConstants.jxr.group.id"),
 			SiteMessages.getString("SiteConstants.jxr.version"));
+	
+	public static final Reports PROJECT_INFO = new Reports(SiteMessages.getString("SiteConstants.project-info.display.name"), 
+			SiteMessages.getString("SiteConstants.project-info.artifact.id"),
+			SiteMessages.getString("SiteConstants.project-info.group.id"),
+			SiteMessages.getString("SiteConstants.project-info.version"));
+	static {
+		List<ReportCategories> catagories = new ArrayList<ReportCategories>();
+		catagories.add(ReportCategories.INFO_INDEX);
+		catagories.add(ReportCategories.INFO_MODULE);
+		catagories.add(ReportCategories.INFO_DEPENDENCIES);
+		PROJECT_INFO.setReportCategories(catagories);
+	}
 }

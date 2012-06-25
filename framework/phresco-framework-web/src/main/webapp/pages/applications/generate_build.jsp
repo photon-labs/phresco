@@ -49,6 +49,8 @@
    	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
    	String importSqlPro  = (String) request.getAttribute(FrameworkConstants.REQ_IMPORT_SQL);
    	String buildNumber = (String) request.getAttribute(FrameworkConstants.REQ_DEPLOY_BUILD_NUMBER);
+   	String finalName = (String) request.getAttribute(FrameworkConstants.FINAL_NAME);
+   	String mainClassValue = (String) request.getAttribute(FrameworkConstants.MAIN_CLASS_VALUE);
    	String checkImportSql = "";
    	if (importSqlPro != null && Boolean.parseBoolean(importSqlPro)) {
    	    checkImportSql = "checked";
@@ -101,19 +103,36 @@
             </div>
         <% } %>
         
+
         <% if (from.equals("generateBuild")) { %>
 		        <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge" id="buildName" name="buildName" maxlength="20" title="20 Characters only"/>
+						<input type="text" class="xlarge javastd" id="buildName" name="buildName" maxlength="20" title="20 Characters only"/>
 				    </div>
 				</div>
 				<div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge" id="newBuildNumber" name="newBuildNumber" maxlength="20" title="10 Characters only"/>
+						<input type="text" class="xlarge javastd" id="newBuildNumber" name="newBuildNumber" maxlength="20" title="10 Characters only"/>
 				    </div>
 				</div>
+				
+				<% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label "><s:text name="label.jar.name"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge javastd" id="jarName" name="jarName" value="<%= StringUtils.isNotEmpty(finalName) ? finalName : "" %>" maxlength="40" title="40 Characters only"/>
+				    </div>
+				</div>
+				
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.main.class.name"/></label>
+				    <div class="input">
+						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" maxlength="40" title="40 Characters only"/>
+				    </div>
+				</div>	
+		<% } %>	
 		<% } %>
 
 		<div class="clearfix">

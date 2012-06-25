@@ -4,7 +4,7 @@
    <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>1.2.0.3001-SNAPSHOT</version>
+        <version>1.2.0.3002-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -25,6 +25,12 @@
     </distributionManagement>
 
     <dependencies>
+		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
         <dependency>
             <groupId>com.photon.phresco.commons</groupId>
             <artifactId>phresco-commons</artifactId>
