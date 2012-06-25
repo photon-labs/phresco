@@ -57,8 +57,11 @@ import org.jdom.output.XMLOutputter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
+import com.photon.phresco.commons.DownloadTypes;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.configuration.Configuration;
 import com.photon.phresco.configuration.Environment;
@@ -71,10 +74,9 @@ import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.api.Validator;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
@@ -90,7 +92,6 @@ import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Credentials;
-import com.photon.phresco.util.DownloadTypes;
 import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
@@ -106,13 +107,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private static final Logger S_LOGGER= Logger.getLogger(ProjectAdministratorImpl.class);
 	private Map<String, List<ModuleGroup>> coreModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
 	private Map<String, List<ModuleGroup>> customModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
-	private List<DownloadInfo> downloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
-	private List<DownloadInfo> serverDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
-	private List<DownloadInfo> dbDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
-	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
+	private Map<String, List<DownloadInfo>> downloadInfosMap = Collections.synchronizedMap(new HashMap<String, List<DownloadInfo>>(64));
 
 	private static void initializeSqlMap() {
 		// TODO: This should come from database
@@ -662,70 +660,72 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 return login;
 	 }
 
-	 private void setDownloadInfoFromService() throws PhrescoException {
+	 private void setDownloadInfoFromService(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getDownloadInfo()");
-
-		 if (CollectionUtils.isEmpty(downloadInfos)) {
-			 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
-		 }
+		 
+		 downloadInfosMap.put(downloadPropertyInfo.getTechId(), PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService(downloadPropertyInfo));
 	 }
 
 	 @Override
-	 public List<DownloadInfo> getServerDownloadInfo() throws PhrescoException {
-
+	 public List<DownloadInfo> getServerDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getServerDownloadInfo()");
-
-		 if (CollectionUtils.isEmpty(downloadInfos)) {
-			 setDownloadInfoFromService();
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
 		 }
-		 if (CollectionUtils.isNotEmpty(serverDownloadInfos)) {
-			 return serverDownloadInfos;
-		 }
-		 for (DownloadInfo downloadInfo : downloadInfos) {
-			 if (DownloadTypes.SERVER.equals(downloadInfo.getType())){
-				 serverDownloadInfos.add(downloadInfo);
+		 
+		 List<DownloadInfo> serverDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.SERVER.equals(downloadInfo.getType())){
+					 serverDownloadInfos.add(downloadInfo);
+				 }
 			 }
 		 }
+		 
 		 return serverDownloadInfos;
 	 }
 
 	 @Override
-	 public List<DownloadInfo> getDbDownloadInfo() throws PhrescoException {
-
+	 public List<DownloadInfo> getDbDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getDbDownloadInfo()");
-
-		 if (CollectionUtils.isEmpty(downloadInfos)) {
-			 setDownloadInfoFromService();
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
 		 }
-		 if (CollectionUtils.isNotEmpty(dbDownloadInfos)) {
-			 return dbDownloadInfos;
-		 }
-		 for (DownloadInfo downloadInfo : downloadInfos) {
-			 if (DownloadTypes.DATABASE.equals(downloadInfo.getType())){
-				 dbDownloadInfos.add(downloadInfo);
+		 
+		 List<DownloadInfo> dbDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.DATABASE.equals(downloadInfo.getType())){
+					 dbDownloadInfos.add(downloadInfo);
+				 }
 			 }
 		 }
+		 
 		 return dbDownloadInfos;
 	 }
 
 	 @Override
-	 public List<DownloadInfo> getEditorDownloadInfo() throws PhrescoException {
-
+	 public List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getEditorDownloadInfo()");
-
-		 setDownloadInfoFromService();
-
-		 if (CollectionUtils.isEmpty(downloadInfos)) {
-			 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
 		 }
-		 if (CollectionUtils.isNotEmpty(editorDownloadInfos)) {
-			 return editorDownloadInfos;
-		 }
-		 for (DownloadInfo downloadInfo : downloadInfos) {
-			 if (DownloadTypes.EDITOR.equals(downloadInfo.getType())){
-				 editorDownloadInfos.add(downloadInfo);
+		 
+		 List<DownloadInfo> editorDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.EDITOR.equals(downloadInfo.getType())){
+					 editorDownloadInfos.add(downloadInfo);
+				 }
 			 }
 		 }
+		 
 		 return editorDownloadInfos;
 	 }
 

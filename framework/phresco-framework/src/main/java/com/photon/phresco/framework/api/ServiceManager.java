@@ -29,6 +29,7 @@ import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
@@ -94,7 +95,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDownloadsFromService() throws PhrescoException;
+    List<DownloadInfo> getDownloadsFromService(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Triggers the create project to the server and returns the client response

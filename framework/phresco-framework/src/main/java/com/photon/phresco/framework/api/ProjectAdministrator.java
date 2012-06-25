@@ -25,15 +25,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -344,21 +345,21 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getServerDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getServerDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns Database DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDbDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getDbDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns editor DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getEditorDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns the jForum path from the service

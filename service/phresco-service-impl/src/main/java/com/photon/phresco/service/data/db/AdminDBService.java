@@ -28,30 +28,30 @@ import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.model.Documentation;
-import com.photon.phresco.model.Documents;
 import com.photon.phresco.model.DownloadInfo;
-import com.photon.phresco.model.Libraries;
-import com.photon.phresco.model.LibraryDoc;
-import com.photon.phresco.model.LibrayDocs;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.PilotTechModuleVersions;
-import com.photon.phresco.model.PilotTechModules;
-import com.photon.phresco.model.PilotTechnology;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.PropertyTemplate;
 import com.photon.phresco.model.Settings;
-import com.photon.phresco.model.SettingsApplies;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.model.SettingsPropPossibleValues;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.service.jaxb.Document;
 import com.photon.phresco.service.jaxb.Library;
+import com.photon.phresco.service.model.DocumentTypes;
+import com.photon.phresco.service.model.Documents;
+import com.photon.phresco.service.model.Libraries;
+import com.photon.phresco.service.model.LibraryDoc;
+import com.photon.phresco.service.model.LibrayDocs;
+import com.photon.phresco.service.model.PilotTechModuleVersions;
+import com.photon.phresco.service.model.PilotTechModules;
+import com.photon.phresco.service.model.PilotTechnology;
+import com.photon.phresco.service.model.SettingsApplies;
+import com.photon.phresco.service.model.SettingsPropPossibleValues;
 
 
 public class AdminDBService {
@@ -243,7 +243,7 @@ public class AdminDBService {
         return template.findByNamedQuery(QUERY_FIND_PILOTS);
     }
 
-    public void addModules(List<com.photon.phresco.model.Modules> modules) {
+    public void addModules(List<com.photon.phresco.service.model.Modules> modules) {
         // TODO Auto-generated method stub
         template.saveOrUpdateAll(modules);
     }
@@ -267,11 +267,11 @@ public class AdminDBService {
         // TODO Auto-generated method stub
         return template.findByNamedQuery(QUERY_FIND_PROJECTINFO);
     }
-    public void addDocument(List<com.photon.phresco.model.Document> documentList) {
+    public void addDocument(List<com.photon.phresco.service.model.Document> documentList) {
         // TODO Auto-generated method stub
         template.saveOrUpdateAll(documentList);
     }
-    public void addDocuments(List<com.photon.phresco.model.Documents> documentsList) {
+    public void addDocuments(List<com.photon.phresco.service.model.Documents> documentsList) {
         // TODO Auto-generated method stub
         template.saveOrUpdateAll(documentsList);
 
@@ -280,7 +280,7 @@ public class AdminDBService {
         // TODO Auto-generated method stub
         template.saveOrUpdateAll(moduleDataList);
     }
-    public void addLibrary(List<com.photon.phresco.model.Library> libraryList) {
+    public void addLibrary(List<com.photon.phresco.service.model.Library> libraryList) {
         // TODO Auto-generated method stub
         template.saveOrUpdateAll(libraryList);
 

@@ -41,14 +41,14 @@ import com.photon.phresco.model.I18NString;
 import com.photon.phresco.model.L10NString;
 import com.photon.phresco.model.PropertyTemplate;
 import com.photon.phresco.model.Settings;
-import com.photon.phresco.model.SettingsApplies;
-import com.photon.phresco.model.SettingsPropPossibleValues;
-import com.photon.phresco.model.SettingsPropertyTemplate;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ArtifactInfo;
+import com.photon.phresco.service.model.SettingsApplies;
+import com.photon.phresco.service.model.SettingsPropPossibleValues;
+import com.photon.phresco.service.model.SettingsPropertyTemplate;
 import com.photon.phresco.util.Constants;
 
 public class ConfigDataGenerator implements Constants{

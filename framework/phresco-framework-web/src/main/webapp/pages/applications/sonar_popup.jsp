@@ -20,7 +20,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@page import="com.photon.phresco.commons.FrameworkConstants"%>
-<%@ page import="com.photon.phresco.util.AndroidConstants"%>
+<%@ page import="com.photon.phresco.commons.AndroidConstants"%>
 
 <%@include file="progress.jsp" %>
 <%

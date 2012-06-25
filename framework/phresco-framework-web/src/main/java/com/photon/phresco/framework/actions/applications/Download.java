@@ -25,7 +25,10 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
+import com.photon.phresco.model.DownloadPropertyInfo;
+import com.photon.phresco.model.ProjectInfo;
 
 public class Download extends FrameworkBaseAction {
 
@@ -33,20 +36,32 @@ public class Download extends FrameworkBaseAction {
     private static final Logger S_LOGGER = Logger.getLogger(Applications.class);
     private static Boolean debugEnabled  = S_LOGGER.isDebugEnabled();
     
-    public String list() {
+    private String projectCode = null;
+    
+	public String list() {
     	if (debugEnabled) {
     		S_LOGGER.debug("Entering Method Download.list()");
     	}
     	
     	try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-			getHttpRequest().setAttribute(REQ_SERVER_DOWNLOAD_INFO, administrator.getServerDownloadInfo());
-			getHttpRequest().setAttribute(REQ_DB_DOWNLOAD_INFO, administrator.getDbDownloadInfo());
-			getHttpRequest().setAttribute(REQ_EDITOR_DOWNLOAD_INFO, administrator.getEditorDownloadInfo());
+			ProjectInfo projectInfo = administrator.getProject(projectCode).getProjectInfo();
+			DownloadPropertyInfo downloadPropertyInfo = new DownloadPropertyInfo(FrameworkUtil.findOS(), projectInfo.getTechnology().getId());
+			getHttpRequest().setAttribute(REQ_SERVER_DOWNLOAD_INFO, administrator.getServerDownloadInfo(downloadPropertyInfo));
+			getHttpRequest().setAttribute(REQ_DB_DOWNLOAD_INFO, administrator.getDbDownloadInfo(downloadPropertyInfo));
+			getHttpRequest().setAttribute(REQ_EDITOR_DOWNLOAD_INFO, administrator.getEditorDownloadInfo(downloadPropertyInfo));
 		} catch (PhrescoException e) {
 			new LogErrorReport(e, "Listing downloads");
 		}
     	
         return APP_DOWNLOAD;
     }
+	
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 }

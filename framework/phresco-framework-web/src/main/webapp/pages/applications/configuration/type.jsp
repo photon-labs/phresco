@@ -46,7 +46,6 @@
 <%@ page import="com.photon.phresco.model.Server" %>
 <%@ page import="com.photon.phresco.model.Database"%>
 <%@ page import="com.photon.phresco.util.Constants" %>
-
 <%
     String value = "";
 	String selectedValue = "";

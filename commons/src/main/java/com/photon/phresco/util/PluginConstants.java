@@ -85,8 +85,12 @@ public interface PluginConstants {
 	 String JAVA_SQL_FILE				= "/site.sql";
 	 String PHP_SQL_DIR					= "/source/sql/";
 	 String PHP_SQL_FILE				= "/site.sql";
-	 String JAVA_POM_BUILD_NAME			= "build";
-	 String JAVA_POM_FINAL_NAME			= "finalName";
+	 String JAVA_POM_ARCHIVE			= "archive";
+	 String JAVA_POM_MANIFEST			= "manifest";
+	 String JAVA_POM_MAINCLASS			= "mainClass";
+	 String JAVA_POM_ADD_PATH 			= "addClasspath";
+	 String JAR_PLUGIN_GROUPID			="org.apache.maven.plugins";
+	 String JAR_PLUGIN_ARTIFACT_ID		= "maven-jar-plugin";
 	 String TOMCAT_GOAL					= "org.codehaus.mojo:tomcat-maven-plugin:1.1:redeploy";
 	 String WEBLOGIC_GOAL				= "com.oracle.weblogic:weblogic-maven-plugin:12.1.1.0:redeploy";
 	 String JBOSS_GOAL					= "cargo:redeploy";

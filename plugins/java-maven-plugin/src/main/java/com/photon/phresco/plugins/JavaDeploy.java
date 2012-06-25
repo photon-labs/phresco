@@ -18,9 +18,7 @@
  * ###
  */
 package com.photon.phresco.plugins;
-
 import java.io.File;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
@@ -30,14 +28,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 
-import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
@@ -47,6 +38,8 @@ import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.phresco.pom.util.PomProcessor;
+
 
 /**
  * Goal which deploys the Java WebApp to a server
@@ -92,7 +85,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 	private File tempDir;
 	private File buildDir;
 	private String context;
-	private static final String finalName = "finalName";
+	
 	public void execute() throws MojoExecutionException {
 		init();
 		updateFinalName();
@@ -129,54 +122,27 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
-			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			String envName = environmentName;
-			if(envName.equals(projAdmin.getDefaultEnvName(baseDir.getName()))) {
-				return;
-			}
-			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir.getName(), envName);
-			for (SettingsInfo settingsInfo : settingsInfos) {
-				context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
-				break;
-			}
+				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+				String envName = environmentName;
+				if (environmentName.indexOf(',') > -1) { // multi-value
+					envName = projAdmin.getDefaultEnvName(baseDir.getName());
+				}
+				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER,
+						baseDir.getName(), envName);
+				for (SettingsInfo settingsInfo : settingsInfos) {
+					context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+					break;
+				}
 			File pom = project.getFile();
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(pom);
-			Element projectNode = doc.getRootElement();
-			Element buildNode = projectNode.getChild(JAVA_POM_BUILD_NAME, projectNode.getNamespace());
-			Element finalNameElement = buildNode.getChild(JAVA_POM_FINAL_NAME, buildNode.getNamespace());
-			if (finalNameElement == null) {
-				finalNameElement = new Element(finalName);
-				finalNameElement.setText(context);
-				buildNode.addContent(finalNameElement);
-			} else {
-				finalNameElement.setText(context);
-			}
-			savePOMFile(doc, pom);
-		} catch (JDOMException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			PomProcessor pomprocessor = new PomProcessor(pom);
+			pomprocessor.setFinalName(context);
+			pomprocessor.save();
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
-
-	private void savePOMFile(Document document, File xmlFile) throws IOException {
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(FrameworkConstants.POM_FILE);
-			if (xmlFile.exists()) {
-				XMLOutputter xmlOutput = new XMLOutputter();
-				xmlOutput.setFormat(Format.getPrettyFormat());
-				xmlOutput.output(document, writer);
-			}
-		} finally {
-			if (writer != null) {
-				writer.close();
-			}
 		}
 	}
 	
@@ -274,6 +240,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			commands.add(SERVER_PORT + serverport);
 			commands.add(SERVER_USERNAME + serverusername);
 			commands.add(SERVER_PASSWORD + serverpassword);
+			commands.add(SKIP_TESTS);
 			pb.directory(baseDir);
 			Process process = pb.start();
 		} catch (IOException e) {
@@ -292,6 +259,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			commands.add(SERVER_HOST + serverhost);
 			commands.add(SERVER_USERNAME + serverusername);
 			commands.add(SERVER_PASSWORD + serverpassword);
+			commands.add(SKIP_TESTS);
 			pb.directory(baseDir);
 			Process process = pb.start();
 		} catch (IOException e) {
@@ -311,6 +279,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			commands.add(SERVER_PORT + serverport);
 			commands.add(SERVER_USERNAME + serverusername);
 			commands.add(SERVER_PASSWORD + serverpassword);
+			commands.add(SKIP_TESTS);
 			pb.directory(baseDir);
 			Process process = pb.start();
 		} catch (IOException e) {

@@ -42,10 +42,9 @@
 
      <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <phresco-commons-version>1.2.0.1001</phresco-commons-version>
         <maven-plugin-plugin.version>2.9</maven-plugin-plugin.version>
         <maven.api.version>3.0.3</maven.api.version>
-        <phresco-commons-version>1.2.0.1001</phresco-commons-version>
+        <phresco-commons-version>2.0.0.1000-SNAPSHOT</phresco-commons-version>
         <sitePluginVersion>3.1</sitePluginVersion>
         <jersey-version>1.9-ea07</jersey-version>
 		<siteBaseUrl>file://C:/apache-tomcat-7.0.26/webapps/ROOT/phresco-site/</siteBaseUrl>

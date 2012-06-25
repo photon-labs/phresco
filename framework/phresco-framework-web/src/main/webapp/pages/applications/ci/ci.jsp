@@ -31,6 +31,7 @@
 <%@ page import="java.io.IOException"%>
 <%@ page import="com.photon.phresco.exception.PhrescoException"%>
 <%@ page import="com.photon.phresco.commons.CIJob" %>
+<%@ page import="com.photon.phresco.commons.CIBuild" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.*"%>

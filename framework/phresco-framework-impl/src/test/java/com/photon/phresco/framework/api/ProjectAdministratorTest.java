@@ -36,12 +36,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.PropertyTemplate;

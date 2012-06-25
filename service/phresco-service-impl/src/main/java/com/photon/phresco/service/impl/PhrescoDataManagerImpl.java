@@ -28,7 +28,6 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.commons.model.Customer;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.model.Documentation;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.Module;
@@ -40,6 +39,7 @@ import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.DBManager;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
+import com.photon.phresco.service.model.DocumentTypes;
 import com.photon.phresco.service.model.ServerConstants;
 
 public class PhrescoDataManagerImpl implements PhrescoDataManager, ServerConstants {
@@ -186,7 +186,7 @@ public class PhrescoDataManagerImpl implements PhrescoDataManager, ServerConstan
 		return dbManager.getTechnologies();
 	}
 
-	public void addModules(List<com.photon.phresco.model.Modules> modules) throws PhrescoException {
+	public void addModules(List<com.photon.phresco.service.model.Modules> modules) throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbManager.addModules (modules);
 	}
@@ -254,13 +254,13 @@ public class PhrescoDataManagerImpl implements PhrescoDataManager, ServerConstan
 		return dbManager.getDocumentType ();
 	}
 
-	public void addDocument(List<com.photon.phresco.model.Document> documentList)throws PhrescoException {
+	public void addDocument(List<com.photon.phresco.service.model.Document> documentList)throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbManager.addDocument(documentList);
 
 	}
 
-	public void addDocuments(List<com.photon.phresco.model.Documents> documentsList) throws PhrescoException{
+	public void addDocuments(List<com.photon.phresco.service.model.Documents> documentsList) throws PhrescoException{
 		// TODO Auto-generated method stub
 		dbManager.addDocuments(documentsList);
 

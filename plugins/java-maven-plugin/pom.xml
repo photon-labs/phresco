@@ -46,6 +46,12 @@
         <artifactId>phresco-framework-impl</artifactId>
         <version>${phresco-commons-version}</version>
     </dependency>
+	
+	<dependency>
+        <groupId>com.photon.phresco.pom</groupId>
+		<artifactId>phresco-pom</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
     
     <dependency>
         <groupId>org.apache.maven</groupId>
