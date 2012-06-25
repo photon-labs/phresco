@@ -3,7 +3,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <% 
 FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
-String path = frameworkConfig.getServerPath() + "/news/jsonp"; 
+String path = frameworkConfig.getServerPath() + "/tweets"; 
 %>
 
 <aside id="sidebar">
@@ -37,7 +37,7 @@ String path = frameworkConfig.getServerPath() + "/news/jsonp";
 	
 	$(document).ready(function() {
 		$.ajax({
-		    url: '<%=path%>', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
+		    url: '<%=path%>', 
 		    type: 'GET',
 		    dataType: 'jsonp',
 		    jsonp: 'callback',
@@ -58,7 +58,7 @@ String path = frameworkConfig.getServerPath() + "/news/jsonp";
 	function filter(){
 		var value = document.getElementById('search').value;
 		$.ajax({
-		    url: '<%=path%>', //Sub the 0.0.0.0:8080 to the ip or name of where the webservice is located.
+		    url: '<%=path%>', 
 		    type: 'GET',
 		    dataType: 'jsonp',
 		    jsonp: 'callback',

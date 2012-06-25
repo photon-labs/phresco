@@ -52,6 +52,7 @@ public class PhrescoServerFactory {
     private static final String PHRESCO_DATA_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.PhrescoDataManagerImpl";
     private static final String PHRESCO_ADMIN_MANAGER_IMPL_CLASS = "com.photon.phresco.service.data.impl.AdminManagerImpl";
     private static final String PHRESCO_COMPONENT_MANAGER_IMPL_CLASS = "com.photon.phresco.service.data.impl.ComponentManagerImpl";
+    private static final String TWITTER_CACHE_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.TweetCacheManagerImpl";
 
 
     private static final String SERVER_CONFIG_FILE = "server.config";
@@ -61,6 +62,7 @@ public class PhrescoServerFactory {
     private static ArchetypeExecutor executor 			= null;
     private static DocumentGenerator generator 			= null;
     private static ServerConfiguration serverConfig     = null;
+    private static TweetCacheManager tweetCacheManager 	= null;
 
 	private static PhrescoDataManager dataManager = null;
 	private static AdminManager adminManager = null;
@@ -77,6 +79,7 @@ public class PhrescoServerFactory {
             dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
             adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
             compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
+            tweetCacheManager = (TweetCacheManager)constructClass(TWITTER_CACHE_MANAGER_IMPL_CLASS, serverConfig);
         }
     }
 
@@ -136,5 +139,8 @@ public class PhrescoServerFactory {
     public static DocumentGenerator getNewDocumentGenerator() throws PhrescoException {
         return (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
     }
-
+    
+    public static TweetCacheManager getTweetCacheManager() {
+        return tweetCacheManager;
+    }
 }

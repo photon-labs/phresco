@@ -1,4 +1,4 @@
-package com.photon.phresco.service.tweet;
+package com.photon.phresco.service.impl;
 
 import java.io.Serializable;
 
