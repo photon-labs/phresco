@@ -25,7 +25,7 @@
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.model.BuildInfo" %>
+<%@ page import="com.photon.phresco.commons.BuildInfo" %>
 <%@ page import="com.photon.phresco.framework.commons.NodeJSUtil" %>
 <%@ page import="org.apache.commons.collections.MapUtils" %>
 

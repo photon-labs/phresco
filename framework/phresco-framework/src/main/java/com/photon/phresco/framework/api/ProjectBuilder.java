@@ -21,8 +21,8 @@ package com.photon.phresco.framework.api;
 
 import java.util.List;
 
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.BuildInfo;
 
 public interface ProjectBuilder {
 	

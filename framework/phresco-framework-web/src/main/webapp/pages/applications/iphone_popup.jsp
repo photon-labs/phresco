@@ -21,8 +21,8 @@
 
 <%@ page import="java.util.List"%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
-<%@ page import="com.photon.phresco.model.BuildInfo"%>
-<%@ page import="com.photon.phresco.util.XCodeConstants" %>
+<%@ page import="com.photon.phresco.commons.BuildInfo"%>
+<%@ page import="com.photon.phresco.commons.XCodeConstants" %>
 <%@ page import="com.photon.phresco.framework.commons.ApplicationsUtil"%>
 <%@ page import="com.photon.phresco.framework.commons.PBXNativeTarget"%>
 <%@ include file="progress.jsp" %>

@@ -48,10 +48,10 @@ import org.w3c.dom.Element;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;

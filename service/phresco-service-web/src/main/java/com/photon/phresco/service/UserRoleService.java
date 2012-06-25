@@ -34,8 +34,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.User;
-import com.photon.phresco.model.Users;
+import com.photon.phresco.service.model.User;
+import com.photon.phresco.service.model.Users;
 
 
 @Path("/userrole")

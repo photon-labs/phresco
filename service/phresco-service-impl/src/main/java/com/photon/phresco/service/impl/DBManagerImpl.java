@@ -32,30 +32,30 @@ import com.photon.phresco.commons.model.Element;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.model.Documentation;
-import com.photon.phresco.model.Documents;
 import com.photon.phresco.model.DownloadInfo;
-import com.photon.phresco.model.Libraries;
-import com.photon.phresco.model.LibraryDoc;
-import com.photon.phresco.model.LibrayDocs;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.PilotTechModuleVersions;
-import com.photon.phresco.model.PilotTechModules;
-import com.photon.phresco.model.PilotTechnology;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.PropertyTemplate;
 import com.photon.phresco.model.Settings;
-import com.photon.phresco.model.SettingsApplies;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.model.SettingsPropPossibleValues;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.DBManager;
 import com.photon.phresco.service.db.DBService;
 import com.photon.phresco.service.jaxb.Document;
 import com.photon.phresco.service.jaxb.Library;
+import com.photon.phresco.service.model.DocumentTypes;
+import com.photon.phresco.service.model.Documents;
+import com.photon.phresco.service.model.Libraries;
+import com.photon.phresco.service.model.LibraryDoc;
+import com.photon.phresco.service.model.LibrayDocs;
+import com.photon.phresco.service.model.PilotTechModuleVersions;
+import com.photon.phresco.service.model.PilotTechModules;
+import com.photon.phresco.service.model.PilotTechnology;
+import com.photon.phresco.service.model.SettingsApplies;
+import com.photon.phresco.service.model.SettingsPropPossibleValues;
 
 public class DBManagerImpl implements DBManager {
 
@@ -170,7 +170,7 @@ public class DBManagerImpl implements DBManager {
 		return dbService.getModule();
 	}
 
-	public void addModules(List<com.photon.phresco.model.Modules> modules) throws PhrescoException {
+	public void addModules(List<com.photon.phresco.service.model.Modules> modules) throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbService.addModules (modules);
 	}
@@ -228,14 +228,14 @@ public class DBManagerImpl implements DBManager {
 		return dbService.getDocumentType ();
 	}
 
-	public void addDocument(List<com.photon.phresco.model.Document> documentsList)
+	public void addDocument(List<com.photon.phresco.service.model.Document> documentsList)
 			throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbService.addDocument(documentsList);
 
 	}
 
-	public void addDocuments(List<com.photon.phresco.model.Documents> documentsList)
+	public void addDocuments(List<com.photon.phresco.service.model.Documents> documentsList)
 			throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbService.addDocuments(documentsList);
@@ -247,12 +247,12 @@ public class DBManagerImpl implements DBManager {
 		dbService.addModule(moduleDataList);
 	}
 
-	public void addLibrary(List<com.photon.phresco.model.Library> libraryList) throws PhrescoException {
+	public void addLibrary(List<com.photon.phresco.service.model.Library> libraryList) throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbService.addLibrary (libraryList);
 	}
 
-	public void addLibraries(List<com.photon.phresco.model.Libraries> librariesList)
+	public void addLibraries(List<com.photon.phresco.service.model.Libraries> librariesList)
 			throws PhrescoException {
 		// TODO Auto-generated method stub
 		dbService.addLibraries (librariesList);

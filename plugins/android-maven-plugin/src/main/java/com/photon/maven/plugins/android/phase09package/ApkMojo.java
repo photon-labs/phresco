@@ -81,7 +81,7 @@ import com.photon.maven.plugins.android.CommandExecutor;
 import com.photon.maven.plugins.android.ExecutionException;
 import com.photon.maven.plugins.android.common.NativeHelper;
 import com.photon.maven.plugins.android.configuration.Sign;
-import com.photon.phresco.model.BuildInfo;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.util.PluginUtils;
 
 /**

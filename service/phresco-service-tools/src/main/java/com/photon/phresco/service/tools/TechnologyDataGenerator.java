@@ -69,7 +69,6 @@ import org.w3c.dom.Element;
 
 import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.jaxb.ArchetypeInfo;
@@ -81,6 +80,7 @@ import com.photon.phresco.service.jaxb.Modules;
 import com.photon.phresco.service.jaxb.ObjectFactory;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.DocumentType;
+import com.photon.phresco.service.model.DocumentTypes;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
 
@@ -172,9 +172,9 @@ public class TechnologyDataGenerator implements ServerConstants {
 		System.out.println("Modules generated successfully for " + tech);
 
 		List <com.photon.phresco.service.jaxb.Module>moduleList = modules.getModule();
-		List <com.photon.phresco.model.Modules> modulesDataList = new ArrayList <com.photon.phresco.model.Modules> ();
+		List <com.photon.phresco.service.model.Modules> modulesDataList = new ArrayList <com.photon.phresco.service.model.Modules> ();
 		for (com.photon.phresco.service.jaxb.Module tempModule:moduleList) {
-			com.photon.phresco.model.Modules modulesData = new com.photon.phresco.model.Modules ();
+			com.photon.phresco.service.model.Modules modulesData = new com.photon.phresco.service.model.Modules ();
 			modulesData.setModuleId(tempModule.getId());
 			modulesDataList.add(modulesData);
 		}

@@ -40,8 +40,8 @@ import org.codehaus.plexus.util.FileUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
@@ -77,7 +77,19 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 	 * @parameter expression="${environmentName}" required="true"
 	 */
 	protected String environmentName;
-	
+
+	/**
+	 * @parameter expression="${buildName}" required="true"
+	 */
+	protected String buildName;
+
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+
+	protected int buildNo;
+
 	private File srcDir;
 	private File targetDir;
 	private File buildDir;
@@ -87,7 +99,7 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 	private String zipName;
 	private Date currentDate;
 	private String sourceDirectory = "/source";
-	
+
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();
 		boolean buildStatus = build();
@@ -97,8 +109,7 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 	private void init() throws MojoExecutionException {
 		try {
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
-			srcDir = new File(baseDir.getPath() + File.separator
-					+ sourceDirectory);
+			srcDir = new File(baseDir.getPath() + File.separator + sourceDirectory);
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			if (!buildDir.exists()) {
 				buildDir.mkdir();
@@ -137,10 +148,19 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 		pu.executeUtil(environmentName, basedir, configfile);
 	}
 
-
 	private void createPackage() throws MojoExecutionException {
 		try {
-			zipName = PROJECT_CODE + nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate) + ".zip";
+			if (buildName != null) {
+				zipName = buildName + ".zip";
+			} else {
+				if (buildNumber != null) {
+					zipName = PROJECT_CODE + buildNumber + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				} else {
+					zipName = PROJECT_CODE + nextBuildNo + STR_UNDERSCORE + getTimeStampForBuildName(currentDate)
+							+ ".zip";
+				}
+			}
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
 			ArchiveUtil.createArchive(targetDir.getPath(), zipFilePath, ArchiveType.ZIP);
 		} catch (PhrescoException e) {
@@ -148,13 +168,20 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void writeBuildInfo(boolean isBuildSuccess)
-			throws MojoExecutionException {
+	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
+
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus(SUCCESS);
@@ -175,15 +202,13 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 	}
 
 	private String getTimeStampForDisplay(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
 
 	private String getTimeStampForBuildName(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd-MMM-yyyy-HH-mm-ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy-HH-mm-ss");
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}
