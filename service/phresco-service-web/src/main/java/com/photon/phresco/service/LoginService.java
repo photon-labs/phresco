@@ -39,6 +39,7 @@ import com.photon.phresco.model.Users;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.service.util.AuthenticationUtil;
 import com.photon.phresco.util.Credentials;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -47,7 +48,7 @@ import com.sun.jersey.api.client.WebResource;
 
 @Path("/login")
 public class LoginService {
-	
+
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,6 +62,8 @@ public class LoginService {
         GenericType<UserInfo> genericType = new GenericType<UserInfo>() {};
         UserInfo userInfo = response.getEntity(genericType);
         fillUserRoles(userInfo);
+        AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
+		userInfo.setToken(authTokenUtil.generateToken(credentials.getUsername()));
         return userInfo;
     }
 	

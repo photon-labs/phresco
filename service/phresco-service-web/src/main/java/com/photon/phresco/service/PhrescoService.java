@@ -27,13 +27,15 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.StreamingOutput;
-
+import com.photon.phresco.util.Constants;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.FileUtils;
 
@@ -44,8 +46,10 @@ import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.ProjectService;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.projects.ProjectServiceFactory;
+import com.photon.phresco.service.util.AuthenticationUtil;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
+
 
 /**
  * Phresco Service Class hosted at the URI path "/api"
@@ -55,7 +59,7 @@ import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 public class PhrescoService {
 	private static final Logger S_LOGGER = Logger.getLogger(PhrescoService.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
-
+	private AuthenticationUtil authUtil = null;
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
@@ -69,9 +73,14 @@ public class PhrescoService {
 	@POST
 	@Produces("application/zip")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public StreamingOutput createProject(ProjectInfo projectInfo) throws PhrescoException, IOException {
+	public StreamingOutput createProject(ProjectInfo projectInfo,@HeaderParam(Constants.AUTH_TOKEN) String token) throws PhrescoException, IOException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method PhrescoService.createProject(ProjectInfo projectInfo)");
+		}
+		authUtil = AuthenticationUtil.getInstance();
+		if(StringUtils.isEmpty(token) || !authUtil.isValidToken(token)) {
+			S_LOGGER.error("Invalid Token");
+			throw new UnauthorizedException("Invalid Token or Token Expired");
 		}
 		String projectPathStr = "";
 		File projectPath = null;
@@ -102,10 +111,15 @@ public class PhrescoService {
 	@Path("/update")
 	@Produces("application/zip")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public StreamingOutput updateProject(ProjectInfo projectInfo) throws PhrescoException {
+	public StreamingOutput updateProject(ProjectInfo projectInfo,@HeaderParam(Constants.AUTH_TOKEN) String token) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method PhrescoService.updateProject(ProjectInfo projectInfo)");
 			S_LOGGER.debug("updateProject() ProjectInfo=" + projectInfo.getCode());
+		}
+		authUtil = AuthenticationUtil.getInstance();
+		if(StringUtils.isEmpty(token) || !authUtil.isValidToken(token)){
+			S_LOGGER.error("Invalid Token");
+			throw new UnauthorizedException("Invalid Token or Token Expired");
 		}
 		String projectPathStr = "";
 		try {
@@ -184,5 +198,4 @@ public class PhrescoService {
 			}
 		}
 	}
-
 }
