@@ -7,24 +7,18 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.Server;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
-import com.photon.phresco.service.client.impl.ClientHelper;
 import com.photon.phresco.service.client.impl.RestClient;
-import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
 
 public class ComponentRestTechnologiesTest {
 	
@@ -39,14 +33,16 @@ public class ComponentRestTechnologiesTest {
         context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
 	}
 
-	@Ignore
+	@Test
     public void testGetTechnologies() {
         try {
             serviceManager = ServiceClientFactory.getServiceManager(context);            
-            RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
+            Type type = new TypeToken<List<Technology>>() {}.getType();
+            RestClient<Technology> techClient = serviceManager.getRestClient("component");
+            techClient.setPath("technologies");
+            techClient.setAccept(MediaType.APPLICATION_JSON);
             techClient.setType(MediaType.APPLICATION_JSON);
-            GenericType<List<Technology>> genericType = new GenericType<List<Technology>>() {};
-            List<Technology> list = techClient.get(genericType);
+            List<Technology> list = techClient.get(type);
             for (Technology tech : list) {
                 System.out.println("Tech Name == " + tech.getName());
             }
@@ -55,86 +51,87 @@ public class ComponentRestTechnologiesTest {
         }
     }
 
-    @Test
+	@Test
     public void testCreateServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
-    	tech.setName("php");
+    	tech.setName("Node");
     	List<String> versions = new ArrayList<String>();
-    	versions.add("6.0");
-    	versions.add("7.0");
+    	versions.add("1.3");
+    	versions.add("1.1");
 		tech.setVersions(versions);
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
-    	Gson gson = new Gson();
-    	String techJson = gson.toJson(techs);
-    	System.out.println(techJson);
-		Type type = new TypeToken<List<Technology>>() {}.getType();
-		List<Technology> technologyList = gson.fromJson(techJson, type);
-		
-//		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
-//		techClient.setAccept(MediaType.APPLICATION_JSON);
-//		techClient.setType(MediaType.APPLICATION_JSON);
-		Client client = ClientHelper.createClient();
-		WebResource resource = client.resource("");
-		Builder buildes = resource.type(MediaType.APPLICATION_JSON);
-//		ClientResponse clientResponse = builder.post(ClientResponse.class, infos);
+		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
+		techClient.setAccept(MediaType.APPLICATION_JSON);
+		techClient.setType(MediaType.APPLICATION_JSON);
+		techClient.create(techs);
     }
     
-    @Ignore
+    @Test
     public void testPutServer() throws PhrescoException {
-    	String id="2c909c4836f2bb7b0136f2bba6db0003";
-    	List<Server> servers = new ArrayList<Server>();
-    	Server server = new Server();
-    	server.setName("Local Server");
-    	server.setDescription("Apache tomcat");
-    	servers.add(server);
+    	List<Technology> techs = new ArrayList<Technology>();
+    	Technology tech = new Technology();
+    	tech.setId("4fe455c4230dbb3894408cf8");
+    	tech.setName("Html5");
+    	List<String> versions = new ArrayList<String>();
+    	versions.add("1.3");
+    	versions.add("1.1");
+		tech.setVersions(versions);
+		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
-		String ServerJson = new Gson().toJson(servers);
-		RestClient<Server> ServerClient = serviceManager.getRestClient("");
-		ServerClient.setAccept(MediaType.APPLICATION_JSON);
-		ServerClient.setType(MediaType.APPLICATION_JSON);
-		ServerClient.update(ServerJson);
+		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
+		techClient.setAccept(MediaType.APPLICATION_JSON);
+		techClient.setType(MediaType.APPLICATION_JSON);
+
+		Type type = new TypeToken<List<Technology>>() {}.getType();
+		List<Technology> entity = techClient.update(techs, type);
+		for (Technology technology : entity) {
+			System.out.println("tec " + technology);
+		}
     }
     
-    @Ignore
+    @Test
     public void testGetServerById() throws PhrescoException {
         try {
-	    	String id = "2c909c4836f2bb7b0136f2bba6db0003";
+	    	String id = "4fe46c00230d28c9353c4b68";
 	    	serviceManager=ServiceClientFactory.getServiceManager(context);
-	    	RestClient<Server> ServerClient = serviceManager.getRestClient("");
-	    	ServerClient.setType(MediaType.APPLICATION_JSON);
-	    	GenericType<List<Server>> genericType = new GenericType<List<Server>>()  {};
-	    	List<Server> list = ServerClient.get(genericType);
-	    	for (Server Server :list ){
-	    		System.out.println("name == " + Server.getName());
-    	    }
+	    	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
+	    	techClient.setAccept(MediaType.APPLICATION_JSON);
+	    	GenericType<Technology> genericType = new GenericType<Technology>()  {};
+	    	Technology tech = techClient.getById(genericType);
+	    	System.out.println("name == " + tech);
+    	    
         }catch(PhrescoException e){
         	e.printStackTrace();
         }
     }
     
-    @Ignore
+    @Test
     public void testPutServerById() throws PhrescoException {
-    	String id="2c909c4836f2bb7b0136f2bba6db0003";
-    	List<Server> servers = new ArrayList<Server>();
-    	Server server = new Server();
-    	server.setName("Server");
-    	server.setDescription("Apache tomcat");
-    	servers.add(server);
+    	String id="4fe026c6230d6868296be32a";
+    	Technology tech = new Technology();
+    	tech.setId("4fe026c6230d6868296be32a");
+    	tech.setName("android-native");
+    	List<String> versions = new ArrayList<String>();
+    	versions.add("1.0");
+    	versions.add("3.0");
+		tech.setVersions(versions);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
-		String ServerJson = new Gson().toJson(servers);
-		RestClient<Server> ServerClient = serviceManager.getRestClient("" + "/" + id);
-		ServerClient.setAccept(MediaType.APPLICATION_JSON);
-		ServerClient.setType(MediaType.APPLICATION_JSON);
-		ServerClient.update(ServerJson);
+		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
+		techClient.setAccept(MediaType.APPLICATION_JSON);
+		techClient.setType(MediaType.APPLICATION_JSON);
+		Type type = new TypeToken<Technology>() {}.getType();
+		Technology updateById = techClient.updateById(tech, type);
+		System.out.println(updateById.getName());
     }
-    
-    @Ignore
+
+    @Test
     public void testDeleteServerById() throws PhrescoException {
-    	    String id = "2c909c4836f2bb7b0136f2bba6db0003" ;
-            serviceManager = ServiceClientFactory.getServiceManager(context);            
-        	RestClient<Server> databaseClient = serviceManager.getRestClient("");
-            databaseClient.delete(id);
+    	String id = "4fe451a5230da2b1ceb2f5b7" ;
+    	serviceManager = ServiceClientFactory.getServiceManager(context);            
+    	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
+    	ClientResponse response = techClient.deleteById();
+    	System.out.println("delete response " + response.getStatus());
     }
 }
