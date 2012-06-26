@@ -52,6 +52,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.photon.phresco.commons.AndroidConstants;
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.PluginProperties;
+import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -65,17 +69,13 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.PluginProperties;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.util.AndroidConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-import com.photon.phresco.util.XCodeConstants;
 import com.phresco.pom.util.PomProcessor;
 
 public class Build extends FrameworkBaseAction {
