@@ -43,7 +43,7 @@ import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.model.ServerConstants;
 
-@Path(ServerConstants.REST_API_CUSTOMERS)
+@Path("empty")
 public class Customers implements ServerConstants {
 
 	private static final Logger S_LOGGER = Logger.getLogger(Customers.class);
