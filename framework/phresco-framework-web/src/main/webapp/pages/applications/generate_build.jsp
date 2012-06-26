@@ -25,8 +25,8 @@
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
-<%@ page import="com.photon.phresco.commons.XCodeConstants"%>
-<%@ page import="com.photon.phresco.commons.AndroidConstants"%>
+<%@ page import="com.photon.phresco.util.XCodeConstants"%>
+<%@ page import="com.photon.phresco.util.AndroidConstants"%>
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
@@ -35,7 +35,7 @@
 <%@ page import="com.photon.phresco.configuration.Environment"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
-<%@ page import="com.photon.phresco.commons.BuildInfo"%>
+<%@ page import="com.photon.phresco.model.BuildInfo"%>
 
 <script src="js/reader.js" ></script>
 <script src="js/select-envs.js"></script>
@@ -49,7 +49,7 @@
    	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
    	String importSqlPro  = (String) request.getAttribute(FrameworkConstants.REQ_IMPORT_SQL);
    	String buildNumber = (String) request.getAttribute(FrameworkConstants.REQ_DEPLOY_BUILD_NUMBER);
-	String finalName = (String) request.getAttribute(FrameworkConstants.FINAL_NAME);
+   	String finalName = (String) request.getAttribute(FrameworkConstants.FINAL_NAME);
    	String mainClassValue = (String) request.getAttribute(FrameworkConstants.MAIN_CLASS_VALUE);
    	String checkImportSql = "";
    	if (importSqlPro != null && Boolean.parseBoolean(importSqlPro)) {
@@ -103,21 +103,22 @@
             </div>
         <% } %>
         
+
         <% if (from.equals("generateBuild")) { %>
 		        <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge" id="buildName" name="buildName" maxlength="20" title="20 Characters only"/>
+						<input type="text" class="xlarge javastd" id="userBuildName" name="userBuildName" maxlength="20" title="20 Characters only"/>
 				    </div>
 				</div>
 				<div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge" id="newBuildNumber" name="newBuildNumber" maxlength="20" title="10 Characters only"/>
+						<input type="text" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
 				    </div>
 				</div>
 				
-				  <% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+				<% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
 				<div class="clearfix">
 					<label for="xlInput" class="xlInput popup-label "><s:text name="label.jar.name"/></label>
 				    <div class="input">
@@ -133,7 +134,7 @@
 				</div>	
 		<% } %>	
 		<% } %>
-		
+
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
 		    <div class="input">
@@ -343,6 +344,18 @@
 
 		$('#build').click(function() {
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
+		});
+		
+		$('#userBuildNumber').bind('input propertychange', function (e) { 	//userBuildNumber validation
+			var userBuildNumber = $(this).val();
+			userBuildNumber = checkForNumber(userBuildNumber);
+        	$(this).val(userBuildNumber);
+		});
+		
+		$('#userBuildName').bind('input propertychange', function (e) { 	//userBuildName validation
+			var userBuildName = $(this).val();
+			userBuildName = checkForSplChr(userBuildName);
+        	$(this).val(userBuildName);
 		});
 		
 		$('#deploy').click(function() {

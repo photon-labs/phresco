@@ -1,4 +1,6 @@
- /* Framework Web Archive
+/*
+ * ###
+ * Framework Web Archive
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 
@@ -50,10 +52,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.photon.phresco.commons.AndroidConstants;
-import com.photon.phresco.commons.BuildInfo;
-import com.photon.phresco.commons.PluginProperties;
-import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -67,13 +65,17 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
+import com.photon.phresco.model.BuildInfo;
+import com.photon.phresco.model.PluginProperties;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.util.AndroidConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.photon.phresco.util.XCodeConstants;
 import com.phresco.pom.util.PomProcessor;
 
 public class Build extends FrameworkBaseAction {
@@ -107,8 +109,8 @@ public class Build extends FrameworkBaseAction {
 	private String jarName = null;
 	//Iphone deploy option
 	private String deployTo = "";
-	private String buildName = null;
-	private String newBuildNumber = null;
+	private String userBuildName = null;
+	private String userBuildNumber = null;
 
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
 
@@ -264,7 +266,7 @@ public class Build extends FrameworkBaseAction {
         if (CollectionUtils.isNotEmpty(projectModules)) {
         	getHttpRequest().setAttribute(REQ_PROJECT_MODULES, projectModules);
         }
-
+        
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -317,23 +319,25 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
 			
-			if (StringUtils.isNotEmpty(buildName)) {
-				settingsInfoMap.put(BUILD_NAME, buildName);
+
+			if (StringUtils.isNotEmpty(userBuildName)) {
+				settingsInfoMap.put(BUILD_NAME, userBuildName);
 			}
 			
-			if (StringUtils.isNotEmpty(newBuildNumber)) {
-				settingsInfoMap.put(BUILD_NUMBER, newBuildNumber);
+			if (StringUtils.isNotEmpty(userBuildNumber)) {
+				settingsInfoMap.put(BUILD_NUMBER, userBuildNumber);
 			}
+
 
 			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,	androidVersion);
 			}
-			
+
 			if(TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
 				settingsInfoMap.put(MAINCLASSNAME, mainClassName);
 				settingsInfoMap.put(JARNAME, jarName);
 			}
-
+			
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
@@ -1558,7 +1562,8 @@ public class Build extends FrameworkBaseAction {
 	public void setDeployTo(String deployTo) {
 		this.deployTo = deployTo;
 	}
-  
+	
+   
 	public String getSkipTest() {
 		return skipTest;
 	}
@@ -1575,20 +1580,20 @@ public class Build extends FrameworkBaseAction {
 		this.showDebug = showDebug;
 	}
 
-	public String getBuildName() {
-		return buildName;
+	public String getUserBuildName() {
+		return userBuildName;
 	}
 
-	public void setBuildName(String buildName) {
-		this.buildName = buildName;
-	}
-	
-	public String getNewBuildNumber() {
-		return newBuildNumber;
+	public void setUserBuildName(String userBuildName) {
+		this.userBuildName = userBuildName;
 	}
 
-	public void setNewBuildNumber(String newBuildNumber) {
-		this.newBuildNumber = newBuildNumber;
+	public String getUserBuildNumber() {
+		return userBuildNumber;
+	}
+
+	public void setUserBuildNumber(String userBuildNumber) {
+		this.userBuildNumber = userBuildNumber;
 	}
 
 	public String getMainClassName() {
@@ -1598,11 +1603,13 @@ public class Build extends FrameworkBaseAction {
 	public void setMainClassName(String mainClassName) {
 		this.mainClassName = mainClassName;
 	}
+
 	public String getJarName() {
 		return jarName;
 	}
 
 	public void setJarName(String jarName) {
 		this.jarName = jarName;
+
 	}
 }
