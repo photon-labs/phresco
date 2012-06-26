@@ -1,12 +1,34 @@
+/*
+ * ###
+ * Phresco Pom
+ * 
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
 package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javax.xml.bind.JAXBException;
 
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.ReportPlugin;
+import com.phresco.pom.model.ReportPlugin.ReportSets;
+import com.phresco.pom.model.ReportSet;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 
 /**
@@ -15,51 +37,104 @@ import com.phresco.pom.site.Reports;
  */
 public class SiteConfigurator {
 
+
 	/**
-	 * @param constants
+	 * 
 	 */
-	private void addReportPlugin(Reports constants, File file) {
+	private ReportPlugin reportPlugin = null;
+	/**
+	 * @param reports
+	 * @param file
+	 * @return
+	 */
+	public ReportPlugin addReportPlugin(Reports reports,File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
-			ReportPlugin reportPlugin = new ReportPlugin();
-			reportPlugin.setGroupId(constants.getGroupId());
-			reportPlugin.setArtifactId(constants.getArtifactId());
-			reportPlugin.setVersion(constants.getVersion());
-			processor.siteConfig(reportPlugin);
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null) {
+				processor.addSitePlugin();
+			}
+			reportPlugin = new ReportPlugin();
+			reportPlugin.setGroupId(reports.getGroupId());
+			reportPlugin.setArtifactId(reports.getArtifactId());
+			reportPlugin.setVersion(reports.getVersion());
+			processor.siteReportConfig(reportPlugin);
 			processor.save();
+			return reportPlugin;
 		} catch (JAXBException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (PhrescoPomException e) {
 		}
+		return null;
+	}
+
+	/**
+	 * @param reports
+	 * @param report
+	 * @param file
+	 * @throws JAXBException
+	 * @throws IOException
+	 * @throws PhrescoPomException 
+	 */
+	public void addInfoReportPlugin(List<Reports> reports,File file) {
+
+		try{
+			PomProcessor processor = new PomProcessor(file);
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null){
+				processor.addSitePlugin();
+			}
+			for (Reports iterateReport : reports) {
+				reportPlugin = new ReportPlugin();
+				reportPlugin.setGroupId(iterateReport.getGroupId());
+				reportPlugin.setArtifactId(iterateReport.getArtifactId());
+				reportPlugin.setVersion(iterateReport.getVersion());
+				processor.siteReportConfig(reportPlugin);
+				ReportSets reportSets = reportPlugin.getReportSets();
+				ReportSet reportSet = new ReportSet();
+				com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
+				if(reportSets == null){
+					reportPlugin.setReportSets(new ReportSets());
+					List<ReportCategories> reportCategories = iterateReport.getReportCategories();
+					for (ReportCategories reportCategories2 : reportCategories) {
+						reportSet.setReports(repo);		
+						reportSet.getReports().getReport().add(reportCategories2.getName());
+					}
+				} reportPlugin.getReportSets().getReportSet().add(reportSet);
+				processor.save();
+			} 
+		}catch (JAXBException e) {
+		} catch (IOException e) {
+		} catch (PhrescoPomException e) {
+		}
+	}
+
+	/**
+	 * @param reports
+	 * @param file
+	 * @return
+	 */
+	public ReportPlugin addReportPlugin(List<Reports> reports,File file){
+		for (Reports iterateReport : reports) {
+			return addReportPlugin(iterateReport,file);
+		}
+		return null;
 	}
 	
 	/**
-	 * @param constants
+	 * @param reports
+	 * @param file
 	 */
-	public void addReportPlugin(List<Reports> constants,File file){
-		for (Reports siteConstants : constants) {
-			addReportPlugin(siteConstants,file);
-		}
-	}
-	
-	/**
-	 * @param constants
-	 */
-	public void removeReportPlugin(List<Reports> constants,File file){
-		
+	public void removeReportPlugin(List<Reports> reports,File file) {
+
 		try {
 			PomProcessor processor = new PomProcessor(file);
-			for (Reports siteConstants : constants) {
-				String groupId = siteConstants.getGroupId();
-				String artifactId = siteConstants.getArtifactId();
+			for (Reports iterateReports : reports) {
+				String groupId = iterateReports.getGroupId();
+				String artifactId = iterateReports.getArtifactId();
 				processor.removeSitePlugin(groupId,artifactId);
 				processor.save();
 			}
 		} catch (JAXBException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }
