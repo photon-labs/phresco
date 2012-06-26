@@ -1,9 +1,9 @@
 package com.phresco.pom.site;
 
 public class ReportCategories {
-	
+
 	private String name;
-	
+
 	private boolean enabled=false;
 
 	public ReportCategories(String name) {
@@ -32,5 +32,9 @@ public class ReportCategories {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	public static final ReportCategories INFO_INDEX = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.index"));
 
+	public static final ReportCategories INFO_MODULE = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.modules"));
+
+	public static final ReportCategories INFO_DEPENDENCIES = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.dependencies"));
 }

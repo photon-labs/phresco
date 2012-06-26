@@ -21,6 +21,7 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -31,7 +32,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import com.phresco.pom.android.AndroidProfile;
-import com.phresco.pom.android.PomConstants;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.BuildBase;
@@ -41,6 +41,7 @@ import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Plugin.Executions;
 import com.phresco.pom.model.Plugin.Goals;
 import com.phresco.pom.model.PluginExecution;
+import com.phresco.pom.model.Profile;
 
 /**
  * @author suresh_ma
@@ -73,18 +74,18 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @throws PhrescoPomException
 	 * @throws ParserConfigurationException
 	 */
-	public void addAndroidProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
+	public void setProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
 			AndroidProfile androidProfile, PluginExecution execution,
 			Element goalElement, List<Element> additionalConfig) throws JAXBException,
 			PhrescoPomException, ParserConfigurationException {
-
+		
 		BuildBase base = new BuildBase();
 		Plugins plugins = new Plugins();
 		Executions executions = new Executions();
 		Goals goals = new Goals();
-		Configuration configuration = new Configuration();
 		Activation activation = new Activation();
 		
+		removeProfile(profileId);
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
@@ -112,9 +113,13 @@ public class AndroidPomProcessor extends PomProcessor {
 			plugin.setExecutions(executions);
 			plugin.setGoals(goals);
 			plugin.getGoals().getAny().add(goalElement);
+			if(plugin.getGoals().getAny().isEmpty()) {
+				plugin.setGoals(null);
+			}
+			execution.getConfiguration().getAny().addAll(additionalConfig);
 			plugin.getExecutions().getExecution().add(execution);
-			plugin.setConfiguration(configuration);
-			plugin.getConfiguration().getAny().addAll(additionalConfig);
+//			plugin.setConfiguration(configuration);
+//			plugin.getConfiguration().getAny().addAll(additionalConfig);
 			plugins.getPlugin().add(plugin);
 			base.setPlugins(plugins);
 			
@@ -123,6 +128,20 @@ public class AndroidPomProcessor extends PomProcessor {
 			
 		} else {
 			throw new PhrescoPomException(POMErrorCode.KEYSTORE_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * @param profileId
+	 */
+	private void removeProfile(String profileId) {
+		if(model.getProfiles()!= null) {
+			for(Profile profile : model.getProfiles().getProfile()) {
+				if(profileId.equals(profile.getId())) {
+					model.getProfiles().getProfile().remove(profile);
+					return;
+				}	 
+			}
 		}
 	}
 
@@ -145,5 +164,150 @@ public class AndroidPomProcessor extends PomProcessor {
 		} else {
 			throw new PhrescoPomException(POMErrorCode.PROFILE_ID_NOT_FOUND);
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean hasSigning() {
+		if(model.getProfiles().getProfile() != null){
+			for(Profile profile : model.getProfiles().getProfile()){
+				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+				for (Plugin plugin2 : plugin) {
+					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+					if(getSigningProfilePlugin(profile, execution)!=""){
+						return true;
+					}
+				}
+			}
+		} return false;
+	}
+	
+	/**
+	 * @param id
+	 * @return
+	 * @throws PhrescoPomException
+	 */
+	public AndroidProfile getProfileElement(String id) throws PhrescoPomException{
+		Profile profile = getProfile(id);
+		AndroidProfile androidProfile = new AndroidProfile();
+		List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+		for (Plugin plugin2 : plugin) {
+			List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+			for (PluginExecution pluginExecution : execution) {
+				List<Element> any = pluginExecution.getConfiguration().getAny();
+				processProfiles(androidProfile, any);
+			}
+		}
+		return androidProfile;
+	}
+
+	/**
+	 * @param androidProfile
+	 * @param any
+	 */
+	private void processProfiles(AndroidProfile androidProfile, List<Element> any) {
+		for (Element element : any) {
+			String tagName = element.getTagName();
+			if(tagName.equals("keystore")) {
+				androidProfile.setKeystore(element.getTextContent());
+			} else if(tagName.equals("storepass")) {
+				androidProfile.setStorepass(element.getTextContent());
+			} else if(tagName.equals("keypass")) {
+				androidProfile.setKeypass(element.getTextContent());
+			} else if(tagName.equals("alias")) {
+				androidProfile.setAlias(element.getTextContent());
+			}
+		}
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getSigningProfile() {
+		if(model.getProfiles().getProfile() != null){
+			for(Profile profile : model.getProfiles().getProfile()){
+				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+				for (Plugin plugin2 : plugin) {
+					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+					return getSigningProfilePlugin(profile, execution);
+				}
+			}
+		}
+		return "";
+	}
+
+	private String getSigningProfilePlugin(Profile profile,	List<PluginExecution> execution) {
+		for (PluginExecution pluginExecution : execution) {
+			List<Element> any = pluginExecution.getConfiguration().getAny();
+			for (Element element : any) {
+				if(element.getTagName().equals("keystore")) {
+					return profile.getId();
+				}
+			}
+		} return "";
+	}
+	
+	public static void main(String[] args) throws JAXBException, IOException, PhrescoPomException {
+		try{
+		AndroidPomProcessor pomProcessor = new AndroidPomProcessor(new File("d:\\pom\\pom.xml"));
+		String profileId = "sign2";
+		String defaultGoal = "suresh";
+		Plugin plugin = new Plugin();
+		plugin.setGroupId("org.apache.maven.plugins");
+		plugin.setArtifactId("maven-jarsigner-plugin");
+		plugin.setVersion("1.2");
+		
+		PluginExecution execution = new PluginExecution();
+		execution.setId("signing");
+		com.phresco.pom.model.PluginExecution.Goals goal = new com.phresco.pom.model.PluginExecution.Goals();
+		goal.getGoal().add("sign");
+		execution.setGoals(goal);
+		execution.setPhase("package");
+		execution.setInherited("true");
+		
+		AndroidProfile androidProfile = new AndroidProfile();
+		String keystore = "source/phresco.keystore";
+		String storepass = "123456789";
+		String keypass = "123456789";
+		String alias = "phresco";
+		androidProfile.setKeystore(keystore);
+		androidProfile.setStorepass(storepass);
+		androidProfile.setKeypass(keypass);
+		androidProfile.setAlias(alias);
+		androidProfile.setVerbose(true);
+		androidProfile.setVerify(true);
+		
+		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+		Document doc = docBuilder.newDocument();
+		
+		List<Element> executionConfig = new ArrayList<Element>();
+        executionConfig.add(doc.createElement("archiveDirectory"));
+        Element removeExistSignature = doc.createElement("removeExistingSignatures");
+		Element includeElement = doc.createElement("includes");
+        Element doNotCheckInBuildInclude = doc.createElement("include");
+        doNotCheckInBuildInclude.setTextContent("do_not_checkin/build/*.apk");
+        Element doNotCheckinTargetInclude = doc.createElement("include");
+        doNotCheckinTargetInclude.setTextContent("do_not_checkin/target/*.apk");
+        includeElement.appendChild(doNotCheckInBuildInclude);
+        includeElement.appendChild(doNotCheckinTargetInclude);
+        executionConfig.add(includeElement);
+        removeExistSignature.setTextContent("true");
+        executionConfig.add(removeExistSignature);
+        
+        com.phresco.pom.model.PluginExecution.Configuration configValues = new com.phresco.pom.model.PluginExecution.Configuration();
+        configValues.getAny().addAll(executionConfig);
+		execution.setConfiguration(configValues);
+		List<Element> additionalConfigs = new ArrayList<Element>();
+		pomProcessor.setProfile(profileId, false, defaultGoal , plugin, androidProfile , execution, null, additionalConfigs );
+		pomProcessor.save();
+		System.out.print("called!!!!!!");
+		System.out.print("called!!!!!!");
+	} catch (Exception e) {
+		System.out.println("Profile generation completed.");
+		e.printStackTrace();
+	}
+//		System.out.println(pomProcessor.hasSigning());
 	}
 }
