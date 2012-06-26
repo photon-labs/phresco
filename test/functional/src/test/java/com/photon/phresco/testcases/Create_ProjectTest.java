@@ -58,8 +58,33 @@ public class Create_ProjectTest extends TestCase{
     public void testCreate_Drupal7() throws InterruptedException, IOException, Exception{
     	    		
     		   drupal=new Drupal7ConstantsXml();
-    		   CreateDbsql db = new CreateDbsql(); 
-    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+    		   String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+   					+ phrsc.PORT + "/";
+   			browserAppends = "*" + phrsc.BROWSER;
+   			assertNotNull("Browser name should not be null", browserAppends);
+   			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+   			assertNotNull("selenium-port number should not be null",
+   					SELENIUM_PORT);
+   			wel = new WelcomeScreen(phrsc.HOST,
+   					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+   					phrsc.CONTEXT);
+   			assertNotNull(wel);
+   			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+				System.out.println("methodName = " + methodName);
+   			loginObject = new LoginScreen(phrsc);
+   			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+   			                   phrescoHome.goToPhrescoHomePage(methodName);
+			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+				System.out.println("methodName = " + methodName);
+				addappscrn.createProjDRUPAL7(drupal,methodName);
+    }
+   @Test
+    public void testCreate_MobWidget() throws InterruptedException, IOException, Exception{
+			    	    		
+                mobwidg=new MobWidgetConstantsXml();
+                String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
     					+ phrsc.PORT + "/";
     			browserAppends = "*" + phrsc.BROWSER;
     			assertNotNull("Browser name should not be null", browserAppends);
@@ -70,34 +95,12 @@ public class Create_ProjectTest extends TestCase{
     					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
     					phrsc.CONTEXT);
     			assertNotNull(wel);
-    			loginObject = new LoginScreen(phrsc);
-    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-    			                   phrescoHome.goToPhrescoHomePage();
-			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
-				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+    			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
-				addappscrn.createProjDRUPAL7(drupal,methodName);
-    }
-   @Test
-    public void testCreate_MobWidget() throws InterruptedException, IOException, Exception{
-			    	    		
-                mobwidg=new MobWidgetConstantsXml();
-	    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-	    					+ phrsc.PORT + "/";
-	    			browserAppends = "*" + phrsc.BROWSER;
-	    			assertNotNull("Browser name should not be null", browserAppends);
-	    			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-	    			assertNotNull("selenium-port number should not be null",
-	    					SELENIUM_PORT);
-	    			wel = new WelcomeScreen(phrsc.HOST,
-	    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
-	    					phrsc.CONTEXT);
-	    			assertNotNull(wel);
-				loginObject = new LoginScreen(phrsc);
-				PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-								   phrescoHome.goToPhrescoHomePage();
-			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+    			loginObject = new LoginScreen(phrsc);
+    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+    			                   phrescoHome.goToPhrescoHomePage(methodName);
+			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
@@ -108,7 +111,7 @@ public class Create_ProjectTest extends TestCase{
 			    	    		
 	               jquerywidg=new JqueryWidgetConstants();
                
-	    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+	               String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
 	    					+ phrsc.PORT + "/";
 	    			browserAppends = "*" + phrsc.BROWSER;
 	    			assertNotNull("Browser name should not be null", browserAppends);
@@ -119,10 +122,12 @@ public class Create_ProjectTest extends TestCase{
 	    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
 	    					phrsc.CONTEXT);
 	    			assertNotNull(wel);
-				loginObject = new LoginScreen(phrsc);
-				PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-								   phrescoHome.goToPhrescoHomePage();
-			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+	    			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+					System.out.println("methodName = " + methodName);
+	    			loginObject = new LoginScreen(phrsc);
+	    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+	    			                   phrescoHome.goToPhrescoHomePage(methodName);
+				    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
@@ -137,14 +142,18 @@ public class Create_ProjectTest extends TestCase{
 			browserAppends = "*" + phrsc.BROWSER;
 			assertNotNull("Browser name should not be null", browserAppends);
 			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-			assertNotNull("selenium-port number should not be null", SELENIUM_PORT);
-			wel = new WelcomeScreen(phrsc.HOST, SELENIUM_PORT, browserAppends,
-					serverURL, phrsc.SPEED, phrsc.CONTEXT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
 			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome = loginObject.testLoginPage();
-							   phrescoHome.goToPhrescoHomePage();
-			ApplicationsScreen applicationScr = phrescoHome.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -154,21 +163,23 @@ public class Create_ProjectTest extends TestCase{
     public void testCreate_iPhoneHybd() throws InterruptedException, IOException, Exception{
     	   		
     		iPhone=new iPhoneConstantsXml();
-    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-    					+ phrsc.PORT + "/";
-    			browserAppends = "*" + phrsc.BROWSER;
-    			assertNotNull("Browser name should not be null", browserAppends);
-    			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-    			assertNotNull("selenium-port number should not be null",
-    					SELENIUM_PORT);
-    			wel = new WelcomeScreen(phrsc.HOST,
-    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
-    					phrsc.CONTEXT);
-    			assertNotNull(wel);
+    		String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+					+ phrsc.PORT + "/";
+			browserAppends = "*" + phrsc.BROWSER;
+			assertNotNull("Browser name should not be null", browserAppends);
+			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
+			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-			                   phrescoHome.goToPhrescoHomePage();
-		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -184,15 +195,18 @@ public class Create_ProjectTest extends TestCase{
 			browserAppends = "*" + phrsc.BROWSER;
 			assertNotNull("Browser name should not be null", browserAppends);
 			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-			assertNotNull("selenium-port number should not be null", SELENIUM_PORT);
-			wel = new WelcomeScreen(phrsc.HOST, SELENIUM_PORT, browserAppends,
-					serverURL, phrsc.SPEED, phrsc.CONTEXT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
 			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome = loginObject.testLoginPage();
-			phrescoHome.goToPhrescoHomePage();
-			ApplicationsScreen applicationScr = phrescoHome
-					.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
 					.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -210,15 +224,18 @@ public class Create_ProjectTest extends TestCase{
 			browserAppends = "*" + phrsc.BROWSER;
 			assertNotNull("Browser name should not be null", browserAppends);
 			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-			assertNotNull("selenium-port number should not be null", SELENIUM_PORT);
-			wel = new WelcomeScreen(phrsc.HOST, SELENIUM_PORT, browserAppends,
-					serverURL, phrsc.SPEED, phrsc.CONTEXT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
 			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome = loginObject.testLoginPage();
-			phrescoHome.goToPhrescoHomePage();
-			ApplicationsScreen applicationScr = phrescoHome
-					.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
 					.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -229,21 +246,23 @@ public class Create_ProjectTest extends TestCase{
     public void testCreate_JWS() throws InterruptedException, IOException, Exception{
     	    		
     		jws=new JavaWebServConstantsXml();
-    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-    					+ phrsc.PORT + "/";
-    			browserAppends = "*" + phrsc.BROWSER;
-    			assertNotNull("Browser name should not be null", browserAppends);
-    			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-    			assertNotNull("selenium-port number should not be null",
-    					SELENIUM_PORT);
-    			wel = new WelcomeScreen(phrsc.HOST,
-    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
-    					phrsc.CONTEXT);
-    			assertNotNull(wel);
+    		String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+					+ phrsc.PORT + "/";
+			browserAppends = "*" + phrsc.BROWSER;
+			assertNotNull("Browser name should not be null", browserAppends);
+			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
+			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-							   phrescoHome.goToPhrescoHomePage();
-		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -253,21 +272,23 @@ public class Create_ProjectTest extends TestCase{
     public void testCreate_PHP() throws InterruptedException, IOException, Exception{
     	   		
     	     phpconst=new PhpConstantsXml();
-    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-    					+ phrsc.PORT + "/";
-    			browserAppends = "*" + phrsc.BROWSER;
-    			assertNotNull("Browser name should not be null", browserAppends);
-    			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-    			assertNotNull("selenium-port number should not be null",
-    					SELENIUM_PORT);
-    			wel = new WelcomeScreen(phrsc.HOST,
-    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
-    					phrsc.CONTEXT);
-    			assertNotNull(wel);
-			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-							   phrescoHome.goToPhrescoHomePage();
-		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+    	     String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+ 					+ phrsc.PORT + "/";
+ 			browserAppends = "*" + phrsc.BROWSER;
+ 			assertNotNull("Browser name should not be null", browserAppends);
+ 			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+ 			assertNotNull("selenium-port number should not be null",
+ 					SELENIUM_PORT);
+ 			wel = new WelcomeScreen(phrsc.HOST,
+ 					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+ 					phrsc.CONTEXT);
+ 			assertNotNull(wel);
+ 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+				System.out.println("methodName = " + methodName);
+ 			loginObject = new LoginScreen(phrsc);
+ 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+ 			                   phrescoHome.goToPhrescoHomePage(methodName);
+			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -277,21 +298,23 @@ public class Create_ProjectTest extends TestCase{
     public void testCreate_Share() throws InterruptedException, IOException, Exception{
     	    		
     	      spconst=new SharepointConstantsXml();
-    			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-    					+ phrsc.PORT + "/";
-    			browserAppends = "*" + phrsc.BROWSER;
-    			assertNotNull("Browser name should not be null", browserAppends);
-    			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-    			assertNotNull("selenium-port number should not be null",
-    					SELENIUM_PORT);
-    			wel = new WelcomeScreen(phrsc.HOST,
-    					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
-    					phrsc.CONTEXT);
-    			assertNotNull(wel);
-			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-			                   phrescoHome.goToPhrescoHomePage();
-		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab();
+    	      String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+  					+ phrsc.PORT + "/";
+  			browserAppends = "*" + phrsc.BROWSER;
+  			assertNotNull("Browser name should not be null", browserAppends);
+  			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+  			assertNotNull("selenium-port number should not be null",
+  					SELENIUM_PORT);
+  			wel = new WelcomeScreen(phrsc.HOST,
+  					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+  					phrsc.CONTEXT);
+  			assertNotNull(wel);
+  			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+				System.out.println("methodName = " + methodName);
+  			loginObject = new LoginScreen(phrsc);
+  			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+  			                   phrescoHome.goToPhrescoHomePage(methodName);
+			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -307,14 +330,18 @@ public class Create_ProjectTest extends TestCase{
 			browserAppends = "*" + phrsc.BROWSER;
 			assertNotNull("Browser name should not be null", browserAppends);
 			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-			assertNotNull("selenium-port number should not be null", SELENIUM_PORT);
-			wel = new WelcomeScreen(phrsc.HOST, SELENIUM_PORT, browserAppends,
-					serverURL, phrsc.SPEED, phrsc.CONTEXT);
+			assertNotNull("selenium-port number should not be null",
+					SELENIUM_PORT);
+			wel = new WelcomeScreen(phrsc.HOST,
+					SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+					phrsc.CONTEXT);
 			assertNotNull(wel);
+			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+			System.out.println("methodName = " + methodName);
 			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome = loginObject.testLoginPage();
-							   phrescoHome.goToPhrescoHomePage();
-			ApplicationsScreen applicationScr = phrescoHome.clickOnApplicationsTab();
+			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+			                   phrescoHome.goToPhrescoHomePage(methodName);
+		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
@@ -326,19 +353,23 @@ public class Create_ProjectTest extends TestCase{
     	    		
     	YuiConst = new YuiConstantsXml();
 			
-			String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
-					+ phrsc.PORT + "/";
-			browserAppends = "*" + phrsc.BROWSER;
-			assertNotNull("Browser name should not be null", browserAppends);
-			SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
-			assertNotNull("selenium-port number should not be null", SELENIUM_PORT);
-			wel = new WelcomeScreen(phrsc.HOST, SELENIUM_PORT, browserAppends,
-					serverURL, phrsc.SPEED, phrsc.CONTEXT);
-			assertNotNull(wel);
-			loginObject = new LoginScreen(phrsc);
-			PhrescoWelcomePage phrescoHome = loginObject.testLoginPage();
-							   phrescoHome.goToPhrescoHomePage();
-			ApplicationsScreen applicationScr = phrescoHome.clickOnApplicationsTab();
+    	String serverURL = phrsc.PROTOCOL + "://" + phrsc.HOST + ":"
+				+ phrsc.PORT + "/";
+		browserAppends = "*" + phrsc.BROWSER;
+		assertNotNull("Browser name should not be null", browserAppends);
+		SELENIUM_PORT = Integer.parseInt(phrsc.PORT);
+		assertNotNull("selenium-port number should not be null",
+				SELENIUM_PORT);
+		wel = new WelcomeScreen(phrsc.HOST,
+				SELENIUM_PORT, browserAppends, serverURL, phrsc.SPEED,
+				phrsc.CONTEXT);
+		assertNotNull(wel);
+		methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		System.out.println("methodName = " + methodName);
+		loginObject = new LoginScreen(phrsc);
+		PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+		                   phrescoHome.goToPhrescoHomePage(methodName);
+	    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
