@@ -25,8 +25,8 @@
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
-<%@ page import="com.photon.phresco.util.XCodeConstants"%>
-<%@ page import="com.photon.phresco.util.AndroidConstants"%>
+<%@ page import="com.photon.phresco.commons.XCodeConstants"%>
+<%@ page import="com.photon.phresco.commons.AndroidConstants"%>
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
@@ -35,7 +35,7 @@
 <%@ page import="com.photon.phresco.configuration.Environment"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
-<%@ page import="com.photon.phresco.model.BuildInfo"%>
+<%@ page import="com.photon.phresco.commons.BuildInfo"%>
 
 <script src="js/reader.js" ></script>
 <script src="js/select-envs.js"></script>
