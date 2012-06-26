@@ -27,6 +27,7 @@ public interface Constants {
 	int STATUS_DELETED = 3;
 
     String SPACE = " ";
+    String REM_DELIMETER = "REM";
     String PROJECT_FOLDER = "project";
     String OSNAME  = "os.name";
     String WINDOWS = "Windows";
