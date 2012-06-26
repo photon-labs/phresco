@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <drupal6>
+       <appInfodrupal6NameValue>Drupal6_None_Proj</appInfodrupal6NameValue>
+       <appInfodrupal6DescValue>This is a Drupal6 project</appInfodrupal6DescValue>
+       <appInfoTechWebappdrupal6>//option[@value='tech-phpdru6']</appInfoTechWebappdrupal6>
+       <appInfoTechWebappdrupal6Click>css=option[value='tech-phpdru7']</appInfoTechWebappdrupal6Click>
+       <createddrupal6Project>link=drupal6_Proj</createddrupal6Project>
+       <drupal6ServerNameValue>drupal6Server</drupal6ServerNameValue>
+       <drupal6ServerDescValue>drupal6Server</drupal6ServerDescValue>
+       <drupal6ServerHostValue>localhost</drupal6ServerHostValue>
+       <drupal6ServerPortValue>80</drupal6ServerPortValue>
+       <drupal6ServerDeployDirValue>c:\wamp\www</drupal6ServerDeployDirValue>
+       <drupal6ServerTypeValue>wamp</drupal6ServerTypeValue>
+       <drupal6ServerContextValue>drupal6Server</drupal6ServerContextValue>
+       <drupal6DbNameValue>drupal6DataBase</drupal6DbNameValue>
+       <drupal6DbDescValue>drupal6DataBase</drupal6DbDescValue>
+       <drupal6DbHostValue>localhost</drupal6DbHostValue>
+       <drupal6DbPortValue>3306</drupal6DbPortValue>
+       <drupal6DbUserNameValue>root</drupal6DbUserNameValue>
+       <drupal6DbPasswordValue></drupal6DbPasswordValue>
+       <drupal6DbdbNameValue>DataBaseValue</drupal6DbdbNameValue>
+       <drupal6DbContextValue>drupal6DataBase</drupal6DbContextValue>
+       <drupal6BuildGenBuilddrupal6Server>label=drupal6Server</drupal6BuildGenBuilddrupal6Server>
+       <drupal6BuildGenBuilddrupal6ServerClick>css=option[value="drupal6Server"]</drupal6BuildGenBuilddrupal6ServerClick>
+       <drupal6BuildGenBuilddrupal6Db>label=drupal6DataBase</drupal6BuildGenBuilddrupal6Db>
+       <drupal6BuildGenBuilddrupal6DbClick>css=option[value="drupal6DataBase"]</drupal6BuildGenBuilddrupal6DbClick>
+       </drupal6>
+
+ </technology>
+</phresco>

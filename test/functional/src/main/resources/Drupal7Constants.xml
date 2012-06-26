@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <drupal7>
+       <appInfoDrupalNameValue>Drupal_Eshop_Proj</appInfoDrupalNameValue>
+       <appInfoDrupalNoneNameValue>Drupal_None_Proj</appInfoDrupalNoneNameValue>
+       <appInfoDrupalDescValue>This is a Drupal7 project</appInfoDrupalDescValue>
+       <appInfoTechWebappDrupal7>//option[@value='tech-phpdru7']</appInfoTechWebappDrupal7>
+       <appInfoTechWebappDrupal7Click>css=option[value='tech-phpdru7']</appInfoTechWebappDrupal7Click>
+       <createdDrupalProject>//a[contains(text(),'Drupal_Eshop_Proj')]</createdDrupalProject>
+       <drupalServerNameValue>DrupalServer</drupalServerNameValue>
+       <drupalServerDescValue>DrupalServer</drupalServerDescValue>
+       <drupalServerHostValue>localhost</drupalServerHostValue>
+       <drupalServerPortValue>80</drupalServerPortValue>
+       <drupalServerDeployDirValue>c:\wamp\www</drupalServerDeployDirValue>
+       <drupalServerTypeValue>wamp</drupalServerTypeValue>
+       <drupalServerContextValue>DrupalServer</drupalServerContextValue>
+       <drupalDbNameValue>DrupalDataBase</drupalDbNameValue>
+       <drupalDbDescValue>This is the Database configuration for Drupal7</drupalDbDescValue>
+       <drupalDbHostValue>localhost</drupalDbHostValue>
+       <drupalDbPortValue>3306</drupalDbPortValue>
+       <drupalDbUserNameValue>root</drupalDbUserNameValue>
+       <drupalDbPasswordValue></drupalDbPasswordValue>
+       <drupalDbdbNameValue>DrupalDataBase</drupalDbdbNameValue>
+       <drupalDbContextValue>DrupalDataBase</drupalDbContextValue>
+       <drupalBuildGenBuildDrupalServer>label=DrupalServer</drupalBuildGenBuildDrupalServer>
+       <drupalBuildGenBuildDrupalServerClick>css=option[value="DrupalServer"]</drupalBuildGenBuildDrupalServerClick>
+       <drupalBuildGenBuildDrupalDb>label=DrupalDataBase</drupalBuildGenBuildDrupalDb>
+       <drupalBuildGenBuildDrupalDbClick>css=option[value="DrupalDataBase"]</drupalBuildGenBuildDrupalDbClick>
+       </drupal7>
+
+ </technology>
+</phresco>

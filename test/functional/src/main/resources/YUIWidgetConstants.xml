@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+<technology>
+<Yuiwidget>
+      <YuiWidgetCreatedProj>//a[contains(text(),'YUIWidget_Eshop_Proj')]</YuiWidgetCreatedProj>
+      <appInfoYuiProjNameValue>YUIWidget_Eshop_Proj</appInfoYuiProjNameValue>
+      <appInfoYuiNoneProjNameValue>YUIWidget_None_Proj</appInfoYuiNoneProjNameValue>
+      <appInfoYuiProjDescValue>This is a YUI Widget project</appInfoYuiProjDescValue>
+      <appInfoTechYuiWidget>//option[@value='tech-html5-widget']</appInfoTechYuiWidget>
+      <YuiConfigServNameValue>YUIServ</YuiConfigServNameValue>
+      <YuiConfigservDescValue>Server configuration for YUI Widget project</YuiConfigservDescValue>
+      <YuiconfigServHostValue>localhost</YuiconfigServHostValue>
+      <YuiconfigServPortValue>8090</YuiconfigServPortValue>
+      <YuiconfigServDeployDir>C:\apache-tomcat-7.0.21\webapps</YuiconfigServDeployDir>
+      <YuiconfigServContextNameValue>yuiapp</YuiconfigServContextNameValue>
+      <YuiConfigWebServiceNameValue>YUIWebserv</YuiConfigWebServiceNameValue>
+      <YuiConfigWebserviceDesc>WebService configuration for YUI Widget project</YuiConfigWebserviceDesc>
+      <YuiconfigWebserviceHostValue>172.16.17.180</YuiconfigWebserviceHostValue>
+      <YuiconfigWebservicePortValue>2020</YuiconfigWebservicePortValue>
+      <YuiconfigWebservContextNameValue>eshop</YuiconfigWebservContextNameValue>
+      
+</Yuiwidget>
+</technology>
+</phresco>
+ 

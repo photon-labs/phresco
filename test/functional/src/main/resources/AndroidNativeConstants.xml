@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+<technology>
+ <androidNative>
+          <appInfoAndroidNativeNameValue>AndroidNative_Eshop_Proj</appInfoAndroidNativeNameValue>
+          <appInfoAndroidNativeNoneNameValue>AndroidNative_None_Proj</appInfoAndroidNativeNoneNameValue>
+          <appInfoAndroidNativeDescValue>This is an Android native project</appInfoAndroidNativeDescValue>
+          <appInfoTechMobappAndroidNativeClick>//option[@value='tech-android-native']</appInfoTechMobappAndroidNativeClick>
+          <createdAndroidNativeProject>//a[contains(text(),'AndroidNative_Eshop_Proj')]</createdAndroidNativeProject>
+          <AndroidNativeWebServNameValue>Webservice</AndroidNativeWebServNameValue>
+          <AndroidNativeWebServDescValue>This is a webservice for Android project</AndroidNativeWebServDescValue>
+          <AndroidNativeWebServTypeValue>label=Web Service</AndroidNativeWebServTypeValue>
+          <AndroidNativeWebServTypeClick>css=option[value="Web Service"]</AndroidNativeWebServTypeClick>
+          <AndroidNativeWebServHostValue>localhost</AndroidNativeWebServHostValue>
+          <AndroidNativeWebServPortValue>2020</AndroidNativeWebServPortValue>
+          <AndroidNativeWebServContextValue>Webservice</AndroidNativeWebServContextValue>
+          <AndroidNativeGenBuildWebServ>label=Webservice</AndroidNativeGenBuildWebServ>
+          <AndroidNativeGenBuildWebServClick>css=option[value="Webservice"]</AndroidNativeGenBuildWebServClick>
+          <AndroidNativeGenBuildSDK>id=sdk</AndroidNativeGenBuildSDK>
+          <AndroidNativeGenBuildSDKSimul>label=Androidsimulator5.0</AndroidNativeGenBuildSDKSimul>
+          <AndroidNativeGenBuildSDKSimulClick>css=option[value="Androidsimulator5.0"]</AndroidNativeGenBuildSDKSimulClick>
+          <AndroidNativeDeploySimulator>id=actionBtn</AndroidNativeDeploySimulator>
+ </androidNative>
+</technology>
+</phresco>
+ 
+      
