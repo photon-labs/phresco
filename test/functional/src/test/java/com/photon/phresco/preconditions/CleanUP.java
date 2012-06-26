@@ -18,6 +18,7 @@ public class CleanUP extends TestCase{
 	private String browserAppends;
 	private LoginScreen loginObject;
 	private int SELENIUM_PORT;
+	String methodName;
 	
 	 @Test
 	    public void testCleanUp() throws InterruptedException, IOException, Exception{
@@ -35,10 +36,10 @@ public class CleanUP extends TestCase{
 	    					phrsc.CONTEXT);
 	    			assertNotNull(wel);
 	    			loginObject = new LoginScreen(phrsc);
-	    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage();
-	    			                   phrescoHome.goToPhrescoHomePage();
-				                       phrescoHome.clickOnApplicationsTab();
-				                       phrescoHome.CleanUp();
+	    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
+	                                   phrescoHome.goToPhrescoHomePage(methodName);
+				                       phrescoHome.clickOnApplicationsTab(methodName);
+				                       phrescoHome.CleanUp(methodName);
 				                       
 					
 	    }
