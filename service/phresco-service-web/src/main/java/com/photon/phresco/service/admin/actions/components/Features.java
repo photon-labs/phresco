@@ -24,12 +24,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.itextpdf.text.pdf.codec.Base64.OutputStream;
+import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 
 public class Features extends ServiceBaseAction {
@@ -64,37 +66,36 @@ public class Features extends ServiceBaseAction {
 		S_LOGGER.debug("Entering Method  Features.save()");
 
 		try {
-			boolean isValid = validateForm();
-//			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
-			if (isValid) {
-				InputStream inputStream = new FileInputStream(featureArc);
-				FileOutputStream outputStream = new FileOutputStream(new File("c:/" + featureArcFileName));
-				IOUtils.copy(inputStream, outputStream);
-				return COMP_FEATURES_LIST;
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
 			}
-		} catch (IOException e) {
-			
+			InputStream inputStream = new FileInputStream(featureArc);
+			/*FileOutputStream outputStream = new FileOutputStream(new File("c:/" + featureArcFileName));
+			IOUtils.copy(inputStream, outputStream);*/
+			addActionMessage(getText(FEATURE_ADDED, Collections.singletonList(name)));
+		} catch (Exception e) {
+			addActionError(getText(FEATURE_NOT_ADDED, Collections.singletonList(name)));
 		} 
 
-		setErrorFound(true);
-		return SUCCESS;
+		return COMP_FEATURES_LIST;
 	}
 		
 	private boolean validateForm() {
-		boolean success = true;
+		boolean success = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY));
-			success = false;
+			success = true;
 		} 
 
 		if (StringUtils.isEmpty(version)) {
 			setVersError(getText(KEY_I18N_ERR_VER_EMPTY));
-			success = false;
+			success = true;
 		}
 		
 		if (StringUtils.isEmpty(featureArcFileName) || featureArc == null) {
 			setFileError(getText(KEY_I18N_ERR_FILE_EMPTY));
-			success = false;
+			success = true;
 		}
 		return success;
 	}

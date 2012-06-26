@@ -675,6 +675,10 @@ label {
     color:#5a5a5a;
 }
 
+.accordion_head h2 {
+    color:#6d6c6c;
+}
+
 .scrollpanel {
     border-bottom: 1px solid #3A090B;
 }
@@ -870,3 +874,23 @@ label {
 .popuplabel {
 	color: #333333;
 }
+
+.modallbl-color {
+	color: #555555;
+}
+
+.modallbl-color label {
+	color: #555555;
+}
+
+.external_features_wrapper {
+	border: 1px solid #a3a3a3;
+}
+
+.errorMessage li {
+	color:red;
+}
+
+.actionMessage li {
+	color:green;
+}	

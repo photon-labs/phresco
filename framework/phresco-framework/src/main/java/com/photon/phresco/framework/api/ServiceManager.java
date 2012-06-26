@@ -103,7 +103,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse createProject(ProjectInfo info) throws PhrescoException;
+    ClientResponse createProject(ProjectInfo info, UserInfo userInfo) throws PhrescoException;
     
     /**
      * Triggers the update project to the server and returns the client response
@@ -111,7 +111,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse updateProject(ProjectInfo info) throws PhrescoException;
+    ClientResponse updateProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException;
   
     /**
      * Triggers the update project to the server and returns the client response

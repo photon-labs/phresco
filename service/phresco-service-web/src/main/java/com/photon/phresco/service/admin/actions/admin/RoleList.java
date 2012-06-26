@@ -21,7 +21,7 @@ package com.photon.phresco.service.admin.actions.admin;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
+import java.util.Collections;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 
 public class RoleList extends ServiceBaseAction { 
@@ -45,12 +45,18 @@ public class RoleList extends ServiceBaseAction {
 	
 	public String save() {
 		S_LOGGER.debug("Entering Method RolesList.save()");
-		
+	try  {
 		if (validateForm()) {
 			setErrorFound(true);
 			return SUCCESS;
 		}
-		return  ADMIN_ROLE_LIST;
+		addActionMessage(getText(ROLE_ADDED, Collections.singletonList(name)));
+		
+	} catch (Exception e) {
+		    addActionError(getText(ROLE_NOT_ADDED, Collections.singletonList(name)));
+	}
+	        return  ADMIN_ROLE_LIST;
+	   
 	}
 		
 	private boolean validateForm() {

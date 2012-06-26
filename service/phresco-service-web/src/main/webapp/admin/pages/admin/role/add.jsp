@@ -31,11 +31,12 @@ function findError(data) {
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.admin.rle.add" theme="simple"/></h4>
+	<h4><s:label for="description" key="lbl.hdr.adm.rle.add" theme="simple"/></h4>
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.admin.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Role Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -43,7 +44,9 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
 			</div>
@@ -51,7 +54,7 @@ function findError(data) {
 	</div>
 	
 	<div class="bottom_button">
-		<input type="button" id="roleSave" class="btn btn-primary" onclick="loadContent('roleSave', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="roleCancel" class="btn btn-primary" onclick="loadContent('roleCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="button" id="roleSave" class="btn btn-primary" onclick="clickSave('roleSave', $('#subcontainer'), 'Creating Role');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="roleCancel" class="btn btn-primary" onclick="loadContent('roleCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>

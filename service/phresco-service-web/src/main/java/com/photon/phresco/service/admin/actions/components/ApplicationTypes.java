@@ -19,6 +19,8 @@
  */
 package com.photon.phresco.service.admin.actions.components;
 
+import java.util.Collections;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -45,10 +47,16 @@ public class ApplicationTypes extends ServiceBaseAction {
 	
 	public String save() {
 		S_LOGGER.debug("Entering Method ApplicationTypes.save()");
-		if (validateForm()) {
-			setErrorFound(true);
-			return SUCCESS;
+		try {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
+			 addActionMessage(getText(APPLNTYPES_ADDED, Collections.singletonList(name)));
+		} catch (Exception e) {
+			 addActionError(getText(APPLNTYPES_NOT_ADDED, Collections.singletonList(name)));
 		}
+		
 		return  COMP_APPTYPE_LIST;
 	}
 	

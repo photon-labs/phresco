@@ -21,8 +21,18 @@
 
 <form class="customer_list">
 	<div class="operation">
-		<input type="button" id="archetypeAdd" class="btn btn-primary" name="archetype_add" onclick="loadContent('archetypeAdd', $('#subcontainer'));" value="<s:text name='lbl.header.comp.arhtyp.add'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.header.comp.delete'/>"/>
+		<input type="button" id="archetypeAdd" class="btn btn-primary" name="archetype_add" onclick="loadContent('archetypeAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.arhtyp.add'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -38,16 +48,16 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.name"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.name"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.desc"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.ver"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.ver"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.apptype"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.apptype"  theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>
@@ -127,3 +137,4 @@
 		</div>
 	</div>
 </form>
+

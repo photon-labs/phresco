@@ -19,6 +19,7 @@
  */
 function clickMenu(menu, tag) {
 	menu.click(function() {
+		showLoadingIcon(tag);
 		inActivateAllMenu(menu);
 		activateMenu($(this));
 		var selectedMenu = $(this).attr("id");
@@ -40,8 +41,9 @@ function clickButtonFileUpload(button, csvElementIds, tag) {
 	});
 }
 
-function formSubmitFileUpload(pageUrl, csvElementIds, tag) {
+function formSubmitFileUpload(pageUrl, csvElementIds, tag, progressText) {
 	var formDataJson = formSerializeToJson($('form').serializeArray());
+	showProgressBar(progressText);
 	$.ajaxFileUpload ({
 		url: pageUrl,
 		secureuri: true,
@@ -49,12 +51,14 @@ function formSubmitFileUpload(pageUrl, csvElementIds, tag) {
 		dataType: 'json',
 		data: formDataJson,   //{name:'logan', version:'2'}
 		success: function (data, status) {
-			loadData(data, tag);
+			hideProgressBar();
+			if (status == 'success') {
+				loadData(data, tag);
+			}
 		},
 		error: function (data, status, e) {
 		}
 	});
-
 }
 
 function formSerializeToJson(a) {
@@ -72,12 +76,30 @@ function formSerializeToJson(a) {
     return o;
 }
 
-function loadContent(pageUrl, tag) {
+function loadContent(pageUrl, tag, params) {
+	var finalParam = $('form').serialize();
+	if (params !== undefined) {
+		finalParam = finalParam + params
+	}
+	showLoadingIcon(tag);
+	$.ajax({
+		url : pageUrl,
+		data : finalParam,
+		type : "POST",
+		success : function(data) {
+			loadData(data, tag);
+		}
+	});
+}
+
+function clickSave(pageUrl, tag, progressText) {
+	showProgressBar(progressText);
 	$.ajax({
 		url : pageUrl,
 		data : $('form').serialize(),
 		type : "POST",
 		success : function(data) {
+			hideProgressBar();
 			loadData(data, tag);
 		}
 	});
@@ -89,6 +111,8 @@ function loadData(data, tag) {
 	} else {
 		tag.empty();
 		tag.html(data);
+		accordion();
+		setTimeOut();
 	}
 }
 
@@ -103,14 +127,14 @@ function activateMenu(selectedMenu) {
 
 function checkAllEvent(currentCheckbox) {
 	var checkAll = $(currentCheckbox).prop('checked');
-	$('input[name="check"]').prop('checked', checkAll);
+	$('.check').prop('checked', checkAll);
 	buttonStatus(checkAll);
 }
 
 function checkboxEvent() {
-	var chkboxStatus = $("input[name='check']").is(':checked');
+	var chkboxStatus = $('.check').is(':checked');
 	buttonStatus(chkboxStatus);
-	if ($("input[name='check']").length == $("input[name='check']:checked").length) {
+	if ($('.check').length == $(".check:checked").length) {
 		$('#checkAllAuto').prop('checked', true);
 	} else {
 		$('#checkAllAuto').prop('checked', false);
@@ -136,3 +160,63 @@ function hideError(tag, span) {
 	span.empty();
 }
 
+function setTimeOut() {
+	setTimeout(function() {
+		  $('#successmsg').fadeOut("slow", function () {
+			  $('#successmsg').remove();
+		  });
+	}, 2000);
+	
+	setTimeout(function() {
+		  $('#errormsg').fadeOut("slow", function () {
+			  $('#errormsg').remove();
+		  });
+	}, 2000);
+}
+
+function accordion() {
+	/** Accordian starts **/
+	var showContent = 0;	
+    $('.siteaccordion').removeClass('openreg').addClass('closereg');
+    $('.mfbox').css('display','none');
+    
+    $('.siteaccordion').bind('click',function(e){
+        var _tempIndex = $('.siteaccordion').index(this);
+        $('.siteaccordion').removeClass('openreg').addClass('closereg');
+        $('.mfbox').each(function(e){
+            if($(this).css('display')=='block'){
+                $(this).slideUp('300');
+            }
+        });
+        if($('.mfbox').eq(_tempIndex).css('display')=='none'){
+            $(this).removeClass('closereg').addClass('openreg');
+            $('.mfbox').eq(_tempIndex).slideDown(300,function() {
+                
+            });
+        }
+    });
+   	/** Accordian ends **/
+	
+}
+
+function showLoadingIcon(tag) {
+	var src = "theme/photon/images/loading_blue.gif";
+	var theme = $.cookie("css");
+	if(theme == undefined || theme == "theme/photon/css/red.css") {
+	src = "theme/photon/images/loading_red.gif";
+	}
+	/* tag.empty();*/
+	tag.html("<img class='loadingIcon' src='"+ src +"' style='display: block'>");
+}
+
+function showProgressBar(progressText) {
+	$(".bar").html(progressText);
+	$(".modal-backdrop").show();
+	$(".progress").show();
+	setInterval(prog, 100);
+}
+
+function hideProgressBar() {
+	$(".modal-backdrop").hide();
+	$(".progress").hide();
+}

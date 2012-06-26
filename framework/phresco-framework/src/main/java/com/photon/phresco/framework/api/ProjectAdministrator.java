@@ -58,7 +58,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    Project createProject(ProjectInfo info, File path) throws PhrescoException;
+    Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException;
 
     /**
      * Update the project with the given project information
@@ -70,7 +70,7 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      * 
      */
-    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path) throws PhrescoException;
+    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path,UserInfo userInfo) throws PhrescoException;
 
     /**
      * Returns the project for the specified project code

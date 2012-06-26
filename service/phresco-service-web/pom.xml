@@ -25,6 +25,12 @@
     </distributionManagement>
 		
     <dependencies>
+	
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
     	
     	<!-- Jersey -->
 		<dependency>
@@ -125,6 +131,11 @@
             <version>${project.version}</version>
         </dependency>
         
+		<dependency>
+            <groupId>com.photon.phresco.service.client</groupId>
+            <artifactId>phresco-service-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
                
         <dependency>
             <groupId>commons-io</groupId>

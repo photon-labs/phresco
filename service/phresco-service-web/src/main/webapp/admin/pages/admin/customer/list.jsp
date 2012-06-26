@@ -19,10 +19,29 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
-<form name="cusListForm" class="customer_list">
-	<div class="operation">
-		<input type="button" id="customerAdd" class="btn btn-primary" name="customer_add" onclick="loadContent('customerAdd', $('#subcontainer'));" value="<s:text name='lbl.header.admin.cust.add'/>"/>
-		<input type="button"  id="del"  class="btn del" class="btn btn-primary" disabled value="<s:text name='lbl.header.admin.delete'/>"/>
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+
+<%@ page import="com.photon.phresco.commons.model.Customer" %>
+
+<%
+	List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+%>
+
+<form class="customer_list">
+	<div class="operation" id="operation">
+		<input type="button" id="customerAdd" class="btn btn-primary" name="customer_add" value="<s:text name='lbl.hdr.adm.cust.add'/>" onclick="loadContent('customerAdd', $('#subcontainer'));"/>
+		<input type="button"  id="del"  class="btn del" class="btn btn-primary" disabled value="<s:text name='lbl.hdr.adm.delete'/>" onclick="loadContent('customerDelete', $('#subcontainer'));"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -38,65 +57,54 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admim.cuslt.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admim.cuslt.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.cuslt.vldupto" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.cuslt.vldupto" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><div class="th-inner"><s:label for="description" key="lbl.header.admin.cusrlt.linctype" theme="simple"/></div>
+								<div class="th-inner tablehead"><div class="th-inner"><s:label for="description" key="lbl.hdr.adm.cusrlt.linctype" theme="simple"/></div></div>
 							</th>
 						</tr>
 					</thead>
 		
 					<tbody>
-						<tr>
-							<td class="checkboxwidth">
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td class="namelabel-width">
-								<a href="#" name="edit" id="" >Best Buy</a>
-							</td>
-							<td >Shopping site</td>
-							<td>2011-2012</td>
-							<td>
-								Gold
-							</td>		
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Horizon Blue</a>
-							</td>
-							<td >Health Insurance</td>
-							<td>2011-2012</td>
-							<td>
-								Platinum	
-							</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Travel click</a>
-							</td>
-							<td >Hotel business management</td>
-							<td>2011-2012</td>
-							<td>
-								Silver	
-							</td>
-						</tr>
+						<%
+							if (CollectionUtils.isNotEmpty(customers)) {
+								for (Customer customer : customers) {
+						%>
+									<tr>
+										<td class="checkboxwidth">
+											<input type="checkbox" class="check" name="customerId" value="<%= customer.getId() %>" onclick="checkboxEvent();" />
+										</td>
+										<td class="namelabel-width">
+											<a href="#" onclick="editCustomer('<%= customer.getId() %>');"><%= customer.getName() %></a>
+										</td>
+										<td class="desclabel-width"><%= customer.getDescription() %></td>
+										<td><%= customer.getValidUpto() %></td>
+										<td><%= customer.getType() %></td>		
+									</tr>	
+						<%		
+								}
+							}
+						%>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-</form>	
+</form>
+
+<script type="text/javascript">
+	/** To edit the customer **/
+	function editCustomer(id) {
+		var params = "customerId=";
+		params = params.concat(id);
+		params = params.concat("&fromPage=");
+		params = params.concat("edit");
+		loadContent("customerAdd", $('#subcontainer'), params);
+	}
+</script>
