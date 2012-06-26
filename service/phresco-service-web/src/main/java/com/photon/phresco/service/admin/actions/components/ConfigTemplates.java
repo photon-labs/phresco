@@ -22,6 +22,9 @@ package com.photon.phresco.service.admin.actions.components;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 
 public class ConfigTemplates extends ServiceBaseAction { 
@@ -47,12 +50,19 @@ public class ConfigTemplates extends ServiceBaseAction {
 	
 	public String save() {
 		S_LOGGER.debug("Entering Method ConfigTemplates.save()");
-		if (validateForm()) {
-			setErrorFound(true);
-			return SUCCESS;
+		try  {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
+			addActionMessage(getText(CONFIGTEMPLATE_ADDED, Collections.singletonList(name)));
+			
+		} catch (Exception e) {
+			    addActionError(getText(CONFIGTEMPLATE_NOT_ADDED, Collections.singletonList(name)));
 		}
-		return  COMP_CONFIGTEMPLATE_LIST;
-	}
+		 return  COMP_CONFIGTEMPLATE_LIST;
+		   
+		}
 	
 	private boolean validateForm() {
 		boolean isError = false;

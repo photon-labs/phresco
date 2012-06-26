@@ -17,48 +17,52 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <script type="text/javascript">
-function findError(data) {
-	if(data.nameError != undefined) {
-		showError($("#nameControl"), $("#nameError"), data.nameError);
-	} else {
-		hideError($("#nameControl"), $("#nameError"));
+	function findError(data) {
+		if(data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+		
+		if(data.verError != undefined) {
+			showError($("#verControl"), $("#verError"), data.verError);
+		} else {
+			hideError($("#verControl"), $("#verError"));
+		}
+		
+		if(data.appltError != undefined) {
+			showError($("#appltControl"), $("#appltError"), data.appltError);
+		} else {
+			hideError($("#appltControl"), $("#appltError"));
+		}
+		
+		if(data.groupError != undefined) {
+			showError($("#groupControl"), $("#groupError"), data.groupError);
+		} else {
+			hideError($("#groupControl"), $("#groupError"));
+		}
 	}
 	
-	if(data.verError != undefined) {
-		showError($("#verControl"), $("#verError"), data.verError);
-	} else {
-		hideError($("#verControl"), $("#verError"));
+	function showDiv() {
+	    $('#othersDiv').show();
 	}
 	
-	if(data.appltError != undefined) {
-		showError($("#appltControl"), $("#appltError"), data.appltError);
-	} else {
-		hideError($("#appltControl"), $("#appltError"));
+	function hideDiv(){
+	    $('#othersDiv').hide();
 	}
-	
-	if(data.groupError != undefined) {
-		showError($("#groupControl"), $("#groupError"), data.groupError);
-	} else {
-		hideError($("#groupControl"), $("#groupError"));
-	}
-}
-function showDiv() {
-    $('#othersDiv').show();
-}
-function hideDiv(){
-    $('#othersDiv').hide();
-}
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.admin.dwnlad.title" theme="simple"/></h4>	
+	<h4><s:label for="description" key="lbl.hdr.adm.dwnlad.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.admin.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Download Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -66,22 +70,27 @@ function hideDiv(){
 		</div>
 			
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01"  placeholder="Description" class="input-xlarge" type="text">
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.dwnld.fle" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.dwnld.fle'/>
+			</label>
 			<div class="controls">
 				<input class="input-xlarge" type="file" id="fileArc" name="fileArc">
 			</div>
 		</div>
 		
 		<div class="control-group" id="appltControl">
-			<s:label for="input01" key="lbl.header.admin.dwnld.appltfrm" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.appltfrm'/>
+			</label>
 			<div class="controls">
 				<select id="multiSelect" multiple="multiple" name="application">
 					<option  value="WN">Windows</option>
@@ -89,20 +98,23 @@ function hideDiv(){
 					<option  value="MC">Mac</option>
 					<option  value="SL">Solaris</option>
 				</select>
-				<span class="help-inline" id="appltError"></span>
+				<span class="help-inline applyerror" id="appltError"></span>
 			</div>
 		</div>
 			
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.dwnld.icon" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.dwnld.icon'/>
+			</label>
 			<div class="controls">
 				<input class="input-xlarge" type="file" id="iconArc" name="iconArc">
 			</div>
 		</div>
 			
 		<div class="control-group" id="verControl">
-			<s:label for="input01" key="lbl.header.admin.dwnld.ver" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.ver'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Version" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
@@ -110,8 +122,9 @@ function hideDiv(){
 		</div>
 			
 		<div class="control-group" id="groupControl">
-			<s:label for="input01" key="lbl.header.admin.dwnld.group" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.group'/>
+			</label>	
 			<div class="controls">
 				<select id="select01" name="group">
 					<option value="" onclick="javascript:hideDiv();">- select -</option>
@@ -125,8 +138,10 @@ function hideDiv(){
 		</div>
         
         <div class="control-group popupalign" id="othersDiv">
-			<s:label for="input01" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<%-- <s:label for="input01" cssClass="control-label labelbold" theme="simple"/> --%>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Others" class="input-xlarge" type="text" name="others">
 				<span class="help-inline" id="othersError"></span>
@@ -135,7 +150,8 @@ function hideDiv(){
 	</div>
 
 	<div class="bottom_button">
-		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="hidden" name="fromPage" value="add" />
+		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>

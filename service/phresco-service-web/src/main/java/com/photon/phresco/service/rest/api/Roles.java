@@ -43,8 +43,8 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.commons.model.Permission;
 import com.photon.phresco.commons.model.Role;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.model.ServerConstants;
 
 @Path(ServerConstants.REST_API_ROLES)

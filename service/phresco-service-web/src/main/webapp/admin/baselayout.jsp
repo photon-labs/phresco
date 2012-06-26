@@ -1,33 +1,26 @@
-<%--
-  ###
-  Service Web Archive
-  
-  Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-       http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  ###
-  --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <!DOCTYPE html>
 <html>
 	<head>
+<%
+		   String css = null;
+		   Cookie[] cookies = request.getCookies();
+     	   for(int i = 0; i < cookies.length; i++) { 
+           Cookie cookiecss = cookies[i];
+           if (cookiecss.getName().equals("css")) {
+           	css = cookiecss.getValue();
+           	css = css.replace("%2F","/");
+           	session.setAttribute("css", css);
+           }  
+       } 
+%>
 		<title>Phresco</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-		<link rel="stylesheet" href="theme/photon/css/red.css" class="changeme">
+		<link rel="stylesheet" href="<%= session.getAttribute("css") %>" class="changeme">
 		<link rel="stylesheet" href="css/media-queries.css">
 		<link rel="stylesheet" href="css/datepicker.css"> <!-- used for date picker-->
 		<link rel="stylesheet" href="css/jquery.ui.all.css"> <!-- used for date picker -->
@@ -39,31 +32,44 @@
 		<!-- document resizer -->
 		<script type="text/javascript" src="js/windowResizer.js"></script>
 		
+		<script type="text/javascript" src="js/loading.js"></script>
+		
 		<!-- Pop Up box -->
 		<script type="text/javascript" src="js/bootstrap-modal.js"></script>
 		<script type="text/javascript" src="js/bootstrap-transition.js"></script>
 		
-		<!-- rightpanel scrollbar -->
+		<!-- right panel scroll bar -->
 		<script type="text/javascript" src="js/home.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
 		
 		<!-- file upload -->
 		<script type="text/javascript" src="js/ajaxfileupload.js"></script>
 		
-		<!-- datepicker -->
+		<!-- date picker -->
 		<script type="text/javascript" src="js/jquery.ui.datepicker.js"></script>
 	   	<script type="text/javascript" src="js/jquery.cookie.js"></script>
 
 			
 		<script type="text/javascript">
 			$(document).ready(function() {
-				if($.cookie("css")) {
-					$("link.changeme").attr("href",$.cookie("css"));
+				var theme = $("link.changeme").attr("href");
+				/* var theme = $.cookie("css"); */
+				if(theme != null && theme != "theme/photon/css/red.css") {
+					$("link.changeme").attr("href", "theme/photon/css/blue.css");
+					showHeaderImage();
+					$.cookie("css", $("link.changeme").attr("href"));
 				}
+				
+				else {
+					$("link.changeme").attr("href", "theme/photon/css/red.css");
+					showHeaderImage();
+					$.cookie("css", $("link.changeme").attr("href"));
+				} 
 				
 				$(".styles").click(function() {
 					$("link.changeme").attr("href",$(this).attr('rel'));
-					$.cookie("css", $(this).attr('rel'), {expires: 365, path: '/'});
+					$.cookie("css", $("link.changeme").attr("href"));
+					var theme = $.cookie("css");
 					showHeaderImage();
 					return false;
 				});
@@ -91,14 +97,26 @@
 			function showHeaderImage() {
 				var theme = $.cookie("css");
 				if(theme != undefined && theme != "theme/photon/css/red.css") {
+					$('#progressBar').removeClass("progress-danger");
+					$('#progressBar').addClass("progress-info");
 					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_blue.png");
+					$('.loadingIcon').attr("src", "theme/photon/images/loading_blue.gif");
 				} else {
+					$('#progressBar').removeClass("progress-info");
+					$('#progressBar').addClass("progress-danger");
 					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_red.png");
+					$('.loadingIcon').attr("src", "theme/photon/images/loading_red.gif");
 				}
 			}
 		</script>
 	</head>
 	<body>
+		<div class="modal-backdrop fade in popupalign"></div>
+	    
+	    <div id="progressBar" class="progress active progress_bar">
+		    <div id="progress-bar" class="bar progress_text"></div>
+		</div>
+		
 		<!-- Header Starts Here -->
 		<header>
 			<div class="header">
@@ -109,9 +127,9 @@
 					<div class="nav_slider">
 						<nav class="headerInnerTop">
 							<ul>
-								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard"><s:label for="description" key="lbl.header.dashboard"  theme="simple"/></a></li>
-								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components"><s:label for="description" key="lbl.header.components" theme="simple"/></a></li>
-								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu"><s:label for="description" key="lbl.header.admin"  theme="simple"/></a></li>
+								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard"><s:label for="description" key="lbl.hdr.dash"  theme="simple"/></a></li>
+								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components"><s:label for="description" key="lbl.hdr.comp" theme="simple"/></a></li>
+								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu"><s:label for="description" key="lbl.hdr.adm"  theme="simple"/></a></li>
 							</ul>
 							<div class="close_links" id="close_links">
 								<a href="JavaScript:void(0);">
@@ -125,16 +143,16 @@
 					<div class="quick_lnk" id="quick_lnk">
 						<a href="JavaScript:void(0);">
 							<div class="quick_links_outer">
-								<s:label for="description" key="lbl.header.quicklink" theme="simple"/>
+								<s:label for="description" key="lbl.hdr.quicklink" theme="simple"/>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div id="signOut" class="signOut">
 					<li class="usersettings">
-						<s:label for="description" key="lbl.header.usersettings" theme="simple"/>
+						<s:label for="description" key="lbl.hdr.usersettings" theme="simple"/>
 						<img src="images/downarrow.png" class="arrow">
-						  <div class="userInfo">&nbsp;<s:label for="description" key="lbl.usersettings.skins"  theme="simple"/>&nbsp;
+						  <div class="userInfo">&nbsp;<s:label for="description" key="lbl.usrset.skins"  theme="simple"/>&nbsp;
 								<a class="styles" href="#"  rel="theme/photon/css/red.css">
 									<img src="images/red_themer.jpg" class="skinImage">
 								</a>
@@ -142,8 +160,8 @@
 									<img src="images/blue_themer.jpg" class="skinImage">
 								</a>
 						 </div>
-						 <div class="userInfo"><a href="#" class="abtPopUp about"><s:label for="description" key="lbl.usersettings.abtservice" theme="simple"/></a></div>
-						 <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label for="description" key="lbl.usersettings.signout" theme="simple"/></a></div>
+						 <div class="userInfo"><a href="#" class="abtPopUp about"><s:label for="description" key="lbl.usrset.abtservice" theme="simple"/></a></div>
+						 <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label for="description" key="lbl.usrset.signout" theme="simple"/></a></div>
 					</li>
 				</div>
 			</div>
@@ -162,14 +180,14 @@
 							class="arrow_links_top">
 							<span class="shortcutRed" id=""></span>
 							<span class="shortcutWh" id="">
-							<s:label for="description" key="lbl.header.topleftnavlab"  theme="simple"/></span>
+							<s:label for="description" key="lbl.hdr.topleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="righttopnav">
 						<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 							class="shortcutRed" id=""></span><span class="shortcutWh"
 							id="">
-							<s:label for="description" key="lbl.header.toprightnavlab" theme="simple"/></span>
+							<s:label for="description" key="lbl.hdr.toprightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>
@@ -186,13 +204,13 @@
 				   <div class="leftbotnav">
 						<a href="JavaScript:void(0);" id="forum" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id=""></span><span
-							class="shortcutWh" id=""><s:label for="description" key="lbl.header.bottomleftnavlab"  theme="simple"/></span>
+							class="shortcutWh" id=""><s:label for="description" key="lbl.hdr.bottomleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="rightbotnav">
 						<a href="JavaScript:void(0);" id="settings" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id="lf_tp1"></span><span
-							class="shortcutWh" id="lf_tp2"><s:label for="description" key="lbl.header.bottomrightnavlab" theme="simple"/></span>
+							class="shortcutWh" id="lf_tp2"><s:label for="description" key="lbl.hdr.bottomrightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>

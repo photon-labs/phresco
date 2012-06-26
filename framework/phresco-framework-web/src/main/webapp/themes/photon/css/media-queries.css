@@ -245,7 +245,7 @@ Width <= 1024
 	
 	.build_detail_div {
 	    float: left;
-	    height: 91%;
+	    height: 98%;
 	    margin-left: 0;
 	    margin-top : 0;
 	    width: 50%;
@@ -257,6 +257,7 @@ Width <= 1024
 	    margin-left: 0;
 	    margin-top: 0px;
 	    width: 50%;
+	    height: 98%;
 	}
 	
 	.table_div_unit {
@@ -1043,7 +1044,7 @@ Width >= 1152 and < 1280
 	
 	.build_detail_div {
 	    float: left;
-	    height: 96%;
+	    height: 100%;
 	    margin-left: 0;
 	    margin-top : 0;
 	    width: 50%;
@@ -1051,7 +1052,7 @@ Width >= 1152 and < 1280
 	
 	.build_progress_div {
 	    float: left;
-	    height: 96%;
+	    height: 100%;
 	    margin-left: 0;
 	    margin-top: 0px;
 	    width: 50%;
@@ -1846,7 +1847,7 @@ Width >= 1280 and height >= 800
 	
 	.build_progress_div {
 		float: left;
-		height: 95%;
+		height: 94.5%;
 		margin-left: 0;
 		margin-top: 0px;
 		width: 50%;
@@ -1863,7 +1864,7 @@ Width >= 1280 and height >= 800
 	
 	.build_detail_div {
 		float: left;
-		height: 95%;
+		height: 94.5%;
 		margin-left: 0;
 		width: 50%;
 	}
@@ -2273,7 +2274,7 @@ Width > 1280 and <= 1360
 	
 	.build_progress_div {
 	    float: left;
-	    height: 96%;
+	    height: 92%;
 	    margin-left: 0;
 	    width: 50%;
 	    margin-top: 0;
@@ -2281,7 +2282,7 @@ Width > 1280 and <= 1360
 	
 	.build_detail_div {
 	    float: left;
-	    height: 96%;
+	    height: 92%;
 	    margin-left: 0;
 	    width: 50%;
 	}
@@ -3023,7 +3024,7 @@ Width > 1441 and <= 1600
 	
 	.build_detail_div {
 	    float: left;
-	    height: 94%;
+	    height: 93%;
 	    margin-left: 0;
 	    width: 50%;
 	}
@@ -3048,7 +3049,7 @@ Width > 1441 and <= 1600
 	
 	.build_progress_div {
 	    float: left;
-	    height: 94%;
+	    height: 93%;
 	    margin-left: 0;
 	    margin-top: 0;
 	    width: 50%;

@@ -28,6 +28,14 @@
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
 
 	<distributionManagement>
+        <repository>
+            <id>${releases.repo.id}</id>
+            <url>${releases.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${snapshots.repo.id}</id>
+            <url>${snapshots.repo.url}</url>
+        </snapshotRepository>
         <site>
             <id>phresco.plugins.javascript</id>
             <name>Phresco Plugins - Javascript</name>
@@ -35,7 +43,7 @@
         </site>
     </distributionManagement>
 	
-	<dependencies>
+    <dependencies>
 
 		<!-- Compile -->
 		<dependency>
@@ -70,12 +78,4 @@
 			</resource>
 		</resources>
 	</build>
-    
-     <distributionManagement>
-            <repository>
-                <id>dev-releases</id>
-                <url>http://172.16.18.178:8080/nexus/content/repositories/releases/</url>
-            </repository>
-          
-    </distributionManagement>
 </project>

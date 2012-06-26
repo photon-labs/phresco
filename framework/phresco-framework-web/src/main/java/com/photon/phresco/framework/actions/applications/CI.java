@@ -21,7 +21,6 @@ package com.photon.phresco.framework.actions.applications;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URL;
@@ -41,10 +40,13 @@ import org.quartz.CronExpression;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import com.photon.phresco.commons.AndroidConstants;
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.commons.CIPasswordScrambler;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
@@ -57,12 +59,10 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
-import com.photon.phresco.framework.commons.filter.FileListFilter;
-import com.photon.phresco.model.CIBuild;
-import com.photon.phresco.util.AndroidConstants;
+import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-import com.photon.phresco.util.XCodeConstants;
 
 
 public class CI extends FrameworkBaseAction implements FrameworkConstants {
@@ -174,6 +174,11 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
+                // get list of sdks
+                List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+                iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
+                iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
+                getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 			
 			CIJob existJob = administrator.getJob(project);
@@ -279,8 +284,10 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				settingsInfoMap.put(IPHONE_TARGET_NAME, target);
 				if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.HYBRID_PLIST);
+					settingsInfoMap.put(ENCRYPT, FALSE);
 				} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
+					settingsInfoMap.put(ENCRYPT, TRUE);
 				}
 			}
 
@@ -305,6 +312,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     			 buildMavenCommand = runtimeManager.buildMavenCommand(project, actionType, settingsInfoMap);
     		} else {
     			buildMavenCommand.append(command);
+    			buildMavenCommand.append(SPACE);
     			buildMavenCommand.append(runtimeManager.buildMavenArgCommand(actionType, settingsInfoMap));
     		}
     		mvncmd = buildMavenCommand.toString().substring(4).trim();

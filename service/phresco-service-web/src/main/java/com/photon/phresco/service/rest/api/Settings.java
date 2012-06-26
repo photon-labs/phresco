@@ -37,12 +37,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 
-import com.photon.phresco.commons.model.Customer;
-import com.photon.phresco.commons.model.Setting;
-import com.photon.phresco.commons.model.Setting;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.SettingsTemplate;
+import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.model.ServerConstants;
 
 @Path(ServerConstants.REST_API_SETTINGS)
@@ -55,7 +53,7 @@ public class Settings implements ServerConstants {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Setting> list(@Context HttpServletRequest request, 
+	public List<SettingsTemplate> list(@Context HttpServletRequest request, 
 			@QueryParam(REST_API_QUERY_PARAM_LIMIT) int limit, 
 			@QueryParam(REST_API_QUERY_PARAM_OFFSET) int offset) throws PhrescoException {
 		HttpSession session = request.getSession(true);
@@ -66,7 +64,7 @@ public class Settings implements ServerConstants {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Setting> update(List<Setting> setting) throws PhrescoException {
+	public List<SettingsTemplate> update(List<SettingsTemplate> setting) throws PhrescoException {
 		return null;
 	}
 	
@@ -80,7 +78,7 @@ public class Settings implements ServerConstants {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void create(List<Setting> setting) throws PhrescoException {
+	public void create(List<SettingsTemplate> setting) throws PhrescoException {
 		throw new UnsupportedOperationException(ERROR_MSG_UNSUPPORTED_OPERATION);
 	}
 	
@@ -91,7 +89,7 @@ public class Settings implements ServerConstants {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path(REST_API_LDAP)
-	public Setting get(@PathParam(REST_API_LDAP_PARAM_ID) String id) {
+	public SettingsTemplate get(@PathParam(REST_API_LDAP_PARAM_ID) String id) {
 		return null;
 	}
 	
@@ -102,7 +100,7 @@ public class Settings implements ServerConstants {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path(REST_API_PATH_ID)
-	public void create(@PathParam(REST_API_PATH_PARAM_ID) String id, Setting setting) {
+	public void create(@PathParam(REST_API_PATH_PARAM_ID) String id, SettingsTemplate setting) {
 		throw new UnsupportedOperationException(ERROR_MSG_UNSUPPORTED_OPERATION);
 	}
 	
@@ -110,7 +108,7 @@ public class Settings implements ServerConstants {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path(REST_API_LDAP)
-	public Setting update(Setting setting) {
+	public SettingsTemplate update(SettingsTemplate setting) {
 		//The settings should exist and the id should be the same
 		return null;
 	}

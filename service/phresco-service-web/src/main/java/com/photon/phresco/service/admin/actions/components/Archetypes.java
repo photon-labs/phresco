@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -68,11 +69,13 @@ public class Archetypes extends ServiceBaseAction {
 	public String save() {
 		S_LOGGER.debug("Entering Method Archetypes.save()");
 		try {
-			boolean isValid = validateForm();
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
 			InputStream inputStream = null;
 			FileOutputStream outputStream = null;
 //			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
-			if (isValid) {
 				inputStream = new FileInputStream(applnArc);
 				/*outputStream = new FileOutputStream(new File("c:/temp/" + applnArcFileName));
 				IOUtils.copy(inputStream, outputStream);*/
@@ -82,37 +85,34 @@ public class Archetypes extends ServiceBaseAction {
 					outputStream = new FileOutputStream(new File("c:/temp/" + pluginArcFileName));
 					IOUtils.copy(inputStream, outputStream);
 				}
-				return COMP_ARCHETYPE_LIST;
-			}
-			
-		} catch (IOException e) {
-			
+				addActionMessage(getText(ARCHETYPE_ADDED, Collections.singletonList(name)));
+		} catch (Exception e) {
+			addActionError(getText(ARCHETYPE_NOT_ADDED, Collections.singletonList(name)));
 		} 
 
-		setErrorFound(true);
-		return SUCCESS;
+		return COMP_ARCHETYPE_LIST;
 	}
 	
 	private boolean validateForm() {
-		boolean success = true;
+		boolean success = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
-			success = false;
+			success = true;
 		}
 		
 		if (StringUtils.isEmpty(version)) {
 			setVerError(getText(KEY_I18N_ERR_VER_EMPTY));
-			success = false;
+			success = true;
 		}
 		
 		if (StringUtils.isEmpty(apptype)) {
 			setAppError(getText(KEY_I18N_ERR_APPTYPE_EMPTY));
-			success = false;
+			success = true;
 		}
 		
 		if (StringUtils.isEmpty(applnArcFileName) || applnArc == null) {
 			setFileError(getText(KEY_I18N_ERR_APPLNJAR_EMPTY));
-			success = false;
+			success = true;
 		}
 		return success;
 	}

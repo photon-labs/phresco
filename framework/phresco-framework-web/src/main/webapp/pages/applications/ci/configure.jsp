@@ -5,8 +5,8 @@
 <%@ page import="com.photon.phresco.commons.CIJob" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
-<%@ page import="com.photon.phresco.util.XCodeConstants"%>
-<%@ page import="com.photon.phresco.util.AndroidConstants"%>
+<%@ page import="com.photon.phresco.commons.XCodeConstants"%>
+<%@ page import="com.photon.phresco.commons.AndroidConstants"%>
 <%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.framework.commons.PBXNativeTarget"%>
@@ -39,6 +39,8 @@
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
+   	// mac sdks
+   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 <div class="popup_Modal configurePopUp" id="ciDetails">
     <form name="ciDetails" action="<%= actionStr %>" method="post" autocomplete="off" class="ci_form" id="ciForm">
@@ -416,10 +418,14 @@
 					<div class="input">
 						<select id="sdk" name="sdk" class="xlarge" >
 							<%
-								for (int i=0; i<XCodeConstants.SUPPORTED_SDKS.length; i++) {
+								if (macSdks != null) {
+									for (String sdk : macSdks) {
 							%>
-								<option value="<%= XCodeConstants.SUPPORTED_SDKS[i] %>"><%= XCodeConstants.SUPPORTED_SDKS[i] %></option>
-							<% } %>
+								<option value="<%= sdk %>"><%= sdk %></option>
+							<% 
+									} 
+								}
+							%>
 						</select>
 					</div>
 				</div>

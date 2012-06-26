@@ -29,11 +29,12 @@ function findError(data) {
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.comp.apln.title" theme="simple"/></h4>	
+	<h4 class="hdr"><s:label for="description" key="lbl.hdr.comp.apln.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.comp.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Application Type Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -41,7 +42,9 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.comp.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.comp.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
 			</div>
@@ -49,7 +52,7 @@ function findError(data) {
 	</div>
 	
 	<div class="bottom_button">
-		<input type="button" id="applicationSave" class="btn btn-primary" onclick="loadContent('applicationSave', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applicationCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="button" id="applicationSave" class="btn btn-primary" onclick="clickSave('applicationSave', $('#subcontainer'), 'Creating Application Type');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applicationCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>

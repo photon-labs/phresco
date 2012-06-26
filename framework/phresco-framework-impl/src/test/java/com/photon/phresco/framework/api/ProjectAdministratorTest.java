@@ -36,12 +36,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.PropertyTemplate;
@@ -68,35 +68,35 @@ public class ProjectAdministratorTest implements FrameworkConstants {
 	    }
 	}
 
-	//@Test
-	public void testCreateProject() throws PhrescoException {
-        int initialSize = getProjectsCount();
-        administrator.createProject(createProjectInfo(), null);
-        int finalSize = getProjectsCount();
-        assertEquals(initialSize + 1, finalSize);
-
-        administrator.deleteProject(Collections.singletonList("Test"));
-    }
-
-	//@Test
-	public void testGetProject() throws PhrescoException {
-	    administrator.createProject(createProjectInfo(), null);
-	    Project project = administrator.getProject("Test");
-	    assertNotNull(project);
-
-	    administrator.deleteProject(Collections.singletonList("Test"));
-	}
-
-	//@Test
-	public void testDeleteProject() throws PhrescoException {
-        administrator.createProject(createProjectInfo(), null);
-
-        int initialSize = getProjectsCount();
-        administrator.deleteProject(Collections.singletonList("Test"));
-        int finalSize = getProjectsCount();
-
-        assertEquals(initialSize - 1, finalSize);
-    }
+//	//@Test
+//	public void testCreateProject() throws PhrescoException {
+//        int initialSize = getProjectsCount();
+//        administrator.createProject(createProjectInfo(), null);
+//        int finalSize = getProjectsCount();
+//        assertEquals(initialSize + 1, finalSize);
+//
+//        administrator.deleteProject(Collections.singletonList("Test"));
+//    }
+//
+//	//@Test
+//	public void testGetProject() throws PhrescoException {
+//	    administrator.createProject(createProjectInfo(), null);
+//	    Project project = administrator.getProject("Test");
+//	    assertNotNull(project);
+//
+//	    administrator.deleteProject(Collections.singletonList("Test"));
+//	}
+//
+//	//@Test
+//	public void testDeleteProject() throws PhrescoException {
+//        administrator.createProject(createProjectInfo(), null);
+//
+//        int initialSize = getProjectsCount();
+//        administrator.deleteProject(Collections.singletonList("Test"));
+//        int finalSize = getProjectsCount();
+//
+//        assertEquals(initialSize - 1, finalSize);
+//    }
 
     @Test
 	public void createEnvironment() throws PhrescoException {

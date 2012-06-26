@@ -28,7 +28,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.commons.model.Customer;
