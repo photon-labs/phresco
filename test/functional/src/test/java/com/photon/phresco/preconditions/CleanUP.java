@@ -40,6 +40,7 @@ public class CleanUP extends TestCase{
 	                                   phrescoHome.goToPhrescoHomePage(methodName);
 				                       phrescoHome.clickOnApplicationsTab(methodName);
 				                       phrescoHome.CleanUp(methodName);
+									   
 				                       
 					
 	    }
