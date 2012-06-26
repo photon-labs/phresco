@@ -170,7 +170,7 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @return
 	 */
 	public boolean hasSigning() {
-		if(model.getProfiles().getProfile() != null){
+		if(model.getProfiles() !=null && model.getProfiles().getProfile() != null){
 			for(Profile profile : model.getProfiles().getProfile()){
 				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
 				for (Plugin plugin2 : plugin) {

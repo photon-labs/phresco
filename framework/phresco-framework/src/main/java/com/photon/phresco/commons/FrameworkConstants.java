@@ -174,6 +174,23 @@ public interface FrameworkConstants {
     String ANDROID_DEVICE = "device";
     String ANDROID_DEVICE_LIST = "deviceList";
     String ANDROID_PROGUARD_SKIP = "android.proguard.skip";
+    String PROFILE_ID = "sign";
+    String GOAL_INSTALL = "install";
+    String GOAL_SIGN = "sign";
+    String ANDROID_PROFILE_PLUGIN_GROUP_ID = "org.apache.maven.plugins";
+    String ANDROID_PROFILE_PLUGIN_ARTIFACT_ID = "maven-jarsigner-plugin";
+    String ANDROID_PROFILE_PLUGIN_VERSION = "1.2";
+    String PHASE_PACKAGE = "package";
+    String ANDROID_EXECUTION_ID = "signing";
+    String ELEMENT_ARCHIVE_DIR = "archiveDirectory";
+    String ELEMENT_REMOVE_EXIST_SIGN = "removeExistingSignatures";
+    String ELEMENT_INCLUDES = "includes";
+    String ELEMENT_INCLUDE = "include";
+    String ELEMENT_BUILD = "do_not_checkin/build/*.apk";
+    String ELEMENT_TARGET = "do_not_checkin/target/*.apk";
+    String ELEMENT_VERBOS = "verbose";
+    String ELEMENT_VERIFY = "verify";
+    
     String POST = "POST";
     String GET = "GET";
 	String SKIPTESTS = "skipTests";
@@ -245,6 +262,7 @@ public interface FrameworkConstants {
     String REQ_NODEJS_SERVER_LOG = "NodeJsServerLog";
     String REQ_PROJECT = "project";
     String REQ_PROJECT_CODE = "projectCode";
+    String REQ_PROJECT_LOCATION = "projectLocation";
     String REQ_SELECTED_TAB = "selectedTab";
     String REQ_SELECTED_MENU = "selectedHeader";
     String REQ_PROJECTS = "Projects";
@@ -320,6 +338,7 @@ public interface FrameworkConstants {
     String REQ_BUILD_WARNING = "buildWarning";
     String REQ_DEPLOY_BUILD_NUMBER = "buildNumber";
     String REQ_ANDROID_PROFILE_DET = "androidProfileDetails";
+    String REQ_ANDROID_HAS_SIGNING = "hasSigning";
     String REQ_DEPLOY_IPHONE_SIMULATOR_VERSION= "simulatorVersion";
     String REQ_HIDE_DEPLOY_TO_SIMULATOR = "deployToSimulatorStatus";
 	String REQ_HIDE_DEPLOY_TO_DEVICE = "deployToDeviceStatus";
@@ -596,7 +615,12 @@ public interface FrameworkConstants {
      */
     String SUCCESS_BUILD_DELETE = "build.delete.success";
     String FAILURE_BUILD_DELETE = "build.delete.fail";
-
+    String PROFILE_CREATE_SUCCESS = "profile.create.success";
+    String PROFILE_UPDATE_SUCCESS = "profile.update.success";
+    String PROFILE_CREATE_ERROR = "profile.create.error";
+    String PROFILE_UPDATE_ERROR = "profile.update.error";
+    String PROFILE_CREATE_MSG = "Create a profile";
+    
     /*
      * Code keys
      */
@@ -1037,4 +1061,8 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORTS = "reports";
    String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
    String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
+   
+   /* Android Key store file */
+   String SIGNING_TYPES="keystore";
+   
   }

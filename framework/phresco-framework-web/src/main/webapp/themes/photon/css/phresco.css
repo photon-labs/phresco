@@ -4553,4 +4553,55 @@ ul#display-inline-block-example li {
 input.xlarge.javastd {
 	 width: 73%;
 }
+
+/** generate build advanced settings starts **/
+.topFouty {
+	top: 40%;
 }
+
+.adv-settings-accoridan-inner {
+	padding : 0px; 
+	width: 100%;
+}
+
+.adv-settings-width {
+	width: 100%;
+}
+
+.adv_setting_accordian_bottom {
+	border-bottom: 1px solid #ffffff !important;
+}
+
+.generate_build_err_msg {
+	width:72%; 
+	text-align: left;	
+}
+
+.adv-settings-popup-action {
+	width: 98%;
+}
+
+.adv-settings-error-msg {
+	width:64%; 
+	text-align: left; 
+	float: left;
+}
+
+.fileTreeBrowseOverflow {
+	overflow: auto; 
+	max-height: 300px; 
+/* 	padding-top: 0px; */
+}
+
+.fieldset_center_align {
+	width: 99%;
+}
+
+.btn_browse {
+	padding: 5px 10px 3px !important;
+}
+
+a[id='androidSigning']:hover {
+     color: #000000 !important;
+}
+/** generate build advanced settings ends **/

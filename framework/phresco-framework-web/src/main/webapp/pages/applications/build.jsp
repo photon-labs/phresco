@@ -380,6 +380,8 @@
     		successEnvValidation(data);
     	} else if(pageUrl == "fetchBuildInfoEnvs") {
     		fillVersions("environments", data.buildInfoEnvs);
-    	}
+    	} else if (pageUrl == "createProfile") {
+			successProfileCreation(data);
+		}
     }
 </script>

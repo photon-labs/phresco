@@ -1396,6 +1396,5 @@ background-color: #ffffff;
 	background: -o-linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* IE10+ */
 	background: linear-gradient(top,  #5b0a0e 0%,#630a0a 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b0a0e', endColorstr='#630a0a',GradientType=0 ); /* IE6-9 */
-		
-	}
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b0a0e', endColorstr='#630a0a',GradientType=0 ); /* IE6-9 */		
+}

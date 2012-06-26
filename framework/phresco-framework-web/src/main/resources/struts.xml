@@ -622,5 +622,19 @@
         <action name="createReportConfig" method="createReportConfig" class="com.photon.phresco.framework.actions.applications.SiteReport">
 <!--             <result name="configure">/pages/applications/siteReport/configure.jsp</result> -->
         </action>
+        
+        <action name="advancedBuildSettings" method="advancedBuildSettings" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result name="success">/pages/applications/generate_build_adv_settings.jsp</result>
+        </action>
+        
+        <action name="createProfile" method="createAndroidProfile" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result type="json"/>
+        </action>
+        
+        <!-- file or folder browse option starts -->
+        <action name="browse" method="browse" class="com.photon.phresco.framework.actions.applications.Applications">
+        	<result name="success">/pages/fileBrowse.jsp</result>
+        </action>
+        <!-- file or folder browse option ends -->
     </package>
 </struts>
