@@ -155,6 +155,8 @@ public interface ServerConstants {
 	String REST_API_QUERY_PARAM_OFFSET = "offset";
 
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "{0} operation is not allowed";
+	String ERROR_MSG_NOT_FOUND = "Content Not Found";
+	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
 	
 	 /*
      * Constants for MongoDB Collections
@@ -180,4 +182,14 @@ public interface ServerConstants {
 	String EX_PHEX00002 = "PHEX00002";
 	String EX_PHEX00003 = "PHEX00003";
 	String EX_PHEX00004 = "PHEX00004";
+	String EX_PHEX00005 = "PHEX00005";
+	String EX_PHEX00006 = "PHEX00006";
+	
+	/*
+     * Constants for Operatins
+     */
+	
+	String UPDATE = "Update";
+	String INSERT = "Insert";
+	String DELETE = "Delete";
 }
