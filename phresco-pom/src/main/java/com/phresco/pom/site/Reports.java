@@ -97,46 +97,46 @@ public class Reports implements Serializable{
 	}
 
 	public static final Reports SUREFIRE_REPORT = new Reports(
-			SiteMessages.getString("SiteConstants.surefireReport.display.name") ,
-			SiteMessages.getString("SiteConstants.surefireReport.group.id"), 
-			SiteMessages.getString("SiteConstants.surefireReport.artifact.id"), 
-			SiteMessages.getString("SiteConstants.surefireReport.version")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			SiteMessages.getString("Reports.surefireReport.display.name") ,
+			SiteMessages.getString("Reports.surefireReport.group.id"), 
+			SiteMessages.getString("Reports.surefireReport.artifact.id"), 
+			SiteMessages.getString("Reports.surefireReport.version")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 
-	public static final Reports JAVADOC = new Reports(SiteMessages.getString("SiteConstants.javadoc.display.name"), 
-			SiteMessages.getString("SiteConstants.javadoc.artifact.id"),
-			SiteMessages.getString("SiteConstants.javadoc.group.id"),
-			SiteMessages.getString("SiteConstants.javadoc.version"));	
+	public static final Reports JAVADOC = new Reports(SiteMessages.getString("Reports.javadoc.display.name"), 
+			SiteMessages.getString("Reports.javadoc.artifact.id"),
+			SiteMessages.getString("Reports.javadoc.group.id"),
+			SiteMessages.getString("Reports.javadoc.version"));	
 	
-	public static final Reports JDEPEND = new Reports(SiteMessages.getString("SiteConstants.jdepend.display.name"), 
-			SiteMessages.getString("SiteConstants.jdepend.artifact.id"),
-			SiteMessages.getString("SiteConstants.jdepend.group.id"),
-			SiteMessages.getString("SiteConstants.jdepend.version"));	
+	public static final Reports JDEPEND = new Reports(SiteMessages.getString("Reports.jdepend.display.name"), 
+			SiteMessages.getString("Reports.jdepend.artifact.id"),
+			SiteMessages.getString("Reports.jdepend.group.id"),
+			SiteMessages.getString("Reports.jdepend.version"));	
 	
-	public static final Reports PMD = new Reports(SiteMessages.getString("SiteConstants.pmd.display.name"), 
-			SiteMessages.getString("SiteConstants.pmd.artifact.id"),
-			SiteMessages.getString("SiteConstants.pmd.group.id"),
-			SiteMessages.getString("SiteConstants.pmd.version"));	
+	public static final Reports PMD = new Reports(SiteMessages.getString("Reports.pmd.display.name"), 
+			SiteMessages.getString("Reports.pmd.artifact.id"),
+			SiteMessages.getString("Reports.pmd.group.id"),
+			SiteMessages.getString("Reports.pmd.version"));	
 	
-	public static final Reports COBERTURA = new Reports(SiteMessages.getString("SiteConstants.cobertura.display.name"), 
-			SiteMessages.getString("SiteConstants.cobertura.artifact.id"),
-			SiteMessages.getString("SiteConstants.cobertura.group.id"),
-			SiteMessages.getString("SiteConstants.cobertura.version"));	
+	public static final Reports COBERTURA = new Reports(SiteMessages.getString("Reports.cobertura.display.name"), 
+			SiteMessages.getString("Reports.cobertura.artifact.id"),
+			SiteMessages.getString("Reports.cobertura.group.id"),
+			SiteMessages.getString("Reports.cobertura.version"));	
 	
-	public static final Reports LINK_CHECK = new Reports(SiteMessages.getString("SiteConstants.linkcheck.display.name"), 
-			SiteMessages.getString("SiteConstants.linkcheck.artifact.id"),
-			SiteMessages.getString("SiteConstants.linkcheck.group.id"),
-			SiteMessages.getString("SiteConstants.linkcheck.version"));	
+	public static final Reports LINK_CHECK = new Reports(SiteMessages.getString("Reports.linkcheck.display.name"), 
+			SiteMessages.getString("Reports.linkcheck.artifact.id"),
+			SiteMessages.getString("Reports.linkcheck.group.id"),
+			SiteMessages.getString("Reports.linkcheck.version"));	
 	
-	public static final Reports JXR = new Reports(SiteMessages.getString("SiteConstants.jxr.display.name"), 
-			SiteMessages.getString("SiteConstants.jxr.artifact.id"),
-			SiteMessages.getString("SiteConstants.jxr.group.id"),
-			SiteMessages.getString("SiteConstants.jxr.version"));
+	public static final Reports JXR = new Reports(SiteMessages.getString("Reports.jxr.display.name"), 
+			SiteMessages.getString("Reports.jxr.artifact.id"),
+			SiteMessages.getString("Reports.jxr.group.id"),
+			SiteMessages.getString("Reports.jxr.version"));
 	
-	public static final Reports PROJECT_INFO = new Reports(SiteMessages.getString("SiteConstants.project-info.display.name"), 
-			SiteMessages.getString("SiteConstants.project-info.artifact.id"),
-			SiteMessages.getString("SiteConstants.project-info.group.id"),
-			SiteMessages.getString("SiteConstants.project-info.version"));
+	public static final Reports PROJECT_INFO = new Reports(SiteMessages.getString("Reports.project-info.display.name"), 
+			SiteMessages.getString("Reports.project-info.artifact.id"),
+			SiteMessages.getString("Reports.project-info.group.id"),
+			SiteMessages.getString("Reports.project-info.version"));
 	static {
 		List<ReportCategories> catagories = new ArrayList<ReportCategories>();
 		catagories.add(ReportCategories.INFO_INDEX);

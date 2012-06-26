@@ -32,9 +32,9 @@ public class ReportCategories {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public static final ReportCategories INFO_INDEX = new ReportCategories(SiteMessages.getString("Reports.Reports.project-info.report.index"));
+	public static final ReportCategories INFO_INDEX = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.index"));
 
-	public static final ReportCategories INFO_MODULE = new ReportCategories(SiteMessages.getString("Reports.Reports.project-info.report.modules"));
+	public static final ReportCategories INFO_MODULE = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.modules"));
 
-	public static final ReportCategories INFO_DEPENDENCIES = new ReportCategories(SiteMessages.getString("Reports.Reports.project-info.report.dependencies"));
+	public static final ReportCategories INFO_DEPENDENCIES = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.dependencies"));
 }

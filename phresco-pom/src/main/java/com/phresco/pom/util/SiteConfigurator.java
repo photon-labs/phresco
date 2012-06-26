@@ -21,9 +21,10 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBException;
+
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.ReportPlugin;
 import com.phresco.pom.model.ReportPlugin.ReportSets;
 import com.phresco.pom.model.ReportSet;
@@ -49,6 +50,9 @@ public class SiteConfigurator {
 	public ReportPlugin addReportPlugin(Reports reports,File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null) {
+				processor.addSitePlugin();
+			}
 			reportPlugin = new ReportPlugin();
 			reportPlugin.setGroupId(reports.getGroupId());
 			reportPlugin.setArtifactId(reports.getArtifactId());
@@ -58,6 +62,7 @@ public class SiteConfigurator {
 			return reportPlugin;
 		} catch (JAXBException e) {
 		} catch (IOException e) {
+		} catch (PhrescoPomException e) {
 		}
 		return null;
 	}
@@ -68,47 +73,38 @@ public class SiteConfigurator {
 	 * @param file
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws PhrescoPomException 
 	 */
-	public void addInfoReportPlugin(List<Reports> reports,File file) throws JAXBException, IOException {
+	public void addInfoReportPlugin(List<Reports> reports,File file) {
 
-		PomProcessor processor = new PomProcessor(file);
-		for (Reports iterateReport : reports) {
-			reportPlugin = new ReportPlugin();
-			reportPlugin.setGroupId(iterateReport.getGroupId());
-			reportPlugin.setArtifactId(iterateReport.getArtifactId());
-			reportPlugin.setVersion(iterateReport.getVersion());
-			processor.siteReportConfig(reportPlugin);
-			ReportSets reportSets = reportPlugin.getReportSets();
-			ReportSet reportSet = new ReportSet();
-			com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
-			if(reportSets == null){
-				reportPlugin.setReportSets(new ReportSets());
-				List<ReportCategories> reportCategories = iterateReport.getReportCategories();
-				for (ReportCategories reportCategories2 : reportCategories) {
-					reportSet.setReports(repo);		
-					reportSet.getReports().getReport().add(reportCategories2.getName());
-				}
-			} reportPlugin.getReportSets().getReportSet().add(reportSet);
-			processor.save();
+		try{
+			PomProcessor processor = new PomProcessor(file);
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null){
+				processor.addSitePlugin();
+			}
+			for (Reports iterateReport : reports) {
+				reportPlugin = new ReportPlugin();
+				reportPlugin.setGroupId(iterateReport.getGroupId());
+				reportPlugin.setArtifactId(iterateReport.getArtifactId());
+				reportPlugin.setVersion(iterateReport.getVersion());
+				processor.siteReportConfig(reportPlugin);
+				ReportSets reportSets = reportPlugin.getReportSets();
+				ReportSet reportSet = new ReportSet();
+				com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
+				if(reportSets == null){
+					reportPlugin.setReportSets(new ReportSets());
+					List<ReportCategories> reportCategories = iterateReport.getReportCategories();
+					for (ReportCategories reportCategories2 : reportCategories) {
+						reportSet.setReports(repo);		
+						reportSet.getReports().getReport().add(reportCategories2.getName());
+					}
+				} reportPlugin.getReportSets().getReportSet().add(reportSet);
+				processor.save();
+			} 
+		}catch (JAXBException e) {
+		} catch (IOException e) {
+		} catch (PhrescoPomException e) {
 		}
-//		reportPlugin = new ReportPlugin();
-//		reportPlugin.setGroupId(Reports.PROJECT_INFO.getGroupId());
-//		reportPlugin.setArtifactId(Reports.PROJECT_INFO.getArtifactId());
-//		reportPlugin.setVersion(Reports.PROJECT_INFO.getVersion());
-//		processor.siteReportConfig(reportPlugin);
-//		ReportSets reportSets = reportPlugin.getReportSets();
-//		ReportSet reportSet = new ReportSet();
-//		com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
-//		if(reportSets == null){
-//			reportPlugin.setReportSets(new ReportSets());
-//			List<ReportCategories> reportCategories = reports[0].getReportCategories();
-//			for (ReportCategories reportCategories2 : reportCategories) {
-//				reportSet.setReports(repo);		
-//				reportSet.getReports().getReport().add(reportCategories2.getName());
-//			}
-//		} 
-//		reportPlugin.getReportSets().getReportSet().add(reportSet);
-//		processor.save();
 	}
 
 	/**
@@ -127,7 +123,7 @@ public class SiteConfigurator {
 	 * @param reports
 	 * @param file
 	 */
-	public void removeReportPlugin(List<Reports> reports,File file){
+	public void removeReportPlugin(List<Reports> reports,File file) {
 
 		try {
 			PomProcessor processor = new PomProcessor(file);
@@ -140,12 +136,5 @@ public class SiteConfigurator {
 		} catch (JAXBException e) {
 		} catch (IOException e) {
 		}
-	}
-	public static void main(String[] args) throws JAXBException, IOException {
-		SiteConfigurator siteConfigurator = new SiteConfigurator();
-		List<Reports> reports = new ArrayList<Reports>();
-		reports.add(Reports.PROJECT_INFO);
-		
-		siteConfigurator.addInfoReportPlugin(reports, new File("d:\\pom\\pom.xml"));
 	}
 }

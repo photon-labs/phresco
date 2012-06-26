@@ -31,15 +31,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import com.phresco.pom.android.AndroidProfile;
-import com.phresco.pom.android.PomConstants;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.BuildBase;
 import com.phresco.pom.model.BuildBase.Plugins;
-import com.phresco.pom.model.Model.Profiles;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Plugin.Executions;
@@ -89,13 +85,7 @@ public class AndroidPomProcessor extends PomProcessor {
 		Goals goals = new Goals();
 		Activation activation = new Activation();
 		
-		if(model.getProfiles()!= null) {
-			for(Profile profile : model.getProfiles().getProfile()){
-				if(profileId.equals(profile.getId())) {
-					 model.setProfiles(null);	 
-				}	
-			}
-		}
+		removeProfile(profileId);
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
@@ -142,6 +132,20 @@ public class AndroidPomProcessor extends PomProcessor {
 	}
 
 	/**
+	 * @param profileId
+	 */
+	private void removeProfile(String profileId) {
+		if(model.getProfiles()!= null) {
+			for(Profile profile : model.getProfiles().getProfile()) {
+				if(profileId.equals(profile.getId())) {
+					model.getProfiles().getProfile().remove(profile);
+					return;
+				}	 
+			}
+		}
+	}
+
+	/**
 	 * @param id
 	 * @param plugin
 	 * @param configElement
@@ -162,17 +166,28 @@ public class AndroidPomProcessor extends PomProcessor {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean hasSigning() {
-		Profiles profiles = model.getProfiles();
-		if(profiles!=null) {
+		if(model.getProfiles().getProfile() != null){
 			for(Profile profile : model.getProfiles().getProfile()){
-				if(profile.getId().equals("sign")) {
-					return true;
+				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+				for (Plugin plugin2 : plugin) {
+					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+					if(getSigningProfilePlugin(profile, execution)!=""){
+						return true;
+					}
 				}
 			}
-		}return false;
+		} return false;
 	}
 	
+	/**
+	 * @param id
+	 * @return
+	 * @throws PhrescoPomException
+	 */
 	public AndroidProfile getProfileElement(String id) throws PhrescoPomException{
 		Profile profile = getProfile(id);
 		AndroidProfile androidProfile = new AndroidProfile();
@@ -187,6 +202,10 @@ public class AndroidPomProcessor extends PomProcessor {
 		return androidProfile;
 	}
 
+	/**
+	 * @param androidProfile
+	 * @param any
+	 */
 	private void processProfiles(AndroidProfile androidProfile, List<Element> any) {
 		for (Element element : any) {
 			String tagName = element.getTagName();
@@ -200,5 +219,32 @@ public class AndroidPomProcessor extends PomProcessor {
 				androidProfile.setAlias(element.getTextContent());
 			}
 		}
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getSigningProfile() {
+		if(model.getProfiles().getProfile() != null){
+			for(Profile profile : model.getProfiles().getProfile()){
+				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
+				for (Plugin plugin2 : plugin) {
+					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+					return getSigningProfilePlugin(profile, execution);
+				}
+			}
+		}
+		return "";
+	}
+
+	private String getSigningProfilePlugin(Profile profile,	List<PluginExecution> execution) {
+		for (PluginExecution pluginExecution : execution) {
+			List<Element> any = pluginExecution.getConfiguration().getAny();
+			for (Element element : any) {
+				if(element.getTagName().equals("keystore")) {
+					return profile.getId();
+				}
+			}
+		} return "";
 	}
 }

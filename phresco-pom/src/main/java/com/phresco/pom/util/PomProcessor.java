@@ -22,7 +22,6 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -37,11 +36,11 @@ import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.phresco.pom.android.AndroidProfile;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.Build;
 import com.phresco.pom.model.BuildBase;
+import com.phresco.pom.model.PluginManagement;
 import com.phresco.pom.model.Build.Plugins;
 import com.phresco.pom.model.Dependency;
 import com.phresco.pom.model.Model;
@@ -51,12 +50,8 @@ import com.phresco.pom.model.Model.Profiles;
 import com.phresco.pom.model.Model.Properties;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
-import com.phresco.pom.model.PluginExecution;
 import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
-import com.phresco.pom.model.ReportPlugin.ReportSets;
-import com.phresco.pom.model.ReportSet;
-import com.phresco.pom.model.ReportSet.Reports;
 import com.phresco.pom.model.Reporting;
 
 
@@ -771,6 +766,61 @@ public class PomProcessor {
 		return model.getBuild().getFinalName();
 	}
 
+	/**
+	 * @param artifactId
+	 * @return
+	 */
+	
+	public Plugin getSitePlugin(String artifactId){
+		if(model.getBuild() != null && model.getBuild().getPluginManagement() != null) {
+			for (Plugin plugin : model.getBuild().getPluginManagement().getPlugins().getPlugin()) {
+				if(artifactId.equals(plugin.getArtifactId())) {
+					return plugin;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param artifactId
+	 * @param version
+	 * @throws JAXBException
+	 * @throws PhrescoPomException
+	 */
+	public void addSitePlugin() throws JAXBException, PhrescoPomException{
+		Plugin existingPlugin = getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID);
+		if(existingPlugin != null) {
+			existingPlugin.setVersion(PomConstants.SITE_PLUGIN_VERSION);
+			return ;
+		}
+		Build build = model.getBuild();
+		if(build == null){
+			build = new Build();
+			model.setBuild(build);
+		}
+		PluginManagement pluginManagement = build.getPluginManagement();
+		if(pluginManagement == null){
+			pluginManagement = new PluginManagement();
+			build.setPluginManagement(pluginManagement);
+		}
+		com.phresco.pom.model.PluginManagement.Plugins plugins = build.getPluginManagement().getPlugins();
+		if(plugins == null ) {
+			plugins = new com.phresco.pom.model.PluginManagement.Plugins();
+			build.getPluginManagement().setPlugins(plugins);
+		}
+		Plugin plugin = new Plugin();
+		com.phresco.pom.model.Plugin.Dependencies dependencies = new com.phresco.pom.model.Plugin.Dependencies();
+		plugin.setArtifactId(PomConstants.SITE_PLUGIN_ARTIFACT_ID);
+		plugin.setVersion(PomConstants.SITE_PLUGIN_VERSION);
+		plugin.setDependencies(dependencies);
+		Dependency dependency = new Dependency();
+		dependency.setGroupId(PomConstants.DOXIA_GROUPID);
+		dependency.setArtifactId(PomConstants.DOXIA_ARTIFACT_ID);
+		dependency.setVersion(PomConstants.DOXIA_VERSION);
+		dependencies.getDependency().add(dependency);
+		plugins.getPlugin().add(plugin);
+	}
 	
 	/**
 	 * Save.
