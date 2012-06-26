@@ -33,6 +33,8 @@ public class Customer extends Element {
 
 	Date validFrom;
 	Date validUpto;
+//	String validFrom;
+//	String validUpto;
 	String repoURL;
 	int type;
 	int status;
@@ -126,6 +128,22 @@ public class Customer extends Element {
 	public void setRepoURL(String repoURL) {
 		this.repoURL = repoURL;
 	}
+	
+//	public String getValidFrom() {
+//		return validFrom;
+//	}
+//
+//	public void setValidFrom(String validFrom) {
+//		this.validFrom = validFrom;
+//	}
+//
+//	public String getValidUpto() {
+//		return validUpto;
+//	}
+//
+//	public void setValidUpto(String validUpto) {
+//		this.validUpto = validUpto;
+//	}
 
 	@Override
 	public String toString() {

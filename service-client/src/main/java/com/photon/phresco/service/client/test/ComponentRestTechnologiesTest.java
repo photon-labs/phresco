@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.reflect.TypeToken;
@@ -28,7 +29,7 @@ public class ComponentRestTechnologiesTest {
 	@Before
 	public void Initilaization() {
 		context = new ServiceContext();
-        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service");
+        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service/rest");
         context.put(ServiceClientConstant.SERVICE_USERNAME, "demouser");
         context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
 	}
@@ -37,15 +38,17 @@ public class ComponentRestTechnologiesTest {
     public void testGetTechnologies() {
         try {
             serviceManager = ServiceClientFactory.getServiceManager(context);            
-            Type type = new TypeToken<List<Technology>>() {}.getType();
+//            Type type = new TypeToken<List<Technology>>() {}.getType();
             RestClient<Technology> techClient = serviceManager.getRestClient("component");
             techClient.setPath("technologies");
-            techClient.setAccept(MediaType.APPLICATION_JSON);
-            techClient.setType(MediaType.APPLICATION_JSON);
-            List<Technology> list = techClient.get(type);
+//            techClient.setAccept(MediaType.APPLICATION_JSON);
+//            techClient.setType(MediaType.APPLICATION_JSON);
+            GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+            List<Technology> list = techClient.get(genericType);
             for (Technology tech : list) {
                 System.out.println("Tech Name == " + tech.getName());
             }
+            
         } catch (PhrescoException e) {
             e.printStackTrace();
         }
@@ -63,12 +66,12 @@ public class ComponentRestTechnologiesTest {
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
 		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
-		techClient.setAccept(MediaType.APPLICATION_JSON);
-		techClient.setType(MediaType.APPLICATION_JSON);
+//		techClient.setAccept(MediaType.APPLICATION_JSON);
+//		techClient.setType(MediaType.APPLICATION_JSON);
 		techClient.create(techs);
     }
     
-    @Test
+	@Test
     public void testPutServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
@@ -81,8 +84,8 @@ public class ComponentRestTechnologiesTest {
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
 		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
-		techClient.setAccept(MediaType.APPLICATION_JSON);
-		techClient.setType(MediaType.APPLICATION_JSON);
+//		techClient.setAccept(MediaType.APPLICATION_JSON);
+//		techClient.setType(MediaType.APPLICATION_JSON);
 
 		Type type = new TypeToken<List<Technology>>() {}.getType();
 		List<Technology> entity = techClient.update(techs, type);
@@ -91,13 +94,13 @@ public class ComponentRestTechnologiesTest {
 		}
     }
     
-    @Test
+	@Test
     public void testGetServerById() throws PhrescoException {
         try {
 	    	String id = "4fe46c00230d28c9353c4b68";
 	    	serviceManager=ServiceClientFactory.getServiceManager(context);
 	    	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
-	    	techClient.setAccept(MediaType.APPLICATION_JSON);
+//	    	techClient.setAccept(MediaType.APPLICATION_JSON);
 	    	GenericType<Technology> genericType = new GenericType<Technology>()  {};
 	    	Technology tech = techClient.getById(genericType);
 	    	System.out.println("name == " + tech);
@@ -119,11 +122,10 @@ public class ComponentRestTechnologiesTest {
 		tech.setVersions(versions);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
 		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
-		techClient.setAccept(MediaType.APPLICATION_JSON);
-		techClient.setType(MediaType.APPLICATION_JSON);
+//		techClient.setAccept(MediaType.APPLICATION_JSON);
+//		techClient.setType(MediaType.APPLICATION_JSON);
 		Type type = new TypeToken<Technology>() {}.getType();
-		Technology updateById = techClient.updateById(tech, type);
-		System.out.println(updateById.getName());
+		ClientResponse clientResponse = techClient.updateById(tech, type);
     }
 
     @Test
@@ -132,6 +134,5 @@ public class ComponentRestTechnologiesTest {
     	serviceManager = ServiceClientFactory.getServiceManager(context);            
     	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/" + id);
     	ClientResponse response = techClient.deleteById();
-    	System.out.println("delete response " + response.getStatus());
     }
 }

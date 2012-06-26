@@ -20,9 +20,19 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <form class="customer_list">
-	<div class="operation">
-		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" onclick="loadContent('downloadAdd', $('#subcontainer'));" value="<s:text name='lbl.header.admin.dwndllst.title'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.header.admin.delete'/>"/>
+	<div class="operation" id="operation">
+		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" onclick="loadContent('downloadAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.dwndllst.title'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -38,16 +48,16 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.dwnldlst.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.dwnldlst.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.dwnldlst.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.dwnldlst.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.dwnldlst.appltfrm" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.dwnldlst.appltfrm" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.dwnldlst.ver"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.dwnldlst.ver"  theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>

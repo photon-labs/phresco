@@ -45,11 +45,12 @@ function findError(data) {
 }
 </script>
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.comp.arhtyp.title" theme="simple"/></h4>	
+	<h4 class="hdr"><s:label for="description" key="lbl.hdr.comp.arhtyp.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.comp.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Archetype Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -57,15 +58,18 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.comp.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.comp.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
 			</div>
 		</div>
 		
 		<div class="control-group" id="verControl">
-			<s:label for="input01" key="lbl.header.comp.version" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.version'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Version" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
@@ -73,15 +77,18 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.com.vercmnt" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.com.vercmnt'/>
+			</label>
 			<div class="controls">
 				<textarea id="input01" placeholder="Version Comment" class="input-xlarge" rows="2" cols="10" ></textarea>
 			</div>
 		</div>
 		
 		<div class="control-group apptype" id="appControl">
-		<s:label for="input01" key="lbl.header.comp.apptype" cssClass="control-label labelbold" theme="simple"/>
-		<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.apptype'/>
+			</label>
 			<div class="controls">
 				<select id="select01" name="apptype">
 					<option value="">- select -</option>
@@ -95,8 +102,9 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group" id="fileControl">
-			<s:label for="input01" key="lbl.header.comp.applnjar" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.applnjar'/>
+			</label>
 			<div class="controls">
 				<input class="input-xlarge" type="file" id="applnArc" name="applnArc">
 				<span class="help-inline" id="fileError"></span>
@@ -105,19 +113,20 @@ function findError(data) {
 		
 		<div id="jar">
 			<div class="control-group">
-				<s:label for="input01" key="lbl.header.comp.pluginjar" cssClass="control-label labelbold" theme="simple"/>
+				<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.comp.pluginjar'/>
+				</label>
 				<div class="controls">
 					<input class="input-xlarge" type="file" id="pluginArc" name="pluginArc">
-						<a><img src="images/add_icon.png" class="add imagealign"></a>
+						<a><img src="images/add_icon.png" class="addplugin imagealign" onclick="javascript:addpluginjar();"></a>
 				</div>
 			</div>
 		</div>
-		
 	</div>
 	
 	<div class="bottom_button">
-		<input type="button" id="archetypeSave" class="btn btn-primary" onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="archetypeCancel" class="btn btn-primary" onclick="loadContent('archetypeCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="button" id="archetypeSave" class="btn btn-primary" onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="archetypeCancel" class="btn btn-primary" onclick="loadContent('archetypeCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>
 
@@ -127,9 +136,17 @@ function findError(data) {
 			$(this).parent().parent().remove();
 		});
 		
-		$('.add').click(function(){
-			var appendTxt = "<div id='jar'><div class='control-group'><label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'><input class='input-xlarge' type='file'id='pluginArc' name='pluginArc'>&nbsp;<img src='images/minus_icon.png' class='del imagealign'></div></div></div>";
-			$("div[id='jar']:last").after(appendTxt);			
-		});
+	/* $(document).on('click', '.addplugin', function(){ 
+	
+	$('.addplugin').live('click',function(){ 	
+		var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'><label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'><input id='input01' class='input-xlarge' type='file'>&nbsp;<img src='images/add_icon.png' class='addplugin imagealign'>&nbsp;<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
+		$("div[id='jar']:last").after(appendTxt);			
+		}); */
+	
 	});
+	function addpluginjar() {
+		var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'><label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'><input id='input01' class='input-xlarge' type='file'>&nbsp;<img src='images/add_icon.png' class='addplugin imagealign' onclick='addpluginjar();'>&nbsp;<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
+		$("div[id='jar']:last").after(appendTxt);	
+	}
+	
 </script>

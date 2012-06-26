@@ -20,9 +20,9 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <form class="form-horizontal customer_list">
-	<div class="operation">
+	<div class="operation" id="operation">
 		
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.header.admin.delete'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
 	</div>
 	
 	<div class="table_div">
@@ -39,10 +39,10 @@
 							</th>
 							<th class="second">
 								<div class="th-inner tablehead">
-								<s:label for="description" key="lbl.header.admin.prmlst.name" theme="simple"/></div>
+								<s:label for="description" key="lbl.hdr.adm.prmlst.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.prmlst.prms" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.prmlst.prms" theme="simple"/></div>
 							</th>
 							
 					</thead>

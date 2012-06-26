@@ -21,8 +21,18 @@
 
 <form class="customer_list">
 	<div class="operation">
-		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" onclick="loadContent('applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.header.comp.apln.add'/>"/>
-		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.header.comp.delete'/>"/>
+		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" onclick="loadContent('applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
+		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -38,10 +48,10 @@
 									</div>
 								</th>
 								<th class="second">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></div>
 								</th>
 								<th class="third">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.desc" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.desc" theme="simple"/></div>
 								</th>
 							</tr>
 						</div>

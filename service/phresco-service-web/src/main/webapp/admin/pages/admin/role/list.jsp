@@ -18,8 +18,8 @@
   ###
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
+
 <script language="JavaScript" type="text/javascript">
-<!--
 
 var NS4 = (navigator.appName == "Netscape" && parseInt(navigator.appVersion) < 5);
 
@@ -108,9 +108,19 @@ function moveAllOptions(theSelFrom, theSelTo){
 </script>
 
 <form class="form-horizontal customer_list">
-	<div class="operation">
-		<input type="button" id="roleAdd" class="btn btn-primary" name="role_action" onclick="loadContent('roleAdd', $('#subcontainer'));" value="<s:text name='lbl.header.admin.rlelst.add'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.header.admin.delete'/>"/>
+	<div class="operation" id="operation">
+		<input type="button" id="roleAdd" class="btn btn-primary" name="role_action" onclick="loadContent('roleAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.rlelst.add'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -126,13 +136,13 @@ function moveAllOptions(theSelFrom, theSelTo){
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.rlelst.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rlelst.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.rlelst.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rlelst.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.rlelst.perm" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rlelst.perm" theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>
@@ -169,7 +179,7 @@ function moveAllOptions(theSelFrom, theSelTo){
 				<div id="myModal" class="modal hide fade">
 					<div class="modal-header">
 					  <a class="close" data-dismiss="modal" >&times;</a>
-					  <h3><s:label for="description" key="lbl.header.admin.rlelst.asgnprm" theme="simple"/></h3>
+					  <h3><s:label for="description" key="lbl.hdr.adm.rlelst.asgnprm" theme="simple"/></h3>
 					</div>
 					<div class="modal-body">
 						<div class="popupbody">
@@ -203,8 +213,8 @@ function moveAllOptions(theSelFrom, theSelTo){
 						</div>
 					</div>
 					<div class="modal-footer">
-					  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.header.comp.cancel" theme="simple"/></a>
-					  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.header.comp.ok" theme="simple"/></a>
+					  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.hdr.comp.cancel" theme="simple"/></a>
+					  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.hdr.comp.ok" theme="simple"/></a>
 					</div>
 				</div>
 				

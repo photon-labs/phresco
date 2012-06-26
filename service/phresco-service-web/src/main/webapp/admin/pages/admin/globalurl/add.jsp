@@ -37,11 +37,12 @@ function findError(data) {
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.admin.url.tiltle" theme="simple"/></h4>	
+	<h4><s:label for="description" key="lbl.hdr.adm.url.tiltle" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.admin.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Customer Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -49,7 +50,9 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-		<s:label for="input01" key="lbl.header.admin.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Description" class="input-xlarge" type="text" >
 				
@@ -57,8 +60,9 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group" id="urlControl">
-			<s:label for="input01" key="lbl.header.admin.glblurl.url" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.glblurl.url'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="URL" class="input-xlarge" type="text" name="url">
 				<span class="help-inline" id="urlError"></span>
@@ -67,7 +71,7 @@ function findError(data) {
 	</div>
 	
 	<div class="bottom_button">
-		<input type="button" id="globalurlSave" class="btn btn-primary" onclick="loadContent('globalurlSave', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="globalurlCancel" class="btn btn-primary" onclick="loadContent('globalurlCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="button" id="globalurlSave" class="btn btn-primary" onclick="clickSave('globalurlSave', $('#subcontainer'), 'Creating Global URL');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="globalurlCancel" class="btn btn-primary" onclick="loadContent('globalurlCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>

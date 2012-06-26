@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.commons.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,7 +35,9 @@ public abstract class Element {
 	String id;
 	String name;
 	String description;
+
 	Date creationDate = new Date();
+//	String creationDate = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss.SSS000").format(new Date());
 	
 	protected Element() {
 		super();
@@ -77,6 +80,14 @@ public abstract class Element {
 		this.description = description;
 	}
 	
+//	public String getCreationDate() {
+//		return creationDate;
+//	}
+//
+//	public void setCreationDate(String creationDate) {
+//		this.creationDate = creationDate;
+//	}
+	
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -84,5 +95,4 @@ public abstract class Element {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-
 }

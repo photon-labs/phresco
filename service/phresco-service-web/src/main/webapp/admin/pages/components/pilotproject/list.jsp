@@ -17,12 +17,22 @@
   limitations under the License.
   ###
   --%>
-<%@ taglib uri="/struts-tags" prefix="s" %>
 
+<%@ taglib uri="/struts-tags" prefix="s" %>	
 <form class="customer_list">
 	<div class="operation">
-		<input type="button" class="btn btn-primary" name="pilotproj_add" id="pilotprojAdd" onclick="loadContent('pilotprojAdd', $('#subcontainer'));" value="<s:text name='lbl.header.comp.pltprjt.add'/>"/>
-		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.header.comp.delete'/>"/>
+		<input type="button" class="btn btn-primary" name="pilotproj_add" id="pilotprojAdd" onclick="loadContent('pilotprojAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.pltprjt.add'/>"/>
+		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>
 	
 	<div class="table_div">
@@ -38,13 +48,13 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.cmp.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.tchngy" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.tchngy" theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>
@@ -88,3 +98,4 @@
 		</div>
 	</div>
 </form>
+

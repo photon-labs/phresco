@@ -21,7 +21,7 @@ package com.photon.phresco.service.admin.actions.admin;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
+import java.util.Collections;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 
 public class GlobalUrlList extends ServiceBaseAction { 
@@ -47,12 +47,17 @@ public class GlobalUrlList extends ServiceBaseAction {
 	
 	public String save() {
 		S_LOGGER.debug("Entering Method GlobalUrlList.list()");
-		
+	try  {
 		if (validateForm()) {
 			setErrorFound(true);
 			return SUCCESS;
 		}
-		return  ADMIN_GLOBALURL_LIST;
+		addActionMessage(getText(URL_ADDED, Collections.singletonList(name)));
+		
+	}  catch (Exception e) {
+		addActionError(getText(URL_NOT_ADDED, Collections.singletonList(name)));
+	}
+	return  ADMIN_GLOBALURL_LIST;
 	}
 	
 	private boolean validateForm() {

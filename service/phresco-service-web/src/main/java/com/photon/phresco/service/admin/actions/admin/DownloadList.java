@@ -24,7 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Collections;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -69,9 +69,10 @@ public class DownloadList extends ServiceBaseAction {
 		S_LOGGER.debug("Entering Method DownloadList.save()");
 		
 		try {
-			boolean isValid = validateForm();
-//			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
-			if (isValid) {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
 				if(fileArc != null) {
 					InputStream inputStream = new FileInputStream(fileArc);
 					/*FileOutputStream outputStream = new FileOutputStream(new File("c:/" + fileArcFileName));
@@ -82,37 +83,35 @@ public class DownloadList extends ServiceBaseAction {
 					/*FileOutputStream outputStream = new FileOutputStream(new File("c:/" + iconArcFileName));
 					IOUtils.copy(inputStream, outputStream);*/
 				}
-				return ADMIN_DOWNLOAD_LIST;
-			}
+				addActionMessage(getText(DOWNLOAD_ADDED, Collections.singletonList(name)));
 			
-		} catch (IOException e) {
-			
-		} 
-
-		setErrorFound(true);
-		return SUCCESS;
+		} catch (Exception e) {
+			addActionError(getText(DOWNLOAD_NOT_ADDED, Collections.singletonList(name)));
+		}
+		
+		return ADMIN_DOWNLOAD_LIST;
 	}
 	
 	private boolean validateForm() {
-		boolean success = true;
+		boolean success = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY));
-			success = false;
+			success = true;
 		} 
 		
 		if (StringUtils.isEmpty(version)) {
 			setVerError(getText(KEY_I18N_ERR_VER_EMPTY));
-			success = false;
+			success = true;
 		} 
 		
 		if (StringUtils.isEmpty(application)) {
 			setAppltError(getText(KEY_I18N_ERR_APPLNPLTF_EMPTY));
-			success = false;
+			success = true;
 		} 
 		
 		if (StringUtils.isEmpty(group)) {
 			setGroupError(getText(KEY_I18N_ERR_GROUP_EMPTY));
-			success = false;
+			success = true;
 		}
 		
 		return success;

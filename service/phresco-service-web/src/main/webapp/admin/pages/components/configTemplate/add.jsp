@@ -35,11 +35,12 @@ function findError(data) {
 </script>
 
 <form name="configForm" class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.header.comp.cnfigtmplt.title" theme="simple"/></h4>	
+	<h4 class="hdr"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<s:label for="input01" key="lbl.header.comp.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
+			</label>
 			<div class="controls">
 				<input id="configname" placeholder="Config Template Name" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
@@ -47,15 +48,18 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.comp.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.comp.desc'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
 			</div>
 		</div>
 		
 		<div class="control-group" id="applyControl">
-			<s:label for="input01" key="lbl.header.comp.appliesto" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.appliesto'/>
+			</label>
 			<div class="controls">
 				<select id="multiSelect" multiple="multiple" name="applies">
 					<option value="PH">PHP</option>
@@ -64,61 +68,59 @@ function findError(data) {
 					<option value="JA">Java</option>
 					<option value="NJ">Node JS</option>
 				</select>
-				<span class="help-inline" id="applyError"></span>
+				<span class="help-inline applyerror" id="applyError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.comp.help" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.comp.help'/>
+			</label>
 			<div class="controls">
 				<input id="input01" placeholder="Help Text" class="input-xlarge" type="text">
 			</div>
 		</div>						
 			
 		<fieldset class = "configFieldset">
-			<legend class = "configLegend"><s:label for="description" key="lbl.header.comp.proptemplate" theme="simple"/></legend>
+			<legend class = "configLegend"><s:label for="description" key="lbl.hdr.comp.proptemplate" cssClass="labelbold" theme="simple"/></legend>
 			<div class = "table_div">
 				<div class="fixed-table-container prpt-header">
 					<div class="fixed-table-container-inner">
 						<table cellspacing="0" class="zebra-striped tablelegend">
-							<thead class = "fieldset-tableheader" >
-								<tr>
-									<!-- <th class="first" >
-										<div class="th-inner fieldset-table tablehead" ><s:label for="description" key="lbl.header.comp.cnfigtmplt.prtyname.title" theme="simple"/></div>
-									</th>-->
-									<th class="second">
-										<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.cnfigtmplt.key.title" theme="simple"/></div>
-									</th>
-									<th class="second">
-										<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.cnfigtmplt.type.title" theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.cnfigtmplt.psblvalue.title"  theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.cnfigtmplt.mndtry.title"  theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label for="description" key="lbl.header.comp.cnfigtmplt.mltpl.title" theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner">
-											
-										</div>
-									</th>
-								</tr>
-							</thead>
+							<div class = "header-background">
+								<thead class = "fieldset-tableheader">
+									<tr>
+										<th class="second">
+											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.key.title" theme="simple"/></div>
+										</th>
+										<th class="second">
+											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.type.title" theme="simple"/></div>
+										</th>
+										<th class="third">
+											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.psblvalue.title"  theme="simple"/></div>
+										</th>
+										<th class="third">
+											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.mndtry.title"  theme="simple"/></div>
+										</th>
+										<th class="third">
+											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.mltpl.title" theme="simple"/></div>
+										</th>
+										<th class="third">
+											<div class="th-inner">
+												
+											</div>
+										</th>
+									</tr>
+								</thead>
+							</div>
 							<div id="input1" class="clonedInput">
 								<tbody>
 									<tr class="configdynamiadd">
-										<!-- td style="width: 14%;">
-											<input type="text" placeholder="" class="input-medium propertytext">
-										</td> -->
 										<td class="textwidth">
 											<input type="text" id = "concate" value="" placeholder="" class="span2">
 										</td>
 										<td class="textwidth">
-											<select id="select01" class = "select">
+											<select id="select01" class = "select typewidth">
 												<option>- select -</option>
 												<option>String</option>
 												<option>Integer</option>
@@ -137,7 +139,7 @@ function findError(data) {
 											<input type="checkbox" value="option1" id="optionsCheckbox">
 										</td>
 										<td class="imagewidth">
-											<a ><img class="add imagealign" src="images/add_icon.png"></a>
+											<a ><img class="add imagealign" src="images/add_icon.png" onclick="addconfig();"></a>
 										</td>
 									</tr>
 								</tbody>
@@ -147,15 +149,15 @@ function findError(data) {
 						<div id="myModal" class="modal hide fade">
 							<div class="modal-header">
 								<a class="close" data-dismiss="modal" >&times;</a>
-								<h3><s:label for="description" key="lbl.header.comp.cnfigtmplt.popup.title" theme="simple"/></h3>
+								<h3><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.popup.title" theme="simple"/></h3>
 							</div>
 							<div class="modal-body">
 								<div class="control-group">
-									<s:label for="description" key="lbl.header.comp.popup.enter" cssClass="control-label labelbold modallbl-color" theme="simple"/>
+									<s:label for="description" key="lbl.hdr.comp.popup.enter" cssClass="control-label labelbold modallbl-color" theme="simple"/>
 									<div class="controls">
 										<input type="text" name="txtCombo" id="txtCombo" class="span3"/>
 										<button type="button" value="" id="addValues" class="btn btn-primary popupadd">
-											<s:label for="description" key="lbl.header.comp.popup.add" theme="simple"/>
+											<s:label for="description" key="lbl.hdr.comp.popup.add" theme="simple"/>
 										</button>
 									</div>
 								</div>
@@ -175,8 +177,8 @@ function findError(data) {
 							</div>
 							
 							<div class="modal-footer">
-								<a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.header.comp.cancel" theme="simple"/></a>
-								<a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.header.comp.ok" theme="simple"/></a>
+								<a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.hdr.comp.cancel" theme="simple"/></a>
+								<a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.hdr.comp.ok" theme="simple"/></a>
 							</div>
 						</div>
 					</div>	
@@ -186,8 +188,8 @@ function findError(data) {
 	</div>
 	
 	<div class="bottom_button">
-		<input type="button" id="configtempSave" class="btn btn-primary" onclick="loadContent('configtempSave', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="configtempCancel" class="btn btn-primary" onclick="loadContent('configtempCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<input type="button" id="configtempSave" class="btn btn-primary" onclick="clickSave('configtempSave', $('#subcontainer'), 'Creating Config Template');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<input type="button" id="configtempCancel" class="btn btn-primary" onclick="loadContent('configtempCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>
 
@@ -199,11 +201,12 @@ $(document).ready(function() {
 		$("#txtCombo").val("");
 	});
 
-	$('.add').click(function() {
+	/* $('.add').live('click', function() {
+		alert("sd");
 		var appendRow =  '<tr class="configdynamiadd">' + $('.configdynamiadd').html() + '</tr>';
-		appendRow = appendRow.replace('class="add imagealign" src="images/add_icon.png"', 'class = "del imagealign" src="images/minus_icon.png" onclick="removeTag(this);"');
 		$("tr:last").after(appendRow);			
-	}); 
+		$("td:last").append('<img class = "del imagealign" src="images/minus_icon.png" onclick="removeTag(this);">');		
+	});  */
 
 	$('#remove').click(function() {
 		$('#valuesCombo option:selected').each( function() {
@@ -234,8 +237,13 @@ $(document).ready(function() {
 		});
 	});
 });
-
+function addconfig(){
+	var appendRow =  '<tr class="configdynamiadd">' + $('.configdynamiadd').html() + '</tr>';
+	$("tr:last").after(appendRow);			
+	$("td:last").append('<img class = "del imagealign" src="images/minus_icon.png" onclick="removeTag(this);">');		
+}
+ 
 function removeTag(currentTag) {
-	$(currentTag).parent().parent().parent().remove();
+	$(currentTag).parent().parent().remove();
 }
 </script>

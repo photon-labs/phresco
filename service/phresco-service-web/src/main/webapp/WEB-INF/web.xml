@@ -57,6 +57,7 @@
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
 		</init-param>
+		
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -69,15 +70,14 @@
 
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
-        <!--  <url-pattern>/rest/*</url-pattern> --> <!-- Need to change the path with service version -->
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/videos/*</url-pattern>
     </servlet-mapping>
 	
-	<!--  <filter>
+	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
@@ -85,6 +85,6 @@
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/admin/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 	
 </web-app>

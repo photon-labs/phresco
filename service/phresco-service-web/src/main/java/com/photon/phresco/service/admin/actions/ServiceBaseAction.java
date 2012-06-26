@@ -22,18 +22,39 @@ package com.photon.phresco.service.admin.actions;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.admin.commons.ServiceActions;
 import com.photon.phresco.service.admin.commons.ServiceUIConstants;
+import com.photon.phresco.service.client.api.ServiceContext;
+import com.photon.phresco.service.client.api.ServiceManager;
+import com.photon.phresco.service.client.factory.ServiceClientFactory;
+import com.photon.phresco.service.client.api.ServiceClientConstant;
 
-public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants {
+public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant {
 
 //	private static final Logger S_LOGGER = Logger.getLogger(ServiceBaseAction.class);
     private static final long serialVersionUID = 1L;
+    
+    private static ServiceManager serviceManager = null;
+    
+    public ServiceManager getServiceManager() {
+    	System.out.println(serviceManager);
+		return serviceManager;
+	}
+
+	protected UserInfo doLogin(String userName, String password) throws PhrescoException {
+    	ServiceContext context = new ServiceContext();
+		context.put(SERVICE_URL, "http://localhost:3030/service/rest");
+		context.put(SERVICE_USERNAME, userName);
+		context.put(SERVICE_PASSWORD, password);
+		serviceManager = ServiceClientFactory.getServiceManager(context);
+		return serviceManager.getUserInfo();
+    }
     
     
     public HttpServletRequest getHttpRequest() {

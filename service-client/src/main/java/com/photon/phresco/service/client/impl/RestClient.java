@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.log4j.Logger;
@@ -73,21 +74,14 @@ public class RestClient<E> {
 	}
 	
 	/**
-	 * Add acceptable media types
-	 * @param mediaType
+	 * Get List of objects for the specified generic type object
+	 * @param genericType
+	 * @return
 	 */
-	public void setAccept(String mediaType) {
-		S_LOGGER.debug("Entered into RestClient.setAccept(String mediaType)" + mediaType);
-		builder = resource.accept(mediaType);
-	}
-	
-	/**
-	 * Set the media type
-	 * @param mediaType
-	 */
-	public void setType(String mediaType) {
-		S_LOGGER.debug("Entered into RestClient.setType(String mediaType)" + mediaType);
-		builder = builder.type(mediaType);
+	@SuppressWarnings("unchecked")
+	public List<E> get(GenericType<List<E>> genericType) {
+		S_LOGGER.debug("Entered into RestClient.get(Type type)");
+		return get(genericType, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
 	
 	/**
@@ -96,10 +90,11 @@ public class RestClient<E> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<E> get(Type type) {
+	public List<E> get(GenericType<List<E>> genericType, String accept, String type) {
 		S_LOGGER.debug("Entered into RestClient.get(Type type)");
-		String jsonObject = builder.get(String.class);
-		return (List<E>) new Gson().fromJson(jsonObject, type);
+		builder = resource.accept(accept).type(type);
+//		String jsonObject = builder.get(String.class);
+		return  builder.get(genericType);
 	}
 	
 	/**
@@ -110,6 +105,18 @@ public class RestClient<E> {
 	@SuppressWarnings("unchecked")
 	public E getById(GenericType<?> genericType) {
 		S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
+		return getById(genericType, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
+	}
+	
+	/**
+	 * Get object for the specified generic type object using the given id 
+	 * @param genericType
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public E getById(GenericType<?> genericType, String accept, String type) {
+		S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
+		builder = resource.accept(accept).type(type);
 		return (E) builder.get(genericType);
 	}
 	
@@ -118,10 +125,34 @@ public class RestClient<E> {
 	 * @param infos
 	 * @throws PhrescoException
 	 */
-	public void create(List<E> infos) throws PhrescoException {
+	public ClientResponse create(List<E> infos) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+		return create(infos, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
+	}
+	
+	/**
+	 * Creates List of objects
+	 * @param infos
+	 * @throws PhrescoException
+	 */
+	public ClientResponse create(List<E> infos, String accept, String type) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+		builder = resource.accept(accept).type(type);
 		ClientResponse clientResponse = builder.post(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
+		return clientResponse;
+	}
+	
+	/**
+	 * Updates List of objects for the given type 
+	 * @param infos
+	 * @param type
+	 * @return
+	 * @throws PhrescoException
+	 */
+	public List<E> update(List<E> infos, Type type) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
+		return update(infos, type, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
 	
 	/**
@@ -132,11 +163,24 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	@SuppressWarnings("unchecked")
-	public List<E> update(List<E> infos, Type type) throws PhrescoException {
+	public List<E> update(List<E> infos, Type gType, String accept, String type) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
+		builder = resource.accept(accept).type(type);
 		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(infos));
 		isErrorThrow(clientResponse);
-		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
+		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), gType);
+	}
+	
+	/**
+	 * Update the given object by using the type given
+	 * @param obj
+	 * @param type
+	 * @return
+	 * @throws PhrescoException
+	 */
+	public ClientResponse updateById(E obj, Type type) throws PhrescoException {
+		S_LOGGER.debug("Entered into RestClient.updateById(E obj, Type type)");
+		return updateById(obj, type, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
 	
 	/**
@@ -147,11 +191,12 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	@SuppressWarnings("unchecked")
-	public E updateById(E obj, Type type) throws PhrescoException {
+	public ClientResponse updateById(E obj, Type gType, String accept, String type) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.updateById(E obj, Type type)");
+		builder = resource.accept(accept).type(type);
 		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(obj));
 		isErrorThrow(clientResponse);
-		return (E) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
+		return clientResponse;
 	}
 	
 	/**
