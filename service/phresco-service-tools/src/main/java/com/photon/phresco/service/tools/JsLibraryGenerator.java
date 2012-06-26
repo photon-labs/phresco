@@ -107,10 +107,10 @@ public class JsLibraryGenerator {
 	private void generate(String tech) throws PhrescoException {
 	    Libraries libraries = new Libraries();
         Library library = new Library();
-        com.photon.phresco.model.Library libraryData = new com.photon.phresco.model.Library ();
-        com.photon.phresco.model.Libraries librariesData = new com.photon.phresco.model.Libraries ();
-        List <com.photon.phresco.model.Library> libraryList = new ArrayList <com.photon.phresco.model.Library> ();
-        List <com.photon.phresco.model.Libraries> librariesList = new ArrayList <com.photon.phresco.model.Libraries> ();
+        com.photon.phresco.service.model.Library libraryData = new com.photon.phresco.service.model.Library ();
+        com.photon.phresco.service.model.Libraries librariesData = new com.photon.phresco.service.model.Libraries ();
+        List <com.photon.phresco.service.model.Library> libraryList = new ArrayList <com.photon.phresco.service.model.Library> ();
+        List <com.photon.phresco.service.model.Libraries> librariesList = new ArrayList <com.photon.phresco.service.model.Libraries> ();
         workBook = getWorkBook(tech);
         HSSFSheet sheet = workBook.getSheet(JSLIBRARY);
         Iterator<Row> rowIterator = sheet.rowIterator();

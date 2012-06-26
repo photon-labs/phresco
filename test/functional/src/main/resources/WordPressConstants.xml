@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <WordPress>
+          <appInfoWordPressNameValue>WordPress_Eshop_Proj</appInfoWordPressNameValue>
+          <appInfoWordPressNoneNameValue>WordPress_None_Proj</appInfoWordPressNoneNameValue>
+          <appInfoWordPressDescValue>This is a WordPress project</appInfoWordPressDescValue>
+          <appInfoTechWebappWordPressClick>//option[@value='tech-wordpress']</appInfoTechWebappWordPressClick>
+          <createdWordPressProject>id=PHR_WordPress</createdWordPressProject>
+          <WordPressWebServNameValue>Webservice</WordPressWebServNameValue>
+          <WordPressWebServDescValue>This is a webservice for WordPress project</WordPressWebServDescValue>
+          <WordPressWebServTypeValue>label=Web Service</WordPressWebServTypeValue>
+          <WordPressWebServTypeClick>css=option[value="Web Service"]</WordPressWebServTypeClick>
+          <WordPressWebServHostValue>localhost</WordPressWebServHostValue>
+          <WordPressWebServPortValue>2020</WordPressWebServPortValue>
+          <WordPressWebServContextValue>Webservice</WordPressWebServContextValue>
+          <WordPressGenBuildWebServ>label=Webservice</WordPressGenBuildWebServ>
+          <WordPressGenBuildWebServClick>css=option[value="Webservice"]</WordPressGenBuildWebServClick>
+          <WordPressGenBuildSDK>id=sdk</WordPressGenBuildSDK>
+          <WordPressGenBuildSDKSimul>label=iphonesimulator5.0</WordPressGenBuildSDKSimul>
+          <WordPressGenBuildSDKSimulClick>css=option[value="iphonesimulator5.0"]</WordPressGenBuildSDKSimulClick>
+          <WordPressDeploySimulator>id=actionBtn</WordPressDeploySimulator>
+       </WordPress>
+ </technology>
+</phresco>

@@ -28,7 +28,6 @@ public interface ServiceActions {
 	String LOGIN_RESULT		= "login";
     String LOGIN_SUCCESS 	= "success";
     String LOGIN_FAILURE 	= "failure";
-    String LOGIN_ERROR		= "error.login";
 	
 	/*****************************
      * Dashboard Action path
@@ -54,6 +53,8 @@ public interface ServiceActions {
 	String COMP_APPTYPE_LIST        	= "applntypesList";
 	String COMP_APPTYPE_ADD				= "applicationAdd";
 	String COMP_APPTYPE_SAVE			= "applicationSave";	
+	String COMP_APPTYPE_EDIT            = "applicationEdit";
+	String COMP_APPTYPE_UPDATE          = "applicationUpdate";
 	String COMP_APPTYPE_CANCEL			= "applicationCancel";
 	
 	

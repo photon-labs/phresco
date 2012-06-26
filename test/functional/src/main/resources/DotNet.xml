@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <DotNet>
+          <appInfoDotNetNameValue>DotNet_Eshop_Proj</appInfoDotNetNameValue>
+          <appInfoDotNetNoneNameValue>DotNet_None_Proj</appInfoDotNetNoneNameValue>
+          <appInfoDotNetDescValue>This is a DotNet project</appInfoDotNetDescValue>
+          <appInfoTechWebappDotNetClick>//option[@value='tech-dotnet']</appInfoTechWebappDotNetClick>
+          <createdDotNetProject>id=PHR_DotNet</createdDotNetProject>
+          <DotNetWebServNameValue>Webservice</DotNetWebServNameValue>
+          <DotNetWebServDescValue>This is a webservice for iphone project</DotNetWebServDescValue>
+          <DotNetWebServTypeValue>label=Web Service</DotNetWebServTypeValue>
+          <DotNetWebServTypeClick>css=option[value="Web Service"]</DotNetWebServTypeClick>
+          <DotNetWebServHostValue>localhost</DotNetWebServHostValue>
+          <DotNetWebServPortValue>2020</DotNetWebServPortValue>
+          <DotNetWebServContextValue>Webservice</DotNetWebServContextValue>
+          <DotNetGenBuildWebServ>label=Webservice</DotNetGenBuildWebServ>
+          <DotNetGenBuildWebServClick>css=option[value="Webservice"]</DotNetGenBuildWebServClick>
+          <DotNetGenBuildSDK>id=sdk</DotNetGenBuildSDK>
+          <DotNetGenBuildSDKSimul>label=iphonesimulator5.0</DotNetGenBuildSDKSimul>
+          <DotNetGenBuildSDKSimulClick>css=option[value="iphonesimulator5.0"]</DotNetGenBuildSDKSimulClick>
+          <DotNetDeploySimulator>id=actionBtn</DotNetDeploySimulator>
+       </DotNet>
+ </technology>
+</phresco>

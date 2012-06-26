@@ -33,12 +33,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.User;
 import com.photon.phresco.model.UserInfo;
-import com.photon.phresco.model.Users;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.service.model.User;
+import com.photon.phresco.service.model.Users;
+import com.photon.phresco.service.util.AuthenticationUtil;
 import com.photon.phresco.util.Credentials;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -61,6 +62,8 @@ public class LoginService {
         GenericType<UserInfo> genericType = new GenericType<UserInfo>() {};
         UserInfo userInfo = response.getEntity(genericType);
         fillUserRoles(userInfo);
+        AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
+        userInfo.setToken(authTokenUtil.generateToken(credentials.getUsername()));
         return userInfo;
     }
 	

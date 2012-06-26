@@ -24,7 +24,6 @@ import java.util.List;
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AppType;
-import com.photon.phresco.model.Modules;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Settings;
 import com.photon.phresco.model.Technology;
@@ -32,6 +31,7 @@ import com.photon.phresco.service.api.DBManager;
 //import com.photon.phresco.service.data.api.AdminManager;
 import com.photon.phresco.service.data.api.ComponentManager;
 import com.photon.phresco.service.impl.DBManagerImpl;
+import com.photon.phresco.service.model.Modules;
 
 public class ComponentManagerImpl implements ComponentManager {
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <iPhone>
+          <appInfoiPhoneNativeNameValue>iPhoneNative_Eshop_Proj</appInfoiPhoneNativeNameValue>
+          <appInfoiPhoneNativeNoneNameValue>iPhoneNative_None_Proj</appInfoiPhoneNativeNoneNameValue>
+          <appInfoiPhoneNativeDescValue>This is a iPhone native project</appInfoiPhoneNativeDescValue>
+          <appInfoTechMobappiPhoneNativeClick>//option[@value='tech-iphone-native']</appInfoTechMobappiPhoneNativeClick>
+          <creatediPhoneNativeProject>id=PHR_iPhonenative</creatediPhoneNativeProject>
+          <iPhoneNativeWebServNameValue>Webservice</iPhoneNativeWebServNameValue>
+          <iPhoneNativeWebServDescValue>This is a webservice for iphone project</iPhoneNativeWebServDescValue>
+          <iPhoneNativeWebServTypeValue>label=Web Service</iPhoneNativeWebServTypeValue>
+          <iPhoneNativeWebServTypeClick>css=option[value="Web Service"]</iPhoneNativeWebServTypeClick>
+          <iPhoneNativeWebServHostValue>localhost</iPhoneNativeWebServHostValue>
+          <iPhoneNativeWebServPortValue>2020</iPhoneNativeWebServPortValue>
+          <iPhoneNativeWebServContextValue>Webservice</iPhoneNativeWebServContextValue>
+          <iPhoneNativeGenBuildWebServ>label=Webservice</iPhoneNativeGenBuildWebServ>
+          <iPhoneNativeGenBuildWebServClick>css=option[value="Webservice"]</iPhoneNativeGenBuildWebServClick>
+          <iPhoneNativeGenBuildSDK>id=sdk</iPhoneNativeGenBuildSDK>
+          <iPhoneNativeGenBuildSDKSimul>label=iphonesimulator5.0</iPhoneNativeGenBuildSDKSimul>
+          <iPhoneNativeGenBuildSDKSimulClick>css=option[value="iphonesimulator5.0"]</iPhoneNativeGenBuildSDKSimulClick>
+          <iPhoneNativeDeploySimulator>id=actionBtn</iPhoneNativeDeploySimulator>
+          <appInfoiPhoneHybridNameValue>iPhoneHybrid_Eshop</appInfoiPhoneHybridNameValue>
+          <appInfoiPhoneHybridNoneNameValue>iPhoneHybrid_None</appInfoiPhoneHybridNoneNameValue>
+          <appInfoiPhoneNativeDescValue>This is a iPhone Hybrid project</appInfoiPhoneNativeDescValue>
+          <appInfoTechMobappiPhoneHybrid>label=iPhone Hybrid</appInfoTechMobappiPhoneHybrid>
+          <appInfoTechMobappiPhoneHybridClick>//option[@value='tech-iphone-hybrid']</appInfoTechMobappiPhoneHybridClick>
+          <appInfoTechMobappiPhoneHybridShoppinCart>//option[@value='ShoppingCart']</appInfoTechMobappiPhoneHybridShoppinCart>
+          <creatediPhoneHybridProject>id=PHR_iPhoneHybrid</creatediPhoneHybridProject>
+       </iPhone>
+ </technology>
+</phresco>

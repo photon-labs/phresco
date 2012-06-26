@@ -17,130 +17,73 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<script type="text/javascript">
-function findError(data) {
-	if(data.nameError != undefined) {
-		showError($("#nameControl"), $("#nameError"), data.nameError);
-	} else {
-		hideError($("#nameControl"), $("#nameError"));
-	}
-	
-	if(data.mailError != undefined) {
-		showError($("#mailControl"), $("#mailError"), data.mailError);
-	} else {
-		hideError($("#mailControl"), $("#mailError"));
-	}
-	
-	if(data.addressError != undefined) {
-		showError($("#addresControl"), $("#addresError"), data.addressError);
-	} else {
-		hideError($("#addresControl"), $("#addresError"));
-	}
-	
-	if(data.zipError != undefined) {
-		showError($("#zipControl"), $("#zipError"), data.zipError);
-	} else {
-		hideError($("#zipControl"), $("#zipError"));
-	}
-	
-	if(data.numError != undefined) {
-		showError($("#numControl"), $("#numError"), data.numError);
-	} else {
-		hideError($("#numControl"), $("#numError"));
-	}
-	
-	if(data.faxError != undefined) {
-		showError($("#faxControl"), $("#faxError"), data.faxError);
-	} else {
-		hideError($("#faxControl"), $("#faxError"));
-	}
-	
-	if(data.conError != undefined) {
-		showError($("#conControl"), $("#conError"), data.conError);
-	} else {
-		hideError($("#conControl"), $("#conError"));
-	}
-	
-	if(data.licenError != undefined) {
-		showError($("#licenControl"), $("#licenError"), data.licenError);
-	} else {
-		hideError($("#licenControl"), $("#licenError"));
-	}
-}
-</script>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		// Date picker
-		document.getElementById('fromdate').value = '';
-		$(function() {
-			$("#fromdate").datepicker({
-				showOn : "button",
-				buttonImage : "images/calendar.gif",
-				buttonImageOnly : true
-			});
-			document.getElementById('todate').value = '';
-			$("#todate").datepicker({
-				showOn : "button",
-				buttonImage : "images/calendar.gif",
-				buttonImageOnly : true
-			});
+<%@ page import="com.photon.phresco.commons.model.Customer" %>
 
-		});
-	});
-	
-</script>
+<%
+	Customer customer = (Customer)request.getAttribute("customer");
+	String fromPage = (String) request.getAttribute("fromPage");
+%>
 
 <form class="form-horizontal customer_list">
 	<h4>
-		<s:label for="description" key="lbl.header.admin.cust.tilte"
-			theme="simple" />
+		<% if (StringUtils.isNotEmpty(fromPage)) { %>
+				<s:label for="description" key="lbl.hdr.adm.cust.edit.tilte" theme="simple" />
+		<% } else { %>
+				<s:label for="description" key="lbl.hdr.adm.cust.tilte" theme="simple" />
+		<% } %>
 	</h4>
 	<div class="content_adder">
 		<div class="control-group" id ="nameControl">
-			<s:label for="input01" key="lbl.header.admin.name" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Customer Name" class="input-xlarge" name="name" type="text">
+				<input id="input01" placeholder="Customer Name" class="input-xlarge" name="name" type="text" value="<%= customer != null ? customer.getName() : "" %>">
 					<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.desc" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.desc'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Description" class="input-xlarge"
-					type="text">
+				<textarea id="textarea" placeholder="Description" class="input-xlarge" rows="3" name="description"><%= customer != null ? customer.getDescription() : "" %></textarea>
 			</div>
 		</div>
 
 		<div class="control-group" id ="mailControl">
-			<s:label for="input01" key="lbl.header.admin.cust.mail" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.mail'/>
+			</label>
 			<div class="controls">
 				<div class="input-prepend">
-					<span class="add-on"> <i class="icon-envelope"></i> </span> <input
-						id="inputIcon" class="span2" type="text" name="email">
-						<span class="help-inline" id="mailError"></span>
+					<span class="add-on"> <i class="icon-envelope"></i></span> 
+					<input id="inputIcon" class="span2" type="text" name="email" value="">
+					<span class="help-inline" id="mailError"></span>
 				</div>
 			</div>
 		</div>
 
 		<div class="control-group" id="addresControl">
-			<s:label for="input01" key="lbl.header.admin.cust.adrs" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.adrs'/>
+			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Address" class="input-xlarge"
-					rows="3" name="address"></textarea>
-					<span class="help-inline" id="addresError"></span>
+				<textarea id="textarea" placeholder="Address" class="input-xlarge" rows="3" name="address"></textarea>
+				<span class="help-inline applyerror" id="addresError"></span>
 			</div>
 		</div>
 
 		<div class="control-group" id="conControl">
-			<s:label for="input01" key="lbl.header.admin.cust.cntry" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cntry'/>
+			</label>
 			<div class="controls">
 				<select id="combobox" name="country">
 					<option value="">- select -</option>
@@ -396,54 +339,57 @@ function findError(data) {
 		</div>
 
 		<div class="control-group">
-			<s:label for="input01" key="lbl.header.admin.cust.state" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.cust.state'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="State" class="input-xlarge"
-					type="text">
+				<input id="input01" placeholder="State" class="input-xlarge" type="text" name="state">
 			</div>
 		</div>
 
 		<div class="control-group" id= "zipControl">
-			<s:label for="input01" key="lbl.header.admin.cust.zipecode" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.zipcode'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Zipcode" class="input-xlarge"
-					type="text" name="zipcode">
-					<span class="help-inline" id="zipError"></span>
+				<input id="input01" placeholder="Zipcode" class="input-xlarge" type="text" name="zipcode">
+				<span class="help-inline" id="zipError"></span>
 			</div>
 		</div>
 
 		<div class="control-group" id= "numControl">
-			<s:label for="input01" key="lbl.header.admin.cust.cont" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cont'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Contact Number"
-					class="input-xlarge" type="text" name="number">
-					<span class="help-inline" id="numError"></span>
+				<input id="input01" placeholder="Contact Number" class="input-xlarge" type="text" name="number">
+				<span class="help-inline" id="numError"></span>
 			</div>
 		</div>
 
 		<div class="control-group" id= "faxControl">
-			<s:label for="input01" key="lbl.header.admin.cust.fax" cssClass="control-label labelbold" theme="simple"/>
-			<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.fax'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Fax Number" class="input-xlarge"
-					type="number" name="fax">
-					<span class="help-inline" id="faxError"></span>
+				<input id="input01" placeholder="Fax Number" class="input-xlarge" type="text" name="fax">
+				<span class="help-inline" id="faxError"></span>
 			</div>
 		</div>
 
 		<div class="control-group">
-		<s:label for="input01" key="lbl.header.admin.cust.hlptxt" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.cust.hlptxt'/>
+			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Help text" class="input-xlarge"
-					type="text">
+				<input id="input01" placeholder="Help text" class="input-xlarge" type="text" name="helpText">
 			</div>
 		</div>
 
 		<div class="control-group" id="licenControl">
-		<s:label for="input01" key="lbl.header.admin.cust.linctype" cssClass="control-label labelbold" theme="simple"/>
-		<span class="mandatory">*</span>
+			<label for="input01" class="control-label labelbold">
+				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.linctype'/>
+			</label>
 			<div class="controls">
 				<select id="select01" name="licence">
 					<option value="">- select -</option>
@@ -456,32 +402,119 @@ function findError(data) {
 		</div>
 
 		<div class="control-group">
-		<s:label for="input01" key="lbl.header.admin.cust.Vlddatefrom" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+				<s:text name='lbl.hdr.adm.cust.Vlddatefrom'/>
+			</label>
 			<div class="controls">
-				<input id="fromdate" class="datealign" type="text" value="">
-
+				<input id="fromdate" class="datealign" type="text" name="validFrom" value="<%= customer != null ? customer.getValidFrom() : "" %>">
 			</div>
 		</div>
 
 		<div class="control-group">
-		<s:label for="input01" key="lbl.header.admin.cust.vlddateto" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+					<s:text name='lbl.hdr.adm.cust.vlddateto'/>
+			</label>
 			<div class="controls">
-				<input id="todate" class="datealign" type="text" value="">
-
+				<input id="todate" class="datealign" type="text" name="validUpTo" value="<%= customer != null ? customer.getValidUpto() : "" %>">
 			</div>
 		</div>
 
 		<div class="control-group">
-		<s:label for="input01" key="lbl.header.admin.cust.url" cssClass="control-label labelbold" theme="simple"/>
+			<label for="input01" class="control-label labelbold">
+					<s:text name='lbl.hdr.adm.cust.url'/>
+			</label>
 			<div class="controls">
-				<input id="repUrl" class="datealign" type="text" value="">
+				<input id="repUrl" class="datealign" type="text" name="repoURL">
 			</div>
 		</div>
-
 	</div>
 
 	<div class="bottom_button">
-		<input type="button" id="customerSave" class="btn btn-primary" onclick="loadContent('customerSave', $('#subcontainer'));" value="<s:text name='lbl.header.comp.save'/>"/>
-		<input type="button" id="customerCancel" class="btn btn-primary" onclick="loadContent('customerCancel', $('#subcontainer'));" value="<s:text name='lbl.header.comp.cancel'/>"/>
+		<% if (StringUtils.isNotEmpty(fromPage)) { %>
+				<input type="button" id="customerUpdate" class="btn btn-primary" onclick="clickSave('customerUpdate', $('#subcontainer'), 'Updating Customer');" value="<s:text name='lbl.hdr.comp.update'/>"/>
+		<% } else { %>
+				<input type="button" id="customerSave" class="btn btn-primary" onclick="clickSave('customerSave', $('#subcontainer'), 'Creating Customer');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<% } %>
+		<input type="button" id="customerCancel" class="btn btn-primary" onclick="loadContent('customerCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
+	<input type="hidden" name="customerId" value="<%= customer != null ? customer.getId() : "" %>"/>
+	<input type="hidden" name="oldName" value="<%= customer != null ? customer.getName() : "" %>"/>
 </form>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Date picker
+		<% if (StringUtils.isEmpty(fromPage)) { %>
+				document.getElementById('fromdate').value = '';
+				document.getElementById('todate').value = '';
+		<% } %>
+		
+		$(function() {
+			$("#fromdate").datepicker({
+				showOn : "button",
+				buttonImage : "images/calendar.gif",
+				buttonImageOnly : true
+			});
+			
+			$("#todate").datepicker({
+				showOn : "button",
+				buttonImage : "images/calendar.gif",
+				buttonImageOnly : true
+			});
+	
+		});
+	});
+	
+	function findError(data) {
+		if(data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+		
+		if(data.mailError != undefined) {
+			showError($("#mailControl"), $("#mailError"), data.mailError);
+		} else {
+			hideError($("#mailControl"), $("#mailError"));
+		}
+		
+		if(data.addressError != undefined) {
+			showError($("#addresControl"), $("#addresError"), data.addressError);
+		} else {
+			hideError($("#addresControl"), $("#addresError"));
+		}
+		
+		if(data.zipError != undefined) {
+			showError($("#zipControl"), $("#zipError"), data.zipError);
+		} else {
+			hideError($("#zipControl"), $("#zipError"));
+		}
+		
+		if(data.numError != undefined) {
+			showError($("#numControl"), $("#numError"), data.numError);
+		} else {
+			hideError($("#numControl"), $("#numError"));
+		}
+		
+		if(data.faxError != undefined) {
+			showError($("#faxControl"), $("#faxError"), data.faxError);
+		} else {
+			hideError($("#faxControl"), $("#faxError"));
+		}
+		
+		if(data.conError != undefined) {
+			showError($("#conControl"), $("#conError"), data.conError);
+		} else {
+			hideError($("#conControl"), $("#conError"));
+		}
+		
+		if(data.licenError != undefined) {
+			showError($("#licenControl"), $("#licenError"), data.licenError);
+		} else {
+			hideError($("#licenControl"), $("#licenError"));
+		}
+	}
+</script>

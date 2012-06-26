@@ -18,15 +18,24 @@
   ###
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-
 <script type="text/javascript">
 	clickMenu($("a[name='url_add']"),$("#subcontainer"));
 </script>
 
 <form class="customer_list">
-	<div class="operation">
-		<input type="button" id="globalurlAdd" class="btn btn-primary" name="url_add" onclick="loadContent('globalurlAdd', $('#subcontainer'));" value="<s:text name='lbl.header.admin.urllst.title'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.header.admin.delete'/>"/>	
+	<div class="operation" id="operation">
+		<input type="button" id="globalurlAdd" class="btn btn-primary" name="url_add" onclick="loadContent('globalurlAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.urllst.title'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>	
 	</div>
 	
 	<div class="table_div">
@@ -42,13 +51,13 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.lurllst.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.lurllst.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.urllst.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.urllst.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.header.admin.urllst.url" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.urllst.url" theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>

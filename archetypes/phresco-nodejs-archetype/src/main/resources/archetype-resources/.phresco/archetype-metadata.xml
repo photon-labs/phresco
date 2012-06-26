@@ -21,7 +21,7 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
 name="nodejs">
 	<fileSets>
-       <fileSet filtered="false" packaged="false"> 
+		<fileSet filtered="false" packaged="false"> 
 			<directory>.phresco/</directory> 
 			<includes> 
 				<include>archetype-metadata.xml</include> 
@@ -32,8 +32,8 @@ name="nodejs">
 			<directory>docs</directory> 
 			<includes> 
 				<include>PHTN_Reference_Guide.doc</include> 
-				<include>PHTN_Release_Notes.doc</include>
-				<include>README.txt</include> 	
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8"> 

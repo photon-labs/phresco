@@ -36,12 +36,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.photon.phresco.commons.AndroidConstants;
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.PluginProperties;
+import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -55,15 +69,14 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.PluginProperties;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.util.AndroidConstants;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-import com.photon.phresco.util.XCodeConstants;
+import com.phresco.pom.util.PomProcessor;
 
 public class Build extends FrameworkBaseAction {
 
@@ -78,6 +91,8 @@ public class Build extends FrameworkBaseAction {
 	private String importSql = null;
 	private String showError = null;
 	private String hideLog = null;
+	private String skipTest = null;
+	private String showDebug = null;
 	private InputStream fileInputStream;
 	private String fileName = "";
 	private String connectionAlive = "false";
@@ -90,8 +105,12 @@ public class Build extends FrameworkBaseAction {
 	private String serialNumber = null;
 	private String proguard = null;
 	private String projectModule = null;
+	private String mainClassName = null;
+	private String jarName = null;
 	//Iphone deploy option
 	private String deployTo = "";
+	private String userBuildName = null;
+	private String userBuildNumber = null;
 
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
 
@@ -222,12 +241,21 @@ public class Build extends FrameworkBaseAction {
 					S_LOGGER.debug("Iphone technology terget name" + xcodeConfig.getName());
 				}
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
+				// get list of sdks
+				List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
+				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
+				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 			
 			projectModules = projectModuleMap.get(projectCode);
 			if (CollectionUtils.isEmpty(projectModules)) {
 				projectModules = getWarProjectModules(projectCode);
 				projectModuleMap.put(projectCode, projectModules);
+			}
+			
+			if (TechnologyTypes.JAVA_STANDALONE.equals(technology)) {
+				getValueFromJavaStdAlonePom();
 			}
 			
 		} catch (Exception e) {
@@ -238,7 +266,7 @@ public class Build extends FrameworkBaseAction {
         if (CollectionUtils.isNotEmpty(projectModules)) {
         	getHttpRequest().setAttribute(REQ_PROJECT_MODULES, projectModules);
         }
-
+        
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -290,11 +318,26 @@ public class Build extends FrameworkBaseAction {
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
+			
+
+			if (StringUtils.isNotEmpty(userBuildName)) {
+				settingsInfoMap.put(BUILD_NAME, userBuildName);
+			}
+			
+			if (StringUtils.isNotEmpty(userBuildNumber)) {
+				settingsInfoMap.put(BUILD_NUMBER, userBuildNumber);
+			}
+
 
 			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,	androidVersion);
 			}
 
+			if(TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
+				settingsInfoMap.put(MAINCLASSNAME, mainClassName);
+				settingsInfoMap.put(JARNAME, jarName);
+			}
+			
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
@@ -330,6 +373,8 @@ public class Build extends FrameworkBaseAction {
 			}
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project, actionType, settingsInfoMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_BUILD, reader);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -498,11 +543,11 @@ public class Build extends FrameworkBaseAction {
 			String techId = project.getProjectInfo().getTechnology().getId();
 			if (TechnologyTypes.IPHONES.contains(techId)) {
 				valuesMap.put(IPHONE_BUILD_NAME, buildInfo.getBuildName());
-				//if deploy to device is selected we have to pass device deploy param as additional param
-				if(StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_DEVICE)) {
-					valuesMap.put(DEVICE_DEPLOY, TRUE);
-				} else {
+				//if deploy to device is selected we have to pass device deploy param as additional param				
+				if (StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_SIMULATOR)) {
 					valuesMap.put(IPHONE_SIMULATOR_VERSION, simulatorVersion);
+				} else {
+					valuesMap.put(DEVICE_DEPLOY, TRUE);
 				}
 			} else {
 				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
@@ -564,6 +609,8 @@ public class Build extends FrameworkBaseAction {
 			actionType.setWorkingDirectory(builder.toString());
 			actionType.setHideLog(Boolean.parseBoolean(hideLog));
 			actionType.setShowError(Boolean.parseBoolean(showError));
+			actionType.setShowDebug(Boolean.parseBoolean(showDebug));
+			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
 			BufferedReader reader = runtimeManager.performAction(project,
 					actionType, valuesMap, null);
 			getHttpSession().setAttribute(projectCode + REQ_FROM_TAB_DEPLOY,
@@ -629,6 +676,9 @@ public class Build extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_HIDE_DEPLOY_TO_SIMULATOR, new Boolean(!createIpa && !deviceDeploy ? true : false));
 			getHttpRequest().setAttribute(REQ_HIDE_DEPLOY_TO_DEVICE, new Boolean(createIpa && deviceDeploy ? true : false));
 			getHttpRequest().setAttribute(REQ_FROM_TAB, REQ_FROM_TAB_DEPLOY);
+			// get list of sdk versions
+			List<String> iphoneSimulatorSdks = IosSdkUtil.getMacSdksVersions(MacSdkType.iphonesimulator);
+			getHttpRequest().setAttribute(REQ_IPHONE_SIMULATOR_SDKS, iphoneSimulatorSdks);
 		} catch (Exception e) {
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Build.Iphone()"
@@ -1315,6 +1365,39 @@ public class Build extends FrameworkBaseAction {
 
 		return env;
 	}
+	
+	private void getValueFromJavaStdAlonePom() throws PhrescoException {
+		try {
+			File file = new File(Utility.getProjectHome() + File.separator + projectCode + File.separator + POM_FILE);
+			PomProcessor pomProcessor = new PomProcessor(file);
+			String finalName = pomProcessor.getFinalName();
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document document = dBuilder.parse(file);
+			document.getDocumentElement().normalize();
+			NodeList nodeList = document.getElementsByTagName(JAVA_POM_MANIFEST);
+			String mainClassValue = "";
+			for (int temp = 0; temp < nodeList.getLength(); temp++) {
+				Node node = nodeList.item(temp);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element mainClassElement = (Element) node;
+					mainClassValue = mainClassElement.getElementsByTagName(JAVA_POM_MAINCLASS).item(0).getTextContent();
+					break;
+				}
+			}
+			getHttpRequest().setAttribute(FINAL_NAME, finalName);
+			getHttpRequest().setAttribute(MAIN_CLASS_VALUE, mainClassValue);
+
+		} catch (JAXBException e) {
+			throw new PhrescoException(e);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} catch (ParserConfigurationException e) {
+			throw new PhrescoException(e);
+		} catch (SAXException e) {
+			throw new PhrescoException(e);
+		}
+	}
 
 	public String getShowSettings() {
 		return showSettings;
@@ -1478,5 +1561,55 @@ public class Build extends FrameworkBaseAction {
 
 	public void setDeployTo(String deployTo) {
 		this.deployTo = deployTo;
+	}
+	
+   
+	public String getSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
+	}
+
+	public String getShowDebug() {
+		return showDebug;
+	}
+
+	public void setShowDebug(String showDebug) {
+		this.showDebug = showDebug;
+	}
+
+	public String getUserBuildName() {
+		return userBuildName;
+	}
+
+	public void setUserBuildName(String userBuildName) {
+		this.userBuildName = userBuildName;
+	}
+
+	public String getUserBuildNumber() {
+		return userBuildNumber;
+	}
+
+	public void setUserBuildNumber(String userBuildNumber) {
+		this.userBuildNumber = userBuildNumber;
+	}
+
+	public String getMainClassName() {
+		return mainClassName;
+	}
+
+	public void setMainClassName(String mainClassName) {
+		this.mainClassName = mainClassName;
+	}
+
+	public String getJarName() {
+		return jarName;
+	}
+
+	public void setJarName(String jarName) {
+		this.jarName = jarName;
+
 	}
 }

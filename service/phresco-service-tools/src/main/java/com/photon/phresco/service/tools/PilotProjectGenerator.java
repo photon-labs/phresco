@@ -40,14 +40,14 @@ import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.PilotTechModuleVersions;
-import com.photon.phresco.model.PilotTechModules;
-import com.photon.phresco.model.PilotTechnology;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
+import com.photon.phresco.service.model.PilotTechModuleVersions;
+import com.photon.phresco.service.model.PilotTechModules;
+import com.photon.phresco.service.model.PilotTechnology;
 import com.photon.phresco.util.TechnologyTypes;
 
 public class PilotProjectGenerator {

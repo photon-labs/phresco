@@ -13,12 +13,12 @@
     <artifactId>phresco-wordpress-archetype</artifactId>
     <name>Archetype - phresco-wordpress-archetype</name>
     <url>http://www.phresco.org</url>
-	
+	<description>phresco-wordpress-archetype</description>
      <distributionManagement>
         <site>
             <id>phresco.archetype.wordpress</id>
             <name>Phresco Archetypes - WordPress</name>
-            <url>scp://phresco.org/home/projects/archetypes/wordpress/public_html/</url>
+            <url>${siteBaseUrl}/archetypes/phresco-wordpress-archetype/</url>
         </site>
     </distributionManagement>
     

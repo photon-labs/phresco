@@ -30,8 +30,8 @@
 	</div>
 	
 	<div class="modal-footer">
-		<input id="cancel" type="button" value="<s:text name="label.cancel"/>" class="btn primary"/>
-		<input type="button" value="<s:text name="label.ok"/>" class="btn primary" id="ok" onClick="onOk()" />
+		<input id="cancel" type="button" value="<s:text name="label.no"/>" class="btn primary"/>
+		<input type="button" value="<s:text name="label.yes"/>" class="btn primary" id="ok" onClick="onOk()" />
 	</div>
 </div>
 <!-- Confirmation dialog ends -->	

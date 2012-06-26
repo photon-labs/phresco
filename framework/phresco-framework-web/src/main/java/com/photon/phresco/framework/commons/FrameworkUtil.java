@@ -108,11 +108,11 @@ public class FrameworkUtil implements FrameworkConstants {
         unitTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_UNIT_TEST);
-        unitTestMap.put(TechnologyTypes.JAVA_STANDALONE, PATH_JAVA_WEBSERVICE_UNIT_TEST);
+        unitTestMap.put(TechnologyTypes.JAVA_STANDALONE, PATH_JAVA_UNIT_TEST);
     }
 
     private void initUnitReportMap() {
-        unitReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.HTML5_WIDGET, PATH_HTML5_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.HTML5, PATH_HTML5_UNIT_TEST_REPORT);
@@ -134,7 +134,7 @@ public class FrameworkUtil implements FrameworkConstants {
         unitReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_UNIT_TEST_REPORT);
-        unitReportMap.put(TechnologyTypes.JAVA_STANDALONE, PATH_JAVA_WEBSERVICE_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.JAVA_STANDALONE, PATH_JAVA_UNIT_TEST_REPORT);
     }
 
     private void initFunctionalTestMap() {
@@ -496,5 +496,28 @@ public class FrameworkUtil implements FrameworkConstants {
             }
         }
         return ret.toString();
+    }
+    
+    public static String findOS() {
+    	String osName = System.getProperty(OS_NAME);
+    	String osBit = System.getProperty(OS_ARCH);
+    	if (osName.contains(WINDOWS)) {
+			osName = WINDOWS;
+		} else if (osName.contains(LINUX)) {
+			osName = LINUX;
+		} else if (osName.contains(MAC)) {
+			osName = MAC;
+		} else if (osName.contains(SERVER)) {
+			osName = SERVER;
+		} else if (osName.contains(WINDOWS7)) {
+			osName = WINDOWS7.replace(" ", "");
+		}
+			
+    	if (osBit.contains(OS_BIT64)) {
+    		osBit = OS_BIT64;
+    	} else {
+    		osBit = OS_BIT86;
+    	}
+    	return osName.concat(osBit);
     }
 }

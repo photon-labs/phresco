@@ -25,10 +25,10 @@ import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AppType;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.Modules;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Settings;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.service.model.Modules;
 
 
 public interface ComponentManager {
@@ -49,9 +49,9 @@ public interface ComponentManager {
 
 	List<Modules> findModules();
 
-	void createModules(List<com.photon.phresco.model.Modules> modules);
+	void createModules(List<com.photon.phresco.service.model.Modules> modules);
 
-	List<com.photon.phresco.model.Modules> updateModules(List<Modules> modules);
+	List<com.photon.phresco.service.model.Modules> updateModules(List<Modules> modules);
 
 	List<ProjectInfo> findPilots();
 

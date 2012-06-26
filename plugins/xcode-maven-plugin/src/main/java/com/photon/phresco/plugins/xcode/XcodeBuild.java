@@ -63,12 +63,12 @@ import org.codehaus.plexus.archiver.zip.ZipArchiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
 import com.photon.phresco.util.PluginUtils;
-import com.photon.phresco.util.XCodeConstants;
 
 /**
  * Run the xcodebuild command line program

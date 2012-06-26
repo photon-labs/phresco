@@ -1,22 +1,3 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
     /**
     * o------------------------------------------------------------------------------o
     * | This file is part of the RGraph package - you can learn more at:             |
@@ -110,8 +91,6 @@
             'chart.annotatable':            false,
             'chart.annotate.color':         'black',
             'chart.scale.decimals':         0,
-            'chart.scale.point':            '.',
-            'chart.scale.thousand':         ',',
             'chart.zoom.factor':            1.5,
             'chart.zoom.fade.in':           true,
             'chart.zoom.fade.out':          true,
@@ -804,9 +783,9 @@
                 RGraph.Text(context,
                             font,
                             size,
-                            centerx + (Math.cos(((i / labels.length) * (2 * Math.PI)) - (Math.PI / 2)) * (this.radius - (this.Get('chart.label.area') / 2) ) ), // Sin A = Opp / Hyp
-                            centery + (Math.sin(((i / labels.length) * (2 * Math.PI)) - (Math.PI / 2)) * (this.radius - (this.Get('chart.label.area') / 2) ) ), // Cos A = Adj / Hyp
-                            String(labels[i]),
+                            centerx + (Math.cos(((i / labels.length) * 6.28) - 1.57) * (this.radius - (this.Get('chart.label.area') / 2) ) ), // Sin A = Opp / Hyp
+                            centery + (Math.sin(((i / labels.length) * 6.28) - 1.57) * (this.radius - (this.Get('chart.label.area') / 2) ) ), // Cos A = Adj / Hyp
+                            String(units_pre + labels[i] + units_post),
                             'center',
                             'center');
             }
@@ -815,16 +794,16 @@
         * If not, use the maximum value
         */
         } else {
-            RGraph.Text(context, font, size, centerx + (0.588 * r ), centery - (0.809 * r ), RGraph.number_format(this, (((end - start) * (1/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 36);
-            RGraph.Text(context, font, size, centerx + (0.951 * r ), centery - (0.309 * r), RGraph.number_format(this, (((end - start) * (2/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 72);
-            RGraph.Text(context, font, size, centerx + (0.949 * r), centery + (0.287 * r), RGraph.number_format(this, (((end - start) * (3/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 108);
-            RGraph.Text(context, font, size, centerx + (0.588 * r ), centery + (0.809 * r ), RGraph.number_format(this, (((end - start) * (4/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 144);
-            RGraph.Text(context, font, size, centerx, centery + r, RGraph.number_format(this, (((end - start) * (5/10)) + start).toFixed(decimals),units_pre, units_post), 'center', 'center', false, 180);
-            RGraph.Text(context, font, size, centerx - (0.588 * r ), centery + (0.809 * r ), RGraph.number_format(this, (((end - start) * (6/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 216);
-            RGraph.Text(context, font, size, centerx - (0.949 * r), centery + (0.300 * r), RGraph.number_format(this, (((end - start) * (7/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 252);
-            RGraph.Text(context, font, size, centerx - (0.951 * r), centery - (0.309 * r), RGraph.number_format(this, (((end - start) * (8/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 288);
-            RGraph.Text(context, font, size, centerx - (0.588 * r ), centery - (0.809 * r ), RGraph.number_format(this, (((end - start) * (9/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 324);
-            RGraph.Text(context, font, size, centerx, centery - r, this.Get('chart.zerostart') ? RGraph.number_format(this, this.start.toFixed(decimals), units_pre, units_post) : RGraph.number_format(this, (((end - start) * (10/10)) + start).toFixed(decimals), units_pre, units_post), 'center', 'center', false, 360);
+            RGraph.Text(context, font, size, centerx + (0.588 * r ), centery - (0.809 * r ), String(units_pre + (((end - start) * (1/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 36);
+            RGraph.Text(context, font, size, centerx + (0.951 * r ), centery - (0.309 * r), String(units_pre + (((end - start) * (2/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 72);
+            RGraph.Text(context, font, size, centerx + (0.949 * r), centery + (0.287 * r), String(units_pre + (((end - start) * (3/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 108);
+            RGraph.Text(context, font, size, centerx + (0.588 * r ), centery + (0.809 * r ), String(units_pre + (((end - start) * (4/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 144);
+            RGraph.Text(context, font, size, centerx, centery + r, String(units_pre + (((end - start) * (5/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 180);
+            RGraph.Text(context, font, size, centerx - (0.588 * r ), centery + (0.809 * r ), String(units_pre + (((end - start) * (6/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 216);
+            RGraph.Text(context, font, size, centerx - (0.949 * r), centery + (0.300 * r), a = String(units_pre + (((end - start) * (7/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 252);
+            RGraph.Text(context, font, size, centerx - (0.951 * r), centery - (0.309 * r), String(units_pre + (((end - start) * (8/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 288);
+            RGraph.Text(context, font, size, centerx - (0.588 * r ), centery - (0.809 * r ), String(units_pre + (((end - start) * (9/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 324);
+            RGraph.Text(context, font, size, centerx, centery - r, this.Get('chart.zerostart') ? units_pre + String(this.start) + units_post : String(units_pre + (((end - start) * (10/10)) + start).toFixed(decimals) + units_post), 'center', 'center', false, 360);
         }
         
         this.context.fill();

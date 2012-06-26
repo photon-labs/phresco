@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+   <mobileWidgetConstants>
+        <appInfoMobileWidgetNameValue>MobileWidget_Eshop_Proj</appInfoMobileWidgetNameValue>
+        <appInfoMobileWidgetNoneNameValue>MobileWidget_None_Proj</appInfoMobileWidgetNoneNameValue>
+        <appInfoMobileWidgetDescValue>This is a Mobile widget project</appInfoMobileWidgetDescValue>
+        <appInfoTechMobappMobileWidget>//option[@value='tech-html5-mobile-widget']</appInfoTechMobappMobileWidget>
+        <appInfoTechMobappMobileWidgetClick>css=option[value="tech-html5-mobile-widget"]</appInfoTechMobappMobileWidgetClick>
+        <createdMobileWidgetProject>//a[contains(text(),'MobileWidget_Eshop_Proj')]</createdMobileWidgetProject>
+        <MobileWidgetServerNameValue>dfghd</MobileWidgetServerNameValue>
+        <MobileWidgetServerDescValue>dfgd</MobileWidgetServerDescValue>
+        <MobileWidgetBuildGenBuildMobileWidgetServer>dfghd</MobileWidgetBuildGenBuildMobileWidgetServer>
+        <MobWidgBuildGenBuildMobWidgWebServ>dfgdhg</MobWidgBuildGenBuildMobWidgWebServ>
+   </mobileWidgetConstants>
+ </technology>
+</phresco>

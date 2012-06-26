@@ -2275,7 +2275,9 @@ fieldset {
     border-radius: 0 0 6px 6px;
     height: 89%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-left:10px;
+    margin-top: 0px;
 }
 
 .bordered-table {
@@ -2364,7 +2366,7 @@ fieldset {
 .popup_Modal {
     top: 55%; 
     left: 50%;
-    width: 560px; 
+    width: 660px; 
     position: fixed;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -2375,7 +2377,7 @@ fieldset {
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding-box;
     background-clip: padding-box;
-    margin-left: -280px;
+    margin-left: -347px;
     margin-top: -160px;
     z-index: 60002;
 }
@@ -4239,7 +4241,7 @@ form div.error {
 	left : 0%; 
 	margin-top : 0px; 
 	margin-bottom : 0px; 
-	width: 62%; 
+	width: 53%; 
 	height : 8px; 
 	margin-left : 4%; 
 	padding-top : 6px; 
@@ -4437,8 +4439,117 @@ div[class*='display_msg'] {
    	padding: 4px 6px;
 }
 
+
 .labelWarn {
     color:#000000;
     width:auto;
     padding: 0;
+}
+
+.selectDefaultWidth {
+	width: 210px !important;
+}
+
+.qtyTable_view {
+	top : 0px !important; 
+	height: 100% !important;
+}
+
+.qtyFixedTblContainer {
+	height: 92%;
+}
+
+ul#display-inline-block-example,
+ul#display-inline-block-example li {
+	/* Setting a common base */
+	/*margin-left: 7px;
+	margin-bottom: 7px;
+	padding: 0;*/
+	margin: 0px 0 1px 1px;
+}
+ 
+ul#display-inline-block-example {
+	width: 100%;
+}
+ 
+ul#display-inline-block-example li#first {
+	display: inline-block;
+	width: 12%;
+	min-height: 12%;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+ul#display-inline-block-example li#label {
+	display: inline-block;
+	width: 12%;
+	min-height: 12%;
+	text-align: right;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+ul#display-inline-block-example li {
+	display: inline-block;
+	width: 25%;
+	min-height: 25%;
+	 
+	/* For IE 7 */
+	zoom: 1;
+	*display: inline;
+}
+
+.width-eight-percent {
+	width: 8% !important;
+}
+
+.width-ten-percent {
+	width: 10% !important;
+}
+
+.width-fifteen-percent {
+	width: 15% !important;
+}
+
+.width-twenty-five-percent {
+	width: 25% !important;
+}
+
+#loadingIconDiv {
+	position: relative;
+    text-align: center;
+    top: 46%;
+    z-index: 6;
+}
+
+.alert-message.warning.sonar {
+	position:absolute;
+    left:34%;
+    text-align: center;
+    width: 35%;
+    height: 15px;
+    margin-top: -34px;
+}
+
+.sonarLabelWarn {
+	color:#000000;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.topFifty {
+	top: 50%;
+}
+
+.svnUrlTxtBox {
+	width: 306px;
+}
+
+input.xlarge.javastd {
+	 width: 270px;
 }

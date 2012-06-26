@@ -1,30 +1,10 @@
-<?php /*
- * ###
- * Archetype - phresco-drupal7-archetype
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */ ?>
 <?php
 /* Author by {phresco} QA Automation Team */
 
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Autoload.php';
+require_once 'phresco/tests/phpwebdriver/RequiredFunction.php';
 include 'phresco/tests/basescreen.php';
-
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-class DrupalCommonFun extends PHPUnit_Extensions_SeleniumTestCase
+class DrupalCommonFun extends RequiredFunction
 {
 	private $properties;
 	private $host;
@@ -32,42 +12,28 @@ class DrupalCommonFun extends PHPUnit_Extensions_SeleniumTestCase
 	private $context;
 	private $protocol;
 	private $serverUrl;
-
+	private $browser;
+	private $screenShotsPath;
+	
 	protected function setUp()
 	{
-		 $doc = new DOMDocument();
-		$doc->load('src/test/php/phresco/tests/phresco-env-config.xml');
-		$environment = $doc->getElementsByTagName("Server");
-		foreach( $environment as $Server )
-		{
-			$protocols= $Server->getElementsByTagName("protocol");
-			$protocol = $protocols->item(0)->nodeValue;
-			
-			$hosts = $Server->getElementsByTagName("host");
-			$host = $hosts->item(0)->nodeValue;
-			
-			$ports = $Server->getElementsByTagName("port");
-			$port = $ports->item(0)->nodeValue;
-			
-			$contexts = $Server->getElementsByTagName("context");
-			$context = $contexts->item(0)->nodeValue;
-		}
-			$config = $doc->getElementsByTagName("Browser");
-			$browser = $config->item(0)->nodeValue;
+		$doc = new DOMDocument();
+		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
+		$environment = $doc->getElementsByTagName("Browser");
 		
-		$this->setBrowser('*' . $browser);
-		$serverUrl = $protocol . ':'.'//' . $host . ':' . $port . '/'. $context . '/';
-		echo $serverUrl;
-		$this->setBrowserUrl($serverUrl);
-		$screenShotsPath = getcwd()."//"."target\surefire-reports\screenshots";
+		$browser = $environment->item(0)->nodeValue;
+		$this->webdriver = new WebDriver("localhost", 4444); 
+		$this->webdriver->connect($browser);
+		$screenShotsPath = getcwd()."//"."surefire-reports/screenshots";
 		if (!file_exists($screenShotsPath)) {
 			mkdir($screenShotsPath);
 		}
 	}
+	
 	public function Title()
 	{
 		$doc = new DOMDocument();
-		$doc->load('src/test/php/phresco/tests/phresco-env-config.xml');
+		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		$environment = $doc->getElementsByTagName("Server");
 		foreach( $environment as $Server )
 		{
@@ -84,23 +50,29 @@ class DrupalCommonFun extends PHPUnit_Extensions_SeleniumTestCase
 			$context = $contexts->item(0)->nodeValue;
 		}
 		$serverUrl = $protocol .':'. '//' . $host . ':' . $port . '/'. $context . '/';
-		$this->open($serverUrl);
-		$this->waitForPageToLoad(WAIT_FOR_NEXT_PAGES);
-		$this->windowMaximize();
-		$this->windowFocus();
-		sleep(WAIT_FOR_NEXT_LINE);
-
+		$this->webdriver->get($serverUrl);
+		/* /* if (window.screen){
+        window.moveTo(0, 0);
+        window.resizeTo(window.screen.availWidth,window.screen.availHeight); 
+		 
+		
+		$this->diver.manage().window().maximize(); $this->windowMaxmize();
+ 
+		 $this->maximize();
+		$this->windowFocus(); */ 
+		sleep(2);
 	}
-	function DoLogin($testCaseName){
-        if ($testCaseName == null) 
-	   {
-           $testCaseName = __FUNCTION__;
-       }
-		$name;
+	function DoLogin($testCaseName)
+	{
+	    if($testCaseName == null)
+	    {
+        $testCaseName = __FUNCTION__;
+        }
+	    $name;
 		$password;
 		$property = new DrupalCommonFun;
 		$doc = new DOMDocument();
-		$doc->load('src/test/php/phresco/tests/drupalsetting.xml');
+		$doc->load('test-classes/phresco/tests/drupalsetting.xml');
 		$users = $doc->getElementsByTagName("user");
 		foreach( $users as $user )
 		{
@@ -110,49 +82,35 @@ class DrupalCommonFun extends PHPUnit_Extensions_SeleniumTestCase
 			$passwords = $user->getElementsByTagName("password");
 			$password = $passwords->item(0)->nodeValue;
 		}
-		$this->isTextPresent(DRU_LOGIN_TEXT);
-		$property->waitForElementPresent('DRU_LOGIN_UNAME');
-		$this->type(DRU_LOGIN_UNAME, $name);
-		$property->waitForElementPresent('DRU_LOGIN_PASSWORD');
-		$this->type(DRU_LOGIN_PASSWORD,$password);
-		$this->clickAndWait(DRU_LOGIN_BUTTON);
-		$property->waitForElementPresent('DRU_LOGIN_UNAME_PRESENT');
-		
-
+		   $this->type(DRU_LOGIN_UNAME,$name);
+		   $this->getElement(DRU_LOGIN_PASSWORD,$testCaseName);
+		   $this->type(DRU_LOGIN_PASSWORD,$password);
+		   $this->clickandLoad(DRU_LOGIN_BUTTON);
+		   sleep(2);
+		   
 		try {
-			$this->assertTrue($this->isTextPresent(DRU_LOGIN_UNAME_PRESENT));
-		}
+			$this->assertTrue($this->isTextPresent(DRU_LOGIN_CONFIRM_MSG));
+		    } 
 		catch (PHPUnit_Framework_AssertionFailedError $e) {
-			$this->doCreateScreenShot($testCaseName);
-			$this->fail( "Failed asserting that &lt;boolean:false&gt; required is true." );
+		 	$this->doCreateScreenShot($testCaseName);
+			
 		}
-		$this->clickAndWait(DRU_LOGOUT);
-		$property->waitForElementPresent('DRU_LOGIN_TEXT');
+	}   
+	
+	   	function DoLogout()
+	{
+		$this->clickandLoad(DRU_LOGOUT_TEXT);
+		sleep(1);
 	}
 	
-	function doCreateScreenShot($file_name)
-	{
-		$this->captureEntirePageScreenshot(getcwd()."//"."target\surefire-reports\screenshots"."//".$file_name.'.png');
-	}
+    /*  function maximize(){
 
-	public function waitForElementPresent($waitfor)
-	{
-			
-		for ($second = 0;$second <=WAIT_FOR_SEC ;$second++) {
-			if ($second >= WAIT_FOR_SEC){
-			}
-			try{
-				if ($this->isElementPresent($waitfor))
-				break;
-			} catch (Exception $e) {}
-			sleep(1);
-		}
+        String script = if (window.screen){window.moveTo(0,0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};;
+        ((JavascriptExecutor) driver).executeScript(script);  } 
+ */
+  
+	
+	
 	}
-	function tearDown()
-	{
-	 $this->stop();
-	}
-
-}
 ?>
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+       <nodejs>
+            <createdNodeJSProject>//a[contains(text(),'NodeJS_Eshop_Webservice')]</createdNodeJSProject>
+            <appInfoNodeJSNameValue>NodeJS_Eshop_Webservice</appInfoNodeJSNameValue>
+            <appInfoNodeJSNoneNameValue>NodeJS_None_Webservice</appInfoNodeJSNoneNameValue>
+            <appInfoNodeJSDescValue>This is a NodeJS project</appInfoNodeJSDescValue>
+            <appInfoTechWebServNodeJS>//option[@value='tech-nodejs-webservice']</appInfoTechWebServNodeJS>
+            <appInfoTechEshopWebServ>//option[@value='EShop WebService']</appInfoTechEshopWebServ>
+            <appInfoNodeJSServNameValue>NodeServer</appInfoNodeJSServNameValue>
+            <NodeJSServerDescValue>Server configuration for NodeJS Pilot Project</NodeJSServerDescValue>
+            <NodeJSServerHostValue>localhost</NodeJSServerHostValue>
+            <NodeJSServServerPortValue>7770</NodeJSServServerPortValue>
+            <NodeJSServerDeployDirValue>c:\temp</NodeJSServerDeployDirValue>
+            <NodeJSServerContextValue>NEshop</NodeJSServerContextValue>
+            <NodeJSDbNameValue>label=NodeDb</NodeJSDbNameValue>
+            <NodeJSDbDescValue>Db configuration for NodeJS Pilot Project</NodeJSDbDescValue>
+            <NodeJSDbHostValue>localhost</NodeJSDbHostValue>
+            <NodeJSDbPortValue>3306</NodeJSDbPortValue>
+            <NodeJSDbUserNameValue>root</NodeJSDbUserNameValue>
+            <NodeJSDbNameValue>NodeDb</NodeJSDbNameValue>
+            <NodeJSBuildRunAgainstSrcButton>id=nodeJS_runAgnSrc</NodeJSBuildRunAgainstSrcButton>
+            <NodeJSBuildRunButton>id=runAgainstSrc</NodeJSBuildRunButton>
+            <NodeJSBuildStopButton>id=stopbtn</NodeJSBuildStopButton>
+            <NodeJSBuildGenBuildNodeJSServer>label=NodeServer</NodeJSBuildGenBuildNodeJSServer>
+            <NodeJSBuildGenBuildNodeJSDb>label=NodeDb</NodeJSBuildGenBuildNodeJSDb>
+            <NodeJSBuildGenBuildNodeJSServerClick>css=option[value="NodeServer"]</NodeJSBuildGenBuildNodeJSServerClick>
+            <NodeJSBuildGenBuildNodeJSDbClick>css=option[value="NodeDb"]</NodeJSBuildGenBuildNodeJSDbClick>
+            <NodeJSBuildGentdBuildDownload>css=img[title="Download"]</NodeJSBuildGentdBuildDownload>
+       </nodejs>
+ </technology>
+</phresco> 

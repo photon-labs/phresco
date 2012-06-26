@@ -25,15 +25,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -45,6 +46,7 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.Reports;
 
 public interface ProjectAdministrator {
 
@@ -56,7 +58,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    Project createProject(ProjectInfo info, File path) throws PhrescoException;
+    Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException;
 
     /**
      * Update the project with the given project information
@@ -68,7 +70,7 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      * 
      */
-    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path) throws PhrescoException;
+    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path,UserInfo userInfo) throws PhrescoException;
 
     /**
      * Returns the project for the specified project code
@@ -343,21 +345,21 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getServerDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getServerDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns Database DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDbDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getDbDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns editor DownloadInfo from the service
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getEditorDownloadInfo() throws PhrescoException;
+    List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Returns the jForum path from the service
@@ -563,5 +565,9 @@ public interface ProjectAdministrator {
 	 * @return 
 	 * @throws PhrescoException
 	 */
-	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException; 
+	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
+
+	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
+	 
+	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
 }

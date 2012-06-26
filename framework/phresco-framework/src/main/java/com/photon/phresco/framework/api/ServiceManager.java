@@ -28,8 +28,9 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
-import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
+import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
@@ -37,6 +38,7 @@ import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.Reports;
 import com.sun.jersey.api.client.ClientResponse;
 
 /**
@@ -93,7 +95,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    List<DownloadInfo> getDownloadsFromService() throws PhrescoException;
+    List<DownloadInfo> getDownloadsFromService(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
     /**
      * Triggers the create project to the server and returns the client response
@@ -101,7 +103,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse createProject(ProjectInfo info) throws PhrescoException;
+    ClientResponse createProject(ProjectInfo info, UserInfo userInfo) throws PhrescoException;
     
     /**
      * Triggers the update project to the server and returns the client response
@@ -109,7 +111,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse updateProject(ProjectInfo info) throws PhrescoException;
+    ClientResponse updateProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException;
   
     /**
      * Triggers the update project to the server and returns the client response
@@ -196,6 +198,8 @@ public interface ServiceManager {
 	
 	// To reset the AppTypes in cache
 	void reSetCacheAppTypes() throws PhrescoException;
+
+	List<Reports> getReports(String techId) throws PhrescoException;
 
 
 }

@@ -30,24 +30,24 @@
 <nav>
 	<ul class="tabs">
 		<li>
-			<a href="#" class="active" name="compTab" id="featuresList"><s:label for="description" key="lbl.header.comp.featrs" theme="simple"/></a>
+			<a href="#" class="active" name="compTab" id="featuresList"><s:label for="description" key="lbl.hdr.comp.featrs" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="archetypesList"><s:label for="description" key="lbl.header.comp.arhtyp" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="archetypesList"><s:label for="description" key="lbl.hdr.comp.arhtyp" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="applntypesList"><s:label for="description" key="lbl.header.comp.aplntyp" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="applntypesList"><s:label for="description" key="lbl.hdr.comp.aplntyp" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="configtempList"><s:label for="description" key="lbl.header.comp.cnfigtmplt" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="configtempList"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label for="description" key="lbl.header.comp.pltprjt" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label for="description" key="lbl.hdr.comp.pltprjt" theme="simple"/></a>
 		</li>
 			
 	</ul>
 	<div class="control-group customer_name">
-		<s:label for="input01" key="lbl.header.comp.customer" cssClass="control-label custom_label" theme="simple"/>
+		<s:label for="input01" key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
 		<div class="controls customer_select_div">
 			<select id="select01" class="customer_listbox">
 				<option>- select -</option>
@@ -64,23 +64,3 @@
 <section id="subcontainer" class="navTopBorder">
 
 </section>
-
-<style>	
-	.customer_name {
-		float: right;
-		left: 71%;
-		margin-bottom: 0;
-		position: absolute;
-		top: 10px;
-		width: auto;
-	}
-		
-	.customer_listbox {
-		float: right;
-		left: 97%;
-		margin-bottom: 0;
-		position: absolute;
-		top: 0px;
-		width: auto;
-	}
-</style>

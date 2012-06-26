@@ -1,22 +1,4 @@
-/*
- * ###
- * Framework Web Archive
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
+
 	// Enables button
 	function enableControl(tagControl, css) {
 		tagControl.attr("class", css);
@@ -44,6 +26,7 @@
     // This function to enable the screen
     function enableScreen() {
         $(".wel_come").show().css("display", "none");
+        $("#loadingIconDiv").empty();
     }
     
     // This function to disable the screen
@@ -63,12 +46,12 @@
 	// Loading icon    
     function showLoadingIcon(tagControl) {
 		var src = "themes/photon/images/loading_blue.gif";
-    	var theme = $.cookie("css");
+    	var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	src = "themes/photon/images/loading_red.gif";
         }
      	tagControl.empty();
-    	tagControl.html("<div><img class='loadingIcon' src='"+ src +"' style='display: block'></div>");
+    	tagControl.html("<img class='loadingIcon' src='"+ src +"' style='display: block'>");
     }
     
     //hide the progress bar
@@ -84,6 +67,8 @@
     	$('#validateProject').show().css("display","none");
 		$('#build-outputOuter').show().css("display","none");
 		$('#descDialog').show().css("display","none");
+		$('#testCaseScreenShotPopUp').show().css("display","none");
+  	    $('#testCaseErrOrFail').show().css("display","none");
 	}
     
     // Shows pop-up
@@ -114,7 +99,10 @@
             			$(".intro_container").hide();
             	    	$(".errorOverlay").show().css("display", "none");
             		}
-	                hideProgessBar();
+            		if((pageUrl == "save" || pageUrl == "update" || pageUrl == "delete" || pageUrl == "deleteConfigurations" || pageUrl == "deleteSettings" || pageUrl == "deleteBuild" || pageUrl == "CIBuildDelete")) {
+            			hideProgessBar();
+            		} 
+            		
 	                tagControl.empty();
 	                tagControl.html(data);
 	           	}
@@ -168,7 +156,7 @@
     }
     
     function getCurrentCSS() {
-        var theme = $.cookie("css");
+        var theme =localStorage["color"];
         if(theme == undefined || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
@@ -246,6 +234,12 @@
     function checkForNumber(portNo) {
     	newPortNo = portNo.replace(/[^0-9]+/g, '');
     	return newPortNo;
+    }
+    
+    
+    function checkForRevision(revision) {
+    	newRevision = revision.replace(/[^0-9\.]+/g, '');
+    	return newRevision;
     }
 	
     // To remove empty space between the characters
@@ -357,4 +351,3 @@
 	    	$('#siteaccordion_active').attr("id", "");   	
 	    });
 	}
-	

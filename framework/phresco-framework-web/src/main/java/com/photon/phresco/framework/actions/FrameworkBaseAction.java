@@ -35,7 +35,7 @@ import javax.xml.bind.JAXBException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-
+import org.apache.commons.collections.CollectionUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.photon.phresco.commons.FrameworkConstants;
@@ -142,21 +142,23 @@ public class FrameworkBaseAction extends ActionSupport implements FrameworkConst
 		return builder;
 	}
     
-    protected List<String> getWarProjectModules(String projectCode) throws JAXBException, IOException, ArrayIndexOutOfBoundsException, PhrescoPomException {
+ protected List<String> getWarProjectModules(String projectCode) throws JAXBException, IOException, ArrayIndexOutOfBoundsException, PhrescoPomException {
     	List<String> projectModules = getProjectModules(projectCode);
-    	List<String> warModules = new ArrayList<String>(projectModules.size());
-    	for (String projectModule : projectModules) {
-    		StringBuilder pathBuilder = getProjectHome(projectCode);
-    		pathBuilder.append(File.separatorChar);
-    		pathBuilder.append(projectModule);
-    		pathBuilder.append(File.separatorChar);
-    		pathBuilder.append(POM_XML);
-    		PomProcessor processor = new PomProcessor(new File(pathBuilder.toString()));
-    		String packaging = processor.getModel().getPackaging();
-			if (StringUtils.isNotEmpty(packaging) && WAR.equalsIgnoreCase(packaging)) {
-    			warModules.add(projectModule);
-    		}
-		}
+    	List<String> warModules = new ArrayList<String>(5);
+    	if (CollectionUtils.isNotEmpty(projectModules)) {
+	    	for (String projectModule : projectModules) {
+	    		StringBuilder pathBuilder = getProjectHome(projectCode);
+	    		pathBuilder.append(File.separatorChar);
+	    		pathBuilder.append(projectModule);
+	    		pathBuilder.append(File.separatorChar);
+	    		pathBuilder.append(POM_XML);
+	    		PomProcessor processor = new PomProcessor(new File(pathBuilder.toString()));
+	    		String packaging = processor.getModel().getPackaging();
+				if (StringUtils.isNotEmpty(packaging) && WAR.equalsIgnoreCase(packaging)) {
+	    			warModules.add(projectModule);
+	    		}
+			}
+    	}
     	return warModules;
     }
 

@@ -24,27 +24,27 @@ import java.util.List;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.DocumentTypes;
 import com.photon.phresco.model.Documentation;
 import com.photon.phresco.model.DownloadInfo;
-import com.photon.phresco.model.LibraryDoc;
-import com.photon.phresco.model.LibrayDocs;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.PilotTechModuleVersions;
-import com.photon.phresco.model.PilotTechModules;
-import com.photon.phresco.model.PilotTechnology;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.PropertyTemplate;
 import com.photon.phresco.model.Settings;
-import com.photon.phresco.model.SettingsApplies;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.model.SettingsPropPossibleValues;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.jaxb.Document;
 import com.photon.phresco.service.jaxb.Library;
-import com.photon.phresco.model.Documents;
+import com.photon.phresco.service.model.DocumentTypes;
+import com.photon.phresco.service.model.Documents;
+import com.photon.phresco.service.model.LibraryDoc;
+import com.photon.phresco.service.model.LibrayDocs;
+import com.photon.phresco.service.model.PilotTechModuleVersions;
+import com.photon.phresco.service.model.PilotTechModules;
+import com.photon.phresco.service.model.PilotTechnology;
+import com.photon.phresco.service.model.SettingsApplies;
+import com.photon.phresco.service.model.SettingsPropPossibleValues;
 import com.photon.phresco.model.Module;
 
 public interface PhrescoDataManager {
@@ -236,17 +236,17 @@ public interface PhrescoDataManager {
 
 	List<DocumentTypes> getDocumentTypes()throws PhrescoException;
 
-	void addDocument(List<com.photon.phresco.model.Document> documentsList)throws PhrescoException;
+	void addDocument(List<com.photon.phresco.service.model.Document> documentsList)throws PhrescoException;
 
-	void addDocuments(List<com.photon.phresco.model.Documents> documentsList) throws PhrescoException;
+	void addDocuments(List<com.photon.phresco.service.model.Documents> documentsList) throws PhrescoException;
 
 	void addModule(List<com.photon.phresco.model.Module> moduleDataList)throws PhrescoException;
 
-	void addModules(List<com.photon.phresco.model.Modules> modulesDataList)throws PhrescoException;
+	void addModules(List<com.photon.phresco.service.model.Modules> modulesDataList)throws PhrescoException;
 
-	void addLibrary(List<com.photon.phresco.model.Library> libraryList) throws PhrescoException;
+	void addLibrary(List<com.photon.phresco.service.model.Library> libraryList) throws PhrescoException;
 
-	void addLibraries(List<com.photon.phresco.model.Libraries> librariesList)throws PhrescoException;
+	void addLibraries(List<com.photon.phresco.service.model.Libraries> librariesList)throws PhrescoException;
 
 	//SETTINGS OBJECT
 

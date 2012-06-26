@@ -261,7 +261,7 @@ public class Features extends FrameworkBaseAction {
 		String[] selectedWebservices = getHttpRequest().getParameterValues(REQ_WEBSERVICES);
 		boolean isEmailSupported = false;
 		
-		if (StringUtils.isNotEmpty(fromTab) && fromTab != null) {
+		if (StringUtils.isNotEmpty(fromTab)) {
 			if (selectedServers != null) {
 				List<String> listTempSelectedServers = null;
 				if (StringUtils.isNotEmpty(selectedServers)) {

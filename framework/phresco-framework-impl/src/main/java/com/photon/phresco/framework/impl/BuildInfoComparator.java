@@ -21,7 +21,7 @@ package com.photon.phresco.framework.impl;
 
 import java.util.Comparator;
 
-import com.photon.phresco.model.BuildInfo;
+import com.photon.phresco.commons.BuildInfo;
 
 public class BuildInfoComparator implements Comparator<BuildInfo> {
 

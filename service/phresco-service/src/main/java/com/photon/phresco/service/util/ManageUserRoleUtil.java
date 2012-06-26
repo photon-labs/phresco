@@ -27,7 +27,7 @@ import java.util.Collections;
 import javax.ws.rs.core.MediaType;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.User;
+import com.photon.phresco.service.model.User;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;

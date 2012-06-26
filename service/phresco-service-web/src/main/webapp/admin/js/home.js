@@ -35,7 +35,7 @@ function hideallNavHome(){
 
 
 /********rightNav*********/
-function rightNav(thisclass, contentclass){
+function rightNav(thisclass, contentclass, buttonclass){
 	thisclass.toggleClass("active");
 	var contentbar= $(".right");
 	var contentbarDiaplay = contentbar.css("width");
@@ -55,11 +55,18 @@ function rightNav(thisclass, contentclass){
 		 contentclass.animate({
 							width:'97%'
 							},1000);
+		 buttonclass.animate({
+			 				width:'98%'
+		 					},1000);
 		}
+		
 		else {
-			
 		 contentclass.animate({
 							width:'97%'
+							},1000);
+
+		 buttonclass.animate({
+							width:'98%'
 							},1000);
 		}
 
@@ -93,12 +100,17 @@ function rightNav(thisclass, contentclass){
 		 $(".bottom_nav").animate({
 							left:'15%'
 							},0);
+		 
 		}
 		else if ((screen.width<=1024) && (screen.height<=768)) {
 			
 		 contentclass.animate({
 							width:'77%'
 							},1000);
+		 buttonclass.animate({
+							width:'98%'
+							},1000);
+		 
 		 $(".bottom_nav").animate({
 							left:'15%'
 							},0);
@@ -106,6 +118,9 @@ function rightNav(thisclass, contentclass){
 		else {
 			contentclass.animate({
 							width:'80%'
+							},1000);
+			 buttonclass.animate({
+							width:'98%'
 							},1000);
 		}
 		
@@ -1573,15 +1588,15 @@ $(document).ready(function(){
 	var contentHeight = $("#container").height();
 	$(".right_navbar").click(function(){
 		var thisclass= 	$(".right_navbar");		
-		var contentclass= 	$(".wrapper");	
-		
-		if ((screen.width<=1024) && (screen.height<=768)) {
+		var contentclass= 	$(".wrapper");
+		var buttonclass = $(".bottom_button");
+		/*if ((screen.width<=1024) && (screen.height<=768)) {
 				$(".bottom_nav").css("left", "23%");
 				$("#container").css("height", contentHeight);
 		} else if ((screen.width<=1280) && (screen.height<=800)) {
 				$(".bottom_nav").css("left", "23%");
-		}
-		rightNav(thisclass, contentclass);									  
+		}*/
+		rightNav(thisclass, contentclass, buttonclass);									  
 	});		
 
 	horizantal_acc();/////////bottom accordion
@@ -1664,17 +1679,17 @@ $(document).ready(function(){
 			}
 			nav_item_index_grid = item_index;
 			item_index = item_index - 1;	
-			tabheader.attr("item-index",item_index)
+			tabheader.attr("item-index",item_index);
 		}else if(navbtn == "next_btn" && item_index < total_tabs){
 			nav_item_index_grid = item_index;
-			item_index = item_index + 1
+			item_index = item_index + 1;
 			if(item_index > 6){
 				posleft = (item_index - 6) * -108;				
 				tabheader.animate({
 					left: posleft+'px'
 					},1000);			
 			}
-			tabheader.attr("item-index",item_index)			
+			tabheader.attr("item-index",item_index);			
 		}
 		if(item_index == 1){
 			

@@ -21,7 +21,6 @@ package com.photon.phresco.plugins;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,16 +28,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.cli.CommandLineException;
-import org.codehaus.plexus.util.cli.Commandline;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 
-import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
@@ -47,6 +37,7 @@ import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.phresco.pom.util.PomProcessor;
 
 /**
  * Goal which builds the Java WebApp
@@ -85,8 +76,6 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 	private String serverport;
 	private String context;
 	
-	private static final String finalName = "finalName";
-
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		if (environmentName != null) {
 			updateFinalName();
@@ -99,54 +88,29 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
-			List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_SERVER);
-			for (SettingsInfo settingsInfo : settingsInfos) {
-				context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
-				break;
-			}
-				
+				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+				String envName = environmentName;
+				if (environmentName.indexOf(',') > -1) { // multi-value
+					envName = projAdmin.getDefaultEnvName(baseDir.getName());
+				}
+				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER,
+						baseDir.getName(), envName);
+				for (SettingsInfo settingsInfo : settingsInfos) {
+					context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+					break;
+				}
 			File pom = project.getFile();
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(pom);
-
-			Element projectNode = doc.getRootElement();
-			Element buildNode = projectNode.getChild(JAVA_POM_BUILD_NAME, projectNode.getNamespace());
-			Element finalNameElement = buildNode.getChild(JAVA_POM_FINAL_NAME, buildNode.getNamespace());
-			if (finalNameElement == null) {
-				finalNameElement = new Element(finalName);
-				finalNameElement.setText(context);
-				buildNode.addContent(finalNameElement);
-			} else {
-				finalNameElement.setText(context);
-			}
-			saveXMLDocument(doc, pom);
-		} catch (JDOMException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			PomProcessor pomprocessor = new PomProcessor(pom);
+			pomprocessor.setFinalName(context);
+			pomprocessor.save();
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
-	private void saveXMLDocument(Document document, File xmlFile) throws IOException {
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(FrameworkConstants.POM_FILE);
-			if (xmlFile.exists()) {
-				XMLOutputter xmlOutput = new XMLOutputter();
-				xmlOutput.setFormat(Format.getPrettyFormat());
-				xmlOutput.output(document, writer);
-			}
-		} finally {
-			if (writer != null) {
-				writer.close();
-			}
-		}
-	}
-
 	
 	private void configure() throws MojoExecutionException {
 		try {
@@ -219,31 +183,26 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 			pu.executeUtil(environmentName, basedir, wsConfigFile);
 		}
 	}
-	
+
 	private void executePhase() throws MojoExecutionException {
 		try {
-			StringBuilder sb = new StringBuilder();
-			sb.append(MVN_CMD);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_CLEAN);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_INSTALL);
-			sb.append(STR_SPACE);
-			sb.append(T7_START_GOAL);
-			sb.append(STR_SPACE);
-			sb.append(SERVER_PORT);
-			sb.append(serverport);
-			sb.append(STR_SPACE);
-			sb.append(SERVER_SHUTDOWN_PORT);
-			sb.append(shutdownport);
-			Commandline cl = new Commandline(sb.toString());
-			cl.setWorkingDirectory(baseDir);
-			Process process = cl.execute();
-		} catch (CommandLineException e) {
+			String mavenHome = System.getProperty(MVN_HOME);
+			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
+			pb.redirectErrorStream(true);
+			List<String> commands = pb.command();
+			commands.add(MVN_PHASE_CLEAN);
+			commands.add(MVN_PHASE_INSTALL);
+			commands.add(T7_START_GOAL);
+			commands.add(SERVER_PORT + serverport);
+			commands.add(SERVER_SHUTDOWN_PORT + shutdownport);
+			commands.add(SKIP_TESTS);
+			pb.directory(baseDir);
+			Process process = pb.start();
+		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	
+
 	private List<SettingsInfo> getSettingsInfo(String configType) throws PhrescoException {
 		ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
 		return projAdmin.getSettingsInfos(configType, baseDir.getName(), environmentName);

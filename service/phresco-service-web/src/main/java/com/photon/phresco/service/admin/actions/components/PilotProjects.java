@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -60,32 +61,30 @@ public class PilotProjects extends ServiceBaseAction {
 		S_LOGGER.debug("Entering Method PilotProjects.save()");
 		
 		try {
-			boolean isValid = validateForm();
-//			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
-			if (isValid) {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
 				InputStream inputStream = new FileInputStream(projArc);
 				/* FileOutputStream outputStream = new FileOutputStream(new File("c:/" + projArcFileName));
 				IOUtils.copy(inputStream, outputStream);*/
-				return COMP_PILOTPROJ_LIST;
-			}
-		} catch (IOException e) {
-			
+				addActionMessage(getText(PLTPROJ_ADDED, Collections.singletonList(name)));
+		} catch (Exception e) {
+			addActionError(getText(PLTPROJ_NOT_ADDED, Collections.singletonList(name)));
 		} 
-
-		setErrorFound(true);
-		return SUCCESS;
+		return COMP_PILOTPROJ_LIST;
 	}
 	
 	private boolean validateForm() {
-		boolean success = true;
+		boolean success = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
-			success = false;
+			success = true;
 		}
 		
 		if (StringUtils.isEmpty(projArcFileName) || projArc == null) {
 			setFileError(getText(KEY_I18N_ERR_PLTPROJ_EMPTY));
-			success = false;
+			success = true;
 		}
 		return success;
 	}

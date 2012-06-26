@@ -18,20 +18,28 @@
   ###
   --%>
 <!DOCTYPE html>
-<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 <html>
 	<head>
+		<% 
+		String css = (String) request.getAttribute("css");
+		if(StringUtils.isEmpty(css)){
+			css = "theme/photon/css/red.css";
+		   }
+		%>
+		<title>Phresco Admin</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-		<link rel="stylesheet" href="theme/photon/css/red.css" class="changeme"> 
+		<link rel="stylesheet" href="<%= css  %>" class="changeme"> 
 		
 		<!-- basic js -->
 		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
 		
-		<!-- rightpanel scrollbar -->
+		<!-- right panel scroll bar -->
 		<script type="text/javascript" src="js/home.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/jquery.cookie.js"></script>
@@ -41,17 +49,16 @@
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-				if($.cookie("css")) {
-					$("link.changeme").attr("href", $.cookie("css"));
-				}
-				
-				$(".styles").click(function() {
-					$("link.changeme").attr("href", $(this).attr('rel'));
-					$.cookie("css", $(this).attr('rel'), {expires: 365, path: '/'});
+				var theme = $("link.changeme").attr("href");
+				if(theme != null && theme != "theme/photon/css/red.css") {
+					$("link.changeme").attr("href", "theme/photon/css/blue.css");
+					$.cookie("css", $("link.changeme").attr("href"));
 					showHeaderImage();
-					return false;
-				});
-				showHeaderImage();
+				} else {
+					$("link.changeme").attr("href", "theme/photon/css/red.css");
+					$.cookie("css", $("link.changeme").attr("href"));
+					showHeaderImage();
+				}
 			});
 			
 			function showHeaderImage() {
@@ -60,7 +67,6 @@
 					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_blue.png");
 					$('.phtaccinno').attr("src", "theme/photon/images/acc_inov_blue.png");
 					$('.welcomeimg').attr("src", "theme/photon/images/welcome_photon_blue.png");
-					
 				} else {
 					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_red.png");
 					$('.phtaccinno').attr("src", "theme/photon/images/acc_inov_red.png");
@@ -120,6 +126,7 @@
 							<input type="submit" value="Login" class="btn btn-primary lgnBtn">
 							<%
 	                        	String loginError = (String)request.getAttribute(ServiceUIConstants.REQ_LOGIN_ERROR);
+													      
 	                    	%>
 							&nbsp;&nbsp;&nbsp;<div class="lgnError"><%= loginError == null ? "" : loginError %></div>
 						</div>

@@ -17,11 +17,22 @@
   limitations under the License.
   ###
   --%>
-<%@ taglib uri="/struts-tags" prefix="s" %>
 
+<%@ taglib uri="/struts-tags" prefix="s" %>
+		
 <form class="form-horizontal customer_list">
 	<div class="operation">
-		<input type="button" id="featuresAdd" class="btn btn-primary" name="features_add" onclick="loadContent('featuresAdd', $('#subcontainer'));" value="<s:text name='lbl.header.comp.featrs.add'/>"/>
+		<input type="button" id="featuresAdd" class="btn btn-primary" name="features_add" onclick="loadContent('featuresAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.featrs.add'/>"/>
+		<s:if test="hasActionMessages()">
+			<div class="alert alert-success"  id="successmsg">
+				<s:actionmessage />
+			</div>
+		</s:if>
+		<s:if test="hasActionErrors()">
+			<div class="alert alert-error"  id="errormsg">
+				<s:actionerror />
+			</div>
+		</s:if>
 	</div>	
 	<div class="content_adder">
 		<div class="control-group">
@@ -42,9 +53,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.desc" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 													
@@ -82,9 +93,9 @@
 												<thead>
 													<tr>
 														<th class="accordiantable"></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.comp.ver"  theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver"  theme="simple"/></th>
 													</tr>
 												</thead>
 																									
@@ -122,9 +133,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 																									
@@ -162,9 +173,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.header.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 																									
@@ -194,30 +205,3 @@
 	</div>	
 </form>
 
-<script type="text/javascript">
-	
-		/** Accordian starts **/
-		var showContent = 0;
-	    $('.siteaccordion').removeClass('openreg').addClass('closereg');
-	    $('.mfbox').css('display','none')
-	    
-	    $('.siteaccordion').bind('click',function(e){
-	        var _tempIndex = $('.siteaccordion').index(this);
-	            $('.siteaccordion').removeClass('openreg').addClass('closereg');
-	            $('.mfbox').each(function(e){
-	                if($(this).css('display')=='block'){
-	                    $(this).slideUp('300');
-	                }
-	            })
-	        if($('.mfbox').eq(_tempIndex).css('display')=='none'){
-	            $(this).removeClass('closereg').addClass('openreg');
-	            $('.mfbox').eq(_tempIndex).slideDown(300,function(){
-	                
-	            });
-	            
-	        }
-	        
-	    });
-	    /** Accordian ends **/
-		
-</script> 

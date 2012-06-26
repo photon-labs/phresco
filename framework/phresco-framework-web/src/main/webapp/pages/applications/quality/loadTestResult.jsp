@@ -107,6 +107,8 @@ if(!isiPad()){
 }
 
 $(document).ready(function() {
+	enableScreen();
+	
 	if ($.browser.safari && $.browser.version == 530.17)
 	{
 	$(".columns").show().css("float","left");

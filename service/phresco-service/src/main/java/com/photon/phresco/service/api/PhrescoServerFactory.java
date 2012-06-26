@@ -38,8 +38,6 @@ package com.photon.phresco.service.api;
 import java.lang.reflect.Constructor;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.service.data.api.AdminManager;
-import com.photon.phresco.service.data.api.ComponentManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.service.model.ServerConfiguration;
 
@@ -50,7 +48,7 @@ public class PhrescoServerFactory {
     private static final String REPOSITORY_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.RepositoryManagerImpl";
     private static final String LDAP_MANAGER_IMPL_CLASS 	  = "com.photon.phresco.service.impl.LDAPManagerImpl";
     private static final String PHRESCO_DATA_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.PhrescoDataManagerImpl";
-    private static final String PHRESCO_ADMIN_MANAGER_IMPL_CLASS = "com.photon.phresco.service.data.impl.AdminManagerImpl";
+    private static final String PHRESCO_ADMIN_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.AdminManagerImpl";
     private static final String PHRESCO_COMPONENT_MANAGER_IMPL_CLASS = "com.photon.phresco.service.data.impl.ComponentManagerImpl";
 
 
@@ -75,8 +73,8 @@ public class PhrescoServerFactory {
             executor = (ArchetypeExecutor) constructClass(ARCHETYPE_EXECUTOR_IMPL_CLASS, serverConfig);
             generator = (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
             dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
-            adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
-            compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
+          //  adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
+         //   compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
         }
     }
 
@@ -136,5 +134,8 @@ public class PhrescoServerFactory {
     public static DocumentGenerator getNewDocumentGenerator() throws PhrescoException {
         return (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
     }
-
+    
+    public static ServerConfiguration getServerConfig() {
+    	return serverConfig;
+    }
 }

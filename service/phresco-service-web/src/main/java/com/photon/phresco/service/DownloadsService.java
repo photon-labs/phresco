@@ -22,9 +22,12 @@ package com.photon.phresco.service;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,6 +40,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
@@ -50,10 +54,10 @@ public class DownloadsService implements ServerConstants {
 	private static final String SOFTWARE_REPO_PATH = "/softwares/info/1.0/info-1.0.json";
 	private static final Logger S_LOGGER = Logger.getLogger(DownloadsService.class);
 	
-    @GET
-    @Path("{osName}")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
-    public List<DownloadInfo> getAvailableDownloads(@PathParam("osName") String osName) throws PhrescoException, JSONException, FileNotFoundException {
+    public List<DownloadInfo> getAvailableDownloads(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException, JSONException, FileNotFoundException {
     	S_LOGGER.info("Retrieving downloads ");
     	List<DownloadInfo> downloadList = new ArrayList<DownloadInfo>();
     	PhrescoServerFactory.initialize();
@@ -63,12 +67,11 @@ public class DownloadsService implements ServerConstants {
 		Gson gson = new Gson();
 		List<DownloadInfo> downloadInfoList = gson.fromJson(downloadInfoJSON, type);
     	for (DownloadInfo downloadInfo : downloadInfoList) {
-				String[] platform = downloadInfo.getPlatform();
-				for (String string : platform) {
-					if(string.equals(osName)){
-						downloadList.add(downloadInfo);
-					}
-				}
+			List<String> platforms = Arrays.asList(downloadInfo.getPlatform());
+			List<String> appliesTo = Arrays.asList(downloadInfo.getAppliesTo());
+			if (platforms.contains(downloadPropertyInfo.getOsName()) && appliesTo.contains(downloadPropertyInfo.getTechId())) {
+				downloadList.add(downloadInfo);
+			}
     	}
     	return downloadList;
     }
