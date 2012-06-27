@@ -58,7 +58,7 @@
 	                        videoName = videoDetail.getName();
 	            %>
 	            
-	                    <a href="#" title="<%= videoName %>">
+	                    <a href="#" title="<%= videoName %>" oncontextmenu="localStorage.menuSelected = 'video';localStorage.index = <%= i %>;localStorage.videoname = '<%= videoName %>'">
 		                    <div class="listindex" id="listindex<%= i %>">
 		                        <div class="imgblock" id="<%= videoName %>" ><img src="<%=imageUrl%>"></div>
 		                        <div class="vidcontent">
@@ -86,8 +86,15 @@
 	
 	<% if (videoInfos != null) { %>
     $(document).ready(function() {
-        $("div[id='listindex0']").attr("class", "listindex-active");
-        changeVideo("<%= videoInfos.get(0).getName() %>");
+    	if (localStorage.index) {
+    		$("div[id='listindex"+localStorage.index+"']").attr("class", "listindex-active"); //Highlight which video is selected.
+    		changeVideo(localStorage.videoname); //To play the selected video.
+    	} else {
+    		$("div[id='listindex0']").attr("class", "listindex-active"); // To higlight intro video when you login after sign out.
+    		changeVideo("<%= videoInfos.get(0).getName() %>");
+    	}
+        
+        
 
         <%  int j = 0;
             for(VideoInfo videoDetail : videoInfos) {
@@ -116,5 +123,6 @@
             }
         });
     }
+	
 	
 </script>
