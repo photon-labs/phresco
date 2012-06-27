@@ -43,7 +43,6 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
 /**
