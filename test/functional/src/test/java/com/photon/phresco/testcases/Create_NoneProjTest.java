@@ -76,7 +76,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				addappscrn.createProjDRUPAL7None(drupal,methodName);
     }
     @Test
@@ -100,7 +100,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				addappscrn.createProjDRUPAL6(drupal6,methodName);
     }
    @Test
@@ -124,7 +124,7 @@ public class Create_NoneProjTest extends TestCase{
 	    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 	    			                   phrescoHome.goToPhrescoHomePage(methodName);
 				    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				addappscrn.createProjHTML5MobileWidgetNone(mobwidg,methodName);
     }
    /*@Test
@@ -149,7 +149,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();			
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);			
 				addappscrn.createProjJqueryWidgetNone(jquerywidg,methodName);
    }*/
     @Test
@@ -171,7 +171,7 @@ public class Create_NoneProjTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjiPhoneNativeNone(iPhone,methodName);
     }
     @Test
@@ -195,7 +195,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjiPhoneHybridNone(iPhone,methodName);
     }
 		@Test
@@ -219,7 +219,7 @@ public class Create_NoneProjTest extends TestCase{
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
-					.gotoAddApplicationScreen();
+					.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjAndroidNativeNone(androidNat,methodName);
 		}
 	
@@ -244,7 +244,7 @@ public class Create_NoneProjTest extends TestCase{
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
-					.gotoAddApplicationScreen();
+					.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjAndroidHybridNone(androidHyb,methodName);
 		}
     @Test
@@ -268,7 +268,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjJavaWebServiceNone(jws,methodName);
     }
     @Test
@@ -292,7 +292,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjPHPNone(phpconst,methodName);
     }
     @Test
@@ -316,7 +316,7 @@ public class Create_NoneProjTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjSharepointNone(spconst,methodName);
     }
     @Test
@@ -338,7 +338,7 @@ public class Create_NoneProjTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjNodeJSNone(nodejsconst,methodName);
     }
     
@@ -362,7 +362,7 @@ public class Create_NoneProjTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjHTML5WidgNone(YuiConst,methodName);
     }		
      
@@ -385,7 +385,7 @@ public void testCreate_DotNet_Proj() throws InterruptedException, IOException, E
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjDotNetNone(DotNetConst,methodName);
     }
     public void testCreate_WordPress_Proj() throws InterruptedException, IOException, Exception{
@@ -407,7 +407,7 @@ public void testCreate_DotNet_Proj() throws InterruptedException, IOException, E
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			addappscrn.createProjWordPressNone(WordpressConst,methodName);
     }
 

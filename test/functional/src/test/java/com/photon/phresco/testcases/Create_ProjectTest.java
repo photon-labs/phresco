@@ -75,7 +75,7 @@ public class Create_ProjectTest extends TestCase{
    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
    			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
 				addappscrn.createProjDRUPAL7(drupal,methodName);
@@ -101,7 +101,7 @@ public class Create_ProjectTest extends TestCase{
     			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
     			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
 				addappscrn.createProjHTML5MobileWidget(mobwidg,methodName);
@@ -128,7 +128,7 @@ public class Create_ProjectTest extends TestCase{
 	    			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 	    			                   phrescoHome.goToPhrescoHomePage(methodName);
 				    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+				AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 				methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 				System.out.println("methodName = " + methodName);
 				addappscrn.createProjJqueryWidget(jquerywidg,methodName);
@@ -154,7 +154,7 @@ public class Create_ProjectTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjiPhoneNative(iPhone,methodName);
@@ -180,7 +180,7 @@ public class Create_ProjectTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjiPhoneHybrid(iPhone,methodName);
@@ -208,7 +208,7 @@ public class Create_ProjectTest extends TestCase{
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
-					.gotoAddApplicationScreen();
+					.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjAndroidNative(androidNat,methodName);
@@ -237,7 +237,7 @@ public class Create_ProjectTest extends TestCase{
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
 			AddApplicationScreen addappscrn = applicationScr
-					.gotoAddApplicationScreen();
+					.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjAndroidHybrid(androidHyb,methodName);
@@ -263,7 +263,7 @@ public class Create_ProjectTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjJavaWebService(jws,methodName);
@@ -289,7 +289,7 @@ public class Create_ProjectTest extends TestCase{
  			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
  			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjPHP(phpconst,methodName);
@@ -315,7 +315,7 @@ public class Create_ProjectTest extends TestCase{
   			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
   			                   phrescoHome.goToPhrescoHomePage(methodName);
 			    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjSharepoint(spconst,methodName);
@@ -342,7 +342,7 @@ public class Create_ProjectTest extends TestCase{
 			PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 			                   phrescoHome.goToPhrescoHomePage(methodName);
 		    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjNodeJS(nodejsconst,methodName);
@@ -370,7 +370,7 @@ public class Create_ProjectTest extends TestCase{
 		PhrescoWelcomePage phrescoHome=loginObject.testLoginPage(methodName);
 		                   phrescoHome.goToPhrescoHomePage(methodName);
 	    ApplicationsScreen applicationScr=phrescoHome.clickOnApplicationsTab(methodName);
-			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen();
+			AddApplicationScreen addappscrn = applicationScr.gotoAddApplicationScreen(methodName);
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjHTML5Widg(YuiConst,methodName);
