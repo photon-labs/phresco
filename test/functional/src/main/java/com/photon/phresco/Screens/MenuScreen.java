@@ -1,22 +1,31 @@
 package com.photon.phresco.Screens;
 
-import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import com.photon.phresco.uiconstants.PhrescoUiConstantsXml;
 
+public class MenuScreen extends WebDriverAbstractBaseScreen {
 
-import com.photon.phresco.uiconstants.PhrescoUiConstants;
+	PhrescoUiConstantsXml phrsc;
 
+	private Log log = LogFactory.getLog(getClass());
+	public WebDriverBaseScreen element;
 
+	public MenuScreen(PhrescoUiConstantsXml phrsc) throws Exception {
+		this.phrsc = phrsc;
+	}
 
-
-
-public class MenuScreen extends WebDriverAbstractBaseScreen{
-	PhrescoUiConstants phrsc = new PhrescoUiConstants();
-    public MenuScreen() throws Exception {
-    	
-    	isTextPresent(phrsc.TEXTCAPTURED);
-    	
-    }
-    
- }
-
+	public void gotoApplicationScreen(String methodName) throws Exception{
+		element = getXpathWebElement(phrsc.APPLICATIONS_TAB);
+		element.click();
+		element = getXpathWebElement(phrsc.ADD_APPLICATION_BUTTON);	
+		waitForElementPresent(phrsc.ADD_APPLICATION_BUTTON,methodName);
+	}
+    public void gotoSettingsScreen(){
+		
+	}
+	public void gotoHelpScreen(){
+		
+	}
+}

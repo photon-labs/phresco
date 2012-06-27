@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>	
+	<selenium>
+		
+		<seleniumPort>4444</seleniumPort>
+		<browserName>googlechrome</browserName>
+		<speed>300</speed>
+	</selenium>	
+	<server>
+		<contextName>phresco</contextName>
+		<protocol>http</protocol>
+		<hostName>localhost</hostName>>
+		<serverPort>2468</serverPort>
+	</server>
+	<homepage>
+	    <hometab>id=home</hometab>
+	</homepage>	
+	<loginpage>
+		<userNameXpath>//input[@id='xlInput']</userNameXpath>
+		<passwordXpath>//div[2]/input</passwordXpath>
+		<userName>dorothy_j</userName>
+		<password>VIRtu@l2020</password>
+		<rememberCheck>//input[@name='rememberme']</rememberCheck>		
+		<loginButton>//input[@value='Login']</loginButton>
+		<signOutLink>link=Sign out</signOutLink>
+	</loginpage>
+	<welcomepage>
+		<welcomeText>Welcome to Phresco.com</welcomeText>		
+		<gotoHomePage>//a[contains(text(),'Go To Phresco Home')]</gotoHomePage>
+		<checkBoxDonotShow>id=dontShowCheck</checkBoxDonotShow>>
+		<videoTitle>id('video-title')</videoTitle>		
+	</welcomepage>
+  	<tabs>
+		<applicationTab>//a[contains(text(),'Applications')]</applicationTab>>
+		<settingsTab>//a[@id='settings']/div/div</settingsTab>>
+		<helpTab>//a[@id='forum']/div</helpTab>
+		<configtab>//a[@id='configuration']</configtab>
+	</tabs>	
+	<applications>
+		<applicationsText>Applications</applicationsText>
+		<addApplicationButtonXpath>//input[@id='add']</addApplicationButtonXpath>
+		<discoverButton>link=Discover</discoverButton>>
+		<appinfoNextButton>//input[@id='next']</appinfoNextButton>>
+		<appinfoCancelButton>link=Cancel</appinfoCancelButton>
+		<appInfoNameXpath>//input[@id='name']</appInfoNameXpath>
+		<appinfoCodeXpath>//input[@id='externalCode']</appinfoCodeXpath>
+		<appinfoDescriptionXpath>//textarea[@id='textarea']</appinfoDescriptionXpath>
+		<appinfoRadioMobileappXpath>//input[@id='apptype-mobile']</appinfoRadioMobileappXpath>
+		<appinfoRadioWebappXpath>//input[@id='apptype-webapp']</appinfoRadioWebappXpath>
+		<appinfoRadioWebserviceXpath>//input[@id='apptype-web-services']</appinfoRadioWebserviceXpath>
+		<appinfoTechnologyXpath>//select[@id='technology']</appinfoTechnologyXpath>
+		<pilotProj>//select[@id='pilotProjects']</pilotProj>
+		<appInfoPilotProjEshop>//option[@value='EShop']</appInfoPilotProjEshop>
+		<appInfoPilotProjNone>//option[@value='']</appInfoPilotProjNone>
+		<appinfoFrameworkId>id=framework</appinfoFrameworkId>
+		<appinfoDatabaseId>name=Database</appinfoDatabaseId>
+		<appinfoEditorId>name=editor</appinfoEditorId>
+		<appinfoPlatformId>name=Platform</appinfoPlatformId>
+		<appinfoLibrariesId>name=Libraries</appinfoLibrariesId>
+		<appinfoJSlibrariesId>name=JSLibraries</appinfoJSlibrariesId>
+		<appinfoCreateProjectButton>id=createProject</appinfoCreateProjectButton>
+		<appinfoFinishButton>//input[@id='finish']</appinfoFinishButton>
+		<ProjCreationSuccessMsg>//div[@id='successmsg']/ul/li/span</ProjCreationSuccessMsg>
+		<appInfoSelectAll>//input[@id='checkAllAuto']</appInfoSelectAll>
+		<appInfoDeleteButton>//input[@id='deleteButton']</appInfoDeleteButton>
+		<appInfoConfirmationOk>//input[@id='ok']</appInfoConfirmationOk>
+		<appInfoConfirmationCancel>//input[@id='cancel']</appInfoConfirmationCancel>
+		<deletionSuccessMsg>//div[@id='successmsg']/ul/li/span</deletionSuccessMsg>
+		<noProjsAvailableMsg>//label[@id='error_message']</noProjsAvailableMsg>
+	</applications>
+	<app-build>
+	    <buildtabServer>id=server</buildtabServer>
+	    <buildtabDatabase>id=database</buildtabDatabase>
+	    <buildtabBuild>link=Build</buildtabBuild>
+	    <buildtabGenerateBuild>id=generatebtn</buildtabGenerateBuild>
+	    <buildtabGenBuildpopupBuild>id=build</buildtabGenBuildpopupBuild>
+	    <buildtabDeployIcon>//td[5]/a/img</buildtabDeployIcon>
+	    <buildtabShowSettings>id=showSettings</buildtabShowSettings>
+	    <builtabWebService>id=webservice</builtabWebService>
+	</app-build>
+	<app-config>
+	    <configtabAddButtonlink>//a[contains(text(),'Add')]</configtabAddButtonlink>
+	    <ConfigNameId>//input[@id='xlInput']</ConfigNameId>
+	    <ConfigSaveButtonId>//input[@value='Save']</ConfigSaveButtonId>
+	    <ConfigDescriptionId>//textarea[@id='textarea']</ConfigDescriptionId>
+	    <ConfigTypeId>//select[@id='configType']</ConfigTypeId>
+	    <ConfigTypeServerValue>label=Server</ConfigTypeServerValue>
+	    <ConfigTypeServerValueClick>//option[@value='Server']</ConfigTypeServerValueClick>
+	    <ConfigTypeEmailValue>label=Email</ConfigTypeEmailValue>
+	    <ConfigTypeEmailValueClick>//option[@value='Email']</ConfigTypeEmailValueClick>
+	    <ConfigTypeDatabase>label=Database</ConfigTypeDatabase>
+	    <ConfigTypeDatabaseClick>//option[@value='Database']</ConfigTypeDatabaseClick>
+	    <ConfigTypeUsernameClick>//input[@id='Admin Username']</ConfigTypeUsernameClick>
+	    <ConfigTypedbUsernameClick>//input[@id='Username']</ConfigTypedbUsernameClick>
+	    <ConfigTypeDBnameClick>//input[@id='DB Name']</ConfigTypeDBnameClick>
+	    <ConfigHostName>//input[@id='Host']</ConfigHostName>
+	    <ConfigPortNumber>//input[@id='Port']</ConfigPortNumber>
+	    <ConfigServerDeployDir>//input[@id='Deploy Directory']</ConfigServerDeployDir>
+	    <ConfigServerType>id=Type</ConfigServerType>
+	    <ConfigServerTypeWamp>label=Wamp</ConfigServerTypeWamp>
+	    <ConfigServerContext>id=Context</ConfigServerContext>
+	</app-config>
+	<app-features>
+	    <drupal7ModBlock>//input[@value='mod_block_7.0.']</drupal7ModBlock>
+	    <drupal7ModTaxonomyManager>//input[@value='mod_taxonomy_manager_7.x-1.0-beta2']</drupal7ModTaxonomyManager>
+	    <drupal7ModField>//input[@value='mod_field_7.0.']</drupal7ModField>
+	    <drupal7ModFieldSQLStorage>mod_field_sql_storage_7.0.</drupal7ModFieldSQLStorage>
+	    <drupal7ModFile>//input[@value='mod_file_7.0.']</drupal7ModFile>
+	    <drupal7ModFilter>//input[@value='mod_filter_7.0.']</drupal7ModFilter>
+	    <drupal7ModNode>//input[@value='mod_node_7.0.']</drupal7ModNode>
+	    <drupal7ModOptions>//input[@value='mod_options_7.0.']</drupal7ModOptions>
+	    <drupal7ModSystem>//input[@value='mod_system_7.0.']</drupal7ModSystem>
+	    <drupal7ModText>//input[@value='mod_text_7.0.']</drupal7ModText>
+	    <drupal7ModUser>//input[@value='mod_user_7.0.']</drupal7ModUser>
+	    <drupal7ModAggregator>//input[@value='mod_aggregator_7.0.']</drupal7ModAggregator>
+	    <drupal7ModBlog>//input[@value='mod_blog_7.0.']</drupal7ModBlog>
+	    <drupal7ModBook>//input[@value='mod_book_7.0.']</drupal7ModBook>
+	    <drupal7ModColor>//input[@value='mod_color_7.0.']</drupal7ModColor>
+	    <drupal7ModComment>//input[@value='mod_comment_7.0.']</drupal7ModComment>
+	    <phpModLogin>//input[@value='mod_login_1.0']</phpModLogin>
+	    <phpModShoutBox>//input[@value='mod_shoutbox_1.0']</phpModShoutBox>
+	    <phpModWeather>//input[@value='mod_weather_1.0']</phpModWeather>
+	    <phpModPagination>//input[@value='mod_pagination_1.0']</phpModPagination>
+	    <phpModListFiles>//input[@value='mod_list_files_1.0']</phpModListFiles>
+	    <phpModAutoCompleteSearch>//input[@value='mod_auto_complete_search_1.0']</phpModAutoCompleteSearch>
+	    <phpModContactForm>//input[@value='mod_contact_form_1.0']</phpModContactForm>
+	    <phpModMultipleCheckBox>//input[@value='mod_multiple_checkbox_1.0']</phpModMultipleCheckBox>
+	    <phpModReportGenerator>//input[@value='mod_reportgenerator_1.0']</phpModReportGenerator>
+	    <phpModCommentingSystem>//input[@value='mod_commenting_system._1.0']</phpModCommentingSystem>
+	    <androidModDroidfu>//input[@value='mod_droid-fu_1.0']</androidModDroidfu>
+	    <androidModAnnotations>//input[@value='mod_androidannotations_2.1.2']</androidModAnnotations>
+	    <iphoneModScannerKit>//input[@name='selectedModules'and @value='mod_scanner_kit_4.2.2']</iphoneModScannerKit>
+	    <javaWebserviceModHibernatjpa>id=mod_hibernate-jpa_1.0.1.FinalcheckBox</javaWebserviceModHibernatjpa>
+	    <sharepointModErrorReporting>//input[@id='mod_errorreporting_1.0checkBox']</sharepointModErrorReporting>
+	    <sharepointModLog4Net>//input[@id='mod_log4net_1.0checkBox']</sharepointModLog4Net>
+	    <sharepointModMediaPlayer>//input[@id='mod_mediaplayer_1.0checkBox']</sharepointModMediaPlayer>
+	    
+	</app-features>
+	
+</phresco>

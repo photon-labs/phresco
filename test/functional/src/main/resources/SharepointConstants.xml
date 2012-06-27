@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+ <technology>
+   <sharepoint>
+   <appInfoTechWebappSharepoint>//option[@value='tech-sharepoint']</appInfoTechWebappSharepoint>
+   <sharepointProj>//a[contains(text(),'SharePoint_ResMngmt_Proj')]</sharepointProj>
+   <appInfoSharepointResourceMngmt>//option[@value='Resource Management']</appInfoSharepointResourceMngmt>
+   <sharepointBuildGenBuildSPServer>label=myserver</sharepointBuildGenBuildSPServer>
+   <sharepointBuildGenBuildSPServerClick>css=option[value="myserver"]</sharepointBuildGenBuildSPServerClick>
+   <appInfoSharepointNameValue>SharePoint_ResMngmt_Proj</appInfoSharepointNameValue>
+   <appInfoSharepointNoneNameValue>SharePoint_None_Proj</appInfoSharepointNoneNameValue>
+   <appInfoSharepointDescValue>This is SharePoint project</appInfoSharepointDescValue>
+   <sharepointServerNameValue>myserver</sharepointServerNameValue>
+   <sharepointServerDescValue>Sharepoint server Configurations</sharepointServerDescValue>
+   <sharepointServerTypeValue>wamp</sharepointServerTypeValue>
+   <sharepointServerContextValue>/Pages/Default.aspx</sharepointServerContextValue>
+   <sharepointServerDeployDirValue>C:\\Temp</sharepointServerDeployDirValue>
+   <sharepointServerPortValue>8000</sharepointServerPortValue>
+   <sharepointServerHostValue>framework-win2</sharepointServerHostValue>
+   </sharepoint>
+ </technology>
+ </phresco>

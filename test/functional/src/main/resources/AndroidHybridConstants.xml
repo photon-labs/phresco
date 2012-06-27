@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+<technology>
+ <androidHybrid>
+          <appInfoTechMobappAndroidHybrid>label=Android Hybrid</appInfoTechMobappAndroidHybrid>
+          <appInfoTechMobappAndroidHybridClick>//option[@value='tech-android-hybrid']</appInfoTechMobappAndroidHybridClick>
+          <appInfoTechMobappAndroidHybridShoppinCart>//option[@value='ShoppingCart']</appInfoTechMobappAndroidHybridShoppinCart>
+          <createdAndroidHybridProject>//a[contains(text(),'AndroidHybrid_Eshop_Proj')]</createdAndroidHybridProject>
+          <appInfoAndroidHybridNameValue>AndroidHybrid_Eshop_Proj</appInfoAndroidHybridNameValue>
+          <appInfoAndroidHybridNoneNameValue>AndroidHybrid_None_Proj</appInfoAndroidHybridNoneNameValue>
+          <appInfoAndroidHybridDescValue>This is an Android Hybrid project</appInfoAndroidHybridDescValue>
+          <AndroidHybridWebServNameValue></AndroidHybridWebServNameValue>
+          <AndroidHybridWebServDescValue></AndroidHybridWebServDescValue>
+          <AndroidHybridWebServTypeValue></AndroidHybridWebServTypeValue>
+          <AndroidHybridWebServTypeClick></AndroidHybridWebServTypeClick>
+          <AndroidHybridWebServHostValue></AndroidHybridWebServHostValue>
+          <AndroidHybridWebServPortValue></AndroidHybridWebServPortValue>
+          <AndroidHybridWebServContextValue></AndroidHybridWebServContextValue>
+          <AndroidHybridGenBuildWebServ></AndroidHybridGenBuildWebServ>
+          <AndroidHybridGenBuildWebServClick></AndroidHybridGenBuildWebServClick>
+          <AndroidHybridGenBuildSDK></AndroidHybridGenBuildSDK>
+          <AndroidHybridGenBuildSDKSimul></AndroidHybridGenBuildSDKSimul>
+          <AndroidHybridGenBuildSDKSimulClick></AndroidHybridGenBuildSDKSimulClick>
+          <AndroidHybridDeploySimulator></AndroidHybridDeploySimulator>
+          
+          
+ </androidHybrid>
+</technology>
+</phresco>
+ 
+      

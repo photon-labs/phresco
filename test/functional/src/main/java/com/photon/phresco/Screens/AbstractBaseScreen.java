@@ -12,7 +12,7 @@ public abstract class AbstractBaseScreen extends BaseScreen {
 	protected long THREAD_SLEEP_MIL_SEC = 5000;
 	protected long SLEEP_FOR_WAIT_ELEM_MIL_SEC = 2000;
 	protected long WAIT_FOR_REFRESH_MIL_SEC = 2000;
-	protected long WAIT_FOR_ELEM_SEC = 120;
+	protected long WAIT_FOR_ELEM_SEC = 20;
 
 	protected AbstractBaseScreen() {
 		if (driver == null) {

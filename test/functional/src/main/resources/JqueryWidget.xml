@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phresco>
+<technology>
+<jquerywidget>
+      <jqueryWidgetCreatedProj>Phr_JqueryCreatedProj</jqueryWidgetCreatedProj>
+      <appInfojqueryProjNameValue>JqueryWidget_Eshop_Proj</appInfojqueryProjNameValue>
+      <appInfojqueryNoneProjNameValue>JqueryWidget_None_Proj</appInfojqueryNoneProjNameValue>
+      <appInfojqueryProjDescValue>This is a Jquery Widget project</appInfojqueryProjDescValue>
+      <appInfoTechjqueryWidget>//option[@value='tech-html5-jquery-widget']</appInfoTechjqueryWidget>
+      <jqueryConfigServNameValue>JqueryServ</jqueryConfigServNameValue>
+      <jqueryConfigservDescValue>Server configuration for YUI Widget project</jqueryConfigservDescValue>
+      <jqueryconfigServHostValue>localhost</jqueryconfigServHostValue>
+      <jqueryconfigServPortValue>8090</jqueryconfigServPortValue>
+      <jqueryconfigServDeployDir>C:\apache-tomcat-7.0.21\webapps</jqueryconfigServDeployDir>
+      <jqueryconfigServContextNameValue>jqueryapp</jqueryconfigServContextNameValue>
+      <jqueryConfigWebServiceNameValue>JqueryWebserv</jqueryConfigWebServiceNameValue>
+      <jqueryConfigWebserviceDesc>WebService configuration for Jquery Widget project</jqueryConfigWebserviceDesc>
+      <jqueryconfigWebserviceHostValue>172.16.17.180</jqueryconfigWebserviceHostValue>
+      <jqueryconfigWebservicePortValue>2020</jqueryconfigWebservicePortValue>
+      <jqueryconfigWebservContextNameValue>eshop</jqueryconfigWebservContextNameValue>     
+</jquerywidget>
+</technology>
+</phresco>
+ 

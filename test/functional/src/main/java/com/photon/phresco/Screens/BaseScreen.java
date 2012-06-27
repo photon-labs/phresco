@@ -10,13 +10,14 @@ import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.photon.phresco.selenium.util.Constants;
 import com.photon.phresco.selenium.util.ScreenActionFailedException;
 import com.photon.phresco.selenium.util.ScreenException;
@@ -24,7 +25,7 @@ import com.thoughtworks.selenium.Selenium;
 
 public class BaseScreen {
 
-	// public static ScreenshottingSelenium selenium;
+
 	public static Selenium selenium;
 	public static WebDriver driver;
 	private static ChromeDriverService chromeService;
@@ -34,29 +35,21 @@ public class BaseScreen {
 
 	}
 
-	public BaseScreen(String url, String browser, String speed, String reporter)
+	public BaseScreen(String host, int port,String browser, String url,String speed, String context)
 			throws AWTException, IOException, ScreenActionFailedException {
-		/*
-		 * selenium = new ScreenshottingSelenium("localhost", 4444, browser,
-		 * url, reporter); selenium.start(); selenium.setSpeed(speed);
-		 * selenium.open("/");
-		 */
+
+		initialize(host, port, browser, url, speed, context);
 	}
 
 	public static void initialize(String host, int port, String browser,
 			String url, String speed, String context)
 			throws com.photon.phresco.selenium.util.ScreenActionFailedException {
-		/*
-		 * PhrescoHTML5widgUiConstants phrsc = new
-		 * PhrescoHTML5widgUiConstants(); selenium = new
-		 * ScreenshottingSelenium(host, port, browser, url,context);
-		 * selenium.start(); selenium.setSpeed(speed);
-		 * selenium.open(phrsc.CONTEXT); selenium.waitForPageToLoad("30000");
-		 */
+	
 		try {
 			instantiateBrowser(browser, url, context, speed);
 		} catch (ScreenException se) {
 			se.printStackTrace();
+			
 		}
 
 	}
@@ -66,7 +59,7 @@ public class BaseScreen {
 
 		if (browserName.equalsIgnoreCase(Constants.BROWSER_CHROME)) {	
 			try {
-				// "D:/Selenium-jar/chromedriver_win_19.0.1068.0/chromedriver.exe"			
+							
 				chromeService = new ChromeDriverService.Builder()
 						.usingChromeDriverExecutable(
 								new File(getChromeLocation()))
@@ -100,30 +93,21 @@ public class BaseScreen {
 			driver = new FirefoxDriver();
 			windowMaximizeFirefox();
 			driver.navigate().to(url + context);	
-			// driver.get(url+context);
-
-			/*
-			 * selenium = new WebDriverBackedSelenium(driver, url);
-			 * selenium.open(context);
-			 */
-		} 
-		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_HTMLUNIT)) {
-				log.info("-------------***LAUNCHING HTMLUNIT***--------------");
-				driver = new HtmlUnitDriver(); 
-				//windowMaximizeFirefox();
-				driver.navigate().to(url + context);	
-				// driver.get(url+context);
-
-				/*
-				 * selenium = new WebDriverBackedSelenium(driver, url);
-				 * selenium.open(context);
-				 */
-			} 
+	
+		}/*else if(browserName.equalsIgnoreCase(Constants.ANDROID_HYBRID)){
+			driver= new AndroidDriver();
+//			driver.navigate().to(url + context);
+			System.out.println("**********AndroidDriver*********");
+			System.out.println("-------------"+url+context);
+			driver.get(url+context);
+		}*/
+		
 		else {
 			throw new ScreenException(
 					"------Only FireFox,InternetExplore and Chrome works-----------");
-		}			
-}
+		}
+
+	}
 
 	public static void windowMaximizeFirefox() {
 		driver.manage().window().setPosition(new Point(0, 0));
@@ -136,18 +120,15 @@ public class BaseScreen {
 
 	public void closeBrowser() {
 		log.info("-------------***BROWSER CLOSING***--------------");		
-		if (driver != null) {
-			driver.close();		
+		if (driver != null) {	
+			driver.quit();
+			
 		if(chromeService!=null){
 			chromeService.stop();
+			
 			}
-		} else {
-			throw new NullPointerException();
-		}
-		// selenium.stop();
-		/*
-		 * driver.quit(); selenium.stop();
-		 */
+		} 
+		
 	}
 	
 	public static String  getChromeLocation(){	
@@ -162,7 +143,6 @@ public class BaseScreen {
 	public static String getChromeFile(){
 	     if(System.getProperty("os.name").startsWith(Constants.WINDOWS_OS)){
 			log.info("*******WINDOWS MACHINE FOUND*************");
-//			getChromeLocation("/chromedriver.exe");
 			return Constants.WINDOWS_DIRECTORY + "/chromedriver.exe" ;			
 		}else if(System.getProperty("os.name").startsWith(Constants.LINUX_OS)){
 			log.info("*******LINUX MACHINE FOUND*************");
