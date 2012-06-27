@@ -1115,6 +1115,7 @@ public class Applications extends FrameworkBaseAction {
 		S_LOGGER.debug("Entering Method  Applications.browse()");
 		try {
 			String projectLocation = Utility.getProjectHome() + projectCode;
+			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation.replace(File.separator, FORWARD_SLASH));
 			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		} catch (Exception e) {
