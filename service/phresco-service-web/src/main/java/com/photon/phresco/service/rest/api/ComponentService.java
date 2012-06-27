@@ -1010,7 +1010,7 @@ public class ComponentService extends DbService implements ServiceConstants{
 	@Path(REST_API_WEBSERVICESBYID + REST_API_PATH_ID)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response webServiceByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
-		List<WebService> webServiceList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , WebService.class);
+		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
 		List<WebService> webServiceList1 = new ArrayList<WebService>();
 		for (WebService wservice : webServiceList) {
 			List<String> technologies = wservice.getTechnologies();
