@@ -4,8 +4,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,15 +36,12 @@ public class ComponentRestTechnologiesTest {
     public void testGetTechnologies() {
         try {
             serviceManager = ServiceClientFactory.getServiceManager(context);            
-//            Type type = new TypeToken<List<Technology>>() {}.getType();
             RestClient<Technology> techClient = serviceManager.getRestClient("component");
             techClient.setPath("technologies");
-//            techClient.setAccept(MediaType.APPLICATION_JSON);
-//            techClient.setType(MediaType.APPLICATION_JSON);
             GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
             List<Technology> list = techClient.get(genericType);
             for (Technology tech : list) {
-                System.out.println("Tech Name == " + tech.getName());
+                System.out.println("Tech Name == " + tech.getName() + " id " + tech.getId());
             }
             
         } catch (PhrescoException e) {
@@ -58,43 +53,39 @@ public class ComponentRestTechnologiesTest {
     public void testCreateServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
-    	tech.setName("Node");
+    	tech.setName("Drupal");
     	List<String> versions = new ArrayList<String>();
-    	versions.add("1.3");
-    	versions.add("1.1");
+    	versions.add("6.18");
+    	versions.add("6.19");
+    	versions.add("7.0");
 		tech.setVersions(versions);
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
 		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
-//		techClient.setAccept(MediaType.APPLICATION_JSON);
-//		techClient.setType(MediaType.APPLICATION_JSON);
-		techClient.create(techs);
+		ClientResponse create = techClient.create(techs);
     }
     
-	@Test
+	@Ignore
     public void testPutServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
-    	tech.setId("4fe455c4230dbb3894408cf8");
-    	tech.setName("Html5");
+    	tech.setId("4fe46c0d230d28c9353c4b69");
+    	tech.setName("Java");
     	List<String> versions = new ArrayList<String>();
-    	versions.add("1.3");
-    	versions.add("1.1");
+    	versions.add("1.5");
+    	versions.add("1.6");
 		tech.setVersions(versions);
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
 		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
-//		techClient.setAccept(MediaType.APPLICATION_JSON);
-//		techClient.setType(MediaType.APPLICATION_JSON);
-
-		Type type = new TypeToken<List<Technology>>() {}.getType();
+		GenericType<List<Technology>> type = new GenericType<List<Technology>>(){};
 		List<Technology> entity = techClient.update(techs, type);
 		for (Technology technology : entity) {
 			System.out.println("tec " + technology);
 		}
     }
     
-	@Test
+	@Ignore
     public void testGetServerById() throws PhrescoException {
         try {
 	    	String id = "4fe46c00230d28c9353c4b68";
@@ -110,7 +101,7 @@ public class ComponentRestTechnologiesTest {
         }
     }
     
-    @Test
+	@Ignore
     public void testPutServerById() throws PhrescoException {
     	String id="4fe026c6230d6868296be32a";
     	Technology tech = new Technology();
@@ -128,7 +119,7 @@ public class ComponentRestTechnologiesTest {
 		ClientResponse clientResponse = techClient.updateById(tech, type);
     }
 
-    @Test
+	@Ignore
     public void testDeleteServerById() throws PhrescoException {
     	String id = "4fe451a5230da2b1ceb2f5b7" ;
     	serviceManager = ServiceClientFactory.getServiceManager(context);            

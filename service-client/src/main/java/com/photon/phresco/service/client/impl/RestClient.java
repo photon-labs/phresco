@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.Technology;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -138,7 +139,7 @@ public class RestClient<E> {
 	public ClientResponse create(List<E> infos, String accept, String type) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
 		builder = resource.accept(accept).type(type);
-		ClientResponse clientResponse = builder.post(ClientResponse.class, new Gson().toJson(infos));
+		ClientResponse clientResponse = builder.post(ClientResponse.class, infos);
 		isErrorThrow(clientResponse);
 		return clientResponse;
 	}
@@ -150,7 +151,7 @@ public class RestClient<E> {
 	 * @return
 	 * @throws PhrescoException
 	 */
-	public List<E> update(List<E> infos, Type type) throws PhrescoException {
+	public List<E> update(List<E> infos, GenericType<List<E>> type) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
 		return update(infos, type, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -163,12 +164,14 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	@SuppressWarnings("unchecked")
-	public List<E> update(List<E> infos, Type gType, String accept, String type) throws PhrescoException {
+	public List<E> update(List<E> infos, GenericType<List<E>> gtype, String accept, String type) throws PhrescoException {
 		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
 		builder = resource.accept(accept).type(type);
-		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(infos));
+//		ClientResponse clientResponse = builder.put(ClientResponse.class, new Gson().toJson(infos));
+		ClientResponse clientResponse = builder.put(ClientResponse.class, infos);
 		isErrorThrow(clientResponse);
-		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), gType);
+//		return (List<E>) (new Gson()).fromJson(clientResponse.getEntity(String.class), type);
+		return clientResponse.getEntity(gtype);
 	}
 	
 	/**
