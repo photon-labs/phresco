@@ -1,5 +1,6 @@
 package com.photon.phresco.service.rest.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -649,6 +650,27 @@ public class ComponentService extends DbService implements ServiceConstants{
     	return response;
 	}
 	
+	
+	/**
+	 * Creates the list of servers
+	 * @param servers
+	 * @return 
+	 */
+	@GET
+	@Path(REST_API_SERVERBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response serverByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+		List<Server> serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
+		List<Server> serverList1 = new ArrayList<Server>();
+		for (Server server : serverList) {
+			List<String> technologies = server.getTechnologies();
+			if(technologies.contains(tech)) {
+				serverList1.add(server);
+			}
+		}
+		return Response.status(Response.Status.CREATED).entity(serverList1).build();
+	}
+	
 	/**
 	 * Creates the list of servers
 	 * @param servers
@@ -814,6 +836,26 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
+	 * Creates the list of servers
+	 * @param servers
+	 * @return 
+	 */
+	@GET
+	@Path(REST_API_DATABASESBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response databaseByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+		List<Database> databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
+		List<Database> databaseList1 = new ArrayList<Database>();
+		for (Database database : databaseList) {
+			List<String> technologies = database.getTechnologies();
+			if(technologies.contains(tech)) {
+				databaseList1.add(database);
+			}
+		}
+		return Response.status(Response.Status.CREATED).entity(databaseList1).build();
+	}
+	
+	/**
 	 * Updates the list of databases
 	 * @param databases
 	 * @return
@@ -957,6 +999,26 @@ public class ComponentService extends DbService implements ServiceConstants{
 			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
 		}
 		return Response.status(Response.Status.OK).build();
+	}
+	
+	/**
+	 * Creates the list of servers
+	 * @param servers
+	 * @return 
+	 */
+	@GET
+	@Path(REST_API_WEBSERVICESBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response webServiceByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+		List<WebService> webServiceList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , WebService.class);
+		List<WebService> webServiceList1 = new ArrayList<WebService>();
+		for (WebService wservice : webServiceList) {
+			List<String> technologies = wservice.getTechnologies();
+			if(technologies.contains(tech)) {
+				webServiceList1.add(wservice);
+			}
+		}
+		return Response.status(Response.Status.CREATED).entity(webServiceList1).build();
 	}
 	
 	/**

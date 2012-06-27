@@ -142,6 +142,9 @@ public interface ServiceConstants {
 	String REST_API_LDAP = "/settings/ldap";
 	String REST_API_SETTINGS = "/settings_temp";
 	String REST_API_TWEETS = "/tweets";
+	String REST_API_SERVERBYID = "/servers/id";
+	String REST_API_DATABASESBYID = "/databases/id";
+	String REST_API_WEBSERVICESBYID = "/webservices/id";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
 	
