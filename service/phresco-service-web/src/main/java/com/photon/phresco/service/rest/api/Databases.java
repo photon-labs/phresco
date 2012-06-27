@@ -40,10 +40,10 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
-@Path(ServerConstants.REST_API_DATABASES)
-public class Databases implements ServerConstants {
+@Path(ServiceConstants.REST_API_DATABASES)
+public class Databases implements ServiceConstants {
 
 	private static final Logger S_LOGGER = Logger.getLogger(Technology.class);
 //	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();

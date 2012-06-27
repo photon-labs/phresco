@@ -26,10 +26,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -43,13 +41,13 @@ import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Example resource class hosted at the URI path "/downloads"
  */
 @Path("/downloads")
-public class DownloadsService implements ServerConstants {
+public class DownloadsService implements ServiceConstants {
 
 	private static final String SOFTWARE_REPO_PATH = "/softwares/info/1.0/info-1.0.json";
 	private static final Logger S_LOGGER = Logger.getLogger(DownloadsService.class);

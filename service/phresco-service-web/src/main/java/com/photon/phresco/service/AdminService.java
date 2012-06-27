@@ -42,13 +42,13 @@ import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Admin config file and Log service"
  */
 @Path("admin")
-public class AdminService implements ServerConstants {
+public class AdminService implements ServiceConstants {
 
 		private static final Logger S_LOGGER = Logger.getLogger(AdminService.class);
 		private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();

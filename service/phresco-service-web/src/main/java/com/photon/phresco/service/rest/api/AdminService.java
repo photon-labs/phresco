@@ -43,11 +43,11 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 @Component
-@Path(ServerConstants.REST_API_ADMIN)
-public class AdminService extends DbService implements ServerConstants{
+@Path(ServiceConstants.REST_API_ADMIN)
+public class AdminService extends DbService implements ServiceConstants{
 	
 	private static final Logger S_LOGGER= Logger.getLogger(AdminService.class);
 	

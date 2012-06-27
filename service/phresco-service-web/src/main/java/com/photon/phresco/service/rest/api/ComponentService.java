@@ -28,11 +28,11 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 @Component
-@Path(ServerConstants.REST_API_COMPONENT)
-public class ComponentService extends DbService implements ServerConstants{
+@Path(ServiceConstants.REST_API_COMPONENT)
+public class ComponentService extends DbService implements ServiceConstants{
 	
 	private static final Logger S_LOGGER= Logger.getLogger(ComponentService.class);
 	

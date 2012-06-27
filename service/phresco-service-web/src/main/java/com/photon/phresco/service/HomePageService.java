@@ -44,12 +44,13 @@ import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Example resource class hosted at the URI path "/video"
  */
 @Path("/homepagevideos")
-public class HomePageService implements ServerConstants {
+public class HomePageService implements ServiceConstants {
 	private static final Logger S_LOGGER = Logger.getLogger(HomePageService.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	@GET

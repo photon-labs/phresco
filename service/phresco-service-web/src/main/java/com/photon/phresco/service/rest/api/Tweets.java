@@ -47,10 +47,10 @@ import com.photon.phresco.commons.model.Tweet;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.api.AdminManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
-@Path(ServerConstants.REST_API_TWEETS)
-public class Tweets implements ServerConstants {
+@Path(ServiceConstants.REST_API_TWEETS)
+public class Tweets implements ServiceConstants {
 
 	private static final Logger S_LOGGER = Logger.getLogger(Tweets.class);
 //	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
