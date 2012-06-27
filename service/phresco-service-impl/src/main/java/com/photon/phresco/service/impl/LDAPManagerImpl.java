@@ -57,8 +57,8 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.api.LDAPManager;
 import com.photon.phresco.service.model.LDAPConfiguration;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.Credentials;
+import com.photon.phresco.util.ServiceConstants;
 
 public class LDAPManagerImpl implements LDAPManager {
 	
@@ -117,9 +117,9 @@ public class LDAPManagerImpl implements LDAPManager {
 		}
 		StringBuffer userPrincipal = new StringBuffer();
 		userPrincipal.append(ldapConfig.getLdapLoginAttribute());
-		userPrincipal.append(ServerConstants.STR_EQUALS);
+		userPrincipal.append(ServiceConstants.STR_EQUALS);
 		userPrincipal.append(userName.trim());
-		userPrincipal.append(ServerConstants.STR_COMMA);
+		userPrincipal.append(ServiceConstants.STR_COMMA);
 		userPrincipal.append(ldapConfig.getLdapBaseDn());
 		return userPrincipal.toString();
 	}
@@ -137,7 +137,7 @@ public class LDAPManagerImpl implements LDAPManager {
 			constraints.setReturningAttributes(attrIDs);
 			NamingEnumeration<SearchResult> ne = ctx.search(ldapConfig.getLdapBaseDn(), ldapConfig
 					.getLdapLoginAttribute()
-					+ ServerConstants.STR_EQUALS + userName, constraints);
+					+ ServiceConstants.STR_EQUALS + userName, constraints);
 			if (ne.hasMore()) {
 				Attributes attrs = ne.next().getAttributes();
 

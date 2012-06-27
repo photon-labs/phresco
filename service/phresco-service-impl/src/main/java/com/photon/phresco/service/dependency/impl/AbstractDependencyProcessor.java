@@ -55,7 +55,6 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.DependencyProcessor;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;

@@ -24,10 +24,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.model.Documentation;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.Module;
@@ -40,9 +40,9 @@ import com.photon.phresco.service.api.DBManager;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.service.model.DocumentTypes;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
-public class PhrescoDataManagerImpl implements PhrescoDataManager, ServerConstants {
+public class PhrescoDataManagerImpl implements PhrescoDataManager, ServiceConstants {
 
 	private RepositoryManager repoManager;
 	private DBManager dbManager;
