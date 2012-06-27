@@ -145,25 +145,25 @@
 					          	<thead>
 						            <tr>
 										<th class="first">
-						                	<div class="th-inner"><s:text name="label.name"/></div>
+						                	<div class="th-inner-test"><s:text name="label.name"/></div>
 						              	</th>
 						              	<th class="second">
-						                	<div class="th-inner"><s:text name="label.class"/></div>
+						                	<div class="th-inner-test"><s:text name="label.class"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner"><s:text name="label.time"/></div>
+						                	<div class="th-inner-test"><s:text name="label.time"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner"><s:text name="label.status"/></div>
+						                	<div class="th-inner-test"><s:text name="label.status"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner"><s:text name="label.log"/></div>
+						                	<div class="th-inner-test"><s:text name="label.log"/></div>
 						              	</th>
 						              	<% 
 						              		if(FrameworkConstants.FUNCTIONAL.equals(testType)) { 
 						              	%>
 						              	<th class="width-ten-percent">
-						                	<div class="th-inner"><s:text name="label.screenshot"/></div>
+						                	<div class="th-inner-test"><s:text name="label.screenshot"/></div>
 						              	</th>
 						              	<% 
 						              		} 
@@ -286,11 +286,11 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()) {
 		/* JQuery scroll bar */
+		$(".fixed-table-container-inner").scrollbars();
 		$("#graphicalView").scrollbars();
 	}
 	
     $(document).ready(function() {
-    	
     	changeView();
     	escPopup();
     	

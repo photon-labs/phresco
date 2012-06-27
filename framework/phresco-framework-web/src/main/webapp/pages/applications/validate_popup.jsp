@@ -128,6 +128,10 @@
 </div>
 
 <script type="text/javascript">
+
+	/* JQuery scroll bar */
+	$(".fixed-table-container-inner").scrollbars();
+	
 	$(document).ready(function() {
 		escPopup();
 		$('#validateCancel, #close').click(function() {

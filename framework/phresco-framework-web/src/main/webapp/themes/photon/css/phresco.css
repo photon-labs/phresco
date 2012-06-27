@@ -604,7 +604,7 @@ footer {
     background-position:center;
     width:7px !important;
     top:7px;
-    height:90%!important;
+    height:100%!important;
 }
 
 .scroll-bar .scroll-slider {
@@ -3155,7 +3155,7 @@ table {
 }
 
 .settings_list_form {
-    height:83%;
+    height:89%;
 }
 
 .app_list_form {
@@ -4040,7 +4040,7 @@ form div.error {
 
 #coremodule_accordion_container {
 	width: 99.3%;
-	height: 90%;
+	height: 97%;
 }
 
 .custommodule_accordion_container {
@@ -4050,7 +4050,7 @@ form div.error {
 
 .jsLib_accordion_container {
 	width: 99.7%;
-	height: 74%;
+	height: 85%;
 }
 
 .noCore_customFeaturesDiv {
@@ -4131,12 +4131,48 @@ form div.error {
 }
    
 .th-inner {
-  	position: absolute;
-  	top: 0;
+  	position: fixed;
+  	top: 162px;
   	line-height: 30px;
   	text-align: left;
   	padding-left: 5px;
   	margin-left: -5px;
+}
+
+ .th-inner-head {
+	position: fixed;
+  	top: 196px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+} 
+
+.th-inner-test {
+	position: fixed;
+  	top: 226px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+}
+
+.th-inner-android {
+	position: fixed;
+  	top: 145px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+}
+
+.th-inner-testtech {
+	position: fixed;
+  	top: 255px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
 }
 
 .first .th-inner {

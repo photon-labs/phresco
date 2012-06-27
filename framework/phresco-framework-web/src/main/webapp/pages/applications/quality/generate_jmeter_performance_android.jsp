@@ -65,12 +65,12 @@
 					          	<thead>
 						            <tr>
 										<th class="first" style="width: 1%;">
-						                	<div class="th-inner">
+						                	<div class="th-inner-android">
 						                		<input type="checkbox" id="selectAll"/>
 						                	</div>
 						              	</th>
 						              	<th class="second">
-						                	<div class="th-inner"><s:text name="label.connected.devices"/></div>
+						                	<div class="th-inner-android"><s:text name="label.connected.devices"/></div>
 						              	</th>
 						            </tr>
 					          	</thead>

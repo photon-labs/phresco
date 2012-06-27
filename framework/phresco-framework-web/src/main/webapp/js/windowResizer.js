@@ -77,15 +77,22 @@ $(document).ready(function() {
 		$(".build_detail_div").css("height",newHeight_build_left_container - 23);
 		$(".build_progress_div").css("height",newHeight_build_left_container - 23);
 		
-		
-		var newHeight_tabledatadiv = $(".table_div").height();
-		$(".table_data_div").css("height",newHeight_tabledatadiv - heightDiff_tabledatadiv);
-
 		var newHeight_tablediv = $("#container").height();
 		$(".table_div").css("height",newHeight_tablediv - heightDiff_tablediv);
 		
-		var newHeight_tabledatadiv = $(".table_div").height();
-		$(".table_data_div").css("height",newHeight_tabledatadiv - heightDiff_tabledatadiv);
+		/* To resize table list and scrollbar */
+		
+		var newHeight_newscrollfixedcon = $(".table_div").height();
+		$(".fixed-table-container").css("height",newHeight_newscrollfixedcon - 30);
+		
+		var newHeight_newscrollfixedcon_inner = $(".fixed-table-container").height();
+		$(".fixed-table-container-inner").css("height",newHeight_newscrollfixedcon_inner - 3);
+		
+		/*var newHeight_newscrollbar = $(".fixed-table-container-inner").height();
+		$(".scroll-bar").css("height",newHeight_newscrollbar + 36);*/
+		
+		/*var newHeight_newscrollbardiv = $(".theme_accordion_container").height();
+		$(".scroll-bar").css("height",newHeight_newscrollbardiv + 36);*/
 		
 		/* Quality tab unit and functional table list resize */
 		var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));

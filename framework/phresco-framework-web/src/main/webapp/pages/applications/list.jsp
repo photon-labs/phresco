@@ -160,7 +160,7 @@
 	/* To check whether the device is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
-		/* $(".fixed-table-container-inner").scrollbars(); */ 
+		$(".fixed-table-container-inner").scrollbars();  
 	}
 
 	$(document).ready(function() {

@@ -22,6 +22,11 @@ Width <= 1024
 *************************************************************************************/
 @media screen and (max-width : 1024px) {
 	/* header starts */
+	
+	.app_list_form {
+    	height: 95%;
+	}
+	
 	.main_wrapper {
 		bottom: 48px;
 		padding-left: 10px;
@@ -412,12 +417,27 @@ Width <= 1024
      	padding: 4px 6px;
      	margin-top: 5px;
      }
+     
+     /* android modal */
+	.th-inner-android {
+	    line-height: 30px;
+	    margin-left: -4px;
+	    padding-left: 5px;
+	    position: absolute;
+	    text-align: left;
+	    top: 2px;
+	}
 }
 
 /***********************************************************************************
 Width size <= 1024
 ************************************************************************************/
 @media only screen and (max-device-width:768px) and (orientation:portrait) {
+	
+	.app_list_form {
+    	height: 91%;
+	}
+	
 	/* header starts */
 	html, body { 
 	    margin: 0; 
@@ -832,6 +852,11 @@ Width size <= 1024
 Width >= 1025 and < 1151
 *************************************************************************************/
 @media screen and (min-width : 1025px) and (max-width : 1151px) {
+	
+	.app_list_form {
+    	height: 91%;
+	}
+	
 	.actions {
 	    background: none repeat scroll 0 0 transparent;
 	    border-radius: 0 0 3px 3px;
@@ -902,6 +927,11 @@ Width >= 1025 and < 1151
 Width >= 1152 and < 1280
 *************************************************************************************/
 @media screen and (min-width : 1152px) and (max-width : 1279px) {
+	
+	.app_list_form {
+    	height: 98%;
+	}
+	
 	/* header starts */
 
 	#warningmsg {
@@ -1216,12 +1246,27 @@ Width >= 1152 and < 1280
 		left: 39.5%; 
 		top: 26%
 	}
+	
+	/* android modal */
+	.th-inner-android {
+	    line-height: 30px;
+	    margin-left: -4px;
+	    padding-left: 5px;
+	    position: absolute;
+	    text-align: left;
+	    top: 2px;
+	}
 }
 
 /************************************************************************************
 Width <= 1280 and height <= 800
 *************************************************************************************/
 @media screen and (min-width : 1280px) and (max-height : 800px) {
+	
+	.app_list_form {
+    	height: 85%;
+	}
+	
 	/* header starts */
 	
 	#warningmsg {
@@ -1642,12 +1687,25 @@ Width <= 1280 and height <= 800
 		left: 36%; 
 		top: 26%
 	}
+	/* android modal */
+	.th-inner-android {
+	    line-height: 30px;
+	    margin-left: -4px;
+	    padding-left: 5px;
+	    position: absolute;
+	    text-align: left;
+	    top: 3px;
+	}
 }
 
 /************************************************************************************
 Width >= 1280 and height >= 800
 *************************************************************************************/
 @media screen and (min-width : 1280px) and (min-height : 801px) {
+	
+	.app_list_form {
+    	height: 91%;
+	}
 	/* header starts */
 	#warningmsg {
      	display: none;
@@ -1979,12 +2037,27 @@ Width >= 1280 and height >= 800
 	    padding-left: 65px;
 	    text-align: center;
 	}
+	
+	/* android modal */
+	.th-inner-android {
+	    line-height: 30px;
+	    margin-left: -4px;
+	    padding-left: 5px;
+	    position: absolute;
+	    text-align: left;
+	    top: 3px;
+	}
 }
 
 /************************************************************************************
 Width > 1280 and <= 1360
 *************************************************************************************/
 @media screen and (min-width : 1281px) and (max-width : 1360px) {
+	
+	.app_list_form {
+    	height: 87%;
+	}
+	
 	/* header starts */ 
 	 .main_wrapper {
 		bottom: 48px;
@@ -2412,12 +2485,27 @@ Width > 1280 and <= 1360
      	padding: 4px 6px;
      	margin-top: 5px;
      }
+     
+     /* android modal */
+	.th-inner-android {
+	    line-height: 30px;
+	    margin-left: -4px;
+	    padding-left: 5px;
+	    position: absolute;
+	    text-align: left;
+	    top: 2px;
+	}
 }
 
 /************************************************************************************
 Width > 1360 and <= 1440
 *************************************************************************************/
 @media only screen and (min-width : 1361px) and (max-width : 1440px) {
+	
+	.app_list_form {
+    	height: 91%;
+	}
+	
 	/* header starts */
 	.main_wrapper {
 		bottom: 48px;
@@ -2794,6 +2882,10 @@ Width > 1441 and <= 1600
 *************************************************************************************/
 @media only screen and (min-width : 1441px) and (max-width : 1600px) {
 	/* header starts */
+	.app_list_form {
+    	height: 90%;
+	}
+
 	#warningmsg {
      	display: none;
      	width: auto; 

@@ -133,7 +133,7 @@
     <%
         } else {
     %>
-	    <div class="table_div">
+	    <div class="settingsList_table_div">
 	        <!-- List -->
         	<div class="fixed-table-container">
 	      		<div class="header-background"> </div>
@@ -142,26 +142,26 @@
 			          	<thead>
 				            <tr>
 				                <th class="first">
-                                    <div class="th-inner">
+                                    <div class="th-inner-head ">
                                         <input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">
                                     </div>
                                 </th>
 								<th class="first">
-				                	<div class="th-inner">
+				                	<div class="th-inner-head ">
 				                		#
 				                	</div>
 				              	</th>
 				              	<th class="second">
-				                	<div class="th-inner"><s:text name="label.url"/></div>
+				                	<div class="th-inner-head "><s:text name="label.url"/></div>
 				              	</th>
 				              	<th class="third" style="width: 20%;">
-				                	<div class="th-inner"><center><s:text name="label.download"/></center></div>
+				                	<div class="th-inner-head "><center><s:text name="label.download"/></center></div>
 				              	</th>
 				         		<th class="third">
-				                	<div class="th-inner"><s:text name="label.time"/></div>
+				                	<div class="th-inner-head "><s:text name="label.time"/></div>
 				              	</th>
 				              	<th class="third">
-				                	<div class="th-inner"><s:text name="label.status"/></div>
+				                	<div class="th-inner-head "><s:text name="label.status"/></div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -246,7 +246,7 @@
 /* To check whether the divice is ipad or not */
 if(!isiPad()){
 	/* JQuery scroll bar */
-	$(".table_data_div").scrollbars();
+	$(".fixed-table-container-inner").scrollbars();
 }
 
 // buildSize to refresh ci after build completed
