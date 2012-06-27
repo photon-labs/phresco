@@ -18,7 +18,7 @@
         <site>
             <id>phresco.commons</id>
             <name>Phresco commons</name>
-             <url>scp://phresco.org/home/projects/commons/public_html/</url>
+             <url>${siteBaseUrl}/service-client/</url>
         </site>
     </distributionManagement>
 

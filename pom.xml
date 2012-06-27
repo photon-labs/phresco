@@ -67,6 +67,13 @@
         </site>
     </distributionManagement>
         
+		<licenses>
+			<license>
+				<name>The Apache Software License, Version 2.0</name>
+				<distribution>repo</distribution>
+				<comments>A business-friendly OSS license</comments>
+			</license>
+		</licenses>
     <build>
         <pluginManagement>
             <plugins>
@@ -369,7 +376,7 @@
           </reportSet>
         </reportSets>
 	 	</plugin>
-		<plugin>
+		 <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
         </plugin>
@@ -403,6 +410,6 @@
           <artifactId>maven-pmd-plugin</artifactId>
           <version>2.7.1</version>
 	 </plugin>	 
-    </plugins>
+    </plugins> 
   </reporting>
 </project>

@@ -20,7 +20,7 @@
         <site>
             <id>phresco.service.web</id>
             <name>Phresco Service Web</name>
-            <url>scp://phresco.org/home/projects/service/web/public_html/</url>
+            <url>${siteBaseUrl}/service/phresco-service-web/</url>
         </site>
     </distributionManagement>
 		
