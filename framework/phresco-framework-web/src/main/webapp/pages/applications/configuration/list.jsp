@@ -93,7 +93,7 @@
     <%
         } else {
     %>
-    		<div class="table_div">
+    		<div class="settingsList_table_div">
 	    		<div class="fixed-table-container">
 		      		<div class="header-background"> </div>
 		      		<div class="fixed-table-container-inner">
@@ -101,24 +101,24 @@
 				          	<thead>
 					            <tr>
 									<th class="first">
-					                	<div class="th-inner">
+					                	<div class="th-inner-head ">
 					                		<input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">
 					                	</div>
 					              	</th>
 					              	<th class="second">
-					                	<div class="th-inner"><s:text name="label.name"/></div>
+					                	<div class="th-inner-head "><s:text name="label.name"/></div>
 					              	</th>
 					              	<th class="third">
-					                	<div class="th-inner"><s:text name="label.description"/></div>
+					                	<div class="th-inner-head "><s:text name="label.description"/></div>
 					              	</th>
 					              	<th class="third">
-					                	<div class="th-inner"><s:text name="label.type"/></div>
+					                	<div class="th-inner-head "><s:text name="label.type"/></div>
 					              	</th>
 					              	<th class="third">
-                                        <div class="th-inner"><s:text name="label.environment"/></div>
+                                        <div class="th-inner-head "><s:text name="label.environment"/></div>
                                     </th>
 					              	<th class="third">
-					                	<div class="th-inner"><s:text name="label.status"/></div>
+					                	<div class="th-inner-head "><s:text name="label.status"/></div>
 					              	</th>
 					            </tr>
 				          	</thead>
@@ -206,7 +206,7 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
-		$(".table_data_div").scrollbars();
+		$(".fixed-table-container-inner").scrollbars();
 	}
 	
     function isConnectionAlive(url, id) {

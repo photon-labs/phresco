@@ -63,12 +63,13 @@
 				        <div style="overflow: auto;">
 					        <table cellspacing="0" class="zebra-striped">
 					          	<thead>
+					       
 						            <tr>
-										<th class="first"><div class="th-inner"><s:text name="label.testsuite.name"/></div></th>
-						              	<th class="second"><div class="th-inner"><s:text name="label.testsuite.total"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.testsuite.success"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.testsuite.failure"/></div></th>
-						              	<th class="first"><div class="th-inner"><s:text name="label.testsuite.error"/></div></th>
+										<th class="first"><div id="thDiv" class="th-inner-test"><s:text name="label.testsuite.name"/></div></th>
+						              	<th class="second"><div id="thDiv1" class="th-inner-test"><s:text name="label.testsuite.total"/></div></th>
+						              	<th class="third"><div id="thDiv2" class="th-inner-test"><s:text name="label.testsuite.success"/></div></th>
+						              	<th class="third"><div id="thDiv3" class="th-inner-test"><s:text name="label.testsuite.failure"/></div></th>
+						              	<th class="first"><div id="thDiv4" class="th-inner-test"><s:text name="label.testsuite.error"/></div></th>
 						            </tr>
 					          	</thead>
 					
@@ -145,10 +146,25 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
+		$(".fixed-table-container-inner").scrollbars();
 		$("#graphicalView").scrollbars();
 	}
 	
 	$(document).ready(function() {
+		if ($('#label').hasClass('techLabel')){
+			$("#thDiv").removeClass("th-inner-test").addClass("th-inner-testtech");
+			$("#thDiv1").removeClass("th-inner-test").addClass("th-inner-testtech");
+			$("#thDiv2").removeClass("th-inner-test").addClass("th-inner-testtech");
+			$("#thDiv3").removeClass("th-inner-test").addClass("th-inner-testtech");
+			$("#thDiv4").removeClass("th-inner-test").addClass("th-inner-testtech");
+		}
+		
+		if ($.browser.safari) {
+    		$(".th-inner-test").css("top","231px");  
+    		$(".th-inner-testtech").css("top","263px"); 
+		}
+
+	
 		// based on view show the list(table/graph)
 		changeView();
 		canvasInit();

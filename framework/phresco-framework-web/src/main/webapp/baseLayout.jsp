@@ -92,6 +92,9 @@
 	  		 localstore = localStorage["color"];
 	  		 $("link[title='phresco']").attr("href",localstore);
 	  		showHeaderImage();
+			$("iframe").attr({
+	             src: $("iframe").attr("src")
+	         });
 	  	 });
 	});
 	

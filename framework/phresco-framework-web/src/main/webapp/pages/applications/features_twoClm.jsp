@@ -67,7 +67,7 @@
 	} 
 	
 	#coremodule_accordion_container {
-	    height: 90%;
+	    height: 97%;
 	    width: 99.3%;
 	}
 	
@@ -92,7 +92,7 @@
 	}
 	
 	.jsLib_accordion_container {
-		height: 90%;
+		height: 97%;
 		width: 99.3%;
 	}
 	
