@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -111,8 +110,8 @@ import com.photon.phresco.service.jaxb.Technology;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.EntityType;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.FileUtil;
+import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 
@@ -960,12 +959,12 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	}
 
 	public void addVideo(VideoInfo videoInfo, File dirPath) throws PhrescoException {
-		boolean exist = isExist(ServerConstants.HOMEPAGE_JSON_FILE);
+		boolean exist = isExist(ServiceConstants.HOMEPAGE_JSON_FILE);
 
 		List<VideoInfo> videoInfoList = null;
 		if (exist) {
 			// Read the VideoInfos from Nexus
-			String videoInfoJSON = getArtifactAsString(ServerConstants.HOMEPAGE_JSON_FILE);
+			String videoInfoJSON = getArtifactAsString(ServiceConstants.HOMEPAGE_JSON_FILE);
 
 			// Convert it into VideoInfo JSON objects
 			Type type = new TypeToken<List<VideoInfo>>() {
@@ -1014,12 +1013,12 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	}
 
 	public void addSettings(SettingsTemplate settingsTemplate, File dirPath) throws PhrescoException {
-		boolean exist = isExist(ServerConstants.SETTINGS_CONFIG_FILE);
+		boolean exist = isExist(ServiceConstants.SETTINGS_CONFIG_FILE);
 		List<SettingsTemplate> settingsList = null;
 
 		if (exist) {
 			// Read the VideoInfos from Nexus
-			String settingsJson = getArtifactAsString(ServerConstants.SETTINGS_CONFIG_FILE);
+			String settingsJson = getArtifactAsString(ServiceConstants.SETTINGS_CONFIG_FILE);
 
 			// Convert it into VideoInfo JSON objects
 			Type type = new TypeToken<List<SettingsTemplate>>() {
