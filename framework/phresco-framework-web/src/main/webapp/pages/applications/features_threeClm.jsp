@@ -67,7 +67,7 @@
 	} 
 	
 	#coremodule_accordion_container {
-	    height: 85%;
+	    height: 97%;
 	    width: 99.3%;
 	}
 	
@@ -103,7 +103,7 @@
 	}
 	
 	.custommodule_accordion_container {
-		height: 72%;
+		height: 97%;
     	width: 99%;
 	}
 </style>
