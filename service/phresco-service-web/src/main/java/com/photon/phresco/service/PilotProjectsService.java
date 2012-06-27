@@ -33,13 +33,13 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Example resource class hosted at the URI path "/apps"
  */
 @Path("/pilots")
-public class PilotProjectsService implements ServerConstants {
+public class PilotProjectsService implements ServiceConstants {
 	
 	private static final Logger S_LOGGER = Logger.getLogger(PilotProjectsService.class);
 

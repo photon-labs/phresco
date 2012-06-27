@@ -36,13 +36,13 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Example resource class hosted at the URI path "/apps"
  */
 @Path("/settings")
-public class ConfigurationService implements ServerConstants {
+public class ConfigurationService implements ServiceConstants {
 	private static final Logger S_LOGGER = Logger.getLogger(ConfigurationService.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	static {

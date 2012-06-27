@@ -9,14 +9,13 @@ import org.springframework.data.document.mongodb.config.AbstractMongoConfigurati
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import com.mongodb.MongoOptions;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 @Configuration
-public class MongoConfig extends AbstractMongoConfiguration implements ServerConstants{
+public class MongoConfig extends AbstractMongoConfiguration implements ServiceConstants{
 	
 	private ServerConfiguration config;
 	

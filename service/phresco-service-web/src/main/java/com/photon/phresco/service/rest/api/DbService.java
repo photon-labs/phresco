@@ -7,7 +7,7 @@ import org.springframework.data.document.mongodb.MongoOperations;
 
 import com.mongodb.MongoException;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 public class DbService {
 	
@@ -22,7 +22,7 @@ public class DbService {
 			ctx = new AnnotationConfigApplicationContext(MongoConfig.class);
 	    	mongoOperation = (MongoOperations)ctx.getBean(MONGO_TEMPLATE);
 		} catch (MongoException e) {
-			PhrescoException phrescoException = new PhrescoException(ServerConstants.EX_PHEX00004);
+			PhrescoException phrescoException = new PhrescoException(ServiceConstants.EX_PHEX00004);
 			S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
 			throw phrescoException;
 		}
