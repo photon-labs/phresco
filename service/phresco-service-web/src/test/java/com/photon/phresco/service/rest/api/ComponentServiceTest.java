@@ -22,10 +22,10 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 
-public class ComponentServiceTest extends DbService implements ServerConstants{
+public class ComponentServiceTest extends DbService implements ServiceConstants {
 	
 	public ComponentServiceTest() throws PhrescoException {
 		super();

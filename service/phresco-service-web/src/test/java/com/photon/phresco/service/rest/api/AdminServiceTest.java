@@ -16,9 +16,9 @@ import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
-public class AdminServiceTest extends DbService implements ServerConstants{
+public class AdminServiceTest extends DbService implements ServiceConstants {
 	
 	public AdminServiceTest() throws PhrescoException {
 		super();

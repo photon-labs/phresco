@@ -67,25 +67,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.codehaus.plexus.util.StringUtils;
 import org.w3c.dom.Element;
 
-import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.jaxb.ArchetypeInfo;
 import com.photon.phresco.service.jaxb.Document;
 import com.photon.phresco.service.jaxb.Documents;
-import com.photon.phresco.service.jaxb.Library;
 import com.photon.phresco.service.jaxb.Module;
 import com.photon.phresco.service.jaxb.Modules;
 import com.photon.phresco.service.jaxb.ObjectFactory;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.DocumentType;
 import com.photon.phresco.service.model.DocumentTypes;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.util.TechnologyTypes;
 
 
-public class TechnologyDataGenerator implements ServerConstants {
+public class TechnologyDataGenerator implements ServiceConstants {
 
 	private static final Logger S_LOGGER = Logger
 			.getLogger(TechnologyDataGenerator.class);
