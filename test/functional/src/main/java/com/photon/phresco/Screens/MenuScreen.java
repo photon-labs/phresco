@@ -16,11 +16,11 @@ public class MenuScreen extends WebDriverAbstractBaseScreen {
 		this.phrsc = phrsc;
 	}
 
-	public void gotoApplicationScreen() throws Exception{
+	public void gotoApplicationScreen(String methodName) throws Exception{
 		element = getXpathWebElement(phrsc.APPLICATIONS_TAB);
 		element.click();
 		element = getXpathWebElement(phrsc.ADD_APPLICATION_BUTTON);	
-		waitForElementPresent(phrsc.ADD_APPLICATION_BUTTON);
+		waitForElementPresent(phrsc.ADD_APPLICATION_BUTTON,methodName);
 	}
     public void gotoSettingsScreen(){
 		
