@@ -52,16 +52,18 @@ if(localStorage.welcome) {
 -->
 
 <script type="text/javascript">
-<!--
+
 	if(localStorage["welcome"]) {
 		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none");
-	 }
-	else {
+	 }else if (localStorage.menuSelected == 'video'){// To hide the welcome overlay page.
+		 $(".errorOverlay").show().css("display","none");
+		$(".intro_container").show().css("display","none"); 
+	 }else {
 		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
 		 $(".intro_container").show().css("display","<%= showWelcome %>");
 	}
-//-->
+
 </script>
     <div class="intro_container_left">
         <h1>Welcome to <span class="hed_red">Phres</span>co<span class="hed_gray">.com</span></h1>
@@ -181,13 +183,17 @@ $(document).ready(function() {
     });
     
     if (localStorage.menuSelected) {
-    	$("a[name='navMenu']").attr("class", "inactive");
-		$(this).attr("class", "active");
-        var selectedNav = localStorage.menuSelected;
-        if (selectedNav == "applications") {
-        	bacgroundValidate("validateFramework", "true");
-        }
-		performAction(selectedNav, '', $("#container"));
+    	if (localStorage.menuSelected == 'video') {
+    		localStorage.menuSelected = 'home';	//To clear the video value in home page.
+    	} else {
+    		$("a[name='navMenu']").attr("class", "inactive");
+    		$(this).attr("class", "active");
+            var selectedNav = localStorage.menuSelected;
+            if (selectedNav == "applications") {
+            	bacgroundValidate("validateFramework", "true");
+            }
+    		performAction(selectedNav, '', $("#container"));
+    	}
 	}
 });
 </script>
