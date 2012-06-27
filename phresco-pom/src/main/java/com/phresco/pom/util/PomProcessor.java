@@ -610,7 +610,7 @@ public class PomProcessor {
 	 * @param sourceDirectoryvalue the source directoryvalue
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public void addSourceDirectory(String sourceDirectoryvalue) throws PhrescoPomException{
+	public void setSourceDirectory(String sourceDirectoryvalue) throws PhrescoPomException{
 		Build build = model.getBuild();
 		if(build==null){
 			 build = new Build();
@@ -754,6 +754,11 @@ public class PomProcessor {
 	 * @param finalName the new final name
 	 */
 	public void setFinalName(String finalName){
+		Build build = model.getBuild();
+		if(build==null){
+			 build = new Build();
+			 model.setBuild(build);
+		}
 		model.getBuild().setFinalName(finalName);
 	}
 	
@@ -763,7 +768,21 @@ public class PomProcessor {
 	 * @return the final name
 	 */
 	public String getFinalName() {
-		return model.getBuild().getFinalName();
+		if(model.getBuild() != null){
+			return model.getBuild().getFinalName();
+		} 
+		return null;
+	}
+	
+	public String getName(){
+		if(model.getName() == null){
+			return "";
+		}
+		return model.getName();
+	}
+	
+	public void setName(String name){
+		model.setName(name);
 	}
 
 	/**
@@ -821,6 +840,7 @@ public class PomProcessor {
 		dependencies.getDependency().add(dependency);
 		plugins.getPlugin().add(plugin);
 	}
+	
 	
 	/**
 	 * Save.
