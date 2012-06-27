@@ -374,7 +374,6 @@ public class Create_ProjectTest extends TestCase{
 			methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 			System.out.println("methodName = " + methodName);
 			addappscrn.createProjHTML5Widg(YuiConst,methodName);
-			
     }
   
     
