@@ -156,9 +156,10 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 //			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 	        RestClient<Customer> editCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
-	        Type type = new TypeToken<Customer>() {}.getType();
-	        ClientResponse clientResponse = editCustomer.updateById(customer, type);
-	        if (clientResponse.getStatus() != 200) {
+	        GenericType<Customer> genericType = new GenericType<Customer>() { };
+	        Customer updatedCustomer = editCustomer.updateById(customer, genericType);
+//	        if (clientResponse.getStatus() != 200) {
+	        if (updatedCustomer == null) {
 	        	addActionError(getText(CUSTOMER_NOT_UPDATED, Collections.singletonList(oldName)));
 	        } else {
 	        	addActionMessage(getText(CUSTOMER_UPDATED, Collections.singletonList(oldName)));
