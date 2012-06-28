@@ -1,0 +1,230 @@
+h1. Usage
+
+This plugin is a tool for the development of JavaScript applications, specifically those aimed at JavaScript Rich Internet Application development (HTML/CSS/JS).
+
+The plugin specifically provides the ability to manage JavaScript object and file dependencies - effectively bringing the world of Maven dependency management to JavaScript. The main force behind this functionality is to minimise the amount of hand-coding a developer needs to do ensuring that an HTML resource has the correct <script> declarations. With this plugin the developer declares the root JavaScript file required by the HTML file. The root JavaScript file will declare its dependencies and this plugin will inject these dependencies as additional <script> declarations in the target HTML.
+
+h2. Declaring dependencies
+
+Maven POM files are used to declare JavaScript dependencies. The following declares a dependency on jQuery v.1.4.2:
+
+{code}
+<dependency>
+  <groupId>com.jquery</groupId>
+  <artifactId>jquery</artifactId>
+  <version>1.4.2</version>
+  <type>js</type>
+</dependency>
+{code}
+
+A file that then depends on jQuery has three methods of declaring its dependence:
+
+* using AMD;
+* via an @import statement within a JavaDoc-style comment block; or
+* declaring a global variable that is required.
+
+h3. A quick word on repositories
+
+At the time of writing there have been no uploads of JS artifacts into the [main Maven repository|http://maven.apache.org/guides/introduction/introduction-to-repositories.html]. This is expected to change over time of course given the up-take of this plugin. Meanwhile JS dependencies will require uploading into repositories manually. Invoking the mvn command for most phases will provide a guide on installing artifacts into local repositories. For example suppose an attempt to depend on prototype.js is made as follows:
+
+{code}
+<dependency>
+  <groupId>org.prototypejs</groupId>
+  <artifactId>prototype</artifactId>
+  <version>1.6.1</version>
+  <type>js</type>
+</dependency>
+{code}
+
+...and it does not exist in any of Maven's repositories, then a message including the text will be output during build:
+
+{code}
+...Could not find artifact org.prototypejs:prototype:js:1.6.1 ...
+{code}
+
+This is easily resolved by [installing the artifact in a local Maven repository|http://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html]. For dependencies that have their own dependencies e.g. jQuery UI depends on jQuery, create a POM file for the dependent project listing the dependencies. This will ensure that artifacts are declared as script statements in the right order.
+
+There will also be benefits from having a repository proxy such as [Sonatype's Nexus|http://nexus.sonatype.org/] (there is a free version).
+
+{note}
+We recommend uploading non-minified versions of JS files into a repository. This makes debugging issues with an application significantly easier. Minification is something that can be applied to both the application's artifacts and its depedencies as a separate concern at a later stage in the development cycle.
+{note}
+
+h2. Using Asynchronous Module Definitions (AMD)
+[AMD|https://github.com/amdjs/amdjs-api/wiki/AMD] usage with the JS Import Plugin requires the use of an AMD loader that relies on something else (JS Import) having ensured that all dependencies have been loaded into an HTML document. Almond.js is provided by the Require.js project and is designed for exactly this situation.
+
+Almond.js can be obtained from [http://github.com/jrburke/almond]. In the absence of a tagged version, a good convention is to use a git repository's commit identifier from the master branch. You can then list Almond as a dependency:
+
+{code}
+<dependency>
+  <groupId>com.github.jrburke</groupId>
+  <artifactId>almond</artifactId>
+  <version>67cd7dc</version>
+  <type>js</type>
+</dependency>
+{code}
+
+h2. Imports
+
+Explicit imports take the form:
+
+{code}
+/**
+ * @import com.jquery:jquery
+ */
+{code}
+
+As can be seen, the format of the import is <groupId>:<artifactId>. The approach holds the advantage that there is no file/version information declared in the JavaScript file that has the dependency. The import parameter format uses what is known to Maven as a GAV parameter (Group, Artifact, Version) and resolves to artifacts declared in a POM file. These GAV parameters are naturally resilient to changes in filenames and version numbers thus in turn making JavaScript source less prone to change.
+
+h2. Global variables
+
+An improved dependency declaration over @import is to declare the global variable using JSLint's external variable syntax (each global required is separated with a comma). For example if a file requires jQuery and 'someothervar' declared externally:
+
+{code}
+/*global $, someothervar */
+{code}
+
+Globally scoped variables are those assigned at either the Document Object Model's window object level or anonymously i.e. with no object qualifier. The following examples are assignments of interest to the plugin:
+
+{code}
+var abc = ...;
+window.abc = ...;
+function abc() ...
+{code}
+
+h2. Global variables or @imports?
+
+Not all dependencies declare global variables which is why @import is available. Where globals are declared, referencing them using this feature is preferred over @import given that the dependency becomes more resilient to changes to where it is declared.
+
+h2. Project file layout
+
+By convention, JavaScript source files are expected to reside in the following folders:
+
+||Folder||Description||
+|src/main/js|Main application JavaScript files (.js)|
+|src/test/js|JavaScript files (.js) for testing|
+
+h2. Resources
+
+The import plugin will filter and copy html resources over to the target folder. The following html shows the declaration of a script statement suitable for this plugin's filtering mechanism:
+
+{code}
+<script type="text/javascript" src="${jsContextJs}"></script>
+{code}
+
+The above declares that the property named "context.js" be substituted with script statements ensuring that context.js and all of its dependencies (and its dependencies dependencies etc.) are included.
+
+All scripts are expressed as a property name using a file path convention relative to the js source folder. Obtaining a js file from a sub folder of the js source folder is illustrated by the following:
+
+{code}
+<script type="text/javascript" src="${JsMyfolderMytestfileJs}"></script>
+{code}
+
+The following resources declaration ensures that the common additional resources of a JS project are recognised. The html and js resources are excluded given that they are handled by the import plugin.
+
+{code}
+  <resources>
+    <resource>
+      <directory>src/main/resources</directory>
+      <excludes>
+        <exclude>**/*.html</exclude>
+      </excludes>
+    </resource>
+    <resource>
+      <directory>src/main/js</directory>
+      <excludes>
+        <exclude>**/*.js</exclude>
+      </excludes>
+      <targetPath>js</targetPath>
+    </resource>
+  </resources>
+{code}
+
+Similarly for test resources:
+
+{code}
+  <testResources>
+    <testResource>
+      <directory>src/test/qunit/resources</directory>
+      <excludes>
+        <exclude>**/*.html</exclude>
+      </excludes>
+    </testResource>
+    <testResource>
+      <directory>src/test/qunit/js</directory>
+      <excludes>
+        <exclude>**/*.js</exclude>
+      </excludes>
+      <targetPath>js</targetPath>
+    </testResource>
+  </testResources>
+{code}
+
+h2. Project file POM plugin declaration requirements
+
+In addition to declaring required dependencies and their resource copying requirements in a project's POM file, declarations on the use of this plugin and the goals to invoke are required. By default the import goals are bound to process-sources and process-test-sources phases for the import goals. Similarly the filter property generation goals are bound to the generate-sources and generate-test-sources. The following POM plugin declaration ensures that the import and generate property goals are invoked as part of the regular Maven lifecycle:
+
+{code}
+<plugins>
+  ...
+  <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>js-import-maven-plugin</artifactId>
+    <version>${projectVersion}</version>
+    <executions>
+      <execution>
+        <goals>
+          <goal>main-import-js</goal>
+          <goal>test-import-js</goal>
+          <goal>main-generate-html</goal>
+          <goal>test-generate-html</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
+  ...
+<plugins>
+{code}
+
+h2. Configuring a web server
+
+During development it is useful to see the generated web artifacts appear in a browser. One way of achieving this is to use the [Maven Jetty Plugin|http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin].
+
+Firstly create a web context file in src/main/webapp/WEB-INF/web.xml:
+
+{code}
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app 
+  xmlns="http://java.sun.com/xml/ns/j2ee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
+  version="2.5">
+</web-app>
+{code}
+
+Then configure the Jetty plugin with the project's POM file:
+
+{code}
+<plugin>
+  <groupId>org.mortbay.jetty</groupId>
+    <artifactId>jetty-maven-plugin</artifactId>
+    <version>7.4.2.v20110526</version>
+    <configuration>
+    <webAppConfig>
+      <contextPath>/</contextPath>
+        <resourceBases>
+          <resourceBase>\${project.build.outputDirectory}</resourceBase>
+          <resourceBase>\${project.build.testOutputDirectory}</resourceBase>
+        </resourceBases>
+    </webAppConfig>
+  </configuration>
+</plugin>
+{code}
+
+The above informs Jetty that both the main and test target output folders are used to source web resources from.
+
+To start Jetty, cd to the project folder and type:
+
+{code}
+mvn jetty:run
+{code}

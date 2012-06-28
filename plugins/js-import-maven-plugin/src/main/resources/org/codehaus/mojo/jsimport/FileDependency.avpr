@@ -1,0 +1,9 @@
+{
+	"name": "FileDependency", 
+	"type": "record",
+    "fields": [
+    	{"name": "file", "type": "string"},
+        {"name": "imports", "type": [{"type": "array", "items": "string"}, "null"]},
+        {"name": "assignedVars", "type": [{"type": "array", "items": "string"}, "null"]}
+    ]
+}

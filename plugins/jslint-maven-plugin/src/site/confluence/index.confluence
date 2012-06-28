@@ -1,0 +1,7 @@
+h1. JSLint Maven Plugin
+
+This plugin brings the [JSLint JavaScript code quality control tool|http://www.JSLint.com/lint.html] capabilities to the Maven project lifecycle. The JSLint Maven Plugin's closest relative to the Java world is the Java compiler plugin.
+
+The JSLint Maven Plugin operates quickly and efficiently on modified JavaScript source code. When used with IDE's such as Eclipse and its Maven integration, developers can rapidly see JSLint problems reported in the IDE's console as a JavaScript source file is saved.
+
+!images/benefit.png!

@@ -40,6 +40,7 @@
   </dependencies>
 	
     <build>
+		<testSourceDirectory>${project.basedir}/src/test/qunit/java</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
         <finalName>HelloWorld</finalName>
 		<extensions>
