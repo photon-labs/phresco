@@ -15,6 +15,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<url>http://www.phresco.org</url>
 	<description>phresco-plugins-root</description>
     <modules>
+		<module>plugin-commons</module>
         <module>drupal-maven-plugin</module>
         <module>php-maven-plugin</module>
         <module>android-maven-plugin</module>
