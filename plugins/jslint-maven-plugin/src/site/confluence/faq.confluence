@@ -1,0 +1,13 @@
+h1. FAQ
+
+h2. JSLint not invoked by Eclipse for test files
+By default m2eclipse performs the following goals for a jar package after a file is saved:
+
+{code}
+process-resources resources:testResources
+{code}
+
+The JSLint Maven Plugin automatically binds the test-jslint goal to the process-test-sources phase. Therefore m2eclipse needs to be configured to invoke this additional phase. m2eclipse can be configured by right-clicking a project, selecting properties, selecting Maven, selecting lifecycle properties and specifying process-test-resources in place of "process-resources resources:testResources" for the "Goals to invoke on resource changes" input.
+
+h2. Why is there no reporting goal?
+There are no report goals in the same way that there are no report goals for the Java compiler plugin. The use-case for this plugin is that a .js file is saved and immediate linting feedback is displayed to the developer via the console.
