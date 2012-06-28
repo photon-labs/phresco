@@ -23,6 +23,12 @@
     </distributionManagement>
 
     <dependencies>
+	    <dependency>
+	        <groupId>com.photon.phresco.commons</groupId>
+	        <artifactId>phresco-commons</artifactId>
+	        <version>${phresco-commons-version}</version>
+	    </dependency>
+    	
     </dependencies>
 
 </project>

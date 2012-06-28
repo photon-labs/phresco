@@ -17,7 +17,7 @@
  * limitations under the License.
  * ###
  */
-package com.photon.phresco.util;
+package com.photon.phresco.plugin.commons;
 
 public interface PluginConstants {
 	

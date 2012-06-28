@@ -198,6 +198,11 @@
             <version>${phresco-commons-version}</version>
         </dependency>
         
+        <dependency>
+            <groupId>com.photon.phresco</groupId>
+    		<artifactId>plugin-commons</artifactId>
+            <version>${phresco-commons-version}</version>
+        </dependency>
     </dependencies>
 
 </project>

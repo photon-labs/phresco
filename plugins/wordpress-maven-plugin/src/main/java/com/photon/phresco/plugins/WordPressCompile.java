@@ -35,7 +35,7 @@ import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
-import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginConstants;
 
 /**
  * Goal which deploys the php project

@@ -33,8 +33,8 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.SettingsInfo;
+import com.photon.phresco.plugin.commons.PluginConstants;
 import com.photon.phresco.util.Constants;
-import com.photon.phresco.util.PluginConstants;
 
 /**
  * Goal which builds the Java WebApp
