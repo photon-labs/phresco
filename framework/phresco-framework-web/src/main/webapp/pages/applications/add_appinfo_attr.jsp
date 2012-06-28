@@ -32,9 +32,9 @@
 
 <%
 	String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
-	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_TEST_SERVERS);
+	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_SERVERS);
 	List<Database> databases = (List<Database>) request.getAttribute(FrameworkConstants.REQ_DATABASES);
-
+	
 	List<String> listSelectedServerIds = (List<String>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_SERVERIDS);
 	List<String> listSelectedDatabaseIds = (List<String>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_DATABASEIDS);
 	

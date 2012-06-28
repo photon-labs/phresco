@@ -37,7 +37,6 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	S_LOGGER.debug("Entered into RestClient.getRestClient(String contextPath)");
 		StringBuilder builder = new StringBuilder();
 		builder.append(serverPath);
-		builder.append("/");
 		builder.append(contextPath);
 		return new RestClient<E>(builder.toString());	
 	}

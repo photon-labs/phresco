@@ -90,7 +90,6 @@ public class Login extends FrameworkBaseAction {
 	            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 	            Credentials credentials = new Credentials(username, password);
 	            userInfo = administrator.doLogin(credentials);
-	            
 	            if (userInfo.getDisplayName() == null) {
 	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
 	                return LOGIN_FAILURE;
@@ -104,6 +103,7 @@ public class Login extends FrameworkBaseAction {
 	            }
 	            
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	        	if (debugEnabled) {
 	                S_LOGGER.error("Entered into catch block of Login.login()"+ FrameworkUtil.getStackTraceAsString(e));
 	    		}
@@ -137,12 +137,11 @@ public class Login extends FrameworkBaseAction {
 		getHttpSession().setAttribute(REQ_USER_INFO, userInfo);
     	getHttpRequest().setAttribute(REQ_SHOW_WELCOME, getText(WELCOME_SHOW));
     	try {
-    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-        List<VideoInfo> videoInfos = administrator.getVideoInfos();
-        FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
-        getHttpRequest().setAttribute(REQ_SERVER_URL, configuration.getServerPath());
-        getHttpRequest().setAttribute(REQ_VIDEO_INFOS, videoInfos);
-        
+	    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	        List<VideoInfo> videoInfos = administrator.getVideoInfos();
+	        FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+	        getHttpRequest().setAttribute(REQ_SERVER_URL, configuration.getServerPath());
+	        getHttpRequest().setAttribute(REQ_VIDEO_INFOS, videoInfos);
     	} catch (PhrescoException e) {
         	if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of Login.loginSuccess()"+ FrameworkUtil.getStackTraceAsString(e));
