@@ -779,7 +779,7 @@ public class Applications extends FrameworkBaseAction {
 			Technology techonology = applicationType.getTechonology(techId);
 			String attrName = null;
 			if (Constants.SETTINGS_TEMPLATE_SERVER.equals(type)) {
-				List<Integer> listSelectedServerIds = null;
+				List<String> listSelectedServerIds = null;
 				List<Server> servers = techonology.getServers();
 				if(StringUtils.isEmpty(from)) {
 					List<String> listSelectedServers = null;
@@ -792,7 +792,7 @@ public class Applications extends FrameworkBaseAction {
 							String[] split = listSelectedServer.split("#VSEP#");
 							listSelectedServerNames.add(split[0].trim());
 						}
-						listSelectedServerIds = new ArrayList<Integer>(2);
+						listSelectedServerIds = new ArrayList<String>(2);
 						for (Server server : servers) {
 							if(listSelectedServerNames.contains(server.getName())) {
 								listSelectedServerIds.add(server.getId());
@@ -806,7 +806,7 @@ public class Applications extends FrameworkBaseAction {
 					String selectedVersions = getHttpRequest().getParameter("selectedVersions");
 					selectedVersions = selectedVersions.replaceAll(" ", "");
 					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
-					listSelectedServerIds = new ArrayList<Integer>(2);
+					listSelectedServerIds = new ArrayList<String>(2);
 					for (Server server : servers) {
 						String serverName = server.getName().trim();
 						serverName = serverName.replaceAll("\\s+", "");
@@ -821,12 +821,12 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().setAttribute("servers", servers);
 			}
 			if (Constants.SETTINGS_TEMPLATE_DB.equals(type)) {
-				List<Integer> listSelectedDatabaseIds = null;
+				List<String> listSelectedDatabaseIds = null;
 				List<Database> databases = techonology.getDatabases();
 				if(StringUtils.isEmpty(from)) {
 					List<String> listSelectedDbs = null;
 					List<String> listSelectedDbNames = null;
-					List<Integer> listSelectedDbIds = null;
+					List<String> listSelectedDbIds = null;
 					String selectedDatabases = getHttpRequest().getParameter("selectedDatabases");
 					if (StringUtils.isNotEmpty(selectedDatabases)) {
 						listSelectedDbNames = new ArrayList<String>();
@@ -835,7 +835,7 @@ public class Applications extends FrameworkBaseAction {
 							String[] split = listSelectedDb.split("#VSEP#");
 							listSelectedDbNames.add(split[0].trim());
 						}
-						listSelectedDbIds = new ArrayList<Integer>(2);
+						listSelectedDbIds = new ArrayList<String>(2);
 						for (Database database : databases) {
 							if(listSelectedDbNames.contains(database.getName())) {
 								listSelectedDbIds.add(database.getId());
@@ -874,7 +874,7 @@ public class Applications extends FrameworkBaseAction {
 					String selectedVersions = getHttpRequest().getParameter("selectedVersions");
 					selectedVersions = selectedVersions.replaceAll(" ", "");
 					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
-					listSelectedDatabaseIds = new ArrayList<Integer>(2);
+					listSelectedDatabaseIds = new ArrayList<String>(2);
 					for (Database database : databases) {
 						String databaseName = database.getName().trim();
 						databaseName = databaseName.replaceAll("\\s+", "");
@@ -907,15 +907,14 @@ public class Applications extends FrameworkBaseAction {
 		String techId = getHttpRequest().getParameter("techId");
 		String appType = getHttpRequest().getParameter(REQ_APPLICATION_TYPE);
 		String type = getHttpRequest().getParameter("type");
-		
-		int selectedId = Integer.parseInt(getHttpRequest().getParameter("selectedId"));
+		String selectedId = getHttpRequest().getParameter("selectedId");
 		ApplicationType applicationType = ApplicationsUtil.getApplicationType(getHttpRequest(), appType);
 		Technology selectedTechnology = applicationType.getTechonology(techId);
 		
 		if ("Server".equals(type)) {
 			List<Server> servers = selectedTechnology.getServers();
 			for (Server server : servers) {
-				if(server.getId() == selectedId) {
+				if(server.getId().equals(selectedId)) {
 					versions = server.getVersions();
 				}
 			}
@@ -923,7 +922,7 @@ public class Applications extends FrameworkBaseAction {
 		if ("Database".equals(type)) {
 			List<Database> databases = selectedTechnology.getDatabases();
 			for (Database database : databases) {
-				if(database.getId() == selectedId) {
+				if(database.getId().equals(selectedId)) {
 					versions.addAll(database.getVersions());
 				}
 			}

@@ -35,8 +35,8 @@
 	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_TEST_SERVERS);
 	List<Database> databases = (List<Database>) request.getAttribute(FrameworkConstants.REQ_DATABASES);
 
-	List<Integer> listSelectedServerIds = (List<Integer>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_SERVERIDS);
-	List<Integer> listSelectedDatabaseIds = (List<Integer>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_DATABASEIDS);
+	List<String> listSelectedServerIds = (List<String>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_SERVERIDS);
+	List<String> listSelectedDatabaseIds = (List<String>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_DATABASEIDS);
 	
 	List<String> listSelectedVersions = (List<String>) request.getAttribute(FrameworkConstants.REQ_LISTSELECTED_VERSIONS);
 	String projInfoDbVersions = (String) request.getAttribute("projectInfoDbVersions");
@@ -149,7 +149,7 @@ $(document).ready(function() {
 	/** To remove the already added options from the select box **/
 	/** For add **/
 	<% if(listSelectedServerIds != null && StringUtils.isEmpty(from)) {
-			for(Integer listSelectedServerId : listSelectedServerIds) {
+			for(String listSelectedServerId : listSelectedServerIds) {
 	%>
 				$("#allServers option[value='<%= listSelectedServerId %>']").remove();
 	<% 		
@@ -160,8 +160,8 @@ $(document).ready(function() {
 	/** For edit **/
 	<% if(listSelectedServerIds != null && StringUtils.isNotEmpty(from)) { %>
 			<% for(Server server : servers) {
-					for(Integer listSelectedServerId : listSelectedServerIds) {
-						if(server.getId() != listSelectedServerId) {
+					for(String listSelectedServerId : listSelectedServerIds) {
+						if(!server.getId().equals(listSelectedServerId)) {
 			%>
 							$("#allServers option[value='<%= server.getId() %>']").remove();
 			<%	
@@ -175,7 +175,7 @@ $(document).ready(function() {
 	
 	/** For add **/
 	<% if(listSelectedDatabaseIds != null && StringUtils.isEmpty(from)) {
-			for(Integer listSelectedDatabaseId : listSelectedDatabaseIds) {
+			for(String listSelectedDatabaseId : listSelectedDatabaseIds) {
 	%>
 				$("#allDatabases option[value='<%= listSelectedDatabaseId %>']").remove();
 	<% 		
@@ -186,8 +186,8 @@ $(document).ready(function() {
 	/** For edit **/
 	<% if(listSelectedDatabaseIds != null && StringUtils.isNotEmpty(from)) { %>
 		<% for(Database database : databases) {
-				for(Integer listSelectedDatabaseId : listSelectedDatabaseIds) {
-					if(database.getId() != listSelectedDatabaseId) {
+				for(String listSelectedDatabaseId : listSelectedDatabaseIds) {
+					if(!database.getId().equals(listSelectedDatabaseId)) {
 		%>
 						$("#allDatabases option[value='<%= database.getId() %>']").remove();
 		<%	

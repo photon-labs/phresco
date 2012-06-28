@@ -365,8 +365,8 @@ public class ApplicationsUtil implements FrameworkConstants {
         }
 	}
 	
-	public static List<Integer> getArrayListFromStrArr(String[] strArr) {
-		List<Integer> list = new ArrayList();
+	public static List getArrayListFromStrArr(String[] strArr) {
+		List list = new ArrayList();
 		if (strArr != null && strArr.length > 0) {
 			for (int i = 0; i < strArr.length; i++) {
 				list.add(Integer.parseInt(strArr[i]));
@@ -377,7 +377,7 @@ public class ApplicationsUtil implements FrameworkConstants {
 
 	public static List<Server> getSelectedServers(List<Server> servers, List<String> selectedServer) {
 		if (debugEnabled) {
-			S_LOGGER.debug("Entering Method ApplicationsUtil.getSelectedServers(List<Server> servers, List<Integer> selectedServerIds[])");
+			S_LOGGER.debug("Entering Method ApplicationsUtil.getSelectedServers(List<Server> servers, List<String> selectedServerIds[])");
 		}
 		try {
 			if (CollectionUtils.isEmpty(servers) || selectedServer == null) {
@@ -443,7 +443,7 @@ public class ApplicationsUtil implements FrameworkConstants {
 		return null;
 	}
 	
-	public static List<WebService> getSelectedWebservices(List<WebService> webservices, List<Integer> selectedWebserviceIds) {
+	public static List<WebService> getSelectedWebservices(List<WebService> webservices, List<String> selectedWebserviceIds) {
 		if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ApplicationsUtil.getSelectedWebservices(List<WebService> webservices, List<Integer> selectedWebserviceIds)");
 		}
