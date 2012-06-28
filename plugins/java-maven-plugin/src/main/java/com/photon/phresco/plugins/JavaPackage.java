@@ -185,8 +185,9 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
-			if (!getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
-				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			String techId = projAdmin.getTechId(baseDir.getName());
+			if (!techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
 				String envName = environmentName;
 				if (environmentName.indexOf(',') > -1) { // multi-value
 					envName = projAdmin.getDefaultEnvName(baseDir.getName());
@@ -347,7 +348,8 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			String zipNameWithoutExt = zipName.substring(0, zipName.lastIndexOf('.'));
 			ProjectAdministrator projectAdministrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			String techId = projectAdministrator.getTechId(baseDir.getName());
-			if (getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
+			if (techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
+
 				copyJarToPackage(zipNameWithoutExt);
 			} else {
 				copyWarToPackage(zipNameWithoutExt, context);

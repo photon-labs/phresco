@@ -296,6 +296,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			}
 		}
 	}
+	
+	public String getTechId(String projectCode) throws PhrescoException {
+		return getProject(projectCode).getProjectInfo().getTechnology().getId();
+	}
 
 	/**
 	 * Update dependency as selected Module in the pom file
