@@ -22,6 +22,13 @@ package com.photon.phresco.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@XmlRootElement
+@JsonIgnoreProperties(ignoreUnknown=true) 
+
 public class Module implements Serializable {
 
 	 private String id;

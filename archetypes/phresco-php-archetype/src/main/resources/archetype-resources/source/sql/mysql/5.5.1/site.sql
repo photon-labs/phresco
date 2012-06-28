@@ -1,8 +1,11 @@
-/*
-SQLyog Enterprise - MySQL GUI v8.12 
-MySQL - 5.5.8-log : Database - samplehello
-*********************************************************************
-*/
+-- phpMyAdmin SQL Dump
+-- version 3.3.9
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Feb 28, 2012 at 10:37 AM
+-- Server version: 5.5.8
+-- PHP Version: 5.3.5
 
 
 /*!40101 SET NAMES utf8 */;

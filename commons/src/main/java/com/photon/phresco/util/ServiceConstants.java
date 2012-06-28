@@ -145,6 +145,7 @@ public interface ServiceConstants {
 	String REST_API_SERVERBYID = "/servers/id";
 	String REST_API_DATABASESBYID = "/databases/id";
 	String REST_API_WEBSERVICESBYID = "/webservices/id";
+	String REST_API_MODULESBYID = "/modules/id";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
 	

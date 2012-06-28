@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.Ignore;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Technology;
@@ -32,7 +32,7 @@ public class ComponentRestTechnologiesTest {
         context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
 	}
 
-	@Test
+	@Ignore
     public void testCreateServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
@@ -66,7 +66,7 @@ public class ComponentRestTechnologiesTest {
 		System.out.println("response " + response.getStatus());
     }
 
-	@Test
+	@Ignore
     public void testGetTechnologies() {
         try {
             serviceManager = ServiceClientFactory.getServiceManager(context);            
@@ -87,7 +87,7 @@ public class ComponentRestTechnologiesTest {
         }
     }
     
-	@Test
+	@Ignore
     public void testPutServer() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
@@ -108,7 +108,7 @@ public class ComponentRestTechnologiesTest {
 		}
     }
     
-	@Test
+	@Ignore
     public void testGetServerById() throws PhrescoException {
         try {
 	    	serviceManager=ServiceClientFactory.getServiceManager(context);
@@ -123,7 +123,7 @@ public class ComponentRestTechnologiesTest {
         }
     }
     
-	@Test
+	@Ignore
     public void testPutServerById() throws PhrescoException {
     	Technology tech = new Technology();
     	tech.setId(id2);
@@ -140,7 +140,7 @@ public class ComponentRestTechnologiesTest {
 		System.out.println(technology);
     }
 
-	@Test
+	@Ignore
     public void testDeleteServerById() throws PhrescoException {
     	serviceManager = ServiceClientFactory.getServiceManager(context);            
     	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/");

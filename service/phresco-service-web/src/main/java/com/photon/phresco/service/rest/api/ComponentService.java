@@ -357,6 +357,32 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
+	 * Returns the list of modules
+	 * @return
+	 */
+	@GET
+	@Path(REST_API_MODULESBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findModulesById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
+		S_LOGGER.debug("Entered into ComponentService.findModules()");
+		Response response = null;
+		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
+		try {
+			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+			
+			for (ModuleGroup moduleGroup : modulesList) {
+				if(moduleGroup.getTechId().equals(techId)) {
+					modules.add(moduleGroup);
+				}
+			}
+			response = Response.status(Response.Status.OK).entity(modules).build();
+		} catch(Exception e) {
+			throw new PhrescoWebServiceException(EX_PHEX00005, MODULES_COLLECTION_NAME);
+		}
+		return response;
+	}
+	
+	/**
 	 * Creates the list of modules
 	 * @param modules
 	 * @return 
@@ -1010,7 +1036,7 @@ public class ComponentService extends DbService implements ServiceConstants{
 	@Path(REST_API_WEBSERVICESBYID + REST_API_PATH_ID)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response webServiceByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
-		List<WebService> webServiceList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , WebService.class);
+		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
 		List<WebService> webServiceList1 = new ArrayList<WebService>();
 		for (WebService wservice : webServiceList) {
 			List<String> technologies = wservice.getTechnologies();
