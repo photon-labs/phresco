@@ -21,8 +21,6 @@ package com.photon.phresco.framework.actions.applications;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -34,12 +32,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
@@ -246,9 +238,7 @@ public class Code extends FrameworkBaseAction {
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
             	actionType.setWorkingDirectory(projectPath.toString());
-            } else {
-            	actionType.setWorkingDirectory(null);
-            }
+            } 
             actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
@@ -266,31 +256,27 @@ public class Code extends FrameworkBaseAction {
 	private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
 		initializeSourceMap();
 		String sourceFolderName = "";
+		File projectPath = null;
 		if (validateAgainst.contains(SOURCE)) {
 			sourceFolderName = sourceFolderPathMap.get(project.getProjectInfo().getTechnology().getId());
-			editSonarIncludes(SOURCE, sourceFolderName, projectCode);
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
 		} else if (validateAgainst.contains(FUNCTIONALTEST)) {
 			if (!TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
 				sourceFolderName = "src";
 			}else {
 				sourceFolderName = "AllTest";
 			}
-			editSonarIncludes(FUNCTIONALTEST, sourceFolderName, projectCode);
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
 		}
 	}
 	
-	private static void editSonarIncludes(String testAgainst, String sourceFolderName, String projectCode)
+	private static void editSonarIncludes(File projectPath, String sourceFolderName, String projectCode)
 			throws PhrescoException {
 		try {
-			File projectPath = null;
-			if(testAgainst.contains(SOURCE)) {
-				projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
-			}else if(testAgainst.contains(FUNCTIONALTEST)) {
-				projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
-			}
 			PomProcessor pomprocessor = new PomProcessor(projectPath);
 			pomprocessor.setName(projectCode);
-			pomprocessor.save();
 			pomprocessor.setSourceDirectory(sourceFolderName);
 			pomprocessor.save();
 		} catch (Exception e) {
