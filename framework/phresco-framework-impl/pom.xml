@@ -30,9 +30,15 @@
             <version>${project.version}</version>
         </dependency>
         
-            <dependency>
+        <dependency>
             <groupId>com.photon.phresco.pom</groupId>
             <artifactId>phresco-pom</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+		
+		<dependency>
+            <groupId>com.photon.phresco.service.client</groupId>
+            <artifactId>phresco-service-client</artifactId>
             <version>${project.version}</version>
         </dependency>
         

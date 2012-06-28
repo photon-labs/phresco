@@ -268,6 +268,7 @@ public interface FrameworkConstants {
     String REQ_TOTAL_THROUGHPUT = "totalThroughput";
     String REQ_TOTAL_STD_DEV = "totalStdDev";
     String REQ_TECHNOLOGY = "technology";
+    String REQ_SELECTED_TECHNOLOGY = "selectedTechnology";
     String REQ_NAME = "name";
     String REQ_CODE = "code";
     String REQ_TYPE = "type";
