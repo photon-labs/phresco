@@ -43,6 +43,7 @@
 			</releases>
 		</repository>
 	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -103,5 +104,9 @@
 			<type>zip</type>
 		</dependency>
 	</dependencies>
-		
+	<properties>
+		<visual.studio.solution>AllTest.sln</visual.studio.solution>
+		<dotnet.tool.version>3.5</dotnet.tool.version>
+		<sonar.language>cs</sonar.language>
+  </properties>
 </project>
