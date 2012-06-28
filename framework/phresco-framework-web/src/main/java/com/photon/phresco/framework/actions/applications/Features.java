@@ -194,6 +194,7 @@ public class Features extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_CONFIG_DB_NAMES, configDbNames);
 
 		} catch (PhrescoException e) {
+			e.printStackTrace();
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Features.list()"
 						+ FrameworkUtil.getStackTraceAsString(e));
@@ -334,8 +335,10 @@ public class Features extends FrameworkBaseAction {
 
 		getHttpRequest().setAttribute(REQ_ALL_JS_LIBS,
 				techonology.getJsLibraries());
+		System.out.println("selectedTechnology.getId():::" + selectedTechnology.getId());
 		List<ModuleGroup> coreModule = (List<ModuleGroup>) administrator
-				.getCoreModules(techonology);
+				.getCoreModules(selectedTechnology.getId());
+		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
 		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
 				.getCustomModules(techonology);
 		if (CollectionUtils.isNotEmpty(coreModule)) {
@@ -386,7 +389,7 @@ public class Features extends FrameworkBaseAction {
 			defaultModules = new ArrayList<String>();
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Technology technology = administrator.getTechnology(techId);
-			List<ModuleGroup> coreModules = (List<ModuleGroup>) administrator.getCoreModules(technology);
+			List<ModuleGroup> coreModules = (List<ModuleGroup>) administrator.getCoreModules(techId);
 			if (CollectionUtils.isNotEmpty(coreModules) && coreModules != null) {
 				for (ModuleGroup coreModule : coreModules) {
 					if (coreModule.isRequired()) {
@@ -460,7 +463,7 @@ public class Features extends FrameworkBaseAction {
 				.getProjectAdministrator();
 		Technology technology = administrator.getTechnology(techId);
 		if (REQ_CORE_MODULE.equals(moduleType)) {
-			return administrator.getCoreModules(technology);
+			return administrator.getCoreModules(techId);
 		}
 
 		if (REQ_CUSTOM_MODULE.equals(moduleType)) {
