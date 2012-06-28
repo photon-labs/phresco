@@ -25,6 +25,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.photon.phresco.model.Documentation.DocumentationType;
 import com.photon.phresco.util.SizeConstants;
 
@@ -43,6 +45,7 @@ public class ModuleGroup implements Serializable {
 	boolean core;	
 	boolean required;
 	List<Documentation> docs;
+	String techId;
 	List<Module> versions = new ArrayList<Module>(SizeConstants.SIZE_VERSIONS_MAP);
 
 	public ModuleGroup() {
@@ -164,6 +167,14 @@ public class ModuleGroup implements Serializable {
 		}
 		
 		return null;
+	}
+
+	public String getTechId() {
+		return techId;
+	}
+
+	public void setTechId(String techId) {
+		this.techId = techId;
 	}
 
 	/* (non-Javadoc)
