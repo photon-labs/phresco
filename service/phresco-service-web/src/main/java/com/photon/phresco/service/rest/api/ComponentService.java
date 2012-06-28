@@ -569,13 +569,15 @@ public class ComponentService extends DbService implements ServiceConstants{
 	public Response getPilotById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
 		S_LOGGER.debug("Entered into getPilotById(String techId)");
 		Response response = null;
+		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		try {
 			List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
 			for (ProjectInfo projectInfo : pilotsList) {
 				if(projectInfo.getTechnology().getId().equals(techId)) {
-					response = Response.status(Response.Status.OK).entity(projectInfo).build();
+					infos.add(projectInfo);
 				}
 			}
+			response = Response.status(Response.Status.OK).entity(infos).build();
 		} 
 		 catch (Exception e) {
 			throw new PhrescoWebServiceException(EX_PHEX00005, PILOTS_COLLECTION_NAME);
