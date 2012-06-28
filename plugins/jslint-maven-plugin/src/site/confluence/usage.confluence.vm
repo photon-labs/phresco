@@ -1,0 +1,32 @@
+h1. Usage
+
+The common usage is to simply declare the plugin and its goals. 
+The process-sources and process-test-sources phases will be bound to by default:
+
+{code}
+<project>
+  ...
+  <build>
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>jslint-maven-plugin</artifactId>
+      <version>${projectVersion}</version>
+      <executions>
+        <execution>
+          <goals>
+            <goal>jslint</goal>
+            <goal>test-jslint</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+    </plugins>
+  </build>
+  ...
+</project>
+{code}
+
+Please consult the [goals|plugin-info.html] page for information on how JSLint can be configured 
+through this plugin.
