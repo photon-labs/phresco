@@ -220,14 +220,19 @@ public class ConfigReader {
 		return configFile;
 	}
 	
-	/*public static void main(String a[]) {
-		try {
-			ConfigReader reader = new ConfigReader(new File("/Users/bharatkumarradha/Desktop/config.xml"));
-			System.out.println(reader.getDefaultEnvName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String getConfigAsJSON(String envName, String configType) {
+		if (envName == null) {
+			envName = getDefaultEnvName();
 		}
-	}*/
- 
+		List<Configuration> configurations = getConfigByEnv(envName);
+		String json = "";
+		for (Configuration configuration : configurations) {
+			if (configuration.getType().equalsIgnoreCase(configType)) {
+				com.google.gson.Gson gson = new com.google.gson.Gson();
+				Properties properties = configuration.getProperties();
+				json = gson.toJson(properties, Properties.class);
+			}
+		}
+		return json;	
+	}
 }
