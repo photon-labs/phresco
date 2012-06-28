@@ -77,7 +77,7 @@ public class Archetypes extends ServiceBaseAction {
 	public String list() throws PhrescoException {
 		S_LOGGER.debug("Entering Method Archetypes.list()");
 		try {
-			RestClient<Technology> technology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+			RestClient<Technology> technology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
 			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
 			List<Technology> technologys = technology.get(genericType);
 			getHttpRequest().setAttribute("technologys", technologys);
@@ -93,7 +93,7 @@ public class Archetypes extends ServiceBaseAction {
 
 		RestClient<ApplicationType> appType;
 		try {
-			appType = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
 			List<ApplicationType> appTypes = appType.get(genericType);
 			getHttpRequest().setAttribute("appTypes", appTypes);
@@ -109,7 +109,7 @@ public class Archetypes extends ServiceBaseAction {
 		S_LOGGER.debug("Entering Method Archetypes.edit()");
 		try {
 
-			RestClient<Technology> technologies = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			RestClient<Technology> technologies = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
 			GenericType<Technology> genericType = new GenericType<Technology>(){};
 			Technology technology = technologies.getById(genericType);
 			getHttpRequest().setAttribute("technology",  technology);
@@ -117,7 +117,7 @@ public class Archetypes extends ServiceBaseAction {
 			
 			//In ArcheType show ApplcationTypes
 			RestClient<ApplicationType> appType;
-			appType = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 			GenericType<List<ApplicationType>> type = new GenericType<List<ApplicationType>>(){};
 			List<ApplicationType> appTypes = appType.get(type);
 			getHttpRequest().setAttribute("appTypes", appTypes);
@@ -154,7 +154,7 @@ public class Archetypes extends ServiceBaseAction {
 			List<Technology> technologies = new ArrayList<Technology>();
 			Technology technology = new Technology(name, description, versionList, appType);	
 			technologies.add(technology);
-			RestClient<Technology> newTechnology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+			RestClient<Technology> newTechnology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
 			ClientResponse clientResponse = newTechnology.create(technologies);
 
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
@@ -179,7 +179,7 @@ public class Archetypes extends ServiceBaseAction {
 			}
 			Technology technology = new Technology(name, description, versionList, appType);
 			technology.setId(techId);
-			RestClient<Technology> editTechnology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			RestClient<Technology> editTechnology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
 			GenericType<Technology> type = new GenericType<Technology>() {};
 			Technology updatedArchetype = editTechnology.updateById(technology, type);
 		} catch(Exception e) {
@@ -195,7 +195,7 @@ public class Archetypes extends ServiceBaseAction {
 			String[] techTypeIds = getHttpRequest().getParameterValues("techId");
 			if (techTypeIds != null) {
 				for (String techId : techTypeIds) {
-					RestClient<Technology> deleteTech = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+					RestClient<Technology> deleteTech = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
 					deleteTech.setPath(techId);
 					ClientResponse clientResponse = deleteTech.deleteById();
 					if (clientResponse.getStatus() != 200) {

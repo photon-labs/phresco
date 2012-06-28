@@ -50,7 +50,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 	public String list() throws PhrescoException {
 		S_LOGGER.debug("Entering Method ApplicationTypes.list()");
 		try {
-			RestClient<ApplicationType> appType = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			RestClient<ApplicationType> appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
 			List<ApplicationType> appTypes = appType.get(genericType);
 			getHttpRequest().setAttribute("appTypes", appTypes);
@@ -68,7 +68,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 
 	public String edit() throws PhrescoException {
 		try {
-			RestClient<ApplicationType> appTypes = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
+			RestClient<ApplicationType> appTypes = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
 			GenericType<ApplicationType> genericType = new GenericType<ApplicationType>(){};
 			ApplicationType appType = appTypes.getById(genericType);
 			getHttpRequest().setAttribute("appType", appType);
@@ -89,7 +89,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 			ApplicationType appType = new ApplicationType(name, description);
 			appTypes.add(appType);
-			RestClient<ApplicationType> newApp = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			RestClient<ApplicationType> newApp = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 			ClientResponse clientResponse = newApp.create(appTypes);
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
 				addActionError(getText(APPLNTYPES_NOT_ADDED, Collections.singletonList(name)));
@@ -112,7 +112,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			}
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
-			RestClient<ApplicationType> editApptype = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
+			RestClient<ApplicationType> editApptype = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
 			GenericType<ApplicationType> genericType = new GenericType<ApplicationType>() {};
 			ApplicationType updatedAppType = editApptype.updateById(appType, genericType);
 		} catch(Exception e)  {
@@ -129,7 +129,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			String[] appTypeIds = getHttpRequest().getParameterValues("apptypeId");
 			if (appTypeIds != null) {
 				for (String appTypeId : appTypeIds) {
-					RestClient<ApplicationType> deleteApptype = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+					RestClient<ApplicationType> deleteApptype = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 					deleteApptype.setPath(appTypeId);
 					ClientResponse clientResponse = deleteApptype.deleteById();
 					if (clientResponse.getStatus() != 200) {

@@ -71,7 +71,7 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 		S_LOGGER.debug("Entering Method  CustomerList.list()");
 		
 		try {
-            RestClient<Customer> customersClient = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
+            RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
             GenericType<List<Customer>> genericType = new GenericType<List<Customer>>(){};
             List<Customer> customers = customersClient.get(genericType);
 			getHttpRequest().setAttribute("customers", customers);
@@ -87,7 +87,7 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 		
 		try {
 			if ("edit".equals(fromPage)) {
-				RestClient<Customer> customersClient = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
+				RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
 	            GenericType<Customer> genericType = new GenericType<Customer>(){};
 	            Customer customer = customersClient.getById(genericType);
 	            getHttpRequest().setAttribute("customer", customer);
@@ -113,7 +113,7 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 			customers.add(customer);
-			RestClient<Customer> newCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
+			RestClient<Customer> newCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
 			ClientResponse clientResponse = newCustomer.create(customers);
 			if (clientResponse.getStatus() != 200) {
 				addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
@@ -140,7 +140,7 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 			customer.setValidFrom(validFrom);
 			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
-			RestClient<Customer> editCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
+			RestClient<Customer> editCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
 	        GenericType<Customer> genericType = new GenericType<Customer>(){};
 	        Customer updatedCustomer = editCustomer.updateById(customer, genericType);
 		} catch(Exception e)  {
@@ -200,7 +200,7 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 			String[] customerIds = getHttpRequest().getParameterValues("customerId");
 			if (customerIds != null) {
 				for (String customerId : customerIds) {
-					 RestClient<Customer> deleteCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
+					 RestClient<Customer> deleteCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
 			    	ClientResponse clientResponse = deleteCustomer.deleteById();
 			    	if (clientResponse.getStatus() != 200) {
 			        	addActionError(getText(CUSTOMER_NOT_DELETED));
