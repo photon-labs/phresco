@@ -143,7 +143,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			info.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
 		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info, userInfo);
-
 		S_LOGGER.debug("createProject response code " + response.getStatus());
 
 		if (response.getStatus() == 200) {
@@ -240,6 +239,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			throw new PhrescoException("Session Expired ! Please Relogin.");
 		}
 		else if (flag) {
+			System.out.println("response recieved is... " + response.getStatus());
 			if (response.getStatus() != 200) {
 				throw new PhrescoException("Project updation failed");
 			}
@@ -474,6 +474,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 
 		return null;
+	}
+	
+	public String getTechId(String projectCode) throws PhrescoException {
+		return getProject(projectCode).getProjectInfo().getTechnology().getId();
 	}
 
 	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
