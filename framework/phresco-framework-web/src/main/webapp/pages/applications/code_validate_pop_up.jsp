@@ -66,25 +66,47 @@
 				</div>
 			</div>
 			
-		<% } else { %>	
+		<% } else if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)) { %>	
+				<fieldset class="popup-fieldset">
+					<legend class="fieldSetLegend"><s:text name="label.select.tech"/></legend>
+					<!-- Show Settings -->
+					<div class="clearfix">
+						<div class="xlInput">
+							<ul class="inputs-list">
+								<li class="popup-li"> 
+									<input type="radio" name="codeTechnology" value="" checked>
+									<span class="textarea_span popup-span">Java</span>
+									<input type="radio" name="codeTechnology" value="js" >
+									<span class="textarea_span popup-span">Java script</span>
+								</li>
+							</ul>
+						</div>	
+					</div>
+				</fieldset>
+		<% } %>
 		
 		<fieldset class="popup-fieldset">
-			<legend class="fieldSetLegend"><s:text name="label.select.tech"/></legend>
+			<legend class="fieldSetLegend"><s:text name="label.select.validate.against"/></legend>
 			<!-- Show Settings -->
 			<div class="clearfix">
 				<div class="xlInput">
 					<ul class="inputs-list">
 						<li class="popup-li"> 
-							<input type="radio" name="codeTechnology" value="" checked>
-							<span class="textarea_span popup-span">Java</span>
-							<input type="radio" name="codeTechnology" value="js" >
-							<span class="textarea_span popup-span">Java script</span>
+							<input type="radio" name="validateAgainst" value="source" checked>
+							<span class="textarea_span popup-span">Source</span>
+							<input id="funTestRadio" type="radio" name="validateAgainst" value="functionalTest" >
+							<span  id="funTestText" class="textarea_span popup-span">Functional Test</span>
 						</li>
 					</ul>
 				</div>	
 			</div>
 		</fieldset>
-		<% } %>
+		<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
+			<li class="popup-li"> 
+				<input type="checkbox" name="skipTest" value="true" />
+				<span class="textarea_span popup-span">Skip Unit Test</span>
+			</li>
+		</ul>
 	</div>
 	
 	<div class="modal-footer">
@@ -100,15 +122,39 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		
 		$('#close, #cancel').click(function() {
 			showParentPage();
 		});
 		
 		$('#codeValidate').click(function() {
 			showParentPage();
-			progress($("input[name='codeTechnology']:checked").val());
+			progress();
 		});
 		
+		$('input[name="validateAgainst"]').click(function() {
+			var selectedVal = $(this).val();
+			if (selectedVal == "functionalTest") {
+				$('#skipTestUl').hide();
+			} else if (selectedVal == "source") {
+				$('#skipTestUl').show();
+			}
+		});
+		
+		 $('input[name="codeTechnology"]').click(function() {
+			var selectedval = $(this).val();
+			if (selectedval == "js") {
+				$('#funTestRadio').hide();
+				$('#funTestText').hide();
+				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
+ 				$('#skipTestUl').show();
+			} else {
+				$('#funTestRadio').show();
+				$('#funTestText').show();
+				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
+ 				$('#skipTestUl').show();
+			}
+		}); 
 	});
 	
 </script>
