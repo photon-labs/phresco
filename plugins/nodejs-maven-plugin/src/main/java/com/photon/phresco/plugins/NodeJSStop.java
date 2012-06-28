@@ -33,7 +33,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
 
-import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginConstants;
 
 /**
  * Goal which builds the Java WebApp

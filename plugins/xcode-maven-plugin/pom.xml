@@ -90,6 +90,12 @@
             <version>${phresco-commons-version}</version>
         </dependency>
         
+	 	<dependency>
+	        <groupId>com.photon.phresco</groupId>
+			<artifactId>plugin-commons</artifactId>
+	        <version>${phresco-commons-version}</version>
+    	</dependency>
+        
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>

@@ -66,9 +66,9 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.plugin.commons.PluginUtils;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
-import com.photon.phresco.util.PluginUtils;
 
 /**
  * Run the xcodebuild command line program

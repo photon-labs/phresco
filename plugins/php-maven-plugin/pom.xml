@@ -42,6 +42,12 @@
     </dependency>
     
     <dependency>
+        <groupId>com.photon.phresco</groupId>
+		<artifactId>plugin-commons</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
         <groupId>org.apache.maven</groupId>
           <artifactId>maven-plugin-api</artifactId>
           <version>2.0</version>
