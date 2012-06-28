@@ -220,10 +220,6 @@ public class ConfigReader {
 		return configFile;
 	}
 	
-	public File getConfigFile() {
-		return configFile;
-	}
-	
 	public String getConfigAsJSON(String envName, String configType) {
 		if (envName == null) {
 			envName = getDefaultEnvName();
