@@ -238,9 +238,7 @@ public class Code extends FrameworkBaseAction {
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
             	actionType.setWorkingDirectory(projectPath.toString());
-            } else {
-            	actionType.setWorkingDirectory(null);
-            }
+            } 
 			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
@@ -254,34 +252,30 @@ public class Code extends FrameworkBaseAction {
         return APP_ENVIRONMENT_READER;
     }
     
-	private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
+    private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
 		initializeSourceMap();
 		String sourceFolderName = "";
+		File projectPath = null;
 		if (validateAgainst.contains(SOURCE)) {
 			sourceFolderName = sourceFolderPathMap.get(project.getProjectInfo().getTechnology().getId());
-			editSonarIncludes(SOURCE, sourceFolderName, projectCode);
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
 		} else if (validateAgainst.contains(FUNCTIONALTEST)) {
 			if (!TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
 				sourceFolderName = "src";
 			}else {
 				sourceFolderName = "AllTest";
 			}
-			editSonarIncludes(FUNCTIONALTEST, sourceFolderName, projectCode);
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
 		}
 	}
 	
-	private static void editSonarIncludes(String testAgainst, String sourceFolderName, String projectCode)
+	private static void editSonarIncludes(File projectPath, String sourceFolderName, String projectCode)
 			throws PhrescoException {
 		try {
-			File projectPath = null;
-			if(testAgainst.contains(SOURCE)) {
-				projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
-			}else if(testAgainst.contains(FUNCTIONALTEST)) {
-				projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
-			}
 			PomProcessor pomprocessor = new PomProcessor(projectPath);
 			pomprocessor.setName(projectCode);
-			pomprocessor.save();
 			pomprocessor.setSourceDirectory(sourceFolderName);
 			pomprocessor.save();
 		} catch (Exception e) {
