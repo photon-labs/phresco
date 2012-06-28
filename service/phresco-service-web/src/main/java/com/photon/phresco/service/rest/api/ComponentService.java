@@ -357,21 +357,49 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
-	 * Returns the list of modules
+	 * Get Module By Given TechId
+	 * @param techId
 	 * @return
 	 */
 	@GET
 	@Path(REST_API_MODULESBYID + REST_API_PATH_ID)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findModulesById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.findModules()");
+	public Response getdModulesById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
+		S_LOGGER.debug("Entered into ComponentService.getdModulesById(String techId)");
 		Response response = null;
 		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
 		try {
 			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
 			
 			for (ModuleGroup moduleGroup : modulesList) {
-				if(moduleGroup.getTechId().equals(techId)) {
+				if(moduleGroup.getTechId().equals(techId) && moduleGroup.getType().equals("module")) {
+					modules.add(moduleGroup);
+				}
+			}
+			response = Response.status(Response.Status.OK).entity(modules).build();
+		} catch(Exception e) {
+			throw new PhrescoWebServiceException(EX_PHEX00005, MODULES_COLLECTION_NAME);
+		}
+		return response;
+	}
+	
+	/**
+	 * Get JsLibrary By Given TechId
+	 * @param techId
+	 * @return
+	 */
+	@GET
+	@Path(REST_API_JSBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getJsById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
+		S_LOGGER.debug("Entered into ComponentService.getJsById(String techId)");
+		Response response = null;
+		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
+		try {
+			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+			
+			for (ModuleGroup moduleGroup : modulesList) {
+				if(moduleGroup.getTechId().equals(techId) && moduleGroup.getType().equals("js")) {
 					modules.add(moduleGroup);
 				}
 			}
@@ -531,6 +559,32 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
+	 * Get Pilot By Given TechId
+	 * @param techId
+	 * @return
+	 */
+	@GET
+	@Path(REST_API_PILOTSBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPilotById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
+		S_LOGGER.debug("Entered into getPilotById(String techId)");
+		Response response = null;
+		try {
+			List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
+			for (ProjectInfo projectInfo : pilotsList) {
+				if(projectInfo.getTechnology().getId().equals(techId)) {
+					response = Response.status(Response.Status.OK).entity(projectInfo).build();
+				}
+			}
+		} 
+		 catch (Exception e) {
+			throw new PhrescoWebServiceException(EX_PHEX00005, PILOTS_COLLECTION_NAME);
+		}
+    	
+    	return response;
+	}
+	
+	/**
 	 * Creates the list of pilots
 	 * @param projectInfos
 	 * @return 
@@ -678,19 +732,20 @@ public class ComponentService extends DbService implements ServiceConstants{
 	
 	
 	/**
-	 * Creates the list of servers
-	 * @param servers
+	 * Get Server By Given TechId
+	 * @param techId
 	 * @return 
 	 */
 	@GET
 	@Path(REST_API_SERVERBYID + REST_API_PATH_ID)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response serverByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+	public Response getServerById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
+		S_LOGGER.debug("Entered into ComponentService.getServerById(String techId)");
 		List<Server> serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
 		List<Server> serverList1 = new ArrayList<Server>();
 		for (Server server : serverList) {
 			List<String> technologies = server.getTechnologies();
-			if(technologies.contains(tech)) {
+			if(technologies.contains(techId)) {
 				serverList1.add(server);
 			}
 		}
@@ -844,6 +899,27 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
+	 * Get Server By Given TechId
+	 * @param tech
+	 * @return 
+	 */
+	@GET
+	@Path(REST_API_DATABASESBYID + REST_API_PATH_ID)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDatabaseById(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+		S_LOGGER.debug("Entered into ComponentService.getDatabaseById(String techId)");
+		List<Database> databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
+		List<Database> databaseList1 = new ArrayList<Database>();
+		for (Database database : databaseList) {
+			List<String> technologies = database.getTechnologies();
+			if(technologies.contains(tech)) {
+				databaseList1.add(database);
+			}
+		}
+		return Response.status(Response.Status.CREATED).entity(databaseList1).build();
+	}
+	
+	/**
 	 * Creates the list of databases
 	 * @param databases
 	 * @return 
@@ -859,26 +935,6 @@ public class ComponentService extends DbService implements ServiceConstants{
 			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
 		}
 		return Response.status(Response.Status.OK).build();
-	}
-	
-	/**
-	 * Creates the list of servers
-	 * @param servers
-	 * @return 
-	 */
-	@GET
-	@Path(REST_API_DATABASESBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response databaseByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
-		List<Database> databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-		List<Database> databaseList1 = new ArrayList<Database>();
-		for (Database database : databaseList) {
-			List<String> technologies = database.getTechnologies();
-			if(technologies.contains(tech)) {
-				databaseList1.add(database);
-			}
-		}
-		return Response.status(Response.Status.CREATED).entity(databaseList1).build();
 	}
 	
 	/**
@@ -1028,14 +1084,15 @@ public class ComponentService extends DbService implements ServiceConstants{
 	}
 	
 	/**
-	 * Creates the list of servers
-	 * @param servers
+	 * Get WebService By Given TechId
+	 * @param techId
 	 * @return 
 	 */
 	@GET
 	@Path(REST_API_WEBSERVICESBYID + REST_API_PATH_ID)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response webServiceByTechId(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+	public Response getWebServiceById(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
+		S_LOGGER.debug("Entered into ComponentService.getWebServiceById(String techId)");
 		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
 		List<WebService> webServiceList1 = new ArrayList<WebService>();
 		for (WebService wservice : webServiceList) {

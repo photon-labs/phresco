@@ -129,7 +129,7 @@ public interface ServiceConstants {
 	String REST_API_APPTYPES = "/apptypes";
 	String REST_API_CONFIG_TEMPLATES= "/configtemplates";
 	String REST_API_MODULES= "/modules";
-	String REST_API_PILOTS = "/pilot";
+	String REST_API_PILOTS = "/pilots";
 	String REST_API_SERVERS = "/servers";
 	String REST_API_DATABASES = "/databases";
 	String REST_API_WEBSERVICES = "/webservices";
@@ -145,7 +145,9 @@ public interface ServiceConstants {
 	String REST_API_SERVERBYID = "/servers/id";
 	String REST_API_DATABASESBYID = "/databases/id";
 	String REST_API_WEBSERVICESBYID = "/webservices/id";
-	String REST_API_MODULESBYID = "/modules/id";
+	String REST_API_MODULESBYID = "/modules/mod";
+	String REST_API_JSBYID = "/modules/js";
+	String REST_API_PILOTSBYID = "/pilots/id";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
 	

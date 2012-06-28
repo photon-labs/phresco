@@ -37,6 +37,7 @@ public class ModuleGroup implements Serializable {
 	
 	//String id of the module. this will be groupId:artifactId:
 	String id;
+	String moduleId;
 	String groupId;
 	String artifactId;
 	String type;
@@ -175,6 +176,14 @@ public class ModuleGroup implements Serializable {
 
 	public void setTechId(String techId) {
 		this.techId = techId;
+	}
+
+	public String getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 	/* (non-Javadoc)
