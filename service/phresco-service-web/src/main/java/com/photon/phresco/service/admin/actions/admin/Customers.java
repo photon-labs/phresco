@@ -94,7 +94,6 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	            getHttpRequest().setAttribute("fromPage", fromPage);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		}
 		
@@ -103,74 +102,53 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	
 	public String save() throws PhrescoException {
 		S_LOGGER.debug("Entering Method  CustomerList.save()");
-		
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-			SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 			List<Customer> customers = new ArrayList<Customer>();
 			Customer customer = new Customer(name, description);
-			if (StringUtils.isNotEmpty(validFrom)) {
-				customer.setValidFrom(dateFormat.parse(validFrom));
-			}
-			if (StringUtils.isNotEmpty(validUpTo)) {
-				customer.setValidUpto(dateFormat.parse(validUpTo));
-			}
-//			customer.setValidFrom(validFrom);
-//			customer.setValidUpto(validUpTo);
+			customer.setValidFrom(validFrom);
+			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 			customers.add(customer);
-	        RestClient<Customer> newCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
-	        ClientResponse clientResponse = newCustomer.create(customers);
-	        if (clientResponse.getStatus() != 200) {
-	        	addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
-	        } else {
-	        	addActionMessage(getText(CUSTOMER_ADDED, Collections.singletonList(name)));
-	        }
+			RestClient<Customer> newCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
+			ClientResponse clientResponse = newCustomer.create(customers);
+			if (clientResponse.getStatus() != 200) {
+				addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
+			} else {
+				addActionMessage(getText(CUSTOMER_ADDED, Collections.singletonList(name)));
+			}
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
-		
+
 		return list();
 	}
-	
+
 	public String update() throws PhrescoException {
 		S_LOGGER.debug("Entering Method  CustomerList.update()");
-		
+
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-			SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+
 			Customer customer = new Customer(customerId, name, description);
-			if (StringUtils.isNotEmpty(validFrom)) {
-				customer.setValidFrom(dateFormat.parse(validFrom));
-			}
-			if (StringUtils.isNotEmpty(validUpTo)) {
-				customer.setValidUpto(dateFormat.parse(validUpTo));
-			}
-//			customer.setValidFrom(validFrom);
-//			customer.setValidUpto(validUpTo);
+			customer.setValidFrom(validFrom);
+			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 			RestClient<Customer> editCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
 	        GenericType<Customer> genericType = new GenericType<Customer>(){};
 	        Customer updatedCustomer = editCustomer.updateById(customer, genericType);
-
-//	        if (clientResponse.getStatus() != 200) {
-//	        	addActionError(getText(CUSTOMER_NOT_UPDATED, Collections.singletonList(oldName)));
-//	        } else {
-//	        	addActionMessage(getText(CUSTOMER_UPDATED, Collections.singletonList(oldName)));
-//	        }
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
-		
 		return list();
 	}
-	
+
 	private boolean validateForm() {
 		boolean isError = false;
 		if (StringUtils.isEmpty(name)) {

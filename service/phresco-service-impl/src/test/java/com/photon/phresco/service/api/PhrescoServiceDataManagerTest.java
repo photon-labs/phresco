@@ -57,11 +57,11 @@ public class PhrescoServiceDataManagerTest {
 		customer.setStatus(Constants.STATUS_OPEN);
 
 		Date validFrom = new Date();
-		customer.setValidFrom(validFrom);
+		//customer.setValidFrom(validFrom);
 
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 3);
-		customer.setValidUpto(cal.getTime());
+		//customer.setValidUpto(cal.getTime());
 
 		return customer;
 	}

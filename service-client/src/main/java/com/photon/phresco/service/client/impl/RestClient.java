@@ -212,7 +212,7 @@ public class RestClient<E> {
 		S_LOGGER.debug("Entered into RestClient.isErrorThrow(ClientResponse clientResponse)");
 		int status = clientResponse.getStatus();
 		if (status == ClientResponse.Status.ACCEPTED.getStatusCode() || 
-				status == ClientResponse.Status.OK.getStatusCode()) {
+				status == ClientResponse.Status.OK.getStatusCode() || status == ClientResponse.Status.CREATED.getStatusCode()) {
 		} else {
 			throw new PhrescoException("Not able to Create");
 		}

@@ -49,7 +49,7 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
 
 	protected UserInfo doLogin(String userName, String password) throws PhrescoException {
     	ServiceContext context = new ServiceContext();
-		context.put(SERVICE_URL, "http://localhost:3030/service/rest");
+		context.put(SERVICE_URL, "http://localhost:3030/service/rest/api");
 		context.put(SERVICE_USERNAME, userName);
 		context.put(SERVICE_PASSWORD, password);
 		serviceManager = ServiceClientFactory.getServiceManager(context);

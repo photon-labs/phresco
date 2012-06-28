@@ -62,6 +62,20 @@
 		<action name="archetypeCancel" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="cancel">
             <result name="archetypeCancel">/admin/pages/components/archetype/list.jsp</result>
         </action>
+        
+        <action name="archetypeEdit" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="edit">
+			<result name="archetypeAdd">/admin/pages/components/archetype/add.jsp</result>
+        </action>
+        
+        <action name="archetypeUpdate" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="update">
+			<result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+			<result type="json" />
+        </action>
+        
+        <action name="archetypeDelete" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="delete">
+			<result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+        </action>
+        
 		<!-- COMPONENT ARCHETYPES ENDS-->
 			
 		<!-- COMPONENT APPLICATION TYPES STARTS-->
@@ -80,6 +94,19 @@
 		
 		<action name="applicationCancel" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="cancel">
             <result name="applicationCancel">/admin/pages/components/application/list.jsp</result>
+        </action>
+        
+        <action name="applicationEdit" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="edit">
+			<result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
+        </action>
+        
+        <action name="applicationUpdate" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="update">
+			<result name="applntypesList">/admin/pages/components/application/list.jsp</result>
+			<result type="json" />
+        </action>
+        
+         <action name="applicationDelete" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="delete">
+			<result name="applntypesList">/admin/pages/components/application/list.jsp</result>
         </action>
 		<!-- COMPONENT APPLICATION TYPES ENDS-->
 			
@@ -144,7 +171,7 @@
 			<result name="customerCancel">/admin/pages/admin/customer/list.jsp</result>
         </action>
         
-        <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="eidt">
+        <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="edit">
 			<result name="customerEdit">/admin/pages/admin/customer/add.jsp</result>
         </action>
         

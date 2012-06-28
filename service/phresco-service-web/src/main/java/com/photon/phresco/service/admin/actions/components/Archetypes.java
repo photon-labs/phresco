@@ -22,94 +22,213 @@ package com.photon.phresco.service.admin.actions.components;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.itextpdf.text.pdf.codec.Base64.OutputStream;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.Technology;
+import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
+import com.photon.phresco.service.client.impl.RestClient;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 
 public class Archetypes extends ServiceBaseAction { 
-	
+
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(Archetypes.class);
-	
+
 	private String name = null;
+	private String id = null;
 	private String nameError = null;
 	private String version = null;
+	private List<String> versionList = null;
 	private String verError = null;
 	private String apptype = null;
 	private String appError = null;
 	private String fileError = null;
 	private boolean errorFound = false;
-	
+
+	private String description;
+	private String fromPage = null;
+	private String techId = null;
+
+	private String versionComment = null;
+	private List<String> appType = null;
+	private String appJar = null;
+	private String pluginJar = null;
+
 	private File applnArc;
 	private String applnArcFileName;
 	private String applnArcContentType;
-	
+
 	private File pluginArc;
 	private String pluginArcFileName;
 	private String pluginArcContentType;
 
 
-	public String list() {
+	public String list() throws PhrescoException {
 		S_LOGGER.debug("Entering Method Archetypes.list()");
+		try {
+			RestClient<Technology> technology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+			List<Technology> technologys = technology.get(genericType);
+			getHttpRequest().setAttribute("technologys", technologys);
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+
 		return COMP_ARCHETYPE_LIST;
 	}
-	
-	public String add() {
+
+	public String add() throws PhrescoException {
 		S_LOGGER.debug("Entering Method Archetypes.add()");
+
+		RestClient<ApplicationType> appType;
+		try {
+			appType = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
+			List<ApplicationType> appTypes = appType.get(genericType);
+			getHttpRequest().setAttribute("appTypes", appTypes);
+		} catch (PhrescoException e) {
+			e.printStackTrace();
+			throw new PhrescoException(e);
+		}
+
 		return COMP_ARCHETYPE_ADD;
 	}
-	
-	public String save() {
+
+	public String edit() throws PhrescoException {
+		S_LOGGER.debug("Entering Method Archetypes.edit()");
+		try {
+
+			RestClient<Technology> technologies = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			GenericType<Technology> genericType = new GenericType<Technology>(){};
+			Technology technology = technologies.getById(genericType);
+			getHttpRequest().setAttribute("technology",  technology);
+			getHttpRequest().setAttribute("fromPage", fromPage);
+			
+			//In ArcheType show ApplcationTypes
+			RestClient<ApplicationType> appType;
+			appType = getServiceManager().getRestClient("component" + ServiceConstants.REST_API_APPTYPES);
+			GenericType<List<ApplicationType>> type = new GenericType<List<ApplicationType>>(){};
+			List<ApplicationType> appTypes = appType.get(type);
+			getHttpRequest().setAttribute("appTypes", appTypes);
+
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return COMP_ARCHETYPE_ADD;
+	}
+
+	public String save() throws PhrescoException {
 		S_LOGGER.debug("Entering Method Archetypes.save()");
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
+
+
 			InputStream inputStream = null;
 			FileOutputStream outputStream = null;
-//			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
-				inputStream = new FileInputStream(applnArc);
-				/*outputStream = new FileOutputStream(new File("c:/temp/" + applnArcFileName));
+			//			boolean isMultipart = ServletFileUpload.isMultipartContent(getHttpRequest());
+			inputStream = new FileInputStream(applnArc);
+			/*outputStream = new FileOutputStream(new File("c:/temp/" + applnArcFileName));
 				IOUtils.copy(inputStream, outputStream);*/
-			
-				if(pluginArc != null) {
-					inputStream = new FileInputStream(pluginArc);
-					outputStream = new FileOutputStream(new File("c:/temp/" + pluginArcFileName));
-					IOUtils.copy(inputStream, outputStream);
-				}
+
+			if(pluginArc != null) {
+				inputStream = new FileInputStream(pluginArc);
+				outputStream = new FileOutputStream(new File("c:/temp/" + pluginArcFileName));
+				IOUtils.copy(inputStream, outputStream);
+			}
+
+			List<Technology> technologies = new ArrayList<Technology>();
+			Technology technology = new Technology(name, description, versionList, appType);	
+			technologies.add(technology);
+			RestClient<Technology> newTechnology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+			ClientResponse clientResponse = newTechnology.create(technologies);
+
+			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
+				addActionError(getText(ARCHETYPE_NOT_ADDED, Collections.singletonList(name)));
+			} else {
 				addActionMessage(getText(ARCHETYPE_ADDED, Collections.singletonList(name)));
+			}
 		} catch (Exception e) {
-			addActionError(getText(ARCHETYPE_NOT_ADDED, Collections.singletonList(name)));
+			throw new PhrescoException(e);
 		} 
 
-		return COMP_ARCHETYPE_LIST;
+		return list();
 	}
-	
+
+	public String update() throws PhrescoException {
+		S_LOGGER.debug("Entering Method  Architypes.update()");
+
+		try {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
+			Technology technology = new Technology(name, description, versionList, appType);
+			technology.setId(techId);
+			RestClient<Technology> editTechnology = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			GenericType<Technology> type = new GenericType<Technology>() {};
+			Technology updatedArchetype = editTechnology.updateById(technology, type);
+		} catch(Exception e) {
+			throw new PhrescoException(e);
+		}
+		return list();
+	}
+
+	public String delete() throws PhrescoException {
+		S_LOGGER.debug("Entering Method  ArcheType.delete()");
+
+		try {
+			String[] techTypeIds = getHttpRequest().getParameterValues("techId");
+			if (techTypeIds != null) {
+				for (String techId : techTypeIds) {
+					RestClient<Technology> deleteTech = getServiceManager().getRestClient("component" +ServiceConstants.REST_API_TECHNOLOGIES);
+					deleteTech.setPath(techId);
+					ClientResponse clientResponse = deleteTech.deleteById();
+					if (clientResponse.getStatus() != 200) {
+						addActionError(getText(ARCHETYPE_NOT_DELETED));
+					}
+				}
+				addActionMessage(getText(ARCHETYPE_DELETED));
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return list();
+	}
+
+
 	private boolean validateForm() {
 		boolean success = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
 			success = true;
 		}
-		
+
 		if (StringUtils.isEmpty(version)) {
 			setVerError(getText(KEY_I18N_ERR_VER_EMPTY));
 			success = true;
 		}
-		
+
 		if (StringUtils.isEmpty(apptype)) {
 			setAppError(getText(KEY_I18N_ERR_APPTYPE_EMPTY));
 			success = true;
 		}
-		
+
 		if (StringUtils.isEmpty(applnArcFileName) || applnArc == null) {
 			setFileError(getText(KEY_I18N_ERR_APPLNJAR_EMPTY));
 			success = true;
@@ -176,7 +295,7 @@ public class Archetypes extends ServiceBaseAction {
 	public void setFileError(String fileError) {
 		this.fileError = fileError;
 	} 
-	
+
 	public File getApplnArc() {
 		return applnArc;
 	}
@@ -192,7 +311,7 @@ public class Archetypes extends ServiceBaseAction {
 	public void setApplnArcFileName(String applnArcFileName) {
 		this.applnArcFileName = applnArcFileName;
 	}
-	
+
 	public String getApplnArcContentType() {
 		return applnArcContentType;
 	}
@@ -232,6 +351,68 @@ public class Archetypes extends ServiceBaseAction {
 	public void setErrorFound(boolean errorFound) {
 		this.errorFound = errorFound;
 	}
-	
-	
+
+	public String getTechId() {
+		return techId;
+	}
+
+	public void setTechId(String techId) {
+		this.techId = techId;
+	}
+
+	public String getFromPage() {
+		return fromPage;
+	}
+
+	public void setFromPage(String fromPage) {
+		this.fromPage = fromPage;
+	}
+	public List<String> getVersionList() {
+		return versionList;
+	}
+
+	public void setVersionList(List<String> versionList) {
+		this.versionList = versionList;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getVersionComment() {
+		return versionComment;
+	}
+
+	public void setVersionComment(String versionComment) {
+		this.versionComment = versionComment;
+	}
+
+	public List<String> getAppType() {
+		return appType;
+	}
+
+	public void setAppType(List<String> appType) {
+		this.appType = appType;
+	}
+
+	public String getAppJar() {
+		return appJar;
+	}
+
+	public void setAppJar(String appJar) {
+		this.appJar = appJar;
+	}
+
+	public String getPluginJar() {
+		return pluginJar;
+	}
+
+	public void setPluginJar(String pluginJar) {
+		this.pluginJar = pluginJar;
+	}
+
 }
