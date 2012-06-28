@@ -66,7 +66,8 @@
 				</div>
 			</div>
 			
-		<% } else if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)) { %>
+		<% } else if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>
 		
 		<fieldset class="popup-fieldset">
 			<legend class="fieldSetLegend"><s:text name="label.select.tech"/></legend>
@@ -76,9 +77,9 @@
 					<ul class="inputs-list">
 						<li class="popup-li"> 
 							<input type="radio" name="codeTechnology" value="" checked>
-							<span class="textarea_span popup-span">Java</span>
+							<span class="textarea_span popup-span"><s:text name="label.tech.java"/></span>
 							<input type="radio" name="codeTechnology" value="js" >
-							<span class="textarea_span popup-span">Java script</span>
+							<span class="textarea_span popup-span"><s:text name="label.tech.javascript"/></span>
 						</li>
 					</ul>
 				</div>	
@@ -95,9 +96,9 @@
 					<ul class="inputs-list">
 						<li class="popup-li"> 
 							<input type="radio" name="validateAgainst" value="source" checked>
-							<span class="textarea_span popup-span">Source</span>
+							<span class="textarea_span popup-span"><s:text name="label.validateAgainst.source"/></span>
 							<input id="funTestRadio" type="radio" name="validateAgainst" value="functionalTest" >
-							<span  id="funTestText" class="textarea_span popup-span">Functional Test</span>
+							<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
 						</li>
 					</ul>
 				</div>	
@@ -106,7 +107,7 @@
 		<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
 			<li class="popup-li"> 
 				<input type="checkbox" name="skipTest" value="true" />
-				<span class="textarea_span popup-span">Skip Unit Test</span>
+				<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 			</li>
 		</ul>
 	</div>
