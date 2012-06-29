@@ -133,7 +133,8 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional</directory> 
 			<includes>
-				<include>**/*</include>
+				<include><include>AllTests.js</include>
+                <include>HelloWorld.js</include>/include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

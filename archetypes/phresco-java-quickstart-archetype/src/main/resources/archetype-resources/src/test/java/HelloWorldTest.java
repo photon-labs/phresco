@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class HelloWorldTest
+public class HelloWorldTest 
     extends TestCase
 {
     /**
@@ -43,7 +43,7 @@ public class HelloWorldTest
      */
     public static Test suite()
     {
-        return new TestSuite( HelloWorldTest.class );
+        return new TestSuite(HelloWorldTest .class );
     }
 
     /**

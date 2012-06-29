@@ -43,6 +43,11 @@ public class Constants {
 	public static final String BROWSER_SAFARI = "*safari";
 	
 	public static final String BROWSER_HTMLUNIT = "*htmlunit";
+	
+	/**
+	 * Execute tests on opera browser
+	 */
+	public static final String BROWSER_OPERA = "*opera";
 
 	public static String DEFAULT_TIMEOUT = "180000";
 

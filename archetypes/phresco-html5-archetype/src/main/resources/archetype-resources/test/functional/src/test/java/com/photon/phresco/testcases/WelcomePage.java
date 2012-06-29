@@ -28,12 +28,14 @@ import org.openqa.selenium.server.SeleniumServer;
 import com.photon.phresco.Screens.MenuScreen;
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.TestConfig;
 import com.thoughtworks.selenium.Selenium;
 
 public class WelcomePage extends TestCase {
 
 
 	private PhrescoUiConstants phrsc;
+	private TestConfig uiconst;
 	private WelcomeScreen wel;
 	private int SELENIUM_PORT;
 	private String browserAppends;
@@ -43,7 +45,7 @@ public class WelcomePage extends TestCase {
 
 		try {
 
-			phrsc = new PhrescoUiConstants();
+			
 			String serverURL = phrsc.PROTOCOL + "://"
 					+ phrsc.HOST + ":"
 					+ phrsc.PORT + "/";
@@ -56,7 +58,7 @@ public class WelcomePage extends TestCase {
 					browserAppends, serverURL, phrsc.SPEED,
 					phrsc.CONTEXT );
 			assertNotNull(wel);
-			MenuScreen menuObj = wel.menuScreen();
+			MenuScreen menuObj = wel.menuScreen(uiconst);
 			assertNotNull(menuObj);
 		} catch (Exception t) {
 			t.printStackTrace();
@@ -67,6 +69,7 @@ public class WelcomePage extends TestCase {
 
 	public void setUp() throws Exception {
 		phrsc = new PhrescoUiConstants();
+		uiconst = new TestConfig();
 	}
 
 	public void tearDown() {
