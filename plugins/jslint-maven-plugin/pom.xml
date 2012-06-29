@@ -1,14 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>mojo-parent</artifactId>
-		<version>30</version>
-	</parent>
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>jslint-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.2.0.3002-SNAPSHOT</version>
+	<version>1.2.0.4001-SNAPSHOT</version>
 	<name>JSLint Maven Plugin</name>
 	<description>Provides JSLint capabilities.</description>
 	<prerequisites>
@@ -52,17 +48,24 @@
 		<url>http://svn.codehaus.org/mojo/trunk/mojo/jslint-maven-plugin</url>
 	</scm>
 
-	<properties>
-		<mojo.java.target>1.5</mojo.java.target>
-		<!-- For Velocity filtering - can't use dot notations -->
-		<projectVersion>${project.version}</projectVersion>
-	</properties>
+        <distributionManagement>
+         <repository>
+		<id>${releases.repo.id}</id>
+		<url>${releases.repo.url}</url>
+	</repository>
+	<snapshotRepository>
+		<id>${snapshots.repo.id}</id>
+		<url>${snapshots.repo.url}</url>
+	</snapshotRepository>
+	</distributionManagement>
+
 
 	<dependencies>
 		<!-- Compile dependencies -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
+                        <version>3.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.jslint4java</groupId>
