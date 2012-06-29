@@ -115,24 +115,26 @@ public class PluginUtils {
 			st = con.createStatement();
 			while (s.hasNext()) {
 				String line = s.next().trim();
-				if(line.contains("--")){
-					String comment = line.substring(line.indexOf("--"), line.lastIndexOf("--"));
-					line = line.replace(comment, "");
-					line = line.replace("--", "");
+				if(databaseType.equals("oracle")) {
+					if(line.startsWith("--")){
+						String comment = line.substring(line.indexOf("--"), line.lastIndexOf("--"));
+						line = line.replace(comment, "");
+						line = line.replace("--", "");
+					}
+					if (line.startsWith(Constants.REM_DELIMETER)) {
+						String comment = line.substring(0, line.lastIndexOf("\n"));
+						line = line.replace(comment, "");
+					}
 				}
 				
-				if (line.startsWith(Constants.REM_DELIMETER)) {
-					String comment = line.substring(0, line.lastIndexOf("\n"));
-					line = line.replace(comment, "");
-				}
 				if (line.startsWith("/*!") && line.endsWith("*/")) {
 					int i = line.indexOf(' ');
 					line = line.substring(i + 1, line.length() - " */".length());
 				}
-
+				
 				if (line.trim().length() > 0) {
 					st.execute(line);
-				}
+				}			
 			}
 		} catch (SQLException e) {
 			throw new PhrescoException(e);
