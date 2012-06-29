@@ -340,7 +340,8 @@ public class Features extends FrameworkBaseAction {
 				.getCoreModules(selectedTechnology.getId());
 		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
 		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
-				.getCustomModules(techonology);
+				.getCustomModules(selectedTechnology.getId());
+		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
 		if (CollectionUtils.isNotEmpty(coreModule)) {
 			getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
 		}
@@ -397,7 +398,7 @@ public class Features extends FrameworkBaseAction {
 					}
 				}
 			}
-			List<ModuleGroup> customModules = (List<ModuleGroup>) administrator.getCustomModules(technology);
+			List<ModuleGroup> customModules = (List<ModuleGroup>) administrator.getCustomModules(techId);
 			if (CollectionUtils.isNotEmpty(customModules) && customModules != null) {
 				for (ModuleGroup customModule : customModules) {
 					if (customModule.isRequired()) {
@@ -467,7 +468,7 @@ public class Features extends FrameworkBaseAction {
 		}
 
 		if (REQ_CUSTOM_MODULE.equals(moduleType)) {
-			return administrator.getCustomModules(technology);
+			return administrator.getCustomModules(techId);
 		}
 
 		if (REQ_JSLIB_MODULE.equals(moduleType)) {

@@ -145,21 +145,8 @@ public class ApplicationsUtil implements FrameworkConstants {
 			S_LOGGER.debug("getPilots() TechnologyId = "+technologyId);
 		}
         try {
-            FrameworkConfiguration configuration = null;
-            configuration = PhrescoFrameworkFactory.getFrameworkConfig();
-            Client client = ClientHelper.createClient();
-
-            WebResource resource = client.resource(configuration.getServerPath()
-                    + FrameworkConstants.REST_PILOT_PATH);
-            resource.accept(MediaType.APPLICATION_OCTET_STREAM);
-
-            GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>() {};
-
-            List<ProjectInfo> pilots = resource.type(MediaType.APPLICATION_JSON).
-                    post(genericType, technologyId);
-
-            return pilots;
-
+        	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            return administrator.getPilots(technologyId);
         } catch (ClientHandlerException e) {
             if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of ApplicationsUtil.getPilots()" + e);

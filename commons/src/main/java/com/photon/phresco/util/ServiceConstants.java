@@ -198,4 +198,11 @@ public interface ServiceConstants {
 	String UPDATE = "Update";
 	String INSERT = "Insert";
 	String DELETE = "Delete";
+	
+	/*
+	 * Constants for URL in ServiceBaseAction
+	 */
+	String COLON_DOUBLE_SLASH = "://";
+	String COLON = ":";
+	String SLASH_REST_SLASH_API = "/rest/api";
 }
