@@ -311,6 +311,13 @@ public interface ProjectAdministrator {
      */
     List<BuildInfo> getBuildInfos(Project project) throws PhrescoException;
 
+    /**
+     * Returns all the build info details from build.info file
+     * @return
+     * @throws PhrescoException
+     */
+    List<BuildInfo> readBuildInfo(File path) throws IOException;
+
     BuildInfo getBuildInfo(Project project, int buildNumber) throws PhrescoException;
 
     List<BuildInfo> getBuildInfos(Project project, int[] buildNumbers) throws PhrescoException;
@@ -598,4 +605,12 @@ public interface ProjectAdministrator {
 	 List<Server> getServers() throws PhrescoException;
 	 
 	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
+	 
+	/**
+	 * Returns CI build object for build number
+	 * @param job, buildNumber
+	 * @return BuildInfo
+	 * @throws PhrescoException
+	 */
+	 BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
 }
