@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -188,6 +189,13 @@ public class ConfigReader {
 	}
 	
 	/**
+	 * @return
+	 */
+	public Set<String> getEnvironments(){
+		return ENV_MAP.keySet();
+	}
+	
+	/**
 	 * return the environment element for the given Environment name
 	 * @param envName
 	 * @return
@@ -220,14 +228,20 @@ public class ConfigReader {
 		return configFile;
 	}
 	
-	/*public static void main(String a[]) {
-		try {
-			ConfigReader reader = new ConfigReader(new File("/Users/bharatkumarradha/Desktop/config.xml"));
-			System.out.println(reader.getDefaultEnvName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String getConfigAsJSON(String envName, String configType) {
+		if (envName == null) {
+			envName = getDefaultEnvName();
 		}
-	}*/
+		List<Configuration> configurations = getConfigByEnv(envName);
+		String json = "";
+		for (Configuration configuration : configurations) {
+			if (configuration.getType().equalsIgnoreCase(configType)) {
+				com.google.gson.Gson gson = new com.google.gson.Gson();
+				Properties properties = configuration.getProperties();
+				json = gson.toJson(properties, Properties.class);
+			}
+		}
+		return json;	
+	}
  
 }
