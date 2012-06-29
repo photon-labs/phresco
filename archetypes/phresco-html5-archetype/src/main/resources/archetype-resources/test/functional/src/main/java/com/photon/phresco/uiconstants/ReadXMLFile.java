@@ -44,7 +44,9 @@ public class ReadXMLFile {
 	private static Element eElement;
 	private Log log = LogFactory.getLog(getClass());
 	private static final String phrsc = "./src/main/resources/phresco-env-config.xml";
-	
+	private static final String constants ="./src/main/resources/UIConstants.xml";
+	private static final String UsrInfoConsts ="./src/main/resources/UserInfo.xml";
+	private static final String MobWidgData ="./src/main/resources/MobileWidgetHWData.xml";
 	public ReadXMLFile() throws ScreenException {
 		log.info("@ReadXMLFile Constructor::loading *****PhrescoUIConstants******");
 		loadPhrescoConstansts(phrsc);
@@ -78,6 +80,17 @@ public class ReadXMLFile {
 		}
 	}
 	
+	public void loadUIConstants() throws ScreenException {
+    	loadPhrescoConstansts(constants);
+	}
+	public void loadUserInfoConstants() throws ScreenException {
+		loadPhrescoConstansts(UsrInfoConsts);
+		
+	}
+    public void loadMobileWidgetData() throws ScreenException {
+		
+    	loadPhrescoConstansts(MobWidgData);
+	}
 	
 	
 	public String getValue(String elementName) {
@@ -91,6 +104,10 @@ public class ReadXMLFile {
 
 		return nValue.getNodeValue();
 	}
+
+	
+
+	
 
 	
 
