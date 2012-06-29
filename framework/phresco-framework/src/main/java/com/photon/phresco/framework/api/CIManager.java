@@ -24,6 +24,7 @@ import java.util.List;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
 import com.sun.jersey.api.client.ClientResponse;
 
@@ -115,4 +116,18 @@ public interface CIManager {
      * @throws PhrescoException
      */
 	void deleteDoNotCheckin(CIJob job) throws PhrescoException;
+	
+    /**
+     * Returns all the buildinfo object.
+     * @return
+     * @throws PhrescoException
+     */
+	List<BuildInfo> getBuildInfos(CIJob job) throws PhrescoException;
+	
+    /**
+     * Return particular buildinfo obj.
+     * @return
+     * @throws PhrescoException
+     */
+	BuildInfo getBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
 }

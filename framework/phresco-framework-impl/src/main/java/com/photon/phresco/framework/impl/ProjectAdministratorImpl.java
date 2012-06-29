@@ -1248,7 +1248,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 
-	 private List<BuildInfo> readBuildInfo(File path) throws IOException {
+	 public List<BuildInfo> readBuildInfo(File path) throws IOException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.readBuildInfo(File path)");
 		 S_LOGGER.debug("getBuildInfos() File Path = "+path.getPath());
 
@@ -2024,4 +2024,16 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			throw new PhrescoException();
 		}
 	}
+	
+	 public BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCIBuildInfo(CIJob job, int buildNumber)");
+		 BuildInfo buildInfo = null;
+		 try {
+			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			 buildInfo = ciManager.getBuildInfo(job,buildNumber);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+		 return buildInfo;
+	 }
 }
