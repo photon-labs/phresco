@@ -44,7 +44,7 @@ public class ConfigReader {
 	private static final Map<String, Element> ENV_MAP = new HashMap<String, Element>();
 	private static ConfigReader READER = null;
 	private static String defaultEnvironment = null;
-	
+	private File configFile = null;
 	public static ConfigReader getInstance(File configXML) throws Exception {
 		if (READER == null) {
 			READER = new ConfigReader(new FileInputStream(configXML));
