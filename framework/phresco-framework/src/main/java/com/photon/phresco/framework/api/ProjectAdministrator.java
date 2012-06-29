@@ -338,7 +338,7 @@ public interface ProjectAdministrator {
      * @param technology
      * @return list of custom modules
      */
-    List<ModuleGroup> getCustomModules(Technology technology);
+    List<ModuleGroup> getCustomModules(String techId) throws PhrescoException;
 
     /**
      * Authenticates the user credentials and returns the user information
@@ -596,4 +596,6 @@ public interface ProjectAdministrator {
 	 List<Database> getDatabases() throws PhrescoException;
 	 
 	 List<Server> getServers() throws PhrescoException;
+	 
+	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
 }

@@ -37,10 +37,10 @@ import com.photon.phresco.model.VersionInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
 @Path("/version")
-public class VersionService implements ServiceConstants {
+public class VersionService implements ServerConstants {
 	
 	private static final String STR_DOT = ".";
 	private static final String STR_HIPHEN = "-";

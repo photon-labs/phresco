@@ -693,7 +693,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 String encodedPassword = new String(encodeBase64);
 			 ServiceContext context = new ServiceContext();
 			 FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
-			 context.put(SERVICE_URL, configuration.getServerPath() + "/rest/api");
+			 context.put(SERVICE_URL, configuration.getServerPath());
 			 context.put(SERVICE_USERNAME, userName);
 			 context.put(SERVICE_PASSWORD, encodedPassword);
 			 serviceManager = ServiceClientFactory.getServiceManager(context);
@@ -1566,29 +1566,35 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 
 	 @Override
-	 public List<ModuleGroup> getCustomModules(Technology technology) {
+	 public List<ModuleGroup> getCustomModules(String techId) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCustomModules(Technology technology)");
-		 S_LOGGER.debug("getCustomModules() TechnologyId = "+technology.getId());
+		 S_LOGGER.debug("getCustomModules() TechnologyId = "+techId);
 
-		 String technologyId = technology.getId();
-		 List<ModuleGroup> customModules = customModulesMap.get(technologyId);
-		 if (CollectionUtils.isNotEmpty(customModules)) {
-			 return customModules;
-		 }
-
-		 customModules = new ArrayList<ModuleGroup>();
-		 List<ModuleGroup> modules = technology.getModules();
-		 if (CollectionUtils.isNotEmpty(modules)) {
-			 for (ModuleGroup module : modules) {
-				 if (!module.isCore()) {
-					 customModules.add(module);
+		 try {
+			 List<ModuleGroup> customModules = customModulesMap.get(techId);
+			 if (CollectionUtils.isNotEmpty(customModules)) {
+				 return customModules;
+			 }
+	
+			 customModules = new ArrayList<ModuleGroup>();
+			 RestClient<ModuleGroup> moduleGroupClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
+			 moduleGroupClient.setPath(techId);
+			 GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
+			 List<ModuleGroup> modules = moduleGroupClient.get(genericType);
+			 if (CollectionUtils.isNotEmpty(modules)) {
+				 for (ModuleGroup module : modules) {
+					 if (!module.isCore()) {
+						 customModules.add(module);
+					 }
 				 }
 			 }
+	
+			 Collections.sort(customModules, new ModuleComparator());
+			 customModulesMap.put(techId, customModules);
+			 return customModules;
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
 		 }
-
-		 Collections.sort(customModules, new ModuleComparator());
-		 customModulesMap.put(technologyId, customModules);
-		 return customModules;
 	 }
 
 	 @Override
@@ -2106,5 +2112,19 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 } catch (Exception ex) {
 			 throw new PhrescoException(ex);
 		 }
+	 }
+	 
+	 public List<ProjectInfo> getPilots(String techId) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getPilots()");
+		 
+		 try {
+			 RestClient<ProjectInfo> pilotClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_PILOTSBYID);
+			 pilotClient.setPath(techId);
+			 GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
+			 pilotClient.getById(genericType);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+		 return null;
 	 }
 }

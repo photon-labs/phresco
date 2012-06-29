@@ -41,13 +41,13 @@ import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
 /**
  * Example resource class hosted at the URI path "/downloads"
  */
 @Path("/downloads")
-public class DownloadsService implements ServiceConstants {
+public class DownloadsService implements ServerConstants {
 
 	private static final String SOFTWARE_REPO_PATH = "/softwares/info/1.0/info-1.0.json";
 	private static final Logger S_LOGGER = Logger.getLogger(DownloadsService.class);

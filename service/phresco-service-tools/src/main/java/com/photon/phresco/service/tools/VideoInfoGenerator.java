@@ -43,9 +43,9 @@ import com.photon.phresco.model.VideoType;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ArtifactInfo;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
-public class VideoInfoGenerator implements ServiceConstants {
+public class VideoInfoGenerator implements ServerConstants {
 
 	private static final String VIDEO_INFO_JSON_FILE = "videoInfo.json";
 	private static final String VIDEO_EXCEL_FILE = "Videos.xls";

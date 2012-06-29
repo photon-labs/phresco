@@ -46,11 +46,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -67,22 +62,27 @@ import org.apache.poi.ss.usermodel.Row;
 import org.codehaus.plexus.util.StringUtils;
 import org.w3c.dom.Element;
 
+import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.Documentation;
+import com.photon.phresco.model.Documentation.DocumentationType;
+import com.photon.phresco.model.Module;
+import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.jaxb.Document;
-import com.photon.phresco.service.jaxb.Documents;
-import com.photon.phresco.service.jaxb.Module;
-import com.photon.phresco.service.jaxb.Modules;
-import com.photon.phresco.service.jaxb.ObjectFactory;
+import com.photon.phresco.service.client.api.ServiceClientConstant;
+import com.photon.phresco.service.client.api.ServiceContext;
+import com.photon.phresco.service.client.api.ServiceManager;
+import com.photon.phresco.service.client.factory.ServiceClientFactory;
+import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.service.model.ArtifactInfo;
-import com.photon.phresco.service.model.DocumentType;
 import com.photon.phresco.service.model.DocumentTypes;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
+import com.sun.jersey.api.client.ClientResponse;
 
 
-public class TechnologyDataGenerator implements ServiceConstants {
+public class TechnologyDataGenerator  implements ServerConstants {
 
 	private static final Logger S_LOGGER = Logger
 			.getLogger(TechnologyDataGenerator.class);
@@ -97,28 +97,39 @@ public class TechnologyDataGenerator implements ServiceConstants {
 	static final Map<String, File> CONTENTS_HOME_MAP = new HashMap<String, File>(16);
 	static final Map<String, String> SNO_AND_NAME_MAP = new HashMap<String, String>(16);
 	static final Map<String, String[]> NAME_AND_DEP_MAP = new HashMap<String, String[]>(16);
-
+	private ServiceManager serviceManager = null;
+	private ServiceContext context = null;
 	RepositoryManager repManager = null;
 	File outFile = null;
 	List <DocumentTypes>  documentTypes  = null;
 
 	static {
 		initInputExcelMap();
+		
 	}
 	
     public TechnologyDataGenerator(File inputRootDir, File outputRootDir, File binariesDir) throws PhrescoException {
+    	super();
         this.inputRootDir = inputRootDir;
         this.outputRootDir = outputRootDir;
         this.moduleBinariesDir = new File(binariesDir, "/technologies/");
         PhrescoServerFactory.initialize();
         this.repManager = PhrescoServerFactory.getRepositoryManager();
         initContentsHomeMap();
+        context = new ServiceContext();
+        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service/rest");
+        context.put(ServiceClientConstant.SERVICE_USERNAME, "demouser");
+        context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
+        
     }
 
 	
 	private static void initInputExcelMap() {
 		INPUT_EXCEL_MAP.put(TechnologyTypes.PHP,"PHTN_PHRESCO_PHP.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.JAVA_WEBSERVICE,"PHTN_PHRESCO_Java-WebService.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MOBILE_WIDGET,"PHTN_PHRESCO_Java-WebService.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,"PHTN_PHRESCO_Java-WebService.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET,"PHTN_PHRESCO_Java-WebService.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.PHP_DRUPAL7,"PHTN_PHRESCO_Drupal7.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.SHAREPOINT,"PHTN_PHRESCO_Sharepoint.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_NATIVE,"PHTN_PHRESCO_Andriod-Native.xls");
@@ -132,15 +143,15 @@ public class TechnologyDataGenerator implements ServiceConstants {
 
 	private  void initContentsHomeMap() {
 
-		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP,new File(moduleBinariesDir, "php"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP_DRUPAL7, new File(moduleBinariesDir, "drupal"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.SHAREPOINT, new File(moduleBinariesDir, "sharepoint"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.ANDROID_NATIVE, new File(moduleBinariesDir, "android-native"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.IPHONE_NATIVE, new File(moduleBinariesDir, "iphone-native"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.NODE_JS_WEBSERVICE, new File(moduleBinariesDir, "nodejs-webservice"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.ANDROID_HYBRID, new File(moduleBinariesDir, "android-hybrid"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.WORDPRESS, new File(moduleBinariesDir, "wordpress"));
-		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP_DRUPAL6, new File(moduleBinariesDir, "drupal6"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP,new File(moduleBinariesDir, "php"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP_DRUPAL7, new File(moduleBinariesDir, "drupal"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.SHAREPOINT, new File(moduleBinariesDir, "sharepoint"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.ANDROID_NATIVE, new File(moduleBinariesDir, "android-native"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.IPHONE_NATIVE, new File(moduleBinariesDir, "iphone-native"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.NODE_JS_WEBSERVICE, new File(moduleBinariesDir, "nodejs-webservice"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.ANDROID_HYBRID, new File(moduleBinariesDir, "android-hybrid"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.WORDPRESS, new File(moduleBinariesDir, "wordpress"));
+//		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP_DRUPAL6, new File(moduleBinariesDir, "drupal6"));
 	}
 
 
@@ -160,27 +171,31 @@ public class TechnologyDataGenerator implements ServiceConstants {
 	}
 
 	public void generateModules(HSSFWorkbook workBook, String tech)
-			throws PhrescoException {
+			throws PhrescoException, IOException {
 		System.out.println("Generating modules for " + tech);
-		Modules modules = handleDependencies(createModules(tech, workBook));
-		writeTo(modules, tech);
-		System.out.println("Uploading Modules XML File For" + tech);
-		addModuleXml(tech);
-		System.out.println("Modules generated successfully for " + tech);
-
-		List <com.photon.phresco.service.jaxb.Module>moduleList = modules.getModule();
-		List <com.photon.phresco.service.model.Modules> modulesDataList = new ArrayList <com.photon.phresco.service.model.Modules> ();
-		for (com.photon.phresco.service.jaxb.Module tempModule:moduleList) {
-			com.photon.phresco.service.model.Modules modulesData = new com.photon.phresco.service.model.Modules ();
-			modulesData.setModuleId(tempModule.getId());
-			modulesDataList.add(modulesData);
-		}
+		List<ModuleGroup> moduleGroup = createModules(tech, workBook);
+		System.out.println("module group ... " + moduleGroup);
+		//writeTo(modules, tech);
+		Gson gson = new Gson();
+		String json = gson.toJson(moduleGroup);
+		System.out.println(json);
+//		FileWriter writer = new FileWriter(new File("D:/demo.json"));
+//		writer.write(json);
+//		writer.flush();
+//		writer.close();
+		/*serviceManager = ServiceClientFactory.getServiceManager(context);
+		RestClient<ModuleGroup> techClient = serviceManager.getRestClient("component/modules");
+		ClientResponse response = techClient.create(moduleGroup);*/
+		serviceManager = ServiceClientFactory.getServiceManager(context);
+		RestClient<ModuleGroup> techClient = serviceManager.getRestClient("component/modules");
+		ClientResponse response = techClient.create(moduleGroup);
+		System.out.println(response.getStatus());
 	}
 
-	private Modules createModules(String tech, HSSFWorkbook  workBook)
+	private List<ModuleGroup> createModules(String tech, HSSFWorkbook  workBook)
 			throws PhrescoException {
+		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
 		HSSFSheet sheet = workBook.getSheet(SHEET_NAME_MODULE);
-		Modules modules = new Modules();
 		Iterator<Row> rowsIter = sheet.rowIterator();
 		// Skipping first row
 		for (int i = 0; i < NO_OF_ROWS_TO_SKIP; i++) {
@@ -188,131 +203,126 @@ public class TechnologyDataGenerator implements ServiceConstants {
 		}
 		while (rowsIter.hasNext()) {
 			Row row = rowsIter.next();
-			Module module = createModule(tech, row);
-			if (module != null) {
-				modules.getModule().add(module);
+			ModuleGroup moduleGroup = createModuleGroup(tech, row);
+			if (moduleGroup != null) {
+				modules.add(moduleGroup);
 			}
 		}
 		return modules;
 	}
 
-	/**
-	 * Handle dependencies.
-	 *
-	 * @param modules
-	 *            the modules
-	 * @return the modules
-	 */
-	private Modules handleDependencies(Modules modules) {
-		Modules modifiedModules = new Modules();
-		List<Module> moduleList = modules.getModule();
-		for (Module module : moduleList) {
-			List<String> depModNameList = new ArrayList<String>();
-			String modName = module.getId();
-			String[] depList = NAME_AND_DEP_MAP.get(modName);
-			if (depList == null) {
-				modifiedModules.getModule().add(module);
-				continue;
-			}
-			for (String dep : depList) {
-				int depNo = (int) (Double.valueOf(dep).doubleValue());
-				String depModName = SNO_AND_NAME_MAP.get(String.valueOf(depNo));
-				depModNameList.add(depModName);
-			}
+//	/**
+//	 * Handle dependencies.
+//	 *
+//	 * @param modules
+//	 *            the modules
+//	 * @return the modulesr
+//	 */
+//	private Modules handleDependencies(Modules modules) {
+//		Modules modifiedModules = new Modules();
+//		List<Module> moduleList = modules.getModule();
+//		for (Module module : moduleList) {
+//			List<String> depModNameList = new ArrayList<String>();
+//			String modName = module.getId();
+//			String[] depList = NAME_AND_DEP_MAP.get(modName);
+//			if (depList == null) {
+//				modifiedModules.getModule().add(module);
+//				continue;
+//			}
+//			for (String dep : depList) {
+//				int depNo = (int) (Double.valueOf(dep).doubleValue());
+//				String depModName = SNO_AND_NAME_MAP.get(String.valueOf(depNo));
+//				depModNameList.add(depModName);
+//			}
+//
+//			if (!depModNameList.isEmpty()) {
+//				module.getDependentModules().addAll(depModNameList);
+//			}
+//
+//			modifiedModules.getModule().add(module);
+//		}
+//		return modifiedModules;
+//	}
 
-			if (!depModNameList.isEmpty()) {
-				module.getDependentModules().addAll(depModNameList);
-			}
-
-			modifiedModules.getModule().add(module);
-		}
-		return modifiedModules;
-	}
-
-	private Module createModule(String tech, Row row) throws PhrescoException {
+	private ModuleGroup createModuleGroup(String tech, Row row) throws PhrescoException {
 		if (S_LOGGER.isDebugEnabled()) {
 			S_LOGGER.debug("row " + row.getRowNum());
 		}
+		ModuleGroup moduleGroup = new ModuleGroup();
 		Cell serialNo = row.getCell(0);
 		if (serialNo == null || Cell.CELL_TYPE_BLANK == serialNo.getCellType()) {
 			return null;
 		}
 
 		String name = row.getCell(1).getStringCellValue();
-		String version = "1.0";
+//		String version = "1.0";
+//		Cell versionCell = row.getCell(2);
+//		if (versionCell == null) {
+//			System.out.println("Version is null for " + name);
+//		} else {
+//			version = getValue(versionCell);
+//			if (version == null) {
+//				System.out.println("Version is null for " + name);
+//				version = "1.0";
+//			}
+//		}
+		String[] versions = new String[]{"1.0"};
 		Cell versionCell = row.getCell(2);
-		if (versionCell == null) {
-			System.out.println("Version is null for " + name);
-		} else {
-			version = getValue(versionCell);
-			if (version == null) {
-				System.out.println("Version is null for " + name);
-				version = "1.0";
-			}
+		if (versionCell != null && Cell.CELL_TYPE_BLANK != versionCell.getCellType()) {
+			String version = getValue(versionCell);
+			versions = StringUtils.split(version,DELIMITER);
 		}
-
+		
 		String identifier = ID
 				+ row.getCell(1).getStringCellValue().toLowerCase()
-						.replace(STR_BLANK_SPACE, STR_UNDER_SCORE)
-				+ STR_UNDER_SCORE + version;
-		String no = String.valueOf(identifier);
+						.replace(STR_BLANK_SPACE, STR_UNDER_SCORE);
+	//	String no = String.valueOf(identifier);
+		
 		Cell requireds = row.getCell(3);
 		String strRequired = getValue(requireds);
 		Boolean required = convertBoolean(strRequired);
 
 		Cell cores = row.getCell(4);
 		Boolean core = convertBoolean(getValue(cores));
-		Module module = createModule(no, name, version, required, core);
+		
 
-		int sNoInt = (int) serialNo.getNumericCellValue();
-		SNO_AND_NAME_MAP.put(String.valueOf(sNoInt), identifier);
-
-		Cell depCell = row.getCell(5);
-		if (depCell != null && Cell.CELL_TYPE_BLANK != depCell.getCellType()) {
-			String depModules = getValue(depCell);
-			String[] depModuleIds = StringUtils.split(depModules,DELIMITER);
-			NAME_AND_DEP_MAP.put(identifier, depModuleIds);
-		}
-		Documents documents = new Documents();
+//		int sNoInt = (int) serialNo.getNumericCellValue();
+//		SNO_AND_NAME_MAP.put(String.valueOf(sNoInt), identifier);
+//
+//		Cell depCell = row.getCell(5);
+//		if (depCell != null && Cell.CELL_TYPE_BLANK != depCell.getCellType()) {
+//			String depModules = getValue(depCell);
+//			String[] depModuleIds = StringUtils.split(depModules,DELIMITER);
+//			NAME_AND_DEP_MAP.put(identifier, depModuleIds);
+//		} 
+		List<Documentation> documentations = new ArrayList<Documentation>();
+		Documentation documents ;
 		Cell helptext = row.getCell(9);
 		if (helptext != null && Cell.CELL_TYPE_BLANK != helptext.getCellType()) {
-			Document doc = new Document();
-			if (S_LOGGER.isDebugEnabled()) {
-				S_LOGGER.debug("no " + no);
-				S_LOGGER.debug("helptext.getCellType() "
-						+ helptext.getCellType());
-			}
+			documents = new Documentation();
 			String docContent = helptext.getStringCellValue();
-			String documentType = DocumentType.HELP_TEXT.name();
-			doc.setContent(docContent);
-			doc.setDocumentType(documentType);
-			documents.getDocument().add(doc);
+			documents.setContent(docContent);
+			documents.setType(DocumentationType.HELP_TEXT);
+			documentations.add(documents);
 		}
 		
 		Cell description = row.getCell(12);
         if (description != null && Cell.CELL_TYPE_BLANK != description.getCellType()) {
-            Document doc = new Document();
+        	documents = new Documentation();
             String docContent = description.getStringCellValue();
-            String documentType = DocumentType.DESCRIPTION.name();
-            doc.setContent(docContent);
-            doc.setDocumentType(documentType);
-            documents.getDocument().add(doc);
+            documents.setContent(docContent);
+            documents.setType(DocumentationType.DESCRIPTION);
+            documentations.add(documents);
             
         }
-        module.setDocuments(documents);
-        
+        String fileExt = null;
 		Cell filenameCell = row.getCell(13);
 		if (filenameCell != null
 				&& Cell.CELL_TYPE_BLANK != filenameCell.getCellType()) {
-			if (S_LOGGER.isDebugEnabled()) {
-				S_LOGGER.debug("no " + no);
-				S_LOGGER.debug("filename.getCellType() "
-						+ filenameCell.getCellType());
-			}
 
 			String filePath = filenameCell.getStringCellValue().trim();
 
-			String fileExt = "zip";
+			fileExt = "zip";
 			if (filePath.endsWith(".tar.gz")) {
 				fileExt = "tar.gz";
 			} else if (filePath.endsWith(".tar")) {
@@ -323,11 +333,8 @@ public class TechnologyDataGenerator implements ServiceConstants {
 				fileExt = "jar";
 			}
 			
-			String createContentURL = createContentURL(tech, module, "."
-					+ fileExt);
-			module.setContentURL(createContentURL);
-			System.out.println("Uploading Module : " + module.getContentURL());
-			publishModule(tech, module, filePath, fileExt);
+	//		System.out.println("Uploading Module : " + module.getContentURL());
+	//		publishModule(tech, module, filePath, fileExt);
 		}
 		/*Cell imagenameCell = row.getCell(14);
         if (imagenameCell != null
@@ -338,32 +345,52 @@ public class TechnologyDataGenerator implements ServiceConstants {
             module.setImageURL(imageUrl);
             publishImageFile(tech, module, imagePath);
             }*/
-        
+		String groupId = null;
 		Cell groupNameCell = row.getCell(14);
 		if (groupNameCell != null
 				&& Cell.CELL_TYPE_BLANK != groupNameCell.getCellType()) {
-			if (S_LOGGER.isDebugEnabled()) {
-				S_LOGGER.debug("no " + no);
-				S_LOGGER.debug("groupname.getCellType() "
-						+ groupNameCell.getCellType());
-			}
-			String groupId = groupNameCell.getStringCellValue();
-			module.setGroupId(groupId);
+			groupId = groupNameCell.getStringCellValue();
+			moduleGroup.setGroupId(groupId);
 		}
-
-		Cell artifactCell = row.getCell(14);
+		
+		String artifactId = null;
+		Cell artifactCell = row.getCell(1);
 		if (artifactCell != null
 				&& Cell.CELL_TYPE_BLANK != artifactCell.getCellType()) {
-			if (S_LOGGER.isDebugEnabled()) {
-				S_LOGGER.debug("no " + no);
-				S_LOGGER.debug("artifact name.getCellType() "
-						+ artifactCell.getCellType());
-			}
-			String artifactId = artifactCell.getStringCellValue();
-			module.setArtifactId(artifactId);
+			artifactId = artifactCell.getStringCellValue();
+			moduleGroup.setArtifactId(artifactId);
 		}
-		return module;
+		Module module = new Module();
+		module.setName(name);
+		module.setGroupId(groupId);
+		module.setArtifactId(artifactId);
+		module.setCore(core);
+		module.setRequired(required);
+		List<Module> modules = createModule(versions, tech, fileExt, identifier, module);
+		moduleGroup.setTechId(tech);
+		moduleGroup.setName(name);
+		moduleGroup.setType("module");
+		moduleGroup.setVersions(modules);
+		moduleGroup.setDocs(documentations);
+		moduleGroup.setModuleId(identifier);
+		return moduleGroup;
 	}
+
+	private List<Module> createModule(String[] versions, String tech, String ext, String id, Module module) {
+		List<Module> modules = new ArrayList<Module>();
+		String contentUrl  = null;
+		for (String version : versions) {
+			module.setVersion(version);
+			if(tech != TechnologyTypes.JAVA_WEBSERVICE) {
+				contentUrl = "/modules/" + tech + "/files/" + id + version + "/"+ version + "/" + id + version + "-" + version + "." + ext; 
+			}
+			module.setContentURL(contentUrl);
+			modules.add(module);
+		}
+		return modules;
+		
+	}
+
 
 	private void publishImageFile(String tech, Module module, String imagePath) throws PhrescoException {
 	    File root = CONTENTS_HOME_MAP.get(tech);
@@ -432,36 +459,36 @@ public class TechnologyDataGenerator implements ServiceConstants {
 		return null;
 	}
 
-	private Module createModule(String id, String mod, String version,
-			Boolean required, Boolean core) {
-		Module module = new Module();
-		module.setId(id);
-		module.setName(mod);
-		module.setVersion(version);
-		module.setRequired(required);
-		module.setCore(core);
-		return module;
-	}
+//	private Module createModule(String id, String mod, String[] versions, String version,
+//			Boolean required, Boolean core, String tech, String fileExt) {
+//		Module module = new Module();
+//		module.setId(id);
+//		module.setName(mod);
+//		module.setVersion(version);
+//		module.setRequired(required);
+//		module.setCore(core);
+//		return module;
+//	}
 
-	private void writeTo(Modules modules, String tech) throws PhrescoException {
-		try {
-			File outFile = new File(outputRootDir, "modules/" + tech + ".xml");
-			System.out.println("Writing Modules to " + outFile.toString());
-
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance("com.photon.phresco.service.jaxb");
-			Marshaller marshaller = jaxbContext.createMarshaller();
-			JAXBElement<Modules> jaxbApptype = new ObjectFactory()
-					.createModules(modules);
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					Boolean.TRUE);
-			marshaller.marshal(jaxbApptype, outFile);
-		} catch (PropertyException e) {
-			throw new PhrescoException(e);
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		}
-	}
+//	private void writeTo(Modules modules, String tech) throws PhrescoException {
+//		try {
+//			File outFile = new File(outputRootDir, "modules/" + tech + ".xml");
+//			System.out.println("Writing Modules to " + outFile.toString());
+//
+//			JAXBContext jaxbContext = JAXBContext
+//					.newInstance("com.photon.phresco.service.jaxb");
+//			Marshaller marshaller = jaxbContext.createMarshaller();
+//			JAXBElement<Modules> jaxbApptype = new ObjectFactory()
+//					.createModules(modules);
+//			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//					Boolean.TRUE);
+//			marshaller.marshal(jaxbApptype, outFile);
+//		} catch (PropertyException e) {
+//			throw new PhrescoException(e);
+//		} catch (JAXBException e) {
+//			throw new PhrescoException(e);
+//		}
+//	}
 
 	public final void generateAll() throws PhrescoException {
 		for (String tech : INPUT_EXCEL_MAP.keySet()) {
@@ -555,7 +582,7 @@ public class TechnologyDataGenerator implements ServiceConstants {
 	}
 	
 	public static void main(String[] args) throws PhrescoException {
-	    File toolsHome = new File("D:\\work\\phresco\\agra\\service\\trunk\\phresco-service-runner\\delivery\\tools\\");
+	    File toolsHome = new File("D:\\work\\phresco\\master\\service\\phresco-service-runner\\delivery\\tools\\");
 	    File binariesDir = new File("D:\\work\\phresco\\Phresco-binaries\\");
         File inputRootDir = new File(toolsHome, "files");
         File outputRootDir = new File(toolsHome, "repo");

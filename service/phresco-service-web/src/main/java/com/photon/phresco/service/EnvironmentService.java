@@ -30,10 +30,10 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.configuration.Environment;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
 @Path("/settings/env")
-public class EnvironmentService implements ServiceConstants {
+public class EnvironmentService implements ServerConstants {
 
     private static final Logger S_LOGGER = Logger.getLogger(EnvironmentService.class);
     private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();

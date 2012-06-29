@@ -27,7 +27,7 @@
 	<groupId>com.photon.phresco.eShop</groupId>
 	<artifactId>eShopRobotiumPerfTest</artifactId>
 	<packaging>apkperf</packaging>
-	<version>1.0.7003</version>
+	<version>2.0.0.1000-SNAPSHOT</version>
 	<name>eShopRobotiumPerfTest</name>
 	<properties>
     	<android.version>2.3.3</android.version>

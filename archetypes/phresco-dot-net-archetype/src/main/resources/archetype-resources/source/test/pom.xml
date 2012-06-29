@@ -22,12 +22,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.photon.phresco</groupId>
 	<artifactId>Phresco</artifactId>
-<<<<<<< HEAD
 	<version>2.0.0.1000-SNAPSHOT</version>
-=======
-	<version>1.2.0.2000-SNAPSHOT</version>
->>>>>>> remotes/origin/boston
-    
+
     <properties>
         <visual.studio.solution>source/Phresco.Sharepoint.sln</visual.studio.solution>
         <visual.test.project.pattern>test/functional/*.Tests;*Test</visual.test.project.pattern>
@@ -48,14 +44,9 @@
 			<plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>sharepoint-maven-plugin</artifactId>
-<<<<<<< HEAD
-                <version>2.0.0.1000-SNAPSHOT</version>
-=======
-                <version>1.2.0.2000-SNAPSHOT</version>
->>>>>>> remotes/origin/boston
+                <version>2.0.0.1000-SNAPSHOT</version>            
                 <extensions>true</extensions>
-            </plugin>
-            
+            </plugin>            
         </plugins>
     </build>
 	
