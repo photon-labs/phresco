@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
+import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
 import com.photon.phresco.model.AppType;
@@ -22,7 +23,12 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.util.ServiceConstants;
+>>>>>>> Stashed changes
 
 
 public class ComponentServiceTest extends DbService implements ServerConstants{
@@ -500,6 +506,25 @@ public class ComponentServiceTest extends DbService implements ServerConstants{
 		String id = "4fe8262e230d8aa51d425aa1";
 		mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
+	}
+	
+	@Test
+	public void testGetModuleById() {
+		String techId = "tech-php";
+		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
+		try {
+			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+			
+			for (ModuleGroup moduleGroup : modulesList) {
+				if(moduleGroup.getTechId().equals(techId) ) {
+					modules.add(moduleGroup);
+				}
+			}
+			String json = new Gson().toJson(modules);
+			System.out.println(json);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }

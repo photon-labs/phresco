@@ -23,12 +23,19 @@
     </distributionManagement>
 
     <dependencies>
+    
         <dependency>
             <groupId>com.photon.phresco.commons</groupId>
             <artifactId>phresco-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+  
+        <dependency>
+	        <groupId>com.photon.phresco</groupId>
+        	<artifactId>phresco-ldap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+      
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>

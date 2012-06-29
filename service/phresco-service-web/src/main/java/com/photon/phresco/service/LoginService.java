@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service;
 
+<<<<<<< Updated upstream
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -45,6 +46,25 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
+=======
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.photon.phresco.commons.model.User;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.util.AuthenticationUtil;
+import com.photon.phresco.service.util.ServerConstants;
+import com.photon.phresco.util.Credentials;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
+>>>>>>> Stashed changes
 
 @Path("/login")
 public class LoginService {

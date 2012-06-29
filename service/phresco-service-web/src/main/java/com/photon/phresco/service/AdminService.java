@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service;
 
+<<<<<<< Updated upstream
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,6 +44,32 @@ import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.log4j.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.model.AdminConfigInfo;
+import com.photon.phresco.model.LogInfo;
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.util.ServerConstants;
+>>>>>>> Stashed changes
 
 /**
  * Admin config file and Log service"

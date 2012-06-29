@@ -39,24 +39,32 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.codehaus.plexus.util.StringUtils;
 
+import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.Documentation;
+import com.photon.phresco.model.Documentation.DocumentationType;
+import com.photon.phresco.model.Module;
+import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.jaxb.Document;
-import com.photon.phresco.service.jaxb.Documents;
-import com.photon.phresco.service.jaxb.Libraries;
-import com.photon.phresco.service.jaxb.Library;
-import com.photon.phresco.service.jaxb.ObjectFactory;
+import com.photon.phresco.service.client.api.ServiceClientConstant;
+import com.photon.phresco.service.client.api.ServiceContext;
+import com.photon.phresco.service.client.api.ServiceManager;
+import com.photon.phresco.service.client.factory.ServiceClientFactory;
+import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.DocumentType;
 import com.photon.phresco.util.TechnologyTypes;
+import com.sun.jersey.api.client.ClientResponse;
 
 public class JsLibraryGenerator {
 
 	private static final String id1 = "jslib_";
 	private static final int noOfRowsToSkip = 1;
 	private static final String JSLIBRARY = "JSLibraries";
+	private static final String DELIMITER = ",";
 	static final Map<String, String> INPUT_EXCEL_MAP = new HashMap<String, String>(16);
 	private static final String JS_LIBRARY_EXCEL_FILE = "PHTN_PHRESCO_JS-Libraries.xls";
 	private static final String OUTPUT_XML_FILE = "jslibrary.xml";
@@ -65,6 +73,8 @@ public class JsLibraryGenerator {
 	private File outFile;
 	private File inputDir;
 	private File binariesDir;
+	private ServiceManager serviceManager = null;
+	private ServiceContext context = null;
 
 	static final Map<String, File> contentsHomeMap = new HashMap<String, File>(
 			16);
@@ -80,16 +90,22 @@ public class JsLibraryGenerator {
 		PhrescoServerFactory.initialize();
 		initContentsHomeMap();
 		initInputExcelMap();
+		context = new ServiceContext();
+        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service/rest");
+        context.put(ServiceClientConstant.SERVICE_USERNAME, "demouser");
+        context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
 	}
 	
 	private static void initInputExcelMap() {
-	    INPUT_EXCEL_MAP.put(TechnologyTypes.PHP,"PHTN_PHRESCO_JS-Libraries.xls");
+//	    INPUT_EXCEL_MAP.put(TechnologyTypes.PHP,"PHTN_PHRESCO_JS-Libraries.xls");
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_HYBRID,"PHTN_PHRESCO_JS-Libraries.xls");
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_HYBRID,"PHTN_PHRESCO_JS-Libraries.xls");
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_NATIVE,"PHTN_PHRESCO_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MOBILE_WIDGET,"PHTN_PHRESCO_Html5_Mobile_Widget_JS-Libraries.xls");
-        INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
-        INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET, "PHTN_PHRESCO_Html5_Yui_Widget_JS-Libraries.xls");
+        INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,"PHTN_PHRESCO_Html5_Mobile_Widget_JS-Libraries.xls");
+        INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET,"PHTN_PHRESCO_Html5_Mobile_Widget_JS-Libraries.xls");
+       // INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
+       // INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET, "PHTN_PHRESCO_Html5_Yui_Widget_JS-Libraries.xls");
     }
 	
 	private  void initContentsHomeMap() {
@@ -105,12 +121,8 @@ public class JsLibraryGenerator {
 
 
 	private void generate(String tech) throws PhrescoException {
-	    Libraries libraries = new Libraries();
-        Library library = new Library();
-        com.photon.phresco.service.model.Library libraryData = new com.photon.phresco.service.model.Library ();
-        com.photon.phresco.service.model.Libraries librariesData = new com.photon.phresco.service.model.Libraries ();
-        List <com.photon.phresco.service.model.Library> libraryList = new ArrayList <com.photon.phresco.service.model.Library> ();
-        List <com.photon.phresco.service.model.Libraries> librariesList = new ArrayList <com.photon.phresco.service.model.Libraries> ();
+		ModuleGroup moduleGroup = new ModuleGroup();
+		List<ModuleGroup> jsLibs = new ArrayList<ModuleGroup>();
         workBook = getWorkBook(tech);
         HSSFSheet sheet = workBook.getSheet(JSLIBRARY);
         Iterator<Row> rowIterator = sheet.rowIterator();
@@ -120,14 +132,16 @@ public class JsLibraryGenerator {
 
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-            library = createJSLibrary(row);
-            libraryList.add(libraryData);
-            libraryList.add(libraryData);
-            librariesList.add(librariesData);
-            libraries.getLibrary().add(library);
+            moduleGroup = createJSLibrary(row, tech);
+            jsLibs.add(moduleGroup);
         }
-        writeTo(libraries, tech);
-        uploadToRepository(libraries, tech);
+        serviceManager = ServiceClientFactory.getServiceManager(context);
+		RestClient<ModuleGroup> techClient = serviceManager.getRestClient("component/modules");
+		ClientResponse response = techClient.create(jsLibs);
+		System.out.println(tech + "Uploaded Successfully................");
+		System.out.println(response.getStatus());
+//        writeTo(libraries, tech);
+//        uploadToRepository(libraries, tech);
         
     }
 
@@ -142,31 +156,31 @@ public class JsLibraryGenerator {
         return workBook;
     }
 
-    private void uploadToRepository(Libraries libraries, String tech)
-			throws PhrescoException {
+//    private void uploadToRepository(Libraries libraries, String tech)
+//			throws PhrescoException {
+//
+//		ArtifactInfo info = new ArtifactInfo("jslibraries", tech, "",
+//				"xml", "0.1");
+//		manager.addArtifact(info, new File(outFile, tech + ".xml"));
+//
+//	}
 
-		ArtifactInfo info = new ArtifactInfo("jslibraries", tech, "",
-				"xml", "0.1");
-		manager.addArtifact(info, new File(outFile, tech + ".xml"));
-
-	}
-
-	private void writeTo(Libraries libraries, String tech) throws PhrescoException {
-		try {
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance("com.photon.phresco.service.jaxb");
-			Marshaller marshaller = jaxbContext.createMarshaller();
-			JAXBElement<Libraries> jaxbApptype = new ObjectFactory()
-					.createLibraries(libraries);
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					Boolean.TRUE);
-			marshaller.marshal(jaxbApptype, new File(outFile, tech + ".xml"));
-		} catch (PropertyException e) {
-			throw new PhrescoException(e);
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		}
-	}
+//	private void writeTo(Libraries libraries, String tech) throws PhrescoException {
+//		try {
+//			JAXBContext jaxbContext = JAXBContext
+//					.newInstance("com.photon.phresco.service.jaxb");
+//			Marshaller marshaller = jaxbContext.createMarshaller();
+//			JAXBElement<Libraries> jaxbApptype = new ObjectFactory()
+//					.createLibraries(libraries);
+//			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//					Boolean.TRUE);
+//			marshaller.marshal(jaxbApptype, new File(outFile, tech + ".xml"));
+//		} catch (PropertyException e) {
+//			throw new PhrescoException(e);
+//		} catch (JAXBException e) {
+//			throw new PhrescoException(e);
+//		}
+//	}
 
 	private String getValue(Cell cell) {
 		if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
@@ -180,25 +194,22 @@ public class JsLibraryGenerator {
 		return null;
 	}
 
-	private Library createJSLibrary(Row row) throws PhrescoException {
+	private ModuleGroup createJSLibrary(Row row, String techId) throws PhrescoException {
+		ModuleGroup moduleGroup = new ModuleGroup();
 		Cell serialNo = row.getCell(0);
 		if (serialNo == null || Cell.CELL_TYPE_BLANK == serialNo.getCellType()) {
 			return null;
 		}
 
 		String name = row.getCell(1).getStringCellValue();
-		String version = "1.0";
+		String[] versions = new String[]{"1.0"};
 		Cell versionCell = row.getCell(2);
-		if (versionCell == null) {
-			System.out.println("Version is null for " + name);
-		} else {
-			version = getValue(versionCell);
-			if (version == null) {
-				System.out.println("Version is null for " + name);
-				version = "1.0";
-			}
+		if (versionCell != null && Cell.CELL_TYPE_BLANK != versionCell.getCellType()) {
+			String version = getValue(versionCell);
+			versions = StringUtils.split(version,DELIMITER);
 		}
-		Boolean req = null;
+		
+		Boolean req = false;
 		Cell required = row.getCell(9);
         if (required != null && Cell.CELL_TYPE_BLANK != required.getCellType()) {
             req = convertBoolean(getValue(required));
@@ -208,33 +219,31 @@ public class JsLibraryGenerator {
 				+ row.getCell(1).getStringCellValue().toLowerCase();
 		String no = String.valueOf(identifier);
 
-		Library library = createJslibrary(no, name, version, req);
-		Documents documents = new Documents();
-		
+		List<Documentation> documentations = new ArrayList<Documentation>();
+		Documentation documents ;
 		Cell helptext = row.getCell(7);
 		if (helptext != null && Cell.CELL_TYPE_BLANK != helptext.getCellType()) {
-			Document doc = new Document();
-			doc.setContent(helptext.getStringCellValue());
-			doc.setDocumentType(DocumentType.HELP_TEXT.name());
-			documents.getDocument().add(doc);
+			documents = new Documentation();
+			documents.setContent(helptext.getStringCellValue());
+			documents.setType(DocumentationType.HELP_TEXT);
+			documentations.add(documents);
 		}
 		
 		Cell description = row.getCell(4);
         if (description != null && Cell.CELL_TYPE_BLANK != description.getCellType()) {
-            Document doc = new Document();
-            doc.setContent(description.getStringCellValue());
-            doc.setDocumentType(DocumentType.DESCRIPTION.name());
-            documents.getDocument().add(doc);
+        	documents = new Documentation();
+        	documents.setContent(description.getStringCellValue());
+        	documents.setType(DocumentationType.DESCRIPTION);
+        	documentations.add(documents);
         }
-        
-		library.setDocuments(documents);
+        String fileExt = "zip";
 		Cell filenameCell = row.getCell(8);
 		if (filenameCell != null
 				&& Cell.CELL_TYPE_BLANK != filenameCell.getCellType()) {
 
 			String filePath = filenameCell.getStringCellValue().trim();
 
-			String fileExt = "zip";
+			
 			if (filePath.endsWith(".tar.gz")) {
 				fileExt = "tar.gz";
 			} else if (filePath.endsWith(".tar")) {
@@ -244,15 +253,32 @@ public class JsLibraryGenerator {
 			} else if (filePath.endsWith(".jar")) {
 				fileExt = "jar";
 			}
-			String contentUrl = "/jslibraries/files/" + no +"/"+ version + "/"+ no + "-" + version + "." + fileExt;
 
-			library.setContentURL(contentUrl);
 			System.out.println("Uploading jslibrary : "	+ filePath);
-			publishJSLibrary(library, filePath, fileExt ,filePath);
+	//		publishJSLibrary(library, filePath, fileExt ,filePath);
 		}
-		return library;
+		List<Module> moduleVersions = createModules(name, versions, fileExt, no);
+		moduleGroup.setModuleId(no);
+		moduleGroup.setName(name);
+		moduleGroup.setRequired(req);
+		moduleGroup.setTechId(techId);
+		moduleGroup.setType("js");
+		moduleGroup.setDocs(documentations);
+		return moduleGroup;
 	}
 
+
+	private List<Module> createModules(String name, String[] versions,
+			String fileExt, String no) {
+		Module module = new Module();
+		for (String version : versions) {
+			module.setName(name);
+			module.setContentType(fileExt);
+			String contentUrl = "/jslibraries/files/" + no +"/"+ version + "/"+ no + "-" + version + "." + fileExt;
+			module.setContentURL(contentUrl);
+		}
+		return null;
+	}
 
 	private Boolean convertBoolean(String value) {
 	    if ("Yes".equalsIgnoreCase(value)) {
@@ -262,37 +288,37 @@ public class JsLibraryGenerator {
         return Boolean.FALSE;
     }
 
-    private void publishJSLibrary(Library library, String fileURL, String ext ,String filepath)
-			throws PhrescoException {
-		File root = contentsHomeMap.get("js-libraries");
-		File artifact = new File(root, filepath);
-		System.out.println("URL = " + artifact.getPath());
-		if (!artifact.exists()) {
-			System.out.println("Library not exist : " + library.getName()	+ " filePath: " + fileURL);
-			System.out.println("artifact.toString() " + artifact.toString());
-			return;
-		}
-
-		ArtifactInfo info = new ArtifactInfo("jslibraries." + ".files",
-				library.getId(), "", ext, library.getVersion());
-		manager.addArtifact(info, artifact);
-		System.out.println("library : " + library.getName() + " filePath: "
-				+ fileURL + " added succesfully");
-	}
-
-	private Library createJslibrary(String id, String mod, String version, Boolean req) {
-		Library library = new Library();
-		library.setId(id);
-		library.setName(mod);
-		library.setVersion(version);
-		library.setRequired(req);
-		return library;
-	}
+//    private void publishJSLibrary(Library library, String fileURL, String ext ,String filepath)
+//			throws PhrescoException {
+//		File root = contentsHomeMap.get("js-libraries");
+//		File artifact = new File(root, filepath);
+//		System.out.println("URL = " + artifact.getPath());
+//		if (!artifact.exists()) {
+//			System.out.println("Library not exist : " + library.getName()	+ " filePath: " + fileURL);
+//			System.out.println("artifact.toString() " + artifact.toString());
+//			return;
+//		}
+//
+//		ArtifactInfo info = new ArtifactInfo("jslibraries." + ".files",
+//				library.getId(), "", ext, library.getVersion());
+//		manager.addArtifact(info, artifact);
+//		System.out.println("library : " + library.getName() + " filePath: "
+//				+ fileURL + " added succesfully");
+//	}
+//
+//	private Library createJslibrary(String id, String mod, String version, Boolean req) {
+//		Library library = new Library();
+//		library.setId(id);
+//		library.setName(mod);
+//		library.setVersion(version);
+//		library.setRequired(req);
+//		return library;
+//	}
 
 	public static void main(String[] args) throws PhrescoException, IOException {
 		//File inputFile = new File(
 				//"D:\\work\\phresco\\source\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");
-		File inputFile = new File("D:\\work\\phresco\\agra\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");
+		File inputFile = new File("D:\\work\\phresco\\master\\service\\phresco-service-runner\\delivery\\tools\\files\\");
 
 		//File outFile = new File(
 				//"D:\\work\\phresco\\source\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");

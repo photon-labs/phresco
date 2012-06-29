@@ -1,7 +1,14 @@
 package com.photon.phresco.service.rest.api;
 
+<<<<<<< Updated upstream
+=======
+import java.io.DataInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+>>>>>>> Stashed changes
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -28,7 +36,12 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.util.ServiceConstants;
+>>>>>>> Stashed changes
 
 @Component
 @Path(ServerConstants.REST_API_COMPONENT)
@@ -69,15 +82,38 @@ public class ComponentService extends DbService implements ServerConstants{
 	 * @return 
 	 */
 	@POST
-	@Consumes (MediaType.APPLICATION_JSON)
+	@Consumes ({MediaType.APPLICATION_JSON, MediaType.MULTIPART_FORM_DATA})
 	@Path(REST_API_APPTYPES)
-	public Response createAppTypes(List<ApplicationType> appTypes) {
+	public Response createAppTypes(@Context HttpServletRequest request, List<ApplicationType> appTypes) {
 		S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
-		try {
-			mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
-		} catch (Exception e) {
-			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
-		}
+		
+		String contentType = request.getContentType();
+        System.out.println ("contentType----" + contentType);
+        String distFilePath = "C://fileupload//test.jar"; //Property file or DB entry
+        if((contentType != null)){
+            System.out.println ("file uploading service successfull-----");
+            try {
+            	DataInputStream in = new DataInputStream(request.getInputStream());
+                int formDataLength = request.getContentLength();
+                System.out.println ("byte size-->"  + formDataLength);
+                byte dataBytes[] = new byte[formDataLength];
+                int byteRead = 0;
+                byteRead = in.read(dataBytes);
+                FileOutputStream fileOutStream = new FileOutputStream(distFilePath);
+                fileOutStream.write (dataBytes);
+                fileOutStream.flush();
+                fileOutStream.close();
+            } catch (Exception e) {
+				// TODO: handle exception
+			}
+            
+        }
+		
+//		try {
+//			mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
+//		} catch (Exception e) {
+//			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
+//		}
 		return Response.status(Response.Status.CREATED).build();
 	}
 	

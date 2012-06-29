@@ -35,6 +35,7 @@
  ******************************************************************************/
 package com.photon.phresco.service.impl;
 
+<<<<<<< Updated upstream
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -115,6 +116,62 @@ import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.FileUtil;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+=======
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.apache.maven.repository.internal.MavenRepositorySystemSession;
+import org.codehaus.plexus.DefaultPlexusContainer;
+import org.codehaus.plexus.PlexusContainerException;
+import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
+import org.sonatype.aether.RepositorySystem;
+import org.sonatype.aether.RepositorySystemSession;
+import org.sonatype.aether.artifact.Artifact;
+import org.sonatype.aether.deployment.DeployRequest;
+import org.sonatype.aether.deployment.DeploymentException;
+import org.sonatype.aether.repository.Authentication;
+import org.sonatype.aether.repository.LocalRepository;
+import org.sonatype.aether.repository.RemoteRepository;
+import org.sonatype.aether.util.artifact.DefaultArtifact;
+import org.sonatype.aether.util.artifact.SubArtifact;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.AdminConfigInfo;
+import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.ModuleGroup;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.SettingsTemplate;
+import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.model.ArtifactInfo;
+import com.photon.phresco.service.model.ServerConfiguration;
+import com.photon.phresco.service.util.ServerConstants;
+import com.photon.phresco.util.FileUtil;
+import com.photon.phresco.util.TechnologyTypes;
+import com.photon.phresco.util.Utility;
+>>>>>>> Stashed changes
 
 public class RepositoryManagerImpl implements RepositoryManager {
 
@@ -133,11 +190,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	private Gson gson = null;
 
 	// TODO:Add ehcaching
-	private static HashMap<String, Technology> techCache = new HashMap<String, Technology>(16);
 	private static HashMap<String, ModuleGroup> modulesCache = new HashMap<String, ModuleGroup>(16);
-	private static HashMap<String, Documents> docsCache = new HashMap<String, Documents>(16);
-	private static HashMap<String, Library> libCache = new HashMap<String, Library>(16);
-	private static HashMap<String, Library> jsLibCache = new HashMap<String, Library>(16);
 	private static Map<String, String[]> versionMap = new HashMap<String, String[]>(16);
 
 	private String url;
@@ -190,6 +243,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		this.username = username;
 		this.password = password;
 	}
+<<<<<<< Updated upstream
 	
 	@Override
 	public ArchetypeInfo getArchetype(ProjectInfo info) {
@@ -597,6 +651,8 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		info.add(projectInfo);
 		return info;
 	}
+=======
+>>>>>>> Stashed changes
 
 	// TODO:Initialize only once on the constructor
 	private RepositorySystem newRepositorySystem() throws PhrescoException {
@@ -624,7 +680,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		return session;
 	}
 
-	@Override
 	public String addArtifact(ArtifactInfo info, File artifactFile) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method RepositoryManagerImpl.addArtifact(ArtifactInfo info, File artifactFile)");
@@ -730,84 +785,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 			S_LOGGER.debug("getArtifactAsStream =" + filePath, e);
 			throw new PhrescoException(e);
 		}
-	}
-
-	@Override
-	public void addModule(String techId, Module module, File moduleContent, File modulePOM) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.addModule(String techId, Module module, File moduleContent, File modulePOM)");
-		}
-		if (isDebugEnabled) {
-			S_LOGGER.debug("addModule() moduleContent=" + moduleContent.getPath());
-		}
-		String fileExt = getFileExt(moduleContent);
-
-		Modules jaxbModules = getJAXBModules(techId);
-		module.setContentURL(createContentURL(techId, module, "." + fileExt));
-		jaxbModules.getModule().add(module);
-
-		File outFile = getTempFile();
-		try {
-
-			JAXBElement<Modules> modulesToWrite = new ObjectFactory().createModules(jaxbModules);
-			marshal.marshal(modulesToWrite, outFile);
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		}
-
-		// upload the archived module content
-		ArtifactInfo info = new ArtifactInfo("modules." + techId + ".files", module.getId(), "", fileExt, module
-				.getVersion());
-		if (isDebugEnabled) {
-			S_LOGGER.debug("addModule() modulePom=" + modulePOM.getPath());
-		}
-		info.setPomFile(modulePOM);
-		addArtifact(info, moduleContent);
-
-		// upload the updated XML file
-		ArtifactInfo fileInfo = new ArtifactInfo("modules", techId, "", "xml", "0.1");
-		addArtifact(fileInfo, outFile);
-
-		outFile.delete();
-	}
-
-	private File getTempFile() {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getTempFile()");
-		}
-		String systemTemp = Utility.getSystemTemp();
-		File outFile = new File(systemTemp, UUID.randomUUID().toString().concat(XML));
-		return outFile;
-	}
-
-	private String getFileExt(File moduleContent) {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getFileExt(File moduleContent)");
-		}
-		if (isDebugEnabled) {
-			S_LOGGER.debug("getFileExt() moduleContent=" + moduleContent.getPath());
-		}
-		String filePath = moduleContent.getName();
-		String fileExt = "zip";
-		if (filePath.endsWith(".tar.gz")) {
-			fileExt = "tar.gz";
-		} else if (filePath.endsWith(".tar")) {
-			fileExt = "tar";
-		} else if (filePath.endsWith(".zip")) {
-			fileExt = "zip";
-		}
-
-		return fileExt;
-	}
-
-	private String createContentURL(String tech, Module module, String ext) {
-		return "/modules/" + tech + "/files/" + module.getId() + "/" + module.getVersion() + "/" + module.getId() + "-"
-				+ module.getVersion() + ext;
-	}
-
-	@Override
-	public void removeModule(String techId, Module modules) throws PhrescoException {
-		throw new UnsupportedOperationException("Not Yet Implemented");
 	}
 
 	@Override
@@ -917,33 +894,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		return config.getEmailExtFile();
 	} 
 	
-	public void addApplicationTypes(List<ApplicationType> apptypes) throws PhrescoException {
-		// Read the ApplicationTypes from Nexus
-		// List<ApplicationType>
-		// add ApplicationTypes to the list
-		// upload the ApplicationTypes
-	}
-
-	public void addLibrary(String techId, Module module, File moduleContent, File modulePOM) throws PhrescoException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void removeLibrary(String techId, Module modules) throws PhrescoException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void addJsLibrary(String techId, Module module, File moduleContent, File modulePOM) throws PhrescoException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void removeJsLibrary(String techId, Module modules) throws PhrescoException {
-		// TODO Auto-generated method stub
-
-	}
-
 	public List<ProjectInfo> addPilotProjects(String techId) throws PhrescoException {
 		// TODO Auto-generated method stub
 		return null;
@@ -952,12 +902,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	public void addTechnology(String apptype, com.photon.phresco.model.Technology tech) throws PhrescoException {
 		// TODO Auto-generated method stub
 	}
-
-	public void addPilotProjects(String techId, List<ProjectInfo> projectInfos) throws PhrescoException {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	public void addVideo(VideoInfo videoInfo, File dirPath) throws PhrescoException {
 		boolean exist = isExist(ServerConstants.HOMEPAGE_JSON_FILE);
 
@@ -1080,5 +1025,24 @@ public class RepositoryManagerImpl implements RepositoryManager {
         // TODO Auto-generated method stub
         return config.getServerContextName();
     }
+
+	@Override
+	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addApplicationTypes(List<ApplicationType> apptypes)
+			throws PhrescoException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ProjectInfo> getPilotProjects(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

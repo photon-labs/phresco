@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service;
 
+<<<<<<< Updated upstream
 import java.util.List;
 
 import javax.ws.rs.POST;
@@ -34,6 +35,23 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import java.util.List;
+
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONException;
+
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.util.ServerConstants;
+>>>>>>> Stashed changes
 
 /**
  * Example resource class hosted at the URI path "/apps"

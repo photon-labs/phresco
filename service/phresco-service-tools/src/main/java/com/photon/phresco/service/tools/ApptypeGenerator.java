@@ -37,12 +37,14 @@ package com.photon.phresco.service.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
+import com.photon.phresco.service.model.Documents;
 import com.photon.phresco.util.TechnologyTypes;
 
 public class ApptypeGenerator {
@@ -65,17 +67,17 @@ public class ApptypeGenerator {
     "PHP can be deployed on most web servers and as a standalone interpreter, on almost every operating system and platform free of charge.";
 
 //    private static final Map<String, Documents> documentMap = new HashMap<String, Documents>();
+//
+//    static {
+//        initDocumentMap();
+//    }
 
-    static {
-        initDocumentMap();
-    }
-
-    private static void initDocumentMap() {
+//    private static void initDocumentMap() {
 //        documentMap.put(TechnologyTypes.PHP, createPHPDoc());
 //        documentMap.put(TechnologyTypes.PHP_DRUPAL7, createDrupalDoc());
 //        documentMap.put(TechnologyTypes.NODE_JS, createNodejsDoc());
 //        documentMap.put(TechnologyTypes.SHAREPOINT, createSharepointDoc());
-    }
+//    }
 
 
 

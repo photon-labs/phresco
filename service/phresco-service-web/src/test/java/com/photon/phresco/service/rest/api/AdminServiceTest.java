@@ -7,16 +7,28 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+<<<<<<< Updated upstream
+=======
+import org.junit.Ignore;
+>>>>>>> Stashed changes
 import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
+import com.google.gson.Gson;
 import com.photon.phresco.commons.model.Customer;
+import com.photon.phresco.commons.model.Role;
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.util.Credentials;
+import com.photon.phresco.util.ServiceConstants;
+>>>>>>> Stashed changes
 
 public class AdminServiceTest extends DbService implements ServerConstants{
 	
@@ -244,5 +256,52 @@ public class AdminServiceTest extends DbService implements ServerConstants{
 		mongoOperation.remove(DOWNLOAD_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
+	
+	@Ignore
+	public void testCreateUsers() {
+		List<User> users = new ArrayList<User>();
+		User user = new User("jeb", "from service");
+		User user1 = new User("bharath", "from framework");
+		List<Customer> customers = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME, Customer.class);
+		System.out.println(customers);
+		user.setCustomers(customers);
+		List<Role> roles = mongoOperation.getCollection("roles", Role.class);
+		System.out.println(roles);
+		user.setRoles(roles);
+		users.add(user);
+		users.add(user1);
+		String json = new Gson().toJson(users);
+		System.out.println(json);
+		//mongoOperation.insertList(USERS_COLLECTION_NAME, users);
+	}
+	
+	@Ignore
+	public void createRoles() {
+		List<Role> roles = new ArrayList<Role>();
+		Role role = new Role("developer", "developer");
+		Role role1 = new Role("manager", "manager");
+		roles.add(role);
+		roles.add(role1);
+		mongoOperation.insertList("roles", roles);
+	}
+	
+	@Ignore
+	public void createCustomer() {
+		List<Customer> customers = new ArrayList<Customer>();
+		Customer cus = new Customer("Kumar", "service");
+		Customer cus1 = new Customer("Ganesh", "service");
+		customers.add(cus);
+		customers.add(cus1);
+//		mongoOperation.insertList(CUSTOMERS_COLLECTION_NAME, customers);
+		
+		Customer findOne = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.whereId().is("4fed86b6230ddae6f2d85afd")), Customer.class);
+		System.out.println("cust " + findOne);
+	}
+	
+	@Test
+	public void createCred() {
+		Credentials cred = new Credentials("kumar_s", "Ksparrow.28");
+		String json = new Gson().toJson(cred);
+		System.out.println(json);
+	}
 }

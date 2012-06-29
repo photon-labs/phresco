@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service.tools;
 
+<<<<<<< Updated upstream
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +46,33 @@ import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.codehaus.plexus.util.StringUtils;
+
+import com.google.gson.Gson;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.model.VideoType;
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.model.ArtifactInfo;
+import com.photon.phresco.service.util.ServerConstants;
+>>>>>>> Stashed changes
 
 public class VideoInfoGenerator implements ServerConstants {
 

@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service.rest.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -43,11 +44,23 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
 
 @Component
 @Path(ServerConstants.REST_API_ADMIN)
 public class AdminService extends DbService implements ServerConstants{
+=======
+import com.photon.phresco.service.api.Converter;
+import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.service.converters.ConvertersFactory;
+import com.photon.phresco.service.dao.UserDAO;
+import com.photon.phresco.util.ServiceConstants;
+
+@Component
+@Path(ServiceConstants.REST_API_ADMIN)
+public class AdminService extends DbService implements ServiceConstants {
+>>>>>>> Stashed changes
 	
 	private static final Logger S_LOGGER= Logger.getLogger(AdminService.class);
 	
@@ -358,18 +371,21 @@ public class AdminService extends DbService implements ServerConstants{
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findUsers() {
 		S_LOGGER.debug("Entered into AdminService.findUsers()");
-		Response response = null;
 		try {
-			List<User> userList = mongoOperation.getCollection(USERS_COLLECTION_NAME , User.class);
-			if(userList != null) {
-				response = Response.status(Response.Status.OK).entity(userList).build();
-			} else {
-				response = Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
+			List<UserDAO> userList = mongoOperation.getCollection("userdaos", UserDAO.class);
+			if (userList.isEmpty()) {
+				return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 			}
+			
+			Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);			
+			List<User> users = new ArrayList<User>(userList.size() * 2);
+			for (UserDAO userDAO : userList) {
+				users.add(converter.convertDAOToObject(userDAO, mongoOperation));
+			}
+			return Response.status(Response.Status.OK).entity(users).build();
 		} catch (Exception e) {
-			throw new PhrescoWebServiceException(EX_PHEX00005, USERS_COLLECTION_NAME);
+			throw new PhrescoWebServiceException(e, EX_PHEX00005, USERS_COLLECTION_NAME);
 		}
-		return response; 
 	}
 
 	/**
@@ -383,9 +399,14 @@ public class AdminService extends DbService implements ServerConstants{
 	public Response createUser(List<User> users) {
 		S_LOGGER.debug("Entered into AdminService.createUser(List<User> users)");
 		try {
-			mongoOperation.insertList(USERS_COLLECTION_NAME , users);
+			Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);			
+			List<UserDAO> userDAOs = new ArrayList<UserDAO>();
+			for (User user : users) {
+				userDAOs.add(converter.convertObjectToDAO(user));
+			}
+			mongoOperation.insertList("userdaos" , userDAOs);
 		} catch (Exception e) {
-			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
 		return Response.status(Response.Status.OK).build();
 	}

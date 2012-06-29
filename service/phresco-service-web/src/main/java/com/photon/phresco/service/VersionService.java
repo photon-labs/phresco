@@ -37,7 +37,7 @@ import com.photon.phresco.model.VersionInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.service.util.ServerConstants;
 
 @Path("/version")
 public class VersionService implements ServerConstants {

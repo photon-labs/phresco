@@ -38,7 +38,7 @@ package com.photon.phresco.service.api;
 import java.lang.reflect.Constructor;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.service.data.api.PhrescoDataManager;
+import com.photon.phresco.ldap.api.LDAPManager;
 import com.photon.phresco.service.model.ServerConfiguration;
 
 public class PhrescoServerFactory {
@@ -46,35 +46,27 @@ public class PhrescoServerFactory {
     private static final String DOCUMENT_GENERATOR_IMPL_CLASS = "com.photon.phresco.service.impl.DocumentGeneratorImpl";
     private static final String ARCHETYPE_EXECUTOR_IMPL_CLASS = "com.photon.phresco.service.impl.ArchetypeExecutorImpl";
     private static final String REPOSITORY_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.RepositoryManagerImpl";
-    private static final String LDAP_MANAGER_IMPL_CLASS 	  = "com.photon.phresco.service.impl.LDAPManagerImpl";
-    private static final String PHRESCO_DATA_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.PhrescoDataManagerImpl";
-    private static final String PHRESCO_ADMIN_MANAGER_IMPL_CLASS = "com.photon.phresco.service.impl.AdminManagerImpl";
-    private static final String PHRESCO_COMPONENT_MANAGER_IMPL_CLASS = "com.photon.phresco.service.data.impl.ComponentManagerImpl";
-
 
     private static final String SERVER_CONFIG_FILE = "server.config";
 
     private static RepositoryManager repositoryManager 	= null;
-    private static LDAPManager ldapManager 				= null;
     private static ArchetypeExecutor executor 			= null;
     private static DocumentGenerator generator 			= null;
     private static ServerConfiguration serverConfig     = null;
-
-	private static PhrescoDataManager dataManager = null;
-	private static AdminManager adminManager = null;
-	private static ComponentManager compenentManager = null;
 
     public static synchronized void initialize() throws PhrescoException {
         if (serverConfig == null) {
             serverConfig = new ServerConfiguration(SERVER_CONFIG_FILE);
 
             repositoryManager = (RepositoryManager) constructClass(REPOSITORY_MANAGER_IMPL_CLASS, serverConfig);
-            ldapManager = (LDAPManager) constructClass(LDAP_MANAGER_IMPL_CLASS, serverConfig);
             executor = (ArchetypeExecutor) constructClass(ARCHETYPE_EXECUTOR_IMPL_CLASS, serverConfig);
             generator = (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
+<<<<<<< Updated upstream
             dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
           //  adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
          //   compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
+=======
+>>>>>>> Stashed changes
         }
     }
 
@@ -102,21 +94,6 @@ public class PhrescoServerFactory {
 
     public static RepositoryManager getRepositoryManager() {
         return repositoryManager;
-    }
-
-    public static PhrescoDataManager getPhrescoDataManager() {
-        return dataManager;
-    }
-
-    public static AdminManager getAdminManager() {
-        return adminManager;
-    }
-    public static ComponentManager getComponentManager() {
-        return compenentManager;
-    }
-
-    public static LDAPManager getLDAPManager() {
-        return ldapManager;
     }
 
     public static ArchetypeExecutor getArchetypeExecutor() {

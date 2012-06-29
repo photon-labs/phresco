@@ -121,4 +121,17 @@ public interface Constants {
     String TEST_FUNCTIONAL = "Functional";
 	String SITE_SQL = "site.sql";
 	String DB_MYSQL   = "mysql";
+	/*
+	 * Constants for String
+	 */
+	String STR_BLANK_SPACE = " ";
+	String STR_EQUALS = "=";
+	String STR_COMMA = ",";
+	String CMD_ARG_VAR = "-D";
+	String STR_UNDER_SCORE="_";
+	/*
+	 *  Constants for System properties
+	 */
+	String USER_HOME_DIR = "user.home";
+	String OS_NAME = "os.name";
 }

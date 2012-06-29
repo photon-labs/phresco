@@ -41,9 +41,15 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.util.ServerConstants;
+>>>>>>> Stashed changes
 
 /**
  * Example resource class hosted at the URI path "/downloads"

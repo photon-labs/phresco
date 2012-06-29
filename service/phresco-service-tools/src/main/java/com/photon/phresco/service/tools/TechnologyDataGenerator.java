@@ -81,8 +81,15 @@ import com.photon.phresco.service.jaxb.ObjectFactory;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.DocumentType;
 import com.photon.phresco.service.model.DocumentTypes;
+<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
+=======
+import com.photon.phresco.service.util.ServerConstants;
+import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.TechnologyTypes;
+import com.sun.jersey.api.client.ClientResponse;
+>>>>>>> Stashed changes
 
 
 public class TechnologyDataGenerator implements ServerConstants {
@@ -256,9 +263,15 @@ public class TechnologyDataGenerator implements ServerConstants {
 
 		String identifier = ID
 				+ row.getCell(1).getStringCellValue().toLowerCase()
+<<<<<<< Updated upstream
 						.replace(STR_BLANK_SPACE, STR_UNDER_SCORE)
 				+ STR_UNDER_SCORE + version;
 		String no = String.valueOf(identifier);
+=======
+						.replace(Constants.STR_BLANK_SPACE, Constants.STR_UNDER_SCORE);
+	//	String no = String.valueOf(identifier);
+		
+>>>>>>> Stashed changes
 		Cell requireds = row.getCell(3);
 		String strRequired = getValue(requireds);
 		Boolean required = convertBoolean(strRequired);

@@ -34,6 +34,11 @@ import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
+<<<<<<< Updated upstream
+=======
+import com.photon.phresco.service.util.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
+>>>>>>> Stashed changes
 
 public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant {
 

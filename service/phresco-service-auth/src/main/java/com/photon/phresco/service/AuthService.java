@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service;
 
+<<<<<<< Updated upstream
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,6 +31,25 @@ import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.api.LDAPManager;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.util.Credentials;
+=======
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.photon.phresco.commons.model.User;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.ldap.api.LDAPManager;
+import com.photon.phresco.ldap.impl.LDAPManagerImpl;
+import com.photon.phresco.service.model.ServerConfiguration;
+import com.photon.phresco.util.Credentials;
+import com.photon.phresco.util.Utility;
+>>>>>>> Stashed changes
 
 @Path("/authenticate")
 public class AuthService {
@@ -42,4 +62,38 @@ public class AuthService {
        LDAPManager ldapManager = PhrescoServerFactory.getLDAPManager();
 		return ldapManager.authenticate(credentials);
     }
+<<<<<<< Updated upstream
+=======
+}
+
+class ConfigFactory {
+	
+    private static final String SERVER_CONFIG_FILE = "server.config";
+    private static LDAPManager ldapManager 				= null;
+    private static ServerConfiguration serverConfig     = null;
+
+    public static synchronized LDAPManager getLDAPManager() throws PhrescoException {
+        if (serverConfig == null) {
+//            serverConfig = new ServerConfiguration(SERVER_CONFIG_FILE);
+        	
+            ldapManager = new LDAPManagerImpl(loadProperties(SERVER_CONFIG_FILE));
+        }
+        
+        return ldapManager;
+    }
+
+	private static Properties loadProperties(String propsFile) throws PhrescoException {
+		InputStream is = null;
+		try {
+			is = ConfigFactory.class.getClassLoader().getResourceAsStream(propsFile);
+			Properties serverProps = new Properties();
+			serverProps.load(is);
+			return serverProps;
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} finally {
+			Utility.closeStream(is);
+		}
+	}
+>>>>>>> Stashed changes
 }

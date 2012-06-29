@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.service;
 
+<<<<<<< Updated upstream
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,20 @@ import org.apache.log4j.Logger;
 
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.service.model.ServerConstants;
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.log4j.Logger;
+
+import com.photon.phresco.configuration.Environment;
+import com.photon.phresco.service.util.ServerConstants;
+>>>>>>> Stashed changes
 
 @Path("/settings/env")
 public class EnvironmentService implements ServerConstants {
