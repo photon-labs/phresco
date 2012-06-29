@@ -190,11 +190,12 @@
 		                                <img src="images/icons/inprogress.png" title="In progress"/>
 				              		<% 
 		                                } else if(ciBuild.getStatus().equals("SUCCESS")) {
-		                                	String downloadUrl = ciBuild.getUrl()+ "artifact/" + ciBuild.getDownload().replaceAll("\"",""); 
+		                                	String downloadUrl = ciBuild.getUrl() + FrameworkConstants.CI_JOB_BUILD_ARTIFACT + FrameworkConstants.FORWARD_SLASH; 
 		                            %>
 				                		<a href="<s:url action='CIBuildDownload'>
 						          		     <s:param name="buildDownloadUrl"><%= downloadUrl %></s:param>
 						          		     <s:param name="projectCode"><%= projectCode %></s:param>
+						          		     <s:param name="buildNumber"><%= ciBuild.getNumber() %></s:param>
 						          		     </s:url>"><img src="images/icons/download.png" title="Download"/>
 			                            </a>
 
@@ -254,7 +255,10 @@ var buildSize = <%= buildSize %>;
 var refreshCi = false;
 
 $(document).ready(function() {
+	
 	$("#popup_div").css("display","none");
+	hideProgessBar();
+	
 	enableScreen();
 		
     $('#configure').click(function() {
