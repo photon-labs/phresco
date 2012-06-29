@@ -23,12 +23,8 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
-<<<<<<< Updated upstream
-import com.photon.phresco.service.model.ServerConstants;
-=======
 import com.photon.phresco.service.api.DbService;
-import com.photon.phresco.util.ServiceConstants;
->>>>>>> Stashed changes
+import com.photon.phresco.service.model.ServerConstants;
 
 
 public class ComponentServiceTest extends DbService implements ServerConstants{

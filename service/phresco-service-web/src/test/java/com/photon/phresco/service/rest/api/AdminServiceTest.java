@@ -7,10 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
-<<<<<<< Updated upstream
-=======
 import org.junit.Ignore;
->>>>>>> Stashed changes
 import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
@@ -22,13 +19,9 @@ import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
-<<<<<<< Updated upstream
-import com.photon.phresco.service.model.ServerConstants;
-=======
 import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.Credentials;
-import com.photon.phresco.util.ServiceConstants;
->>>>>>> Stashed changes
 
 public class AdminServiceTest extends DbService implements ServerConstants{
 	
