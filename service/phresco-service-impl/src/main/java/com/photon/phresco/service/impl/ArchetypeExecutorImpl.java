@@ -35,7 +35,6 @@
  ******************************************************************************/
 package com.photon.phresco.service.impl;
 
-<<<<<<< Updated upstream
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -50,12 +49,10 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.ArchetypeExecutor;
 import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.jaxb.ArchetypeInfo;
 import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ProjectUtils;
-=======
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -70,10 +67,8 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.ArchetypeExecutor;
 import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.util.ServerConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ProjectUtils;
->>>>>>> Stashed changes
 
 public class ArchetypeExecutorImpl implements ArchetypeExecutor,
         ServerConstants, Constants {

@@ -33,6 +33,9 @@ public class User extends Element {
 	String lastName;
 	int status;
 	List<Role> roles;
+	private boolean phrescoEnabled;
+	private String displayName;
+	List<Customer> customers;
 
 	public User() {
 		super();
@@ -62,6 +65,62 @@ public class User extends Element {
 		this.status = status;
 	}
 
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public void setEmail(String mailId) {
+		this.email = mailId;
+	}
+
+	public void setPhrescoEnabled(boolean phrescoEnabled) {
+		this.phrescoEnabled = phrescoEnabled;
+	}
+	
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public boolean isPhrescoEnabled() {
+		return phrescoEnabled;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -80,5 +139,5 @@ public class User extends Element {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

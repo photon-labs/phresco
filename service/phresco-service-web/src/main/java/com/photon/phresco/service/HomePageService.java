@@ -19,7 +19,6 @@
  */
 package com.photon.phresco.service;
 
-<<<<<<< Updated upstream
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,33 +44,6 @@ import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
-=======
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Type;
-import java.net.URL;
-import java.util.List;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.StreamingOutput;
-
-import org.apache.log4j.Logger;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.service.api.PhrescoServerFactory;
-import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.util.ServerConstants;
->>>>>>> Stashed changes
 
 /**
  * Example resource class hosted at the URI path "/video"

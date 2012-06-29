@@ -1,11 +1,8 @@
 package com.photon.phresco.service.rest.api;
 
-<<<<<<< Updated upstream
-=======
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
->>>>>>> Stashed changes
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +33,9 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
-<<<<<<< Updated upstream
 import com.photon.phresco.service.model.ServerConstants;
-=======
 import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.util.ServiceConstants;
->>>>>>> Stashed changes
 
 @Component
 @Path(ServerConstants.REST_API_COMPONENT)

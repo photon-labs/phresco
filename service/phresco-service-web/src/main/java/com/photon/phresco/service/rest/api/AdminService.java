@@ -44,23 +44,16 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
-<<<<<<< Updated upstream
-import com.photon.phresco.service.model.ServerConstants;
-
-@Component
-@Path(ServerConstants.REST_API_ADMIN)
-public class AdminService extends DbService implements ServerConstants{
-=======
 import com.photon.phresco.service.api.Converter;
 import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.converters.ConvertersFactory;
 import com.photon.phresco.service.dao.UserDAO;
 import com.photon.phresco.util.ServiceConstants;
 
+
 @Component
 @Path(ServiceConstants.REST_API_ADMIN)
 public class AdminService extends DbService implements ServiceConstants {
->>>>>>> Stashed changes
 	
 	private static final Logger S_LOGGER= Logger.getLogger(AdminService.class);
 	

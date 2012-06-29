@@ -38,7 +38,6 @@ package com.photon.phresco.service.api;
 import java.lang.reflect.Constructor;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.ldap.api.LDAPManager;
 import com.photon.phresco.service.model.ServerConfiguration;
 
 public class PhrescoServerFactory {
@@ -61,12 +60,6 @@ public class PhrescoServerFactory {
             repositoryManager = (RepositoryManager) constructClass(REPOSITORY_MANAGER_IMPL_CLASS, serverConfig);
             executor = (ArchetypeExecutor) constructClass(ARCHETYPE_EXECUTOR_IMPL_CLASS, serverConfig);
             generator = (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
-<<<<<<< Updated upstream
-            dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
-          //  adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
-         //   compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
-=======
->>>>>>> Stashed changes
         }
     }
 

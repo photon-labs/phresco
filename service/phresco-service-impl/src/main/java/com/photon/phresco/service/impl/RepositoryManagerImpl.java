@@ -35,14 +35,11 @@
  ******************************************************************************/
 package com.photon.phresco.service.impl;
 
-<<<<<<< Updated upstream
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -52,14 +49,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -87,91 +80,21 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
-import com.photon.phresco.model.Documentation;
-import com.photon.phresco.model.Documentation.DocumentationType;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.WebService;
-import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.jaxb.Apptype;
-import com.photon.phresco.service.jaxb.Apptypes;
-import com.photon.phresco.service.jaxb.ArchetypeInfo;
-import com.photon.phresco.service.jaxb.Document;
-import com.photon.phresco.service.jaxb.Documents;
-import com.photon.phresco.service.jaxb.Libraries;
-import com.photon.phresco.service.jaxb.Library;
-import com.photon.phresco.service.jaxb.Module;
-import com.photon.phresco.service.jaxb.Modules;
-import com.photon.phresco.service.jaxb.ObjectFactory;
-import com.photon.phresco.service.jaxb.Technology;
 import com.photon.phresco.service.model.ArtifactInfo;
-import com.photon.phresco.service.model.EntityType;
 import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.FileUtil;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-=======
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.maven.repository.internal.MavenRepositorySystemSession;
-import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
-import org.sonatype.aether.RepositorySystem;
-import org.sonatype.aether.RepositorySystemSession;
-import org.sonatype.aether.artifact.Artifact;
-import org.sonatype.aether.deployment.DeployRequest;
-import org.sonatype.aether.deployment.DeploymentException;
-import org.sonatype.aether.repository.Authentication;
-import org.sonatype.aether.repository.LocalRepository;
-import org.sonatype.aether.repository.RemoteRepository;
-import org.sonatype.aether.util.artifact.DefaultArtifact;
-import org.sonatype.aether.util.artifact.SubArtifact;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.AdminConfigInfo;
-import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.DownloadInfo;
-import com.photon.phresco.model.ModuleGroup;
-import com.photon.phresco.model.ProjectInfo;
-import com.photon.phresco.model.SettingsTemplate;
-import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.model.ArtifactInfo;
-import com.photon.phresco.service.model.ServerConfiguration;
-import com.photon.phresco.service.util.ServerConstants;
-import com.photon.phresco.util.FileUtil;
-import com.photon.phresco.util.TechnologyTypes;
-import com.photon.phresco.util.Utility;
->>>>>>> Stashed changes
 
 public class RepositoryManagerImpl implements RepositoryManager {
 
@@ -243,44 +166,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		this.username = username;
 		this.password = password;
 	}
-<<<<<<< Updated upstream
-	
-	@Override
-	public ArchetypeInfo getArchetype(ProjectInfo info) {
-		Technology technology = techCache.get(info.getTechnology().getId());
-		return technology.getArchetypeInfo();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getApplicationTypes()");
-		}
-		InputStream is = null;
-		try {
-			is = PhrescoServerFactory.getRepositoryManager().getArtifactAsStream(config.getApptypeFile());
-			List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>(32);
-			JAXBElement<Apptypes> jaxbApptypes = (JAXBElement<Apptypes>) unMarshal.unmarshal(is);
-			List<Apptype> apptypeList = jaxbApptypes.getValue().getApptype();
-			for (Apptype apptype : apptypeList) {
-				List<Technology> technologies = apptype.getTechnology();
-				List<com.photon.phresco.model.Technology> commonTechs = new ArrayList<com.photon.phresco.model.Technology>(
-						32);
-				for (Technology technology : technologies) {
-					techCache.put(technology.getId(), technology);
-					commonTechs.add(generateTechnology(technology));
-				}
-
-				applicationTypes.add(new ApplicationType(apptype.getId(), apptype.getName(), commonTechs));
-			}
-			return applicationTypes;
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		} finally {
-			Utility.closeStream(is);
-		}
-	}
 	
 	private com.photon.phresco.model.Technology generateTechnology(Technology technology) throws PhrescoException {
 		if (isDebugEnabled) {
@@ -300,7 +185,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		tech.setModules(getModules(id));
 		tech.setJsLibraries(getJSLibraries(id));
 		tech.setDatabases(getDatabases());
-		tech.setServers(getServers());
+//		tech.setServers(getServers());
 		tech.setWebservices(getWebservices());
 		return tech;
 	}
@@ -428,117 +313,8 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("getModules() Technology ID=" + techId);
 		}
-
-		Modules jaxbModules = getJAXBModules(techId);
-		if (jaxbModules == null) {
-			return Collections.emptyList();
-		}
-
-		Map<String, List<String>> depModulesMap = new HashMap<String, List<String>>(64);
-		List<Module> moduleList = jaxbModules.getModule();
-		List<ModuleGroup> moduleBeans = new ArrayList<ModuleGroup>(moduleList.size());
-
-		for (Module module : moduleList) {
-			ModuleGroup modBean = createModule(module);
-
-			// add the modules to the cache
-			modulesCache.put(module.getId(), modBean);
-
-			// TODO:JEB - handle multiple versions
-			// Add to the map fill the dependencies
-			depModulesMap.put(module.getId(), module.getDependentModules());
-			moduleBeans.add(modBean);
-		}
-
-//		 fill the dependencies
-		 if (!depModulesMap.isEmpty()) {
-			 Set<String> moduleIdsFromMap = depModulesMap.keySet();
-			 for (String modIdfromMap : moduleIdsFromMap) {
-		
-				 List<String> moduleIds = depModulesMap.get(modIdfromMap);
-				 List<ModuleGroup> depModules = new	ArrayList<ModuleGroup>(16);
-				 for (String moduleId : moduleIds) {
-					 depModules.add(modulesCache.get(moduleId));
-				 }
-		
-				 ModuleGroup moduleGroup = modulesCache.get(modIdfromMap);
-				 com.photon.phresco.model.Module module = moduleGroup.getVersions().get(0);
-				 module.setDependentModules(depModules);
-			 }
-		
-		 }
 		 
-		 return moduleBeans;
-	}
-
-	private ModuleGroup createModule(Module module) {
-		ModuleGroup modBean = new ModuleGroup();
-		modBean.setId(module.getId());
-		modBean.setName(module.getName());
-		modBean.setRequired(module.isRequired());
-		modBean.setCore(module.isCore());
-		modBean.setArtifactId(module.getArtifactId());
-		modBean.setGroupId(module.getGroupId());
-		modBean.setType(module.getContentType());
-		
-		List<Documentation> docs = getDocumentation(module.getDocuments());
-		modBean.setDocs(docs);
-
-		com.photon.phresco.model.Module modVersion = new com.photon.phresco.model.Module();
-		modVersion.setUrl(module.getContentURL());
-		modVersion.setVersion(module.getVersion());
-		modBean.getVersions().add(modVersion);
-		return modBean;
-	}
-
-	private List<Documentation> getDocumentation(Documents documents) {
-		if (documents == null) {
-			return null;
-		}
-		
-		
-		List<Document> jaxbDocuments = documents.getDocument();
-		List<Documentation> docs = new ArrayList<Documentation>(jaxbDocuments.size() * 2);
-		for (Document document : jaxbDocuments) {
-			Documentation doc = new Documentation();
-			doc.setUrl(document.getUrl());
-			doc.setContent(document.getContent());
-			String documentType = document.getDocumentType();
-			if ("HELP_TEXT".equals(documentType)) {
-				doc.setType(DocumentationType.HELP_TEXT);	
-			} else if ("DESCRIPTION".equals(documentType)) {
-				doc.setType(DocumentationType.DESCRIPTION);
-			}
-			
-			docs.add(doc);
-		}
-		
-		return docs;
-	}
-
-	private Modules getJAXBModules(String techId) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getJAXBModules(String techId)");
-		}
-		if (isDebugEnabled) {
-			S_LOGGER.debug(" getJAXBModules() Technology ID=" + techId);
-		}
-		String moduleFile = config.getModuleFile(techId);
-		// TODO:JEB - This check should be removed
-		if (Utility.isEmpty(moduleFile)) {
-			return null;
-		}
-
-		InputStream is = PhrescoServerFactory.getRepositoryManager().getArtifactAsStream(moduleFile);
-		try {
-			@SuppressWarnings("unchecked")
-			JAXBElement<Modules> jaxbModules = (JAXBElement<Modules>) unMarshal.unmarshal(is);
-			return jaxbModules.getValue();
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		} finally {
-			Utility.closeStream(is);
-		}
+		 return null;
 	}
 
 	public List<ModuleGroup> getJSLibraries(String techId) throws PhrescoException {
@@ -552,107 +328,9 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		if (Utility.isEmpty(jslibraryFile)) {
 			return Collections.emptyList();
 		}
-
-		InputStream is = PhrescoServerFactory.getRepositoryManager().getArtifactAsStream(jslibraryFile);
-		try {
-			@SuppressWarnings("unchecked")
-			JAXBElement<Libraries> jaxbLibs = (JAXBElement<Libraries>) unMarshal.unmarshal(is);
-			Libraries libs = jaxbLibs.getValue();
-			List<Library> moduleList = libs.getLibrary();
-			List<ModuleGroup> libBeans = new ArrayList<ModuleGroup>(moduleList.size());
-			for (Library library : moduleList) {
-				jsLibCache.put(library.getId(), library);
-
-				libBeans.add(createModule(library));
-			}
-
-			return libBeans;
-		} catch (JAXBException e) {
-			throw new PhrescoException(e);
-		} finally {
-			Utility.closeStream(is);
-		}
-	}
-
-	private ModuleGroup createModule(Library module) {
-		ModuleGroup modBean = new ModuleGroup();
-		modBean.setId(module.getId());
-		modBean.setName(module.getName());
-		Boolean required = module.isRequired();
-		if (required != null) {
-			modBean.setRequired(module.isRequired());	
-		}
-		// modBean.setCore(module.isCore());
-		// modBean.setArtifactId(module.getArtifactId());
-		// modBean.setGroupId(module.getGroupId());
-		modBean.setType(module.getContentType());
-		List<Documentation> docs = getDocumentation(module.getDocuments());
-		modBean.setDocs(docs);
-
-		com.photon.phresco.model.Module modVersion = new com.photon.phresco.model.Module();
-		modVersion.setUrl(module.getContentURL());
-		modVersion.setVersion(module.getVersion());
-		// modVersion.s(new Date());
-		modBean.getVersions().add(modVersion);
-		return modBean;
-	}
-
-	@Override
-	public Documents getDocument(String id, EntityType type) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getDocument(String id, EntityType type)");
-		}
-		if (EntityType.TECHNOLOGY.equals(type)) {
-			return techCache.get(id).getDocuments();
-		}
-
-		if (EntityType.MODULE.equals(type)) {
-			return docsCache.get(id);
-		}
-
-		if (EntityType.LIBRARY.equals(type)) {
-			return libCache.get(id).getDocuments();
-		}
-
+		
 		return null;
 	}
-
-	@Override
-	public Library getJsLibrary(String id) throws PhrescoException {
-		return jsLibCache.get(id);
-	}
-
-	/**
-	 * Returns pilot projects.
-	 * 
-	 * @param techId
-	 * @return
-	 * @throws PhrescoException
-	 */
-	public List<ProjectInfo> getPilotProjects(String techId) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method RepositoryManagerImpl.getPilotProjects(String techId)");
-		}
-		if (isDebugEnabled) {
-			S_LOGGER.debug("getPilotProjects() Technology ID=" + techId);
-		}
-		List<ProjectInfo> info = new ArrayList<ProjectInfo>();
-		String settingsJson = config.getPilotFile(techId);
-		if (Utility.isEmpty(settingsJson)) {
-			return Collections.emptyList();
-		}
-		InputStream is = PhrescoServerFactory.getRepositoryManager().getArtifactAsStream(settingsJson);
-		Reader reader = null;
-		Gson gson = new Gson();
-		reader = new InputStreamReader(is);
-		// as of now we assume that there will be one pilot project
-		ProjectInfo projectInfo = gson.fromJson(reader, ProjectInfo.class);
-		projectInfo.setPilotProjectUrls(new String[] { config.getPilotUrls(techId) });
-		info.add(projectInfo);
-		return info;
-	}
-=======
->>>>>>> Stashed changes
 
 	// TODO:Initialize only once on the constructor
 	private RepositorySystem newRepositorySystem() throws PhrescoException {

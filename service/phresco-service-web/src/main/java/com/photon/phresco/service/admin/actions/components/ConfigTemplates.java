@@ -19,11 +19,10 @@
  */
 package com.photon.phresco.service.admin.actions.components;
 
+import java.util.Collections;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import java.util.Collections;
 
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 
