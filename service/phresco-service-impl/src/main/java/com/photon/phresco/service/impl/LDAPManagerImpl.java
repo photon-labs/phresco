@@ -52,8 +52,8 @@ import javax.naming.directory.SearchResult;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.api.LDAPManager;
 import com.photon.phresco.service.model.LDAPConfiguration;
 import com.photon.phresco.service.model.ServerConfiguration;
@@ -73,7 +73,7 @@ public class LDAPManagerImpl implements LDAPManager {
 	}
 
 	@Override
-	public UserInfo authenticate(Credentials credentials) throws PhrescoException {
+	public User authenticate(Credentials credentials) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method LDAPManagerImpl.authenticate(Credentials credentials)");
 		}
@@ -93,13 +93,13 @@ public class LDAPManagerImpl implements LDAPManager {
 			if (isDebugEnabled) {
 				S_LOGGER.debug("authenticate() Login Success for " + userName);
 			}
-			return getUserInfo(credentials, dc);
+			return getUser(credentials, dc);
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (isDebugEnabled) {
 				S_LOGGER.debug("authenticate() Login Failed for " + userName);
 			}
-			return new UserInfo();
+			return new User();
 		} finally {
 			try {
 				if (dc != null) {
@@ -124,11 +124,11 @@ public class LDAPManagerImpl implements LDAPManager {
 		return userPrincipal.toString();
 	}
 
-	private UserInfo getUserInfo(Credentials credentials, DirContext ctx) throws PhrescoException {
+	private User getUser(Credentials credentials, DirContext ctx) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method LDAPManagerImpl.getUserInfo(String userName, DirContext ctx)");
 		}
-		UserInfo userInfo = new UserInfo();
+		User user = new User();
 		try {
 			String userName = credentials.getUsername();
 			SearchControls constraints = new SearchControls();
@@ -141,19 +141,19 @@ public class LDAPManagerImpl implements LDAPManager {
 			if (ne.hasMore()) {
 				Attributes attrs = ne.next().getAttributes();
 
-				userInfo.setUserName(userName);
-				userInfo.setCredentials(credentials);
-				userInfo.setDisplayName(getDisplayName(attrs));
-				userInfo.setMail(getMailId(attrs));
-				userInfo.setPhrescoEnabled(isPhrescoEnabled(attrs)); 
-				userInfo.setCustomerNames(getCustomerNames(attrs));
+				user.setName(userName);
+		//		userInfo.setCredentials(credentials);
+				user.setDisplayName(getDisplayName(attrs));
+				user.setEmail(getMailId(attrs));
+				user.setPhrescoEnabled(isPhrescoEnabled(attrs)); 
+		//		userInfo.setCustomerNames(getCustomerNames(attrs));
 				
 			}
 			
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
-		return userInfo;
+		return user;
 	}
 
 	private List<String> getCustomerNames(Attributes attrs) throws NamingException {

@@ -72,7 +72,7 @@ public class PhrescoServerFactory {
             ldapManager = (LDAPManager) constructClass(LDAP_MANAGER_IMPL_CLASS, serverConfig);
             executor = (ArchetypeExecutor) constructClass(ARCHETYPE_EXECUTOR_IMPL_CLASS, serverConfig);
             generator = (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
-            dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
+//            dataManager = (PhrescoDataManager) constructClass(PHRESCO_DATA_MANAGER_IMPL_CLASS);
           //  adminManager = (AdminManager) constructClass(PHRESCO_ADMIN_MANAGER_IMPL_CLASS);
          //   compenentManager = (ComponentManager)constructClass(PHRESCO_COMPONENT_MANAGER_IMPL_CLASS);
         }

@@ -25,10 +25,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.api.LDAPManager;
-import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.impl.LDAPManagerImpl;
+import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.util.Credentials;
 
 @Path("/authenticate")
@@ -37,9 +38,25 @@ public class AuthService {
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UserInfo authenticate(Credentials credentials) throws PhrescoException {
-		PhrescoServerFactory.initialize();
-       LDAPManager ldapManager = PhrescoServerFactory.getLDAPManager();
+    public User authenticate(Credentials credentials) throws PhrescoException {
+		LDAPManager ldapManager = ConfigFactory.getLDAPManager();
 		return ldapManager.authenticate(credentials);
     }
+}
+
+class ConfigFactory {
+	
+    private static final String SERVER_CONFIG_FILE = "server.config";
+    private static LDAPManager ldapManager 				= null;
+    private static ServerConfiguration serverConfig     = null;
+
+    public static synchronized LDAPManager getLDAPManager() throws PhrescoException {
+        if (serverConfig == null) {
+            serverConfig = new ServerConfiguration(SERVER_CONFIG_FILE);
+            ldapManager = new LDAPManagerImpl(serverConfig);
+        }
+        
+        return ldapManager;
+    }
+    
 }

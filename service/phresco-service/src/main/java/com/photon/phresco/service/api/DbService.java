@@ -17,7 +17,7 @@
  * limitations under the License.
  * ###
  */
-package com.photon.phresco.service.rest.api;
+package com.photon.phresco.service.api;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;

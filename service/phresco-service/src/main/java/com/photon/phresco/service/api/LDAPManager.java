@@ -35,12 +35,12 @@
  ******************************************************************************/
 package com.photon.phresco.service.api;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.util.Credentials;
 
 public interface LDAPManager {
 	
-	 UserInfo authenticate(Credentials credentials) throws PhrescoException;
+	 User authenticate(Credentials credentials) throws PhrescoException;
 
 }

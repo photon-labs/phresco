@@ -32,7 +32,11 @@ public class User extends Element {
 	String firstName;
 	String lastName;
 	int status;
+	String token;
 	List<Role> roles;
+	List<Customer> customers;
+	String displayName;
+	boolean phrescoEnabled;
 
 	public User() {
 		super();
@@ -62,6 +66,70 @@ public class User extends Element {
 		this.status = status;
 	}
 
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public boolean isPhrescoEnabled() {
+		return phrescoEnabled;
+	}
+
+	public void setPhrescoEnabled(boolean phrescoEnabled) {
+		this.phrescoEnabled = phrescoEnabled;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -76,7 +144,7 @@ public class User extends Element {
 		builder.append(", description=");
 		builder.append(description);
 		builder.append(", creationDate=");
-		builder.append(creationDate);
+	//	builder.append(creationDate);
 		builder.append("]");
 		return builder.toString();
 	}

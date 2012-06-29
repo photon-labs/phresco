@@ -17,7 +17,7 @@
  * limitations under the License.
  * ###
  */
-package com.photon.phresco.service.rest.api;
+package com.photon.phresco.service.api;
 
 import java.net.UnknownHostException;
 
