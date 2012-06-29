@@ -189,13 +189,6 @@ public class ConfigReader {
 	}
 	
 	/**
-	 * @return
-	 */
-	public Set<String> getEnvironments(){
-		return ENV_MAP.keySet();
-	}
-	
-	/**
 	 * return the environment element for the given Environment name
 	 * @param envName
 	 * @return
