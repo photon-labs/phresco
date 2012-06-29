@@ -62,21 +62,24 @@ $(document).ready(function() {
 } */
 
 function showWelcomeImage() {
-   
- 	if (localStorage["color"] != null) {
-		$("link[id='theme']").attr("href", localStorage["color"]);
-	} else {
-		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+		localstore = sessionStorage["color"];
+		localStorage["color"] = localstore; 
+		sessionStorage.clear();
+
+		if (localStorage["color"] == null || localStorage["color"] == "null" || localStorage["color"] == "") {
+			$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+		}
+		else {
+			$("link[id='theme']").attr("href", localStorage["color"]);
+		} 
+	 
+	 var theme = localStorage["color"]; 
+	
+	if(theme == "themes/photon/css/blue.css") {
+		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
+		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
+		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
 	}
- 	
- 	var theme = localStorage["color"]; 
-
-    if(theme == "themes/photon/css/blue.css") {
-        $('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
-        $('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
-        $('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
-    }
-
 }
 
 </script>
