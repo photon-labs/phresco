@@ -54,6 +54,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
@@ -61,6 +62,7 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.CIManager;
+import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.util.Utility;
 import com.sun.jersey.api.client.ClientResponse;
 
@@ -354,9 +356,6 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             ciBuild.setStatus("INPROGRESS");
         } else {
         	ciBuild.setStatus(resultJson.getAsString());
-        	for (JsonElement jsonArtElement : asJsonArray) {
-            	ciBuild.setDownload(jsonArtElement.getAsJsonObject().get(FrameworkConstants.CI_JOB_BUILD_DOWNLOAD_PATH).toString());
-    		}
         }
 
         ciBuild.setId(idJson.getAsString());
@@ -627,6 +626,49 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
 		}
     }
     
+    @Override
+    public List<BuildInfo> getBuildInfos(CIJob job) throws PhrescoException {
+        if (debugEnabled) {
+            S_LOGGER.debug("Entering Method CIManagerImpl.getBuildInfos");
+        }
+        List<BuildInfo> buildInfo = null;
+        try {
+        	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+        	String jenkinsDataHome = System.getenv(JENKINS_HOME);
+            StringBuilder builder = new StringBuilder(jenkinsDataHome);
+            builder.append(File.separator);
+            builder.append(WORKSPACE_DIR);
+            builder.append(File.separator);
+            builder.append(job.getName());
+            builder.append(File.separator);
+            builder.append(BUILD_DIR);
+            builder.append(File.separator);
+            builder.append(BUILD_INFO_FILE_NAME);
+        	buildInfo = administrator.readBuildInfo(new File(builder.toString()));
+		} catch (Exception e) {
+        	if (debugEnabled) {
+    			S_LOGGER.error("Entered into the catch block of CIManagerImpl.getBuildInfos" + e.getLocalizedMessage());
+    		}
+		}
+        return buildInfo;
+    }
+    
+	@Override
+	public BuildInfo getBuildInfo(CIJob job, int buildNumber)throws PhrescoException {
+		List<BuildInfo> buildInfos = getBuildInfos(job);
+		if (CollectionUtils.isEmpty(buildInfos)) {
+			return null;
+		}
+
+		for (BuildInfo buildInfo : buildInfos) {
+			if (buildInfo.getBuildNo() == buildNumber) {
+				return buildInfo;
+			}
+		}
+
+		return null;
+	}
+
     private boolean deleteDir(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();

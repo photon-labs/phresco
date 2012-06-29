@@ -58,6 +58,7 @@ public interface FrameworkConstants {
     String CI_JOB_BUILD_ID = "id";
     String CI_JOB_BUILD_TIME_STAMP = "timestamp";
     String CI_JOB_BUILD_ARTIFACTS = "artifacts";
+    String CI_JOB_BUILD_ARTIFACT = "artifact";
     String CI_JOB_BUILD_DOWNLOAD_PATH = "relativePath";
     String CI_CREATE_JOB_COMMAND = "create-job";
     String CI_UPDATE_JOB_COMMAND = "update-job";
