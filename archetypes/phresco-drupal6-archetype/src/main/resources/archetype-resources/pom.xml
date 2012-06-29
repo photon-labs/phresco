@@ -94,7 +94,7 @@
 			</dependencies>
 		</plugin>
 			</plugins>
-		</pluginManageMent>
+		</pluginManagement>
 	</build>
 	
 	<dependencies>

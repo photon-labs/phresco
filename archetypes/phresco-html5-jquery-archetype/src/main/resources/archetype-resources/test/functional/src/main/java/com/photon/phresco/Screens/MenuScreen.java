@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-html5-jquery-archetype
- * 
+ * PHR_jquery-widget-hw
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,8 @@ import java.io.IOException;
 
 
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.TestConfig;
+
 
 
 
@@ -31,9 +33,9 @@ import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 public class MenuScreen extends WebDriverAbstractBaseScreen{
 	PhrescoUiConstants phrsc = new PhrescoUiConstants();
-    public MenuScreen() throws Exception {
+    public MenuScreen(TestConfig uiconst) throws Exception {
     	
-    	isTextPresent(phrsc.TEXTCAPTURED);
+    	isTextPresent(uiconst.TEXTCAPTURED);
     	
     }
     

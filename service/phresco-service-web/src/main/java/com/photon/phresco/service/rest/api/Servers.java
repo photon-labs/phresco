@@ -181,6 +181,7 @@ public class Servers implements ServerConstants {
         versions = new ArrayList<String>(2);
         versions.add("0.6.x");
         versions.add("0.7.x");
+        versions.add("0.8.x");
         servers.add(new Server(6, "NodeJS", versions, "NodeJS"));
         
         versions = new ArrayList<String>(2);

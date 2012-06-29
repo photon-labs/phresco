@@ -23,6 +23,7 @@ import java.io.IOException;
 
 
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.TestConfig;
 
 
 
@@ -35,9 +36,9 @@ public class WelcomeScreen extends PhotonAbstractScreen {
     	
     
     }
-public MenuScreen menuScreen() throws Exception {
+public MenuScreen menuScreen(TestConfig uiconst) throws Exception {
     
-	return new MenuScreen();
+	return new MenuScreen(uiconst);
 }
 
 }
