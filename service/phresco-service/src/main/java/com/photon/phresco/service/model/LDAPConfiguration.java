@@ -38,9 +38,8 @@ package com.photon.phresco.service.model;
 import java.util.Properties;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.util.ServiceConstants;
 
-public class LDAPConfiguration implements ServiceConstants {
+public class LDAPConfiguration implements ServerConstants {
 	private Properties ldapProps;
 	private String ldapContextFactory;
 	private String ldapUrl;

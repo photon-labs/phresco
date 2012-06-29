@@ -51,12 +51,12 @@ import com.photon.phresco.service.api.ArchetypeExecutor;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.jaxb.ArchetypeInfo;
 import com.photon.phresco.service.model.ServerConfiguration;
+import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ProjectUtils;
-import com.photon.phresco.util.ServiceConstants;
 
 public class ArchetypeExecutorImpl implements ArchetypeExecutor,
-        ServiceConstants, Constants {
+        ServerConstants, Constants {
     public static final Logger S_LOGGER 			= Logger.getLogger(ArchetypeExecutorImpl.class);
     public static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
     private static final String INTERACTIVE_MODE 	= "false";

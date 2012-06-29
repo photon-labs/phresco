@@ -37,9 +37,9 @@ import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
-public class VideoDownloader extends Thread implements ServiceConstants {
+public class VideoDownloader extends Thread implements ServerConstants {
 
 	private static final String VIDEO_FOLDER = "/webapps/";
 	private static final Logger s_logger = Logger.getLogger(VideoDownloader.class);

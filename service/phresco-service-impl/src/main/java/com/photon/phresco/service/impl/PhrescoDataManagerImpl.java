@@ -40,9 +40,9 @@ import com.photon.phresco.service.api.DBManager;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.data.api.PhrescoDataManager;
 import com.photon.phresco.service.model.DocumentTypes;
-import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.service.model.ServerConstants;
 
-public class PhrescoDataManagerImpl implements PhrescoDataManager, ServiceConstants {
+public class PhrescoDataManagerImpl implements PhrescoDataManager, ServerConstants {
 
 	private RepositoryManager repoManager;
 	private DBManager dbManager;
