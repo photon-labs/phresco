@@ -147,7 +147,6 @@
 			<directory>test/functional/src/main/java/com/photon/phresco/uiconstants</directory>
 			<includes>
 				<include>PhrescoUiConstants.java</include>
-				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
                 <include>JQueryWidgetData.java</include>
                 <include>TestConfig.java</include>
@@ -157,7 +156,6 @@
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
-				<include>config.ini</include>
 				<include>phresco-env-config.xml</include>
                 <include>JQueryWidgetHWData.xml</include>
                 <include>UIConstants.xml</include>
