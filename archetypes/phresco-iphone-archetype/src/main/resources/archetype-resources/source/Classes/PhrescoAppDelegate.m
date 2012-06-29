@@ -23,7 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-    ConfigurationReader *configReader = [[ConfigurationReader alloc]init];
+    /*ConfigurationReader *configReader = [[ConfigurationReader alloc]init];
     [configReader parseXMLFileAtURL:@"phresco-env-config" environment:@"myWebservice"];
     
     NSString *protocol = [[configReader.stories objectAtIndex: 0] objectForKey:@"protocol"];
@@ -43,7 +43,7 @@
                [NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     NSString *urlString = [NSString stringWithFormat:@"%@://%@:%@/%@", protocol,host, port, context];
-    NSLog(@"Configuration urlString: %@",urlString);
+    NSLog(@"Configuration urlString: %@",urlString);*/
 
     [self.window addSubview:viewController.view];
     
