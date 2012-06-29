@@ -149,6 +149,9 @@
 				<include>PhrescoUiConstants.java</include>
 				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
+                <include>JQueryWidgetData.java</include>
+                <include>TestConfig.java</include>
+                <include>UserInfoConstants.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
