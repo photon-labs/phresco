@@ -51,7 +51,7 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/test/java</directory> 
 			<includes> 
-				<include>HelloWorld.java</include> 
+				<include>HelloWorldTest.java</include> 
 			</includes> 
 		</fileSet>
   </fileSets>
