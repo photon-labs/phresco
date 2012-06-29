@@ -512,9 +512,9 @@ public class ComponentServiceTest extends DbService implements ServerConstants{
 			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
 			
 			for (ModuleGroup moduleGroup : modulesList) {
-				if(moduleGroup.getTechId().equals(techId) ) {
-					modules.add(moduleGroup);
-				}
+//				if(moduleGroup.getTechId().equals(techId) ) {
+//					modules.add(moduleGroup);
+//				}
 			}
 			String json = new Gson().toJson(modules);
 			System.out.println(json);
