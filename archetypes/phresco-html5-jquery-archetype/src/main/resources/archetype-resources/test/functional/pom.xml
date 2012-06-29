@@ -1,9 +1,9 @@
 <!--
   ###
-  Archetype - phresco-html5-jquery-archetype
-  
+  PHR_jquery-widget-hw
+  %%
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  
+  %%
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -102,7 +102,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>2.1</version>
+				<version>3.1</version>
 				<executions>
 		          <execution>
 		            <phase>test</phase>

@@ -1,6 +1,6 @@
 /*
  * ###
- * Archetype - phresco-html5-jquery-archetype
+ * Archetype - phresco-html5-archetype
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 
@@ -44,7 +44,9 @@ public class ReadXMLFile {
 	private static Element eElement;
 	private Log log = LogFactory.getLog(getClass());
 	private static final String phrsc = "./src/main/resources/phresco-env-config.xml";
-	
+	private static final String constants ="./src/main/resources/UIConstants.xml";
+	private static final String UsrInfoConsts ="./src/main/resources/UserInfo.xml";
+	private static final String jqueryWidgData ="./src/main/resources/JQueryWidgetHWData.xml";
 	public ReadXMLFile() throws ScreenException {
 		log.info("@ReadXMLFile Constructor::loading *****PhrescoUIConstants******");
 		loadPhrescoConstansts(phrsc);
@@ -78,6 +80,17 @@ public class ReadXMLFile {
 		}
 	}
 	
+	public void loadUIConstants() throws ScreenException {
+    	loadPhrescoConstansts(constants);
+	}
+	public void loadUserInfoConstants() throws ScreenException {
+		loadPhrescoConstansts(UsrInfoConsts);
+		
+	}
+    public void loadJQueryWidgetData() throws ScreenException {
+		
+    	loadPhrescoConstansts(jqueryWidgData);
+	}
 	
 	
 	public String getValue(String elementName) {
@@ -91,6 +104,10 @@ public class ReadXMLFile {
 
 		return nValue.getNodeValue();
 	}
+
+	
+
+	
 
 	
 

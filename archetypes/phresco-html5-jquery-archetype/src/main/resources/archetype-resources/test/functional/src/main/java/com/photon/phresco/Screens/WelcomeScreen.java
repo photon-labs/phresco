@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-html5-jquery-archetype
- * 
+ * PHR_jquery-widget-hw
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,6 +23,8 @@ import java.io.IOException;
 
 
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.TestConfig;
+
 
 
 
@@ -35,9 +37,9 @@ public class WelcomeScreen extends PhotonAbstractScreen {
     	
     
     }
-public MenuScreen menuScreen() throws Exception {
+public MenuScreen menuScreen(TestConfig uiconst) throws Exception {
     
-	return new MenuScreen();
+	return new MenuScreen(uiconst);
 }
 
 }
