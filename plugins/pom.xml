@@ -3,7 +3,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.3002-SNAPSHOT</version>
+        <version>1.2.0.4001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -21,10 +21,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>sharepoint-maven-plugin</module>
         <module>java-maven-plugin</module>
         <module>javascript-maven-plugin</module>
-	<module>js-testrunner-plugin</module>
-	<module>xcode-maven-plugin</module>
+		<module>js-testrunner-plugin</module>
+		<module>xcode-maven-plugin</module>
         <module>nodejs-maven-plugin</module>    
         <module>wordpress-maven-plugin</module>        
+        <module>js-import-maven-plugin</module>        
+        <module>jslint-maven-plugin</module>        
     </modules>
     
     <distributionManagement>

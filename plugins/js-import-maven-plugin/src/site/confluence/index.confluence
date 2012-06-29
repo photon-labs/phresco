@@ -1,0 +1,45 @@
+h1. JavaScript Import Maven Plugin
+
+The JS Import Maven plugin essentially provides Maven dependency management support for JavaScript. [Asynchronous Module Definitions|https://github.com/amdjs/amdjs-api/wiki/AMD] (AMD) are also supported.
+
+The import plugin supports js type artifacts and compressed bundles of web resources and will expand the latter into a project's target folder. Web resource bundles are denoted with a "www" classifier and a type of "zip".
+
+h2. AMDJS
+Imagine being able to use the popular AMD method of declaring modules and their dependencies combined with Maven's powerful dependency management. The JS Import plugin supports AMD declarations natively and works on the principle that dependencies are resolved at build time.
+
+An example AMD declaration:
+
+{code}
+/*global define, $ */
+define("jquery", function() {
+  return $;
+});
+{code}
+
+..and then later where it is required:
+
+{code}
+/*global define, window */
+define([ "jquery" ], function($) {
+  $("p").click(function() {
+    window.console.log("p clicked");
+  });
+});
+{code}
+
+h2. With/without AMDJS
+You can also use just the following in your JavaScript code when you want to ensure that a dependency is present at runtime (again using jQuery as an example):
+
+{code}
+/*global $ */
+{code}
+
+Alternatively when there are no global variables declared by a JavaScript dependency you can import it without being concerned about its file location and version:
+
+{code}
+/**
+ * @import com.jqueryui:jquery-ui
+ */
+{code}
+
+This frictionless approach to declaring JavaScript dependency requirements is the motivation for the Maven JavaScript Import Plugin.

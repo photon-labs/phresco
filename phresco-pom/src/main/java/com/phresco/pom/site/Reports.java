@@ -142,6 +142,10 @@ public class Reports implements Serializable{
 		catagories.add(ReportCategories.INFO_INDEX);
 		catagories.add(ReportCategories.INFO_MODULE);
 		catagories.add(ReportCategories.INFO_DEPENDENCIES);
+		catagories.add(ReportCategories.CIM);
+		catagories.add(ReportCategories.SCM);
+		catagories.add(ReportCategories.SUMMARY);
+		catagories.add(ReportCategories.LICENSE);
 		PROJECT_INFO.setReportCategories(catagories);
 	}
 }

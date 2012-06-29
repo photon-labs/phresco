@@ -1,0 +1,18 @@
+<lifecycleMappingMetadata>
+	<pluginExecutions>
+		<pluginExecution>
+			<pluginExecutionFilter>
+				<goals>
+					<goal>jslint</goal>
+					<goal>test-jslint</goal>
+				</goals>
+			</pluginExecutionFilter>
+			<action>
+				<execute>
+					<runOnIncremental>true</runOnIncremental>
+					<runOnConfiguration>false</runOnConfiguration>
+				</execute>
+			</action>
+		</pluginExecution>
+	</pluginExecutions>
+</lifecycleMappingMetadata>

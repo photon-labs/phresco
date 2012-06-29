@@ -36,18 +36,18 @@
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>4.7</version>
-          <scope>test</scope>
         </dependency>
   </dependencies>
 	
     <build>
+		<testSourceDirectory>${project.basedir}/src/test/qunit/java</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
         <finalName>HelloWorld</finalName>
 		<extensions>
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2.0.3002-SNAPSHOT</version>
+				<version>1.2.0.4001-SNAPSHOT</version>
 			</extension>
 		</extensions>
 		<sourceDirectory>src/main/js</sourceDirectory>	
@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.2.0.3002-SNAPSHOT</version>
+                <version>1.2.0.4001-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>

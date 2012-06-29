@@ -52,7 +52,6 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
-import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
@@ -187,8 +186,9 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 
 	private void updateFinalName() throws MojoExecutionException {
 		try {
-			if (!getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
-				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			String techId = projAdmin.getTechId(baseDir.getName());
+			if (!techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
 				String envName = environmentName;
 				if (environmentName.indexOf(',') > -1) { // multi-value
 					envName = projAdmin.getDefaultEnvName(baseDir.getName());
@@ -293,17 +293,29 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		adaptSourceConfig();
 	}
 
-	private void adaptSourceConfig() {
-		String basedir = baseDir.getName();
-		String modulePath = "";
-		if (moduleName != null) {
-			modulePath = File.separatorChar + moduleName;
-		}
-		File sourceConfigXML = new File(baseDir + modulePath + JAVA_WEBAPP_CONFIG_FILE);
-		File parentFile = sourceConfigXML.getParentFile();
-		if (parentFile.exists()) {
-			PluginUtils pu = new PluginUtils();
-			pu.executeUtil(environmentName, basedir, sourceConfigXML);
+	private void adaptSourceConfig() throws MojoExecutionException {
+		try {
+			String basedir = baseDir.getName();
+			File sourceConfigXML = null;
+			String modulePath = "";
+			if (moduleName != null) {
+				modulePath = File.separatorChar + moduleName;
+			}
+			ProjectAdministrator projectAdministrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			String techId = projectAdministrator.getTechId(basedir);
+			if (techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET) 
+					|| techId.equals(TechnologyTypes.HTML5_WIDGET)) {
+				sourceConfigXML = new File(baseDir + modulePath + "/src/main/webapp/WEB-INF/resources/phresco-env-config.xml");
+			} else {
+				sourceConfigXML = new File(baseDir + modulePath + JAVA_WEBAPP_CONFIG_FILE);
+			}
+			File parentFile = sourceConfigXML.getParentFile();
+			if (parentFile.exists()) {
+				PluginUtils pu = new PluginUtils();
+				pu.executeUtil(environmentName, basedir, sourceConfigXML);
+			}
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
 
@@ -336,7 +348,9 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			}
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
 			String zipNameWithoutExt = zipName.substring(0, zipName.lastIndexOf('.'));
-			if (getTechId().equals(TechnologyTypes.JAVA_STANDALONE)) {
+			ProjectAdministrator projectAdministrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			String techId = projectAdministrator.getTechId(baseDir.getName());
+			if (techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
 
 				copyJarToPackage(zipNameWithoutExt);
 			} else {
@@ -460,17 +474,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
-	private String getTechId() throws IOException {
-		File projectInfoFile = new File(baseDir.getPath() + File.separator + DOT_PHRESCO_FOLDER, PROJECT_INFO_FILE);
-		BufferedReader reader = new BufferedReader(new FileReader(projectInfoFile));
-		String readLine = reader.readLine();
-		Gson gson = new Gson();
-		ProjectInfo projectInfo = gson.fromJson(readLine, ProjectInfo.class);
-		String techId = projectInfo.getTechnology().getId();
-		return techId;
-	}
-
 }
 
 class WarFileNameFilter implements FilenameFilter {

@@ -78,6 +78,14 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      */
     Project getProject(String projectCode) throws PhrescoException;
+    
+    /**
+     * Returns the technology Id for the specified project code
+     * @param projectCode
+     * @return
+     * @throws PhrescoException
+     */
+    String getTechId(String projectCode) throws PhrescoException;
 
     /**
      * Returns all application types
