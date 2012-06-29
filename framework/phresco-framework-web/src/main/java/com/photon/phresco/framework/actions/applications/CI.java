@@ -700,8 +700,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     		// need to read jenkins home build info file
     		String buildName = administrator.getCIBuildInfo(existJob, Integer.parseInt(buildNumber)).getBuildName();
     		S_LOGGER.debug("Entering Method CI.CIBuildDownload() buildName " + buildName);
-    		S_LOGGER.debug("Entering Method CI.CIBuildDownload() download url " + buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName);
-            URL url = new URL(buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName);
+    		S_LOGGER.debug("Entering Method CI.CIBuildDownload() download url " + buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName.substring(0, buildName.lastIndexOf(DOT)) + ARCHIVE_FORMAT);
+            URL url = new URL(buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName.substring(0, buildName.lastIndexOf(DOT)) + ARCHIVE_FORMAT);
             fileInputStream = url.openStream();
 			fileName = existJob.getName();
 			return SUCCESS;
