@@ -70,9 +70,8 @@
 			String currentEnv = System.getProperty("SERVER_ENVIRONMENT");
 			String path = getServletContext().getRealPath("/WEB-INF/resources/phresco-env-config.xml");
 			File file = new File(path);
-			ConfigReader reader = new ConfigReader(file);
+			ConfigReader reader = ConfigReader.getInstance(file);
 			String configJson = reader.getConfigAsJSON(currentEnv, "WebServices");
-			System.out.println("configJson...... " + configJson);
 		%>
 
         <!-- EShop API JS -->
