@@ -79,15 +79,12 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
-import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.ServerConfiguration;
@@ -102,7 +99,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static final String XML = ".xml";
 	private static final String DEFAULT = "default";
-	private static final String JAXB_PACKAGE_NAME = "com.photon.phresco.service.jaxb";
+//	private static final String JAXB_PACKAGE_NAME = "com.photon.phresco.service.jaxb";
 	private static final int HTTP_NOT_FOUND = 404;
 	private static final String LOCAL_REPO = "../temp/target/local-repo";
 
@@ -146,17 +143,17 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		}
 		this.config = config;
 		try {
-			jaxbContext = JAXBContext.newInstance(JAXB_PACKAGE_NAME);
-			unMarshal = jaxbContext.createUnmarshaller();
-			// unMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-			// Boolean.TRUE);
-			marshal = jaxbContext.createMarshaller();
-			// marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//			jaxbContext = JAXBContext.newInstance(JAXB_PACKAGE_NAME);
+//			unMarshal = jaxbContext.createUnmarshaller();
+//			// unMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//			// Boolean.TRUE);
+//			marshal = jaxbContext.createMarshaller();
+//			// marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 			// Boolean.TRUE);
 
 			gson = new Gson();
 			initMap();
-		} catch (JAXBException e) {
+		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
 	}
