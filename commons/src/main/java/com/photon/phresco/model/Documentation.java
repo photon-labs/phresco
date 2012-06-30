@@ -21,6 +21,9 @@ package com.photon.phresco.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Documentation implements Serializable {
 	
 	/**

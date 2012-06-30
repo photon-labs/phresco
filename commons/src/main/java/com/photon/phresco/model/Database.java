@@ -20,6 +20,7 @@
 package com.photon.phresco.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,27 +28,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Database implements Serializable {
 	
-	int id;
+	String id;
 	String name;
 	List<String> versions;
 	String description;
+	List<String> technologies = new ArrayList<String>();
 	
 	public Database() {
 		super();
 	}
 
-	public Database(int id, String name, List<String> versions, String description) {
+	public Database(String id, String name, List<String> versions, String description) {
 		this.id = id;
 		this.name = name;
 		this.versions = versions;
 		this.description = description;
 	}
-
-	public int getId() {
+	
+	public Database(String name, List<String> versions, String description, List<String> technologies) {
+		this.name = name;
+		this.versions = versions;
+		this.description = description;
+		this.technologies = technologies;
+	}
+	
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -73,6 +82,14 @@ public class Database implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<String> getTechnologies() {
+		return technologies;
+	}
+
+	public void setTechnologies(List<String> technologies) {
+		this.technologies = technologies;
 	}
 
 	@Override

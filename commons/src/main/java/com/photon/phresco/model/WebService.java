@@ -19,29 +19,40 @@
  */
 package com.photon.phresco.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WebService {
 	
-	int id;
+	String id;
 	String name;
 	String version;
 	String description;
+	List<String> technologies = new ArrayList<String>();
 	
 	public WebService() {
 		super();
 	}
 
-	public WebService(int id, String name, String version, String description) {
+	public WebService(String id, String name, String version, String description) {
 		this.id = id;
 		this.name = name;
 		this.version = version;
 		this.description = description;
 	}
-
-	public int getId() {
+	
+	public WebService(String name, String version, String description, List<String> technologies) {
+		this.name = name;
+		this.version = version;
+		this.description = description;
+		this.technologies = technologies;
+	}
+	
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -67,6 +78,14 @@ public class WebService {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<String> getTechnologies() {
+		return technologies;
+	}
+
+	public void setTechnologies(List<String> technologies) {
+		this.technologies = technologies;
 	}
 
 	@Override
