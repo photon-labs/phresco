@@ -43,6 +43,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -253,20 +255,23 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		BufferedReader in = null;
 		try {
 			getLog().info("Packaging the project...");
-			String mavenHome = System.getProperty(MVN_HOME);
-			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(MVN_PHASE_CLEAN);
-			commands.add(MVN_PHASE_PACKAGE);
-			commands.add(SKIP_TESTS);
-			pb.directory(baseDir);
-			Process process = pb.start();
+			StringBuilder sb = new StringBuilder();
+			sb.append(MVN_CMD);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_CLEAN);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_PACKAGE);
+			sb.append(SKIP_TESTS);
+
+			Commandline cl = new Commandline(sb.toString());
+			Process process = cl.execute();
 			in = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
