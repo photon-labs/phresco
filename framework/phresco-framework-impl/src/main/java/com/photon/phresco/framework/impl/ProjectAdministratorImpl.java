@@ -2019,4 +2019,16 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			throw new PhrescoException();
 		}
 	}
+	
+	public static void main(String[] args) {
+		String passWord = "Ksparrow.28";
+		byte[] encodeBase64 = Base64.encodeBase64(passWord.getBytes());
+		 String encodedPassword = new String(encodeBase64);
+		Credentials cred = new Credentials();
+		cred.setUsername("kumar_s");
+		cred.setPassword(encodedPassword);
+		String json = new Gson().toJson(cred);
+		System.out.println(json);
+		
+	}
 }
