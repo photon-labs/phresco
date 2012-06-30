@@ -39,6 +39,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -49,8 +51,8 @@ import org.jdom.output.XMLOutputter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.POMProcessor;
@@ -203,27 +205,16 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 		BufferedReader in = null;
 		try {
 			getLog().info("Executing ...");
-			String path = "";
-			String mavenHome = System.getProperty(JAVA_LIB_PATH);
-			String[] split = mavenHome.split(";");
-			for (int i = 0; i < split.length; i++) {
-				path = split[i];
-				if (path.indexOf(SP_DIR_NAME) != -1) {
-					break;
-				}
-			}
-			String drive = path.trim().substring(0, 2);
-			File workingDir = new File(baseDir.getPath() + sourceDirectory);
-			ProcessBuilder pb = new ProcessBuilder(drive + STSADM_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add("WSPBuilder.exe");
-			pb.directory(workingDir);
-			Process process = pb.start();
-			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			Commandline cl = new Commandline("WSPBuilder.exe");
+			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
