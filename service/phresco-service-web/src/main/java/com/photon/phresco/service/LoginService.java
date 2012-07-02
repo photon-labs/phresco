@@ -25,11 +25,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+
+import org.springframework.data.document.mongodb.query.Criteria;
+import org.springframework.data.document.mongodb.query.Query;
+
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
+import com.photon.phresco.service.api.Converter;
+import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.converters.ConvertersFactory;
+import com.photon.phresco.service.dao.UserDAO;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.service.util.AuthenticationUtil;
 import com.photon.phresco.util.Credentials;
@@ -39,7 +49,12 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 @Path("/login")
-public class LoginService {
+public class LoginService extends DbService {
+	
+	 
+	public LoginService() {
+		super();
+	}
 	
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,9 +68,18 @@ public class LoginService {
         ClientResponse response = resource.type(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class, credentials);
         GenericType<User> genericType = new GenericType<User>() {};
         User user = response.getEntity(genericType);
+        
+        
+        UserDAO userDao = mongoOperation.findOne("userdao", new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
+        user.setId(user.getName());
+        Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);
+        User convertedUser = converter.convertDAOToObject(userDao, mongoOperation);
+        
+        
         AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
-        user.setToken(authTokenUtil.generateToken(credentials.getUsername()));
-        return user;
+        convertedUser.setToken(authTokenUtil.generateToken(credentials.getUsername()));
+        convertedUser.setDisplayName(user.getDisplayName());
+        convertedUser.setPhrescoEnabled(true);
+        return convertedUser;
     }
-	
 }

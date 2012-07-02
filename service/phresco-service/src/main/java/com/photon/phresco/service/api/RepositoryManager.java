@@ -122,8 +122,6 @@ import com.photon.phresco.service.model.EntityType;
 	 
 	 String getEmailExtFile() throws PhrescoException;
 
-	 String getServiceContextName() throws PhrescoException;
-
 	List<ProjectInfo> getPilotProjects(String id);
 
 
