@@ -59,27 +59,6 @@
 <div id="sonar_report" class="sonar_report">
 
 </div>
-<form id="codeForm">
-	<input type="hidden" name="skipTest"/>
-	<div id="codeConfirm" class="modal confirm">
-		<div class="modal-header">
-			<h3><s:text name="label.skiptest.confirm"/></h3>
-			<a id="close" href="#" class="close">&times;</a>
-		</div>
-		
-		<div class="modal-body">
-			<p id="confirmationText">Do you want to select skiptest?</p>
-		</div>
-		
-		<div class="modal-footer">
-			<input id="no" type="button" value="<s:text name="label.no"/>" class="btn primary"/>
-			<input type="button" value="<s:text name="label.yes"/>" class="btn primary" id="yes" />
-		</div>
-	</div>
-</form>
-<!--  Validate popup Start -->
-<!-- <div class="popup_div" id="code_validate_pop_up"></div> -->
-<!--  Validate popup Start -->
 
 <script>
     $(document).ready(function() {
@@ -97,42 +76,16 @@
     	enableScreen();
 		
         $('#validate').click(function() {
-        	<% 	
-        		if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.IPHONES.contains(technology)){
-        	%>
-        		getCodeValidatePopUp();
-        	<% 
-        		} else {
-        	%>
-        			disableScreen();
-        			$('#codeConfirm').show();    
-        			escBlockPopup();
-	        <% 
-        		}
-        	%>
+			getCodeValidatePopUp();
         });
         
        	$('#closeGenTest, #closeGenerateTest').click(function() {
        		closePopup();
        		sonarReport();
         });
-		$('#yes').click(function() {
-       		$('#codeConfirm').hide();
-       		$("input[name='skipTest']").val("true");
-       		progress();
-    		return false;
-        });
-       	
-       	$('#no').click(function() {
-       		$('#codeConfirm').hide();    
-       		$("input[name='skipTest']").val("false");
-       		progress();
-    		return false;
-        });		
     });
     
-    function progress(codeTech) {
-		$('#codeConfirm').hide(); 
+    function progress() {
     	getCurrentCSS();
     	$('#loadingDiv').show();
     	$('#build-output').empty();
@@ -141,7 +94,7 @@
         $(".wel_come").show().css("display","block");
         
         readerHandlerSubmit('progressValidate', '<%= projectCode %>', '<%= FrameworkConstants.REQ_SONAR_PATH %>');
-     }
+	}
     
     function sonarReport() {
         $("#sonar_report").empty();

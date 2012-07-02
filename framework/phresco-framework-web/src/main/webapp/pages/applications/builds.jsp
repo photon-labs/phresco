@@ -73,22 +73,22 @@
 			          	<thead>
 				            <tr>
 								<th class="first">
-				                	<div class="th-inner">
+				                	<div class="th-inner-head ">
 				                		<input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">
 				                	</div>
 				              	</th>
 				              	<th class="second">
-				                	<div class="th-inner">#</div>
+				                	<div class="th-inner-head ">#</div>
 				              	</th>
 				              	<th class="third">
-				                	<div class="th-inner"><s:text name="label.date"/></div>
+				                	<div class="th-inner-head "><s:text name="label.date"/></div>
 				              	</th>
 				              	<th class="third">
-				                	<div class="th-inner"><s:text name="label.download"/></div>
+				                	<div class="th-inner-head "><s:text name="label.download"/></div>
 				              	</th>
 				              	<% if (!(TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology) || TechnologyTypes.JAVA_STANDALONE.contains(technology))) { %>
 					              	<th class="third">
-					                	<div class="th-inner">
+					                	<div class="th-inner-head ">
 					                		Deploy
 					                	</div>
 					              	</th>
@@ -170,7 +170,7 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
-		$(".table_data_div").scrollbars();
+		$(".fixed-table-container-inner").scrollbars();
 	}
 	
 	// By default disable all Run buttons under builds
