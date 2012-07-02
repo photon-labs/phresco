@@ -328,12 +328,12 @@ public class ProguardMojo extends AbstractAndroidMojo {
         addInJar(project.getBuild().getOutputDirectory());
 
         // we then add all its dependencies (incl. transitive ones), unless they're blacklisted
-        for (Artifact artifact : getAllRelevantDependencyArtifacts()) {
+        /*for (Artifact artifact : getAllRelevantDependencyArtifacts()) {
             if (isBlacklistedArtifact(artifact)) {
                 continue;
             }
             addInJar(artifact.getFile().getAbsolutePath());
-        }
+        }*/
     }
 
     private void addInJar(String path, String filterExpression) {
