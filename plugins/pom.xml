@@ -3,7 +3,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.4001-SNAPSHOT</version>
+        <version>1.2.0.5001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
