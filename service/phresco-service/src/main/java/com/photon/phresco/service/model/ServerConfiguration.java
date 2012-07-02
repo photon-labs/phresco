@@ -81,6 +81,7 @@ public class ServerConfiguration {
 	private static final String PHRESCO_DB_PORT = "db.port";
 	private static final String PHRESCO_DB_NAME = "db.name";
 	private static final String PHRESCO_DB_COLLECTION = "db.defaultcollection";
+	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -95,7 +96,8 @@ public class ServerConfiguration {
 	private String dbPort;
 	private String dbName;
 	private String dbDefaultCollectionName;
-	
+	private String twitterServiceURL; 
+
 	public ServerConfiguration(String fileName) throws PhrescoException {
 		initServerConfig(fileName);
 		initDependencyConfig();
@@ -129,7 +131,7 @@ public class ServerConfiguration {
 			is = this.getClass().getClassLoader().getResourceAsStream(fileName);
 			serverProps = new Properties();
 			serverProps.load(is);
-			
+
 			// Initialize the Server URL
 			this.repositoryURL = serverProps.getProperty(KEY_PHRESCO_MAVEN_REPOSITORY_URL);
 			this.repositoryUser = serverProps.getProperty(KEY_PHRESCO_MAVEN_REPOSITORY_USER);
@@ -143,6 +145,7 @@ public class ServerConfiguration {
 			this.dbPort = serverProps.getProperty(PHRESCO_DB_PORT);
 			this.dbName = serverProps.getProperty(PHRESCO_DB_NAME);
 			this.dbDefaultCollectionName = serverProps.getProperty(PHRESCO_DB_COLLECTION);
+			this.twitterServiceURL = serverProps.getProperty(PHRESCO_TWITTER_SERVICE_URL);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
@@ -209,6 +212,10 @@ public class ServerConfiguration {
 	
 	public String getServerContextName() {
         return serviceContextName;
+	}
+	
+	public String getTwitterServiceURL() {
+        return twitterServiceURL;
 	}
 	
 	public String getCiConfigFile() {
