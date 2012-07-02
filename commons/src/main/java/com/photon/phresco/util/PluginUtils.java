@@ -128,8 +128,7 @@ public class PluginUtils {
 				}
 				
 				if (line.startsWith("/*!") && line.endsWith("*/")) {
-					int i = line.indexOf(' ');
-					line = line.substring(i + 1, line.length() - " */".length());
+					line = line.substring(line.indexOf("/*"), line.indexOf("*/") + 2);
 				}
 				
 				if (line.trim().length() > 0) {
