@@ -28,6 +28,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -186,19 +188,26 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 
 	private void executePhase() throws MojoExecutionException {
 		try {
-			String mavenHome = System.getProperty(MVN_HOME);
-			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(MVN_PHASE_CLEAN);
-			commands.add(MVN_PHASE_INSTALL);
-			commands.add(T7_START_GOAL);
-			commands.add(SERVER_PORT + serverport);
-			commands.add(SERVER_SHUTDOWN_PORT + shutdownport);
-			commands.add(SKIP_TESTS);
-			pb.directory(baseDir);
-			Process process = pb.start();
-		} catch (IOException e) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MVN_CMD);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_CLEAN);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_INSTALL);
+			sb.append(STR_SPACE);
+			sb.append(T7_START_GOAL);
+			sb.append(STR_SPACE);
+			sb.append(SERVER_PORT);
+			sb.append(serverport);
+			sb.append(STR_SPACE);
+			sb.append(SERVER_SHUTDOWN_PORT);
+			sb.append(shutdownport);
+			sb.append(STR_SPACE);
+			sb.append(SKIP_TESTS);
+			Commandline cl = new Commandline(sb.toString());
+			cl.setWorkingDirectory(baseDir);
+			Process process = cl.execute();
+		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}

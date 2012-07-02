@@ -31,6 +31,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -159,23 +160,33 @@ public class SharePointDeploy extends AbstractMojo implements PluginConstants {
 		if (!file.exists()) {
 			return;
 		}
-		File workingDir = new File(deployDirectory);
-		String drive = directoryReturn();
-		ProcessBuilder pb = new ProcessBuilder(drive + STSADM_PATH);
-		pb.redirectErrorStream(true);
-		List<String> commands = pb.command();
-		commands.add(SHAREPOINT_STR_O + SHAREPOINT_RESTORE);
-		commands.add(SHAREPOINT_STR_URL);
-		commands.add(protocol);
-		commands.add(SHAREPOINT_STR_COLON + SHAREPOINT_STR_DOUBLESLASH + host + SHAREPOINT_STR_COLON + port
-				+ SHAREPOINT_STR_BACKSLASH + serverContext);
-		commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_OVERWRITE);
-		commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_FILENAME);
-		commands.add(SHAREPOINT_STR_DOUBLEQUOTES + build.getPath() + "\\phresco-pilot.dat"
-				+ SHAREPOINT_STR_DOUBLEQUOTES);
-
-		pb.directory(workingDir);
-		Process process = pb.start();
+		StringBuilder sb = new StringBuilder();
+		sb.append(SHAREPOINT_STSADM);
+		sb.append(STR_SPACE);
+		sb.append(SHAREPOINT_STR_O);
+		sb.append(SHAREPOINT_RESTORE);
+		sb.append(STR_SPACE);
+		sb.append(SHAREPOINT_STR_URL);
+		sb.append(STR_SPACE);
+		sb.append(protocol);
+		sb.append(SHAREPOINT_STR_COLON);
+		sb.append(SHAREPOINT_STR_DOUBLESLASH);
+		sb.append(host);
+		sb.append(SHAREPOINT_STR_COLON);
+		sb.append(port);
+		sb.append(SHAREPOINT_STR_BACKSLASH);
+		sb.append(serverContext);
+		sb.append(STR_SPACE);
+		sb.append(SHAREPOINT_STR_HYPEN);
+		sb.append(SHAREPOINT_STR_OVERWRITE);
+		sb.append(STR_SPACE);
+		sb.append(SHAREPOINT_STR_HYPEN);
+		sb.append(SHAREPOINT_STR_FILENAME);
+		sb.append(STR_SPACE);
+		sb.append(SHAREPOINT_STR_DOUBLEQUOTES + build.getPath() + "\\phresco-pilot.dat" + SHAREPOINT_STR_DOUBLEQUOTES);
+		Commandline cl = new Commandline(sb.toString());
+		cl.setWorkingDirectory(deployDirectory);
+		Process process = cl.execute();
 		BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		String line = null;
 		while ((line = in.readLine()) != null) {
@@ -184,76 +195,84 @@ public class SharePointDeploy extends AbstractMojo implements PluginConstants {
 
 	private void addSolution(String ProjectCode, String deployDirectory) throws MojoExecutionException {
 		try {
-			File workingDir = new File(deployDirectory);
-			String drive = directoryReturn();
-			ProcessBuilder pb = new ProcessBuilder(drive + STSADM_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(SHAREPOINT_STR_O);
-			commands.add(SHAREPOINT_ADDSOLUTION);
-			commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_FILENAME);
-			commands.add(SHAREPOINT_STR_O);
-			commands.add(SHAREPOINT_STR_DOUBLEQUOTES + baseDir.getPath() + "\\source" + "\\" + ProjectCode + ".wsp"
-					+ SHAREPOINT_STR_DOUBLEQUOTES);
-
-			File file = new File(baseDir.getPath() + "\\source" + "\\" + ProjectCode + ".wsp");
+			StringBuilder sb = new StringBuilder();
+			sb.append(SHAREPOINT_STSADM);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_O);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_ADDSOLUTION);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_HYPEN);
+			sb.append(SHAREPOINT_STR_FILENAME);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_DOUBLEQUOTES + baseDir.getPath() + "\\source" + "\\"
+					+ ProjectCode + ".wsp" + SHAREPOINT_STR_DOUBLEQUOTES);
+			File file = new File(baseDir.getPath() + "\\source" + "\\"
+					+ ProjectCode + ".wsp");
 			if (file.exists()) {
-				pb.directory(workingDir);
-				Process process = pb.start();
-				BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				Commandline cl = new Commandline(sb.toString());
+				cl.setWorkingDirectory(deployDirectory);
+				Process process = cl.execute();
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						process.getInputStream()));
 				String line = null;
 				while ((line = in.readLine()) != null) {
 				}
 			} else {
 				getLog().error("File Not found Exception");
 			}
+		} catch (CommandLineException e) {
+
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
-
 	}
 
 	private void deploysolution(String protocol, String deploydirectory, String serverContext, String host,
 			String port, String projectCode) throws MojoExecutionException, CommandLineException {
 		try {
-			File workingDir = new File(deploydirectory);
-			String drive = directoryReturn();
-			ProcessBuilder pb = new ProcessBuilder(drive + STSADM_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(SHAREPOINT_STR_O);
-			commands.add(SHAREPOINT_DEPLOYSOLUTION);
-			commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_NAME);
-			commands.add(projectCode + ".wsp");
-			commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_URL);
-			commands.add(protocol + SHAREPOINT_STR_COLON + SHAREPOINT_STR_DOUBLESLASH + host + SHAREPOINT_STR_COLON
-					+ port + SHAREPOINT_STR_BACKSLASH + serverContext);
-			commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_IMMEDIATE);
-			commands.add(SHAREPOINT_STR_HYPEN + SHAREPOINT_STR_ALLOWACDEP);
-			pb.directory(workingDir);
-			Process process = pb.start();
-			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append(SHAREPOINT_STSADM);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_O);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_DEPLOYSOLUTION);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_HYPEN);
+			sb.append(SHAREPOINT_STR_NAME);
+			sb.append(STR_SPACE);
+			sb.append(projectCode + ".wsp");
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_HYPEN);
+			sb.append(SHAREPOINT_STR_URL);
+			sb.append(STR_SPACE);
+			sb.append(protocol);
+			sb.append(SHAREPOINT_STR_COLON);
+			sb.append(SHAREPOINT_STR_DOUBLESLASH);
+			sb.append(host);
+			sb.append(SHAREPOINT_STR_COLON);
+			sb.append(port);
+			sb.append(SHAREPOINT_STR_BACKSLASH);
+			sb.append(serverContext);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_HYPEN);
+			sb.append(SHAREPOINT_STR_IMMEDIATE);
+			sb.append(STR_SPACE);
+			sb.append(SHAREPOINT_STR_HYPEN);
+			sb.append(SHAREPOINT_STR_ALLOWACDEP);
+			Commandline cl = new Commandline(sb.toString());
+			cl.setWorkingDirectory(deploydirectory);
+			Process process = cl.execute();
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
-
-	}
-
-	private String directoryReturn() {
-		String path = "";
-		String mavenHome = System.getProperty(JAVA_LIB_PATH);
-		String[] split = mavenHome.split(";");
-		for (int i = 0; i < split.length; i++) {
-			path = split[i];
-			if (path.indexOf(SP_DIR_NAME) != -1) {
-				break;
-			}
-		}
-		String drive = path.trim().substring(0, 2);
-		return drive;
-
 	}
 }
