@@ -211,7 +211,7 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
     /* To check whether the divice is ipad or not */
 	if(!isiPad()){
 	    /* JQuery scroll bar */
-		$(".settings_table_data_div").scrollbars();
+		$(".fixed-table-container-inner").scrollbars();
 	}
     function isConnectionAlive(url, id) {
         $.ajax({

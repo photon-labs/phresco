@@ -32,6 +32,10 @@
 <!-- media queries css -->
 <link type="text/css" rel="stylesheet" href="themes/photon/css/media-queries.css">
 
+<!-- jquery file tree css starts -->
+<link type="text/css" rel="stylesheet" href="css/jqueryFileTree.css" media="screen">
+<!-- jquery file tree css ends -->
+
 <!-- rightpanel js -->
 <script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
@@ -68,6 +72,10 @@
 
 <!-- Window Resizer -->
 
+<!-- jquery file tree starts-->
+<script type="text/javascript" src="js/jqueryFileTree.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<!-- jquery file tree ends -->
 <script type="text/javascript">
 	if (localStorage["color"] != null) {
 		$("link[title='phresco']").attr("href", localStorage["color"]);
@@ -84,6 +92,9 @@
 	  		 localstore = localStorage["color"];
 	  		 $("link[title='phresco']").attr("href",localstore);
 	  		showHeaderImage();
+			$("iframe").attr({
+	             src: $("iframe").attr("src")
+	         });
 	  	 });
 	});
 	

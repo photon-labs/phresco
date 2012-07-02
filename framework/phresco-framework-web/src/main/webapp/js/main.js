@@ -83,7 +83,6 @@ return this.each(function(){
 				position: 'absolute',
 				top: 0,
 				left: 0,
-				zIndex: 1,
 				height: 'auto'
 			});
 			scrollBar.css({
@@ -146,7 +145,7 @@ return this.each(function(){
 			else{
 				_f = false;
 				scrollBar.hide();
-				scrollContent.css({width: _box.width(), top: 0, left:0});
+				scrollContent.css({top: 0, left:0});
 				scrollContent.children('.scroll-hold').css('padding-right', 0);
 			 }
 			

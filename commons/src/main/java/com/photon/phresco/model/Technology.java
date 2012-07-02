@@ -60,6 +60,11 @@ public class Technology implements Cloneable, Serializable {
 	
 	private boolean emailSupported;
 	
+	private String description;
+	private String versionComment;
+	private List<String> appType;
+	private String appJar;
+	private String pluginJar;
 	private List<String> versions;
 
     public Technology() {
@@ -70,6 +75,14 @@ public class Technology implements Cloneable, Serializable {
         super();
         this.id = id;
         this.name = name;
+    }
+    
+    public Technology(String name, String description, List<String>versions, List<String> appType) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.versions = versions;
+        this.appType = appType;
     }
 
     public String getId() {
@@ -159,7 +172,47 @@ public class Technology implements Cloneable, Serializable {
 	public List<String> getVersions() {
 		return versions;
 	}
+    
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getVersionComment() {
+		return versionComment;
+	}
+
+	public void setVersionComment(String versionComment) {
+		this.versionComment = versionComment;
+	}
+
+	public List<String> getAppType() {
+		return appType;
+	}
+
+	public void setAppType(List<String> appType) {
+		this.appType = appType;
+	}
+
+	public String getAppJar() {
+		return appJar;
+	}
+
+	public void setAppJar(String appJar) {
+		this.appJar = appJar;
+	}
+
+	public String getPluginJar() {
+		return pluginJar;
+	}
+
+	public void setPluginJar(String pluginJar) {
+		this.pluginJar = pluginJar;
+	} 
+	
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(1024);

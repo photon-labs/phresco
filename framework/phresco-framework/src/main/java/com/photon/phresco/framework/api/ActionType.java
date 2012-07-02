@@ -86,4 +86,7 @@ public interface ActionType {
     
     boolean canShowDebug();
     void setShowDebug(boolean showDebug);
+    
+    String getProfileId();
+    void setProfileId(String profileId);
 }

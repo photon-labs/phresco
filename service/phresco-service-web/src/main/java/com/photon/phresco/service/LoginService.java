@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
@@ -43,18 +44,18 @@ public class LoginService {
 	@POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UserInfo login(Credentials credentials) throws PhrescoException {
+    public User login(Credentials credentials) throws PhrescoException {
 		Client client = Client.create();
 		PhrescoServerFactory.initialize();
 		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
 		WebResource resource = client.resource(repoMgr.getAuthServiceURL() + ServerConstants.AUTHENTICATE);
         resource.accept(MediaType.APPLICATION_JSON_TYPE);
         ClientResponse response = resource.type(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class, credentials);
-        GenericType<UserInfo> genericType = new GenericType<UserInfo>() {};
-        UserInfo userInfo = response.getEntity(genericType);
+        GenericType<User> genericType = new GenericType<User>() {};
+        User user = response.getEntity(genericType);
         AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
-        userInfo.setToken(authTokenUtil.generateToken(credentials.getUsername()));
-        return userInfo;
+        user.setToken(authTokenUtil.generateToken(credentials.getUsername()));
+        return user;
     }
 	
 }

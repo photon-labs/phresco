@@ -36,6 +36,7 @@ public class User extends Element {
 	private boolean phrescoEnabled;
 	private String displayName;
 	List<Customer> customers;
+	String token;
 
 	public User() {
 		super();
@@ -119,6 +120,14 @@ public class User extends Element {
 
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override
