@@ -53,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
@@ -694,12 +693,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		// TODO Auto-generated method stub
 
 	}
-
-    @Override
-    public String getServiceContextName() throws PhrescoException {
-        // TODO Auto-generated method stub
-        return config.getServerContextName();
-    }
 
 	@Override
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
