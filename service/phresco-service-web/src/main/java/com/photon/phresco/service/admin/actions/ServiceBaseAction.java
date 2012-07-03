@@ -26,8 +26,8 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.admin.commons.ServiceActions;
 import com.photon.phresco.service.admin.commons.ServiceUIConstants;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
@@ -47,9 +47,9 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
 		return serviceManager;
 	}
 
-	protected UserInfo doLogin(String userName, String password) throws PhrescoException {
+	protected User doLogin(String userName, String password) throws PhrescoException {
     	ServiceContext context = new ServiceContext();
-		context.put(SERVICE_URL, "http://localhost:3030/service/rest");
+		context.put(SERVICE_URL, "http://localhost:3030/service/rest/api");
 		context.put(SERVICE_USERNAME, userName);
 		context.put(SERVICE_PASSWORD, password);
 		serviceManager = ServiceClientFactory.getServiceManager(context);

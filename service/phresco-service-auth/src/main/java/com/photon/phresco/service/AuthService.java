@@ -47,6 +47,17 @@ public class AuthService {
 		LDAPManager ldapManager = ConfigFactory.getLDAPManager();
 		return ldapManager.authenticate(credentials);
     }
+
+//	private User sendDemoUser() {
+//		User user = new User();
+//		user.setId("demouser");
+//		user.set
+//		user.setDisplayName("Demo User");
+//		user.setEmail("demouser@photon.in");
+//		user.setPhrescoEnabled(true);
+//		user.setLoginId("demouser");
+//		return user;
+//	}
 }
 
 class ConfigFactory {

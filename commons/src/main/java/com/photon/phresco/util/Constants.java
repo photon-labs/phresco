@@ -134,4 +134,9 @@ public interface Constants {
 	 */
 	String USER_HOME_DIR = "user.home";
 	String OS_NAME = "os.name";
+	
+	/*
+	 * Constants for Rest
+	 */
+	String PHR_AUTH_TOKEN = "X-phr-auth-token";
 }
