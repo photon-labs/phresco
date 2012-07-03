@@ -31,15 +31,24 @@ public class Customer extends Element {
 	public static final int TYPE_SILVER = 1;
 	public static final int TYPE_BRONZE = 2;
 
-	Date validFrom;
-	Date validUpto;
-//	String validFrom;
-//	String validUpto;
+//	Date validFrom;
+//	Date validUpto;
+	String validFrom;
+	String validUpto;
 	String repoURL;
 	int type;
 	int status;
 	String name;
 	String description;
+	
+	String address;
+	String country;
+	String state;
+	String zipcode;
+	String contactNumber;
+	String fax;
+	String helpText;
+	
 
 	public Customer() {
 		super();
@@ -81,29 +90,29 @@ public class Customer extends Element {
 		this.description = description;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date addOn) {
+	public void setCreationDate(String addOn) {
 		this.creationDate = addOn;
 	}
 
-	public Date getValidFrom() {
-		return validFrom;
-	}
-
-	public void setValidFrom(Date validFrom) {
-		this.validFrom = validFrom;
-	}
-
-	public Date getValidUpto() {
-		return validUpto;
-	}
-
-	public void setValidUpto(Date validUpto) {
-		this.validUpto = validUpto;
-	}
+//	public Date getValidFrom() {
+//		return validFrom;
+//	}
+//
+//	public void setValidFrom(Date validFrom) {
+//		this.validFrom = validFrom;
+//	}
+//
+//	public Date getValidUpto() {
+//		return validUpto;
+//	}
+//
+//	public void setValidUpto(Date validUpto) {
+//		this.validUpto = validUpto;
+//	}
 
 	public int getStatus() {
 		return status;
@@ -129,21 +138,77 @@ public class Customer extends Element {
 		this.repoURL = repoURL;
 	}
 	
-//	public String getValidFrom() {
-//		return validFrom;
-//	}
-//
-//	public void setValidFrom(String validFrom) {
-//		this.validFrom = validFrom;
-//	}
-//
-//	public String getValidUpto() {
-//		return validUpto;
-//	}
-//
-//	public void setValidUpto(String validUpto) {
-//		this.validUpto = validUpto;
-//	}
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getHelpText() {
+		return helpText;
+	}
+
+	public void setHelpText(String helpText) {
+		this.helpText = helpText;
+	}
+	
+	public String getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(String validFrom) {
+		this.validFrom = validFrom;
+	}
+
+	public String getValidUpto() {
+		return validUpto;
+	}
+
+	public void setValidUpto(String validUpto) {
+		this.validUpto = validUpto;
+	}
 
 	@Override
 	public String toString() {

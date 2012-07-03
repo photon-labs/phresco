@@ -106,7 +106,7 @@ public interface ServiceConstants {
 	String EX_PHEX00004 = "PHEX00004";
 	String EX_PHEX00005 = "PHEX00005";
 	String EX_PHEX00006 = "PHEX00006";
-	String EX_PHEX00007 = "PHEX00007";
+	
 	/*
      * Constants for Operatins
      */
