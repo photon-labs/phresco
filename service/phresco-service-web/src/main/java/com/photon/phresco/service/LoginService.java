@@ -70,8 +70,10 @@ public class LoginService extends DbService {
         UserDAO userDao = mongoOperation.findOne(ServiceConstants.USERDAO_COLLECTION_NAME, new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
         user.setId(user.getName());
         Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);
-        User convertedUser = converter.convertDAOToObject(userDao, mongoOperation);
-        
+        User convertedUser = new User();
+        if(userDao != null) {
+        	convertedUser = converter.convertDAOToObject(userDao, mongoOperation);
+        }
         
         AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
         convertedUser.setToken(authTokenUtil.generateToken(credentials.getUsername()));
