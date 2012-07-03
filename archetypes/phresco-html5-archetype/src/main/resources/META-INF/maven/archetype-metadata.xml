@@ -44,7 +44,7 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/main/webapp</directory> 
 			<includes>
-				<include>index.html</include>
+				<include>index.jsp</include>
 				<include>environment.jsp</include>
 			</includes>
 		</fileSet>
