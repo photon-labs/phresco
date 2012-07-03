@@ -41,7 +41,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 			LOGGER.debug(absolutePath);
 		}
 		
-		if(absolutePath.getPath().equals("/service/rest/api/login")) {
+		if(absolutePath.getPath().equals(ServiceConstants.REST_LOGIN_PATH)) {
 			return request;
 		}
 		

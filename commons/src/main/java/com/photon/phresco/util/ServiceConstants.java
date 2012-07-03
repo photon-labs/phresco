@@ -65,6 +65,7 @@ public interface ServiceConstants {
 	String REST_API_JSBYID = "/modules/js";
 	String REST_API_PILOTSBYID = "/pilots/id";
 	String REST_API_LOGIN = "/login";
+	String REST_LOGIN_PATH = "/service/rest/api/login";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
 	
@@ -108,6 +109,7 @@ public interface ServiceConstants {
 	String EX_PHEX00004 = "PHEX00004";
 	String EX_PHEX00005 = "PHEX00005";
 	String EX_PHEX00006 = "PHEX00006";
+	String EX_PHEX00007 = "PHEX00007";
 	
 	/*
      * Constants for Operatins
