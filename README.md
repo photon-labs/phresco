@@ -5,6 +5,8 @@ Phresco, a product of Photon Infotech Pvt Ltd, is designed to work seamlessly wi
 Phresco allows the user to develop projects simultaneously with faster cycles across multiple channels. Phresco is endowed with latest tools and capabilities which, along with expanding libraries of pre-built templates, standardized codes and manifold archetypes aid the development team increase their capability by limiting the occurrences of errors and reducing the development time.
 Phresco, with the aid of Responsive Web Design (RWD), helps developers in exposing the myriad functionalities developed using Phresco across multiple channels i.e., web, mobile, tablet and kiosk with minimum resizing, panning and scrolling efforts.
 Phresco supports
+
+
 1.  Web Application technologies including
 •	Drupal 6
 •	Drupal 7
