@@ -38,15 +38,18 @@ efforts.
 
 2.	Web Service technologies including
             
-            •	Node JS Web Service
+      •	Node JS Web Service
             
-            •	Java Web Service
+      •	Java Web Service
 
 3.	Mobile Application technologies including
 
             •	iPhone native
+            
             •	iPhone hybrid
+            
             •	Android native
+            
             •	Android hybrid
 
 
