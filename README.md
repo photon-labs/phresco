@@ -27,7 +27,7 @@ Phresco supports
 
 
 
-Quick Start
+Quick start
 -----------
 
 Clone the repo, git clone git://github.com/phresco/phresco.git 
@@ -62,7 +62,6 @@ http://forum.phresco.com
 
 Mailing List
 ------------
-
 
 Have a query? Feel free to contact us.
 phresco-support@photoninfotech.net
