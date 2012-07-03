@@ -25,10 +25,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
@@ -43,12 +39,13 @@ import com.photon.phresco.service.dao.UserDAO;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.service.util.AuthenticationUtil;
 import com.photon.phresco.util.Credentials;
+import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
-@Path("/login")
+@Path(ServiceConstants.REST_API_LOGIN)
 public class LoginService extends DbService {
 	
 	 
@@ -70,7 +67,7 @@ public class LoginService extends DbService {
         User user = response.getEntity(genericType);
         
         
-        UserDAO userDao = mongoOperation.findOne("userdao", new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
+        UserDAO userDao = mongoOperation.findOne(ServiceConstants.USERDAO_COLLECTION_NAME, new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
         user.setId(user.getName());
         Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);
         User convertedUser = converter.convertDAOToObject(userDao, mongoOperation);
@@ -79,7 +76,7 @@ public class LoginService extends DbService {
         AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
         convertedUser.setToken(authTokenUtil.generateToken(credentials.getUsername()));
         convertedUser.setDisplayName(user.getDisplayName());
-        convertedUser.setPhrescoEnabled(true);
+        convertedUser.setPhrescoEnabled(user.isPhrescoEnabled());
         return convertedUser;
     }
 }
