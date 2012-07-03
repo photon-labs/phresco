@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.util.AuthenticationUtil;
-import com.photon.phresco.service.util.Utility;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.spi.container.ContainerRequest;
