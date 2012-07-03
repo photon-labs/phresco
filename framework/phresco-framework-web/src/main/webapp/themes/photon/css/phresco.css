@@ -604,7 +604,7 @@ footer {
     background-position:center;
     width:7px !important;
     top:7px;
-    height:90%!important;
+    height:100%!important;
 }
 
 .scroll-bar .scroll-slider {
@@ -3097,6 +3097,7 @@ table {
 
 .configurePopUp {
     margin-top: -300px;
+    width: 560px;
 }
 
 .ci_form {
@@ -3155,7 +3156,7 @@ table {
 }
 
 .settings_list_form {
-    height:83%;
+    height:89%;
 }
 
 .app_list_form {
@@ -3968,6 +3969,31 @@ form div.error {
 /** performance test popup styles ends **/
 
 /** validate popup **/
+
+.validate-container {
+  	width: 100%;
+  	height: 91%;
+  	margin: -1px auto;
+  	position: relative;
+  	padding-top: 30px;
+  	border-radius: 6px; 
+}
+
+.validate-container-inner {
+ 	overflow-x: visible;
+ 	overflow-y: auto;
+ 	height: 100%;
+}
+  
+.th-inner-validate {
+  	position: absolute;
+  	top: 2px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -5px;
+}
+
 .validate_Modal {
 	margin-top: -200px;
 	height: 50%;
@@ -4040,7 +4066,7 @@ form div.error {
 
 #coremodule_accordion_container {
 	width: 99.3%;
-	height: 90%;
+	height: 97%;
 }
 
 .custommodule_accordion_container {
@@ -4050,7 +4076,7 @@ form div.error {
 
 .jsLib_accordion_container {
 	width: 99.7%;
-	height: 74%;
+	height: 85%;
 }
 
 .noCore_customFeaturesDiv {
@@ -4131,12 +4157,48 @@ form div.error {
 }
    
 .th-inner {
-  	position: absolute;
-  	top: 0;
+  	position: fixed;
+  	top: 162px;
   	line-height: 30px;
   	text-align: left;
   	padding-left: 5px;
   	margin-left: -5px;
+}
+
+ .th-inner-head {
+	position: fixed;
+  	top: 196px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+} 
+
+.th-inner-test {
+	position: fixed;
+  	top: 226px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+}
+
+.th-inner-android {
+	position: fixed;
+  	top: 145px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
+}
+
+.th-inner-testtech {
+	position: fixed;
+  	top: 255px;
+  	line-height: 30px;
+  	text-align: left;
+  	padding-left: 5px;
+  	margin-left: -4px;
 }
 
 .first .th-inner {
@@ -4551,5 +4613,57 @@ ul#display-inline-block-example li {
 }
 
 input.xlarge.javastd {
-	 width: 270px;
+	  width: 73%;
 }
+
+/** generate build advanced settings starts **/
+.topFouty {
+	top: 40%;
+}
+
+.adv-settings-accoridan-inner {
+	padding : 0px; 
+	width: 100%;
+}
+
+.adv-settings-width {
+	width: 100%;
+}
+
+.adv_setting_accordian_bottom {
+	border-bottom: 1px solid #ffffff !important;
+}
+
+.generate_build_err_msg {
+	width:72%; 
+	text-align: left;	
+}
+
+.adv-settings-popup-action {
+	width: 98%;
+}
+
+.adv-settings-error-msg {
+	width:64%; 
+	text-align: left; 
+	float: left;
+}
+
+.fileTreeBrowseOverflow {
+	overflow: auto; 
+	max-height: 300px; 
+/* 	padding-top: 0px; */
+}
+
+.fieldset_center_align {
+	width: 99%;
+}
+
+.btn_browse {
+	padding: 5px 10px 3px !important;
+}
+
+a[id='androidSigning']:hover {
+     color: #000000 !important;
+}
+/** generate build advanced settings ends **/

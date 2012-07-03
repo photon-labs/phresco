@@ -111,7 +111,8 @@
     }
     
     // This method is for popup form submit and Dynamic small subpage page load
-    function popup(pageUrl, params, tagControl, callSuccessEvent) {
+    // is secondpopup avail can be used to display two popup's in a single popup div
+    function popup(pageUrl, params, tagControl, callSuccessEvent, isSecondPopupAvail) {
     	var param = "";
     	if (!isBlank($('form').serialize())) {
     		param = "&";
@@ -123,10 +124,15 @@
             url : pageUrl,
             data : $('form').serialize() + param,
             success : function(data) {
-            	tagControl.empty();
-            	tagControl.html(data);
-            	if(callSuccessEvent != undefined && !isBlank(callSuccessEvent)) {
-            		successEvent(pageUrl);
+            	if(tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail == undefined && isBlank(isSecondPopupAvail)) {
+                	tagControl.empty();
+                	tagControl.html(data);
+                }
+            	if (tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail != undefined && !isBlank(isSecondPopupAvail)) {
+            		tagControl.append(data);
+            	}
+             	if(callSuccessEvent != undefined && !isBlank(callSuccessEvent)) {
+             		successEvent(pageUrl, data);
             	}
             }
         });

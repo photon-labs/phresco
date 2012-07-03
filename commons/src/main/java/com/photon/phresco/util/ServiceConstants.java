@@ -64,6 +64,8 @@ public interface ServiceConstants {
 	String REST_API_MODULESBYID = "/modules/mod";
 	String REST_API_JSBYID = "/modules/js";
 	String REST_API_PILOTSBYID = "/pilots/id";
+	String REST_API_LOGIN = "/login";
+	String REST_LOGIN_PATH = "/service/rest/api/login";
 	
 	String REST_API_LDAP_PARAM_ID = "ldap";
 	
@@ -96,6 +98,7 @@ public interface ServiceConstants {
 	String WEBSERVICES_COLLECTION_NAME = "webservices";
 	String SETTINGS_COLLECTION_NAME = "settings";
 	String TECHNOLOGIES_COLLECTION_NAME = "technologies";
+	String USERDAO_COLLECTION_NAME = "userdaos";
 	
 	/*
      * Constants for Exception Message keys
@@ -106,6 +109,7 @@ public interface ServiceConstants {
 	String EX_PHEX00004 = "PHEX00004";
 	String EX_PHEX00005 = "PHEX00005";
 	String EX_PHEX00006 = "PHEX00006";
+	String EX_PHEX00007 = "PHEX00007";
 	
 	/*
      * Constants for Operatins

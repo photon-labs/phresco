@@ -24,11 +24,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -43,6 +45,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -52,10 +55,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.photon.phresco.commons.AndroidConstants;
-import com.photon.phresco.commons.BuildInfo;
-import com.photon.phresco.commons.PluginProperties;
-import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -69,13 +68,23 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
+import com.photon.phresco.commons.BuildInfo;
+import com.photon.phresco.commons.PluginProperties;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.commons.AndroidConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.photon.phresco.commons.XCodeConstants;
+import com.phresco.pom.android.AndroidProfile;
+import com.phresco.pom.model.Plugin;
+import com.phresco.pom.model.PluginExecution;
+import com.phresco.pom.model.PluginExecution.Configuration;
+import com.phresco.pom.model.PluginExecution.Goals;
+import com.phresco.pom.util.AndroidPomProcessor;
 import com.phresco.pom.util.PomProcessor;
 
 public class Build extends FrameworkBaseAction {
@@ -111,6 +120,16 @@ public class Build extends FrameworkBaseAction {
 	private String deployTo = "";
 	private String userBuildName = null;
 	private String userBuildNumber = null;
+
+	// Create profile
+	private String keystore = null;
+	private String storepass = null;
+	private String keypass = null;
+	private String alias = null;
+	private boolean profileCreationStatus = false;
+	private String profileCreationMessage = null;
+	private String profileAvailable = null;
+	private String signing = null;
 
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
 
@@ -248,6 +267,21 @@ public class Build extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 			
+			// get has signing info from android pom
+			if (TechnologyTypes.ANDROIDS.contains(technology)) { 
+	        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+	        	builder.append(projectCode);
+	        	builder.append(File.separatorChar);
+	        	builder.append(POM_XML);
+	        	File pomPath = new File(builder.toString());
+	        	AndroidPomProcessor processor = new AndroidPomProcessor(pomPath);
+	        	if (pomPath.exists() && processor.hasSigning()) {
+	        		getHttpRequest().setAttribute(REQ_ANDROID_HAS_SIGNING, true);
+	        	} else {
+	        		getHttpRequest().setAttribute(REQ_ANDROID_HAS_SIGNING, false);
+	        	}			
+			}
+			
 			projectModules = projectModuleMap.get(projectCode);
 			if (CollectionUtils.isEmpty(projectModules)) {
 				projectModules = getWarProjectModules(projectCode);
@@ -353,12 +387,25 @@ public class Build extends FrameworkBaseAction {
 
 			if (TechnologyTypes.ANDROIDS.contains(technology)) {
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
+				actionType.setSkipTest(true);
+				actionType.setProfileId("");
+				if(StringUtils.isNotEmpty(signing) && StringUtils.isNotEmpty(profileAvailable)) {
+		        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+		        	builder.append(projectCode);
+		        	builder.append(File.separatorChar);
+		        	builder.append(POM_XML);
+		        	File pomPath = new File(builder.toString());
+		        	AndroidPomProcessor processor = new AndroidPomProcessor(pomPath);
+		        	if (pomPath.exists() && processor.hasSigning()) {
+		        		actionType.setProfileId(processor.getSigningProfile());
+		        	}
+				}
 				if (StringUtils.isEmpty(proguard)) {
 					// if the checkbox is selected value should be set to false otherwise true
 					proguard = TRUE;
 				}
 				/*settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);*/
-				settingsInfoMap.put(SKIPTESTS, TRUE);
+//				settingsInfoMap.put(SKIPTESTS, TRUE);
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 			} else {
@@ -1399,6 +1446,115 @@ public class Build extends FrameworkBaseAction {
 		}
 	}
 
+	public String advancedBuildSettings() {
+		S_LOGGER.debug("Entering Method Build.advancedBuildSettings()");
+		AndroidProfile androidProfile = null;
+		try {
+        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+        	builder.append(projectCode);
+        	builder.append(File.separatorChar);
+        	builder.append(POM_XML);
+        	File pomPath = new File(builder.toString());
+        	AndroidPomProcessor processor = new AndroidPomProcessor(pomPath);
+        	if (pomPath.exists() && processor.hasSigning()) {
+    			String signingProfileid = processor.getSigningProfile();
+    			androidProfile = processor.getProfileElement(signingProfileid);
+        	}
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of  Build.advancedBuildSettings()"	+ FrameworkUtil.getStackTraceAsString(e));
+		}
+		getHttpRequest().setAttribute("projectCode", projectCode);
+		getHttpRequest().setAttribute(REQ_ANDROID_PROFILE_DET, androidProfile);
+		getHttpRequest().setAttribute(REQ_FROM_TAB, REQ_FROM_TAB_DEPLOY);
+		return SUCCESS;
+	}
+	
+	public String createAndroidProfile() throws IOException {
+		S_LOGGER.debug("Entering Method Build.createAndroidProfile()");
+		boolean hasSigning = false;
+		try {
+        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+        	builder.append(projectCode);
+        	builder.append(File.separatorChar);
+        	builder.append(POM_XML);
+        	File pomPath = new File(builder.toString());
+        	
+			AndroidPomProcessor processor = new AndroidPomProcessor(pomPath);
+			hasSigning = processor.hasSigning();
+			String profileId = PROFILE_ID;
+			String defaultGoal = GOAL_INSTALL;
+			Plugin plugin = new Plugin();
+			plugin.setGroupId(ANDROID_PROFILE_PLUGIN_GROUP_ID);
+			plugin.setArtifactId(ANDROID_PROFILE_PLUGIN_ARTIFACT_ID);
+			plugin.setVersion(ANDROID_PROFILE_PLUGIN_VERSION);
+			
+			PluginExecution execution = new PluginExecution();
+			execution.setId(ANDROID_EXECUTION_ID);
+			Goals goal = new Goals();
+			goal.getGoal().add(GOAL_SIGN);
+			execution.setGoals(goal);
+			execution.setPhase(PHASE_PACKAGE);
+			execution.setInherited(TRUE);
+			
+			AndroidProfile androidProfile = new AndroidProfile();
+			androidProfile.setKeystore(keystore);
+			androidProfile.setStorepass(storepass);
+			androidProfile.setKeypass(keypass);
+			androidProfile.setAlias(alias);
+			androidProfile.setVerbose(true);
+			androidProfile.setVerify(true);
+			
+			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			
+			List<Element> executionConfig = new ArrayList<Element>();
+            executionConfig.add(doc.createElement(ELEMENT_ARCHIVE_DIR));
+            Element removeExistSignature = doc.createElement(ELEMENT_REMOVE_EXIST_SIGN);
+			Element includeElement = doc.createElement(ELEMENT_INCLUDES);
+            Element doNotCheckInBuildInclude = doc.createElement(ELEMENT_INCLUDE);
+            doNotCheckInBuildInclude.setTextContent(ELEMENT_BUILD);
+            Element doNotCheckinTargetInclude = doc.createElement(ELEMENT_INCLUDE);
+            doNotCheckinTargetInclude.setTextContent(ELEMENT_TARGET);
+            includeElement.appendChild(doNotCheckInBuildInclude);
+            includeElement.appendChild(doNotCheckinTargetInclude);
+            executionConfig.add(includeElement);
+            removeExistSignature.setTextContent(TRUE);
+            executionConfig.add(removeExistSignature);
+            
+            //verboss
+            Element verbos = doc.createElement(ELEMENT_VERBOS);
+            verbos.setTextContent(TRUE);
+            executionConfig.add(verbos);
+            //verify
+            Element verify = doc.createElement(ELEMENT_VERIFY);
+            verbos.setTextContent(TRUE);
+            executionConfig.add(verify);
+            
+            Configuration configValues = new Configuration();
+            configValues.getAny().addAll(executionConfig);
+			execution.setConfiguration(configValues);
+			List<Element> additionalConfigs = new ArrayList<Element>();
+			processor.setProfile(profileId, false, defaultGoal , plugin, androidProfile , execution, null, additionalConfigs);
+			processor.save();
+			profileCreationStatus = true;
+			if (hasSigning) {
+				profileCreationMessage = getText(PROFILE_UPDATE_SUCCESS);
+			} else {
+				profileCreationMessage = getText(PROFILE_CREATE_SUCCESS);
+			}
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of  Build.createAndroidProfile()"	+ FrameworkUtil.getStackTraceAsString(e));
+			profileCreationStatus = false;
+			if (hasSigning) {
+				profileCreationMessage = getText(PROFILE_UPDATE_ERROR);
+			} else {
+				profileCreationMessage = getText(PROFILE_CREATE_ERROR);
+			}
+		}
+		return SUCCESS;
+	}
+	
 	public String getShowSettings() {
 		return showSettings;
 	}
@@ -1612,4 +1768,69 @@ public class Build extends FrameworkBaseAction {
 		this.jarName = jarName;
 
 	}
+
+	public String getKeystore() {
+		return keystore;
+	}
+
+	public void setKeystore(String keystore) {
+		this.keystore = keystore;
+	}
+
+	public String getStorepass() {
+		return storepass;
+	}
+
+	public void setStorepass(String storepass) {
+		this.storepass = storepass;
+	}
+
+	public String getKeypass() {
+		return keypass;
+	}
+
+	public void setKeypass(String keypass) {
+		this.keypass = keypass;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public boolean isProfileCreationStatus() {
+		return profileCreationStatus;
+	}
+
+	public void setProfileCreationStatus(boolean profileCreationStatus) {
+		this.profileCreationStatus = profileCreationStatus;
+	}
+
+	public String getProfileCreationMessage() {
+		return profileCreationMessage;
+	}
+
+	public void setProfileCreationMessage(String profileCreationMessage) {
+		this.profileCreationMessage = profileCreationMessage;
+	}
+
+	public String getProfileAvailable() {
+		return profileAvailable;
+	}
+
+	public void setProfileAvailable(String profileAvailable) {
+		this.profileAvailable = profileAvailable;
+	}
+
+	public String getSigning() {
+		return signing;
+	}
+
+	public void setSigning(String signing) {
+		this.signing = signing;
+	}
+	
 }

@@ -25,24 +25,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
-import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.impl.RestClient;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
-public class Customers extends ServiceBaseAction implements ServerConstants { 
+public class Customers extends ServiceBaseAction  { 
 	
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(Customers.class);
@@ -76,7 +71,7 @@ public class Customers extends ServiceBaseAction implements ServerConstants {
 		S_LOGGER.debug("Entering Method  CustomerList.list()");
 		
 		try {
-            RestClient<Customer> customersClient = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
+            RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
             GenericType<List<Customer>> genericType = new GenericType<List<Customer>>(){};
             List<Customer> customers = customersClient.get(genericType);
 			getHttpRequest().setAttribute("customers", customers);
@@ -92,14 +87,13 @@ public class Customers extends ServiceBaseAction implements ServerConstants {
 		
 		try {
 			if ("edit".equals(fromPage)) {
-				RestClient<Customer> customersClient = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
+				RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
 	            GenericType<Customer> genericType = new GenericType<Customer>(){};
 	            Customer customer = customersClient.getById(genericType);
 	            getHttpRequest().setAttribute("customer", customer);
 	            getHttpRequest().setAttribute("fromPage", fromPage);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		}
 		
@@ -108,73 +102,53 @@ public class Customers extends ServiceBaseAction implements ServerConstants {
 	
 	public String save() throws PhrescoException {
 		S_LOGGER.debug("Entering Method  CustomerList.save()");
-		
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-			SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 			List<Customer> customers = new ArrayList<Customer>();
 			Customer customer = new Customer(name, description);
-			if (StringUtils.isNotEmpty(validFrom)) {
-				customer.setValidFrom(dateFormat.parse(validFrom));
-			}
-			if (StringUtils.isNotEmpty(validUpTo)) {
-				customer.setValidUpto(dateFormat.parse(validUpTo));
-			}
-//			customer.setValidFrom(validFrom);
-//			customer.setValidUpto(validUpTo);
+			customer.setValidFrom(validFrom);
+			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 			customers.add(customer);
-	        RestClient<Customer> newCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS);
-	        ClientResponse clientResponse = newCustomer.create(customers);
-	        if (clientResponse.getStatus() != 200) {
-	        	addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
-	        } else {
-	        	addActionMessage(getText(CUSTOMER_ADDED, Collections.singletonList(name)));
-	        }
+			RestClient<Customer> newCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
+			ClientResponse clientResponse = newCustomer.create(customers);
+			if (clientResponse.getStatus() != 200) {
+				addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
+			} else {
+				addActionMessage(getText(CUSTOMER_ADDED, Collections.singletonList(name)));
+			}
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
-		
+
 		return list();
 	}
-	
+
 	public String update() throws PhrescoException {
 		S_LOGGER.debug("Entering Method  CustomerList.update()");
-		
+
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-			SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+
 			Customer customer = new Customer(customerId, name, description);
-			if (StringUtils.isNotEmpty(validFrom)) {
-				customer.setValidFrom(dateFormat.parse(validFrom));
-			}
-			if (StringUtils.isNotEmpty(validUpTo)) {
-				customer.setValidUpto(dateFormat.parse(validUpTo));
-			}
-//			customer.setValidFrom(validFrom);
-//			customer.setValidUpto(validUpTo);
+			customer.setValidFrom(validFrom);
+			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
-	        RestClient<Customer> editCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
-	        Type type = new TypeToken<Customer>() {}.getType();
-	        ClientResponse clientResponse = editCustomer.updateById(customer, type);
-	        if (clientResponse.getStatus() != 200) {
-	        	addActionError(getText(CUSTOMER_NOT_UPDATED, Collections.singletonList(oldName)));
-	        } else {
-	        	addActionMessage(getText(CUSTOMER_UPDATED, Collections.singletonList(oldName)));
-	        }
+			RestClient<Customer> editCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
+	        GenericType<Customer> genericType = new GenericType<Customer>(){};
+	        Customer updatedCustomer = editCustomer.updateById(customer, genericType);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
-		
 		return list();
 	}
-	
+
 	private boolean validateForm() {
 		boolean isError = false;
 		if (StringUtils.isEmpty(name)) {
@@ -226,7 +200,7 @@ public class Customers extends ServiceBaseAction implements ServerConstants {
 			String[] customerIds = getHttpRequest().getParameterValues("customerId");
 			if (customerIds != null) {
 				for (String customerId : customerIds) {
-					 RestClient<Customer> deleteCustomer = getServiceManager().getRestClient("admin-temp" + REST_API_CUSTOMERS + "/" + customerId);
+					 RestClient<Customer> deleteCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
 			    	ClientResponse clientResponse = deleteCustomer.deleteById();
 			    	if (clientResponse.getStatus() != 200) {
 			        	addActionError(getText(CUSTOMER_NOT_DELETED));

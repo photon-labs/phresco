@@ -66,7 +66,8 @@
 
 	/* To check whether the divice is ipad or not and apply JQuery scroll bar */
 	if(!isiPad()){
-		$(".theme_accordion_container").scrollbars();
+		$(".jsLib_accordion_container").scrollbars();
+		$("#coremodule_accordion_container").scrollbars();
 	}
 	
 	$(document).ready(function() {

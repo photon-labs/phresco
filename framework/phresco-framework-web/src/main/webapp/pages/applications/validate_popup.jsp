@@ -60,17 +60,17 @@
 		<%
 			if (CollectionUtils.isNotEmpty(validationResults)) {
 		%>
-			<div class="fixed-table-container">
+			<div class="validate-container">
 	      		<div class="header-background"> </div>
-	      		<div class="fixed-table-container-inner validatePopup_tbl">
+	      		<div class="validate-container-inner validatePopup_tbl">
 			        <table cellspacing="0" class="zebra-striped">
 			          	<thead>
 				            <tr>
 								<th class="first validate_tblHdr">
-				                	<div class="th-inner"><s:text name="label.message"/></div>
+				                	<div class="th-inner-validate"><s:text name="label.message"/></div>
 				              	</th>
 				              	<th class="second validate_tblHdr">
-				                	<div class="th-inner"><s:text name="label.status"/></div>
+				                	<div class="th-inner-validate"><s:text name="label.status"/></div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -128,6 +128,10 @@
 </div>
 
 <script type="text/javascript">
+
+	/* JQuery scroll bar */
+	//$(".validate-container-inner").scrollbars(); 
+	
 	$(document).ready(function() {
 		escPopup();
 		$('#validateCancel, #close').click(function() {

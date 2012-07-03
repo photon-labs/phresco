@@ -55,6 +55,7 @@ public interface ServiceUIConstants {
     
 
     String KEY_I18N_ERR_NAME_EMPTY = "err.msg.name.empty";
+    String KEY_I18N_ERR_DESC_EMPTY = "err.msg.desc.empty";
     String KEY_I18N_ERR_VER_EMPTY = "err.msg.ver.empty";
     String KEY_I18N_ERR_FILE_EMPTY	= "err.msg.file.empty";
     
@@ -78,10 +79,18 @@ public interface ServiceUIConstants {
     String FEATURE_NOT_ADDED = "feature.add.fail";
     String APPLNTYPES_ADDED = "applntypes.add.success";
     String APPLNTYPES_NOT_ADDED = "applntypes.add.fail";
+    String APPLNTYPES_UPDATED = "applntypes.update.success";
+    String APPLNTYPES_NOT_UPDATED = "applntypes.update.fail";
+    String APPLNTYPES_DELETED = "appTyep.delete.success";
+    String APPLNTYPES_NOT_DELETED = "appType.delete.fail" ;
     String CONFIGTEMPLATE_ADDED = "congiftemplate.add.success";
     String CONFIGTEMPLATE_NOT_ADDED = "congiftemplate.add.fail";
     String ARCHETYPE_ADDED = "archetype.add.success";
     String ARCHETYPE_NOT_ADDED = "archetype.add.fail";
+    String ARCHETYPE_UPDATED = "archetype.update.success";
+    String ARCHETYPE_NOT_UPDATED = "archetype.update.fail";
+    String ARCHETYPE_DELETED = "archetype.delete.success";
+    String ARCHETYPE_NOT_DELETED = "archetype.delete.fail" ;
     String PLTPROJ_ADDED = "pltproj.add.success";
     String PLTPROJ_NOT_ADDED = "pltproj.add.fail";
     String CUSTOMER_ADDED = "customer.add.success";

@@ -53,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
@@ -79,15 +78,12 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
-import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
-import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.ServerConfiguration;
@@ -102,7 +98,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static final String XML = ".xml";
 	private static final String DEFAULT = "default";
-	private static final String JAXB_PACKAGE_NAME = "com.photon.phresco.service.jaxb";
+//	private static final String JAXB_PACKAGE_NAME = "com.photon.phresco.service.jaxb";
 	private static final int HTTP_NOT_FOUND = 404;
 	private static final String LOCAL_REPO = "../temp/target/local-repo";
 
@@ -146,17 +142,17 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		}
 		this.config = config;
 		try {
-			jaxbContext = JAXBContext.newInstance(JAXB_PACKAGE_NAME);
-			unMarshal = jaxbContext.createUnmarshaller();
-			// unMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-			// Boolean.TRUE);
-			marshal = jaxbContext.createMarshaller();
-			// marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//			jaxbContext = JAXBContext.newInstance(JAXB_PACKAGE_NAME);
+//			unMarshal = jaxbContext.createUnmarshaller();
+//			// unMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+//			// Boolean.TRUE);
+//			marshal = jaxbContext.createMarshaller();
+//			// marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 			// Boolean.TRUE);
 
 			gson = new Gson();
 			initMap();
-		} catch (JAXBException e) {
+		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
 	}
@@ -184,127 +180,127 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		tech.setVersions(versions);
 		tech.setModules(getModules(id));
 		tech.setJsLibraries(getJSLibraries(id));
-		tech.setDatabases(getDatabases());
+//		tech.setDatabases(getDatabases());
 //		tech.setServers(getServers());
-		tech.setWebservices(getWebservices());
+//		tech.setWebservices(getWebservices());
 		return tech;
 	}
 
-	private List<Database> getDatabases() {
-		List<Database> databases = new ArrayList<Database>();
-		
-		List<String> versions = new ArrayList<String>(2);
-		versions.add("5.5.1");
-		versions.add("5.5");
-		versions.add("5.1");
-		versions.add("5.0");
-		versions.add("4.1");
-		versions.add("4.0");
-		databases.add(new Database(1, "MySQL", versions, "My SQL DB"));
-		
-		versions = new ArrayList<String>(2);
-		versions.add("11gR2");
-		versions.add("11gR1");
-		versions.add("10gR2");
-		versions.add("10gR1");
-		versions.add("9iR2");
-		versions.add("9iR1");
-		versions.add("8iR3");
-		versions.add("8iR2");
-		versions.add("8iR1");
-		versions.add("8i");
-		databases.add(new Database(2, "Oracle", versions, "Oracle DB"));
-
-		versions = new ArrayList<String>(2);
-		versions.add("2.0.4");
-		versions.add("1.8.5 ");
-		databases.add(new Database(3, "MongoDB", versions, "Mongo DB"));
-		
-		versions = new ArrayList<String>(2);
-		versions.add("10");
-		versions.add("9.7");
-		versions.add("9.5");
-		versions.add("9");
-		databases.add(new Database(4, "DB2", versions, "DB2 DB"));
-		
-		versions = new ArrayList<String>(2);
-		versions.add("2012");
-		versions.add("2008 R2");
-		versions.add("2008");
-		versions.add("2005");
-		databases.add(new Database(5, "MSSQL", versions, "MSSQL DB"));
-		
-		return databases;
-	}
-
-	private List<Server> getServers() {
-		List<Server> servers = new ArrayList<Server>();
-
-		List<String> versions = new ArrayList<String>(2);
-		versions.add("7.0.x");
-		versions.add("6.0.x");
-		versions.add("5.5.x");
-		
-		servers.add(new Server(1, "Apache Tomcat", versions, "Apache Tomcat Server"));
-		versions = new ArrayList<String>(2);
-		versions.add("7.1.x");
-		versions.add("7.0.x");
-		versions.add("6.1.x");
-		versions.add("6.0.x");
-		versions.add("5.1.x");
-		versions.add("5.0.x");
-		versions.add("4.2.x");
-		versions.add("4.0.x");
-		servers.add(new Server(2, "JBoss", versions, "JBoss application server"));
-
-		versions = new ArrayList<String>(2);
-		versions.add("7.5");
-		versions.add("7.0");
-		versions.add("6.0");
-		versions.add("5.1");
-		versions.add("5.0");
-		servers.add(new Server(3, "IIS", versions, "IIS Server"));
-
-		versions = new ArrayList<String>(2);
-		versions.add("12c(12.1.1)");
-		versions.add("11gR1(10.3.6)");
-		versions.add("11g(10.3.1)");
-		versions.add("10.3");
-		versions.add("10.0");
-		versions.add("9.2");
-		versions.add("9.1");
-		servers.add(new Server(4, "WebLogic", versions, "Web Logic"));
-		
-		versions = new ArrayList<String>(2);
-		versions.add("2.3");
-		versions.add("2.2");
-		versions.add("2.0");
-        versions.add("1.3");
-        servers.add(new Server(5, "Apache", versions, "Apache"));
-        
-        versions = new ArrayList<String>(2);
-        versions.add("0.6.x");
-        servers.add(new Server(6, "NodeJS", versions, "NodeJS"));
-        
-        versions = new ArrayList<String>(2);
-        versions.add("8.x");
-        versions.add("7.x");
-        versions.add("6.x");
-        versions.add("5.x");
-        versions.add("4.x");
-        servers.add(new Server(7, "Jetty", versions, "Jetty"));
-
-		return servers;
-	}
-
-	private List<WebService> getWebservices() {
-		List<WebService> databases = new ArrayList<WebService>();
-		databases.add(new WebService(1, "REST/JSON", "1.0", "REST JSON web services"));
-		databases.add(new WebService(2, "REST/XML", "1.0", "REST XML web services"));
-		databases.add(new WebService(3, "SOAP", "1.1", "SOAP 1.1"));
-		databases.add(new WebService(4, "SOAP", "1.2", "SOAP 1.2"));
-		return databases;
-	}
+//	private List<Database> getDatabases() {
+//		List<Database> databases = new ArrayList<Database>();
+//		
+//		List<String> versions = new ArrayList<String>(2);
+//		versions.add("5.5.1");
+//		versions.add("5.5");
+//		versions.add("5.1");
+//		versions.add("5.0");
+//		versions.add("4.1");
+//		versions.add("4.0");
+//		databases.add(new Database(1, "MySQL", versions, "My SQL DB"));
+//		
+//		versions = new ArrayList<String>(2);
+//		versions.add("11gR2");
+//		versions.add("11gR1");
+//		versions.add("10gR2");
+//		versions.add("10gR1");
+//		versions.add("9iR2");
+//		versions.add("9iR1");
+//		versions.add("8iR3");
+//		versions.add("8iR2");
+//		versions.add("8iR1");
+//		versions.add("8i");
+//		databases.add(new Database(2, "Oracle", versions, "Oracle DB"));
+//
+//		versions = new ArrayList<String>(2);
+//		versions.add("2.0.4");
+//		versions.add("1.8.5 ");
+//		databases.add(new Database(3, "MongoDB", versions, "Mongo DB"));
+//		
+//		versions = new ArrayList<String>(2);
+//		versions.add("10");
+//		versions.add("9.7");
+//		versions.add("9.5");
+//		versions.add("9");
+//		databases.add(new Database(4, "DB2", versions, "DB2 DB"));
+//		
+//		versions = new ArrayList<String>(2);
+//		versions.add("2012");
+//		versions.add("2008 R2");
+//		versions.add("2008");
+//		versions.add("2005");
+//		databases.add(new Database(5, "MSSQL", versions, "MSSQL DB"));
+//		
+//		return databases;
+//	}
+//
+//	private List<Server> getServers() {
+//		List<Server> servers = new ArrayList<Server>();
+//
+//		List<String> versions = new ArrayList<String>(2);
+//		versions.add("7.0.x");
+//		versions.add("6.0.x");
+//		versions.add("5.5.x");
+//		
+//		servers.add(new Server(1, "Apache Tomcat", versions, "Apache Tomcat Server"));
+//		versions = new ArrayList<String>(2);
+//		versions.add("7.1.x");
+//		versions.add("7.0.x");
+//		versions.add("6.1.x");
+//		versions.add("6.0.x");
+//		versions.add("5.1.x");
+//		versions.add("5.0.x");
+//		versions.add("4.2.x");
+//		versions.add("4.0.x");
+//		servers.add(new Server(2, "JBoss", versions, "JBoss application server"));
+//
+//		versions = new ArrayList<String>(2);
+//		versions.add("7.5");
+//		versions.add("7.0");
+//		versions.add("6.0");
+//		versions.add("5.1");
+//		versions.add("5.0");
+//		servers.add(new Server(3, "IIS", versions, "IIS Server"));
+//
+//		versions = new ArrayList<String>(2);
+//		versions.add("12c(12.1.1)");
+//		versions.add("11gR1(10.3.6)");
+//		versions.add("11g(10.3.1)");
+//		versions.add("10.3");
+//		versions.add("10.0");
+//		versions.add("9.2");
+//		versions.add("9.1");
+//		servers.add(new Server(4, "WebLogic", versions, "Web Logic"));
+//		
+//		versions = new ArrayList<String>(2);
+//		versions.add("2.3");
+//		versions.add("2.2");
+//		versions.add("2.0");
+//        versions.add("1.3");
+//        servers.add(new Server(5, "Apache", versions, "Apache"));
+//        
+//        versions = new ArrayList<String>(2);
+//        versions.add("0.6.x");
+//        servers.add(new Server(6, "NodeJS", versions, "NodeJS"));
+//        
+//        versions = new ArrayList<String>(2);
+//        versions.add("8.x");
+//        versions.add("7.x");
+//        versions.add("6.x");
+//        versions.add("5.x");
+//        versions.add("4.x");
+//        servers.add(new Server(7, "Jetty", versions, "Jetty"));
+//
+//		return servers;
+//	}
+//
+//	private List<WebService> getWebservices() {
+//		List<WebService> databases = new ArrayList<WebService>();
+//		databases.add(new WebService(1, "REST/JSON", "1.0", "REST JSON web services"));
+//		databases.add(new WebService(2, "REST/XML", "1.0", "REST XML web services"));
+//		databases.add(new WebService(3, "SOAP", "1.1", "SOAP 1.1"));
+//		databases.add(new WebService(4, "SOAP", "1.2", "SOAP 1.2"));
+//		return databases;
+//	}
 
 	public List<ModuleGroup> getModules(String techId) throws PhrescoException {
 		if (isDebugEnabled) {
@@ -697,12 +693,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		// TODO Auto-generated method stub
 
 	}
-
-    @Override
-    public String getServiceContextName() throws PhrescoException {
-        // TODO Auto-generated method stub
-        return config.getServerContextName();
-    }
 
 	@Override
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {

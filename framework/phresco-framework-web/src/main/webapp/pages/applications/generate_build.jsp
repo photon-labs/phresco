@@ -65,7 +65,7 @@
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm"> 
-<div class="popup_Modal" id="generateBuild_Modal">
+<div class="popup_Modal topFouty" id="generateBuild_Modal">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
 		<%if (from.equals("nodeJS_runAgnSrc") || from.equals("runAgnSrc")) {%>
@@ -262,7 +262,7 @@
 			</div>
 		<% } %>	
 		
-		<fieldset class="popup-fieldset">
+		<fieldset class="popup-fieldset fieldset_center_align">
 			<!-- Show Settings -->
 			<div class="clearfix">
 				<div class="xlInput">
@@ -288,38 +288,83 @@
 								<input type="checkbox" id="importSql" name="importSql" value="true" <%= checkImportSql%> >
 								<span class="textarea_span popup-span"><s:text name="label.import.sql"/></span>
 							<% } %>
-							<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %>
-								<input type="checkbox" id="proguard" name="proguard" value="false" disabled="disabled">
-								<span class="textarea_span popup-span"><s:text name="label.progurad"/></span>
-							<% } %>
+<%-- 							<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %> --%>
+<!-- 								<input type="checkbox" id="proguard" name="proguard" value="false" disabled="disabled"> -->
+<%-- 								<span class="textarea_span popup-span"><s:text name="label.progurad"/></span> --%>
+<%-- 							<% } %> --%>
 						</li>
 					</ul>
 				</div>	
 			</div>
 		</fieldset>
+<!-- 		advanced settingd -->
+		<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %>
+		<div class="theme_accordion_container clearfix" style="float: none;">
+		    <section class="accordion_panel_wid">
+		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+		            <section class="lft_menus_container adv-settings-width">
+		                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.advanced.settings"/></span></span>
+		                <div class="mfbox siteinnertooltiptxt">
+		                    <div class="scrollpanel adv_setting_accordian_bottom">
+		                        <section class="scrollpanel_inner">
+									<fieldset class="popup-fieldset fieldset_center_align">
+										<!-- Show Settings -->
+										<div class="clearfix">
+											<div class="xlInput">
+												<ul class="inputs-list">
+													<li class="popup-li">
+															<input type="checkbox" id="proguard" name="proguard" value="false"  disabled="disabled">
+															<span class="textarea_span popup-span"><s:text name="label.progurad"/></span>
+															
+															<input type="checkbox" id="signing" name="signing" value="false">
+															<span class="textarea_span popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
+													</li>
+												</ul>
+											</div>	
+										</div>
+									</fieldset>
+		                        </section>
+		                    </div>
+		                </div>
+		            </section>  
+		        </div>
+		    </section>
+		</div>
+		<input id="profileAvailable" name="profileAvailable" type="hidden" value=""/>
+		<% } %>
+<!-- 		advanced settings end -->
 	</div>
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
-			<div id="errMsg" style="width:72%; text-align: left;"></div>
-			<input type="hidden" name="from" value="<%= from %>" id="from">
-			<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
-			<% if (from.equals("nodeJS_runAgnSrc")) {%>
-				<input type="button" id="runAgainstSrc" class="btn primary" value="<s:text name="label.run"/>">
-			<% } else if (from.equals("runAgnSrc")) {%>
-				<input type="button" id="javaRunAgainstSrc" class="btn primary" value="<s:text name="label.run"/>">
-			<% } else if (from.equals(FrameworkConstants.DEPLOY)) {%>	
-				<input type="button" id="deploy" class="btn primary" value="<s:text name="label.deploy"/>">
-			<% } else { %>
-				<input type="button" id="build" class="btn primary" value="<s:text name="label.build"/>">
-			<% } %>
+			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
+			<div style="float: right;">
+				<input type="hidden" name="from" value="<%= from %>" id="from">
+				<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
+				<% if (from.equals("nodeJS_runAgnSrc")) {%>
+					<input type="button" id="runAgainstSrc" class="btn primary" value="<s:text name="label.run"/>">
+				<% } else if (from.equals("runAgnSrc")) {%>
+					<input type="button" id="javaRunAgainstSrc" class="btn primary" value="<s:text name="label.run"/>">
+				<% } else if (from.equals(FrameworkConstants.DEPLOY)) {%>	
+					<input type="button" id="deploy" class="btn primary" value="<s:text name="label.deploy"/>">
+				<% } else { %>
+					<input type="button" id="build" class="btn primary" value="<s:text name="label.build"/>">
+				<% } %>
+			</div>
 		</div>
 	</div>
 </div>
 </form> 
 
 <script type="text/javascript">
-    
+	<%
+		if (TechnologyTypes.ANDROIDS.contains(technology) && (Boolean) request.getAttribute(FrameworkConstants.REQ_ANDROID_HAS_SIGNING)) {
+	%>
+		$('#profileAvailable').val("true");
+	<%
+		}
+	%>
+
 	if(!isiPad()){
 	    /* JQuery scroll bar */
 		$(".generate_build").scrollbars();
@@ -338,11 +383,18 @@
 	var readerSession = "";
 	
 	$(document).ready(function() {
+		// accodion for advanced issue
+		accordion();
+
 		$('#close, #cancel').click(function() {
 			showParentPage();
 		});
 
 		$('#build').click(function() {
+			if ($('input[type=checkbox][name=signing]').is(':checked') && isBlank($('#profileAvailable').val())) {
+				$("#errMsg").html('<%= FrameworkConstants.PROFILE_CREATE_MSG %>');
+				return false;
+			}
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
 		});
 		
@@ -389,6 +441,16 @@
 		    	$("#errMsg").empty();
 		    }
 		});
+		
+		$('#androidSigning').click(function() {
+// 			if ($(this).is(':checked')) {
+				// remove existing duplicate div
+				$('#advancedSettingsBuildForm').remove();
+				showAdvSettingsConfigure();
+// 			} else {
+// 				removeAdvSettings();
+// 			}
+		})
 		
 	});
 		
@@ -441,5 +503,14 @@
 			$("input[value='<%= defaultEnv %>']").attr("checked", "checked");
 			$("input[value='<%= defaultEnv %>']").attr("disabled", "disabled");
 		}
+	}
+	
+	function showAdvSettingsConfigure() {
+		showPopup();
+		popup('advancedBuildSettings', '', $('#popup_div'), '', true);
+	}
+	
+	function removeAdvSettings() {
+// 		alert("Remove settings configure");
 	}
 </script>

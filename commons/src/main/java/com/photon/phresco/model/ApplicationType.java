@@ -30,25 +30,34 @@ import com.photon.phresco.util.SizeConstants;
 @SuppressWarnings("restriction")
 @XmlRootElement
 public class ApplicationType implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private String id;
-	
+
 	//Name of the application type.[Web, Mobile, HTML5]
 	private String name;
-	
+
 	//String to be displayed in the UI
 	private String displayName;
 
+	private String description;
+
 	//List of technologies supported for the application type. [Web - PHP, PHP with Drupal]
 	private List<Technology> technologies = new ArrayList<Technology>(SizeConstants.SIZE_TECHNOLOGIES_MAP);
-	
+
 	public ApplicationType() {
 		super();
+	}
+
+	public ApplicationType(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+
 	}
 
 	public ApplicationType(String name, String displayName, List<Technology> technologies) {
@@ -89,21 +98,29 @@ public class ApplicationType implements Serializable {
 	public void setTechnologies(List<Technology> technologies) {
 		this.technologies = technologies;
 	}
-	
+
 	public Technology getTechonology(String id) {
-	    if (technologies == null || technologies.size() == 0) {
-	        return null;
-	    }
-	    
-	    for (Technology technology : technologies) {
-            if (technology.getId().equals(id)) {
-                return technology;
-            }
-        }
-	    
-	    return null;
+		if (technologies == null || technologies.size() == 0) {
+			return null;
+		}
+
+		for (Technology technology : technologies) {
+			if (technology.getId().equals(id)) {
+				return technology;
+			}
+		}
+
+		return null;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -70,7 +70,7 @@
 
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/rest/api/*</url-pattern>
     </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>

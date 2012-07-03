@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
@@ -51,11 +52,33 @@ import com.phresco.pom.util.PomProcessor;
 public class Code extends FrameworkBaseAction {
     private static final long serialVersionUID = 8217209827121703596L;
     private static final Logger S_LOGGER = Logger.getLogger(Code.class);
+    private static Map<String, String> sourceFolderPathMap = new HashMap<String, String>();
     
     private String projectCode = null;
 	private String skipTest = null;
     private String codeTechnology = null;
+    private String validateAgainst = null;
     private String target = null;
+    private static String SOURCE = "source";
+	private static String FUNCTIONALTEST = "functionalTest";
+    
+    private static void initializeSourceMap() {
+		// TODO: This should come from database
+		sourceFolderPathMap.put(TechnologyTypes.PHP, "source");
+		sourceFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "source");
+		sourceFolderPathMap.put(TechnologyTypes.PHP_DRUPAL7, "source");
+		sourceFolderPathMap.put(TechnologyTypes.SHAREPOINT, "source");
+		sourceFolderPathMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, "source");
+		sourceFolderPathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "src");
+		sourceFolderPathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, "src");
+		sourceFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "src");
+		sourceFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "src");
+		sourceFolderPathMap.put(TechnologyTypes.JAVA_STANDALONE, "src");
+		sourceFolderPathMap.put(TechnologyTypes.WORDPRESS, "source");
+		sourceFolderPathMap.put(TechnologyTypes.IPHONE_HYBRID, "source");
+		sourceFolderPathMap.put(TechnologyTypes.IPHONE_NATIVE, "source");
+		sourceFolderPathMap.put(TechnologyTypes.DOT_NET, "source");
+	}
     
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
@@ -211,6 +234,11 @@ public class Code extends FrameworkBaseAction {
             if(!StringUtils.isEmpty(codeTechnology)) { // if js is selected in popup , have to pass setting map to form mvn command
             	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
+            validateAgainst(validateAgainst, project,projectCode);
+            if (FUNCTIONALTEST.equals(validateAgainst)) {
+            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
+            	actionType.setWorkingDirectory(projectPath.toString());
+            } 
 			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
@@ -223,6 +251,37 @@ public class Code extends FrameworkBaseAction {
         
         return APP_ENVIRONMENT_READER;
     }
+    
+    private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
+		initializeSourceMap();
+		String sourceFolderName = "";
+		File projectPath = null;
+		if (validateAgainst.contains(SOURCE)) {
+			sourceFolderName = sourceFolderPathMap.get(project.getProjectInfo().getTechnology().getId());
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
+		} else if (validateAgainst.contains(FUNCTIONALTEST)) {
+			if (!TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
+				sourceFolderName = "src";
+			}else {
+				sourceFolderName = "AllTest";
+			}
+			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
+			editSonarIncludes(projectPath, sourceFolderName, projectCode);
+		}
+	}
+	
+	private static void editSonarIncludes(File projectPath, String sourceFolderName, String projectCode)
+			throws PhrescoException {
+		try {
+			PomProcessor pomprocessor = new PomProcessor(projectPath);
+			pomprocessor.setName(projectCode);
+			pomprocessor.setSourceDirectory(sourceFolderName);
+			pomprocessor.save();
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
     
 
 	public String showCodeValidatePopUp(){
@@ -275,5 +334,13 @@ public class Code extends FrameworkBaseAction {
 
 	public void setSkipTest(String skipTest) {
 		this.skipTest = skipTest;
+	}
+
+	public String getValidateAgainst() {
+		return validateAgainst;
+	}
+
+	public void setValidateAgainst(String validateAgainst) {
+		this.validateAgainst = validateAgainst;
 	}
 }
