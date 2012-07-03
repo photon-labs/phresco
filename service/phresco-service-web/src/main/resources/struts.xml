@@ -1,3 +1,22 @@
+<!--
+  ###
+  Service Web Archive
+  %%
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
 <!DOCTYPE struts PUBLIC
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 "http://struts.apache.org/dtds/struts-2.0.dtd">
@@ -62,6 +81,20 @@
 		<action name="archetypeCancel" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="cancel">
             <result name="archetypeCancel">/admin/pages/components/archetype/list.jsp</result>
         </action>
+        
+        <action name="archetypeEdit" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="edit">
+			<result name="archetypeAdd">/admin/pages/components/archetype/add.jsp</result>
+        </action>
+        
+        <action name="archetypeUpdate" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="update">
+			<result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+			<result type="json" />
+        </action>
+        
+        <action name="archetypeDelete" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="delete">
+			<result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+        </action>
+        
 		<!-- COMPONENT ARCHETYPES ENDS-->
 			
 		<!-- COMPONENT APPLICATION TYPES STARTS-->
@@ -80,6 +113,19 @@
 		
 		<action name="applicationCancel" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="cancel">
             <result name="applicationCancel">/admin/pages/components/application/list.jsp</result>
+        </action>
+        
+        <action name="applicationEdit" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="edit">
+			<result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
+        </action>
+        
+        <action name="applicationUpdate" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="update">
+			<result name="applntypesList">/admin/pages/components/application/list.jsp</result>
+			<result type="json" />
+        </action>
+        
+         <action name="applicationDelete" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="delete">
+			<result name="applntypesList">/admin/pages/components/application/list.jsp</result>
         </action>
 		<!-- COMPONENT APPLICATION TYPES ENDS-->
 			
@@ -144,7 +190,7 @@
 			<result name="customerCancel">/admin/pages/admin/customer/list.jsp</result>
         </action>
         
-        <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="eidt">
+        <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="edit">
 			<result name="customerEdit">/admin/pages/admin/customer/add.jsp</result>
         </action>
         

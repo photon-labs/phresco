@@ -99,6 +99,7 @@ public interface ServiceConstants {
 	String SETTINGS_COLLECTION_NAME = "settings";
 	String TECHNOLOGIES_COLLECTION_NAME = "technologies";
 	String USERDAO_COLLECTION_NAME = "userdaos";
+	String ROLES_COLLECTION_NAME = "roles";
 	
 	/*
      * Constants for Exception Message keys

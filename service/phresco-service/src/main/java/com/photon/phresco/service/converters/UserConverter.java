@@ -27,7 +27,7 @@ public class UserConverter implements Converter<UserDAO, User>, ServiceConstants
 		}
 		List<String> roleIds = dao.getRoleIds();
 		if (roleIds != null) {
-			user.setRoles(getObjects(mongoOperation, "roles", Role.class, dao.getRoleIds()));
+			user.setRoles(getObjects(mongoOperation, ROLES_COLLECTION_NAME, Role.class, dao.getRoleIds()));
 		}
 		return user;
 	}
