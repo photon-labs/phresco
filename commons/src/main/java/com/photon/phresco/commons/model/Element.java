@@ -36,8 +36,8 @@ public abstract class Element {
 	String name;
 	String description;
 
-	Date creationDate = new Date();
-//	String creationDate = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss.SSS000").format(new Date());
+//	Date creationDate;
+	String creationDate = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss.SSS000").format(new Date());
 	
 	protected Element() {
 		super();
@@ -80,19 +80,19 @@ public abstract class Element {
 		this.description = description;
 	}
 	
-//	public String getCreationDate() {
-//		return creationDate;
-//	}
-//
-//	public void setCreationDate(String creationDate) {
-//		this.creationDate = creationDate;
-//	}
-	
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
+	
+//	public Date getCreationDate() {
+//		return creationDate;
+//	}
+//
+//	public void setCreationDate(Date creationDate) {
+//		this.creationDate = creationDate;
+//	}
 }

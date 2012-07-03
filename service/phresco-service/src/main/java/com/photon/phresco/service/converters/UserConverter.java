@@ -32,22 +32,11 @@ public class UserConverter implements Converter<UserDAO, User>, ServiceConstants
 		return user;
 	}
 	
-	public <X> List<X> getObjects(MongoOperations mongoOperation, String collectionName, Class<X> type, List<String> ids) {
-		List<X> objects = new ArrayList<X>(ids.size() * 2);
-		for (String id : ids) {
-			X object = mongoOperation.findOne(collectionName, new Query(Criteria.whereId().is(id)), type);
-			System.out.println("id = " + id + " object " + object);
-			objects.add(object);
-		}
-		System.out.println("return... objects.... " + objects);
-		return objects; 
-	}
-
 	@Override
 	public UserDAO convertObjectToDAO(User user) throws PhrescoException {
+		
 		UserDAO dao = new UserDAO();
 		dao.setId(user.getId());
-
 		List<Role> roles = user.getRoles();
 		if (roles  != null) { 
 			List<String> roleIds = new ArrayList<String>(roles.size() * 2);
@@ -57,10 +46,8 @@ public class UserConverter implements Converter<UserDAO, User>, ServiceConstants
 
 			dao.setRoleIds(roleIds);
 		}
-		
 		List<Customer> customers = user.getCustomers();
 		if (customers != null) {
-			System.out.println(customers);
 			List<String> customerIds = new ArrayList<String>();
 			for (Customer customer : customers) {
 				customerIds.add(customer.getId());
@@ -71,4 +58,12 @@ public class UserConverter implements Converter<UserDAO, User>, ServiceConstants
 		return dao;
 	}
 	
+	public static <X> List<X> getObjects(MongoOperations mongoOperation, String collectionName, Class<X> type, List<String> ids) {
+		List<X> objects = new ArrayList<X>(ids.size() * 2);
+		for (String id : ids) {
+			X object = mongoOperation.findOne(collectionName, new Query(Criteria.whereId().is(id)), type);
+			objects.add(object);
+		}
+		return objects; 
+	}
 }

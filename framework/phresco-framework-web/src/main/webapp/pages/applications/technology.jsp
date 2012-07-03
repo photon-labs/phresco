@@ -44,7 +44,7 @@
 	String checkedStr = "";
 	String projectCode = ""; 
 	String appType = (String)request.getAttribute(FrameworkConstants.REQ_APPLICATION_TYPE);
-	Technology selectedTechnology = (Technology) request.getAttribute(FrameworkConstants.SESSION_SELECTED_TECHNOLOGY);
+	Technology selectedTechnology = (Technology) request.getAttribute(FrameworkConstants.REQ_SELECTED_TECHNOLOGY);
     ProjectInfo selectedInfo = (ProjectInfo) session.getAttribute((String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE));
 	String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
 	String disabled = "disabled";
@@ -92,8 +92,9 @@
 		pilotTechVersions = pilotProjectInfo.getTechnology().getVersions();
 	}
 	
-	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_TEST_SERVERS);
+	List<Server> servers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_SERVERS);
 	List<Database> databases = (List<Database>) request.getAttribute( FrameworkConstants.REQ_DATABASES);
+	List<WebService> webservices = (List<WebService>) request.getAttribute( FrameworkConstants.REQ_WEBSERVICES);
 %>
 
 <div class="clearfix">
@@ -128,48 +129,60 @@
 </div>
 
 <form id="deleteObjects">
-	<!-- Servers are loaded here starts -->
-	<div class="clearfix">
-		<label for="xlInput" class="new-xlInput"><s:text name="label.supported.servers"/></label>
-	    
-	    <div class="input new-input" id="dispServer" style="color: #ffffff;">
+	<%
+		if (CollectionUtils.isNotEmpty(servers)) {
+	%>
+		<!-- Servers are loaded here starts -->
+		<div class="clearfix">
+			<label for="xlInput" class="new-xlInput"><s:text name="label.supported.servers"/></label>
+		    
+		    <div class="input new-input" id="dispServer" style="color: #ffffff;">
+		
+		    </div>
+		    
+		    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    
+		    <input type="hidden" id="selectedServer" name="selectedServers" value="">
+		</div>
+		<!-- Servers are loaded here ends -->
+	<%
+		}
+	%>
 	
-	    </div>
-	    
-	    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
-	    
-	    <input type="hidden" id="selectedServer" name="selectedServers" value="">
-	</div>
-	<!-- Servers are loaded here ends -->
-
-	<!-- Databases are loaded here starts -->
-	<div class="clearfix">
-		<label for="xlInput" Class="new-xlInput"><s:text name="label.supported.dbs"/></label>
-		<div class="input new-input" id="dispDatabase" style="color: #ffffff">
-	
-	    </div>
-	    
-	    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
-	    
-	    <input type="hidden" id="selectedDatabase" name="selectedDatabases" value="">
-	</div>
+	<%
+		if (CollectionUtils.isNotEmpty(databases)) {
+	%>
+		<!-- Databases are loaded here starts -->
+		<div class="clearfix">
+			<label for="xlInput" Class="new-xlInput"><s:text name="label.supported.dbs"/></label>
+			<div class="input new-input" id="dispDatabase" style="color: #ffffff">
+		
+		    </div>
+		    
+		    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    
+		    <input type="hidden" id="selectedDatabase" name="selectedDatabases" value="">
+		</div>
+		<!-- Databases are loaded here ends -->
+	<%
+		}
+	%>
 </form>
-<!-- Databases are loaded here ends -->
 
-<!-- Web Services are loaded here starts -->
-<div class="clearfix">
-	<s:label for="webservice" key="label.web.service" theme="simple" cssClass="new-xlInput"/>
-	<div class="input new-input">
-		<div class="typeFields" id="typefield">
-			<div id="multilist-scroller">
-				<ul>
-					<%
-						checkedStr = "";
-						List<WebService> webservices = selectedTechnology.getWebservices();
-						if(webservices != null) {
+<%
+	if(CollectionUtils.isNotEmpty(webservices)) {
+%>
+	<!-- Web Services are loaded here starts -->
+	<div class="clearfix">
+		<s:label for="webservice" key="label.web.service" theme="simple" cssClass="new-xlInput"/>
+		<div class="input new-input">
+			<div class="typeFields" id="typefield">
+				<div id="multilist-scroller">
+					<ul>
+						<%
+							checkedStr = "";
 							for(WebService webservice : webservices) {
 								if(selectedWebServices != null && CollectionUtils.isNotEmpty(selectedWebServices)) {
-								
 									for(WebService selectedWebService : selectedWebServices) {
 										if(selectedWebService.getId() == webservice.getId()){
 											checkedStr = "checked";
@@ -179,21 +192,23 @@
 										}
 									}
 								}
-					%>
-								<li>
-									<input type="checkbox" id="webservices" name="webservices" value="<%= webservice.getId() %>" <%= checkedStr %>
-										class="check"><%= webservice.getName() + " " + webservice.getVersion() %> 
-								</li>
-					<%        
+						%>
+									<li>
+										<input type="checkbox" id="webservices" name="webservices" value="<%= webservice.getId() %>" <%= checkedStr %>
+											class="check"><%= webservice.getName() + " " + webservice.getVersion() %> 
+									</li>
+						<%        
 							}
-						}
-					%>
-				</ul>
+						%>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!-- Web Services are loaded here ends -->
+	<!-- Web Services are loaded here ends -->
+<%
+	}
+%>
 
 <!-- Email starts -->
 <div class="clearfix">
@@ -544,9 +559,7 @@
 			type = $(obj).attr("title");
 		}
 		
-		var params = "applicationType="
-		params = params.concat('<%= appType %>');
-		params = params.concat("&type=");
+		var params = "type=";
 		params = params.concat(type);
 		params = params.concat("&techId=");
 		params = params.concat('<%= selectedTechnology.getId() %>');
@@ -568,9 +581,7 @@
 		} else {
 			versionFor = "serverVersion";
 		}
-		var params = "applicationType=";
-		params = params.concat('<%= appType %>');
-		params = params.concat("&techId=");
+		var params = "techId=";
 		params = params.concat('<%= selectedTechnology.getId() %>');
 		params = params.concat("&type=");
 		params = params.concat(type);

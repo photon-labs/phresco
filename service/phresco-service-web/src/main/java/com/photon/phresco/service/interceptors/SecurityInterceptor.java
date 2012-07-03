@@ -23,6 +23,10 @@ import java.net.URI;
 
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.service.util.AuthenticationUtil;
+import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerRequestFilter;
 
@@ -35,8 +39,27 @@ public class SecurityInterceptor implements ContainerRequestFilter {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(absolutePath);
 		}
-
-		return request;
+		
+		if(absolutePath.getPath().equals(ServiceConstants.REST_LOGIN_PATH)) {
+			return request;
+		}
+		
+		String headerValue = request.getHeaderValue(Constants.PHR_AUTH_TOKEN);
+		try {
+			AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
+			boolean isValid = authTokenUtil.isValidToken(headerValue);
+			if(isValid) {
+				return request;
+			}
+		} catch (Exception e) {
+			try {
+				throw new PhrescoException(ServiceConstants.EX_PHEX00007);
+			} catch (PhrescoException e1) {
+				e1.printStackTrace();
+			}
+		}
+		 
+		return null;
 	}
 
 }

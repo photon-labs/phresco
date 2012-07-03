@@ -123,16 +123,16 @@
 					        <table cellspacing="0" class="zebra-striped">
 					          	<thead>
 						            <tr>
-										<th class="first"><div class="th-inner"><s:text name="label.label"/></div></th>
-						              	<th class="second"><div class="th-inner"><s:text name="label.sample"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.average"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.min"/></div></th>
-						              	<th class="first"><div class="th-inner"><s:text name="label.max"/></div></th>
-						              	<th class="second"><div class="th-inner"><s:text name="label.std.dev"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.error"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.throughput"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.kb.sec"/></div></th>
-						              	<th class="third"><div class="th-inner"><s:text name="label.avg.bytes"/></div></th>
+										<th class="first"><div class="th-inner-test"><s:text name="label.label"/></div></th>
+						              	<th class="second"><div class="th-inner-test"><s:text name="label.sample"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.average"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.min"/></div></th>
+						              	<th class="first"><div class="th-inner-test"><s:text name="label.max"/></div></th>
+						              	<th class="second"><div class="th-inner-test"><s:text name="label.std.dev"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.error"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.throughput"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.kb.sec"/></div></th>
+						              	<th class="third"><div class="th-inner-test"><s:text name="label.avg.bytes"/></div></th>
 						            </tr>
 					          	</thead>
 					
@@ -224,11 +224,15 @@
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
-		$(".jmtable_data_div").scrollbars();
+		$(".fixed-table-container-inner").scrollbars();
 		$("#graphicalView").scrollbars();
 	}
 	
 	$(document).ready(function() {
+		
+		if ($.browser.safari) {
+    		$(".th-inner-test").css("top","235px"); 
+		}
 		canvasInit();
 		
 		 $(".styles").click(function() {

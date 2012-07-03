@@ -29,6 +29,7 @@ import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
@@ -45,6 +46,7 @@ import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
+import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Credentials;
 import com.phresco.pom.site.Reports;
 
@@ -288,6 +290,13 @@ public interface ProjectAdministrator {
      */
     void deleteConfigurations(Map<String, List<String>> selectedConfigs, Project project) throws PhrescoException;
 
+   /**
+     * Returns the technology Id for the specified project code
+     * @param projectCode
+     * @return
+     * @throws PhrescoException
+     */
+    String getTechId(String projectCode) throws PhrescoException;
     /**
      * TODO: DO we need this?
      * @param path
@@ -302,6 +311,13 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      */
     List<BuildInfo> getBuildInfos(Project project) throws PhrescoException;
+
+    /**
+     * Returns all the build info details from build.info file
+     * @return
+     * @throws PhrescoException
+     */
+    List<BuildInfo> readBuildInfo(File path) throws IOException;
 
     BuildInfo getBuildInfo(Project project, int buildNumber) throws PhrescoException;
 
@@ -320,17 +336,17 @@ public interface ProjectAdministrator {
 
     /**
      * Returns the core modules specified under the given technology
-     * @param technology
+     * @param techId
      * @return list of core modules
      */
-    List<ModuleGroup> getCoreModules(Technology technology);
+    List<ModuleGroup> getCoreModules(String techId) throws PhrescoException;
 
     /**
      * Returns the custom modules specified under the given technology
      * @param technology
      * @return list of custom modules
      */
-    List<ModuleGroup> getCustomModules(Technology technology);
+    List<ModuleGroup> getCustomModules(String techId) throws PhrescoException;
 
     /**
      * Authenticates the user credentials and returns the user information
@@ -338,7 +354,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    UserInfo doLogin(Credentials credentials) throws PhrescoException;
+    User doLogin(Credentials credentials) throws PhrescoException;
 
     /**
      * Returns Server DownloadInfo from the service
@@ -551,13 +567,27 @@ public interface ProjectAdministrator {
 	
 	/**
 	 * get servers from service
-	 * @param 
-	 * @return
+	 * @param techId
+	 * @return serverList
 	 * @throws PhrescoException
 	 */
-	List<Server> getServers() throws PhrescoException;
+	List<Server> getServers(String techId) throws PhrescoException;
 	
-	List<Database> getDatabases() throws PhrescoException;
+	/**
+	 * get databases from service
+	 * @param techId
+	 * @return dbList
+	 * @throws PhrescoException
+	 */
+	List<Database> getDatabases(String techId) throws PhrescoException;
+	
+	/**
+	 * get webservices from service
+	 * @param techId
+	 * @return webServiceList
+	 * @throws PhrescoException
+	 */
+	List<WebService> getWebServices(String techId) throws PhrescoException;
 	
 	/**
 	 * Delete the sql Folder
@@ -570,4 +600,18 @@ public interface ProjectAdministrator {
 	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
 	 
 	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
+	 
+	 List<Database> getDatabases() throws PhrescoException;
+	 
+	 List<Server> getServers() throws PhrescoException;
+	 
+	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
+	 
+	/**
+	 * Returns CI build object for build number
+	 * @param job, buildNumber
+	 * @return BuildInfo
+	 * @throws PhrescoException
+	 */
+	 BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
 }

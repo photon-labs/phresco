@@ -59,10 +59,10 @@
 						        <table cellspacing="0" class="zebra-striped">
 						          	<thead>
 							            <tr>
-											<th class="first"><div class="th-inner"><s:text name="label.thread.name"/></div></th>
-							              	<th class="second"><div class="th-inner"><s:text name="label.date"/></div></th>
-							              	<th class="third"><div class="th-inner"><s:text name="label.elapsed.time"/></div></th>
-							              	<th class="third"><div class="th-inner"><s:text name="label.status"/></div></th>
+											<th class="first"><div class="th-inner-test"><s:text name="label.thread.name"/></div></th>
+							              	<th class="second"><div class="th-inner-test"><s:text name="label.date"/></div></th>
+							              	<th class="third"><div class="th-inner-test"><s:text name="label.elapsed.time"/></div></th>
+							              	<th class="third"><div class="th-inner-test"><s:text name="label.status"/></div></th>
 							            </tr>
 						          	</thead>
 						
@@ -103,10 +103,15 @@
 /* To check whether the divice is ipad or not */
 if(!isiPad()){
 	/* JQuery scroll bar */
-	$(".jmtable_data_div").scrollbars();
+	$(".fixed-table-container-inner").scrollbars();
 }
 
 $(document).ready(function() {
+	
+	if ($.browser.safari) {
+		$(".th-inner-test").css("top","235px"); 
+	}
+	
 	enableScreen();
 	
 	if ($.browser.safari && $.browser.version == 530.17)

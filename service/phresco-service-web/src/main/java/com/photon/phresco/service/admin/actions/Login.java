@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import com.photon.phresco.model.UserInfo;
+
+import com.photon.phresco.commons.model.User;
 
 public class Login extends ServiceBaseAction {
 
@@ -44,17 +45,17 @@ public class Login extends ServiceBaseAction {
 	private String authenticate() {
 		S_LOGGER.debug("Entering Method  Login.authenticate()");
 		
-		UserInfo userInfo = null;
+		User User = null;
 			try {
 				byte[] encodeBase64 = Base64.encodeBase64(password.getBytes());
 				String encodedPassword = new String(encodeBase64);
 				
-				userInfo = doLogin(username, encodedPassword);
-				if (StringUtils.isEmpty(userInfo.getDisplayName())) {
+				User = doLogin(username, encodedPassword);
+				if (StringUtils.isEmpty(User.getDisplayName())) {
 					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
 					return LOGIN_FAILURE;
 				}
-				if (!userInfo.isPhrescoEnabled()) {
+				if (!User.isPhrescoEnabled()) {
 					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_ACCESS_DENIED));
 					return LOGIN_FAILURE;
 				} 

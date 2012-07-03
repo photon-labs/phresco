@@ -134,7 +134,7 @@
     <%
         } else {
     %>
-	    <div class="table_div">
+	    <div class="settingsList_table_div">
 	        <!-- List -->
         	<div class="fixed-table-container">
 	      		<div class="header-background"> </div>
@@ -143,26 +143,26 @@
 			          	<thead>
 				            <tr>
 				                <th class="first">
-                                    <div class="th-inner">
+                                    <div class="th-inner-head ">
                                         <input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">
                                     </div>
                                 </th>
 								<th class="first">
-				                	<div class="th-inner">
+				                	<div class="th-inner-head ">
 				                		#
 				                	</div>
 				              	</th>
 				              	<th class="second">
-				                	<div class="th-inner"><s:text name="label.url"/></div>
+				                	<div class="th-inner-head "><s:text name="label.url"/></div>
 				              	</th>
 				              	<th class="third" style="width: 20%;">
-				                	<div class="th-inner"><center><s:text name="label.download"/></center></div>
+				                	<div class="th-inner-head "><center><s:text name="label.download"/></center></div>
 				              	</th>
 				         		<th class="third">
-				                	<div class="th-inner"><s:text name="label.time"/></div>
+				                	<div class="th-inner-head "><s:text name="label.time"/></div>
 				              	</th>
 				              	<th class="third">
-				                	<div class="th-inner"><s:text name="label.status"/></div>
+				                	<div class="th-inner-head "><s:text name="label.status"/></div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -191,11 +191,12 @@
 		                                <img src="images/icons/inprogress.png" title="In progress"/>
 				              		<% 
 		                                } else if(ciBuild.getStatus().equals("SUCCESS")) {
-		                                	String downloadUrl = ciBuild.getUrl()+ "artifact/" + ciBuild.getDownload().replaceAll("\"",""); 
+		                                	String downloadUrl = ciBuild.getUrl() + FrameworkConstants.CI_JOB_BUILD_ARTIFACT + FrameworkConstants.FORWARD_SLASH; 
 		                            %>
 				                		<a href="<s:url action='CIBuildDownload'>
 						          		     <s:param name="buildDownloadUrl"><%= downloadUrl %></s:param>
 						          		     <s:param name="projectCode"><%= projectCode %></s:param>
+   						          		     <s:param name="buildNumber"><%= ciBuild.getNumber() %></s:param>
 						          		     </s:url>"><img src="images/icons/download.png" title="Download"/>
 			                            </a>
 
@@ -247,7 +248,7 @@
 /* To check whether the divice is ipad or not */
 if(!isiPad()){
 	/* JQuery scroll bar */
-	$(".table_data_div").scrollbars();
+	$(".fixed-table-container-inner").scrollbars();
 }
 
 // buildSize to refresh ci after build completed
@@ -255,7 +256,10 @@ var buildSize = <%= buildSize %>;
 var refreshCi = false;
 
 $(document).ready(function() {
+	
 	$("#popup_div").css("display","none");
+	hideProgessBar();
+
 	enableScreen();
 		
     $('#configure').click(function() {

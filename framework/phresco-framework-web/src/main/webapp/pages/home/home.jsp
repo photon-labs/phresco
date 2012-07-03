@@ -56,8 +56,10 @@ if(localStorage.welcome) {
 	if(localStorage["welcome"]) {
 		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none");
-	 }
-	else {
+	 }else if (localStorage.menuSelected == 'video'){
+		 $(".errorOverlay").show().css("display","none");
+		$(".intro_container").show().css("display","none"); 
+	 }else {
 		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
 		 $(".intro_container").show().css("display","<%= showWelcome %>");
 	}
@@ -181,13 +183,17 @@ $(document).ready(function() {
     });
     
     if (localStorage.menuSelected) {
-    	$("a[name='navMenu']").attr("class", "inactive");
-		$(this).attr("class", "active");
-        var selectedNav = localStorage.menuSelected;
-        if (selectedNav == "applications") {
-        	bacgroundValidate("validateFramework", "true");
-        }
-		performAction(selectedNav, '', $("#container"));
+    	if(localStorage.menuSelected == 'video'){
+    		localStorage.menuSelected = 'home';
+    	}else{
+    		$("a[name='navMenu']").attr("class", "inactive");
+    		$(this).attr("class", "active");
+            var selectedNav = localStorage.menuSelected;
+            if (selectedNav == "applications") {
+            	bacgroundValidate("validateFramework", "true");
+            }
+    		performAction(selectedNav, '', $("#container"));
+    	}
 	}
 });
 </script>
