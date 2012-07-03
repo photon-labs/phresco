@@ -44,13 +44,13 @@ efforts.
 
 3.	Mobile Application technologies including
 
-            •	iPhone native
+      •	iPhone native
             
-            •	iPhone hybrid
+      •	iPhone hybrid
             
-            •	Android native
+      •	Android native
             
-            •	Android hybrid
+      •	Android hybrid
 
 
 Quick start
