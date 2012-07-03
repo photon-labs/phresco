@@ -261,6 +261,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			sb.append(MVN_PHASE_CLEAN);
 			sb.append(STR_SPACE);
 			sb.append(MVN_PHASE_PACKAGE);
+			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
 
 			Commandline cl = new Commandline(sb.toString());
