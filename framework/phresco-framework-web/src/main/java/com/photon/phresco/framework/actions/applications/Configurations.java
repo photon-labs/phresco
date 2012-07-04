@@ -55,6 +55,7 @@ import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.TechnologyTypes;
 
 public class Configurations extends FrameworkBaseAction {
     private static final long serialVersionUID = -4883865658298200459L;
@@ -416,8 +417,8 @@ public class Configurations extends FrameworkBaseAction {
         	}
     	    value = getHttpRequest().getParameter(key);
             boolean isRequired = propertyTemplate.isRequired();
-           
-            if (serverTypeValidation && "deploy_dir".equals(key)) {
+            String techId = project.getProjectInfo().getTechnology().getId();
+            if (serverTypeValidation && "deploy_dir".equals(key) || TechnologyTypes.ANDROIDS.contains(techId)) {
             	isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
