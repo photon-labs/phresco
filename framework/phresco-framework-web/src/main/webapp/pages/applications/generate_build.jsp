@@ -108,13 +108,13 @@
 		        <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge javastd" id="userBuildName" name="userBuildName" maxlength="20" title="20 Characters only"/>
+						<input type="text" placeholder="specify Build name" class="xlarge javastd" id="userBuildName" name="userBuildName" maxlength="20" title="20 Characters only"/>
 				    </div>
 				</div>
 				<div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
+						<input type="text" placeholder="specify Build number" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
 				    </div>
 				</div>
 				
@@ -313,7 +313,7 @@
 											<div class="xlInput">
 												<ul class="inputs-list">
 													<li class="popup-li">
-															<input type="checkbox" id="proguard" name="proguard" value="false"  disabled="disabled">
+															<input type="checkbox" id="proguard" name="proguard" value="false">
 															<span class="textarea_span popup-span"><s:text name="label.progurad"/></span>
 															
 															<input type="checkbox" id="signing" name="signing" value="false">
