@@ -48,6 +48,19 @@
                     </execution>
                 </executions>
 		    </plugin>
+			 <plugin>
+			<groupId>org.apache.geronimo.genesis.plugins</groupId>
+			<artifactId>tools-maven-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>install-legal-files</id>
+					<phase>generate-resources</phase>
+					<goals>
+						<goal>copy-legal-files</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
         </plugins>
     </build>
     
