@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,14 +33,14 @@ public class Customer extends Element {
 
 //	Date validFrom;
 //	Date validUpto;
-	String validFrom;
-	String validUpto;
-	String repoURL;
-	int type;
-	int status;
-	String name;
-	String description;
-	
+	private String validFrom;
+	private String validUpto;
+	private String repoURL;
+	private int type;
+	private int status;
+	private String name;
+	private String description;
+
 	String address;
 	String country;
 	String state;
@@ -48,7 +48,7 @@ public class Customer extends Element {
 	String contactNumber;
 	String fax;
 	String helpText;
-	
+
 
 	public Customer() {
 		super();
@@ -137,7 +137,7 @@ public class Customer extends Element {
 	public void setRepoURL(String repoURL) {
 		this.repoURL = repoURL;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -193,7 +193,7 @@ public class Customer extends Element {
 	public void setHelpText(String helpText) {
 		this.helpText = helpText;
 	}
-	
+
 	public String getValidFrom() {
 		return validFrom;
 	}
