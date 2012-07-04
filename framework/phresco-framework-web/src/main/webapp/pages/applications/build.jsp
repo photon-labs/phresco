@@ -32,7 +32,7 @@
 <%@ page import="com.photon.phresco.util.Utility" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.commons.BuildInfo" %>
+<%@ page import="com.photon.phresco.model.BuildInfo" %>
 <%@ page import="com.photon.phresco.framework.commons.NodeJSUtil" %>
 
 <script type="text/javascript" src="js/delete.js" ></script>
@@ -163,9 +163,13 @@
 			<div class="build_table_div">
     			<!-- Command Display Heading starts -->
 				<div class="tblheader" style="height: 29px;">
+					<div class="clipboard" style="position:absolute; right:44px; top:144px;">
+                    	<img src="images/icons/clipboard.png" alt="clipboard" id="clipboard" style= "height:25px; width:25px; cursor:pointer;" title="Copy to clipboard"> 
+					</div>
 					<table class="zebra-striped" style="height: 29px;"> 
 						<tr class="tr_color">
 		    				<th><s:text name="label.progress"/></th>
+		    				
 						</tr>
 		           </table>
           		</div>
@@ -211,7 +215,6 @@
 	
     $(document).ready(function() {
     	enableScreen();
-    	
     	if ($.browser.safari && $.browser.version == 530.17) {
     		$(".buildDiv").show().css("float","left");
     	}
@@ -266,6 +269,11 @@
         });
     });
     
+
+	$('#clipboard').click(function(){
+		copyToClipboard($('#build-output').text());
+	});
+    
  	// Its used by iphone alone
     function deploy(obj) {
     	$('#popup_div').empty();
@@ -278,6 +286,12 @@
         params = params.concat(buildNumber);
 		readerHandlerSubmit('deploy', '<%= projectCode %>', 'Deploy', params);
     }
+ 	
+    function copyToClipboard(data) {
+        var params = "copyToClipboard=";
+        params = params.concat(data);
+        performAction('copyToClipboard', params, '');
+	}
     
     function generateBuild(projectCode, from, obj) {
     	$('#popup_div').empty();
@@ -382,6 +396,6 @@
     		fillVersions("environments", data.buildInfoEnvs);
     	} else if (pageUrl == "createProfile") {
 			successProfileCreation(data);
-    	}
+		}
     }
 </script>
