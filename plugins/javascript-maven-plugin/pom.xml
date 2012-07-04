@@ -70,12 +70,30 @@
 	</dependencies>
 
 	<build>
+    
 		<resources>
 			<resource>
 				<directory>src/main/resources/META-INF/plexus</directory>
 				<filtering>true</filtering>
 				<targetPath>META-INF/plexus</targetPath>
-			</resource>
-		</resources>
+		    </resource>
+        </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        
 	</build>
 </project>
