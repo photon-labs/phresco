@@ -4,7 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class encryptString {
+public class EncryptString {
 	// iv length should be 16 bytes
 	private String iv = "fedcba9876543210";
 	private String key = null;
@@ -14,9 +14,9 @@ public class encryptString {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @return
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	public void Crypto(String key) throws Exception {
@@ -39,7 +39,7 @@ public class encryptString {
 
 	/**
 	 * Bytes to Hexa conversion
-	 * 
+	 *
 	 * @param data
 	 * @return
 	 */
@@ -61,7 +61,7 @@ public class encryptString {
 
 	/**
 	 * Encrpt the given string
-	 * 
+	 *
 	 * @param plainData
 	 * @throws Exception
 	 */
