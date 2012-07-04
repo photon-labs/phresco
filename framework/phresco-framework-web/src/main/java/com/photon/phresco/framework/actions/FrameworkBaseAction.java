@@ -32,10 +32,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.apache.commons.collections.CollectionUtils;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.photon.phresco.commons.FrameworkConstants;
@@ -112,7 +113,8 @@ public class FrameworkBaseAction extends ActionSupport implements FrameworkConst
     public void copyToClipboard () {
     	S_LOGGER.debug("Entered FrameworkBaseAction.copyToClipboard");
     	Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-    	clipboard.setContents(new StringSelection(copyToClipboard), null);
+    	clipboard.setContents(new StringSelection(copyToClipboard.replaceAll(" ", "").replaceAll("(?m)^[ \t]*\r?\n", "")), null);
+    	
     }
     
     protected List<String> getProjectModules(String projectCode) {
@@ -142,7 +144,7 @@ public class FrameworkBaseAction extends ActionSupport implements FrameworkConst
 		return builder;
 	}
     
- protected List<String> getWarProjectModules(String projectCode) throws JAXBException, IOException, ArrayIndexOutOfBoundsException, PhrescoPomException {
+    protected List<String> getWarProjectModules(String projectCode) throws JAXBException, IOException, ArrayIndexOutOfBoundsException, PhrescoPomException {
     	List<String> projectModules = getProjectModules(projectCode);
     	List<String> warModules = new ArrayList<String>(5);
     	if (CollectionUtils.isNotEmpty(projectModules)) {
