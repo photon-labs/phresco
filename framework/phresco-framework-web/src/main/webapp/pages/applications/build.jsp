@@ -32,7 +32,7 @@
 <%@ page import="com.photon.phresco.util.Utility" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.model.BuildInfo" %>
+<%@ page import="com.photon.phresco.commons.BuildInfo" %>
 <%@ page import="com.photon.phresco.framework.commons.NodeJSUtil" %>
 
 <script type="text/javascript" src="js/delete.js" ></script>
