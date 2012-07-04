@@ -390,9 +390,58 @@ public interface ProjectAdministrator {
 
     CIJob getJob(Project project) throws PhrescoException;
 
+    /**
+     * Returns the list of user created jobs
+     * @return
+     * @throws PhrescoException
+     */
+    List<CIJob> getJobs(Project project) throws PhrescoException;
+    
+    /**
+     * Returns particular job object
+     * @return
+     * @throws PhrescoException
+     */
+    CIJob getJob(Project project, String jobName) throws PhrescoException;
+    
+    /**
+     * Writes particular jobs object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void writeJsonJobs(Project project, List<CIJob> job, String status) throws PhrescoException;
+    
+    /**
+     * Delete jobs object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void deleteJsonJobs(Project project, List<CIJob> job) throws PhrescoException;
+    
+    /**
+     * Delete job object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void updateJsonJob(Project project, CIJob job) throws PhrescoException;
+    
     CIJobStatus buildJob(Project project) throws PhrescoException;
 
+    /**
+     * Returns build of jobs
+     * @return
+     * @throws PhrescoException
+     */
+    CIJobStatus buildJobs(Project project, List<String> jobs) throws PhrescoException;
+
     List<CIBuild> getBuilds(Project project) throws PhrescoException;
+
+    /**
+     * Returns build of a particular job
+     * @return
+     * @throws PhrescoException
+     */
+    List<CIBuild> getBuilds(CIJob ciJob) throws PhrescoException;
 
 	String sendReport(LogInfo loginfo) throws PhrescoException ;
 
@@ -433,10 +482,28 @@ public interface ProjectAdministrator {
 	CIJobStatus deleteCI(Project project, List<String> builds) throws PhrescoException;
 	
     /**
+     * Delete job. If build is null job ll be deleted
+     * @throws PhrescoException
+     */
+	CIJobStatus deleteCIBuild(Project project, Map<String, List<String>> builds) throws PhrescoException;
+
+    /**
+     * Delete job. If build is null job ll be deleted
+     * @throws PhrescoException
+     */
+	CIJobStatus deleteCIJobs(Project project, List<String> jobs) throws PhrescoException;
+	
+    /**
      * Checks whether job is in progress
      * @throws PhrescoException
      */
 	int getProgressInBuild(Project project) throws PhrescoException;
+	
+    /**
+     * Checks whether job is in progress
+     * @throws PhrescoException
+     */
+	boolean isJobCreatingBuild(CIJob ciJob) throws PhrescoException;
 	
     /**
      * gets exmail ext plugin from nexus and stores it in jenkins plugin dir

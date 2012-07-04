@@ -40,6 +40,8 @@ $(document).ready(function() {
 		
 		var newHeight_addinfodiv = $("#container").height();
 		$(".appInfoTabDiv").css("height",newHeight_addinfodiv - 66);
+		$(".scrollCiList").css("height",newHeight_addinfodiv - 110);
+		$("#CiBuildsList").css("height",newHeight_addinfodiv - 120);
 		
 		/* Appinfo page */
 		var newHeight_addformdiv = $(".appInfoTabDiv").height();
