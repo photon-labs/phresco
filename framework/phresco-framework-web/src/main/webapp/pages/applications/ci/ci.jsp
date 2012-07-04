@@ -38,6 +38,7 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.*"%>
+<%@ page import="com.photon.phresco.commons.CIBuild"%>
 
 <script src="js/reader.js" ></script>
 <script type="text/javascript" src="js/delete.js" ></script>
