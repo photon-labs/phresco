@@ -106,6 +106,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	private String target = "";
 	private String proguard = null;
 	private List<String> triggers = null;
+	private String buildNumber = null;
     CIJob job = null;
 
     public String ci() {
@@ -297,7 +298,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 					// if the checkbox is selected value should be set to false otherwise true
 					proguard = TRUE;
 				}
-				/*settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);*/
+				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
@@ -354,7 +355,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
             Project project = administrator.getProject(projectCode);
             getHttpRequest().setAttribute("totalBuildsSize", administrator.getTotalBuilds(project)+"");
             // clear existin do_not_checkin_folder
-            administrator.deleteDoNotCheckin(project);
+//            administrator.deleteDoNotCheckin(project);
             
     		CIJobStatus ciJobStatus = administrator.buildJob(project);
     		if(ciJobStatus.getCode() == JOB_STATUS_NOTOK) {
@@ -696,8 +697,11 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
     		Project project = administrator.getProject(projectCode);
     		CIJob existJob = administrator.getJob(project);
-            //Get it from web path
-            URL url = new URL(buildDownloadUrl);
+    		// need to read jenkins home build info file
+    		String buildName = administrator.getCIBuildInfo(existJob, Integer.parseInt(buildNumber)).getBuildName();
+    		S_LOGGER.debug("Entering Method CI.CIBuildDownload() buildName " + buildName);
+    		S_LOGGER.debug("Entering Method CI.CIBuildDownload() download url " + buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName.substring(0, buildName.lastIndexOf(DOT)) + ARCHIVE_FORMAT);
+            URL url = new URL(buildDownloadUrl + CHECKIN_DIR + FORWARD_SLASH + BUILD_PATH + FORWARD_SLASH + buildName.substring(0, buildName.lastIndexOf(DOT)) + ARCHIVE_FORMAT);
             fileInputStream = url.openStream();
 			fileName = existJob.getName();
 			return SUCCESS;
@@ -994,5 +998,13 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setTriggers(List<String> triggers) {
 		this.triggers = triggers;
+	}
+
+	public String getBuildNumber() {
+		return buildNumber;
+	}
+
+	public void setBuildNumber(String buildNumber) {
+		this.buildNumber = buildNumber;
 	}
 }

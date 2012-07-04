@@ -86,12 +86,6 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/main/webapp/WEB-INF/resources</directory> 
-			<includes>
-				<include>phresco-env-config.xml</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
 			<directory>src/main/webapp/images</directory> 
 			<includes>
 				<include>**/*</include>
@@ -154,6 +148,9 @@
 				<include>PhrescoUiConstants.java</include>
 				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
+                <include>MobileWidgetData.java</include>
+                <include>TestConfig.java</include>
+                <include>UserInfoConstants.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -161,6 +158,9 @@
 			<includes>
 				<include>config.ini</include>
 				<include>phresco-env-config.xml</include>
+                <include>MobileWidgetHWData.xml</include>
+                <include>UIConstants.xml</include>
+                <include>UserInfo.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">

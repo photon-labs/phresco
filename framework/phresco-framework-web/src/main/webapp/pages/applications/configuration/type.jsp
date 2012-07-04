@@ -17,6 +17,7 @@
   limitations under the License.
   ###
   --%>
+<%@page import="com.photon.phresco.util.TechnologyTypes"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ include file="../errorReport.jsp" %>
@@ -58,6 +59,9 @@
     if (StringUtils.isNotEmpty(oldName)) {
     	settingsInfo = (SettingsInfo) request.getAttribute(FrameworkConstants.REQ_CONFIG_INFO);
     }
+    Project project = (Project)request.getAttribute(FrameworkConstants.REQ_PROJECT);
+    String projectCode = project.getProjectInfo().getCode();
+    String techId = project.getProjectInfo().getTechnology().getId();
     SettingsTemplate settingsTemplate = (SettingsTemplate)request.getAttribute(FrameworkConstants.REQ_CURRENT_SETTINGS_TEMPLATE);
     Map<String, Technology> technologies = (Map<String, Technology>)request.getAttribute(FrameworkConstants.REQ_ALL_TECHNOLOGIES);
     Map<String, String> errorMap = (Map<String, String>) session.getAttribute(FrameworkConstants.ERROR_SETTINGS);
@@ -236,18 +240,20 @@
 			     }
 				
 				$("#type").change(function() {
-				 var server = $('#type').val();
-				 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
-					 $('#remoteDeployment').show();	 
-			     } else {
-			    	  hideRemoteDeply(); 
-			     }
-				 remoteDeplyChecked();
-				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
-					 $("input[name='remoteDeployment']").attr("checked",false);
-					 $("#admin_username label").html('Admin Username');
-					 $("#admin_password label").html('Admin Password'); 
-				 }  
+					 var server = $('#type').val();
+					 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
+						 $('#remoteDeployment').show();	 
+				     } else {
+				    	  hideRemoteDeply(); 
+				     }
+					 remoteDeplyChecked();
+					 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
+						 $("input[name='remoteDeployment']").attr("checked",false);
+						 $("#admin_username label").html('Admin Username');
+						 $("#admin_password label").html('Admin Password'); 
+					 }
+					 // based on technology hide remote deployment
+					 technologyBasedRemoteDeploy();
 			});   
 		<%
 			}
@@ -273,6 +279,9 @@
 			}
 		%>
 		/** To display projectInfo databases ends **/
+		
+		// based on technology hide remote deploy directory
+		technologyBasedRemoteDeploy();
 		
 		// Hide deploy dir if NodeJs server is created
 		if($("#type option:selected").val() == "NodeJS") {
@@ -302,6 +311,8 @@
 				hideDeployDir();
 			}
 			getCurrentVersions('onChange');
+			
+			technologyBasedRemoteDeploy();
 		});
 		
         
@@ -346,10 +357,11 @@
 			}
 			if( '<%= selectedValue %>' == "Apache Tomcat" || '<%= selectedValue %>' == "JBoss" || '<%= selectedValue %>' == "WebLogic"){
 				 $('#remoteDeployment').show(); 
-		     } else {
-		    	  hideRemoteDeply(); 
-		     }
+		    } else {
+		    	 hideRemoteDeply(); 
+		    }
 			remoteDeplyChecked();
+			
 		});
 	}
 	
@@ -381,5 +393,16 @@
 		} else {
 			$('#deploy_dir').show();
 		}
+	}
+	
+	function technologyBasedRemoteDeploy() {
+		<% 
+			if (TechnologyTypes.ANDROIDS.contains(techId)) {
+		%>
+			hideDeployDir();
+			hideRemoteDeply();
+		<%
+			}
+		%>
 	}
 </script>

@@ -1,3 +1,22 @@
+/*
+ * ###
+ * Framework Web Archive
+ * %%
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
 package com.photon.phresco.framework.actions.applications;
 
 import java.util.ArrayList;
@@ -34,6 +53,7 @@ import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.TechnologyTypes;
 
 public class Configurations extends FrameworkBaseAction {
     private static final long serialVersionUID = -4883865658298200459L;
@@ -386,6 +406,7 @@ public class Configurations extends FrameworkBaseAction {
         			value = getHttpRequest().getParameter(key);
         			 //If nodeJs server selected , there should not be valition for deploy dir.
                     if ("type".equals(key) && "NodeJS".equals(value)) {
+                    	
                     	serverTypeValidation = true;
                     }
 				}
@@ -394,9 +415,9 @@ public class Configurations extends FrameworkBaseAction {
         	}
     	    value = getHttpRequest().getParameter(key);
             boolean isRequired = propertyTemplate.isRequired();
-           
-            if (serverTypeValidation && "deploy_dir".equals(key)) {
-            	isRequired = false;
+            String techId = project.getProjectInfo().getTechnology().getId();
+            if ((serverTypeValidation && "deploy_dir".equals(key)) || TechnologyTypes.ANDROIDS.contains(techId)) {
+           		isRequired = false;
             }
             // validation for UserName & Password for RemoteDeployment
             boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);

@@ -21,5 +21,7 @@ public class PomConstants {
 	public final static String DOXIA_ARTIFACT_ID = "doxia-module-confluence";
 	
 	public final static String DOXIA_VERSION = "1.2"; 
+	
+	public final static String MVN_SCOPE_SYSTEM = "system"; 
 
 }

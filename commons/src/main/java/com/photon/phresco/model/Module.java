@@ -38,6 +38,7 @@ public class Module implements Serializable {
 	 private String artifactId;
 	 private String url;
 	 private int modulesid;
+	 private String imageUrl;
 
 	 /**
 	 * @return the documentsid
@@ -225,6 +226,12 @@ public class Module implements Serializable {
 		this.artifactId = artifactId;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	public Module(String id, String contentType, String contentURL,
 			List<String> technolgoyRef, List dependentModules,
 			String documentsId, String name, String version, Boolean core,

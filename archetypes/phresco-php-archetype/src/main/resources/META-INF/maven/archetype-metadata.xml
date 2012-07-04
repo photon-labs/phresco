@@ -153,6 +153,7 @@
 				<include>Homepage.php</include>
 				<include>PhpCommonFun.php</include>
 				<include>UserModules.php</include>
+				<include>Dashboard_Cat.php</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false"> 

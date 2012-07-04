@@ -20,10 +20,8 @@
 package com.photon.phresco.Screens;
 
 import java.io.IOException;
-
-
-
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.TestConfig;
 
 
 
@@ -31,9 +29,9 @@ import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 public class MenuScreen extends WebDriverAbstractBaseScreen{
 	PhrescoUiConstants phrsc = new PhrescoUiConstants();
-    public MenuScreen() throws Exception {
+    public MenuScreen(TestConfig uiconst) throws Exception {
     	
-    	isTextPresent(phrsc.TEXTCAPTURED);
+    	isTextPresent(uiconst.TEXTCAPTURED);
     	
     }
     
