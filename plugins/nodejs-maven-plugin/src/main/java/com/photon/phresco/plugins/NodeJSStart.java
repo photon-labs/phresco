@@ -33,6 +33,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -116,26 +117,12 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 		FileWriter fileWriter = null;
 		try {
 			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			String path = "";
 			boolean tempConnectionAlive = false;
-			String mavenHome = System.getProperty(JAVA_LIB_PATH);
-			String[] split = mavenHome.split(";");
-			for (int i = 0; i < split.length; i++) {
-				path = split[i];
-				if (path.indexOf(NODEJS_DIR_NAME) != -1) {
-					break;
-				}
-			}
-
-			ProcessBuilder pb = new ProcessBuilder(path + NODE_EXE_PATH);
-			File workingDirectory = new File(baseDir + FORWARD_SLASH
-					+ PROJECT_FOLDER);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(NODE_SERVER_FILE);
-			commands.add(environmentName);
-			pb.directory(workingDirectory);
-			Process proc = pb.start();
+			Commandline cl = new Commandline(NODE_CMD);
+			String[] args1 = { NODE_SERVER_FILE, environmentName };
+			cl.addArguments(args1);
+			cl.setWorkingDirectory(baseDir.getPath() + "/source");
+			Process proc = cl.execute();
 			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
 					.getName(), environmentName);
 			for (SettingsInfo serverDetails : settingsInfos) {

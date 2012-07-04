@@ -21,6 +21,7 @@ package com.photon.phresco.plugins;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
@@ -39,6 +40,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -53,7 +56,6 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
-import com.photon.phresco.util.POMProcessor;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.Utility;
@@ -179,51 +181,47 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	@SuppressWarnings("static-access")
 	private Element getNode(File pomFile, Element rootNode, String nodeName) throws JDOMException, IOException {
-		POMProcessor pomProc = new POMProcessor(pomFile);
-		return pomProc.getNode(rootNode, nodeName);
-		/*
-		 * if (pomFile == null) { throw new
-		 * IllegalArgumentException("pom file should not be null"); } if
-		 * (!pomFile.exists()) { throw new
-		 * FileNotFoundException("File doesn't exist"); } SAXBuilder builder =
-		 * new SAXBuilder(); Document document = builder.build(pomFile);
-		 * rootNode = document.getRootElement(); Element dependencies =
-		 * rootNode.getChild(nodeName, rootNode.getNamespace()); // sometime,
-		 * this doesn't work. So as workaround this stint. if (dependencies ==
-		 * null) { List children = rootNode.getChildren(); for (Object object :
-		 * children) { if ((object instanceof Element) && ((Element)
-		 * object).getName().equals(nodeName)) { dependencies = (Element)
-		 * object; break; } } } return dependencies;
-		 */
+//		POMProcessor pomProc = new POMProcessor(pomFile);
+//		return pomProc.getNode(rootNode, nodeName);
+	
+		if (pomFile == null) {
+			throw new IllegalArgumentException("pom file should not be null");
+		}
+		if (!pomFile.exists()) {
+			throw new FileNotFoundException("File doesn't exist");
+		}
+		SAXBuilder builder = new SAXBuilder();
+		Document document = builder.build(pomFile);
+		rootNode = document.getRootElement();
+		Element dependencies = rootNode.getChild(nodeName,rootNode.getNamespace());
+		if (dependencies == null) {
+			List children = rootNode.getChildren();
+			for (Object object : children) {
+				if ((object instanceof Element) && ((Element) object).getName().equals(nodeName)) {
+					dependencies = (Element) object;
+					break;
+				}
+			}
+		}
+		return dependencies;
+		 
 	}
 
 	private void executeExe() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			getLog().info("Executing ...");
-			String path = "";
-			String mavenHome = System.getProperty(JAVA_LIB_PATH);
-			String[] split = mavenHome.split(";");
-			for (int i = 0; i < split.length; i++) {
-				path = split[i];
-				if (path.indexOf(SP_DIR_NAME) != -1) {
-					break;
-				}
-			}
-			String drive = path.trim().substring(0, 2);
-			File workingDir = new File(baseDir.getPath() + sourceDirectory);
-			ProcessBuilder pb = new ProcessBuilder(drive + STSADM_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add("WSPBuilder.exe");
-			pb.directory(workingDir);
-			Process process = pb.start();
-			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			Commandline cl = new Commandline("WSPBuilder.exe");
+			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {

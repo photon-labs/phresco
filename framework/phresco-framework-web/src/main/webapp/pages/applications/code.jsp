@@ -76,7 +76,12 @@
     	enableScreen();
 		
         $('#validate').click(function() {
-			getCodeValidatePopUp();
+        	<% if (TechnologyTypes.IPHONES.contains(technology)) { %>
+		        	showParentPage();
+					progress();
+			<% } else { %>
+					getCodeValidatePopUp();
+			<% } %>
         });
         
        	$('#closeGenTest, #closeGenerateTest').click(function() {

@@ -33,7 +33,7 @@ public class Reports implements Serializable{
 	/**
 	 * @param reportCategories the reportCategories to set
 	 */
-	private void setReportCategories(List<ReportCategories> reportCategories) {
+	public void setReportCategories(List<ReportCategories> reportCategories) {
 		this.reportCategories = reportCategories;
 	}
 

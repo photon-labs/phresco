@@ -313,7 +313,7 @@
 											<div class="xlInput">
 												<ul class="inputs-list">
 													<li class="popup-li">
-															<input type="checkbox" id="proguard" name="proguard" value="false"  disabled="disabled">
+															<input type="checkbox" id="proguard" name="proguard" value="false">
 															<span class="textarea_span popup-span"><s:text name="label.progurad"/></span>
 															
 															<input type="checkbox" id="signing" name="signing" value="false">

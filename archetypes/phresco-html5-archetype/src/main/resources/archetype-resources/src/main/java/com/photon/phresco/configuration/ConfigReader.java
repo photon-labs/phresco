@@ -36,64 +36,97 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
 public class ConfigReader {
 	
 	//envname, env dom element
 	private static final Map<String, Element> ENV_MAP = new HashMap<String, Element>();
-	private static ConfigReader READER = null;
 	private static String defaultEnvironment = null;
+	private Document document = null;
 	private File configFile = null;
-	public static ConfigReader getInstance(File configXML) throws Exception {
-		if (READER == null) {
-			READER = new ConfigReader(new FileInputStream(configXML));
+	
+	/**
+	 * ConfigReader single instance created by configuration xml
+	 * @param configXML File type
+	 * @return
+	 * @throws Exception
+	 */
+	public ConfigReader(File configXML) throws Exception {
+		if (configXML.exists()) {
+			this.configFile = configXML;
+			initXML(new FileInputStream(configXML));
 		}
-		return READER;
 	}
 	
-	public static ConfigReader getInstance(InputStream xmlStream) throws Exception {
-		if (READER == null) {
-			READER = new ConfigReader(xmlStream);
-		}
-		return READER;
+	/**
+	 * ConfigReader single instance created by configuration xml input stream
+	 * @param xmlStream
+	 * @return
+	 * @throws Exception
+	 */
+	public ConfigReader(InputStream xmlStream) throws Exception {
+		initXML(xmlStream);
 	}
 
+	/**
+	 * Returns the defaut environment name
+	 * @return
+	 */
 	public String getDefaultEnvName() {
 		return defaultEnvironment;
 	}
 	
+	/**
+	 * Returns the Configurations of given environments
+	 * @param envName - Environment name
+	 * @return
+	 */
 	public List<Configuration> getConfigByEnv(String envName) {
 		List<Configuration> configurations = new ArrayList<Configuration>();
 		Element environment = getEnvironment(envName);
-		NodeList configNodes = environment.getChildNodes();
-		for (int i = 0; i < configNodes.getLength(); i++) {
-			if (configNodes.item(i).getNodeType() !=  Element.TEXT_NODE) {
-				Element configNode = (Element) configNodes.item(i);
-				String configType = configNode.getNodeName();
-				String configName = configNode.getAttribute("name");
-				String configDesc = configNode.getAttribute("desc");
-				String configAppliesTo = configNode.getAttribute("appliesto");
-				Properties properties = getProperties(configNode);
-				Configuration config = new Configuration(configName, configDesc, configType, properties, configAppliesTo);
-				configurations.add(config);
+		if (environment != null) {
+			NodeList configNodes = environment.getChildNodes();
+			for (int i = 0; i < configNodes.getLength(); i++) {
+				if (configNodes.item(i).getNodeType() !=  Element.TEXT_NODE) {
+					Element configNode = (Element) configNodes.item(i);
+					String configType = configNode.getNodeName();
+					String configName = configNode.getAttribute("name");
+					String configDesc = configNode.getAttribute("desc");
+					String configAppliesTo = configNode.getAttribute("appliesTo");
+					Properties properties = getProperties(configNode);
+					Configuration config = new Configuration(configName, configDesc, envName, configType, properties, configAppliesTo);
+					configurations.add(config);
+				}
 			}
 		}
 		return configurations;
 	}
 	
-	/*public List<Configuration> getDefaultEnv() {
-		return getConfigByEnv(defaultEnvironment);
-	}*/
-	
-	protected ConfigReader(InputStream xmlStream) throws Exception {
-		initXML(xmlStream);
+	/**
+	 * Returns the Configurations of given environments by configuration type
+	 * @param envName
+	 * @param configType
+	 * @return
+	 */
+	public List<Configuration> getConfigurations(String envName, String configType) {
+		List<Configuration> configurations = getConfigByEnv(envName);
+		List<Configuration> filterConfigs = new ArrayList<Configuration>(configurations.size());
+		for (Configuration configuration : configurations) {
+			if (configuration.getType().equals(configType)) {
+				filterConfigs.add(configuration);
+			}	
+		}
+		return filterConfigs;
 	}
 	
-	private void initXML(InputStream xmlStream) throws Exception {
+	/**
+	 * loads the configuration xml as input stream
+	 * @param xmlStream
+	 * @throws Exception
+	 */
+	protected void initXML(InputStream xmlStream) throws Exception {
 		try {
 			if (xmlStream == null) {
-				xmlStream = this.getClass().getClassLoader().getResourceAsStream("config.xml");
+				xmlStream = this.getClass().getClassLoader().getResourceAsStream("configuration.xml");
 			}
 			parseXML(xmlStream);
 		} finally {
@@ -105,37 +138,70 @@ public class ConfigReader {
 		}
 	}
 	
+	/**
+	 * Creating Dom object to parse the configuration xml 
+	 * @param xmlStream
+	 * @throws Exception
+	 */
 	private void parseXML(InputStream xmlStream) throws Exception {
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		domFactory.setNamespaceAware(false);
 		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		Document document = builder.parse(xmlStream);
+		document = builder.parse(xmlStream);
 		parseDocument(document);
 	}
 	
+	/**
+	 * parse the configuration xml
+	 * @param document
+	 */
 	private void parseDocument(Document document) {
 		//get a nodelist of environments
 		NodeList environmentList = document.getElementsByTagName("environment");
-
+		ENV_MAP.clear();
+		
 		for(int i = 0 ; i < environmentList.getLength(); i++) {
 
 			//get the environment element
 			Element environment = (Element) environmentList.item(i);
 			String envName = environment.getAttribute("name");
+			
+			boolean defaultEnv = Boolean.parseBoolean(environment.getAttribute("default"));
+			if (defaultEnv) {
+				defaultEnvironment = envName;
+			}
 			//add environment element to map
 			ENV_MAP.put(envName, environment);
 		}
 	}
 	
+	protected Document getDocument() {
+		return document;
+	}
+	
+	/**
+	 * return the environments
+	 * @return
+	 */
 	protected Map<String, Element> getEnviroments() {
 		return ENV_MAP;
 	}
 	
+	/**
+	 * return the environment element for the given Environment name
+	 * @param envName
+	 * @return
+	 */
 	protected Element getEnvironment(String envName) {
 		return ENV_MAP.get(envName);
 	}
 	
-	protected Properties getProperties(Element configNode) {
+	/**
+	 * return the property of the given configuration
+	 * @param configNode
+	 * @return
+	 */
+	private Properties getProperties(Element configNode) {
 		Properties props = new Properties();
 		NodeList propNodes = configNode.getChildNodes();
 		for(int i = 0 ; i < propNodes.getLength(); i++) {
@@ -169,5 +235,4 @@ public class ConfigReader {
 		}
 		return json;	
 	}
-
 }

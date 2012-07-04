@@ -140,50 +140,42 @@ public class BaseScreen {
 				 * selenium = new WebDriverBackedSelenium(driver, url);
 				 * selenium.open(context);
 				 */
-			}
+			} 
 		
 		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
 				log.info("-------------***LAUNCHING OPERA***--------------");
-
-				WebDriver driver = new OperaDriver(); 
+				WebDriver driver = new OperaDriver();
 				System.out.println("******entering window maximize********");
 				Robot robot;
 				try {
 					robot = new Robot();
 					robot.keyPress(KeyEvent.VK_ALT);
-			        robot.keyPress(KeyEvent.VK_SPACE);
-			        robot.keyRelease(KeyEvent.VK_ALT);
-			        robot.keyRelease(KeyEvent.VK_SPACE);
-			        robot.keyPress(KeyEvent.VK_X);
-			        robot.keyRelease(KeyEvent.VK_X);
+					robot.keyPress(KeyEvent.VK_SPACE);
+					robot.keyRelease(KeyEvent.VK_ALT);
+					robot.keyRelease(KeyEvent.VK_SPACE);
+					robot.keyPress(KeyEvent.VK_X);
+					robot.keyRelease(KeyEvent.VK_X);
 				} catch (AWTException e) {
-				
+
 					e.printStackTrace();
 				}
-				
-				 System.out.println("******window maximized********");
+
+				System.out.println("******window maximized********");
 				System.out.println("URL = " + url);
-	            driver.navigate().to(url + context);
-	            try {
+				driver.navigate().to(url + context);
+				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				
-
-				/*
-				 * selenium = new WebDriverBackedSelenium(driver, url);
-				 * selenium.open(context);
-				 */
-				
+			} else {
+				throw new ScreenException(
+						"------Only FireFox,InternetExplore,Chrome and Opera works-----------");
 			}
-		else {
-			throw new ScreenException(
-					"------Only FireFox,InternetExplore,Chrome and Opera works-----------");
-		}			
-}
+		}
+		
+
+	
 
 	public static void windowMaximizeFirefox() {
 		driver.manage().window().setPosition(new Point(0, 0));
@@ -197,14 +189,13 @@ public class BaseScreen {
 	public void closeBrowser() {
 		log.info("-------------***BROWSER CLOSING***--------------");		
 		if (driver != null) {
-			driver.quit();		
+			driver.close();		
 		if(chromeService!=null){
 			chromeService.stop();
 			}
-		} 
-		//else {
-			//throw new NullPointerException();
-		//}
+		} else {
+			throw new NullPointerException();
+		}
 		// selenium.stop();
 		/*
 		 * driver.quit(); selenium.stop();

@@ -4,7 +4,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.0.4001-SNAPSHOT</version>
+        <version>1.2.0.5001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
@@ -130,6 +130,19 @@
                     </archive>
                 </configuration>
             </plugin>
+			<plugin>
+					<groupId>org.apache.geronimo.genesis.plugins</groupId>
+					<artifactId>tools-maven-plugin</artifactId>
+					<executions>
+						<execution>
+						<id>install-legal-files</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-legal-files</goal>
+						</goals>
+						</execution>
+					</executions>
+				</plugin>
         </plugins>
     </build>
     
