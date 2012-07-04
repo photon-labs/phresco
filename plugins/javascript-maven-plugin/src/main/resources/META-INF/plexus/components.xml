@@ -121,9 +121,9 @@
 			<role-hint>jettyPlugin</role-hint>
 			<implementation>org.apache.maven.model.Plugin</implementation>
 			<configuration>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jettyVersion}</version>
+				 <groupId>org.mortbay.jetty</groupId>
+				 <artifactId>maven-jetty-plugin</artifactId>
+				 <version>6.1.10</version>
 			</configuration>
 		</component>
 
@@ -135,7 +135,7 @@
 			<configuration>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${mavenCompilerVersion}</version>
+				<version>2.5.1</version>
 			</configuration>
 		</component>
 
@@ -147,7 +147,7 @@
 			<configuration>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${mavenSurefireVersion}</version>
+				<version>2.12</version>
 			</configuration>
 		</component>
 
@@ -159,7 +159,7 @@
 			<configuration>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>${mavenAssemblyVersion}</version>
+				<version>2.3</version>
 			</configuration>
 		</component>
 
@@ -171,7 +171,7 @@
 			<configuration>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>${mavenSiteVersion}</version>
+				<version>3.1</version>
 			</configuration>
 		</component>
 
@@ -183,7 +183,7 @@
 			<configuration>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>almond</artifactId>
-				<version>${almondVersion}</version>
+				<version>0.0.2-alpha-1</version>
 				<type>js</type>
 			</configuration>
 		</component>
@@ -196,11 +196,12 @@
 			<configuration>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>qunit-amd</artifactId>
-				<version>${qunitVersion}</version>
+				<version>1.5.0-alpha-1</version>
 				<classifier>www</classifier>
 				<type>zip</type>
 			</configuration>
 		</component>
+
 
 		<!-- JS Test Runner -->
 		<component>
@@ -241,11 +242,11 @@
 
 						<phases>
 							<process-sources>
-								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5001-SNAPSHOT:jslint,
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:import-js
+								org.codehaus.mojo:jslint-maven-plugin:2.0.0.1000-SNAPSHOT:jslint,
+								org.codehaus.mojo:js-import-maven-plugin:2.0.0.1000-SNAPSHOT:import-js
 							</process-sources>
 							<generate-resources>
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:generate-html
+								org.codehaus.mojo:js-import-maven-plugin:2.0.0.1000-SNAPSHOT:generate-html
 							</generate-resources>
 							<process-resources>
 								org.apache.maven.plugins:maven-resources-plugin:2.5:resources
@@ -254,11 +255,11 @@
                         		org.apache.maven.plugins:maven-compiler-plugin:2.5.1:compile
                     		</compile>
 							<process-test-sources>
-								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5001-SNAPSHOT:test-jslint,
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:test-import-js
+								org.codehaus.mojo:jslint-maven-plugin:2.0.0.1000-SNAPSHOT:test-jslint,
+								org.codehaus.mojo:js-import-maven-plugin:2.0.0.1000-SNAPSHOT:test-import-js
 							</process-test-sources>
 							<generate-test-resources>
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:test-generate-html
+								org.codehaus.mojo:js-import-maven-plugin:2.0.0.1000-SNAPSHOT:test-generate-html
 							</generate-test-resources>
 							<process-test-resources>
 								org.apache.maven.plugins:maven-resources-plugin:2.5:testResources
