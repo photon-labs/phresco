@@ -113,7 +113,8 @@ public class FrameworkBaseAction extends ActionSupport implements FrameworkConst
     public void copyToClipboard () {
     	S_LOGGER.debug("Entered FrameworkBaseAction.copyToClipboard");
     	Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-    	clipboard.setContents(new StringSelection(copyToClipboard), null);
+    	clipboard.setContents(new StringSelection(copyToClipboard.replaceAll(" ", "").replaceAll("(?m)^[ \t]*\r?\n", "")), null);
+    	
     }
     
     protected List<String> getProjectModules(String projectCode) {
