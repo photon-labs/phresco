@@ -75,9 +75,14 @@
     	sonarReport();
     	enableScreen();
 		
-        $('#validate').click(function() {
-			getCodeValidatePopUp();
-        });
+    	 $('#validate').click(function() {
+         	<% if (TechnologyTypes.IPHONES.contains(technology)) { %>
+ 		        	showParentPage();
+ 					progress();
+ 			<% } else { %>
+ 					getCodeValidatePopUp();
+ 			<% } %>
+         });
         
        	$('#closeGenTest, #closeGenerateTest').click(function() {
        		closePopup();
