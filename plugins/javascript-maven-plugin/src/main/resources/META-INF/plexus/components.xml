@@ -241,44 +241,44 @@
 
 						<phases>
 							<process-sources>
-								org.codehaus.mojo:jslint-maven-plugin:${jslintVersion}:jslint,
-								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:import-js
+								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5001-SNAPSHOT:jslint,
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:import-js
 							</process-sources>
 							<generate-resources>
-								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:generate-html
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:generate-html
 							</generate-resources>
 							<process-resources>
-								org.apache.maven.plugins:maven-resources-plugin:${mavenResourcesVersion}:resources
+								org.apache.maven.plugins:maven-resources-plugin:2.5:resources
 							</process-resources>
 							<compile>
-                        		org.apache.maven.plugins:maven-compiler-plugin:${mavenCompilerVersion}:compile
+                        		org.apache.maven.plugins:maven-compiler-plugin:2.5.1:compile
                     		</compile>
 							<process-test-sources>
-								org.codehaus.mojo:jslint-maven-plugin:${jslintVersion}:test-jslint,
-								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:test-import-js
+								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5001-SNAPSHOT:test-jslint,
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:test-import-js
 							</process-test-sources>
 							<generate-test-resources>
-								org.codehaus.mojo:js-import-maven-plugin:${jsimportVersion}:test-generate-html
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5001-SNAPSHOT:test-generate-html
 							</generate-test-resources>
 							<process-test-resources>
-								org.apache.maven.plugins:maven-resources-plugin:${mavenResourcesVersion}:testResources
+								org.apache.maven.plugins:maven-resources-plugin:2.5:testResources
 							</process-test-resources>
 							<test-compile>
-								org.apache.maven.plugins:maven-compiler-plugin:${mavenCompilerVersion}:testCompile
+								org.apache.maven.plugins:maven-compiler-plugin:2.5.1:testCompile
 							</test-compile>
 							<test>
-								org.apache.maven.plugins:maven-surefire-plugin:${mavenSurefireVersion}:test
+								org.apache.maven.plugins:maven-surefire-plugin:2.12:test
 							</test>
 							<prepare-package>
-								org.codehaus.mojo:webminifier-maven-plugin:${webminifierVersion}:minify-js
+								org.codehaus.mojo:webminifier-maven-plugin:1.0.1:minify-js
 							</prepare-package>
 							<package>
 							</package>
 							<install>
-								org.apache.maven.plugins:maven-install-plugin:${mavenInstallVersion}:install
+								org.apache.maven.plugins:maven-install-plugin:2.3.1:install
 							</install>
 							<deploy>
-								org.apache.maven.plugins:maven-deploy-plugin:${mavenDeployVersion}:deploy
+								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
 							</deploy>
 						</phases>
 
