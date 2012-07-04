@@ -18,13 +18,20 @@
   ###
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.photon.phresco.model.Technology" %>
+
+<%
+	List<Technology> technologys = (List<Technology>) request.getAttribute("technologys");
+%>
 
 <form class="customer_list">
-	<div class="operation">
+	<div class="operation" id="operation">
 		<input type="button" id="archetypeAdd" class="btn btn-primary" name="archetype_add" onclick="loadContent('archetypeAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.arhtyp.add'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.comp.delete'/>" onclick="loadContent('archetypeDelete', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success"  id="successmsg">
+			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
 			</div>
 		</s:if>
@@ -63,78 +70,39 @@
 					</thead>
 		
 					<tbody>
-					
-						<tr>
-							<td class="checkboxwidth">
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Drupal</a>
-							</td>
-							<td class="namelabel-width">Drupal</td>
-							<td class="namelabel-width">7.0</td>
-							<td>Web Application</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >PHP</a>
-							</td>
-							<td>PHP</td>
-							<td>5.3</td>
-							<td>Web Application</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Android</a>
-							</td>
-							<td>Android</td>
-							<td>2.3.3</td>
-							<td>Mobile</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Java</a>
-							</td>
-							<td>Java</td>
-							<td>1.7</td>
-							<td>Standalone</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Node JS</a>
-							</td>
-							<td>Node JS</td>
-							<td>0.4.11</td>
-							<td>Web Service</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >HTML5 Multichannel Widget</a>
-							</td>
-							<td
-							>HTML5 Multichannel Widget</td>
-							<td>5.0</td>
-							<td>Web Application</td>
-						</tr>
+								<%
+									if (CollectionUtils.isNotEmpty(technologys)) {
+										for ( Technology technology : technologys) {
+								%>
+											<tr>
+												<td class="checkboxwidth">
+													<input type="checkbox" class="check" name="techId" value="<%= technology.getId() %>" onclick="checkboxEvent();" />
+												</td>
+												<td class="namelabel-width">
+													<a href="#" onclick="editTech('<%= technology.getId() %>');"><%= technology.getName() %></a>
+												</td>
+												<td class="desclabel-width"><%= technology.getDescription() %></td>	
+												<td><%= technology.getVersions() %></td>
+												<td><%= technology.getAppType() %></td>		
+											</tr>	
+								<%		
+										}
+									}
+								%>
+						
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </form>
-
+<script type="text/javascript">
+function editTech(id) {
+		var params = "techId=";
+		params = params.concat(id);
+		params = params.concat("&fromPage=");
+		params = params.concat("edit");
+		loadContent("archetypeEdit", $('#subcontainer'), params);
+	}
+	</script>
+	

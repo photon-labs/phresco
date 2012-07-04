@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,16 +40,18 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.photon.phresco.exception.PhrescoException;
+
 public class ConfigWriter {
 
 	private ConfigReader reader = null;
 	private Document document = null;
 	private Element rootElement = null;
-	
+
 	/**
 	 * Constructor of ConfigWriter
 	 * @param reader
-	 * @param newFile 
+	 * @param newFile
 	 * @throws Exception
 	 */
 	public ConfigWriter(ConfigReader reader, boolean newFile) throws Exception {
@@ -61,8 +63,8 @@ public class ConfigWriter {
 			rootElement = (Element) document.getElementsByTagName("environments").item(0);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Created the configuration xml of selected environment using File object
 	 * @param configXmlPath
@@ -86,7 +88,7 @@ public class ConfigWriter {
 		createConfiguration(selectedEnvStr);
 		writeXml(new FileOutputStream(srcReaderToAppend.getConfigFile()));
 	}
-	
+
 	/**
 	 * Created the configuration xml of selected environment using OutputStream object
 	 * @param fos
@@ -97,7 +99,7 @@ public class ConfigWriter {
 		createConfiguration(selectedEnvStr);
 		writeXml(fos);
 	}
-	
+
 	/**
 	 * Read the Environments to create the configurations
 	 * @param selectedEnvStr
@@ -107,13 +109,13 @@ public class ConfigWriter {
 		String[] envs = selectedEnvStr.split(",");
 		for (String envName : envs) {
 			List<Configuration> configByEnv = reader.getConfigByEnv(envName);
-			if (configByEnv != null && !configByEnv.isEmpty()) { 
+			if (configByEnv != null && !configByEnv.isEmpty()) {
 				boolean defaultEnv = envName.equals(reader.getDefaultEnvName());
 				createConfigurations(configByEnv, envName, defaultEnv);
 			}
 		}
 	}
-	
+
 	/**
 	 * Create the Configuration element of selected Environments
 	 * @param configList
@@ -133,11 +135,11 @@ public class ConfigWriter {
 		}
 		rootElement.appendChild(envNode);
 	}
-	
+
 	/**
 	 * Write the xml document using OutputStream
 	 * @param fos
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	protected void writeXml(OutputStream fos) throws Exception {
 		try {
@@ -161,7 +163,7 @@ public class ConfigWriter {
 	 * Create the new Xml Dom object
 	 * @throws Exception
 	 */
-	protected void createNewXml() throws Exception {
+	protected void createNewXml() throws PhrescoException {
 		try {
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             domFactory.setNamespaceAware(false);
@@ -170,18 +172,18 @@ public class ConfigWriter {
             rootElement = document.createElement("environments");
             document.appendChild(rootElement);
 		} catch (ParserConfigurationException e) {
-			throw new Exception(e);
-		}		
+			throw new PhrescoException(e);
+		}
 	}
-	
+
 	protected Document getDocument() {
 		return document;
 	}
-	
+
 	protected Element getRootElement() {
 		return rootElement;
 	}
-	
+
 	/**
 	 * create the properties to the configuration element
 	 * @param configNode

@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,21 +27,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User extends Element {
 
-	String loginId;
-	String email;
-	String firstName;
-	String lastName;
-	int status;
-	List<Role> roles;
+	private String loginId;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private int status;
+	private List<Role> roles;
 	private boolean phrescoEnabled;
 	private String displayName;
-	List<Customer> customers;
-	String token;
+	private List<Customer> customers;
+	private String token;
 
 	public User() {
 		super();
 	}
-	
+
 	public User(String id, String name, String description) {
 		super(id, name, description);
 	}
@@ -49,7 +49,7 @@ public class User extends Element {
 	public User(String name, String description) {
 		super(name, description);
 	}
-	
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -77,7 +77,7 @@ public class User extends Element {
 	public void setPhrescoEnabled(boolean phrescoEnabled) {
 		this.phrescoEnabled = phrescoEnabled;
 	}
-	
+
 	public String getLoginId() {
 		return loginId;
 	}
