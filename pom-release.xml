@@ -30,6 +30,7 @@
             <configuration>
                 <includes>
 			<include>**/pom.xml</include>
+			<include>**/components.xml</include>
 			<!--
 			<include>commons/**/pom.xml</include>
 			<include>framework/**/pom.xml</include>
