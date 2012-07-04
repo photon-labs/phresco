@@ -50,10 +50,10 @@ import org.w3c.dom.Element;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
@@ -261,6 +261,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			sb.append(MVN_PHASE_CLEAN);
 			sb.append(STR_SPACE);
 			sb.append(MVN_PHASE_PACKAGE);
+			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
 
 			Commandline cl = new Commandline(sb.toString());

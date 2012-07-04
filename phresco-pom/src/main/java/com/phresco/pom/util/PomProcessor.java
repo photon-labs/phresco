@@ -22,6 +22,7 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -52,7 +53,10 @@ import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
 import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
+import com.phresco.pom.model.ReportSet;
 import com.phresco.pom.model.Reporting;
+import com.phresco.pom.site.ReportCategories;
+import com.phresco.pom.site.Reports;
 
 
 // TODO: Auto-generated Javadoc
@@ -106,21 +110,22 @@ public class PomProcessor {
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope) throws JAXBException, PhrescoPomException {
-		addDependency(groupId, artifactId, version, scope, null);
+		addDependency(groupId, artifactId, version, scope, null, null);
 	} 
 	
 	/**
 	 * Adds the dependency.
-	 *
-	 * @param groupId the group id
-	 * @param artifactId the artifact id
-	 * @param version the version
-	 * @param scope the scope
-	 * @param type the type
-	 * @throws JAXBException the jAXB exception
-	 * @throws PhrescoPomException the phresco pom exception
+	 * 
+	 * @param groupId
+	 * @param artifactId
+	 * @param version
+	 * @param scope
+	 * @param type
+	 * @param systemPath
+	 * @throws JAXBException
+	 * @throws PhrescoPomException
 	 */
-	public void addDependency(String groupId, String artifactId, String version, String scope, String type) throws JAXBException, PhrescoPomException {
+	public void addDependency(String groupId, String artifactId, String version, String scope, String type,String systemPath) throws JAXBException, PhrescoPomException {
         if(isDependencyAvailable(groupId, artifactId)){
             changeDependencyVersion(groupId, artifactId, version);
             return;
@@ -131,7 +136,11 @@ public class PomProcessor {
         dependency.setVersion(version);
         if(StringUtils.isNotBlank(scope)){
             dependency.setScope(scope);
+            if(scope.equals(PomConstants.MVN_SCOPE_SYSTEM)){
+            	dependency.setSystemPath(systemPath);
+            }
         }
+        
         if(StringUtils.isNotBlank(type)){
             dependency.setType(type);
         }
@@ -145,6 +154,12 @@ public class PomProcessor {
 	 * @param artifactId the artifact id
 	 * @return true, if is dependency available
 	 * @throws PhrescoPomException the phresco pom exception
+	 */
+	/**
+	 * @param groupId
+	 * @param artifactId
+	 * @return
+	 * @throws PhrescoPomException
 	 */
 	public boolean isDependencyAvailable(String groupId,String artifactId) throws PhrescoPomException{
 		if(model.getDependencies()==null){
@@ -610,7 +625,7 @@ public class PomProcessor {
 	 * @param sourceDirectoryvalue the source directoryvalue
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public void addSourceDirectory(String sourceDirectoryvalue) throws PhrescoPomException{
+	public void setSourceDirectory(String sourceDirectoryvalue) throws PhrescoPomException{
 		Build build = model.getBuild();
 		if(build==null){
 			 build = new Build();
@@ -717,7 +732,7 @@ public class PomProcessor {
 	 * @param reportPlugin the report plugin
 	 */
 	
-	public void siteReportConfig(ReportPlugin reportPlugin){
+	public void siteReportConfig(ReportPlugin reportPlugin) {
 		com.phresco.pom.model.Reporting.Plugins plugins = new com.phresco.pom.model.Reporting.Plugins();
 		if(model.getReporting()==null){
 			model.setReporting(new Reporting());
@@ -754,6 +769,11 @@ public class PomProcessor {
 	 * @param finalName the new final name
 	 */
 	public void setFinalName(String finalName){
+		Build build = model.getBuild();
+		if(build==null){
+			 build = new Build();
+			 model.setBuild(build);
+		}
 		model.getBuild().setFinalName(finalName);
 	}
 	
@@ -763,7 +783,21 @@ public class PomProcessor {
 	 * @return the final name
 	 */
 	public String getFinalName() {
-		return model.getBuild().getFinalName();
+		if(model.getBuild() != null){
+			return model.getBuild().getFinalName();
+		} 
+		return null;
+	}
+	
+	public String getName(){
+		if(model.getName() == null){
+			return "";
+		}
+		return model.getName();
+	}
+	
+	public void setName(String name){
+		model.setName(name);
 	}
 
 	/**
@@ -820,6 +854,55 @@ public class PomProcessor {
 		dependency.setVersion(PomConstants.DOXIA_VERSION);
 		dependencies.getDependency().add(dependency);
 		plugins.getPlugin().add(plugin);
+	}
+	
+	public List<ReportPlugin> getReportPlugin() {
+		if(model.getReporting() != null && model.getReporting().getPlugins().getPlugin() != null) {
+			return model.getReporting().getPlugins().getPlugin();
+		}
+		return null;
+	}
+	
+	/**
+	 * @return
+	 */
+	public List<String> getProjectInfoReportCategories() {
+		List<ReportPlugin> reportPlugin = getReportPlugin();
+		if(reportPlugin != null){
+			return getProjectInfoReport(reportPlugin);
+		} return null;
+	}
+
+	/**
+	 * @param reportPlugin
+	 * @return
+	 */
+	private List<String> getProjectInfoReport(List<ReportPlugin> reportPlugin) {
+		for (ReportPlugin reportPlugin2 : reportPlugin) {
+			if(reportPlugin2.getGroupId().equals(Reports.PROJECT_INFO.getGroupId()) && reportPlugin2.getArtifactId().equals(Reports.PROJECT_INFO.getArtifactId())){
+				List<ReportSet> reportSet = reportPlugin2.getReportSets().getReportSet();
+				for (ReportSet reportSet2 : reportSet) {
+					return reportSet2.getReports().getReport();
+				}
+			}
+		} return null;
+	}
+	
+	/**
+	 * @param reportCategories
+	 */
+	public void removeProjectInfoReportCategory(List<ReportCategories> reportCategories){
+		if (reportCategories != null) {
+			List<String> removeList  = new ArrayList<String>();
+			List<String> projectInfoReportCategories = getProjectInfoReportCategories();
+			for (String string : projectInfoReportCategories) {
+				for (ReportCategories reportCategoriesList : reportCategories) {
+					if(reportCategoriesList.getName().equals(string)){
+						removeList.add(string);
+					} 
+				} 
+			} projectInfoReportCategories.removeAll(removeList);
+		}
 	}
 	
 	/**

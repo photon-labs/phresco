@@ -21,6 +21,7 @@ package com.photon.phresco.plugins;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
@@ -51,11 +52,10 @@ import org.jdom.output.XMLOutputter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
-import com.photon.phresco.util.POMProcessor;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.Utility;
@@ -183,22 +183,28 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 
 	@SuppressWarnings("static-access")
 	private Element getNode(File pomFile, Element rootNode, String nodeName) throws JDOMException, IOException {
-		POMProcessor pomProc = new POMProcessor(pomFile);
-		return pomProc.getNode(rootNode, nodeName);
-		/*
-		 * if (pomFile == null) { throw new
-		 * IllegalArgumentException("pom file should not be null"); } if
-		 * (!pomFile.exists()) { throw new
-		 * FileNotFoundException("File doesn't exist"); } SAXBuilder builder =
-		 * new SAXBuilder(); Document document = builder.build(pomFile);
-		 * rootNode = document.getRootElement(); Element dependencies =
-		 * rootNode.getChild(nodeName, rootNode.getNamespace()); // sometime,
-		 * this doesn't work. So as workaround this stint. if (dependencies ==
-		 * null) { List children = rootNode.getChildren(); for (Object object :
-		 * children) { if ((object instanceof Element) && ((Element)
-		 * object).getName().equals(nodeName)) { dependencies = (Element)
-		 * object; break; } } } return dependencies;
-		 */
+		//POMProcessor pomProc = new POMProcessor(pomFile);
+		//return pomProc.getNode(rootNode, nodeName);
+		if (pomFile == null) {
+			throw new IllegalArgumentException("pom file should not be null");
+		}
+		if (!pomFile.exists()) {
+			throw new FileNotFoundException("File doesn't exist");
+		}
+		SAXBuilder builder = new SAXBuilder();
+		Document document = builder.build(pomFile);
+		rootNode = document.getRootElement();
+		Element dependencies = rootNode.getChild(nodeName,rootNode.getNamespace());
+		if (dependencies == null) {
+			List children = rootNode.getChildren();
+			for (Object object : children) {
+				if ((object instanceof Element) && ((Element) object).getName().equals(nodeName)) {
+					dependencies = (Element) object;
+					break;
+				}
+			}
+		}
+		return dependencies;
 	}
 
 	private void executeExe() throws MojoExecutionException {

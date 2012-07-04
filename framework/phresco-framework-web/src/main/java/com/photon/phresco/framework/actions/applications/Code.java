@@ -235,10 +235,15 @@ public class Code extends FrameworkBaseAction {
             	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
             validateAgainst(validateAgainst, project,projectCode);
+            if (!TechnologyTypes.IPHONES.contains(technology)) {
+            	validateAgainst(validateAgainst, project,projectCode);
+            }
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
             	actionType.setWorkingDirectory(projectPath.toString());
-            } 
+            } else {
+            	actionType.setWorkingDirectory(null);
+            }
 			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);

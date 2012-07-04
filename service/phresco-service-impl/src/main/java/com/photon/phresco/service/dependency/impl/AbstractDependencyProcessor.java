@@ -1,4 +1,5 @@
 /*
+/*
  * ###
  * Phresco Service Implemenation
  * 
@@ -220,7 +221,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
                         String groupId = "jslibraries.files";
                         String artifactId = "jslib_" + jsLibrary.getName().toLowerCase();
                         processor.addDependency(groupId, artifactId, jsLibrary.getVersions()
-                                .get(0).getVersion(), "", "js");
+                                .get(0).getVersion(), "", "js","");
                     }
                 }
                 processor.save();

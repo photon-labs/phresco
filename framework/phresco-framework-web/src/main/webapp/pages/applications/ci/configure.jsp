@@ -449,7 +449,7 @@
 					<input type="checkbox" id="showSettings" name="showSettings" value="showsettings" <%= showSettings %>> <s:text name="label.show.setting"/>
 						&nbsp;
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
-						<input type="checkbox" id="proguard" name="proguard" value="false" disabled="disabled">
+						<input type="checkbox" id="proguard" name="proguard" value="false" >
 						<span><s:text name="label.progurad"/></span>
 				<% } %>
 				</div>

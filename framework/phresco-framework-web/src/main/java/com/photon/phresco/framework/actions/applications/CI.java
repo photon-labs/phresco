@@ -300,7 +300,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 					// if the checkbox is selected value should be set to false otherwise true
 					proguard = TRUE;
 				}
-				/*settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);*/
+				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;

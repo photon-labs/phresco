@@ -33,22 +33,12 @@
 	</listener>
 	
 	<servlet>
-		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-name>jersey-spring-servlet</servlet-name>
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>com.photon.phresco.service.rest.api</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-    <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>com.photon.phresco.service;com.photon.phresco.service.rest.api</param-value>
-        </init-param>
         <init-param>
   			<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
   			<param-value>com.photon.phresco.service.interceptors.SecurityInterceptor</param-value>
@@ -57,11 +47,9 @@
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
 		</init-param>
-		
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
     <servlet>
         <servlet-name>InitializeService</servlet-name>
         <servlet-class>com.photon.phresco.servlets.InitializeService</servlet-class>
@@ -69,7 +57,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-name>jersey-spring-servlet</servlet-name>
         <url-pattern>/rest/api/*</url-pattern>
     </servlet-mapping>
 	<servlet-mapping>
