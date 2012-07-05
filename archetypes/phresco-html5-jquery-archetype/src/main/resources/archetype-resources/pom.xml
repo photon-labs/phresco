@@ -40,7 +40,7 @@
   </dependencies>
 	
     <build>
-		<testSourceDirectory>${project.basedir}/src/test/qunit/java</testSourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
         <finalName>HelloWorld</finalName>
 		<extensions>
@@ -115,6 +115,34 @@
 							</webapps>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.11</version>
+				<configuration>
+					<excludes>
+						<exclude>js/**/*Test.java</exclude>
+					</excludes>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>surefire-qunit</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<reportsDirectory>${project.build.directory}/surefire-reports/qunit</reportsDirectory>
+							<excludes>
+								<exclude>none</exclude>
+							</excludes>
+							<includes>
+								<include>js/**/*Test.java</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
     
