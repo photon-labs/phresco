@@ -36,6 +36,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +44,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -92,9 +94,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     private CIJobStatus doJob(CIJob job, String jobType) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.createJob(CIJob job)");
-		}
+    	S_LOGGER.debug("Entering Method CIManagerImpl.createJob(CIJob job)");
     	try {
             cli = getCLI(job);
             List<String> argList = new ArrayList<String>();
@@ -105,6 +105,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             customizeNodes(processor, job);
             
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            S_LOGGER.debug("argList " + argList.toString());
             int result = cli.execute(argList, processor.getConfigAsStream(), System.out, baos);
             
             String message = "Job created successfully";
@@ -112,7 +113,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             	byte[] byteArray = baos.toByteArray();
             	message = new String(byteArray);
             }
-            
+            S_LOGGER.debug("message " + message);
             setSvnCredential(job);
             
             setMailCredential(job);
@@ -139,9 +140,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     private void setSvnCredential(CIJob job) throws JDOMException, IOException {
-        if (debugEnabled) {
-        	S_LOGGER.debug("Entering Method CIManagerImpl.setSvnCredential");
-        }
+       	S_LOGGER.debug("Entering Method CIManagerImpl.setSvnCredential");
         try {
             InputStream credentialXml = PhrescoFrameworkFactory.getServiceManager().getCredentialXml();
             SvnProcessor processor = new SvnProcessor(credentialXml);
@@ -163,9 +162,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             
             processor.writeStream(new File(builder.toString() + CI_CREDENTIAL_XML));
 		} catch (Exception e) {
-        	if (debugEnabled) {
-        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.setSvnCredential " + e.getLocalizedMessage());
-    		}
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.setSvnCredential " + e.getLocalizedMessage());
 		}
     }
     
@@ -196,16 +193,12 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             
             processor.writeStream(new File(builder.toString() + CI_MAILER_XML));
 		} catch (Exception e) {
-        	if (debugEnabled) {
-        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.setMailCredential " + e.getLocalizedMessage());
-    		}
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.setMailCredential " + e.getLocalizedMessage());
 		}
     }
     
     public void getJdkHomeXml() throws PhrescoException {
-        if (debugEnabled) {
-        	S_LOGGER.debug("Entering Method CIManagerImpl.getJdkHomeXml");
-        }
+       	S_LOGGER.debug("Entering Method CIManagerImpl.getJdkHomeXml");
         try {
 			InputStream JDKHomeXmlStream = PhrescoFrameworkFactory.getServiceManager().getJdkHomeXml();
 			String jenkinsJobHome = System.getenv(JENKINS_HOME);
@@ -215,9 +208,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
 			File f = new File(builder.toString() + CI_JDK_HOME_XML);
 			streamToFile(f, JDKHomeXmlStream);
 		} catch (Exception e) {
-        	if (debugEnabled) {
-        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getJdkHomeXml" + e.getLocalizedMessage());
-    		}
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getJdkHomeXml" + e.getLocalizedMessage());
 		}
     }
     
@@ -233,16 +224,12 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
 			out.close();
 			ip.close();
 		} catch (Exception e) {
-        	if (debugEnabled) {
-        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.streamToFile" + e.getLocalizedMessage());
-    		}
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.streamToFile" + e.getLocalizedMessage());
 		}
     }
     
     public void getMavenHomeXml() throws PhrescoException {
-        if (debugEnabled) {
-        	S_LOGGER.debug("Entering Method CIManagerImpl.getMavenHomeXml");
-        }
+       	S_LOGGER.debug("Entering Method CIManagerImpl.getMavenHomeXml");
         try {
             InputStream MAVENHomeXmlStream = PhrescoFrameworkFactory.getServiceManager().getMavenHomeXml();
             String jenkinsJobHome = System.getenv(JENKINS_HOME);
@@ -251,17 +238,13 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             File f = new File(builder.toString() + CI_MAVEN_HOME_XML);
             streamToFile(f, MAVENHomeXmlStream);
 		} catch (Exception e) {
-        	if (debugEnabled) {
-        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getMavenHomeXml" + e.getLocalizedMessage());
-    		}
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getMavenHomeXml" + e.getLocalizedMessage());
 		}
     }
     
     @Override
     public CIJobStatus buildJob(CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.buildJob(CIJob job)");
-		}
+   		S_LOGGER.debug("Entering Method CIManagerImpl.buildJob(CIJob job)");
     	cli = getCLI(job);
         
         List<String> argList = new ArrayList<String>();
@@ -308,37 +291,32 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     
     @Override
     public List<CIBuild> getCIBuilds(CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.getCIBuilds(CIJob job)");
-		}
-//    	FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
-    	if (debugEnabled) {
-    		S_LOGGER.debug("getCIBuilds()  JobName = "+ job.getName());
-		}
-        JsonArray jsonArray = getBuildsArray(job);
-        List<CIBuild> ciBuilds = new ArrayList<CIBuild>(jsonArray.size());
-        Gson gson = new Gson();
-        CIBuild ciBuild = null;
-        for (int i = 0; i < jsonArray.size(); i++) {
-            ciBuild = gson.fromJson(jsonArray.get(i), CIBuild.class);
-            setBuildStatus(ciBuild, job);
-    		String buildUrl = ciBuild.getUrl();
-    		String jenkinUrl = job.getJenkinsUrl() + ":" + job.getJenkinsPort();
-    		buildUrl = buildUrl.replaceAll("localhost:" + job.getJenkinsPort(), jenkinUrl); // when displaying url it should display setup machine ip
-    		ciBuild.setUrl(buildUrl);
-            ciBuilds.add(ciBuild);
+    	S_LOGGER.debug("Entering Method CIManagerImpl.getCIBuilds(CIJob job)");
+    	List<CIBuild> ciBuilds = null;
+        try{
+        	S_LOGGER.debug("getCIBuilds()  JobName = "+ job.getName());
+            JsonArray jsonArray = getBuildsArray(job);
+            ciBuilds = new ArrayList<CIBuild>(jsonArray.size());
+            Gson gson = new Gson();
+            CIBuild ciBuild = null;
+            for (int i = 0; i < jsonArray.size(); i++) {
+                ciBuild = gson.fromJson(jsonArray.get(i), CIBuild.class);
+                setBuildStatus(ciBuild, job);
+        		String buildUrl = ciBuild.getUrl();
+        		String jenkinUrl = job.getJenkinsUrl() + ":" + job.getJenkinsPort();
+        		buildUrl = buildUrl.replaceAll("localhost:" + job.getJenkinsPort(), jenkinUrl); // when displaying url it should display setup machine ip
+        		ciBuild.setUrl(buildUrl);
+                ciBuilds.add(ciBuild);
+            }
+        } catch(Exception e) {
+        	S_LOGGER.debug("Entering Method CIManagerImpl.getCIBuilds(CIJob job)");
         }
-        
         return ciBuilds;
     }
     
     private void setBuildStatus(CIBuild ciBuild, CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.setBuildStatus(CIBuild ciBuild)");
-		}
-    	if (debugEnabled) {
-    		S_LOGGER.debug("setBuildStatus()  url = "+ ciBuild.getUrl());
-		}
+   		S_LOGGER.debug("Entering Method CIManagerImpl.setBuildStatus(CIBuild ciBuild)");
+   		S_LOGGER.debug("setBuildStatus()  url = "+ ciBuild.getUrl());
 		String buildUrl = ciBuild.getUrl();
 		String jenkinsUrl = job.getJenkinsUrl() + ":" + job.getJenkinsPort();
 		buildUrl = buildUrl.replaceAll("localhost:" + job.getJenkinsPort(), jenkinsUrl); // display the jenkins running url in ci list
@@ -358,6 +336,10 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             ciBuild.setStatus("INPROGRESS");
         } else {
         	ciBuild.setStatus(resultJson.getAsString());
+        	//download path
+        	for (JsonElement jsonArtElement : asJsonArray) {
+            	ciBuild.setDownload(jsonArtElement.getAsJsonObject().get(FrameworkConstants.CI_JOB_BUILD_DOWNLOAD_PATH).toString());
+    		}
         }
 
         ciBuild.setId(idJson.getAsString());
@@ -374,12 +356,8 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     private String getJsonResponse(String jsonUrl) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.getJsonResponse(String jsonUrl)");
-		}
-    	if (debugEnabled) {
-    		S_LOGGER.debug("getJsonResponse() JSonUrl = "+jsonUrl);
-		}
+		S_LOGGER.debug("Entering Method CIManagerImpl.getJsonResponse(String jsonUrl)");
+		S_LOGGER.debug("getJsonResponse() JSonUrl = "+jsonUrl);
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(jsonUrl);
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -391,9 +369,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     private CLI getCLI(CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.getCLI()");
-		}
+    	S_LOGGER.debug("Entering Method CIManagerImpl.getCLI()");
 //        FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
         String jenkinsUrl = "http://" + job.getJenkinsUrl() + ":" + job.getJenkinsPort() + "/ci/";
         try {
@@ -432,19 +408,8 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.SuccessTrigger//email//recipientList", (String)email.get("failureEmails"));
     }
     
-    public static void main(String[] args)  {
-//    	try {
-//    		CIManagerImpl managerImpl = new CIManagerImpl();
-//            managerImpl.validate();
-//    	} catch(Exception e) {
-//    		e.printStackTrace();
-//    	}
-    }
-
     private void validate() throws IOException, InterruptedException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.validate()");
-		}
+    	S_LOGGER.debug("Entering Method CIManagerImpl.validate()");
         CLI validateCLI = new CLI(new URL("http://localhost:3579/ci/"));
         
         List<String> argList = new ArrayList<String>();
@@ -479,12 +444,8 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     
     @Override
     public int getTotalBuilds(CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-			S_LOGGER.debug("Entering Method CIManagerImpl.getTotalBuilds(CIJob job)");
-		}
-    	if (debugEnabled) {
-			S_LOGGER.debug("getCIBuilds()  JobName = " + job.getName());
-		}
+		S_LOGGER.debug("Entering Method CIManagerImpl.getTotalBuilds(CIJob job)");
+		S_LOGGER.debug("getCIBuilds()  JobName = " + job.getName());
         JsonArray jsonArray = getBuildsArray(job);
         Gson gson = new Gson();
         CIBuild ciBuild = null;
@@ -512,21 +473,21 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     public CIJobStatus deleteCI(CIJob job, List<String> builds) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.deleteCI(CIJob job)");
-    		S_LOGGER.debug("Job name " + job.getName());
-		}
+    	S_LOGGER.debug("Entering Method CIManagerImpl.deleteCI(CIJob job)");
+    	S_LOGGER.debug("Job name " + job.getName());
     	cli = getCLI(job);
         String deleteType = null;
         List<String> argList = new ArrayList<String>();
+        S_LOGGER.debug("job name " + job.getName());
+        S_LOGGER.debug("Builds " + builds);
         if(CollectionUtils.isEmpty(builds)) {	// delete job
-        	if (debugEnabled) {
-        		S_LOGGER.debug("Command " + FrameworkConstants.CI_JOB_DELETE_COMMAND);
-    		}
+        	S_LOGGER.debug("Job deletion started");
+        	S_LOGGER.debug("Command " + FrameworkConstants.CI_JOB_DELETE_COMMAND);
         	deleteType = "Job";
         	argList.add(FrameworkConstants.CI_JOB_DELETE_COMMAND);
             argList.add(job.getName());
         } else {								// delete Build
+        	S_LOGGER.debug("Build deletion started");
         	deleteType = "Build";
         	argList.add(FrameworkConstants.CI_BUILD_DELETE_COMMAND);
             argList.add(job.getName());
@@ -537,10 +498,8 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     	    }
     	    String buildNos = result.substring(0, result.length() - 1);
         	argList.add(buildNos);
-        	if (debugEnabled) {
-        		S_LOGGER.debug("Command " + FrameworkConstants.CI_BUILD_DELETE_COMMAND);
-        		S_LOGGER.debug("Build numbers " + buildNos);
-    		}
+    		S_LOGGER.debug("Command " + FrameworkConstants.CI_BUILD_DELETE_COMMAND);
+    		S_LOGGER.debug("Build numbers " + buildNos);
         }
         try {
             int status = cli.execute(argList);
@@ -549,10 +508,8 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             	deleteType = deleteType.substring(0, 1).toLowerCase() + deleteType.substring(1);
                 message = "Error while deleting " + deleteType +" in jenkins";
             }
-            if (debugEnabled) {
-            	S_LOGGER.debug("Delete CI Status " + status);
-            	S_LOGGER.debug("Delete CI Message " + message);
-    		}
+        	S_LOGGER.debug("Delete CI Status " + status);
+        	S_LOGGER.debug("Delete CI Message " + message);
             return new CIJobStatus(status, message);
         } finally {
             if (cli != null) {
@@ -572,43 +529,31 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     public int getProgressInBuild(CIJob job) throws PhrescoException {
-    	if (debugEnabled) {
-    		S_LOGGER.debug("Entering Method CIManagerImpl.isBuilding(CIJob job)");
-		}
+    	S_LOGGER.debug("Entering Method CIManagerImpl.isBuilding(CIJob job)");
     	String jenkinsUrl = "http://" + job.getJenkinsUrl() + ":" + job.getJenkinsPort() + "/ci/";
     	String isBuildingUrlUrl = "computer/api/xml?xpath=/computerSet/busyExecutors/text()";
         String jsonResponse = getJsonResponse(jenkinsUrl + isBuildingUrlUrl);
         int buidInProgress = Integer.parseInt(jsonResponse);
-        if (debugEnabled) {
-        	S_LOGGER.debug("buidInProgress " + buidInProgress);
-		}
+        S_LOGGER.debug("buidInProgress " + buidInProgress);
     	return buidInProgress;
     }
     
     public void getEmailExtPlugin() throws PhrescoException {
-        if (debugEnabled) {
-            S_LOGGER.debug("Entering Method CIManagerImpl.getEmailExtPlugin");
-        }
+        S_LOGGER.debug("Entering Method CIManagerImpl.getEmailExtPlugin");
         try {
-        	 ClientResponse response = PhrescoFrameworkFactory.getServiceManager().getEmailExtPlugin();
-             if (debugEnabled) {
-     			S_LOGGER.debug("createProject response code " + response.getStatus());
-     		}
+        	ClientResponse response = PhrescoFrameworkFactory.getServiceManager().getEmailExtPlugin();
+   			S_LOGGER.debug("createProject response code " + response.getStatus());
             InputStream pluginStream = response.getEntityInputStream();
             String pluginDir = Utility.getJenkinsHomePluginDir();
             File pluginFile = new File(pluginDir + CI_MAIL_EXT_PLUGIN);
 			streamToFile(pluginFile, pluginStream);
 		} catch (Exception e) {
-        	if (debugEnabled) {
-    			S_LOGGER.error("Entered into the catch block of CIManagerImpl.getEmailExtPlugin" + e.getLocalizedMessage());
-    		}
+    		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getEmailExtPlugin" + e.getLocalizedMessage());
 		}
     }
     
     public void deleteDoNotCheckin(CIJob job) throws PhrescoException {
-        if (debugEnabled) {
-            S_LOGGER.debug("Entering Method CIManagerImpl.deleteBuilds");
-        }
+        S_LOGGER.debug("Entering Method CIManagerImpl.deleteBuilds");
         try {
         	String jenkinsDataHome = System.getenv(JENKINS_HOME);
             StringBuilder builder = new StringBuilder(jenkinsDataHome);
@@ -622,17 +567,13 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             builder.append(BUILD_PATH);
             boolean deleteDir = deleteDir(new File(builder.toString()));
 		} catch (Exception e) {
-        	if (debugEnabled) {
-    			S_LOGGER.error("Entered into the catch block of CIManagerImpl.deleteBuilds" + e.getLocalizedMessage());
-    		}
+    		S_LOGGER.error("Entered into the catch block of CIManagerImpl.deleteBuilds" + e.getLocalizedMessage());
 		}
     }
     
     @Override
     public List<BuildInfo> getBuildInfos(CIJob job) throws PhrescoException {
-        if (debugEnabled) {
-            S_LOGGER.debug("Entering Method CIManagerImpl.getBuildInfos");
-        }
+        S_LOGGER.debug("Entering Method CIManagerImpl.getBuildInfos");
         List<BuildInfo> buildInfo = null;
         try {
         	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
@@ -648,9 +589,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             builder.append(BUILD_INFO_FILE_NAME);
         	buildInfo = administrator.readBuildInfo(new File(builder.toString()));
 		} catch (Exception e) {
-        	if (debugEnabled) {
-    			S_LOGGER.error("Entered into the catch block of CIManagerImpl.getBuildInfos" + e.getLocalizedMessage());
-    		}
+   			S_LOGGER.error("Entered into the catch block of CIManagerImpl.getBuildInfos" + e.getLocalizedMessage());
 		}
         return buildInfo;
     }

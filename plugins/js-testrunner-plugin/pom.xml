@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.jstestrunner</groupId>
 	<artifactId>jstestrunner-junit</artifactId>
-	<version>1.2.0.5001-SNAPSHOT</version>
+	<version>1.2.0.5002-SNAPSHOT</version>
 	<name>JS Test Runner for JUnit</name>
 	<description>Runs JavaScript headlessly and reports details of the test back through JUnit.</description>
 

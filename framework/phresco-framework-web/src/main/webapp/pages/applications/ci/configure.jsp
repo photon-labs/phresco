@@ -79,14 +79,14 @@
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.name"/></label>
 				<div class="input">
-					<input type="text" id="name" name="name" value="<%= existingJob == null ? projectCode : existingJob.getName()%>" disabled autofocus>
+					<input type="text" id="name" name="name" value="<%= existingJob == null ? "" : existingJob.getName()%>" <%= existingJob == null ? "" : "disabled" %> autofocus>
 				</div>
 			</div>
 			
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.svn.url"/></label>
 				<div class="input">
-					<input type="text" id="svnurl" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
+					<input type="text" id="svnurl" class="ciSvnUrlWidth" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
 				</div>
 			</div>
 			
@@ -480,6 +480,7 @@
 					<div id="errMsg"></div>
 				    <img src="themes/photon/images/loading_red.gif" class="popupLoadingIcon" style="display: none;"> 
 	    	 </div> 
+	    	<input type="hidden" name="oldJobName" value="<%= existingJob == null ? "" : existingJob.getName()%>" >
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
             <input type="button" class="btn primary" value="<s:text name="label.save"/>" id="actionBtn">
             <input type="button" class="btn primary" value="<s:text name="label.next"/>" id="nextBtn">
@@ -492,7 +493,7 @@
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
-		$("#svnurl").focus();
+		$("#name").focus();
 		$("#configs").hide();
 		$("#actionBtn").hide();
 		$("#preBtn").hide();
@@ -587,15 +588,6 @@
 		    loadSchedule(selectedSchedule);
 		});
 		show(selectedSchedule);
-		
-		// It allows user type text without spaces
-	    $("#name").keydown(function(event) {
-	        if ( event.keyCode == 32 ) {
-	        	event.preventDefault();
-	        }
-	    });
-		
-		
 		
 		<% 
 			if(existingJob != null) {
