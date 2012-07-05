@@ -281,7 +281,7 @@ Clone the repo, git clone git://github.com/phresco/phresco.git
 Versioning
 ----------
 
-For enhanced transparency and detailed insight into our release cycle, and for striving to maintain compatibility, Bootstrap will be maintained under the Semantic Versioning guidelines as much as possible.
+For enhanced transparency and detailed insight into our release cycle, and for striving to maintain compatibility, Phresco will be maintained under the proper Versioning guidelines as much as possible.
 Releases will be numbered with the follow format:
 <major>.<minor>.<fix>.<iteration>
 
