@@ -16,258 +16,258 @@ efforts.
 
 
 
-<Table Border="1" cellpadding="2" cellspacing="2" align="center" width="100%">
+<Table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
-   <td align="center"><b>Technology</b></td>
-	<td align="center"><b>Code validation</b></td>
-	<td align="center"><b>Unit Test</b></td>
-	<td align="center"><b>Functional Test</b></td>
-	<td align="center"><b>Performance Test</b></td>
-	<td align="center"><b>Load Test</b></td>
-	<td align="center"><b>Deploy</b></td>
-	<td align="center"><b>Continuous Integration</b></td>
-	<td align="center"><b>Remote Deployment</b></td>
+   <td style="text-align:center"><b>Technology</b></td>
+	<td style="text-align:center"><b>Code validation</b></td>
+	<td style="text-align:center"><b>Unit Test</b></td>
+	<td style="text-align:center"><b>Functional Test</b></td>
+	<td style="text-align:center"><b>Performance Test</b></td>
+	<td style="text-align:center"><b>Load Test</b></td>
+	<td style="text-align:center"><b>Deploy</b></td>
+	<td style="text-align:center"><b>Continuous Integration</b></td>
+	<td style="text-align:center"><b>Remote Deployment</b></td>
 </tr>
 
 <tr>
-	<td><b>YUI Widget</b></td>
-	<td align="center" style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>YUI Widget</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
-	<td><b>JQuery Widget</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:left"><b>JQuery Widget</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
-	<td><b>Node JS</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:left"><b>Node JS</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
-	<td><b>Drupal</b></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>Drupal</b></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
-	<td><b>WordPress</b></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>WordPress</b></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-</tr>
-
-
-<tr>
-	<td><b>PHP</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
-	<td><b>SharePoint</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>PHP</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>	
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
-	<td><b>Android</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>SharePoint</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>	
 </tr>
 
 
 <tr>
-	<td><b>iPhone</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>Android</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
-	<td><b>ASP .NET</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
+	<td style="text-align:left"><b>iPhone</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
-	<td><b>JAVA</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:left"><b>ASP .NET</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	height="15px" style="text-align:center"></img></td>
+</tr>
+
+
+<tr>
+	<td style="text-align:left"><b>JAVA</b></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
-	height="15px" align="center"></img></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
 	width="15px" 
-	height="15px" align="center"></img></td>
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 </Table>
