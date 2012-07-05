@@ -18,10 +18,11 @@
   ###
   --%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.model.UserInfo" %>
+<%@ page import="com.photon.phresco.commons.model.User" %>
+<%@ page import="com.photon.phresco.commons.model.Role" %>
 
 <%
-	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO);
+	User userInfo = (User)session.getAttribute(FrameworkConstants.REQ_USER_INFO);
 	boolean disableCI = false;
 	if (userInfo == null || userInfo.getDisplayName() == null) {
 	request.setAttribute(FrameworkConstants.REQ_LOGIN_ERROR, "Session expired");
@@ -38,8 +39,8 @@
 <%
 	} else {
 		if (userInfo.getRoles() != null) {
-			for (String role : userInfo.getRoles()) {
-				if (role.equals(FrameworkConstants.ENGINEER)) {
+			for (Role role : userInfo.getRoles()) {
+				if (role.getName().equals(FrameworkConstants.ENGINEER)) {
 				 	disableCI = true;	// Restrict CI
 %>
 				 <script type="text/javascript">
@@ -47,7 +48,6 @@
 				 </script>
 <%
 				}
-				
 				if (role.equals(FrameworkConstants.RELEASE_ENGINEER)) {
 %>
 				 <script type="text/javascript">

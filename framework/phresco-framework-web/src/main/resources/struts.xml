@@ -124,7 +124,7 @@
             <result type="json" />
         </action>
         
-        <action name="getPilotProjectModules" method="getPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
+        <action name="getPilotProjectModules" method="fetchPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
             <result type="json" />
         </action>
         

@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -44,6 +45,7 @@ import org.tmatesoft.svn.core.SVNException;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
@@ -65,7 +67,6 @@ import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Utility;
@@ -74,7 +75,6 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
-import org.apache.commons.codec.binary.Base64;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -280,10 +280,10 @@ public class Applications extends FrameworkBaseAction {
 					.getWebServices(selectedTechnology);
 			S_LOGGER.debug("Selected technology" + techonology.toString());
 			// This attribute for Pilot Project combo box
-			// getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-			// ApplicationsUtil.getPilotNames(techonology.getId()));
-			// getHttpRequest().setAttribute(REQ_PILOT_PROJECT_INFO,
-			// ApplicationsUtil.getPilotProjectInfo(techonology.getId()));
+			getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
+			ApplicationsUtil.getPilotNames(techonology.getId()));
+			getHttpRequest().setAttribute(REQ_PILOT_PROJECT_INFO,
+			ApplicationsUtil.getPilotProjectInfo(techonology.getId()));
 			getHttpRequest().setAttribute(REQ_SELECTED_TECHNOLOGY, techonology);
 			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, appType);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
@@ -378,7 +378,7 @@ public class Applications extends FrameworkBaseAction {
 			setFeatures(administrator, projectInfo);
 			S_LOGGER.debug("Going to create project, Project info values "
 					+ projectInfo.toString());
-			UserInfo userInfo = (UserInfo) getHttpSession().getAttribute(
+			User userInfo = (User) getHttpSession().getAttribute(
 					REQ_USER_INFO);
 			administrator.createProject(projectInfo, null, userInfo);
 			addActionMessage(getText(SUCCESS_PROJECT,
@@ -474,7 +474,7 @@ public class Applications extends FrameworkBaseAction {
 				}
 
 				administrator.deleteSqlFolder(deletableDbs, projectInfo);
-				UserInfo userInfo = (UserInfo) getHttpSession().getAttribute(
+				User userInfo = (User) getHttpSession().getAttribute(
 						REQ_USER_INFO);
 				administrator.updateProject(projectInfo, originalinfo,
 						projectPath, userInfo);
@@ -519,7 +519,6 @@ public class Applications extends FrameworkBaseAction {
 
 		String module = getHttpRequest().getParameter(REQ_SELECTEDMODULES);
 		String[] modules = module.split(",");
-
 		ApplicationType applicationType = administrator
 				.getApplicationType(projectInfo.getApplication());
 		if (S_LOGGER.isDebugEnabled()) {

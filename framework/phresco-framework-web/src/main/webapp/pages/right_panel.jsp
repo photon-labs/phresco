@@ -36,17 +36,17 @@ String path = frameworkConfig.getServerPath() + "/tweets";
 <script type="text/javascript">
 	
 	$(document).ready(function() {
-		$.ajax({
-		    url: '<%=path%>', 
-		    type: 'GET',
-		    dataType: 'jsonp',
-		    jsonp: 'callback',
-		    success: function(data){
-		        for(i in data) {
-					$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');
-				}
-		    }
-		});
+// 		$.ajax({
+<%-- 		    url: '<%=path%>',  --%>
+// 		    type: 'GET',
+// 		    dataType: 'jsonp',
+// 		    jsonp: 'callback',
+// 		    success: function(data){
+// 		        for(i in data) {
+// 					$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');
+// 				}
+// 		    }
+// 		});
 	});
 	
 	function parseTwitterDate($stamp)
@@ -57,27 +57,27 @@ String path = frameworkConfig.getServerPath() + "/tweets";
 	
 	function filter(){
 		var value = document.getElementById('search').value;
-		$.ajax({
-		    url: '<%=path%>', 
-		    type: 'GET',
-		    dataType: 'jsonp',
-		    jsonp: 'callback',
-		    success: function(data){
-		    	$('.tweeterContent').empty();
-				var matchPos1 = -1;
-				for(i in data) {
-					var string1 = data[i].text.toUpperCase();
-					var myRegExp = value.toUpperCase();
-					if(myRegExp.length !=0){
-						matchPos1 = string1.search(myRegExp);
-						if(matchPos1!= -1){
-							$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');	
-						}
-					}else{
-						$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');
-					}
-				}
-		    }
-		});
+// 		$.ajax({
+<%-- 		    url: '<%=path%>',  --%>
+// 		    type: 'GET',
+// 		    dataType: 'jsonp',
+// 		    jsonp: 'callback',
+// 		    success: function(data){
+// 		    	$('.tweeterContent').empty();
+// 				var matchPos1 = -1;
+// 				for(i in data) {
+// 					var string1 = data[i].text.toUpperCase();
+// 					var myRegExp = value.toUpperCase();
+// 					if(myRegExp.length !=0){
+// 						matchPos1 = string1.search(myRegExp);
+// 						if(matchPos1!= -1){
+// 							$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');	
+// 						}
+// 					}else{
+// 						$('.tweeterContent').append('<div class="blog_twit"><div class="blog_twit_img"><img src="images/right1.png" border="0" alt="image"></div><div class="blog_twit_txt">'+data[i].text+'</div><div class="blog_twit_boder">'+parseTwitterDate(data[i].created_at)+'</div></div>');
+// 					}
+// 				}
+// 		    }
+// 		});
 	}
 </script>

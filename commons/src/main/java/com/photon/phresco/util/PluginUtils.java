@@ -243,7 +243,7 @@ public class PluginUtils {
 			serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 			serializer.transform(new DOMSource(doc), new StreamResult(stw));
-			encryptString encryptstring = new encryptString();
+			EncryptString encryptstring = new EncryptString();
 			encryptstring.Crypto("D4:6E:AC:3F:F0:BE");
 			String encryptXmlString = encryptstring.encrypt(stw.toString());
 			writeXml(encryptXmlString, fileName);

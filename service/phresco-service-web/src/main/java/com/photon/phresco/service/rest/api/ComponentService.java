@@ -82,14 +82,11 @@ public class ComponentService extends DbService implements ServiceConstants {
 		S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
 		
 		String contentType = request.getContentType();
-        System.out.println ("contentType----" + contentType);
         String distFilePath = "C://fileupload//test.jar"; //Property file or DB entry
         if((contentType != null)){
-            System.out.println ("file uploading service successfull-----");
             try {
             	DataInputStream in = new DataInputStream(request.getInputStream());
                 int formDataLength = request.getContentLength();
-                System.out.println ("byte size-->"  + formDataLength);
                 byte dataBytes[] = new byte[formDataLength];
                 int byteRead = 0;
                 byteRead = in.read(dataBytes);
@@ -1149,7 +1146,6 @@ public class ComponentService extends DbService implements ServiceConstants {
 			for (WebService webService : webServices) {
 				WebService webServiceInfo = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(webService.getId())), WebService.class);
 				if (webServiceInfo != null) {
-					System.out.println("Entered");
 					mongoOperation.save(WEBSERVICES_COLLECTION_NAME , webService);
 				}
 			}

@@ -62,7 +62,7 @@ public class PhrescoServerFactory {
             repositoryManager = (RepositoryManager) constructClass(REPOSITORY_MANAGER_IMPL_CLASS, serverConfig);
             executor = (ArchetypeExecutor) constructClass(ARCHETYPE_EXECUTOR_IMPL_CLASS, serverConfig);
             generator = (DocumentGenerator) constructClass(DOCUMENT_GENERATOR_IMPL_CLASS);
-			tweetCacheManager = (TweetCacheManager)constructClass(TWITTER_CACHE_MANAGER_IMPL_CLASS, serverConfig);
+		//	tweetCacheManager = (TweetCacheManager)constructClass(TWITTER_CACHE_MANAGER_IMPL_CLASS, serverConfig);
         }
     }
 

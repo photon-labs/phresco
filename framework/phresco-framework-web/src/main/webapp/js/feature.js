@@ -79,6 +79,7 @@
 			} else {
 				isPilotSelected = false;
 			}
+			alert("inside document ready before calling getPilotProjectModules()..");
 			getPilotProjectModules(isPilotSelected);
 		}
 
@@ -232,6 +233,7 @@
 	}
 	
 	function getPilotProjectModules(isPilotSelected) {
+		//alert("inside getPilotProjectModules...");
         var params = "technology=";
 		params = params.concat($("#technology").val());
 		performAction('getPilotProjectModules', params, '', true);
@@ -239,6 +241,12 @@
 	
 	function chkUnchkPilotModules(pilotModules, isCheck) {
 		for (i in pilotModules) {
+			var nameSep = new Array();
+			nameSep = pilotModules[i].split("#VSEP#");
+			var moduleId = nameSep[0];
+			var version = nameSep[1];
+			//alert("moduleId:::" + moduleId);
+			//alert("version:::" + version);
    			$("input:radio[name='" + pilotModules[i] + "']").attr('checked', isCheck);
    			$("input:radio[name='" + pilotModules[i] + "']").attr('disabled', isCheck);
 		

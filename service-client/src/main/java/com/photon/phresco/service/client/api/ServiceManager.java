@@ -19,8 +19,17 @@
  */
 package com.photon.phresco.service.client.api;
 
+import java.util.List;
+
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.Database;
+import com.photon.phresco.model.ModuleGroup;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Server;
+import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.client.impl.RestClient;
 
 /**
@@ -32,4 +41,19 @@ public interface ServiceManager {
 	
 	User getUserInfo() throws PhrescoException;
 	
+	List<VideoInfo> getVideoInfos() throws PhrescoException;
+	
+	List<ApplicationType> getApplicationTypes() throws PhrescoException;
+	
+	List<Server> getServers(String techId) throws PhrescoException;
+	
+	List<Database> getDatabases(String techId) throws PhrescoException;
+	
+	List<WebService> getWebServices(String techId) throws PhrescoException;
+	
+	List<ProjectInfo> getPilots(String techId) throws PhrescoException;
+	
+	List<ModuleGroup> getModules(String techId) throws PhrescoException;
+	
+	List<ModuleGroup> getJSLibs(String techId) throws PhrescoException;
 }

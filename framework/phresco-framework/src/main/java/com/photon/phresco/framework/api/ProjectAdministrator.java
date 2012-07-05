@@ -43,7 +43,6 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.model.WebService;
@@ -60,7 +59,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException;
+    Project createProject(ProjectInfo info, File path, User userInfo) throws PhrescoException;
 
     /**
      * Update the project with the given project information
@@ -72,7 +71,7 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      * 
      */
-    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path,UserInfo userInfo) throws PhrescoException;
+    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path, User userInfo) throws PhrescoException;
 
     /**
      * Returns the project for the specified project code
@@ -674,6 +673,8 @@ public interface ProjectAdministrator {
 	 
 	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
 	 
+	List<ModuleGroup> getJSLibs(String technologyId) throws PhrescoException;
+
 	/**
 	 * Returns CI build object for build number
 	 * @param job, buildNumber
