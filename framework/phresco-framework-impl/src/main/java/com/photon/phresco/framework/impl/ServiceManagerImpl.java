@@ -38,6 +38,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
@@ -53,7 +54,6 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Credentials;
@@ -380,7 +380,7 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return (List<VideoInfo>) cache.get(VIDEOS_FILE);
     }
 
-    public ClientResponse createProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException {
+    public ClientResponse createProject(ProjectInfo info, User userInfo) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.createProject(ProjectInfo info)");
 		}
@@ -396,7 +396,7 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return response;
     }
 
-    public ClientResponse updateProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException {
+    public ClientResponse updateProject(ProjectInfo info,User userInfo) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.updateProject(ProjectInfo info)");
 		}
@@ -426,7 +426,7 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         return response;
     }
     
-    public UserInfo doLogin(Credentials credentials) throws PhrescoException {
+    public User doLogin(Credentials credentials) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ServiceManagerImpl.doLogin(Credentials credentials)");
 		}
@@ -435,8 +435,8 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
         WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_LOGIN_PATH);
         resource.accept(MediaType.APPLICATION_JSON_TYPE);
         ClientResponse response = resource.type(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class, credentials);
-        GenericType<UserInfo> genericType = new GenericType<UserInfo>() {};
-        UserInfo userInfo = response.getEntity(genericType);
+        GenericType<User> genericType = new GenericType<User>() {};
+        User userInfo = response.getEntity(genericType);
         return userInfo;
     }
     

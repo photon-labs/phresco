@@ -25,7 +25,6 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.framework.api.ValidationResult" %>
 
 <%@ include file="../userInfoDetails.jsp" %>

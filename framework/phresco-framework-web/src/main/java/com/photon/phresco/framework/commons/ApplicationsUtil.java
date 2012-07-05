@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,13 +50,12 @@ import org.xml.sax.SAXException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.applications.Applications;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.filter.FileListFilter;
-import com.photon.phresco.framework.impl.ClientHelper;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.Module;
@@ -69,10 +67,7 @@ import com.photon.phresco.util.Utility;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.WebResource;
 
 public class ApplicationsUtil implements FrameworkConstants {
 
@@ -197,8 +192,9 @@ public class ApplicationsUtil implements FrameworkConstants {
     			List<ModuleGroup> pilotModules = projectInfo.getTechnology().getModules();
     			if (CollectionUtils.isNotEmpty(pilotModules)) {
     				for (ModuleGroup pilotModule : pilotModules) {
+    					System.out.println("pilotModule.getModuleId() in getPilotModuleIds() in ApplicationUtil.java:::" + pilotModule.getModuleId());
     					if (CollectionUtils.isNotEmpty(pilotModule.getVersions())) {
-    						mapPilotModules.put(pilotModule.getId(), pilotModule.getVersions().get(0).getVersion());
+    						mapPilotModules.put(pilotModule.getModuleId(), pilotModule.getVersions().get(0).getVersion());
     					}
     				}
     			}
@@ -224,7 +220,7 @@ public class ApplicationsUtil implements FrameworkConstants {
     			if (CollectionUtils.isNotEmpty(pilotModules)) {
     				for (ModuleGroup pilotModule : pilotModules) {
     					if (CollectionUtils.isNotEmpty(pilotModule.getVersions())) {
-    						mapPilotModules.put(pilotModule.getId(), pilotModule.getVersions().get(0).getVersion());
+    						mapPilotModules.put(pilotModule.getModuleId(), pilotModule.getVersions().get(0).getVersion());
     					}
     				}
     			}

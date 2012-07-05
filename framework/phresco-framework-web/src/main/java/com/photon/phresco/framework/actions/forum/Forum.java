@@ -25,11 +25,11 @@ import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.FrameworkUtil;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.util.Credentials;
 
 public class Forum extends FrameworkBaseAction {
@@ -50,8 +50,9 @@ public class Forum extends FrameworkBaseAction {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			String serviceUrl= administrator.getJforumPath();
 			
-			UserInfo sessionUserInfo = (UserInfo)getHttpSession().getAttribute(REQ_USER_INFO);
-			Credentials credentials = sessionUserInfo.getCredentials();
+			User sessionUserInfo = (User)getHttpSession().getAttribute(REQ_USER_INFO);
+//			Credentials credentials = sessionUserInfo.getCredentials();
+			Credentials credentials = null;
 			
 			String username = credentials.getUsername();
 			byte[] usernameEncode = Base64.encodeBase64(username.getBytes());

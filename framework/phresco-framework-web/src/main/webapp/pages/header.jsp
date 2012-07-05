@@ -20,7 +20,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.model.UserInfo" %>
+<%@ page import="com.photon.phresco.commons.model.User" %>
 
 <%-- <script type="text/javascript" src="js/windowResizer.js"></script> --%>
 <script src="js/reader.js" ></script>
@@ -28,7 +28,7 @@
 <%
 	String validationStatus = (String)session.getAttribute("validationStatus");
 	String displayName = "";
-	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO);
+	User userInfo = (User)session.getAttribute(FrameworkConstants.REQ_USER_INFO);
 	if(userInfo == null || userInfo.getDisplayName() == null){
 	request.setAttribute(FrameworkConstants.REQ_LOGIN_ERROR, "Invalid Username or Password");
 %>

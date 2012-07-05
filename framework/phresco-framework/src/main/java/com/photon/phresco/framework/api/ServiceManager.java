@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.AdminConfigInfo;
@@ -35,7 +36,6 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
 import com.phresco.pom.site.Reports;
@@ -103,7 +103,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse createProject(ProjectInfo info, UserInfo userInfo) throws PhrescoException;
+    ClientResponse createProject(ProjectInfo info, User userInfo) throws PhrescoException;
     
     /**
      * Triggers the update project to the server and returns the client response
@@ -111,7 +111,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    ClientResponse updateProject(ProjectInfo info,UserInfo userInfo) throws PhrescoException;
+    ClientResponse updateProject(ProjectInfo info, User userInfo) throws PhrescoException;
   
     /**
      * Triggers the update project to the server and returns the client response
@@ -127,7 +127,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    UserInfo doLogin(Credentials credentials) throws PhrescoException;
+    User doLogin(Credentials credentials) throws PhrescoException;
     
     /**
      * Get the admin config information from the server and return as Map.

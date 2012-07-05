@@ -124,7 +124,7 @@
             <result type="json" />
         </action>
         
-        <action name="getPilotProjectModules" method="getPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
+        <action name="getPilotProjectModules" method="fetchPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
             <result type="json" />
         </action>
         
@@ -584,8 +584,8 @@
         	<result type="json"><param name="root">testResultFiles</param></result>
         </action>
         
-       	<action name="getBuildsSize" method="getTotalBuilds" class="com.photon.phresco.framework.actions.applications.CI">
-            <result type="json"><param name="root">totalBuildSize</param></result>
+        <action name="getNoOfJobsIsInProgress" method="numberOfJobsIsInProgress" class="com.photon.phresco.framework.actions.applications.CI">
+            <result type="json"><param name="root">numberOfJobsInProgress</param></result>
         </action>
         
         <action name="getBuildProgress" method="buildProgress" class="com.photon.phresco.framework.actions.applications.CI">

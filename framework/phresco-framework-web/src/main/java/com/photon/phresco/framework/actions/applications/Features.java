@@ -39,7 +39,6 @@ import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
-import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
@@ -223,7 +222,7 @@ public class Features extends FrameworkBaseAction {
 		projectInfo.setApplication(application);
 		String pilotProjectName = getHttpRequest().getParameter(REQ_SELECTED_PILOT_PROJ);
 		projectInfo.setPilotProjectName(pilotProjectName);
-
+		
 		setTechnology(projectInfo, administrator);
 		FrameworkUtil.setAppInfoDependents(request);
 	}
@@ -328,32 +327,29 @@ public class Features extends FrameworkBaseAction {
 			S_LOGGER.debug("Entering Method  Features.setFeaturesInRequest()");
 		}
 		Technology selectedTechnology = projectInfo.getTechnology();
-		ApplicationType applicationType = administrator
-				.getApplicationType(projectInfo.getApplication());
-		Technology techonology = applicationType
-				.getTechonology(selectedTechnology.getId());
 
-		getHttpRequest().setAttribute(REQ_ALL_JS_LIBS,
-				techonology.getJsLibraries());
-		System.out.println("selectedTechnology.getId():::" + selectedTechnology.getId());
-		List<ModuleGroup> coreModule = (List<ModuleGroup>) administrator
-				.getCoreModules(selectedTechnology.getId());
-		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
-		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
-				.getCustomModules(selectedTechnology.getId());
-		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
+		List<ModuleGroup> coreModule = administrator.getCoreModules(selectedTechnology.getId());
 		if (CollectionUtils.isNotEmpty(coreModule)) {
 			getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
 		}
-
+		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
+		
+		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
+				.getCustomModules(selectedTechnology.getId());
 		if (CollectionUtils.isNotEmpty(customModule)) {
 			getHttpRequest().setAttribute(REQ_CUSTOM_MODULES, customModule);
 		}
-
+		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
+		
+		List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId());
+		if (CollectionUtils.isNotEmpty(jsLibs)) {
+			getHttpRequest().setAttribute(REQ_ALL_JS_LIBS, jsLibs);
+		}
+		System.out.println("jsLibs in setFeaturesInRequest() in Features.java:::" + jsLibs.size());
+		
 		// This attribute for Pilot Project combo box
 		getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
 				ApplicationsUtil.getPilotNames(selectedTechnology.getId()));
-
 		if (CollectionUtils.isNotEmpty(selectedTechnology.getModules())) {
 			// pilotModules.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getModules()));
 			getHttpRequest().setAttribute(
@@ -374,13 +370,33 @@ public class Features extends FrameworkBaseAction {
 		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 	}
 
-	public String getPilotProjectModules() {
-		String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
-		pilotModules = new ArrayList<String>(ApplicationsUtil
-				.getPilotModuleIds(techId).keySet());
-		pilotJSLibs = new ArrayList<String>(ApplicationsUtil.getPilotJsLibIds(
-				techId).keySet());
-		pilotModules.addAll(pilotJSLibs);
+	public String fetchPilotProjectModules() {
+		try {
+			System.out.println("inside fetchPilotProjectModules()...");
+			String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
+			pilotModules = new ArrayList<String>();
+			
+			Map<String, String> pilotModuleIds = ApplicationsUtil.getPilotModuleIds(techId);
+			if (pilotModuleIds != null) {
+				for (Map.Entry entry: pilotModuleIds.entrySet()) {
+					String moduleId = (String) entry.getKey();
+					String moduleVersion = (String) entry.getValue();
+					pilotModules.add(moduleId + "#VSEP#" + moduleVersion);
+				}
+			}
+			
+			Map<String, String> pilotJsLibIds = ApplicationsUtil.getPilotJsLibIds(techId);
+			if (pilotJsLibIds != null) {
+				for (Map.Entry entry: pilotJsLibIds.entrySet()) {
+					String jsLibId = (String) entry.getKey();
+					String jsLibVersion = (String) entry.getValue();
+					pilotModules.add(jsLibId + "#VSEP#" + jsLibVersion);
+				}
+			}
+			System.out.println("final pilot modules in getPilotProjectModules():::::" + pilotModules);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 	
