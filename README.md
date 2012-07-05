@@ -13,9 +13,7 @@ and reducing the development time.
 Phresco, with the aid of Responsive Web Design (RWD), helps developers in exposing the myriad functionalities developed
 using Phresco across multiple channels i.e., web, mobile, tablet and kiosk with minimum resizing, panning and scrolling
 efforts.
-
-
-<Table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
+<table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
    <td style="text-align:center"><b>Supported Technologies</b></td>
 	<td style="text-align:center"><b>Code Validation</b></td>
@@ -29,12 +27,26 @@ efforts.
 </tr>
 
 <tr>
-	<td style="text-align:left"><b>YUI Widget</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"><b>iPhone</b></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:left"></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Android</b></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
@@ -43,6 +55,35 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+</tr>
+
+
+<tr>
+	<td style="text-align:left"><b>Node JS</b></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 <tr>
@@ -66,24 +107,43 @@ efforts.
 </tr>
 
 <tr>
-	<td style="text-align:left"><b>Node JS</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"><b>YUI Widget</b></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>JAVA</b></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
+	width="15px" 
+	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
@@ -141,7 +201,6 @@ efforts.
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
-
 <tr>
 	<td style="text-align:left"><b>SharePoint</b></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
@@ -160,47 +219,6 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>	
 </tr>
-
-
-<tr>
-	<td style="text-align:left"><b>Android</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-</tr>
-
-
-<tr>
-	<td style="text-align:left"><b>iPhone</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-</tr>
-
 
 <tr>
 	<td style="text-align:left"><b>ASP .NET</b></td>
@@ -221,31 +239,7 @@ efforts.
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
-
-<tr>
-	<td style="text-align:left"><b>JAVA</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-</tr>
-
-</Table>
+</table>
 
 Quick start
 -----------
