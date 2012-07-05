@@ -24,7 +24,7 @@ efforts.
 	<td style="text-align:center"><b>Functional Test</b></td>
 	<td style="text-align:center"><b>Performance Test</b></td>
 	<td style="text-align:center"><b>Load Test</b></td>
-	<td style="text-align:center"><b>Deploy</b></td>
+	<td style="text-align:center"><b>Build & Deploy</b></td>
 	<td style="text-align:center"><b>Continuous Integration</b></td>
 	<td style="text-align:center"><b>Remote Deployment</b></td>
 </tr>
