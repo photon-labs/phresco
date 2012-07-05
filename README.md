@@ -30,58 +30,58 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>YUI Widget</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:left"></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>JQuery Widget</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:left"></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>Node JS</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
@@ -90,15 +90,15 @@ efforts.
 	<td style="text-align:left"><b>Drupal</b></td>
 	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
@@ -106,17 +106,17 @@ efforts.
 <tr>
 	<td style="text-align:left"><b>WordPress</b></td>
 	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
@@ -124,19 +124,19 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>PHP</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
@@ -144,19 +144,19 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>SharePoint</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>	
 </tr>
@@ -164,59 +164,59 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>Android</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
 	<td style="text-align:left"><b>iPhone</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 </tr>
 
 
 <tr>
 	<td style="text-align:left"><b>ASP .NET</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"&nbsp;</img></td>
 </tr>
@@ -224,23 +224,23 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>JAVA</b></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" 
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/2192/flavour_extended/48/key_check.png" 
 	width="15px" 
 	height="15px" style="text-align:center"></img></td>
 </tr>
