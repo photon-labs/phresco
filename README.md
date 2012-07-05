@@ -18,8 +18,8 @@ efforts.
 
 <Table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
-   <td style="text-align:center"><b>Technology</b></td>
-	<td style="text-align:center"><b>Code validation</b></td>
+   <td style="text-align:center"><b>Supported Technologies</b></td>
+	<td style="text-align:center"><b>Code Validation</b></td>
 	<td style="text-align:center"><b>Unit Test</b></td>
 	<td style="text-align:center"><b>Functional Test</b></td>
 	<td style="text-align:center"><b>Performance Test</b></td>
@@ -281,7 +281,7 @@ Clone the repo, git clone git://github.com/phresco/phresco.git
 Versioning
 ----------
 
-For enhanced transparency and detailed insight into our release cycle, and for striving to maintain compatibility, Bootstrap will be maintained under the Semantic Versioning guidelines as much as possible.
+For enhanced transparency and detailed insight into our release cycle, and for striving to maintain compatibility, Phresco will be maintained under the proper Versioning guidelines as much as possible.
 Releases will be numbered with the follow format:
 <major>.<minor>.<fix>.<iteration>
 
