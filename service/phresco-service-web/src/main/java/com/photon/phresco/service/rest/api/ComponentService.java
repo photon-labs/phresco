@@ -80,31 +80,11 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path(REST_API_APPTYPES)
 	public Response createAppTypes(@Context HttpServletRequest request, List<ApplicationType> appTypes) {
 		S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
-		
-		String contentType = request.getContentType();
-        String distFilePath = "C://fileupload//test.jar"; //Property file or DB entry
-        if((contentType != null)){
-            try {
-            	DataInputStream in = new DataInputStream(request.getInputStream());
-                int formDataLength = request.getContentLength();
-                byte dataBytes[] = new byte[formDataLength];
-                int byteRead = 0;
-                byteRead = in.read(dataBytes);
-                FileOutputStream fileOutStream = new FileOutputStream(distFilePath);
-                fileOutStream.write (dataBytes);
-                fileOutStream.flush();
-                fileOutStream.close();
-            } catch (Exception e) {
-				// TODO: handle exception
-			}
-            
-        }
-		
-//		try {
-//			mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
-//		} catch (Exception e) {
-//			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
-//		}
+		try {
+			mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(EX_PHEX00006, INSERT);
+		}
 		return Response.status(Response.Status.CREATED).build();
 	}
 	

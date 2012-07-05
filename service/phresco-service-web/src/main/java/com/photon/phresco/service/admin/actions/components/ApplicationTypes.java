@@ -29,6 +29,10 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
+import com.photon.phresco.service.client.api.ServiceClientConstant;
+import com.photon.phresco.service.client.api.ServiceContext;
+import com.photon.phresco.service.client.api.ServiceManager;
+import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
@@ -49,11 +53,10 @@ public class ApplicationTypes extends ServiceBaseAction {
 
 	public String list() throws PhrescoException {
 		S_LOGGER.debug("Entering Method ApplicationTypes.list()");
+
 		try {
-			RestClient<ApplicationType> appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
-			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
-			List<ApplicationType> appTypes = appType.get(genericType);
-			getHttpRequest().setAttribute("appTypes", appTypes);
+			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
+			getHttpRequest().setAttribute(REQ_APP_TYPES, applicationTypes);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -63,16 +66,19 @@ public class ApplicationTypes extends ServiceBaseAction {
 
 	public String add() {
 		S_LOGGER.debug("Entering Method ApplicationTypes.add()");
+		
 		return COMP_APPTYPE_ADD;
 	}
 
-	public String edit() throws PhrescoException {
+	public String edit() throws PhrescoException {	
+		S_LOGGER.debug("Entering Method ApplicationTypes.edit()");
+		
 		try {
 			RestClient<ApplicationType> appTypes = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
 			GenericType<ApplicationType> genericType = new GenericType<ApplicationType>(){};
 			ApplicationType appType = appTypes.getById(genericType);
-			getHttpRequest().setAttribute("appType", appType);
-			getHttpRequest().setAttribute("fromPage", fromPage);
+			getHttpRequest().setAttribute(REQ_APP_TYPE, appType);
+			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -81,6 +87,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 
 	public String save() throws PhrescoException {
 		S_LOGGER.debug("Entering Method ApplicationTypes.save()");
+		
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
@@ -88,9 +95,9 @@ public class ApplicationTypes extends ServiceBaseAction {
 			}
 			List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 			ApplicationType appType = new ApplicationType(name, description);
+			appType.setDisplayName(name);
 			appTypes.add(appType);
-			RestClient<ApplicationType> newApp = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
-			ClientResponse clientResponse = newApp.create(appTypes);
+			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes);
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
 				addActionError(getText(APPLNTYPES_NOT_ADDED, Collections.singletonList(name)));
 			} else {
@@ -112,9 +119,8 @@ public class ApplicationTypes extends ServiceBaseAction {
 			}
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
-			RestClient<ApplicationType> editApptype = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
-			GenericType<ApplicationType> genericType = new GenericType<ApplicationType>() {};
-			ApplicationType updatedAppType = editApptype.updateById(appType, genericType);
+			appType.setDescription(name);
+			getServiceManager().updateApplicationTypes(appType, appTypeId);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
@@ -126,12 +132,10 @@ public class ApplicationTypes extends ServiceBaseAction {
 		S_LOGGER.debug("Entering Method  AppType.delete()");
 
 		try {
-			String[] appTypeIds = getHttpRequest().getParameterValues("apptypeId");
+			String[] appTypeIds = getHttpRequest().getParameterValues(REQ_APP_TYPEID);
 			if (appTypeIds != null) {
 				for (String appTypeId : appTypeIds) {
-					RestClient<ApplicationType> deleteApptype = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
-					deleteApptype.setPath(appTypeId);
-					ClientResponse clientResponse = deleteApptype.deleteById();
+					ClientResponse clientResponse = getServiceManager().deleteApplicationType(appTypeId);
 					if (clientResponse.getStatus() != 200) {
 						addActionError(getText(APPLNTYPES_NOT_DELETED));
 					}

@@ -28,10 +28,15 @@ public interface ServiceUIConstants {
     String REQ_LOGIN_ERROR	= "loginError";
     String REQ_FROM_PAGE	= "fromPage";
     String REQ_USER_INFO = "userInfo";
+    String REQ_APP_TYPE = "appType";
+    String REQ_APP_TYPES = "appTypes";  
+    String REQ_APP_TYPEID = "apptypeId";
+    String REQ_ARCHE_TYPES = "technologys";
+    String REQ_ARCHE_TYPE = "technology";
+    String REQ_ARCHE_TECHID = "techId";
     String ERROR_LOGIN = "err.login.invalid.cred";
     String ERROR_LOGIN_ACCESS_DENIED = "err.login.access.denied";
-
-
+    
     
 	/*****************************
      * Common Constants
