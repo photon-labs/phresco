@@ -17,6 +17,10 @@ public class ReportCategories {
 		this.enabled = enabled;
 	}
 
+	public ReportCategories() {
+		
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -32,17 +36,17 @@ public class ReportCategories {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public static final ReportCategories INFO_INDEX = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.index"));
+	public static final ReportCategories INFO_INDEX = new ReportCategories(SiteMessages.getString("Reports.project-info.report.index"));
 
-	public static final ReportCategories INFO_MODULE = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.modules"));
+	public static final ReportCategories INFO_MODULE = new ReportCategories(SiteMessages.getString("Reports.project-info.report.modules"));
 
-	public static final ReportCategories INFO_DEPENDENCIES = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.dependencies"));
+	public static final ReportCategories INFO_DEPENDENCIES = new ReportCategories(SiteMessages.getString("Reports.project-info.report.dependencies"));
 	
-	public static final ReportCategories SCM = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.scm"));
+	public static final ReportCategories SCM = new ReportCategories(SiteMessages.getString("Reports.project-info.report.scm"));
 	
-	public static final ReportCategories CIM = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.cim"));
+	public static final ReportCategories CIM = new ReportCategories(SiteMessages.getString("Reports.project-info.report.cim"));
 	
-	public static final ReportCategories SUMMARY = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.summary"));
+	public static final ReportCategories SUMMARY = new ReportCategories(SiteMessages.getString("Reports.project-info.report.summary"));
 	
-	public static final ReportCategories LICENSE = new ReportCategories(SiteMessages.getString("Reports.Report.project-info.report.license"));
+	public static final ReportCategories LICENSE = new ReportCategories(SiteMessages.getString("Reports.project-info.report.license"));
 }

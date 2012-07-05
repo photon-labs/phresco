@@ -1,3 +1,22 @@
+/*
+ * ###
+ * Phresco Framework
+ * %%
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
 package com.photon.phresco.commons;
 
 import java.io.File;
@@ -51,6 +70,14 @@ public interface FrameworkConstants {
     String CI_BUILD_DELETE_COMMAND = "delete-builds";
     String CI_JOB_DELETE_COMMAND = "delete-job";
     String CI_RELOAD_CONFIGS = "reload-configuration";
+    String CI_APPEND_JOBS = "appendJobs";
+    String CI_CREATE_NEW_JOBS = "createNewJobs";
+    String CI_JENKINS_ALIVE = "jenkinsAlive";
+    String CI_BUILD_JENKINS_ALIVE = "buildJenkinsAlive";
+    String CI_BUILD_IS_IN_PROGRESS = "isBuildInProgress";
+    String CI_NO_OF_JOBS_IN_PROGRESS = "noOfJobsIsInProgress";
+    String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
+    String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
@@ -325,6 +352,9 @@ public interface FrameworkConstants {
     String REQ_ERROR = "error";
     String REQ_SELECTED_ITEMS = "check";
     String REQ_SELECTED_BUILDS = "selectedBuilds";
+    String REQ_SELECTED_BUILDS_LIST = "builds";
+    String REQ_SELECTED_JOBS_LIST = "Jobs";
+    String REQ_SELECTED_ALL_BUILDS_LIST = "allBuilds";
     String REQ_SETTINGS = "settings";
     String REQ_BUILD = "build";
     String REQ_RELEASE = "release";
@@ -426,6 +456,7 @@ public interface FrameworkConstants {
     String REQ_SERVER_LOG = "serverLog";
     
     String REQ_EXISTING_JOB = "existingJob";
+    String REQ_EXISTING_JOBS = "existingJobs";
     String REQ_CRON_BY = "cronBy";
     String REQ_HOURS = "hours";
     String REQ_MINUTES = "minutes";
@@ -591,7 +622,9 @@ public interface FrameworkConstants {
     
     String CI_SAVE_UPDATE_FAILED = "Save Or Updation failed.";
     String CI_BUILD_FAILED = "Build triggered failed.";
-    
+    String CI_ONE_JOB_REQUIRED = "Select only one job at a time for configuration";
+    String CI_BUILD_LOADED_SHORTLY = "Builds will be loaded shortly";
+    String CI_NO_JOBS_AVAILABLE = "No Job (s) Available";
     /*
      * Create Project keys
      */

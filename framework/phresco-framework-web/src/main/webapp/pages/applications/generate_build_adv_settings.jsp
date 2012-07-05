@@ -62,7 +62,7 @@
 		                    <div class="scrollpanel adv_setting_accordian_bottom">
 		                        <section class="scrollpanel_inner">
 							       	<div class="clearfix">
-										<label for="xlInput" class="xlInput popup-label"><s:text name="label.keystore"/></label>
+										<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.keystore"/></label>
 										<div class="input">
 											<input type="text" name="keystore" value="<%= androidProfile != null ? androidProfile.getKeystore() : ""%>" autofocus>
 											<input type="button" id="fileLocation" class="btn primary btn_browse browseFileLocation" value="<s:text name="label.select.file"/>">
@@ -70,21 +70,21 @@
 									</div>
 									
 									<div class="clearfix">
-										<label for="xlInput" class="xlInput popup-label"><s:text name="label.storepass"/></label>
+										<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.storepass"/></label>
 										<div class="input">
 											<input type="text" name="storepass" value="<%= androidProfile != null ? androidProfile.getStorepass() : ""%>">
 										</div>
 									</div>
 									
 									<div class="clearfix">
-										<label for="xlInput" class="xlInput popup-label"><s:text name="label.keypass"/></label>
+										<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.keypass"/></label>
 										<div class="input">
 											<input type="text" name="keypass" value="<%= androidProfile != null ? androidProfile.getKeypass() : ""%>">
 										</div>
 									</div>
 									
 									<div class="clearfix">
-										<label for="xlInput" class="xlInput popup-label"><s:text name="label.alias"/></label>
+										<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.alias"/></label>
 										<div class="input">
 											<input type="text" name="alias" value="<%= androidProfile != null ? androidProfile.getAlias() : ""%>">
 										</div>
