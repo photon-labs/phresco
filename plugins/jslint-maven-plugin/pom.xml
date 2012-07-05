@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>jslint-maven-plugin</artifactId>
+	<packaging>maven-plugin</packaging>
+	<version>2.0.0.1000-SNAPSHOT</version>
+	<name>JSLint Maven Plugin</name>
+	<description>Provides JSLint capabilities.</description>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+	<inceptionYear>2010</inceptionYear>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	    <distributionManagement>
+             <repository>
+                <id>${releases.repo.id}</id>
+                <url>${releases.repo.url}</url>
+            </repository>
+        <snapshotRepository>
+                <id>${snapshots.repo.id}</id>
+                <url>${snapshots.repo.url}</url>
+        </snapshotRepository>
+	</distributionManagement>
+
+
+	<dependencies>
+		<!-- Compile dependencies -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+                        <version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.jslint4java</groupId>
+			<artifactId>jslint4java</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sonatype.plexus</groupId>
+			<artifactId>plexus-build-api</artifactId>
+			<version>0.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>1.5.15</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-module-confluence</artifactId>
+						<version>1.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludeModules>apt</excludeModules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

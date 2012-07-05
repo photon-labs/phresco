@@ -26,6 +26,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>js-testrunner-plugin</module>        
         <module>javascript-maven-plugin</module>
         <module>plugin-commons</module>        
+        <module>jslint-maven-plugin</module>        
+        <module>js-import-maven-plugin</module>        
   </modules>
     
     <distributionManagement>
