@@ -1,9 +1,9 @@
 /*
  * ###
- * PHR_jquery-widget-hw
- * %%
+ * Archetype - phresco-html5-jquery-archetype
+ * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * %%
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -138,11 +138,40 @@ public class BaseScreen {
 				 * selenium.open(context);
 				 */
 			} 
-		else {
-			throw new ScreenException(
-					"------Only FireFox,InternetExplore and Chrome works-----------");
-		}			
-}
+		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
+				log.info("-------------***LAUNCHING OPERA***--------------");
+				WebDriver driver = new OperaDriver();
+				System.out.println("******entering window maximize********");
+				Robot robot;
+				try {
+					robot = new Robot();
+					robot.keyPress(KeyEvent.VK_ALT);
+					robot.keyPress(KeyEvent.VK_SPACE);
+					robot.keyRelease(KeyEvent.VK_ALT);
+					robot.keyRelease(KeyEvent.VK_SPACE);
+					robot.keyPress(KeyEvent.VK_X);
+					robot.keyRelease(KeyEvent.VK_X);
+				} catch (AWTException e) {
+
+					e.printStackTrace();
+				}
+
+				System.out.println("******window maximized********");
+				System.out.println("URL = " + url);
+				driver.navigate().to(url + context);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} else {
+				throw new ScreenException(
+						"------Only FireFox,InternetExplore,Chrome and Opera works-----------");
+			}
+		}
+		
+
+	
 
 	public static void windowMaximizeFirefox() {
 		driver.manage().window().setPosition(new Point(0, 0));

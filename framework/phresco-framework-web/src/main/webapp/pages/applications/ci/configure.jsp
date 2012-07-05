@@ -1,3 +1,22 @@
+<%--
+  ###
+  Framework Web Archive
+  %%
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@	page import="org.apache.commons.lang.StringUtils"%>
@@ -60,14 +79,14 @@
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.name"/></label>
 				<div class="input">
-					<input type="text" id="name" name="name" value="<%= existingJob == null ? projectCode : existingJob.getName()%>" disabled autofocus>
+					<input type="text" id="name" name="name" value="<%= existingJob == null ? "" : existingJob.getName()%>" <%= existingJob == null ? "" : "disabled" %> autofocus>
 				</div>
 			</div>
 			
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.svn.url"/></label>
 				<div class="input">
-					<input type="text" id="svnurl" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
+					<input type="text" id="svnurl" class="ciSvnUrlWidth" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
 				</div>
 			</div>
 			
@@ -449,7 +468,7 @@
 					<input type="checkbox" id="showSettings" name="showSettings" value="showsettings" <%= showSettings %>> <s:text name="label.show.setting"/>
 						&nbsp;
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
-						<input type="checkbox" id="proguard" name="proguard" value="false" disabled="disabled">
+						<input type="checkbox" id="proguard" name="proguard" value="false">
 						<span><s:text name="label.progurad"/></span>
 				<% } %>
 				</div>
@@ -461,6 +480,7 @@
 					<div id="errMsg"></div>
 				    <img src="themes/photon/images/loading_red.gif" class="popupLoadingIcon" style="display: none;"> 
 	    	 </div> 
+	    	<input type="hidden" name="oldJobName" value="<%= existingJob == null ? "" : existingJob.getName()%>" >
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
             <input type="button" class="btn primary" value="<s:text name="label.save"/>" id="actionBtn">
             <input type="button" class="btn primary" value="<s:text name="label.next"/>" id="nextBtn">
@@ -473,7 +493,7 @@
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
-		$("#svnurl").focus();
+		$("#name").focus();
 		$("#configs").hide();
 		$("#actionBtn").hide();
 		$("#preBtn").hide();
@@ -568,15 +588,6 @@
 		    loadSchedule(selectedSchedule);
 		});
 		show(selectedSchedule);
-		
-		// It allows user type text without spaces
-	    $("#name").keydown(function(event) {
-	        if ( event.keyCode == 32 ) {
-	        	event.preventDefault();
-	        }
-	    });
-		
-		
 		
 		<% 
 			if(existingJob != null) {

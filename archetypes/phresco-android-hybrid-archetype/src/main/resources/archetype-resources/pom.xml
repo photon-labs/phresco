@@ -53,20 +53,9 @@
 				<plugin>
 					<groupId>com.photon.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>1.2.0.5001-SNAPSHOT</version>
+					<version>1.2.0.5003-SNAPSHOT</version>
 					<extensions>true</extensions>
 				</plugin>
-				<plugin>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>3.1</version>
-			<dependencies>
-				<dependency>
-				<groupId>org.apache.maven.doxia</groupId>
-				<artifactId>doxia-module-confluence</artifactId>
-				<version>1.2</version>
-				</dependency>
-			</dependencies>
-		</plugin>
 			</plugins>
 		</pluginManagement>
     <!-- To use the plugin goals in your POM or parent POM -->
@@ -87,5 +76,40 @@
             </plugin>
         </plugins>
 	</build>
-
+<profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+		        <plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+						  <execution>
+							<id>default-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+							  <goal>clean</goal>
+							</goals>
+						  </execution>
+						</executions>
+						<configuration>
+						  <filesets>
+							<fileset>
+							  <directory>do_not_checkin/build</directory>
+							  <includes>
+								<include>**/*</include>
+							  </includes>
+							  <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+						</configuration>
+					  </plugin>
+		        </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

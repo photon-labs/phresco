@@ -1,9 +1,9 @@
 /*
  * ###
- * PHR_jquery-widget-hw
- * %%
+ * Archetype - phresco-html5-jquery-archetype
+ * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * %%
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -41,6 +41,12 @@ public class Constants {
 	 * Execute tests on safari browser
 	 */
 	public static final String BROWSER_SAFARI = "*safari";
+	/**
+	 * Execute tests on opera browser
+	 */
+	public static final String BROWSER_OPERA = "*opera";
+	
+	
 	
 	public static final String BROWSER_HTMLUNIT = "*htmlunit";
 

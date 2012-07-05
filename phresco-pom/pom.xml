@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.0.5001-SNAPSHOT</version>
+        <version>1.2.0.5003-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -39,5 +39,32 @@
             <artifactId>junit</artifactId>
             <version>4.9</version>
         </dependency>
+        
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        
     </dependencies>
+
+	<build>	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.geronimo.genesis.plugins</groupId>
+				<artifactId>tools-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>install-legal-files</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-legal-files</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>	
+	
 </project>
+
