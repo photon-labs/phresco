@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -28,7 +29,7 @@ public class ComponentRestAppTypesTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
     public void testGetAppTypes() throws PhrescoException {
         RestClient<ApplicationType> applicationTypeClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 		GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
@@ -36,7 +37,7 @@ public class ComponentRestAppTypesTest implements ServiceConstants {
         System.out.println("applicationTypes.size():" + applicationTypes.size());
     }
 	
-	@Test
+	@Ignore
     public void testGetAppTypesByName() throws PhrescoException {
     	String appName = "apptype-webapp";
         RestClient<ApplicationType> applicationTypeClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);

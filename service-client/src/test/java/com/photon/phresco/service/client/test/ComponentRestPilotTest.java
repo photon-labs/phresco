@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -30,7 +31,7 @@ public class ComponentRestPilotTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
 	public void getPilots() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ProjectInfo> pilotClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_PILOTSBYID);
@@ -40,7 +41,7 @@ public class ComponentRestPilotTest implements ServiceConstants {
     	System.out.println("pilotProjectInfos.size():" + pilotProjectInfos.size());
     }
 	
-	@Test
+	@Ignore
 	public void getPilotModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ProjectInfo> pilotClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_PILOTSBYID);

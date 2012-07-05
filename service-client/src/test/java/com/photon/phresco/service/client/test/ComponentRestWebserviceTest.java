@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -29,7 +30,7 @@ public class ComponentRestWebserviceTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
     public void testGetWebservices() throws PhrescoException {
     	RestClient<WebService> webserviceClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICES);
 		GenericType<List<WebService>> genericType = new GenericType<List<WebService>>(){};
@@ -37,7 +38,7 @@ public class ComponentRestWebserviceTest implements ServiceConstants {
         System.out.println("webservices.size():" + webservices.size());
     }
 	
-	@Test
+	@Ignore
     public void testGetWebservicesByTechnology() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<WebService> webserviceClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICESBYID);

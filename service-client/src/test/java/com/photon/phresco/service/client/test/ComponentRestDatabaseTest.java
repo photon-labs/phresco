@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -29,7 +30,7 @@ public class ComponentRestDatabaseTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
     public void testGetDatabases() throws PhrescoException {
     	RestClient<Database> dbClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_DATABASES);
 		GenericType<List<Database>> genericType = new GenericType<List<Database>>(){};
@@ -37,7 +38,7 @@ public class ComponentRestDatabaseTest implements ServiceConstants {
         System.out.println("databases.size():" + databases.size());
     }
 	
-	@Test
+	@Ignore
     public void testGetDatabasesByTechnology() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<Database> dbClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_DATABASESBYID);

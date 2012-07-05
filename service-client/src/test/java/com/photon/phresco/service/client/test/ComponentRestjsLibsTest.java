@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -29,7 +30,7 @@ public class ComponentRestjsLibsTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
 	public void getJSLibs() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> jsLibClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_JSBYID);
