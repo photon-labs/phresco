@@ -31,7 +31,7 @@ efforts.
 
 <tr>
 	<td><b>YUI Widget</b></td>
-	<td align="center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" align="center"></img></td>
+	<td align="center" style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" align="center"></img></td>
 	<td align="center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
 	width="15px" 
 	height="15px" align="center"></img></td>
