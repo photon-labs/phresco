@@ -19,7 +19,7 @@ efforts.
 <Table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
    <td style="text-align:center"><b>Supported Technologies</b></td>
-	<td style="text-align:center"><b>Code validation</b></td>
+	<td style="text-align:center"><b>Code Validation</b></td>
 	<td style="text-align:center"><b>Unit Test</b></td>
 	<td style="text-align:center"><b>Functional Test</b></td>
 	<td style="text-align:center"><b>Performance Test</b></td>
