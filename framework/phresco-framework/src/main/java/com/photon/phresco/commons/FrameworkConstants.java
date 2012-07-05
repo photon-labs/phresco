@@ -21,11 +21,15 @@ public interface FrameworkConstants {
     String PROJECT_INFO = "project.info";
     
     String DO_NOT_CHECKIN_DIR = "do_not_checkin";
+    String ARCHIVES = "archives";
     String BUILD_DIR = DO_NOT_CHECKIN_DIR + File.separator + "build";
     String CHECKIN_DIR = "do_not_checkin";
     String BUILD_PATH = "build";
     String WORKSPACE_DIR = "workspace";
     String SPACE = " ";
+    String UNDERSCORE = "_";
+    String PDF = "pdf";
+    String XML = "xml";
     String POM_XML = "pom.xml";
     String STATIC_ANALYSIS_REPORT = "static-analysis-report";
     String INDEX_HTML = "index.html";
@@ -369,6 +373,7 @@ public interface FrameworkConstants {
     String REQ_CUSTOM_MODULES = "customModules";
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
+    String REQ_PDF_REPORT_FILES = "pdfReportFiles";
     String REQ_ANDROID_DEVICE = "device";
     String REQ_IPHONE_DEVICE = "device";
     String REQ_IPHONE_SIMULATOR = "simulator";
@@ -1066,4 +1071,7 @@ public interface FrameworkConstants {
    /* Android Key store file */
    String SIGNING_TYPES="keystore";
    
+   /* Unit test report directory */
+   String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
+   String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
   }

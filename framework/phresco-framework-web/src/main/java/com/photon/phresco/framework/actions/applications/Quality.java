@@ -181,8 +181,8 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String uname = null;
     private String dbUrl = null;
     private String driver = null;
-	
-	private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
+    
+    private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
 
     
     public String unit() {
@@ -352,12 +352,18 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 sb.append(projectModule);
     		}
         	
+        	StringBuilder tempsb = new StringBuilder(sb);
         	if ("javascript".equals(techReport)) {
-        		sb.append("/do_not_checkin/target/jasmine");
+        		tempsb.append(UNIT_TEST_QUNIT_REPORT_DIR);
+        		File file = new File(tempsb.toString());
+                if (file.isDirectory() && file.list().length > 0) {
+                	sb.append(UNIT_TEST_QUNIT_REPORT_DIR);
+                } else {
+                	sb.append(UNIT_TEST_JASMINE_REPORT_DIR);
+                }
         	} else {
         		sb.append(frameworkUtil.getUnitReportDir(project.getProjectInfo().getTechnology().getId()));
         	}
-            
         } else if (LOAD.equals(testType)) {
             sb.append(frameworkUtil.getLoadReportDir(project.getProjectInfo().getTechnology().getId()));
             sb.append(File.separator);
