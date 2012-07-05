@@ -104,6 +104,7 @@ import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
@@ -246,7 +247,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			excludeModule(delta);
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
-		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(projectInfo, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta,userInfo);
 		 if(response.getStatus() == 401){
@@ -260,12 +260,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
 			createSqlFolder(delta, path);
 		}
-		updatePomProject(delta,projectInfoClone);
+		updatePomProject(delta,projectInfo);
 		try {
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
@@ -313,8 +313,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		String techId = delta.getTechnology().getId();
 		File path = new File(Utility.getProjectHome() + File.separator + delta.getCode() + File.separator + POM_FILE);
 		boolean flag1 = techId.equals(TechnologyTypes.JAVA_WEBSERVICE) || techId.equals(TechnologyTypes.JAVA_STANDALONE) || techId.equals(TechnologyTypes.HTML5_WIDGET) || 
-		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET);
-		boolean flag2 = techId.equals(TechnologyTypes.ANDROID_HYBRID) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
+		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		if (flag1) {
 			try {
 				ServerPluginUtil spUtil = new ServerPluginUtil();
@@ -325,17 +324,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException(e);
 			}
 		} 
-		if(flag2) {
-			try { 
-				if(projectInfoClone.getTechnology().getModules() != null) {
-					updateAndroidPomProject(projectInfoClone);
-				}
-			} catch (JDOMException e) {
-				throw new PhrescoException(e);
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
-		}
 	}
 
 	/**
@@ -493,75 +481,25 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return null;
 	}
 
-	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
+	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, PhrescoPomException {
 		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
 		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
+			PomProcessor pomProcessor = new PomProcessor(path);
 			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
 			if(CollectionUtils.isEmpty(modules)){
 				return;
 			}
 			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(moduleGroup.getGroupId()));
-				dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getArtifactId()));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
+				pomProcessor.addDependency(moduleGroup.getGroupId(), moduleGroup.getArtifactId(), moduleGroup.getVersions().get(0).getVersion());
+				pomProcessor.save();
 			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
-		}
-	}
-	/**
-	 * TODO: need to change this to use Phresco POM processor module.
-	 * @param projectInfo
-	 * @throws PhrescoException
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void updateAndroidPomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
-		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
-			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
-			if(CollectionUtils.isEmpty(modules)){
-				return;
-			}
-			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(getGroupId(projectInfo.getTechnology())));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getId()));
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
+			} catch (JAXBException e) {
+				throw new PhrescoException(e);
+			} catch (IOException e) {
+				throw new PhrescoException(e);
 		}
 	}
 
-	private  String getGroupId(Technology technology) {
-		return "modules." + technology.getId() + ".files";
-	}
 
 	@Override
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
