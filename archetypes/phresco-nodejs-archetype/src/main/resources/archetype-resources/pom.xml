@@ -36,7 +36,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>nodejs-maven-plugin</artifactId>
-				<version>1.2.0.5001-SNAPSHOT</version>
+				<version>1.2.0.5002-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 
@@ -64,4 +64,41 @@
 		</plugins>
 		<sourceDirectory>source</sourceDirectory>
 	</build>
+	<profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+		        <plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+						  <execution>
+							<id>default-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+							  <goal>clean</goal>
+							</goals>
+						  </execution>
+						</executions>
+						<configuration>
+						  <filesets>
+							<fileset>
+							  <directory>do_not_checkin/build</directory>
+							  <includes>
+								<include>**/*</include>
+							  </includes>
+							  <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+						</configuration>
+					  </plugin>
+		        </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

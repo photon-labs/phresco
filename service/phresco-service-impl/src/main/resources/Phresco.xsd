@@ -115,6 +115,7 @@
   	<xs:sequence>
   		<xs:element name="contentType" type="xs:string"></xs:element>
   		<xs:element name="contentURL" type="xs:string" />
+  		<xs:element name="imageUrl" type="xs:string" />
   		<xs:element name="technolgoyRef" type="xs:string"
   			maxOccurs="unbounded" />
   		<xs:element name="dependentModules" type="xs:string"
