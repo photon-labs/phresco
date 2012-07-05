@@ -16,18 +16,17 @@ efforts.
 
 
 
-<Table Border=7 cellpadding=10>
-
+<Table Border="7" cellpadding="5" cellspacing="5" align="center" width="100%">
 <tr>
-<td><center><b>Technology</b></center></td>
-<td><center><b>Code validation</b></center></td>
-<td><center><b>Unit Testing</b></center></td>
-<td><center><b>Functional Testing</b></center></td>
-<td><center><b>Performance Testing</b></center></td>
-<td><center><b>Load Testing</b></center></td>
-<td><CENTER><b>Build & Deployment</b></CENTER></td>
-<td><CENTER><b>Continuous Integration</b></CENTER></td>
-<td><CENTER><b>Remote Deployment</b></CENTER></td>
+<td align="center"><b>Technology</b></td>
+<td align="center"><b>Code validation</b></td>
+<td align="center"><b>Unit Testing</b></td>
+<td align="center"><b>Functional Testing</b></td>
+<td align="center"><b>Performance Testing</b></td>
+<td align="center"><b>Load Testing</b></td>
+<td align="center"><b>Build & Deployment</b></td>
+<td align="center"><b>Continuous Integration</b></td>
+<td align="center"><b>Remote Deployment</b></td>
 </tr>
 
 <tr>
