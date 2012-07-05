@@ -15,7 +15,6 @@ using Phresco across multiple channels i.e., web, mobile, tablet and kiosk with 
 efforts.
 
 
-
 <Table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
    <td style="text-align:center"><b>Supported Technologies</b></td>
@@ -32,9 +31,7 @@ efforts.
 <tr>
 	<td style="text-align:left"><b>YUI Widget</b></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:left"></td>
@@ -86,19 +83,13 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>Drupal</b></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
@@ -109,16 +100,12 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>WordPress</b></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
@@ -131,9 +118,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 
@@ -153,9 +138,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 
@@ -175,9 +158,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>	
+	<td style="text-align:center"&nbsp;</img></td>	
 </tr>
 
 
@@ -191,9 +172,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
@@ -213,9 +192,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
@@ -241,9 +218,7 @@ efforts.
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://www.gettyicons.com/free-icons/112/must-have/png/256/check_256.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://www.clker.com/cliparts/8/0/1/9/1195445329999867155jean_victor_balin_cross.svg.med.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"&nbsp;</img></td>
 </tr>
 
 
@@ -271,7 +246,6 @@ efforts.
 </tr>
 
 </Table>
-
 
 Quick start
 -----------
