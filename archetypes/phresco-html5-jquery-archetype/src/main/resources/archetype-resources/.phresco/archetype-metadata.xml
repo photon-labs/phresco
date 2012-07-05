@@ -76,33 +76,21 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/java</directory> 
+			<directory>src/test/java/com/photon/phresco</directory> 
+			<includes>
+				<include>TestCase.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/test/js</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/java</directory> 
+			<directory>src/test/resources</directory> 
 			<includes>
-				<include>AllTest.java</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/js/HelloWorld/widgets</directory> 
-			<includes>
-				<include>HelloWorldTest.js</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/resources/css</directory> 
-			<includes>
-				<include>qunit.css</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/resources/HelloWorld/widgets</directory> 
-			<includes>
-				<include>HelloWorldTest.html</include>
+				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -149,9 +137,6 @@
 				<include>PhrescoUiConstants.java</include>
 				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
-                <include>JQueryWidgetData.java</include>
-                <include>TestConfig.java</include>
-                <include>UserInfoConstants.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -159,9 +144,6 @@
 			<includes>
 				<include>config.ini</include>
 				<include>phresco-env-config.xml</include>
-                <include>JQueryWidgetHWData.xml</include>
-                <include>UIConstants.xml</include>
-                <include>UserInfo.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
