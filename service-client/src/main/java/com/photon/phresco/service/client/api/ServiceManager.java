@@ -31,6 +31,7 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.client.impl.RestClient;
+import com.sun.jersey.api.client.ClientResponse;
 
 /**
  * Interface for making service calls to Phresco Framework
@@ -42,6 +43,12 @@ public interface ServiceManager {
 	User getUserInfo() throws PhrescoException;
 	
 	List<VideoInfo> getVideoInfos() throws PhrescoException;
+	
+	ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException;
+	
+	void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException;
+	
+	ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException;
 	
 	List<ApplicationType> getApplicationTypes() throws PhrescoException;
 	
