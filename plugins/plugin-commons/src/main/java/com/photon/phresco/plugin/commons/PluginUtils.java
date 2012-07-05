@@ -17,7 +17,7 @@
  * limitations under the License.
  * ###
  */
-package com.photon.phresco.util;
+package com.photon.phresco.plugin.commons;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -53,6 +53,8 @@ import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.SettingsInfo;
+import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.Utility;
 
 public class PluginUtils {
 	private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
@@ -126,11 +128,9 @@ public class PluginUtils {
 						line = line.replace(comment, "");
 					}
 				}
-				
 				if (line.startsWith("/*!") && line.endsWith("*/")) {
 					line = line.substring(line.indexOf("/*"), line.indexOf("*/") + 2);
 				}
-				
 				if (line.trim().length() > 0) {
 					st.execute(line);
 				}			
@@ -243,7 +243,7 @@ public class PluginUtils {
 			serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 			serializer.transform(new DOMSource(doc), new StreamResult(stw));
-			encryptString encryptstring = new encryptString();
+			EncryptString encryptstring = new EncryptString();
 			encryptstring.Crypto("D4:6E:AC:3F:F0:BE");
 			String encryptXmlString = encryptstring.encrypt(stw.toString());
 			writeXml(encryptXmlString, fileName);

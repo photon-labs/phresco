@@ -50,7 +50,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.photon.phresco.plugin.commons.PluginUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -68,7 +68,6 @@ import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
-import com.photon.phresco.util.PluginUtils;
 
 /**
  * Run the xcodebuild command line program

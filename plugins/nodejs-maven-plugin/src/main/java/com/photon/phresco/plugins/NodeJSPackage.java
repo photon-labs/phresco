@@ -31,7 +31,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import com.photon.phresco.plugin.commons.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -44,8 +45,6 @@ import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
-import com.photon.phresco.util.PluginConstants;
-import com.photon.phresco.util.PluginUtils;
 
 /**
  * Goal which builds the Nodejs project

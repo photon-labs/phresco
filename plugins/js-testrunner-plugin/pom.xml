@@ -49,7 +49,7 @@
 			<artifactId>plexus-utils</artifactId>
 			<version>1.5.15</version>
 		</dependency>
-		<dependency>
+        <dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>7.4.2.v20110526</version>

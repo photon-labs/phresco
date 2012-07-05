@@ -17,14 +17,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <modules>
         <module>drupal-maven-plugin</module>
         <module>php-maven-plugin</module>
-        <module>android-maven-plugin</module>
+        <module>android-maven-plugin</module> 
         <module>sharepoint-maven-plugin</module>
         <module>java-maven-plugin</module>
         <module>xcode-maven-plugin</module>
         <module>nodejs-maven-plugin</module>    
         <module>wordpress-maven-plugin</module>        
         <module>js-testrunner-plugin</module>        
-        <module>javascript-maven-plugin</module>        
+        <module>javascript-maven-plugin</module>
+        <module>plugin-commons</module>        
   </modules>
     
     <distributionManagement>

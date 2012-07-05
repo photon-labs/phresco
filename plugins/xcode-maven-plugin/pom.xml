@@ -83,7 +83,13 @@
             <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
-        
+
+        <dependency>
+	        <groupId>com.photon.phresco</groupId>
+			<artifactId>plugin-commons</artifactId>
+	        <version>${phresco-commons-version}</version>
+    	</dependency>
+
         <dependency>
             <groupId>com.photon.phresco.framework</groupId>
             <artifactId>phresco-framework-impl</artifactId>

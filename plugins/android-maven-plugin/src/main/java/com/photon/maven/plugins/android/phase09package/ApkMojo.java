@@ -38,20 +38,15 @@ package com.photon.maven.plugins.android.phase09package;
 import static com.photon.maven.plugins.android.common.AndroidExtension.APK;
 import static com.photon.maven.plugins.android.common.AndroidExtension.APKLIB;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
@@ -64,25 +59,23 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.archiver.zip.ZipArchiver;
 import org.codehaus.plexus.util.AbstractScanner;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
 import com.photon.maven.plugins.android.AndroidSigner;
 import com.photon.maven.plugins.android.CommandExecutor;
 import com.photon.maven.plugins.android.ExecutionException;
 import com.photon.maven.plugins.android.common.NativeHelper;
 import com.photon.maven.plugins.android.configuration.Sign;
+import com.photon.maven.plugins.android.phase09package.ApkBuilder;
 import com.photon.phresco.commons.BuildInfo;
-import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.plugin.commons.PluginUtils;
+
 
 /**
  * Creates the apk file. By default signs it with debug keystore.<br/>

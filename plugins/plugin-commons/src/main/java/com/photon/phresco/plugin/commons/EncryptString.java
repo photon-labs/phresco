@@ -1,4 +1,4 @@
-package com.photon.phresco.util;
+package com.photon.phresco.plugin.commons;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,9 +14,9 @@ public class EncryptString {
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @return
-	 *
+	 * 
 	 * @throws Exception
 	 */
 	public void Crypto(String key) throws Exception {
@@ -39,7 +39,7 @@ public class EncryptString {
 
 	/**
 	 * Bytes to Hexa conversion
-	 *
+	 * 
 	 * @param data
 	 * @return
 	 */
@@ -61,7 +61,7 @@ public class EncryptString {
 
 	/**
 	 * Encrpt the given string
-	 *
+	 * 
 	 * @param plainData
 	 * @throws Exception
 	 */
