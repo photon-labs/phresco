@@ -51,8 +51,8 @@ public class DownloadInfo implements Serializable {
 		this.version = version;
 		this.downloadURL = downloadURL;
 		this.type = type;
-		this.appliesTo = appliesTo;
-		this.platform = platform;
+		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
+		this.platform = Arrays.copyOf(platform, platform.length);
 	}
 
 	public String getId() {
@@ -100,7 +100,7 @@ public class DownloadInfo implements Serializable {
 	}
 
 	public void setAppliesTo(String[] appliesTo) {
-		this.appliesTo = appliesTo;
+		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
 	}
 
 	public String[] getPlatform() {
@@ -108,7 +108,7 @@ public class DownloadInfo implements Serializable {
 	}
 
 	public void setPlatform(String[] platform) {
-		this.platform = platform;
+		this.platform = Arrays.copyOf(platform, platform.length);
 	}
 
 	public String getFileName() {
