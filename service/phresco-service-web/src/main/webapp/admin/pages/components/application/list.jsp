@@ -19,12 +19,19 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.photon.phresco.model.ApplicationType" %>
+
+<%
+	List<ApplicationType> appTypes = (List<ApplicationType>) request.getAttribute("appTypes");
+%>
 <form class="customer_list">
-	<div class="operation">
+	<div class="operation" id="operation">
 		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" onclick="loadContent('applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
-		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>" onclick="loadContent('applicationDelete', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success"  id="successmsg">
+			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
 			</div>
 		</s:if>
@@ -32,15 +39,15 @@
 			<div class="alert alert-error"  id="errormsg">
 				<s:actionerror />
 			</div>
-		</s:if>
+		</s:if> 
 	</div>
 	
 	<div class="table_div">
 		<div class="fixed-table-container">
+		  <div class="header-background"></div>
 			<div class="fixed-table-container-inner">
 				<table cellspacing="0" class="zebra-striped">
 					<thead>
-						<div class="header-background"> 
 							<tr>
 								<th class="first nameTd">
 									<div class="th-inner">
@@ -48,57 +55,51 @@
 									</div>
 								</th>
 								<th class="second">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label for="name" key="lbl.hdr.cmp.name" theme="simple"/></div>
 								</th>
 								<th class="third">
 									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.desc" theme="simple"/></div>
 								</th>
 							</tr>
-						</div>
 					</thead>
 								
 					<tbody>
-						<tr>
-							<td class="checkboxwidth">
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td class="nameTd">
-								<a href="#" name="edit" id="" >Web Application</a>
-							</td>
-							<td>An application that is accessed over a network such as the Internet or an intranet</td>
-						</tr>
+								<%
+									if (CollectionUtils.isNotEmpty(appTypes)) {
+										for ( ApplicationType appType : appTypes) {
+											
+								%>
+											<tr>
+												<td class="checkboxwidth">
+													<input type="checkbox" class="check" name="apptypeId" value="<%= appType.getId() %>" onclick="checkboxEvent();" />
+												</td>
+												<td class="namelabel-width">
+													<a href="#" onclick="editAppType('<%= appType.getId() %>');"><%= appType.getName() %></a>
+												</td>
+												<td class="desclabel-width"><%= appType.getDescription() %></td>	
+											</tr>	
+								<%		
+										}
+									}
+								%>
 						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td class="nameTd">
-								<a href="#" name="edit" id="" >Mobile</a>
-							</td>
-							<td>A mobile application is software that runs on a handheld device (phone, tablet, iPod, etc.) than can connect to wifi or wireless carrier networks, and has an operating system that supports web or standalone software</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td class="nameTd">
-								<a href="#" name="edit" id="" >Web Service</a>
-							</td>
-							<td>A Web service is a method of communication between two electronic devices over the web. The W3C defines a "Web service" as "a software system designed to support interoperable machine-to-machine interaction over a network"</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td class="nameTd">
-								<a href="#" name="edit" id="" >Standalone</a>
-							</td>
-							<td>Standalone Application is a software that can work offline, i.e. does not necessarily require network connection to function</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </form>
+<script type="text/javascript">
+	/** To edit the customer **/
+	/* $(document).ready(function() {
+		$("#errorDiv").show();
+	}); */
+	
+	function editAppType(id) {
+		var params = "appTypeId=";
+		params = params.concat(id);
+		params = params.concat("&fromPage=");
+		params = params.concat("edit");
+		loadContent("applicationEdit", $('#subcontainer'), params);
+	}
+</script>
