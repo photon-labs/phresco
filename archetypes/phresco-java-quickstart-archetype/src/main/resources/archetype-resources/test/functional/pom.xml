@@ -19,8 +19,8 @@
 			<version>1.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>helloworld</groupId>
-			<artifactId>helloworld</artifactId>
+			<groupId>Javastandalone</groupId>
+			<artifactId>Javastandalone</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/do_not_checkin/target/HelloWorld.jar</systemPath>
