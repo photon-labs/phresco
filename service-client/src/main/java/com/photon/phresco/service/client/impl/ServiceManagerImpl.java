@@ -146,12 +146,15 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	editApptype.setPath(appTypeId);
 		GenericType<ApplicationType> genericType = new GenericType<ApplicationType>() {};
 		ApplicationType updateById = editApptype.updateById(appType, genericType);
+		manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
     }
     
     public ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException {
 	    RestClient<ApplicationType> deleteApptype = getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 	    deleteApptype.setPath(appTypeId);
 	    ClientResponse clientResponse = deleteApptype.deleteById();
+	    System.out.println("Client Response ServiceManagerImpl"  +clientResponse +" " +clientResponse.getStatus());
+	    manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
 	    return clientResponse;
     }
     public List<Server> getServers(String techId) throws PhrescoException {
