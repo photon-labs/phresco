@@ -37,10 +37,8 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
-	
-
 	String REST_API_COMPONENT =  "/component";
-	String REST_API_ADMIN =  "/admin-temp";
+	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
 	String REST_API_APPTYPES = "/apptypes";
 	String REST_API_CONFIG_TEMPLATES= "/configtemplates";
@@ -50,13 +48,13 @@ public interface ServiceConstants {
 	String REST_API_DATABASES = "/databases";
 	String REST_API_WEBSERVICES = "/webservices";
 	String REST_API_TECHNOLOGIES= "/technologies";
-	String REST_API_DOWNLOADS = "/downloads-temp";
+	String REST_API_DOWNLOADS = "/downloads";
 	String REST_API_VIDEOS = "/videos";
 	String REST_API_USERS = "/users";
 	String REST_API_ROLES = "/roles";
 	String REST_API_PERMISSIONS = "/permissions";
 	String REST_API_LDAP = "/settings/ldap";
-	String REST_API_SETTINGS = "/settings_temp";
+	String REST_API_SETTINGS = "/settings";
 	String REST_API_TWEETS = "/tweets";
 	String REST_API_SERVERBYID = "/servers/id";
 	String REST_API_DATABASESBYID = "/databases/id";
@@ -66,21 +64,16 @@ public interface ServiceConstants {
 	String REST_API_PILOTSBYID = "/pilots/id";
 	String REST_API_LOGIN = "/login";
 	String REST_LOGIN_PATH = "/service/rest/api/login";
-	
 	String REST_API_LDAP_PARAM_ID = "ldap";
-	
-	
-
-
 	String REST_API_PATH_ID = "/{id}";
 	String REST_API_PATH_PARAM_ID = "id";
 	String REST_API_QUERY_PARAM_SESSION_ID = "sessionId";
 	String REST_API_QUERY_PARAM_LIMIT = "limit";
 	String REST_API_QUERY_PARAM_OFFSET = "offset";
-
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "{0} operation is not allowed";
 	String ERROR_MSG_NOT_FOUND = "Content Not Found";
 	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
+	String REST_QUERY_TECHID = "tech-id";
 	
 	 /*
      * Constants for MongoDB Collections
