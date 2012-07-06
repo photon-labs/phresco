@@ -126,8 +126,9 @@ public class PomProcessor {
 	 * @throws PhrescoPomException
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope, String type,String systemPath) throws JAXBException, PhrescoPomException {
-        if(isDependencyAvailable(groupId, artifactId)){
+		if(isDependencyAvailable(groupId, artifactId)){
             changeDependencyVersion(groupId, artifactId, version);
+            setDependencySystemPath(groupId, artifactId, systemPath);
             return;
         }
         Dependency dependency = new Dependency();
@@ -215,6 +216,40 @@ public class PomProcessor {
 				dependency.setVersion(version);
 			} 
 		}
+	}
+	
+	/**
+	 * @param groupId
+	 * @param artifactId
+	 * @param systemPath
+	 * @throws PhrescoPomException
+	 */
+	public void setDependencySystemPath(String groupId, String artifactId,String systemPath) throws PhrescoPomException {
+		if(model.getDependencies()==null){
+			return;
+		}
+		List<Dependency> list = model.getDependencies().getDependency();
+		for(Dependency dependency : list){
+			if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)){
+				dependency.setSystemPath(systemPath);
+			} 
+		}
+	}
+	
+	/**
+	 * @param groupId
+	 * @param artifactId
+	 * @return
+	 */
+	public Dependency getDependency(String groupId, String artifactId) {
+		if(model.getDependencies()!=null) {
+			List<Dependency> list = model.getDependencies().getDependency();
+			for(Dependency dependency : list) {
+				if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)){
+					return dependency;
+				} 
+			}
+		} return null;
 	}
 
 	/**
@@ -749,7 +784,7 @@ public class PomProcessor {
 	 */
 	public void removeSitePlugin(String groupId,String artifactId) {
 		com.phresco.pom.model.Reporting.Plugins plugins = model.getReporting().getPlugins();
-		if(plugins.getPlugin()==null){
+		if(model.getReporting() == null && plugins == null){
 			return;
 		}
 		for (ReportPlugin plugin : plugins.getPlugin()) {
