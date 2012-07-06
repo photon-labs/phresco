@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DownloadInfo implements Serializable {
 
 	private static final long serialVersionUID = -9197395975210628328L;
-
 	private String id;
 	private String name;
 	private String version;

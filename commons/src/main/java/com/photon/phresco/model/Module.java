@@ -234,7 +234,7 @@ public class Module implements Serializable {
 
 	public Module(String id, String contentType, String contentURL,
 			List<String> technolgoyRef, List dependentModules,
-			String documentsId, String name, String version, Boolean core,
+			int documentsId, String name, String version, Boolean core,
 			Boolean required, String groupId, String artifactId) {
 		super();
 		this.id = id;
@@ -242,7 +242,7 @@ public class Module implements Serializable {
 		this.contentURL = contentURL;
 		this.technolgoyRef = technolgoyRef;
 //		this.dependentModules = dependentModules;
-		this.documentsid = documentsid;
+		this.documentsid = documentsId;
 		this.name = name;
 		this.version = version;
 		this.core = core;
@@ -273,9 +273,7 @@ public class Module implements Serializable {
 	public Module() {
 		// TODO Auto-generated constructor stub
 	}
-	public void Modules () {
 
-	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
