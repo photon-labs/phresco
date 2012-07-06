@@ -119,7 +119,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			}
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
-			appType.setDescription(name);
+			appType.setDescription(description);
 			getServiceManager().updateApplicationTypes(appType, appTypeId);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
@@ -156,11 +156,6 @@ public class ApplicationTypes extends ServiceBaseAction {
 			isError = true;
 		}
 		return isError;
-	}
-
-	public String cancel() {
-		S_LOGGER.debug("Entering Method ApplicationTypes.cancel()");
-		return COMP_APPTYPE_CANCEL;
 	}
 
 	public String getName() {

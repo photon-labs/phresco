@@ -200,7 +200,7 @@
 			}
 		%>
 	 	<input type="button" id="archetypeCancel" class="btn btn-primary"
-			onclick="loadContent('archetypeCancel', $('#subcontainer'));"
+			onclick="loadContent('archetypesList', $('#subcontainer'));"
 			value="<s:text name='lbl.hdr.comp.cancel'/>" />
 	</div>
 	

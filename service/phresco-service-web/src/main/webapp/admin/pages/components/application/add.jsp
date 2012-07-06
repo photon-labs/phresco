@@ -84,7 +84,7 @@
 		<% } else { %>
 				<input type="button" id="applicationSave" class="btn btn-primary" onclick="clickSave('applicationSave', $('#subcontainer'), 'Creating Application Type');" value="<s:text name='lbl.hdr.comp.save'/>"/>
 		<% } %>
-		<input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applicationCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applntypesList', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
    </div>
 	
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
