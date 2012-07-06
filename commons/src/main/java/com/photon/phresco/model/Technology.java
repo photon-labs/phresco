@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ public class Technology implements Cloneable, Serializable {
     private String appTypeId;
 
     private String id;
-    
+
     //Name of the Technology. [PHP, PHP with Drupal]
     private String name;
 
@@ -55,11 +55,11 @@ public class Technology implements Cloneable, Serializable {
 	private List<Server> servers;
 
 	private List<Database> databases;
-	
+
 	private List<WebService> webservices;
-	
+
 	private boolean emailSupported;
-	
+
 	private String description;
 	private String versionComment;
 	private List<String> appType;
@@ -76,7 +76,7 @@ public class Technology implements Cloneable, Serializable {
         this.id = id;
         this.name = name;
     }
-    
+
     public Technology(String name, String description, List<String>versions, List<String> appType) {
         super();
         this.name = name;
@@ -164,7 +164,7 @@ public class Technology implements Cloneable, Serializable {
 	public void setEmailSupported(boolean emailSupported) {
 		this.emailSupported = emailSupported;
 	}
-	
+
 	public void setVersions(List<String> versions) {
 		this.versions = versions;
 	}
@@ -172,7 +172,7 @@ public class Technology implements Cloneable, Serializable {
 	public List<String> getVersions() {
 		return versions;
 	}
-    
+
 	public String getDescription() {
 		return description;
 	}
@@ -211,8 +211,8 @@ public class Technology implements Cloneable, Serializable {
 
 	public void setPluginJar(String pluginJar) {
 		this.pluginJar = pluginJar;
-	} 
-	
+	}
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(1024);
@@ -239,15 +239,16 @@ public class Technology implements Cloneable, Serializable {
         builder.append("]");
         return builder.toString();
     }
-   
-    @SuppressWarnings("unchecked")
-	public Technology clone() {
+
+
+	@SuppressWarnings("unchecked")
+    public Technology clone() throws CloneNotSupportedException{
     	Technology tech = new Technology();
 
     	tech.setId(getId());
     	tech.setName(getName());
     	tech.setAppTypeId(getAppTypeId());
-    	
+
 		if (databases != null && !databases.isEmpty()) {
 			tech.setDatabases((List<Database>) ((ArrayList<Database>) databases).clone());
 		}

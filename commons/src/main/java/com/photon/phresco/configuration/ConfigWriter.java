@@ -21,6 +21,7 @@ package com.photon.phresco.configuration;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Properties;
@@ -33,6 +34,8 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -54,7 +57,7 @@ public class ConfigWriter {
 	 * @param newFile
 	 * @throws Exception
 	 */
-	public ConfigWriter(ConfigReader reader, boolean newFile) throws Exception {
+	public ConfigWriter(ConfigReader reader, boolean newFile) throws PhrescoException {
 		this.reader = reader;
 		if (newFile) {
 			createNewXml();
@@ -71,7 +74,7 @@ public class ConfigWriter {
 	 * @param selectedEnvStr
 	 * @throws Exception
 	 */
-	public void saveXml(File configXmlPath, String selectedEnvStr) throws Exception {
+	public void saveXml(File configXmlPath, String selectedEnvStr) throws PhrescoException,TransformerException,IOException {
 		createConfiguration(selectedEnvStr);
 		writeXml(new FileOutputStream(configXmlPath));
 	}
@@ -82,7 +85,7 @@ public class ConfigWriter {
 	 * @param selectedEnvStr
 	 * @throws Exception
 	 */
-	public void saveXml(ConfigReader srcReaderToAppend, String selectedEnvStr) throws Exception {
+	public void saveXml(ConfigReader srcReaderToAppend, String selectedEnvStr) throws PhrescoException,TransformerException,IOException {
 		document = srcReaderToAppend.getDocument();
 		rootElement = (Element) document.getElementsByTagName("environments").item(0);
 		createConfiguration(selectedEnvStr);
@@ -95,7 +98,7 @@ public class ConfigWriter {
 	 * @param selectedEnvStr
 	 * @throws Exception
 	 */
-	public void saveXml(OutputStream fos, String selectedEnvStr) throws Exception {
+	public void saveXml(OutputStream fos, String selectedEnvStr) throws PhrescoException, TransformerException ,IOException {
 		createConfiguration(selectedEnvStr);
 		writeXml(fos);
 	}
@@ -105,7 +108,7 @@ public class ConfigWriter {
 	 * @param selectedEnvStr
 	 * @throws Exception
 	 */
-	private void createConfiguration(String selectedEnvStr) throws Exception {
+	private void createConfiguration(String selectedEnvStr) throws PhrescoException {
 		String[] envs = selectedEnvStr.split(",");
 		for (String envName : envs) {
 			List<Configuration> configByEnv = reader.getConfigByEnv(envName);
@@ -123,7 +126,7 @@ public class ConfigWriter {
 	 * @param defaultEnv
 	 * @throws Exception
 	 */
-	private void createConfigurations(List<Configuration> configList, String envName, boolean defaultEnv) throws Exception {
+	private void createConfigurations(List<Configuration> configList, String envName, boolean defaultEnv) throws PhrescoException {
 		Element envNode = document.createElement("environment");
 		envNode.setAttribute("name", envName);
 		envNode.setAttribute("default", Boolean.toString(defaultEnv));
@@ -139,9 +142,10 @@ public class ConfigWriter {
 	/**
 	 * Write the xml document using OutputStream
 	 * @param fos
+	 * @throws TransformerException
 	 * @throws Exception
 	 */
-	protected void writeXml(OutputStream fos) throws Exception {
+	protected void writeXml(OutputStream fos) throws PhrescoException, TransformerException ,IOException{
 		try {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			Transformer transformer = tFactory.newTransformer();
