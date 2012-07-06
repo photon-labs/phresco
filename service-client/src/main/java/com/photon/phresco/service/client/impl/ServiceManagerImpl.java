@@ -19,7 +19,9 @@
  */
 package com.photon.phresco.service.client.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
@@ -71,6 +73,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	StringBuilder builder = new StringBuilder();
     	builder.append(serverPath);
     	builder.append(contextPath);
+//    	System.out.println("==================================");
+//    	System.out.println("REST URL : " + builder.toString());
+//    	System.out.println("==================================");
     	RestClient<E> restClient = new RestClient<E>(builder.toString());
     	restClient.addHeader(PHR_AUTH_TOKEN, userInfo.getToken());
     	return restClient;
@@ -114,6 +119,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     private List<ApplicationType> getApplicationTypesFromServer() throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.getApplicationTypesFromServer()");
+    	
     	RestClient<ApplicationType> appTypeClient = getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 		GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
 		return appTypeClient.get(genericType);
@@ -135,6 +142,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.createApplicationTypes()");
+    	
     	RestClient<ApplicationType> newApp = getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 		ClientResponse clientResponse = newApp.create(appTypes);
 		manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
@@ -142,26 +151,29 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.updateApplicationTypes()");
+    	
     	RestClient<ApplicationType> editApptype = getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
     	editApptype.setPath(appTypeId);
 		GenericType<ApplicationType> genericType = new GenericType<ApplicationType>() {};
-		ApplicationType updateById = editApptype.updateById(appType, genericType);
+		editApptype.updateById(appType, genericType);
 		manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
     }
     
     public ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException {
+    	S_LOGGER.debug("Entered into RestClient.deleteApplicationType()");
+    	
 	    RestClient<ApplicationType> deleteApptype = getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
 	    deleteApptype.setPath(appTypeId);
 	    ClientResponse clientResponse = deleteApptype.deleteById();
-	    System.out.println("Client Response ServiceManagerImpl"  +clientResponse +" " +clientResponse.getStatus());
 	    manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
 	    return clientResponse;
     }
     public List<Server> getServers(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClientgetServers(String techId)");
     	
-		RestClient<Server> serverClient = getRestClient(REST_API_COMPONENT + REST_API_SERVERBYID);
-		serverClient.setPath(techId);
+		RestClient<Server> serverClient = getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
+		serverClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<Server>> genericType = new GenericType<List<Server>>(){};
 		return serverClient.get(genericType);
 	}
@@ -169,8 +181,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     public List<Database> getDatabases(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClient.getDatabases(String techId)");
     	
-		RestClient<Database> dbClient = getRestClient(REST_API_COMPONENT + REST_API_DATABASESBYID);
-		dbClient.setPath(techId);
+		RestClient<Database> dbClient = getRestClient(REST_API_COMPONENT + REST_API_DATABASES);
+		dbClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<Database>> genericType = new GenericType<List<Database>>(){};
 		return dbClient.get(genericType);
 	}
@@ -178,8 +190,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     public List<WebService> getWebServices(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClient.getWebServices(String techId)");
     	
-		RestClient<WebService> webServiceClient = getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICESBYID);
-		webServiceClient.setPath(techId);
+		RestClient<WebService> webServiceClient = getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICES);
+		webServiceClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<WebService>> genericType = new GenericType<List<WebService>>(){};
 		return webServiceClient.get(genericType);
 	}
@@ -187,8 +199,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     public List<ProjectInfo> getPilots(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClient.getPilots(String techId)");
     	
-    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTSBYID);
-    	pilotClient.setPath(techId);
+    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
+    	pilotClient.queryString(REST_QUERY_TECHID, techId);
     	GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
     	return pilotClient.get(genericType);
     }
@@ -196,8 +208,11 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     public List<ModuleGroup> getModules(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClient.getModules(String techId)");
     	
-    	RestClient<ModuleGroup> moduleGroupClient = getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+    	headers.put(REST_QUERY_TECHID, techId);
+    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+    	moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	return moduleGroupClient.get(genericType);
     }
@@ -205,8 +220,11 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     public List<ModuleGroup> getJSLibs(String techId) throws PhrescoException {
     	S_LOGGER.debug("Entered into RestClient.getJSLibs(String techId)");
     	
-    	RestClient<ModuleGroup> jsLibClient = getRestClient(REST_API_COMPONENT + REST_API_JSBYID);
-    	jsLibClient.setPath(techId);
+    	RestClient<ModuleGroup> jsLibClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+    	headers.put(REST_QUERY_TECHID, techId);
+    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_JS);
+    	jsLibClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	return jsLibClient.get(genericType);
     }

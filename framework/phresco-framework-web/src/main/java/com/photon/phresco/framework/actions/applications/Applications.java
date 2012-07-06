@@ -394,7 +394,7 @@ public class Applications extends FrameworkBaseAction {
 		return discover();
 	}
 
-	public String update() throws PhrescoException {
+	public String update() throws PhrescoException, CloneNotSupportedException {
 		S_LOGGER.debug("Entering Method  Applications.update()");
 
 		BufferedReader reader = null;

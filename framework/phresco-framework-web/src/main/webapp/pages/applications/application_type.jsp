@@ -58,8 +58,11 @@
     <!--  Technologies are loaded here starts-->
     <div class="input new-input">
         <%
-            List<Technology> technologies = selectedAppType.getTechnologies();
-        %>
+        	List<Technology> technologies = null;
+			if (selectedAppType != null) {
+				technologies = selectedAppType.getTechnologies();
+			}
+		%>
 		<div class="app_type_float_left">
 			<select id="technology" name="technology" class="xlarge" <%= disabled %> >
 				<%
