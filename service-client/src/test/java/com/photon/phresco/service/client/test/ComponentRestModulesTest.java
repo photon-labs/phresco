@@ -3,6 +3,7 @@ package com.photon.phresco.service.client.test;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -29,7 +30,7 @@ public class ComponentRestModulesTest implements ServiceConstants{
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Test
+	@Ignore
 	public void getModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
@@ -44,7 +45,7 @@ public class ComponentRestModulesTest implements ServiceConstants{
     	}
     }
 	
-	@Test
+	@Ignore
 	public void getCoreModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
@@ -61,7 +62,7 @@ public class ComponentRestModulesTest implements ServiceConstants{
     	}
     }
 	
-	@Test
+	@Ignore
 	public void getCustomModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
@@ -78,7 +79,7 @@ public class ComponentRestModulesTest implements ServiceConstants{
     	}
     }
 	
-	@Test
+	@Ignore
 	public void getDefaultCoreModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
@@ -95,7 +96,7 @@ public class ComponentRestModulesTest implements ServiceConstants{
     	}
     }
 	
-	@Test
+	@Ignore
 	public void getDefaultCustomModules() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);

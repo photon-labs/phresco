@@ -162,21 +162,27 @@
 			if (StringUtils.isNotEmpty(fromPage)) {
 		%>
 		<input type="button" id="archetypeUpdate" class="btn btn-primary"
-			onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Updating Archetype');"
+			onclick="formSubmitFileUpload('archetypeUpdate', 'applnArc,pluginArc', $('#subcontainer'), 'Updating Archetype');"
 			value="<s:text name='lbl.hdr.comp.update'/>" />
 		<%
 			} else {
 		%>
+		   	<input type="button" id="archetypeSave" class="btn btn-primary"
+			onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');"
+			value="<s:text name='lbl.hdr.comp.save'/>" />
 		<%
 			}
 		%>
-		<input type="button" id="archetypeSave" class="btn btn-primary"
-			onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');"
-			value="<s:text name='lbl.hdr.comp.save'/>" /> <input type="button"
+	 <input type="button"
 			id="archetypeCancel" class="btn btn-primary"
 			onclick="loadContent('archetypeCancel', $('#subcontainer'));"
 			value="<s:text name='lbl.hdr.comp.cancel'/>" />
 	</div>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
+	<input type="hidden" name="techId" value="<%= technology != null ? technology.getId() : "" %>"/>
+	<input type="hidden" name="oldName" value="<%= technology != null ? technology.getName() : "" %>"/> 
 </form>
 
 <script type="text/javascript">

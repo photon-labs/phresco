@@ -73,6 +73,7 @@ public class ProjectUtils implements Constants {
 	}
 	
 	public static void updateProjectInfo(ProjectInfo info, File phrescoFolder) throws PhrescoException {
+		// TODO Only  the use modified information should come from UI. So no filtering should be removed.
 		BufferedWriter out = null;
 		FileWriter fstream = null;
 		BufferedReader reader = null;
@@ -86,15 +87,20 @@ public class ProjectUtils implements Constants {
 			
 			List<ModuleGroup> selectedInfomodules = info.getTechnology().getModules();
 			List<ModuleGroup> selectedInfojsLibraries = info.getTechnology().getJsLibraries();
-			if(ProjectInfomodules != null && !ProjectInfomodules.isEmpty()) {
+			
+			if(ProjectInfomodules != null && !ProjectInfomodules.isEmpty() && selectedInfomodules != null) {
 				selectedInfomodules.addAll(ProjectInfomodules);	
+				info.getTechnology().setModules(selectedInfomodules);
+			}else if (ProjectInfomodules != null) {
+				info.getTechnology().setModules(ProjectInfomodules);
 			}
 			if(projectInfojsLibraries != null && !projectInfojsLibraries.isEmpty() && selectedInfojsLibraries != null) {
 			    selectedInfojsLibraries.addAll(projectInfojsLibraries); 
-            }
+			    info.getTechnology().setModules(selectedInfojsLibraries);
+            }else if (projectInfojsLibraries != null) {
+				info.getTechnology().setModules(ProjectInfomodules);
+			}
 			
-			info.getTechnology().setModules(selectedInfomodules);
-			info.getTechnology().setJsLibraries(selectedInfojsLibraries);
 			String infoJSON = gson.toJson(info);
 			fstream = new FileWriter(phrescoFolder.getPath());
 			out = new BufferedWriter(fstream);
@@ -102,6 +108,7 @@ public class ProjectUtils implements Constants {
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
+			Utility.closeStream(reader);
 			try {
 				if (out != null) {
 					out.close();
@@ -114,6 +121,7 @@ public class ProjectUtils implements Constants {
 			}
 		}
 	}
+	
 	
 	
 	

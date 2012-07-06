@@ -38,7 +38,7 @@ public class ComponentRestServerTest implements ServiceConstants {
         System.out.println("servers.size() in testGetServers():" + servers.size());
     }
 	
-	@Test
+	@Ignore
     public void testGetServersByTechnology() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<Server> serverClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERBYID);

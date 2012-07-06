@@ -32,10 +32,9 @@ public class VideoType {
 	}
 
 	public VideoType(String type, String url, String codecs) {
-		setType(type);
-		setUrl(url);
-		setCodecs(codecs);
-
+		this.type = type;
+		this.url = url;
+		this.codecs = codecs;
 	}
 
 	public String getType() {

@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -105,7 +105,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public String getProjectCode() {
 		return projectCode;
 	}
@@ -113,7 +113,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setProjectCode(String projectCode) {
 		this.projectCode = projectCode;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -129,7 +129,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	
+
 	public String getGroupId() {
 		return groupId;
 	}
@@ -185,7 +185,8 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	 * @param pilotProjectUrls the pilotProjectUrls to set
 	 */
 	public void setPilotProjectUrls(String[] pilotProjectUrls) {
-		this.pilotProjectUrls = pilotProjectUrls;
+		//this.pilotProjectUrls = pilotProjectUrls;
+		this.pilotProjectUrls =Arrays.copyOf(pilotProjectUrls, pilotProjectUrls.length);
 	}
 
 	public String getId() {
@@ -197,7 +198,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	}
 
 
-	public ProjectInfo clone(){
+	public ProjectInfo clone()throws CloneNotSupportedException{
 		ProjectInfo infos = new ProjectInfo();
 		infos.setApplication(application);
 		infos.setCode(code);
