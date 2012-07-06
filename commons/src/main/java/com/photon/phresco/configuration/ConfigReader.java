@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,32 +32,39 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import com.photon.phresco.exception.PhrescoException;
 
 public class ConfigReader {
-	
+
 	//envname, env dom element
 	private static final Map<String, Element> ENV_MAP = new HashMap<String, Element>();
 	private static String defaultEnvironment = null;
 	private Document document = null;
 	private File configFile = null;
-	
+
 	/**
 	 * ConfigReader single instance created by configuration xml
 	 * @param configXML File type
 	 * @return
+	 * @throws SAXException
+	 * @throws ParserConfigurationException
 	 * @throws Exception
 	 */
-	public ConfigReader(File configXML) throws Exception {
+	public ConfigReader(File configXML) throws IOException, ParserConfigurationException, SAXException {
 		if (configXML.exists()) {
 			this.configFile = configXML;
 			initXML(new FileInputStream(configXML));
 		}
 	}
-	
+
 	/**
 	 * ConfigReader single instance created by configuration xml input stream
 	 * @param xmlStream
@@ -75,7 +82,7 @@ public class ConfigReader {
 	public String getDefaultEnvName() {
 		return defaultEnvironment;
 	}
-	
+
 	/**
 	 * Returns the Configurations of given environments
 	 * @param envName - Environment name
@@ -101,7 +108,7 @@ public class ConfigReader {
 		}
 		return configurations;
 	}
-	
+
 	/**
 	 * Returns the Configurations of given environments by configuration type
 	 * @param envName
@@ -114,17 +121,20 @@ public class ConfigReader {
 		for (Configuration configuration : configurations) {
 			if (configuration.getType().equals(configType)) {
 				filterConfigs.add(configuration);
-			}	
+			}
 		}
 		return filterConfigs;
 	}
-	
+
 	/**
 	 * loads the configuration xml as input stream
 	 * @param xmlStream
+	 * @throws IOException
+	 * @throws SAXException
+	 * @throws ParserConfigurationException
 	 * @throws Exception
 	 */
-	protected void initXML(InputStream xmlStream) throws Exception {
+	protected void initXML(InputStream xmlStream) throws IOException, ParserConfigurationException, SAXException {
 		try {
 			if (xmlStream == null) {
 				xmlStream = this.getClass().getClassLoader().getResourceAsStream("configuration.xml");
@@ -134,24 +144,27 @@ public class ConfigReader {
 			try {
 				xmlStream.close();
 			} catch (IOException e) {
-				throw new Exception(e);
+				throw new IOException(e);
 			}
 		}
 	}
-	
+
 	/**
-	 * Creating Dom object to parse the configuration xml 
+	 * Creating Dom object to parse the configuration xml
 	 * @param xmlStream
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 * @throws Exception
 	 */
-	private void parseXML(InputStream xmlStream) throws Exception {
+	private void parseXML(InputStream xmlStream) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		domFactory.setNamespaceAware(false);
 		DocumentBuilder builder = domFactory.newDocumentBuilder();
 		document = builder.parse(xmlStream);
 		parseDocument(document);
 	}
-	
+
 	/**
 	 * parse the configuration xml
 	 * @param document
@@ -160,13 +173,13 @@ public class ConfigReader {
 		//get a nodelist of environments
 		NodeList environmentList = document.getElementsByTagName("environment");
 		ENV_MAP.clear();
-		
+
 		for(int i = 0 ; i < environmentList.getLength(); i++) {
 
 			//get the environment element
 			Element environment = (Element) environmentList.item(i);
 			String envName = environment.getAttribute("name");
-			
+
 			boolean defaultEnv = Boolean.parseBoolean(environment.getAttribute("default"));
 			if (defaultEnv) {
 				defaultEnvironment = envName;
@@ -175,11 +188,11 @@ public class ConfigReader {
 			ENV_MAP.put(envName, environment);
 		}
 	}
-	
+
 	protected Document getDocument() {
 		return document;
 	}
-	
+
 	/**
 	 * return the environments
 	 * @return
@@ -187,7 +200,7 @@ public class ConfigReader {
 	protected Map<String, Element> getEnviroments() {
 		return ENV_MAP;
 	}
-	
+
 	/**
 	 * return the environment element for the given Environment name
 	 * @param envName
@@ -196,7 +209,7 @@ public class ConfigReader {
 	protected Element getEnvironment(String envName) {
 		return ENV_MAP.get(envName);
 	}
-	
+
 	/**
 	 * return the property of the given configuration
 	 * @param configNode
@@ -216,11 +229,11 @@ public class ConfigReader {
 		}
 		return props;
 	}
-	
+
 	public File getConfigFile() {
 		return configFile;
 	}
-	
+
 	public String getConfigAsJSON(String envName, String configType) {
 		if (envName == null) {
 			envName = getDefaultEnvName();
@@ -234,7 +247,7 @@ public class ConfigReader {
 				json = gson.toJson(properties, Properties.class);
 			}
 		}
-		return json;	
+		return json;
 	}
- 
+
 }
