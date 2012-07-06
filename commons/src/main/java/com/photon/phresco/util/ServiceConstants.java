@@ -73,7 +73,10 @@ public interface ServiceConstants {
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "{0} operation is not allowed";
 	String ERROR_MSG_NOT_FOUND = "Content Not Found";
 	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
-	String REST_QUERY_TECHID = "tech-id";
+	String REST_QUERY_TECHID = "techId";
+	String REST_QUERY_TYPE = "type";
+	String REST_QUERY_TYPE_MODULE = "module";
+	String REST_QUERY_TYPE_JS = "js";
 	
 	 /*
      * Constants for MongoDB Collections
