@@ -33,7 +33,6 @@ import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.ldap.api.LDAPManager;
 import com.photon.phresco.ldap.impl.LDAPManagerImpl;
-import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.util.Credentials;
 import com.photon.phresco.util.Utility;
 
@@ -64,11 +63,9 @@ class ConfigFactory {
 	
     private static final String SERVER_CONFIG_FILE = "server.config";
     private static LDAPManager ldapManager 				= null;
-    private static ServerConfiguration serverConfig     = null;
 
     public static synchronized LDAPManager getLDAPManager() throws PhrescoException {
-        if (serverConfig == null) {
-        	
+        if (ldapManager == null) {
             ldapManager = new LDAPManagerImpl(loadProperties(SERVER_CONFIG_FILE));
         }
         
