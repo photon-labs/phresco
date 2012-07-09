@@ -41,7 +41,7 @@ public class AuthenticationUtil {
 			String cacheTTL = properties.getProperty(AUTH_TOKEN_CACHE_TIME); 
 			Long tokenIdleTime = new Long(cacheTTL);
 			tokenCache = CacheBuilder.newBuilder()
-					.expireAfterAccess(tokenIdleTime, TimeUnit.SECONDS).build();
+					.expireAfterAccess(tokenIdleTime, TimeUnit.MINUTES).build();
 		} catch (NumberFormatException e) {
 			throw new PhrescoException(e);
 		} catch (FileNotFoundException e) {

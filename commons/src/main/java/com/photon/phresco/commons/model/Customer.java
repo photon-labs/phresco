@@ -41,13 +41,13 @@ public class Customer extends Element {
 	private String name;
 	private String description;
 
-	String address;
-	String country;
-	String state;
-	String zipcode;
-	String contactNumber;
-	String fax;
-	String helpText;
+	private String address;
+	private String country;
+	private String state;
+	private String zipcode;
+	private String contactNumber;
+	private String fax;
+	private String helpText;
 
 
 	public Customer() {

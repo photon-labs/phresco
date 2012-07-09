@@ -235,10 +235,6 @@ public class Archetypes extends ServiceBaseAction {
 		}
 		return success;
 	}
-	public String cancel() {
-		S_LOGGER.debug("Entering Method Archetypes.cancel()");
-		return COMP_ARCHETYPE_CANCEL;
-	}
 
 	public String getName() {
 		return name;

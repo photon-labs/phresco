@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,11 +38,11 @@ import com.photon.phresco.exception.PhrescoException;
 
 public class ArchiveUtil {
 	public enum ArchiveType {ZIP, TAR, TARGZ	}
-	
+
 	public static void createArchive(String sourcePath, String destPath, ArchiveType archiveType) throws PhrescoException {
 		createArchive(new File(sourcePath), new File(destPath), archiveType);
 	}
-	
+
 	public static void createArchive(File sourcePath, File destPath, ArchiveType archiveType) throws PhrescoException {
 		if (archiveType.equals(ArchiveType.ZIP)) {
 			createZip(sourcePath, destPath);
@@ -67,7 +67,7 @@ public class ArchiveUtil {
 			throw new PhrescoException(e);
 		}
 	}
-	
+
 	private static void createTar(File sourcePath, File destPath) throws PhrescoException {
 		TarArchiver tarArchiver = new TarArchiver();
 		tarArchiver.addDirectory(sourcePath);
@@ -80,19 +80,19 @@ public class ArchiveUtil {
 			throw new PhrescoException(e);
 		}
 	}
-	
+
 	private static void createTarGZ(File sourcePath, File destPath) {
-		
+
 	}
-	
+
 	public static void extractArchive(String sourcePath, String destPath, ArchiveType archiveType) throws PhrescoException {
 		extractArchive(new File(sourcePath), new File(destPath), null, archiveType);
 	}
-	
+
 	public static void extractArchive(String sourcePath, String destPath, String folderNameInArchive, ArchiveType archiveType) throws PhrescoException {
 		extractArchive(new File(sourcePath), new File(destPath), folderNameInArchive, archiveType);
 	}
-	
+
 	public static void extractArchive(File sourcePath, File destPath, String folderNameInArchive, ArchiveType archiveType) throws PhrescoException {
 		ConsoleLogger logger = new ConsoleLogger();
 		if (archiveType.equals(ArchiveType.ZIP)) {
@@ -111,7 +111,7 @@ public class ArchiveUtil {
 		zipUnArchiver.enableLogging(logger);
 		zipUnArchiver.setSourceFile(sourcePath);
 		if (!destPath.exists()) {
-			FileUtils.mkdir(destPath.getAbsolutePath());	
+			FileUtils.mkdir(destPath.getAbsolutePath());
 		}
 		zipUnArchiver.setDestDirectory(destPath);
 		if(StringUtils.isEmpty(folderNameInArchive)){
@@ -120,7 +120,7 @@ public class ArchiveUtil {
 			zipUnArchiver.extract(folderNameInArchive,destPath);
 		}
 	}
-	
+
 	private static void extractTar(File sourcePath, File destPath, Logger logger) {
 		TarUnArchiver tarUnArchiver = new TarUnArchiver();
 		tarUnArchiver.enableLogging(logger);
@@ -131,7 +131,7 @@ public class ArchiveUtil {
 		tarUnArchiver.setDestDirectory(destPath);
 		tarUnArchiver.extract();
 	}
-	
+
 	private static void extractTarGZip(File sourcePath, File destPath, Logger logger) {
 		TarGZipUnArchiver tarGZipUnArchiver = new TarGZipUnArchiver();
 		tarGZipUnArchiver.enableLogging(logger);
@@ -142,22 +142,18 @@ public class ArchiveUtil {
 		tarGZipUnArchiver.setDestDirectory(destPath);
 		tarGZipUnArchiver.extract();
 	}
-	
+
 	public void say() {
 		ConsoleLoggerManager clm = new ConsoleLoggerManager();
 		   String className = clm.getClass().getName().replace('.', '/');
 		   String classJar =  clm.getClass().getResource("/" + className + ".class").toString();
-		   if (classJar.startsWith("jar:")) {
-		     System.out.println("*** running from jar!");
-		   }
-		   System.out.println(classJar);
 		 }
-	
+
 	public static void main(String[] args) throws PhrescoException {
 //		ArchiveUtil.createArchive("c:/temp", "c:/temp/test.zip", ArchiveType.ZIP);
 //		ArchiveUtil.extractArchive("c:/temp/test.zip", "c:/temp/test", ArchiveType.ZIP);
 		ArchiveUtil au = new ArchiveUtil();
 		au.say();
 	}
-	
+
 }

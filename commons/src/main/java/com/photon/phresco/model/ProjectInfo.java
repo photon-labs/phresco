@@ -198,7 +198,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	}
 
 
-	public ProjectInfo clone(){
+	public ProjectInfo clone()throws CloneNotSupportedException{
 		ProjectInfo infos = new ProjectInfo();
 		infos.setApplication(application);
 		infos.setCode(code);

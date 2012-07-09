@@ -79,7 +79,7 @@
 			} else {
 				isPilotSelected = false;
 			}
-			alert("inside document ready before calling getPilotProjectModules()..");
+//			alert("inside document ready before calling getPilotProjectModules()..");
 			getPilotProjectModules(isPilotSelected);
 		}
 

@@ -340,71 +340,34 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path(REST_API_MODULES)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findModules() {
+	public Response findModules(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_TYPE) String type) {
 		S_LOGGER.debug("Entered into ComponentService.findModules()");
 		
+		List<ModuleGroup> foundModules = new ArrayList<ModuleGroup>();
 		try {
-			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
-			if(modulesList != null) {
-				return  Response.status(Response.Status.OK).entity(modulesList).build();
+			
+			if(techId != null && type != null && type.equals(REST_QUERY_TYPE_MODULE)) {
+				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE);
+				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+				return Response.status(Response.Status.OK).entity(foundModules).build();
+			}
+			
+			if(techId != null && type != null && type.equals(REST_QUERY_TYPE_JS)) {
+				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS);
+				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+				return Response.status(Response.Status.OK).entity(foundModules).build();
+			}
+			
+			if(techId != null && type != null) {
+				foundModules = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 		} catch(Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, MODULES_COLLECTION_NAME);
 		}
-		return Response.status(Response.Status.NO_CONTENT).build();
+		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 	
-	/**
-	 * Get Module By Given TechId
-	 * @param techId
-	 * @return
-	 */
-	@GET
-	@Path(REST_API_MODULESBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getdModulesById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.getdModulesById(String techId)");
-		
-		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
-		try {
-			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
-			
-			for (ModuleGroup moduleGroup : modulesList) {
-				if(moduleGroup.getTechId().equals(techId) && moduleGroup.getType().equals("module")) {
-					modules.add(moduleGroup);
-				}
-			}
-		} catch(Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00005, MODULES_COLLECTION_NAME);
-		}
-		return Response.status(Response.Status.OK).entity(modules).build();
-	}
-	
-	/**
-	 * Get JsLibrary By Given TechId
-	 * @param techId
-	 * @return
-	 */
-	@GET
-	@Path(REST_API_JSBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getJsById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.getJsById(String techId)");
-		
-		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
-		try {
-			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
-			
-			for (ModuleGroup moduleGroup : modulesList) {
-				if(moduleGroup.getTechId().equals(techId) && moduleGroup.getType().equals("js")) {
-					modules.add(moduleGroup);
-				}
-			}
-		} catch(Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00005, MODULES_COLLECTION_NAME);
-		}
-		return Response.status(Response.Status.OK).entity(modules).build();
-	}
 	
 	/**
 	 * Creates the list of modules
@@ -537,45 +500,23 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path(REST_API_PILOTS)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findPilots() {
+	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findPilots()");
-		
-		try {
-			List<ProjectInfo> pilotList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
-			 if(pilotList != null) {
-				 return  Response.status(Response.Status.OK).entity(pilotList).build();
-			 } 
-		} catch (Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00005, PILOTS_COLLECTION_NAME);
-		}
-    	
-    	return Response.status(Response.Status.NO_CONTENT).build();
-	}
-	
-	/**
-	 * Get Pilot By Given TechId
-	 * @param techId
-	 * @return
-	 */
-	@GET
-	@Path(REST_API_PILOTSBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPilotById(@PathParam(REST_API_PATH_PARAM_ID) String techId) {
-		S_LOGGER.debug("Entered into getPilotById(String techId)");
-		
 		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		try {
 			List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
-			for (ProjectInfo projectInfo : pilotsList) {
-				if(projectInfo.getTechnology().getId().equals(techId)) {
-					infos.add(projectInfo);
+			if(techId != null) {
+				for (ProjectInfo projectInfo : pilotsList) {
+					if(projectInfo.getTechnology().getId().equals(techId)) {
+						infos.add(projectInfo);
+					}
 				}
+				return Response.status(Response.Status.OK).entity(infos).build();
 			}
-		} 
-		 catch (Exception e) {
+			return Response.status(Response.Status.OK).entity(pilotsList).build();
+		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, PILOTS_COLLECTION_NAME);
 		}
-    	return Response.status(Response.Status.OK).entity(infos).build();
 	}
 	
 	/**
@@ -711,25 +652,18 @@ public class ComponentService extends DbService implements ServiceConstants {
 	public Response findServers(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findServers()");
 		
-		List<Server> serverByTech = new ArrayList<Server>();
+		List<Server> serverList = new ArrayList<Server>();
 		try {
-			List<Server> serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
-			if(serverList != null) {
+			serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
 				if(techId != null && !techId.isEmpty()) {
-					for (Server server : serverList) {
-						List<String> technologies = server.getTechnologies();
-						if(technologies.contains(techId)) {
-							serverByTech.add(server);
-						}
-					}
-					return Response.status(Response.Status.OK).entity(serverByTech).build();
+					Criteria criteria = Criteria.where("technologies").in(techId);
+					serverList= mongoOperation.find(SERVERS_COLLECTION_NAME, new Query(criteria), Server.class);
+					return Response.status(Response.Status.OK).entity(serverList).build();
 				}
 			return  Response.status(Response.Status.OK).entity(serverList).build();
-			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SERVERS_COLLECTION_NAME);
 		}
-		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
 	/**
@@ -864,48 +798,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	public Response findDatabases(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findDatabases()");
 		
-		List<Database> dbByTech = new ArrayList<Database>();
+		List<Database> databaseList = new ArrayList<Database>();
 		try {
-			List<Database> databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-			if(databaseList != null) {
+			databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
 				if(techId != null && !techId.isEmpty()) {
-					for (Database database : databaseList) {
-						List<String> technologies = database.getTechnologies();
-						if(technologies.contains(techId)) {
-							dbByTech.add(database);
-						}
-					}
-					return Response.status(Response.Status.OK).entity(dbByTech).build();
+					Criteria criteria = Criteria.where("technologies").in(techId);
+					databaseList= mongoOperation.find(DATABASES_COLLECTION_NAME, new Query(criteria), Database.class);
+					return Response.status(Response.Status.OK).entity(databaseList).build();
 				}
 			return  Response.status(Response.Status.OK).entity(databaseList).build();
-			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, DATABASES_COLLECTION_NAME);
 		}
-		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
-	/**
-	 * Get Database By Given TechId
-	 * @param tech
-	 * @return 
-	 */
-	@GET
-	@Path(REST_API_DATABASESBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDatabaseById(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
-		S_LOGGER.debug("Entered into ComponentService.getDatabaseById(String techId)");
-		
-		List<Database> databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-		List<Database> databaseList1 = new ArrayList<Database>();
-		for (Database database : databaseList) {
-			List<String> technologies = database.getTechnologies();
-			if(technologies.contains(tech)) {
-				databaseList1.add(database);
-			}
-		}
-		return Response.status(Response.Status.CREATED).entity(databaseList1).build();
-	}
 	
 	/**
 	 * Creates the list of databases
@@ -1040,48 +946,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	public Response findWebServices(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findWebServices()");
 		
-		List<WebService> webServiceByTech = new ArrayList<WebService>();
+		List<WebService> webServiceList = new ArrayList<WebService>();
 		try {
-			List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
-			if(webServiceList != null) {
+			webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
 				if(techId != null && !techId.isEmpty()) {
-					for (WebService webService : webServiceList) {
-						List<String> technologies = webService.getTechnologies();
-						if(technologies.contains(techId)) {
-							webServiceByTech.add(webService);
-						}
-					}
-					return Response.status(Response.Status.OK).entity(webServiceByTech).build();
+					Criteria criteria = Criteria.where("technologies").in(techId);
+					webServiceList= mongoOperation.find(WEBSERVICES_COLLECTION_NAME, new Query(criteria), WebService.class);
+					return Response.status(Response.Status.OK).entity(webServiceList).build();
 				}
 			return  Response.status(Response.Status.OK).entity(webServiceList).build();
-			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, WEBSERVICES_COLLECTION_NAME);
 		}
-		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
-	/**
-	 * Get WebService By Given TechId
-	 * @param techId
-	 * @return 
-	 */
-	@GET
-	@Path(REST_API_WEBSERVICESBYID + REST_API_PATH_ID)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getWebServiceById(@PathParam(REST_API_PATH_PARAM_ID) String tech) {
-		S_LOGGER.debug("Entered into ComponentService.getWebServiceById(String techId)");
-		
-		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
-		List<WebService> webServiceList1 = new ArrayList<WebService>();
-		for (WebService wservice : webServiceList) {
-			List<String> technologies = wservice.getTechnologies();
-			if(technologies.contains(tech)) {
-				webServiceList1.add(wservice);
-			}
-		}
-		return Response.status(Response.Status.CREATED).entity(webServiceList1).build();
-	}
 	
 	/**
 	 * Creates the list of webservices

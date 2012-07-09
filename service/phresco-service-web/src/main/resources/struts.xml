@@ -78,10 +78,6 @@
             <result type="json" />
         </action>
 		
-		<action name="archetypeCancel" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="cancel">
-            <result name="archetypeCancel">/admin/pages/components/archetype/list.jsp</result>
-        </action>
-        
         <action name="archetypeEdit" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="edit">
 			<result name="archetypeAdd">/admin/pages/components/archetype/add.jsp</result>
         </action>
@@ -111,10 +107,6 @@
 			<result type="json" />
         </action>
 		
-		<action name="applicationCancel" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="cancel">
-            <result name="applicationCancel">/admin/pages/components/application/list.jsp</result>
-        </action>
-        
         <action name="applicationEdit" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="edit">
 			<result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
         </action>

@@ -98,8 +98,8 @@ public class Reports implements Serializable{
 
 	public static final Reports SUREFIRE_REPORT = new Reports(
 			SiteMessages.getString("Reports.surefireReport.display.name") ,
-			SiteMessages.getString("Reports.surefireReport.group.id"), 
 			SiteMessages.getString("Reports.surefireReport.artifact.id"), 
+			SiteMessages.getString("Reports.surefireReport.group.id"), 
 			SiteMessages.getString("Reports.surefireReport.version")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 

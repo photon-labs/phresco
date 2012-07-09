@@ -150,17 +150,20 @@
 			            <%
 			                List<ApplicationType> appTypes = (List<ApplicationType>) request.getAttribute(FrameworkConstants.SESSION_APPLICATION_TYPES);
 			                String checkedStr = "";
-			                for(ApplicationType applicationType : appTypes) {
-			                    String name = applicationType.getName();
-			                    String displayName = applicationType.getDisplayName();
-			                    
-			                    if(selectedInfo != null) {
-			                        checkedStr = name.equals(selectedInfo.getApplication()) ? "checked" : "";
-			                    }
+			                if (CollectionUtils.isNotEmpty(appTypes)) {
+				                for(ApplicationType applicationType : appTypes) {
+				                    String name = applicationType.getName();
+				                    
+				                    if(selectedInfo != null) {
+				                        checkedStr = name.equals(selectedInfo.getApplication()) ? "checked" : "";
+				                    }
 			            %>
 			                <input type="radio" name="application" id="<%= name %>" value="<%= name %>" <%= checkedStr %> <%= disabled %>/> 
-			                <span class="textarea_span"><%= displayName %></span>
-			            <% } %>
+			                <span class="textarea_span"><%= name %></span>
+			            <% 
+			            		}
+			                }
+			            %>
 		            </li>
 		        </ul>
 		    </div>
@@ -263,7 +266,7 @@
     function checkDefault() {
         var $radios = $("input[name='application']");
         if ($radios.is(':checked') === false) {
-            $radios.filter("[value='apptype-webapp']").attr('checked', true);
+            $radios.filter("[value='Web Application']").attr('checked', true);
         }
         changeApplication();
     }
