@@ -98,7 +98,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<plugin>
 					<groupId>com.photon.phresco.plugins</groupId>
 					<artifactId>drupal-maven-plugin</artifactId>
-					<version>1.2.0.5001-SNAPSHOT</version>
+					<version>1.2.0.6001-SNAPSHOT</version>
 						<executions>
 							<execution>
 							<phase>validate</phase>
@@ -161,12 +161,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
 			<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
 			<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
-			<sonar.phpCodesniffer.skip>true</sonar.phpCodesniffer.skip> 
 			<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
 			<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
 			<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
 			<sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
 			<sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
 			<sonar.phase>validate</sonar.phase>
+			<sonar.phpCodesniffer.standardArgument>Drupal</sonar.phpCodesniffer.standardArgument>
     </properties>
 </project>

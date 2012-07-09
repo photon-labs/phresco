@@ -376,3 +376,19 @@
 	    	$('#siteaccordion_active').attr("id", "");   	
 	    });
 	}
+	
+	function isAllCheckBoxCheked(tagControlId) {
+		if (!$("tbody#" + tagControlId + " input[type=checkbox]:not(:checked)").length) {
+			 return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function isAtleastOneCheckBoxCheked(tagControlId) {
+		if ($("tbody." + tagControlId + " input[type=checkbox]:checked").length > 0) {
+			 return true;
+		} else {
+			return false;
+		}
+	}

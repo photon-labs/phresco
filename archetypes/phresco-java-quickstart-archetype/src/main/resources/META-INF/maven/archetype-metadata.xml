@@ -43,6 +43,12 @@
 			</includes> 
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+			</includes> 
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src/test/java/com/photon/phresco/testcases</directory> 
 			<includes> 
 				<include>HelloWorldTest.java</include> 

@@ -36,20 +36,24 @@
 package com.photon.phresco.service.dependency.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.pom.AndroidTestPOMUpdater;
-import com.photon.phresco.service.pom.POMUpdater;
 import com.photon.phresco.util.TechnologyTypes;
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;
 
 /**
@@ -67,7 +71,6 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private String ANDROID_VERSION = "android.version";
 	private String POM_FILE = "pom.xml";
-	private String PROPERTIES = "properties";
 
 	/**
 	 * @param dependencyManager
@@ -100,7 +103,16 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 			}
 		}
 		updateAndroidVersion(path, info);
-		POMUpdater.updatePOM(path, technology);
+	     try {
+	    	 List<ModuleGroup> modules = technology.getModules();
+	    	 if((CollectionUtils.isNotEmpty(modules)) && modules != null) {
+	    		 updatePOMModules(path, modules);
+	    	 }
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (PhrescoPomException e) {
+			e.printStackTrace();
+		}
 		AndroidTestPOMUpdater.updatePOM(path);
 		if (technology.getId().equals(TechnologyTypes.ANDROID_HYBRID)) {
 			extractJsLibraries(path, info.getTechnology().getJsLibraries());
@@ -109,7 +121,28 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 
 	@Override
 	protected String getModulePathKey() {
-		return null;
+		return "";
+	}
+	
+	private void updatePOMModules(File path, List<com.photon.phresco.model.ModuleGroup> modules)
+	throws PhrescoException, JAXBException, PhrescoPomException {
+		try {
+			if (isDebugEnabled) {
+				S_LOGGER.debug("extractModules() path=" + path.getPath());
+			}
+			File pomFile = new File(path, "pom.xml");
+			if (pomFile.exists()) {
+				PomProcessor processor = new PomProcessor(pomFile);
+				for (com.photon.phresco.model.ModuleGroup module : modules) {
+					if (module != null) {
+						processor.addDependency(module.getGroupId(), module.getArtifactId(), module.getVersions().get(0).getVersion());
+					}
+				}
+				processor.save();
+			}
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		}
 	}
 
 	public void updateAndroidVersion(File path, ProjectInfo info) throws PhrescoException {

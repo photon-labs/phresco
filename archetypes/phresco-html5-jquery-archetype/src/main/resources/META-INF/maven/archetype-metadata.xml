@@ -76,21 +76,21 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/java</directory> 
+			<directory>src/test/java/com/photon/phresco/service</directory> 
 			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/java</directory> 
-			<includes>
-				<include>AllTest.java</include>
+				<include>TestCase.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/test/qunit/js/HelloWorld/widgets</directory> 
 			<includes>
 				<include>HelloWorldTest.js</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>src/test/qunit/js/com/qunit</directory> 
+			<includes>
+				<include>AllTest.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
