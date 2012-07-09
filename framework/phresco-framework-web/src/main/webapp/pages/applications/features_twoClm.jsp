@@ -264,6 +264,15 @@
 					                            if (leftModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
 												  	descContent = leftModule.getDoc(DocumentationType.DESCRIPTION).getContent();
 												}
+					                            
+					                            String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+												String url = "";
+												String featureUrl = "";
+												if(StringUtils.isEmpty(featureUrl)) {
+													url = "images/right1.png";
+												} else {
+													url = serverUrl + featureUrl;
+												}
 												  
 												String helpTextContent = "";
 												if (leftModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
@@ -292,7 +301,7 @@
 														</td>
 														<td class="editFeatures_td2">
 															<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= leftModule.getName() %></a>
+															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= leftModule.getName() %></a>
 														</td>
 														<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 													</tr>
@@ -382,6 +391,15 @@
 												if (rightModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
 												  	descContent = rightModule.getDoc(DocumentationType.DESCRIPTION).getContent();
 												}
+												
+												String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+												String url = "";
+												String featureUrl = "";
+												if(StringUtils.isEmpty(featureUrl)) {
+													url = "images/right1.png";
+												} else {
+													url = serverUrl + featureUrl;
+												}
 												  
 												String helpTextContent = "";
 												if (rightModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
@@ -423,7 +441,7 @@
 														</td>
 														<td class="editFeatures_td2">
 															<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= rightModule.getId()%>" id="<%= helpTextContent %>"><%= rightModule.getName() %></a>
+															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= rightModule.getId()%>" id="<%= helpTextContent %>"><%= rightModule.getName() %></a>
 														</td>
 														<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 													</tr>

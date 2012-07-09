@@ -245,7 +245,15 @@
 												if (module.getDoc(DocumentationType.DESCRIPTION) != null) { 
 												  	descContent = module.getDoc(DocumentationType.DESCRIPTION).getContent();
 												}
-												  
+												
+												String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+												String url = "";
+												String featureUrl = "";
+												if(StringUtils.isEmpty(featureUrl)) {
+													url = "images/right1.png";
+												} else {
+													url = serverUrl + featureUrl;
+												}
 												String helpTextContent = "";
 												if (module.getDoc(DocumentationType.HELP_TEXT) != null) { 
 												  	helpTextContent = module.getDoc(DocumentationType.HELP_TEXT).getContent();
@@ -283,7 +291,7 @@
 														</td>
 														<td class="editFeatures_td2">
 														<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= module.getId()%>" id="<%= helpTextContent %>"><%= module.getName() %></a>
+															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= module.getId()%>" id="<%= helpTextContent %>"><%= module.getName() %></a>
 														</td>
 														<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 													</tr>
