@@ -13,6 +13,13 @@ and reducing the development time.
 Phresco, with the aid of Responsive Web Design (RWD), helps developers in exposing the myriad functionalities developed
 using Phresco across multiple channels i.e., web, mobile, tablet and kiosk with minimum resizing, panning and scrolling
 efforts.
+
+Phresco supports some of the most popular technologies. For almost every technology included in Phresco, tools are provided 
+to support the critical stages in a project development such as Code Validation, Testing, Build & Deployment, 
+Continuous Integration and Remote Deployment.
+
+<b>In the technology matrix below, the list of technologies and the availability of tools for the critical stages of project development are illustrated.</b> 
+
 <table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
    <td style="text-align:center"><b>Supported Technologies</b></td>
@@ -148,8 +155,10 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>Drupal</b></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
+	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
@@ -165,9 +174,9 @@ efforts.
 
 <tr>
 	<td style="text-align:left"><b>WordPress</b></td>
-	<td style="text-align:center"&nbsp;</img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:center"></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
 	height="15px" style="text-align:center"></img></td>
 	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 

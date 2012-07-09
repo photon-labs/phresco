@@ -66,19 +66,20 @@ public class AdminService extends DbService implements ServiceConstants {
      * @return
      */
     @GET
-    @Path(REST_API_CUSTOMERS)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path (REST_API_CUSTOMERS)
+    @Produces (MediaType.APPLICATION_JSON)
     public Response findCustomer() {
     	S_LOGGER.debug("Entered into AdminService.findCustomer()");
     	
     	try {
     		List<Customer> customerList = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME , Customer.class);
-    		if(customerList != null) {
+    		if (customerList != null) {
     			return Response.status(Response.Status.OK).entity(customerList).build();
     		} 
     	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00005, CUSTOMERS_COLLECTION_NAME);
 		}
+    	
     	return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
     }
 
@@ -89,7 +90,7 @@ public class AdminService extends DbService implements ServiceConstants {
      */
     @POST
     @Consumes (MediaType.APPLICATION_JSON)
-    @Path(REST_API_CUSTOMERS)
+    @Path (REST_API_CUSTOMERS)
     public Response createCustomer(List<Customer> customer) {
     	S_LOGGER.debug("Entered into AdminService.createCustomer(List<Customer> customer)");
     	
@@ -98,6 +99,7 @@ public class AdminService extends DbService implements ServiceConstants {
     	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+    	
     	return Response.status(Response.Status.OK).build();
     }
 
@@ -109,13 +111,14 @@ public class AdminService extends DbService implements ServiceConstants {
     @PUT
     @Consumes (MediaType.APPLICATION_JSON)
     @Produces (MediaType.APPLICATION_JSON)
-    @Path(REST_API_CUSTOMERS)
+    @Path (REST_API_CUSTOMERS)
     public Response updateCustomer(List<Customer> customers) {
     	S_LOGGER.debug("Entered into AdminService.updateCustomer(List<Customer> customers)");
     	
     	try {
     		for (Customer customer : customers) {
-        		Customer updateCustomers = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(customer.getId())), Customer.class);
+        		Customer updateCustomers = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME , 
+        		        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(customer.getId())), Customer.class);
         		if (updateCustomers != null) {
         			mongoOperation.save(CUSTOMERS_COLLECTION_NAME, customer);
         		}
@@ -123,6 +126,7 @@ public class AdminService extends DbService implements ServiceConstants {
     	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+    	
     	return Response.status(Response.Status.OK).entity(customers).build();
     }
 
@@ -132,7 +136,7 @@ public class AdminService extends DbService implements ServiceConstants {
      * @throws PhrescoException 
      */
     @DELETE
-    @Path(REST_API_CUSTOMERS)
+    @Path (REST_API_CUSTOMERS)
     public void deleteCustomer(List<Customer> deleteCustomers) throws PhrescoException {
     	S_LOGGER.debug("Entered into AdminService.deleteCustomer(List<Customer> deleteCustomers)");
     	
@@ -147,19 +151,21 @@ public class AdminService extends DbService implements ServiceConstants {
      * @return
      */
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path(REST_API_CUSTOMERS + REST_API_PATH_ID)
+    @Produces (MediaType.APPLICATION_JSON)
+    @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response getCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
     	S_LOGGER.debug("Entered into AdminService.getCustomer(String id)");
     	
     	try {
-    		Customer customer = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Customer.class);
-    		if(customer != null) {
+    		Customer customer = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, 
+    		        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Customer.class);
+    		if (customer != null) {
     			return Response.status(Response.Status.OK).entity(customer).build();
     		}
     	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00005, CUSTOMERS_COLLECTION_NAME);
     	}
+    	
     	return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
     }
     
@@ -171,18 +177,19 @@ public class AdminService extends DbService implements ServiceConstants {
     @PUT
     @Consumes (MediaType.APPLICATION_JSON)
     @Produces (MediaType.APPLICATION_JSON)
-    @Path(REST_API_CUSTOMERS + REST_API_PATH_ID)
+    @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response updateCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id , Customer updateCustomers) {
     	S_LOGGER.debug("Entered into AdminService.updateCustomer(String id , Customer updateCustomers)");
     	
     	try {
-    		if(id.equals(updateCustomers.getId())) {
+    		if (id.equals(updateCustomers.getId())) {
         		mongoOperation.save(CUSTOMERS_COLLECTION_NAME, updateCustomers);
         		return Response.status(Response.Status.OK).entity(updateCustomers).build();
-        	} 
-    	}catch (Exception e) {
+         	} 
+    	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+    	
     	return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
     }
 
@@ -193,7 +200,7 @@ public class AdminService extends DbService implements ServiceConstants {
      * @return 
      */
     @DELETE
-    @Path(REST_API_CUSTOMERS + REST_API_PATH_ID)
+    @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response deleteCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
     	S_LOGGER.debug("Entered into AdminService.deleteCustomer(String id)");
     	
@@ -202,6 +209,7 @@ public class AdminService extends DbService implements ServiceConstants {
     	} catch (Exception e) {
     		throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
     	}
+    	
     	return Response.status(Response.Status.OK).build();
     }
 
@@ -211,19 +219,20 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_VIDEOS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_VIDEOS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findVideos() {
 		S_LOGGER.debug("Entered into AdminService.findVideos()");
 		
 		try {
 			List<VideoInfo> videoList = mongoOperation.getCollection(VIDEOS_COLLECTION_NAME , VideoInfo.class);
-			if(videoList != null) {
+			if (videoList != null) {
 				return Response.status(Response.Status.OK).entity(videoList).build(); 
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, VIDEOS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.OK).entity(ERROR_MSG_NOT_FOUND).build(); 
 	}
 
@@ -234,7 +243,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_VIDEOS)
+	@Path (REST_API_VIDEOS)
 	public Response createVideo(List<VideoInfo> videos) {
 		S_LOGGER.debug("Entered into AdminService.createVideo(List<VideoInfo> videos)");
 		
@@ -243,6 +252,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
@@ -254,13 +264,14 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_VIDEOS)
+	@Path (REST_API_VIDEOS)
 	public Response updateVideos(List<VideoInfo> videos) {
 		S_LOGGER.debug("Entered into AdminService.updateVideos(List<VideoInfo> videos)");
 		
 		try {
 			for (VideoInfo video : videos) {
-				VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(video.getId())), VideoInfo.class);
+				VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(video.getId())), VideoInfo.class);
 				if (videoInfo  != null) {
 					mongoOperation.save(VIDEOS_COLLECTION_NAME, video);
 				}
@@ -268,6 +279,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(videos).build();
 	}
 
@@ -292,19 +304,21 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_VIDEOS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_VIDEOS + REST_API_PATH_ID)
 	public Response getVideo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into AdminService.getVideo(String id)");
 		
 		try {
-			VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), VideoInfo.class);
-			if(videoInfo != null) {
+			VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), VideoInfo.class);
+			if (videoInfo != null) {
 				return Response.status(Response.Status.OK).entity(videoInfo).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, VIDEOS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -316,18 +330,19 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_VIDEOS + REST_API_PATH_ID)
+	@Path (REST_API_VIDEOS + REST_API_PATH_ID)
 	public Response updateVideo(@PathParam(REST_API_PATH_PARAM_ID) String id , VideoInfo videoInfo) {
 		S_LOGGER.debug("Entered into AdminService.updateVideo(String id , VideoInfo videoInfo)");
 		
 		try {
-			if(id.equals(videoInfo.getId())) {
+			if (id.equals(videoInfo.getId())) {
 				mongoOperation.save(VIDEOS_COLLECTION_NAME, videoInfo);
 				return Response.status(Response.Status.OK).entity(videoInfo).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		 
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 
@@ -347,6 +362,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
@@ -356,8 +372,8 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_USERS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_USERS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findUsers() {
 		S_LOGGER.debug("Entered into AdminService.findUsers()");
 		
@@ -372,6 +388,7 @@ public class AdminService extends DbService implements ServiceConstants {
 			for (UserDAO userDAO : userList) {
 				users.add(converter.convertDAOToObject(userDAO, mongoOperation));
 			}
+			
 			return Response.status(Response.Status.OK).entity(users).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, USERS_COLLECTION_NAME);
@@ -385,7 +402,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_USERS)
+	@Path (REST_API_USERS)
 	public Response createUser(List<User> users) {
 		S_LOGGER.debug("Entered into AdminService.createUser(List<User> users)");
 		
@@ -399,6 +416,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
@@ -410,13 +428,14 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_USERS)
+	@Path (REST_API_USERS)
 	public Response updateUsers(List<User> users) {
 		S_LOGGER.debug("Entered into AdminService.updateUsers(List<User> users)");
 		
 		try {
 			for (User user : users) {
-				User userInfo = mongoOperation.findOne(USERS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(user.getId())), User.class);
+				User userInfo = mongoOperation.findOne(USERS_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(user.getId())), User.class);
 				if (userInfo  != null) {
 					mongoOperation.save(USERS_COLLECTION_NAME, user);
 				}
@@ -424,6 +443,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(users).build();
 	}
 
@@ -433,7 +453,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_USERS)
+	@Path (REST_API_USERS)
 	public void deleteUsers(List<User> users) throws PhrescoException {
 		S_LOGGER.debug("Entered into AdminService.deleteUsers(List<User> users)");
 		
@@ -448,19 +468,21 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_USERS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response getUser(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into AdminService.getUser(String id)");
 		
 		try {
-			User userInfo = mongoOperation.findOne(USERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), User.class);
-			if(userInfo != null) {
+			User userInfo = mongoOperation.findOne(USERS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), User.class);
+			if (userInfo != null) {
 				return Response.status(Response.Status.OK).entity(userInfo).build(); 
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, USERS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -472,18 +494,19 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_USERS + REST_API_PATH_ID)
+	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response updateUser(@PathParam(REST_API_PATH_PARAM_ID) String id , User user) {
 		S_LOGGER.debug("Entered into AdminService.updateUser(String id , User user)");
 		
 		try {
-			if(id.equals(user.getId())) {
+			if (id.equals(user.getId())) {
 				mongoOperation.save(USERS_COLLECTION_NAME, user);
 				return Response.status(Response.Status.OK).entity(user).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build(); 
 	}
 	
@@ -493,7 +516,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_USERS + REST_API_PATH_ID)
+	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response deleteUser(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into AdminService.deleteUser(String id)");
 		
@@ -502,6 +525,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
@@ -511,19 +535,20 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_DOWNLOADS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_DOWNLOADS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findDownloadInfo() {
 		S_LOGGER.debug("Entered into AdminService.findDownloadInfo()");
 		
 		try {
 			List<DownloadInfo> downloadList = mongoOperation.getCollection(DOWNLOAD_COLLECTION_NAME , DownloadInfo.class);
-			if(downloadList != null) {
+			if (downloadList != null) {
 				return Response.status(Response.Status.OK).entity(downloadList).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DOWNLOAD_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 
@@ -534,7 +559,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DOWNLOADS)
+	@Path (REST_API_DOWNLOADS)
 	public Response createDownloadInfo(List<DownloadInfo> downloadInfos) {
 		S_LOGGER.debug("Entered into AdminService.createDownloadInfo(List<DownloadInfo> downloadInfos)");
 		
@@ -543,6 +568,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 
@@ -554,13 +580,14 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DOWNLOADS)
+	@Path (REST_API_DOWNLOADS)
 	public Response updateDownloadInfo(List<DownloadInfo> downloads) {
 		S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(List<DownloadInfo> downloads)");
 		
 		try {
 			for (DownloadInfo download : downloads) {
-				DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(download.getId())), DownloadInfo.class);
+				DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(download.getId())), DownloadInfo.class);
 				if (downloadInfo  != null) {
 					mongoOperation.save(DOWNLOAD_COLLECTION_NAME, download);
 				}
@@ -568,6 +595,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(downloads).build();
 	}
 
@@ -577,7 +605,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_DOWNLOADS)
+	@Path (REST_API_DOWNLOADS)
 	public void deleteDownloadInfo(List<DownloadInfo> downloadInfos) throws PhrescoException {
 		S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(List<DownloadInfo> downloadInfos)");
 		
@@ -592,19 +620,21 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_DOWNLOADS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response getDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into AdminService.getDownloadInfo(String id)");
 		
 		try {
-			DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);
-			if(downloadInfo != null) {
+			DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);
+			if (downloadInfo != null) {
 				return Response.status(Response.Status.OK).entity(downloadInfo).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, DOWNLOAD_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -616,20 +646,19 @@ public class AdminService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DOWNLOADS + REST_API_PATH_ID)
+	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response updateDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id , DownloadInfo downloadInfo) {
 		S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(String id , DownloadInfo downloadInfos)");
 		
 		try {
-			if(id.equals(downloadInfo.getId())) {
+			if (id.equals(downloadInfo.getId())) {
 				mongoOperation.save(DOWNLOAD_COLLECTION_NAME, downloadInfo);
 				return Response.status(Response.Status.OK).entity(downloadInfo).build();
-			} else {
-				
-			}
+			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 	
@@ -639,7 +668,7 @@ public class AdminService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_DOWNLOADS + REST_API_PATH_ID)
+	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response deleteDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(String id)");
 		
@@ -648,6 +677,7 @@ public class AdminService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
  }
