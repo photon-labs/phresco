@@ -14,8 +14,11 @@ Phresco, with the aid of Responsive Web Design (RWD), helps developers in exposi
 using Phresco across multiple channels i.e., web, mobile, tablet and kiosk with minimum resizing, panning and scrolling
 efforts.
 
-Phresco supports some of the most popular technologies. For almost every technology included in Phresco, tools are provided to support the critical stages in a project development such as  Code Validation, Testing, Build & Deployment, Continuous Integration and Remote Deployment. 
-In the technology matrix below, the list of technologies and the availability of tools for the critical stages of project development are illustrated. 
+Phresco supports some of the most popular technologies. For almost every technology included in Phresco, tools are provided 
+to support the critical stages in a project development such as Code Validation, Testing, Build & Deployment, 
+Continuous Integration and Remote Deployment.
+
+<b>In the technology matrix below, the list of technologies and the availability of tools for the critical stages of project development are illustrated.</b> 
 
 <table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
