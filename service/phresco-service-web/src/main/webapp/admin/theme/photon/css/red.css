@@ -813,12 +813,12 @@ label {
 }
 
 /* after service properties*/
-.shortcutWh label{
-	color:#DB050D;;
+.shortcutWh label {
+	color: #878181;
 }
 
 .shortcutWh:hover label {
-	color:#878181;
+	color: #DB050D;
 }
 
 .userInfo label {

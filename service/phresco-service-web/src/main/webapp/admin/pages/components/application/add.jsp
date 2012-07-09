@@ -52,9 +52,9 @@
 <form class="form-horizontal customer_list">
   <h4 class="hdr">
    <% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<s:label for="description" key="lbl.hdr.comp.apln.edit.title" theme="simple" />
+				<s:label key="lbl.hdr.comp.apln.edit.title" theme="simple" />
 		<% } else { %>
-	            <s:label for="description" key="lbl.hdr.comp.apln.title" theme="simple"/>	
+	            <s:label key="lbl.hdr.comp.apln.title" theme="simple"/>	
 	    <% } %>
      </h4>       
 	<div class="content_adder">

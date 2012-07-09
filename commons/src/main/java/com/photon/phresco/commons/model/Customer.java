@@ -38,9 +38,6 @@ public class Customer extends Element {
 	private String repoURL;
 	private int type;
 	private int status;
-	private String name;
-	private String description;
-
 	private String address;
 	private String country;
 	private String state;
@@ -72,22 +69,6 @@ public class Customer extends Element {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getCreationDate() {

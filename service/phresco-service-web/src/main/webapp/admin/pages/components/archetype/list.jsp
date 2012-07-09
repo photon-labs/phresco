@@ -55,16 +55,16 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.name"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.name"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.ver"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.ver"  theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.apptype"  theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.apptype"  theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>

@@ -22,24 +22,25 @@
 
 <%@ page import="org.apache.commons.lang.StringUtils"%>
 
-<%@ page import="com.photon.phresco.commons.model.Customer" %>
+<%@ page import="com.photon.phresco.commons.model.Customer"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <%
-	Customer customer = (Customer)request.getAttribute("customer");
-	String fromPage = (String) request.getAttribute("fromPage");
+	Customer customer = (Customer)request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER);
+	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
 %>
 
 <form class="form-horizontal customer_list">
 	<h4>
 		<% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<s:label for="description" key="lbl.hdr.adm.cust.edit.tilte" theme="simple" />
+				<s:label key="lbl.hdr.adm.cust.edit.tilte" theme="simple" />
 		<% } else { %>
-				<s:label for="description" key="lbl.hdr.adm.cust.tilte" theme="simple" />
+				<s:label key="lbl.hdr.adm.cust.tilte" theme="simple" />
 		<% } %>
 	</h4>
 	<div class="content_adder">
 		<div class="control-group" id ="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
@@ -49,7 +50,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
@@ -58,7 +59,7 @@
 		</div>
 
 		<div class="control-group" id ="mailControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.mail'/>
 			</label>
 			<div class="controls">
@@ -71,7 +72,7 @@
 		</div>
 
 		<div class="control-group" id="addresControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.adrs'/>
 			</label>
 			<div class="controls">
@@ -81,7 +82,7 @@
 		</div>
 
 		<div class="control-group" id="conControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cntry'/>
 			</label>
 			<div class="controls">
@@ -339,7 +340,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.cust.state'/>
 			</label>
 			<div class="controls">
@@ -348,7 +349,7 @@
 		</div>
 
 		<div class="control-group" id= "zipControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.zipcode'/>
 			</label>
 			<div class="controls">
@@ -358,7 +359,7 @@
 		</div>
 
 		<div class="control-group" id= "numControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cont'/>
 			</label>
 			<div class="controls">
@@ -368,7 +369,7 @@
 		</div>
 
 		<div class="control-group" id= "faxControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.fax'/>
 			</label>
 			<div class="controls">
@@ -378,7 +379,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.cust.hlptxt'/>
 			</label>
 			<div class="controls">
@@ -387,7 +388,7 @@
 		</div>
 
 		<div class="control-group" id="licenControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.linctype'/>
 			</label>
 			<div class="controls">
@@ -402,7 +403,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.cust.Vlddatefrom'/>
 			</label>
 			<div class="controls">
@@ -411,7 +412,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 					<s:text name='lbl.hdr.adm.cust.vlddateto'/>
 			</label>
 			<div class="controls">
@@ -420,7 +421,7 @@
 		</div>
 
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 					<s:text name='lbl.hdr.adm.cust.url'/>
 			</label>
 			<div class="controls">
@@ -435,7 +436,7 @@
 		<% } else { %>
 				<input type="button" id="customerSave" class="btn btn-primary" onclick="clickSave('customerSave', $('#subcontainer'), 'Creating Customer');" value="<s:text name='lbl.hdr.comp.save'/>"/>
 		<% } %>
-		<input type="button" id="customerCancel" class="btn btn-primary" onclick="loadContent('customerCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="customerCancel" class="btn btn-primary" onclick="loadContent('customerList', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 	
 	<!-- Hidden Fields -->

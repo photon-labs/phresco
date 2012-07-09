@@ -50,7 +50,6 @@
 		<s:label for="input01" key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
 		<div class="controls customer_select_div">
 			<select id="select01" class="customer_listbox">
-				<option>- select -</option>
 				<option>Walgreens</option>
 				<option>NBO</option>
 				<option>Cengage</option>

@@ -1,4 +1,27 @@
-<%@ taglib uri="/struts-tags" prefix="s" %>
+<%--
+  ###
+  Service Web Archive
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  --%>
+  
+<%@ taglib uri="/struts-tags" prefix="s"%>
+
+<%@ page import="com.photon.phresco.commons.model.User"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <!DOCTYPE html>
 <html>
@@ -111,6 +134,14 @@
 		</script>
 	</head>
 	<body>
+        <%
+            User userInfo = (User) session.getAttribute(ServiceUIConstants.SESSION_USER_INFO);
+            String displayName = "";
+            if (userInfo != null) {
+                displayName = userInfo.getDisplayName();
+            }
+        %>
+	   
 		<div class="modal-backdrop fade in popupalign"></div>
 	    
 	    <div id="progressBar" class="progress active progress_bar">
@@ -127,9 +158,15 @@
 					<div class="nav_slider">
 						<nav class="headerInnerTop">
 							<ul>
-								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard"><s:label for="description" key="lbl.hdr.dash"  theme="simple"/></a></li>
-								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components"><s:label for="description" key="lbl.hdr.comp" theme="simple"/></a></li>
-								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu"><s:label for="description" key="lbl.hdr.adm"  theme="simple"/></a></li>
+								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard">
+								    <s:label key="lbl.hdr.dash"  theme="simple"/></a>
+                                </li>
+								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components">
+								    <s:label key="lbl.hdr.comp" theme="simple"/></a>
+								</li>
+								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu">
+								    <s:label key="lbl.hdr.adm"  theme="simple"/></a>
+								</li>
 							</ul>
 							<div class="close_links" id="close_links">
 								<a href="JavaScript:void(0);">
@@ -143,25 +180,25 @@
 					<div class="quick_lnk" id="quick_lnk">
 						<a href="JavaScript:void(0);">
 							<div class="quick_links_outer">
-								<s:label for="description" key="lbl.hdr.quicklink" theme="simple"/>
+								<s:label key="lbl.hdr.quicklink" theme="simple"/>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div id="signOut" class="signOut">
 					<li class="usersettings">
-						<s:label for="description" key="lbl.hdr.usersettings" theme="simple"/>
+						<%= displayName %>
 						<img src="images/downarrow.png" class="arrow">
-						  <div class="userInfo">&nbsp;<s:label for="description" key="lbl.usrset.skins"  theme="simple"/>&nbsp;
-								<a class="styles" href="#"  rel="theme/photon/css/red.css">
-									<img src="images/red_themer.jpg" class="skinImage">
-								</a>
-								<a class="styles" href="#"  rel="theme/photon/css/blue.css">
-									<img src="images/blue_themer.jpg" class="skinImage">
-								</a>
-						 </div>
-						 <div class="userInfo"><a href="#" class="abtPopUp about"><s:label for="description" key="lbl.usrset.abtservice" theme="simple"/></a></div>
-						 <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label for="description" key="lbl.usrset.signout" theme="simple"/></a></div>
+                        <div class="userInfo">&nbsp;<s:label key="lbl.usrset.skins"  theme="simple"/>&nbsp;
+                            <a class="styles" href="#"  rel="theme/photon/css/red.css">
+								<img src="images/red_themer.jpg" class="skinImage">
+							</a>
+							<a class="styles" href="#"  rel="theme/photon/css/blue.css">
+								<img src="images/blue_themer.jpg" class="skinImage">
+							</a>
+                        </div>
+                        <div class="userInfo"><a href="#" class="abtPopUp about"><s:label key="lbl.usrset.abtservice" theme="simple"/></a></div>
+                        <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label key="lbl.usrset.signout" theme="simple"/></a></div>
 					</li>
 				</div>
 			</div>
@@ -180,14 +217,14 @@
 							class="arrow_links_top">
 							<span class="shortcutRed" id=""></span>
 							<span class="shortcutWh" id="">
-							<s:label for="description" key="lbl.hdr.topleftnavlab"  theme="simple"/></span>
+							<s:label key="lbl.hdr.topleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="righttopnav">
 						<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 							class="shortcutRed" id=""></span><span class="shortcutWh"
 							id="">
-							<s:label for="description" key="lbl.hdr.toprightnavlab" theme="simple"/></span>
+							<s:label key="lbl.hdr.toprightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>
@@ -204,13 +241,13 @@
 				   <div class="leftbotnav">
 						<a href="JavaScript:void(0);" id="forum" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id=""></span><span
-							class="shortcutWh" id=""><s:label for="description" key="lbl.hdr.bottomleftnavlab"  theme="simple"/></span>
+							class="shortcutWh" id=""><s:label key="lbl.hdr.bottomleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="rightbotnav">
 						<a href="JavaScript:void(0);" id="settings" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id="lf_tp1"></span><span
-							class="shortcutWh" id="lf_tp2"><s:label for="description" key="lbl.hdr.bottomrightnavlab" theme="simple"/></span>
+							class="shortcutWh" id="lf_tp2"><s:label key="lbl.hdr.bottomrightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>

@@ -178,10 +178,6 @@
 			<result type="json" />
         </action>
 		
-		<action name="customerCancel" class="com.photon.phresco.service.admin.actions.admin.Customers" method="cancel">
-			<result name="customerCancel">/admin/pages/admin/customer/list.jsp</result>
-        </action>
-        
         <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="edit">
 			<result name="customerEdit">/admin/pages/admin/customer/add.jsp</result>
         </action>

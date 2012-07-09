@@ -29,10 +29,6 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
-import com.photon.phresco.service.client.api.ServiceClientConstant;
-import com.photon.phresco.service.client.api.ServiceContext;
-import com.photon.phresco.service.client.api.ServiceManager;
-import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
@@ -82,6 +78,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
+		
 		return COMP_APPTYPE_ADD;
 	}
 
@@ -91,6 +88,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
+				
 				return SUCCESS;
 			}
 			List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
@@ -106,6 +104,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 		}catch (Exception e) {
 			throw new PhrescoException(e);
 		}
+		
 		return  list();
 	}
 
@@ -155,6 +154,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
 			isError = true;
 		}
+		
 		return isError;
 	}
 

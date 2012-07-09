@@ -44,7 +44,7 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
     
     private static ServiceManager serviceManager = null;
     
-    public ServiceManager getServiceManager() {
+    protected ServiceManager getServiceManager() {
 		return serviceManager;
 	}
 
@@ -65,13 +65,11 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
 		return serviceManager.getUserInfo();
     }
     
-    
-    public HttpServletRequest getHttpRequest() {
+    protected HttpServletRequest getHttpRequest() {
         return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
     }
     
-    public HttpSession getHttpSession() {
+    protected HttpSession getHttpSession() {
         return getHttpRequest().getSession();
     }
-    
 }
