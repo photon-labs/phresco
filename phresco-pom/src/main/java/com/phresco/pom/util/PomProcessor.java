@@ -940,6 +940,14 @@ public class PomProcessor {
 		}
 	}
 	
+	public void removeAllReportingPlugin(){
+		com.phresco.pom.model.Reporting.Plugins plugins = model.getReporting().getPlugins();
+		if(model.getReporting() == null && plugins == null){
+			return;
+		}
+		model.getReporting().getPlugins().getPlugin().removeAll(getReportPlugin());
+	}
+	
 	/**
 	 * Save.
 	 *
