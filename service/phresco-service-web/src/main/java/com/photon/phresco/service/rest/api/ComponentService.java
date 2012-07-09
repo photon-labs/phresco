@@ -3,7 +3,6 @@ package com.photon.phresco.service.rest.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -32,7 +30,10 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
+import com.photon.phresco.service.api.Converter;
 import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.service.converters.ConvertersFactory;
+import com.photon.phresco.service.dao.ApplicationTypeDAO;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
@@ -49,40 +50,53 @@ public class ComponentService extends DbService implements ServiceConstants {
 	/**
 	 * Returns the list of apptypes
 	 * @return
+	 * @throws PhrescoException 
 	 */
 	@GET
-	@Path(REST_API_APPTYPES)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findAppTypes() {
+	@Path (REST_API_APPTYPES)
+	@Produces (MediaType.APPLICATION_JSON)
+	public Response findAppTypes() throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.findAppTypes()");
 		
+		List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>();
 		try {
-			List<ApplicationType> appTypeList = mongoOperation.getCollection(APPTYPES_COLLECTION_NAME , ApplicationType.class);
-			if(appTypeList != null) {
-				return Response.status(Response.Status.OK).entity(appTypeList).build();
-			} 
-		} catch (Exception e) {
+		    List<ApplicationTypeDAO> appDAOList = mongoOperation.getCollection(APPTYPESDAO_COLLECTION_NAME, ApplicationTypeDAO.class);
+	        Converter<ApplicationTypeDAO, ApplicationType> converter = 
+	            (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);   
+	        for (ApplicationTypeDAO applicationTypeDAO : appDAOList) {
+	            applicationTypes.add(converter.convertDAOToObject(applicationTypeDAO, mongoOperation));
+	        }
+	        return Response.status(Response.Status.OK).entity(applicationTypes).build();
+		}
+		catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, APPTYPES_COLLECTION_NAME);
 		}
-    	return Response.status(Response.Status.OK).build();
 	}
 	
 	/**
 	 * Creates the list of apptypes
 	 * @param appTypes
 	 * @return 
+	 * @throws PhrescoException 
 	 */
 	@POST
-	@Consumes ({MediaType.APPLICATION_JSON, MediaType.MULTIPART_FORM_DATA})
-	@Path(REST_API_APPTYPES)
-	public Response createAppTypes(@Context HttpServletRequest request, List<ApplicationType> appTypes) {
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Path (REST_API_APPTYPES)
+	public Response createAppTypes(List<ApplicationType> appTypes) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
 		
 		try {
-			mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
+			Converter<ApplicationTypeDAO, ApplicationType> converter = 
+			    (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);			
+			List<ApplicationTypeDAO> appTypeDAOs = new ArrayList<ApplicationTypeDAO>();
+			for (ApplicationType applicationType : appTypes) {
+				appTypeDAOs.add(converter.convertObjectToDAO(applicationType));
+			}
+			mongoOperation.insertList(APPTYPESDAO_COLLECTION_NAME , appTypeDAOs);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
@@ -94,13 +108,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_APPTYPES)
+	@Path (REST_API_APPTYPES)
 	public Response updateAppTypes(List<ApplicationType> appTypes) {
 		S_LOGGER.debug("Entered into ComponentService.updateAppTypes(List<ApplicationType> appTypes)");
 		
 		try {
 			for (ApplicationType appType : appTypes) {
-				ApplicationType applnType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(appType.getId())), ApplicationType.class);
+				ApplicationType applnType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(appType.getId())), ApplicationType.class);
 				if (applnType != null) {
 					mongoOperation.save(APPTYPES_COLLECTION_NAME, appType);
 				}
@@ -108,6 +123,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(appTypes).build();
 	}
 	
@@ -117,7 +133,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_APPTYPES)
+	@Path (REST_API_APPTYPES)
 	@Produces (MediaType.TEXT_PLAIN)
 	public void deleteAppTypes(List<ApplicationType> appTypes) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteAppTypes(List<ApplicationType> appTypes)");
@@ -133,19 +149,21 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_APPTYPES + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response getApptype(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getApptype(String id)");
 		
 		try {
-			ApplicationType appType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
+			ApplicationType appType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
 			if(appType != null) {
 				return Response.status(Response.Status.OK).entity(appType).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, APPTYPES_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	
@@ -157,18 +175,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_APPTYPES + REST_API_PATH_ID)
+	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response updateAppType(@PathParam(REST_API_PATH_PARAM_ID) String id , ApplicationType appType) {
 		S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , ApplicationType appType)");
 		
 		try {
-			if(id.equals(appType.getId())) {
+			if (id.equals(appType.getId())) {
 				mongoOperation.save(APPTYPES_COLLECTION_NAME, appType);
 				return Response.status(Response.Status.OK).entity(appType).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, UPDATE);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(appType).build();
 	}
 	
@@ -178,7 +197,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_APPTYPES + REST_API_PATH_ID)
+	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response deleteAppType(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteAppType(String id)");
 		
@@ -187,6 +206,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -195,19 +215,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_SETTINGS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_SETTINGS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findSettings() {
 		S_LOGGER.debug("Entered into ComponentService.findSettings()");
 		
 		try {
 			List<SettingsTemplate> settingsList = mongoOperation.getCollection(SETTINGS_COLLECTION_NAME , SettingsTemplate.class);
-			if(settingsList != null) {
+			if (settingsList != null) {
 				return Response.status(Response.Status.OK).entity(settingsList).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SETTINGS_COLLECTION_NAME);
 		}
+		
     	return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	
@@ -218,7 +239,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SETTINGS)
+	@Path (REST_API_SETTINGS)
 	public Response createSettings(List<SettingsTemplate> settings) {
 		S_LOGGER.debug("Entered into ComponentService.createSettings(List<SettingsTemplate> settings)");
 		
@@ -227,6 +248,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
@@ -238,13 +260,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SETTINGS)
+	@Path (REST_API_SETTINGS)
 	public Response updateSettings(List<SettingsTemplate> settings) {
 		S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
 		
 		try {
 			for (SettingsTemplate settingTemplate : settings) {
-				SettingsTemplate settingTemplateInfo = mongoOperation.findOne(SETTINGS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(settingTemplate.getId())), SettingsTemplate.class);
+				SettingsTemplate settingTemplateInfo = mongoOperation.findOne(SETTINGS_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(settingTemplate.getId())), SettingsTemplate.class);
 				if (settingTemplateInfo != null) {
 					mongoOperation.save(SETTINGS_COLLECTION_NAME, settingTemplate);
 				}
@@ -252,6 +275,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(settings).build();
 	}
 	
@@ -261,13 +285,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_SETTINGS)
+	@Path (REST_API_SETTINGS)
 	public void deleteSettings(List<SettingsTemplate> settings) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
 		throw phrescoException;
+		
 	}
 	
 	/**
@@ -276,19 +301,21 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_SETTINGS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response getSettingsTemplate(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getSettingsTemplate(String id)");
 		
 		try {
-			SettingsTemplate settingTemplate = mongoOperation.findOne(SETTINGS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class); 
-			if(settingTemplate != null) {
+			SettingsTemplate settingTemplate = mongoOperation.findOne(SETTINGS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class); 
+			if (settingTemplate != null) {
 				return Response.status(Response.Status.OK).entity(settingTemplate).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SETTINGS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -300,18 +327,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SETTINGS + REST_API_PATH_ID)
+	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response updateSetting(@PathParam(REST_API_PATH_PARAM_ID) String id , SettingsTemplate settingsTemplate) {
 		S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , SettingsTemplate settingsTemplate)");
 		
 		try {
-			if(id.equals(settingsTemplate.getId())) {
+			if (id.equals(settingsTemplate.getId())) {
 				mongoOperation.save(SETTINGS_COLLECTION_NAME, settingsTemplate);
 				return Response.status(Response.Status.OK).entity(settingsTemplate).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(settingsTemplate).build();
 	}
 	
@@ -321,7 +349,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_SETTINGS + REST_API_PATH_ID)
+	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response deleteSettingsTemplate(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteSettingsTemplate(String id)");
 		
@@ -330,6 +358,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -338,33 +367,34 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_MODULES)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_MODULES)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findModules(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_TYPE) String type) {
 		S_LOGGER.debug("Entered into ComponentService.findModules()");
 		
 		List<ModuleGroup> foundModules = new ArrayList<ModuleGroup>();
 		try {
 			
-			if(techId != null && type != null && type.equals(REST_QUERY_TYPE_MODULE)) {
+			if (techId != null && type != null && type.equals(REST_QUERY_TYPE_MODULE)) {
 				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE);
 				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
-			if(techId != null && type != null && type.equals(REST_QUERY_TYPE_JS)) {
+			if (techId != null && type != null && type.equals(REST_QUERY_TYPE_JS)) {
 				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS);
 				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
-			if(techId != null && type != null) {
+			if (techId != null && type != null) {
 				foundModules = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 		} catch(Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, MODULES_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 	
@@ -376,7 +406,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_MODULES)
+	@Path (REST_API_MODULES)
 	public Response createModules(List<ModuleGroup> modules) {
 		S_LOGGER.debug("Entered into ComponentService.createModules(List<ModuleGroup> modules)");
 		
@@ -385,6 +415,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
@@ -396,13 +427,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_MODULES)
+	@Path (REST_API_MODULES)
 	public Response updateModules(List<ModuleGroup> modules) {
 		S_LOGGER.debug("Entered into ComponentService.updateModules(List<ModuleGroup> modules)");
 		
-		try{
+		try {
 			for (ModuleGroup moduleGroup : modules) {
-				ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(moduleGroup.getId())), ModuleGroup.class);
+				ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(moduleGroup.getId())), ModuleGroup.class);
 				if (module != null) {
 					mongoOperation.save(MODULES_COLLECTION_NAME, moduleGroup);
 				}
@@ -410,6 +442,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(modules).build();
 	}
 	
@@ -419,7 +452,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_MODULES)
+	@Path (REST_API_MODULES)
 	public void deleteModules(List<ModuleGroup> modules) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteModules(List<ModuleGroup> modules)");
 		
@@ -434,14 +467,15 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_MODULES + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response getModule(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getModule(String id)");
 		
 		try {
-			ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
-			if(module != null) {
+			ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
+			if (module != null) {
 				return  Response.status(Response.Status.OK).entity(module).build();
 			} 
 		} catch (Exception e) {
@@ -460,18 +494,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_MODULES + REST_API_PATH_ID)
+	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response updatemodule(@PathParam(REST_API_PATH_PARAM_ID) String id , ModuleGroup module) {
 		S_LOGGER.debug("Entered into ComponentService.updatemodule(String id , ModuleGroup module)");
 		
 		try {
-			if(id.equals(module.getId())) {
+			if (id.equals(module.getId())) {
 				mongoOperation.save(PILOTS_COLLECTION_NAME, module);
 				return  Response.status(Response.Status.OK).entity(module).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(module).build();
 	}
 	
@@ -481,7 +516,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_MODULES + REST_API_PATH_ID)
+	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response deleteModules(String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteModules(String id)");
 		
@@ -490,6 +525,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -498,16 +534,17 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_PILOTS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_PILOTS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findPilots()");
+		 
 		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		try {
 			List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
 			if(techId != null) {
 				for (ProjectInfo projectInfo : pilotsList) {
-					if(projectInfo.getTechnology().getId().equals(techId)) {
+					if (projectInfo.getTechnology().getId().equals(techId)) {
 						infos.add(projectInfo);
 					}
 				}
@@ -526,7 +563,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_PILOTS)
+	@Path (REST_API_PILOTS)
 	public Response createPilots(List<ProjectInfo> projectInfos) {
 		S_LOGGER.debug("Entered into ComponentService.createPilots(List<ProjectInfo> projectInfos)");
 		
@@ -535,6 +572,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
@@ -546,7 +584,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_PILOTS)
+	@Path (REST_API_PILOTS)
 	public Response updatePilots(List<ProjectInfo> pilots) {
 		S_LOGGER.debug("Entered into ComponentService.updatePilots(List<ProjectInfo> pilots)");
 		
@@ -560,6 +598,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(pilots).build();
 	}
 	
@@ -569,7 +608,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_PILOTS)
+	@Path (REST_API_PILOTS)
 	public void deletePilots(List<ProjectInfo> pilots) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deletePilots(List<ProjectInfo> pilots)");
 		
@@ -584,19 +623,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_PILOTS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response getPilot(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getPilot(String id)");
 		
 		try {
 			ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
-			if(projectInfo != null) {
+			if (projectInfo != null) {
 				return Response.status(Response.Status.OK).entity(projectInfo).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, PILOTS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -609,18 +649,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_PILOTS + REST_API_PATH_ID)
+	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response updatePilot(@PathParam(REST_API_PATH_PARAM_ID) String id , ProjectInfo pilot) {
 		S_LOGGER.debug("Entered into ComponentService.updatePilot(String id, ProjectInfo pilot)");
 		
 		try {
-			if(id.equals(pilot.getId())) {
+			if (id.equals(pilot.getId())) {
 				mongoOperation.save(PILOTS_COLLECTION_NAME, pilot);
 				return  Response.status(Response.Status.OK).entity(pilot).build();
 			}
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(pilot).build();
 	}
 	
@@ -630,7 +671,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_PILOTS + REST_API_PATH_ID)
+	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response deletePilot(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deletePilot(String id)");
 		
@@ -639,6 +680,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -647,20 +689,21 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_SERVERS)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_SERVERS)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findServers(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findServers()");
 		
 		List<Server> serverList = new ArrayList<Server>();
 		try {
 			serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
-				if(techId != null && !techId.isEmpty()) {
-					Criteria criteria = Criteria.where("technologies").in(techId);
+				if (techId != null && !techId.isEmpty()) {
+					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
 					serverList= mongoOperation.find(SERVERS_COLLECTION_NAME, new Query(criteria), Server.class);
 					return Response.status(Response.Status.OK).entity(serverList).build();
 				}
-			return  Response.status(Response.Status.OK).entity(serverList).build();
+				
+			return  Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SERVERS_COLLECTION_NAME);
 		}
@@ -673,7 +716,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SERVERS)
+	@Path (REST_API_SERVERS)
 	public Response createServers(List<Server> servers) {
 		S_LOGGER.debug("Entered into ComponentService.createServers(List<Server> servers)");
 		
@@ -682,6 +725,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, INSERT);
 		}
+		
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
@@ -693,13 +737,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SERVERS)
+	@Path (REST_API_SERVERS)
 	public Response updateServers(List<Server> servers) {
 		S_LOGGER.debug("Entered into ComponentService.updateServers(List<Server> servers)");
 		
 		try {
 			for (Server server : servers) {
-				Server serverInfo = mongoOperation.findOne(SERVERS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(server.getId())), Server.class);
+				Server serverInfo = mongoOperation.findOne(SERVERS_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(server.getId())), Server.class);
 				if (serverInfo != null) {
 					mongoOperation.save(SERVERS_COLLECTION_NAME , server);
 				}
@@ -707,6 +752,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(servers).build();
 	}
 	
@@ -716,7 +762,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_SERVERS)
+	@Path (REST_API_SERVERS)
 	public void deleteServers(List<Server> servers) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteServers(List<Server> servers)");
 		
@@ -731,19 +777,21 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_SERVERS + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response getServer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getServer(String id)");
 		
 		try {
-			Server server = mongoOperation.findOne(SERVERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
-			if(server != null ){
+			Server server = mongoOperation.findOne(SERVERS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
+			if (server != null ) {
 				return  Response.status(Response.Status.OK).entity(server).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SERVERS_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.OK).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -756,17 +804,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_SERVERS + REST_API_PATH_ID)
+	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response updateServer(@PathParam(REST_API_PATH_PARAM_ID) String id , Server server) {
 		S_LOGGER.debug("Entered into ComponentService.updateServer(String id, Server server)");
+		
 		try {
-			if(id.equals(server.getId())) {
+			if (id.equals(server.getId())) {
 				mongoOperation.save(SERVERS_COLLECTION_NAME, server);
 				return Response.status(Response.Status.OK).entity(server).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 	
@@ -776,7 +826,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_SERVERS + REST_API_PATH_ID)
+	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response deleteServer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteServer(String id)");
 		
@@ -785,6 +835,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -793,20 +844,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_DATABASES)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_DATABASES)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findDatabases(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findDatabases()");
 		
 		List<Database> databaseList = new ArrayList<Database>();
 		try {
 			databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-				if(techId != null && !techId.isEmpty()) {
-					Criteria criteria = Criteria.where("technologies").in(techId);
+				if (techId != null && !techId.isEmpty()) {
+					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
 					databaseList= mongoOperation.find(DATABASES_COLLECTION_NAME, new Query(criteria), Database.class);
 					return Response.status(Response.Status.OK).entity(databaseList).build();
 				}
-			return  Response.status(Response.Status.OK).entity(databaseList).build();
+			return  Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, DATABASES_COLLECTION_NAME);
 		}
@@ -820,7 +871,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DATABASES)
+	@Path (REST_API_DATABASES)
 	public Response createDatabases(List<Database> databases) {
 		S_LOGGER.debug("Entered into ComponentService.createDatabases(List<Database> databases)");
 		
@@ -829,6 +880,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -840,13 +892,14 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DATABASES)
+	@Path (REST_API_DATABASES)
 	public Response updateDatabases(List<Database> databases) {
 		S_LOGGER.debug("Entered into ComponentService.updateDatabases(List<Database> databases)");
 		
 		try {
 			for (Database dataBase : databases) {
-				Database dataBaseInfo = mongoOperation.findOne(DATABASES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(dataBase.getId())), Database.class);
+				Database dataBaseInfo = mongoOperation.findOne(DATABASES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(dataBase.getId())), Database.class);
 				if (dataBaseInfo != null) {
 					mongoOperation.save(DATABASES_COLLECTION_NAME , dataBase);
 				}
@@ -854,6 +907,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(databases).build();
 	}
 	
@@ -863,7 +917,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_DATABASES)
+	@Path (REST_API_DATABASES)
 	public void deleteDatabases(List<Database> databases) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteDatabases(List<Database> databases)");
 		
@@ -878,19 +932,21 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_DATABASES + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response getDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getDatabase(String id)");
 		
 		try {
-			Database database = mongoOperation.findOne(DATABASES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Database.class);
-			if(database != null) {
+			Database database = mongoOperation.findOne(DATABASES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Database.class);
+			if (database != null) {
 				return Response.status(Response.Status.OK).entity(database).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, DATABASES_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -903,18 +959,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_DATABASES + REST_API_PATH_ID)
+	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response updateDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id , Database database) {
 		S_LOGGER.debug("Entered into ComponentService.updateDatabase(String id, Database database)");
 		
 		try {
-			if(id.equals(database.getId())) {
+			if (id.equals(database.getId())) {
 				mongoOperation.save(DATABASES_COLLECTION_NAME, database);
 				return Response.status(Response.Status.OK).entity(database).build(); 
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 	
@@ -924,7 +981,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_DATABASES + REST_API_PATH_ID)
+	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response deleteDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteDatabase(String id)");
 		
@@ -933,6 +990,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -941,20 +999,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_WEBSERVICES)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_WEBSERVICES)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findWebServices(@QueryParam(REST_QUERY_TECHID) String techId) {
 		S_LOGGER.debug("Entered into ComponentService.findWebServices()");
 		
 		List<WebService> webServiceList = new ArrayList<WebService>();
 		try {
 			webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
-				if(techId != null && !techId.isEmpty()) {
-					Criteria criteria = Criteria.where("technologies").in(techId);
+				if (techId != null && !techId.isEmpty()) {
+					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
 					webServiceList= mongoOperation.find(WEBSERVICES_COLLECTION_NAME, new Query(criteria), WebService.class);
 					return Response.status(Response.Status.OK).entity(webServiceList).build();
 				}
-			return  Response.status(Response.Status.OK).entity(webServiceList).build();
+			return  Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, WEBSERVICES_COLLECTION_NAME);
 		}
@@ -968,7 +1026,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
-	@Path(REST_API_WEBSERVICES)
+	@Path (REST_API_WEBSERVICES)
 	public Response createWebServices(List<WebService> webServices) {
 		S_LOGGER.debug("Entered into ComponentService.createWebServices(List<WebService> webServices)");
 		
@@ -977,6 +1035,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -988,7 +1047,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_WEBSERVICES)
+	@Path (REST_API_WEBSERVICES)
 	public Response updateWebServices(List<WebService> webServices) {
 		S_LOGGER.debug("Entered into ComponentService.updateWebServices(List<WebService> webServices)");
 		
@@ -1002,6 +1061,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(webServices).build();
 	}
 	
@@ -1011,7 +1071,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_WEBSERVICES)
+	@Path (REST_API_WEBSERVICES)
 	public void deleteWebServices(List<WebService> webServices) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteWebServices(List<WebService> webServices)");
 		
@@ -1026,19 +1086,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_WEBSERVICES + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response getWebService(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getWebService(String id)");
 		
 		try {
 			WebService webService = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
-			if(webService != null) {
+			if (webService != null) {
 				return Response.status(Response.Status.OK).entity(webService).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, WEBSERVICES_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -1051,18 +1112,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_WEBSERVICES + REST_API_PATH_ID)
+	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response updateWebService(@PathParam(REST_API_PATH_PARAM_ID) String id , WebService webService) {
 		S_LOGGER.debug("Entered into ComponentService.updateWebService(String id, WebService webService)");
 		
 		try {
-			if(id.equals(webService.getId())) {
+			if (id.equals(webService.getId())) {
 				mongoOperation.save(WEBSERVICES_COLLECTION_NAME, webService);
 				return Response.status(Response.Status.OK).entity(webService).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 	
@@ -1072,7 +1134,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_WEBSERVICES + REST_API_PATH_ID)
+	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response deleteWebService(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteWebService(String id)");
 		
@@ -1081,6 +1143,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -1089,19 +1152,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Path(REST_API_TECHNOLOGIES)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path (REST_API_TECHNOLOGIES)
+	@Produces (MediaType.APPLICATION_JSON)
 	public Response findTechnologies() {
 		S_LOGGER.debug("Entered into ComponentService.findTechnologies()");
 		
 		try {
 			List<Technology> techList = mongoOperation.getCollection(TECHNOLOGIES_COLLECTION_NAME , Technology.class);
-			if(techList != null) {
+			if (techList != null) {
 				return Response.status(Response.Status.OK).entity(techList).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, TECHNOLOGIES_COLLECTION_NAME);
 		}
+		
     	return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build(); 
 	}
 	
@@ -1112,14 +1176,18 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@POST
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_TECHNOLOGIES)
-	public Response createTechnologies(List<Technology> technologies) {
+	public Response createTechnologies(@QueryParam(REST_QUERY_TECHID) String appTypeId, List<Technology> technologies) {
 		S_LOGGER.debug("Entered into ComponentService.createTechnologies(List<Technology> technologies)");
 		
 		try {
-			mongoOperation.insertList(TECHNOLOGIES_COLLECTION_NAME , technologies);
+		    for (Technology technology : technologies) {
+                technology.setAppTypeId(appTypeId);
+                mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, technology);
+            }
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 	
@@ -1145,6 +1213,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.OK).entity(technologies).build();
 	}
 	
@@ -1154,7 +1223,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @throws PhrescoException 
 	 */
 	@DELETE
-	@Path(REST_API_TECHNOLOGIES)
+	@Path (REST_API_TECHNOLOGIES)
 	public void deleteTechnologies(List<WebService> technologies) throws PhrescoException {
 		S_LOGGER.debug("Entered into ComponentService.deleteTechnologies(List<WebService> technologies)");
 		
@@ -1169,19 +1238,20 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path(REST_API_TECHNOLOGIES + REST_API_PATH_ID)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response getTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.getTechnology(String id)");
 		
 		try {
 			Technology technology = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
-			if(technology != null) {
+			if (technology != null) {
 				return Response.status(Response.Status.OK).entity(technology).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, TECHNOLOGIES_COLLECTION_NAME);
 		}
+		
 		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
@@ -1194,18 +1264,19 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@PUT
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
-	@Path(REST_API_TECHNOLOGIES + REST_API_PATH_ID)
+	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response updateTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id , Technology technology) {
 		S_LOGGER.debug("Entered into ComponentService.getTechnology(String id, Technology technology)");
 		
 		try {
-			if(id.equals(technology.getId())) {
+			if (id.equals(technology.getId())) {
 				mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, technology);
 				return Response.status(Response.Status.OK).entity(technology).build();
 			} 
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
 		}
+		
 		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
 	}
 	
@@ -1215,7 +1286,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 * @return 
 	 */
 	@DELETE
-	@Path(REST_API_TECHNOLOGIES + REST_API_PATH_ID)
+	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response deleteTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 		S_LOGGER.debug("Entered into ComponentService.deleteTechnology(String id)");
 		
@@ -1224,6 +1295,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
+		
 		return Response.status(Response.Status.OK).build();
 	}
 }

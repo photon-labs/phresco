@@ -96,6 +96,7 @@ public interface ServiceConstants {
 	String TECHNOLOGIES_COLLECTION_NAME = "technologies";
 	String USERDAO_COLLECTION_NAME = "userdaos";
 	String ROLES_COLLECTION_NAME = "roles";
+	String APPTYPESDAO_COLLECTION_NAME = "apptypedao";
 	
 	/*
      * Constants for Exception Message keys
@@ -122,4 +123,10 @@ public interface ServiceConstants {
 	String COLON_DOUBLE_SLASH = "://";
 	String COLON = ":";
 	String SLASH_REST_SLASH_API = "/rest/api";
+	
+	/*
+     * Constants for Fields
+     */
+	String REST_API_FIELD_TECH = "technologies";
+	String REST_API_FIELD_APPID = "appTypeId";
 }

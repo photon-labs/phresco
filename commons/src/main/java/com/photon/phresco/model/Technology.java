@@ -25,10 +25,12 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.photon.phresco.commons.model.Element;
+
 
 @SuppressWarnings("restriction")
 @XmlRootElement
-public class Technology implements Cloneable, Serializable {
+public class Technology extends Element implements Cloneable, Serializable {
 
     /**
      *
