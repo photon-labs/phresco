@@ -33,12 +33,14 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.Action;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
+import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
@@ -191,7 +193,9 @@ public class Features extends FrameworkBaseAction {
 			}
 			getHttpRequest().setAttribute(REQ_CONFIG_SERVER_NAMES, configServerNames);
 			getHttpRequest().setAttribute(REQ_CONFIG_DB_NAMES, configDbNames);
-
+			FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+			getHttpRequest().setAttribute(REQ_SERVER_URL, configuration.getServerPath());
+			
 		} catch (PhrescoException e) {
 			e.printStackTrace();
 			if (debugEnabled) {

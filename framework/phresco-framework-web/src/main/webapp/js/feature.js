@@ -18,14 +18,6 @@
  * ###
  */
 	$("a[name='ModuleDesc']").hover(function() {
-        // Get the current title
-        var title = $(this).attr("title");
-
-        // Store it in a temporary attribute
-        $(this).attr("tmp_title", title);
-
-        // Set the title to nothing so we don't see the tooltips
-        $(this).attr("title","");
         
 		/* Get the tooltip text */
 		var thisId = $(this).attr("id");
@@ -56,11 +48,6 @@
 	},
 
 	function() { // Fired when we leave the element
-        // Retrieve the title from the temporary attribute
-        var title = $(this).attr("tmp_title");
-
-        // Return the title to what it was
-        $(this).attr("title", title);
         $(".twipsy").hide();
     });
 
@@ -142,10 +129,12 @@
 	
 		// Description popup js codes
 		$("a[name='ModuleDesc']").click(function() {
-			var description = $(this).attr("tmp_title");
+			var description = $(this).attr("descrContent");
 			if (description != "") {
+				var imgUrl = $(this).attr("descImage");
 				$("#moduleDescription").empty();
 				$("#moduleDescription").html(description);
+				$("#featureImg").attr("src", imgUrl);
 				enableModuleDesc('block');
 			}
 		});
