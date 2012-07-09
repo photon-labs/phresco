@@ -40,7 +40,7 @@ import com.phresco.pom.site.Reports;
  *
  */
 public class SiteConfigurator {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(SiteConfigurator.class);
 
 	/**
@@ -48,41 +48,43 @@ public class SiteConfigurator {
 	 */
 	private ReportPlugin reportPlugin = null;
 	/**
-	 * @param reports
+	 * @param iterateReport
 	 * @param file
 	 * @return
 	 */
-	public ReportPlugin addReportPlugin(Reports reports,List<ReportCategories> reportCategories,File file) {
+	public ReportPlugin addReportPlugin(List<Reports> report, List<ReportCategories> reportCategories, File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
-			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)== null) {
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID) == null) {
 				processor.addSitePlugin();
 			}
-			if(getReports(file) != null){
-				String groupId = reports.getGroupId();
-				String artifactId = reports.getArtifactId();
-				processor.removeSitePlugin(groupId, artifactId);
+			if(getReports(file) != null) {
+				processor.removeAllReportingPlugin();
 			}
-			reportPlugin = new ReportPlugin();
-			reportPlugin.setGroupId(reports.getGroupId());
-			reportPlugin.setArtifactId(reports.getArtifactId());
-			reportPlugin.setVersion(reports.getVersion());
-			if(reportPlugin.getArtifactId().equals(Reports.PROJECT_INFO.getArtifactId())) {
-				ReportSets reportSets = reportPlugin.getReportSets();
-				ReportSet reportSet = new ReportSet();
-				com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
-				if(reportSets == null){
-					reportPlugin.setReportSets(new ReportSets());
-					if(reportCategories != null){
-					for (ReportCategories reportCategories2 : reportCategories) {
-						reportSet.setReports(repo);		
-						reportSet.getReports().getReport().add(reportCategories2.getName());
-					} reportPlugin.getReportSets().getReportSet().add(reportSet);
-				} 
+
+			for (Reports iterateReport : report) {
+				reportPlugin = new ReportPlugin();
+				reportPlugin.setGroupId(iterateReport.getGroupId());
+				reportPlugin.setArtifactId(iterateReport.getArtifactId());
+				reportPlugin.setVersion(iterateReport.getVersion());
+
+				if(reportPlugin.getArtifactId().equals(Reports.PROJECT_INFO.getArtifactId())) {
+					ReportSets reportSets = reportPlugin.getReportSets();
+					ReportSet reportSet = new ReportSet();
+					com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
+					if(reportSets == null){
+						reportPlugin.setReportSets(new ReportSets());
+						if(reportCategories != null){
+							for (ReportCategories reportCategories2 : reportCategories) {
+								reportSet.setReports(repo);		
+								reportSet.getReports().getReport().add(reportCategories2.getName());
+							} reportPlugin.getReportSets().getReportSet().add(reportSet);
+						} 
+					}
 				}
+				processor.siteReportConfig(reportPlugin);
 			}
-			processor.siteReportConfig(reportPlugin);
-			processor.save();
+				processor.save();
 		} catch (JAXBException e) {
 			LOGGER.debug(e);
 		} catch (IOException e) {
@@ -93,19 +95,6 @@ public class SiteConfigurator {
 		return reportPlugin;
 	}
 
-
-
-
-	/**
-	 * @param reports
-	 * @param file
-	 */
-	public void addReportPlugin(List<Reports> reports,List<ReportCategories> reportCategories,File file){
-		for (Reports iterateReport : reports) {
-			addReportPlugin(iterateReport,reportCategories,file);
-		}
-	}
-	
 	/**
 	 * @param reports
 	 * @param file
@@ -126,18 +115,23 @@ public class SiteConfigurator {
 			LOGGER.debug(e);
 		}
 	}
-	
+
 	/**
 	 * @param file
 	 * @return
+	 * @deprecated
 	 */
+	public void addReportPlugin(List<Reports> reports , File file) {
+		addReportPlugin(reports, null, file);
+	}
+	
 	public List<Reports> getReports(File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
 			List<ReportPlugin> reportPlugin = processor.getReportPlugin();
 			if(reportPlugin != null) {
-			List<Reports> reports = new ArrayList<Reports>();
-			List<ReportCategories> categories = new ArrayList<ReportCategories>();
+				List<Reports> reports = new ArrayList<Reports>();
+				List<ReportCategories> categories = new ArrayList<ReportCategories>();
 				for (ReportPlugin reportPlugin2 : reportPlugin) {
 					Reports reports1 = new Reports();
 					reports1.setGroupId(reportPlugin2.getGroupId());
@@ -150,8 +144,8 @@ public class SiteConfigurator {
 							categories.add(reportCategories);
 							reports1.setReportCategories(categories);
 						}
-						} reports.add(reports1);
-					} 
+					} reports.add(reports1);
+				} 
 				return reports;
 			}
 		} catch (JAXBException e) {
@@ -161,7 +155,7 @@ public class SiteConfigurator {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param file
 	 * @param reportCategories
