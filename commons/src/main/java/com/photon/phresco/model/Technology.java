@@ -40,7 +40,7 @@ public class Technology extends Element implements Cloneable, Serializable {
     private String appTypeId;
 
     private String id;
-
+    
     //Name of the Technology. [PHP, PHP with Drupal]
     private String name;
 
@@ -68,7 +68,8 @@ public class Technology extends Element implements Cloneable, Serializable {
 	private String appJar;
 	private String pluginJar;
 	private List<String> versions;
-
+	private boolean system;
+	
     public Technology() {
         super();
     }
@@ -191,7 +192,15 @@ public class Technology extends Element implements Cloneable, Serializable {
 		this.versionComment = versionComment;
 	}
 
-	public List<String> getAppType() {
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    public List<String> getAppType() {
 		return appType;
 	}
 
