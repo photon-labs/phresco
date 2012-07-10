@@ -239,9 +239,9 @@
     	</div>
     
     <!-- Test case error or Test case failure starts -->	
-	<div id="testCaseErrOrFail" class="modal abtDialog">
+	<div id="testCaseErrOrFail" class="modal confirm">
 		<div class="modal-header">
-			<div class="TestType"></div><a id="closeTestCasePopup" href="#" class="close">&times;</a>
+			<div class="TestType" style="word-wrap: break-word;"></div><a id="closeTestCasePopup" href="#" class="close">&times;</a>
 		</div>
 		<div class="abt_div">
 <!-- 			<div id="testCaseType" class="testCaseType"> -->

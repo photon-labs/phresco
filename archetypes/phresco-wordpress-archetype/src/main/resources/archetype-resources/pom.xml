@@ -30,16 +30,15 @@
 		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
 		<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
 		<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
-		<sonar.phpCodesniffer.skip>true</sonar.phpCodesniffer.skip> 
 		<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
 		<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
 		<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
 		<sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
-		<!--<sonar.phpUnit.mainTestClass>/test/functional/src/test/php/phresco/AllTest.php</sonar.phpUnit.mainTestClass>-->
 		<sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
+		<sonar.phpCodesniffer.skip>WordPress</sonar.phpCodesniffer.skip> 
     </properties>
   
 	<build>
@@ -48,7 +47,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>wordpress-maven-plugin</artifactId>
-				<version>1.2.0.5002-SNAPSHOT</version>
+				<version>1.2.0.6001-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>

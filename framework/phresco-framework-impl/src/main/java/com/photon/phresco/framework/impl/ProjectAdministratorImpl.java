@@ -50,7 +50,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -77,7 +76,6 @@ import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.LogInfo;
-import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
@@ -95,12 +93,14 @@ import com.photon.phresco.util.DownloadTypes;
 import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
+import com.phresco.pom.util.SiteConfigurator;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
-import com.phresco.pom.util.SiteConfigurator;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants {
 
@@ -111,6 +111,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<DownloadInfo> serverDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> dbDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
+	private List<DownloadInfo> toolsDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
+	private List<DownloadInfo> othersDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
@@ -222,11 +224,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.updateProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("updateProject() > info name : " + delta.getName());
-
 		if (StringUtils.isEmpty(delta.getVersion())) {
 			delta.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
-
 		ClientResponse response = null;
 		String techId = delta.getTechnology().getId();
 		if(techId.equals(TechnologyTypes.PHP_DRUPAL6)|| techId.equals(TechnologyTypes.PHP_DRUPAL7)) {
@@ -234,13 +234,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		ProjectInfo projectInfoClone = projectInfo.clone();
-		updateDocument(projectInfo, path);
+		updateDocument(delta, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta,userInfo);
 		if(response.getStatus() == 401){
 			throw new PhrescoException("Session Expired ! Please Relogin.");
 		}
 		else if (flag) {
-			System.out.println("response recieved is... " + response.getStatus());
 			if (response.getStatus() != 200) {
 				throw new PhrescoException("Project updation failed");
 			}
@@ -253,7 +252,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
@@ -297,29 +296,17 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		String techId = delta.getTechnology().getId();
 		File path = new File(Utility.getProjectHome() + File.separator + delta.getCode() + File.separator + POM_FILE);
 		boolean flag1 = techId.equals(TechnologyTypes.JAVA_WEBSERVICE) || techId.equals(TechnologyTypes.JAVA_STANDALONE) || techId.equals(TechnologyTypes.HTML5_WIDGET) || 
-		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET);
-		boolean flag2 = techId.equals(TechnologyTypes.ANDROID_HYBRID) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
+		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		if (flag1) {
 			try {
 				ServerPluginUtil spUtil = new ServerPluginUtil();
 				spUtil.deletePluginFromPom(path);
 				spUtil.addServerPlugin(delta, path);
-				updatePomProject(delta);
+				updatePomProject(projectInfoClone);
 			} catch (Exception e) {
 				throw new PhrescoException(e);
 			}
 		} 
-		if(flag2) {
-			try { 
-				if(projectInfoClone.getTechnology().getModules() != null) {
-					updateAndroidPomProject(projectInfoClone);
-				}
-			} catch (JDOMException e) {
-				throw new PhrescoException(e);
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
-		}
 	}
 
 	/**
@@ -355,16 +342,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if(selectedInfojsLibraries == null && projectInfojsLibraries != null && !projectInfojsLibraries.isEmpty() ) {
 				projectInfo.getTechnology().setJsLibraries(projectInfojsLibraries);
 			}
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw  new PhrescoException(e);
-		}
-		finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
+		} finally {
+			Utility.closeStream(reader);
 		}
 		return projectInfo;
 	}
@@ -480,75 +461,24 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	public String getTechId(String projectCode) throws PhrescoException {
 		return getProject(projectCode).getProjectInfo().getTechnology().getId();
 	}
-
-	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
+	
+	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, PhrescoPomException {
 		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
 		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
+			PomProcessor pomProcessor = new PomProcessor(path);
 			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
 			if(CollectionUtils.isEmpty(modules)){
 				return;
 			}
 			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(moduleGroup.getGroupId()));
-				dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getArtifactId()));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
+				pomProcessor.addDependency(moduleGroup.getGroupId(), moduleGroup.getArtifactId(), moduleGroup.getVersions().get(0).getVersion());
+				pomProcessor.save();
 			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
+			} catch (JAXBException e) {
+				throw new PhrescoException(e);
+			} catch (IOException e) {
+				throw new PhrescoException(e);
 		}
-	}
-	/**
-	 * TODO: need to change this to use Phresco POM processor module.
-	 * @param projectInfo
-	 * @throws PhrescoException
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void updateAndroidPomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
-		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
-			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
-			if(CollectionUtils.isEmpty(modules)){
-				return;
-			}
-			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(getGroupId(projectInfo.getTechnology())));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getId()));
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
-		}
-	}
-
-	private  String getGroupId(Technology technology) {
-		return "modules." + technology.getId() + ".files";
 	}
 
 	@Override
@@ -739,7 +669,48 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 		 return editorDownloadInfos;
 	 }
+	 
+	 @Override
+	 public List<DownloadInfo> getToolsDownloadInfo() throws PhrescoException {
 
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getToolsDownloadInfo()");
+
+		 setDownloadInfoFromService();
+
+		 if (CollectionUtils.isEmpty(downloadInfos)) {
+			 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
+		 }
+		 if (CollectionUtils.isNotEmpty(toolsDownloadInfos)) {
+			 return toolsDownloadInfos;
+		 }
+		 for (DownloadInfo downloadInfo : downloadInfos) {
+			 if (DownloadTypes.TOOLS.equals(downloadInfo.getType())){
+				 toolsDownloadInfos.add(downloadInfo);
+			 }
+		 }
+		 return toolsDownloadInfos;
+	 }
+	 
+	 @Override
+		public List<DownloadInfo> getOtherDownloadInfo() throws PhrescoException {
+			 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getEditorDownloadInfo()");
+
+			 setDownloadInfoFromService();
+
+			 if (CollectionUtils.isEmpty(downloadInfos)) {
+				 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
+			 }
+			 if (CollectionUtils.isNotEmpty(othersDownloadInfos)) {
+				 return othersDownloadInfos;
+			 }
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.OTHERS.equals(downloadInfo.getType())){
+					 othersDownloadInfos.add(downloadInfo);
+				 }
+			 }
+			 return othersDownloadInfos;
+		}
+	 
 	 /**
 	  * This method is to fetch the settings template through REST service
 	  * @return List of settings template stored in the server [Database, Server and Email]
@@ -2105,16 +2076,22 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 	}
 	
-	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+	public List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException {
 		try {
 			SiteConfigurator configurator = new SiteConfigurator();
 			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
-				configurator.addReportPlugin(reportsToBeAdded, file);
-			}
-			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
-				configurator.removeReportPlugin(reportsToBeRemoved, file);
-			}
+			List<Reports> reports = configurator.getReports(file);
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+				configurator.addReportPlugin(reports, reportCategories, file);
 		} catch (Exception e) {
 			throw new PhrescoException();
 		}

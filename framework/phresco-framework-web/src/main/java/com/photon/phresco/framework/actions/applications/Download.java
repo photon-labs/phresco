@@ -43,6 +43,8 @@ public class Download extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_SERVER_DOWNLOAD_INFO, administrator.getServerDownloadInfo());
 			getHttpRequest().setAttribute(REQ_DB_DOWNLOAD_INFO, administrator.getDbDownloadInfo());
 			getHttpRequest().setAttribute(REQ_EDITOR_DOWNLOAD_INFO, administrator.getEditorDownloadInfo());
+			getHttpRequest().setAttribute(REQ_TOOLS_DOWNLOAD_INFO, administrator.getToolsDownloadInfo());
+			getHttpRequest().setAttribute(REQ_OTHERS_DOWNLOAD_INFO, administrator.getOtherDownloadInfo());
 		} catch (PhrescoException e) {
 			new LogErrorReport(e, "Listing downloads");
 		}

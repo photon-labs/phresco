@@ -18,7 +18,7 @@
       <groupId>org.codehaus.mojo</groupId>
      <artifactId>javascript-maven-plugin</artifactId>
 	<packaging>jar</packaging>
-    <version>1.2.0.5002-SNAPSHOT</version>
+    <version>1.2.0.6001-SNAPSHOT</version>
 	<name>Javascript Maven Plugin</name>
 	<description>An extension that provides lifecycle binding, dependency, plugin and resource configuration suitable to most JS projects.</description>
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
