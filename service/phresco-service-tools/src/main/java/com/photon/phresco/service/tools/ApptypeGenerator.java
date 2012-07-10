@@ -114,7 +114,7 @@ public class ApptypeGenerator  implements ServiceConstants {
         techs.add(createTechnology(TechnologyTypes.JAVA_STANDALONE, "Java Standalone", new String[]{"1.6", "1.5"}));
         
         serviceManager = ServiceClientFactory.getServiceManager(context);
-        RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
+        RestClient<Technology> techClient = serviceManager.getRestClient("/components/technologies");
         techClient.queryString("techId", "apptype-webapp");
         ClientResponse response = techClient.create(techs);
         System.out.println("response " + response.getStatus());
@@ -127,7 +127,7 @@ public class ApptypeGenerator  implements ServiceConstants {
         techs.add(createTechnology(TechnologyTypes.IPHONE_NATIVE, "iPhone Native", new String[]{}));
         techs.add(createTechnology(TechnologyTypes.IPHONE_HYBRID, "iPhone Hybrid", new String[]{}));
         serviceManager = ServiceClientFactory.getServiceManager(context);
-        RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
+        RestClient<Technology> techClient = serviceManager.getRestClient("/components/technologies");
         techClient.queryString("techId", "apptype-mobile");
         ClientResponse response = techClient.create(techs);
         System.out.println("response " + response.getStatus());
@@ -139,7 +139,7 @@ public class ApptypeGenerator  implements ServiceConstants {
         techs.add(createTechnology(TechnologyTypes.JAVA_WEBSERVICE, "Java Web Service", new String[]{"1.6", "1.5"}));
         techs.add(createTechnology(TechnologyTypes.NODE_JS_WEBSERVICE, "Node JS Web Service", new String[]{"6.14","6.11", "6.8","6.7", "6.1"}));
         serviceManager = ServiceClientFactory.getServiceManager(context);
-        RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
+        RestClient<Technology> techClient = serviceManager.getRestClient("/components/technologies");
         techClient.queryString("techId", "apptype-web-services");
         ClientResponse response = techClient.create(techs);
         System.out.println("response " + response.getStatus());

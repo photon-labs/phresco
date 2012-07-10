@@ -54,36 +54,34 @@ public class PhrescoReportService implements ServerConstants {
 	}
 	
 	public static void initializeReportMap() {
-		List<Reports> javaReports = new ArrayList<Reports>();
-		javaReports.add(Reports.JAVADOC);
-		javaReports.add(Reports.COBERTURA);
-		javaReports.add(Reports.JDEPEND);
-		javaReports.add(Reports.JXR);
-		javaReports.add(Reports.PMD);
-		javaReports.add(Reports.SUREFIRE_REPORT);
-		javaReports.add(Reports.PROJECT_INFO);
+		List<Reports> allReports = new ArrayList<Reports>();
+		allReports.add(Reports.PROJECT_INFO);
+		allReports.add(Reports.JAVADOC);
+		allReports.add(Reports.COBERTURA);
+		allReports.add(Reports.JDEPEND);
+		allReports.add(Reports.JXR);
+		allReports.add(Reports.PMD);
+		allReports.add(Reports.SUREFIRE_REPORT);
 		
-		siteReport.put(TechnologyTypes.PHP, javaReports);
-		
-		List<Reports> phpReports = new ArrayList<Reports>();
-		phpReports.add(Reports.JDEPEND);
-		phpReports.add(Reports.JXR);
-		siteReport.put(TechnologyTypes.PHP, phpReports);
-		
-		siteReport.put(TechnologyTypes.PHP_DRUPAL6, javaReports);
-		siteReport.put(TechnologyTypes.PHP_DRUPAL7, javaReports);
-		siteReport.put(TechnologyTypes.JAVA, javaReports);
-		siteReport.put(TechnologyTypes.JAVA_STANDALONE, javaReports);
-		siteReport.put(TechnologyTypes.NODE_JS_WEBSERVICE, javaReports);
-		siteReport.put(TechnologyTypes.SHAREPOINT, javaReports);
-		siteReport.put(TechnologyTypes.HTML5, javaReports);
-		siteReport.put(TechnologyTypes.HTML5_MOBILE_WIDGET, javaReports);
-		siteReport.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, javaReports);
-		siteReport.put(TechnologyTypes.HTML5_WIDGET, javaReports);
-		siteReport.put(TechnologyTypes.WORDPRESS, javaReports);
-		siteReport.put(TechnologyTypes.IPHONE_HYBRID, javaReports);
-		siteReport.put(TechnologyTypes.IPHONE_NATIVE, javaReports);
-		siteReport.put(TechnologyTypes.ANDROID_HYBRID, javaReports);
-		siteReport.put(TechnologyTypes.ANDROID_NATIVE, javaReports);
+		siteReport.put(TechnologyTypes.JAVA, allReports);
+		siteReport.put(TechnologyTypes.JAVA_STANDALONE, allReports);
+		siteReport.put(TechnologyTypes.JAVA_WEBSERVICE, allReports);
+		siteReport.put(TechnologyTypes.ANDROID_HYBRID, allReports);
+		siteReport.put(TechnologyTypes.ANDROID_NATIVE, allReports);
+		siteReport.put(TechnologyTypes.HTML5,allReports);
+		siteReport.put(TechnologyTypes.HTML5_MOBILE_WIDGET,allReports);
+		siteReport.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,allReports);
+		siteReport.put(TechnologyTypes.HTML5_WIDGET,allReports);
+				
+		List<Reports> infoReports = new ArrayList<Reports>();
+		infoReports.add(Reports.PROJECT_INFO);
+		siteReport.put(TechnologyTypes.PHP, infoReports);
+		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoReports);
+		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoReports);
+		siteReport.put(TechnologyTypes.NODE_JS_WEBSERVICE, infoReports);
+		siteReport.put(TechnologyTypes.SHAREPOINT, infoReports);
+		siteReport.put(TechnologyTypes.WORDPRESS, infoReports);
+		siteReport.put(TechnologyTypes.IPHONE_NATIVE, infoReports);
+		siteReport.put(TechnologyTypes.IPHONE_HYBRID, infoReports);
 	}
 }

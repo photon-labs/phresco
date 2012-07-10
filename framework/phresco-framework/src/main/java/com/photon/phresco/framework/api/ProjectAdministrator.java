@@ -388,6 +388,13 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
+    
+    /**
+     * Returns others DownloadInfo from the service
+     * @return
+     * @throws PhrescoException
+     */
+    List<DownloadInfo> getOtherDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
     String getJforumPath() throws PhrescoException;
 
     void createJob(Project project, CIJob job) throws PhrescoException;
