@@ -37,7 +37,7 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
-	String REST_API_COMPONENT =  "/component";
+	String REST_API_COMPONENT =  "/components";
 	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
 	String REST_API_APPTYPES = "/apptypes";
