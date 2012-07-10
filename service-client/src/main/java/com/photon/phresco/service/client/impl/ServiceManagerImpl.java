@@ -52,6 +52,7 @@ import com.sun.jersey.api.client.WebResource;
 public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant, ServiceConstants, Constants {
 
     private static final Logger S_LOGGER = Logger.getLogger(ServiceManagerImpl.class);
+    private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
     private EhCacheManager manager;
     
     private String serverPath = null;
@@ -69,7 +70,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public <E> RestClient<E> getRestClient(String contextPath) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getRestClient(String contextPath)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getRestClient(String contextPath)" + contextPath);
+        }
     	
     	StringBuilder builder = new StringBuilder();
     	builder.append(serverPath);
@@ -81,7 +84,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public User getUserInfo() throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getUserInfo())");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getUserInfo())");
+        }
     	
 		return userInfo;
 	}
@@ -98,7 +103,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
 	
     private void doLogin(String username, String password) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.doLogin(String username, String password)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.doLogin(String username, String password)");
+        }
     	
     	Credentials credentials = new Credentials(username, password); 
     	Client client = ClientHelper.createClient();
@@ -110,7 +117,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<VideoInfo> getVideoInfos() throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getVideoInfos()");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getVideoInfos()");
+        }
     	
     	RestClient<VideoInfo> videoInfosClient = getRestClient(REST_API_ADMIN + REST_API_VIDEOS);
     	GenericType<List<VideoInfo>> genericType = new GenericType<List<VideoInfo>>(){};
@@ -119,7 +128,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     private List<ApplicationType> getApplicationTypesFromServer() throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getApplicationTypesFromServer()");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getApplicationTypesFromServer()");
+        }
     	
     	RestClient<ApplicationType> appTypeClient = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 		GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
@@ -128,7 +139,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<ApplicationType> getApplicationTypes() throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getApplicationTypes()");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getApplicationTypes()");
+        }
 
     	List<ApplicationType> appInfoValues = manager.getAppInfo(userInfo.getLoginId()); 
     	try {	
@@ -144,7 +157,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.createApplicationTypes(List<ApplicationType> appTypes)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.createApplicationTypes(List<ApplicationType> appTypes)");
+        }
     	
     	RestClient<ApplicationType> newApp = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 		ClientResponse clientResponse = newApp.create(appTypes);
@@ -154,7 +169,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.updateApplicationTypes(ApplicationType appType, String appTypeId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.updateApplicationTypes(ApplicationType appType, String appTypeId)" + appTypeId);
+        }
     	
     	RestClient<ApplicationType> editApptype = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
     	editApptype.setPath(appTypeId);
@@ -164,7 +181,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.deleteApplicationType(String appTypeId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.deleteApplicationType(String appTypeId)" + appTypeId);
+        }
     	
 	    RestClient<ApplicationType> deleteApptype = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 	    deleteApptype.setPath(appTypeId);
@@ -175,7 +194,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<Server> getServers(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClientgetServers(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClientgetServers(String techId)" + techId);
+        }
     	
 		RestClient<Server> serverClient = getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
 		serverClient.queryString(REST_QUERY_TECHID, techId);
@@ -185,7 +206,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public List<Database> getDatabases(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getDatabases(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getDatabases(String techId)" + techId);
+        }
     	
 		RestClient<Database> dbClient = getRestClient(REST_API_COMPONENT + REST_API_DATABASES);
 		dbClient.queryString(REST_QUERY_TECHID, techId);
@@ -195,7 +218,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public List<WebService> getWebServices(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getWebServices(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getWebServices(String techId)" + techId);
+        }
     	
 		RestClient<WebService> webServiceClient = getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICES);
 		webServiceClient.queryString(REST_QUERY_TECHID, techId);
@@ -205,7 +230,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	}
     
     public List<ProjectInfo> getPilots(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getPilots(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getPilots(String techId)" + techId);
+        }
     	
     	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
     	pilotClient.queryString(REST_QUERY_TECHID, techId);
@@ -215,7 +242,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<ModuleGroup> getModules(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getModules(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getModules(String techId)" + techId);
+        }
     	
     	RestClient<ModuleGroup> moduleGroupClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
     	Map<String, String> headers = new HashMap<String, String>();
@@ -228,7 +257,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<ModuleGroup> getJSLibs(String techId) throws PhrescoException {
-    	S_LOGGER.debug("Entered into RestClient.getJSLibs(String techId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getJSLibs(String techId)" + techId);
+        }
     	
     	RestClient<ModuleGroup> jsLibClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
     	Map<String, String> headers = new HashMap<String, String>();
@@ -241,7 +272,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public List<Customer> getCustomers() throws PhrescoException {
-        S_LOGGER.debug("Entered into RestClient.getCustomers()");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getCustomers()");
+        }
         
         RestClient<Customer> customersClient = getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         GenericType<List<Customer>> genericType = new GenericType<List<Customer>>(){};
@@ -250,7 +283,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public Customer getCustomer(String customerId) throws PhrescoException {
-        S_LOGGER.debug("Entered into RestClient.getCustomer(String customerId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getCustomer(String customerId)" + customerId);
+        }
         
         RestClient<Customer> customersClient = getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         customersClient.setPath(customerId);
@@ -260,7 +295,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public ClientResponse createCustomers(List<Customer> customers) throws PhrescoException {
-        S_LOGGER.debug("Entered into RestClient.createCustomers(List<Customer> customers)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.createCustomers(List<Customer> customers)");
+        }
         
         RestClient<Customer> customersClient = getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         
@@ -268,7 +305,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public void updateCustomer(Customer customer, String customerId) throws PhrescoException {
-        S_LOGGER.debug("Entered into RestClient.updateCustomer(Customer customer, String customerId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.updateCustomer(Customer customer, String customerId)" + customerId);
+        }
         
         RestClient<Customer> customersClient = getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         customersClient.setPath(customerId);
@@ -277,7 +316,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
     
     public ClientResponse deleteCustomer(String customerId) throws PhrescoException {
-        S_LOGGER.debug("Entered into RestClient.deleteCustomer(String customerId)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.deleteCustomer(String customerId)" + customerId);
+        }
         
         RestClient<Customer> customersClient = getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         customersClient.setPath(customerId);
