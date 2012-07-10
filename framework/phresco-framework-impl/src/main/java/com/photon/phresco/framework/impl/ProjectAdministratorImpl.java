@@ -112,6 +112,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<DownloadInfo> dbDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> toolsDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
+	private List<DownloadInfo> othersDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
@@ -689,6 +690,26 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 		 return toolsDownloadInfos;
 	 }
+	 
+	 @Override
+		public List<DownloadInfo> getOtherDownloadInfo() throws PhrescoException {
+			 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getEditorDownloadInfo()");
+
+			 setDownloadInfoFromService();
+
+			 if (CollectionUtils.isEmpty(downloadInfos)) {
+				 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
+			 }
+			 if (CollectionUtils.isNotEmpty(othersDownloadInfos)) {
+				 return othersDownloadInfos;
+			 }
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.OTHERS.equals(downloadInfo.getType())){
+					 othersDownloadInfos.add(downloadInfo);
+				 }
+			 }
+			 return othersDownloadInfos;
+		}
 	 
 	 /**
 	  * This method is to fetch the settings template through REST service

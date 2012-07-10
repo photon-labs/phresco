@@ -384,6 +384,13 @@ public interface ProjectAdministrator {
     List<DownloadInfo> getToolsDownloadInfo() throws PhrescoException;
     
     /**
+     * Returns others DownloadInfo from the service
+     * @return
+     * @throws PhrescoException
+     */
+    List<DownloadInfo> getOtherDownloadInfo() throws PhrescoException;
+    
+    /**
      * Returns the jForum path from the service
      * @return
      * @throws PhrescoException

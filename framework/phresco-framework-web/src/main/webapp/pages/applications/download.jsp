@@ -43,6 +43,7 @@
 	List<DownloadInfo> dbDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_DB_DOWNLOAD_INFO);
 	List<DownloadInfo> editorDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_EDITOR_DOWNLOAD_INFO);
 	List<DownloadInfo> toolsDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_TOOLS_DOWNLOAD_INFO);
+	List<DownloadInfo> othersDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_OTHERS_DOWNLOAD_INFO);
 %>
 
 <div class="theme_accordion_container" id="Downloadtab_div">
@@ -199,6 +200,45 @@
                         </section>
                     </div>
                 </div>
+                
+                 <% 
+                	} if(othersDownloadInfos != null && othersDownloadInfos.size() > 0) { 
+                %>
+                <span class="siteaccordion"><span><s:text name="label.others"/></span></span>
+                <div class="mfbox siteinnertooltiptxt">
+                    <div class="scrollpanel">
+                        <section class="scrollpanel_inner">
+                        	<table class="download_tbl">
+	                        	<thead>
+	                            	<tr class="download_tbl_header">
+                            			<th><s:text name="label.name"/></th>
+                            			<th><s:text name="label.version"/></th>
+                            			<th><s:text name="label.size"/></th>
+                            			<th class="label_center"><s:text name="label.download"/></th>
+                            		</tr>	
+	                            </thead>
+	                            
+	                        	<tbody>
+		                    	<%
+		                    		for (DownloadInfo otherDownloadInfos : othersDownloadInfos) {
+		                    	%>
+		                    		<tr>
+		                    			<td><%= otherDownloadInfos.getName() %></td>
+		                    			<td><%= otherDownloadInfos.getVersion() %></td>
+		                    			<td><%= otherDownloadInfos.getFileSize() %></td>
+		                    			<td class="label_center">
+		                    				<a href="<%= otherDownloadInfos.getDownloadURL() %>">
+		                    					<img src="images/icons/download.png" title="Download"/>
+		                    				</a>
+		                    			</td>
+		                    		</tr>
+	                    		<%	} %>
+	                    		</tbody>
+                        	</table>
+                        </section>
+                    </div>
+                </div>
+                
                 <% } %>
             </section>  
         </div>
