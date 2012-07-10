@@ -723,6 +723,26 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 	 
 	 
+	 @Override
+	 public List<DownloadInfo> getOtherDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getOtherDownloadInfo()");
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
+		 }
+		 
+		 List<DownloadInfo> othersDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.OTHERS.equals(downloadInfo.getType())){
+					 othersDownloadInfos.add(downloadInfo);
+				 }
+			 }
+		 }
+		 return othersDownloadInfos;
+	 }
+	 
 	 /**
 	  * This method is to fetch the settings template through REST service
 	  * @return List of settings template stored in the server [Database, Server and Email]

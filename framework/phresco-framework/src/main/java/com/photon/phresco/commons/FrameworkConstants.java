@@ -524,6 +524,7 @@ public interface FrameworkConstants {
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
 	String REQ_EDITOR_DOWNLOAD_INFO = "editorDownloadInfos";
 	String REQ_TOOLS_DOWNLOAD_INFO = "toolsDownloadInfos";
+	String REQ_OTHERS_DOWNLOAD_INFO = "othersDownloadInfos";
 	
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
