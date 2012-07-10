@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>js-import-maven-plugin</artifactId>
-	<version>2.0.0.1000-SNAPSHOT</version>
+	<version>2.0.0.6001-SNAPDHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>JavaScript Import Maven Plugin</name>
 	<description>Provides tooling for managing JavaScript dependencies.</description>

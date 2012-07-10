@@ -31,7 +31,7 @@
 		<plugin>
 			<groupId>com.photon.phresco.plugins.xcode</groupId>
 			<artifactId>xcode-maven-plugin</artifactId>
-			<version>2.0.0.1000-SNAPSHOT</version>
+			<version>2.0.0.6001-SNAPDHOT</version>
 			<extensions>true</extensions>
 			<configuration>
 				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>
