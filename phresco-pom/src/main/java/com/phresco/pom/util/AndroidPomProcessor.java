@@ -209,13 +209,13 @@ public class AndroidPomProcessor extends PomProcessor {
 	private void processProfiles(AndroidProfile androidProfile, List<Element> any) {
 		for (Element element : any) {
 			String tagName = element.getTagName();
-			if(tagName.equals("keystore")) {
+			if(tagName.equals(PomConstants.KEYSTORE)) {
 				androidProfile.setKeystore(element.getTextContent());
-			} else if(tagName.equals("storepass")) {
+			} else if(tagName.equals(PomConstants.STOREPASS)) {
 				androidProfile.setStorepass(element.getTextContent());
-			} else if(tagName.equals("keypass")) {
+			} else if(tagName.equals(PomConstants.KEYPASS)) {
 				androidProfile.setKeypass(element.getTextContent());
-			} else if(tagName.equals("alias")) {
+			} else if(tagName.equals(PomConstants.ALIAS)) {
 				androidProfile.setAlias(element.getTextContent());
 			}
 		}
@@ -225,7 +225,7 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @return
 	 */
 	public String getSigningProfile() {
-		if(model.getProfiles().getProfile() != null){
+		if(model.getProfiles() != null && model.getProfiles().getProfile() != null) {
 			for(Profile profile : model.getProfiles().getProfile()){
 				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
 				for (Plugin plugin2 : plugin) {
@@ -237,77 +237,23 @@ public class AndroidPomProcessor extends PomProcessor {
 		return "";
 	}
 
+	/**
+	 * @param profile
+	 * @param execution
+	 * @return
+	 */
 	private String getSigningProfilePlugin(Profile profile,	List<PluginExecution> execution) {
-		for (PluginExecution pluginExecution : execution) {
-			List<Element> any = pluginExecution.getConfiguration().getAny();
-			for (Element element : any) {
-				if(element.getTagName().equals("keystore")) {
-					return profile.getId();
+		if(model.getProfiles() != null && model.getProfiles().getProfile() != null) {
+			for (PluginExecution pluginExecution : execution) {
+				if(pluginExecution.getConfiguration() != null){
+				List<Element> any = pluginExecution.getConfiguration().getAny();
+					for (Element element : any) {
+						if(element.getTagName().equals(PomConstants.KEYSTORE)) {
+							return profile.getId();
+						}
+					}
 				}
 			}
 		} return "";
-	}
-	
-	public static void main(String[] args) throws JAXBException, IOException, PhrescoPomException {
-		try{
-		AndroidPomProcessor pomProcessor = new AndroidPomProcessor(new File("d:\\pom\\pom.xml"));
-		String profileId = "sign2";
-		String defaultGoal = "suresh";
-		Plugin plugin = new Plugin();
-		plugin.setGroupId("org.apache.maven.plugins");
-		plugin.setArtifactId("maven-jarsigner-plugin");
-		plugin.setVersion("1.2");
-		
-		PluginExecution execution = new PluginExecution();
-		execution.setId("signing");
-		com.phresco.pom.model.PluginExecution.Goals goal = new com.phresco.pom.model.PluginExecution.Goals();
-		goal.getGoal().add("sign");
-		execution.setGoals(goal);
-		execution.setPhase("package");
-		execution.setInherited("true");
-		
-		AndroidProfile androidProfile = new AndroidProfile();
-		String keystore = "source/phresco.keystore";
-		String storepass = "123456789";
-		String keypass = "123456789";
-		String alias = "phresco";
-		androidProfile.setKeystore(keystore);
-		androidProfile.setStorepass(storepass);
-		androidProfile.setKeypass(keypass);
-		androidProfile.setAlias(alias);
-		androidProfile.setVerbose(true);
-		androidProfile.setVerify(true);
-		
-		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
-		Document doc = docBuilder.newDocument();
-		
-		List<Element> executionConfig = new ArrayList<Element>();
-        executionConfig.add(doc.createElement("archiveDirectory"));
-        Element removeExistSignature = doc.createElement("removeExistingSignatures");
-		Element includeElement = doc.createElement("includes");
-        Element doNotCheckInBuildInclude = doc.createElement("include");
-        doNotCheckInBuildInclude.setTextContent("do_not_checkin/build/*.apk");
-        Element doNotCheckinTargetInclude = doc.createElement("include");
-        doNotCheckinTargetInclude.setTextContent("do_not_checkin/target/*.apk");
-        includeElement.appendChild(doNotCheckInBuildInclude);
-        includeElement.appendChild(doNotCheckinTargetInclude);
-        executionConfig.add(includeElement);
-        removeExistSignature.setTextContent("true");
-        executionConfig.add(removeExistSignature);
-        
-        com.phresco.pom.model.PluginExecution.Configuration configValues = new com.phresco.pom.model.PluginExecution.Configuration();
-        configValues.getAny().addAll(executionConfig);
-		execution.setConfiguration(configValues);
-		List<Element> additionalConfigs = new ArrayList<Element>();
-		pomProcessor.setProfile(profileId, false, defaultGoal , plugin, androidProfile , execution, null, additionalConfigs );
-		pomProcessor.save();
-		System.out.print("called!!!!!!");
-		System.out.print("called!!!!!!");
-	} catch (Exception e) {
-		System.out.println("Profile generation completed.");
-		e.printStackTrace();
-	}
-//		System.out.println(pomProcessor.hasSigning());
 	}
 }
