@@ -26,6 +26,7 @@ public class ApplicationTypeDAO extends BaseDAO {
 	private String name;
 	private String displayName;
 	private String description;
+	private boolean system;
 	
 	public ApplicationTypeDAO() {
 		super();
@@ -55,10 +56,19 @@ public class ApplicationTypeDAO extends BaseDAO {
 		this.description = description;
 	}
 
+    public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
     @Override
     public String toString() {
         return "ApplicationTypeDAO [name=" + name + ", displayName="
-                + displayName + ", description=" + description + "]";
+                + displayName + ", description=" + description + ", system="
+                + system + "]";
     }
 	
 }
