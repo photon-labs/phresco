@@ -209,13 +209,13 @@ public class AndroidPomProcessor extends PomProcessor {
 	private void processProfiles(AndroidProfile androidProfile, List<Element> any) {
 		for (Element element : any) {
 			String tagName = element.getTagName();
-			if(tagName.equals("keystore")) {
+			if(tagName.equals(PomConstants.KEYSTORE)) {
 				androidProfile.setKeystore(element.getTextContent());
-			} else if(tagName.equals("storepass")) {
+			} else if(tagName.equals(PomConstants.STOREPASS)) {
 				androidProfile.setStorepass(element.getTextContent());
-			} else if(tagName.equals("keypass")) {
+			} else if(tagName.equals(PomConstants.KEYPASS)) {
 				androidProfile.setKeypass(element.getTextContent());
-			} else if(tagName.equals("alias")) {
+			} else if(tagName.equals(PomConstants.ALIAS)) {
 				androidProfile.setAlias(element.getTextContent());
 			}
 		}
@@ -225,7 +225,7 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @return
 	 */
 	public String getSigningProfile() {
-		if(model.getProfiles().getProfile() != null){
+		if(model.getProfiles() != null && model.getProfiles().getProfile() != null) {
 			for(Profile profile : model.getProfiles().getProfile()){
 				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
 				for (Plugin plugin2 : plugin) {
@@ -237,12 +237,21 @@ public class AndroidPomProcessor extends PomProcessor {
 		return "";
 	}
 
+	/**
+	 * @param profile
+	 * @param execution
+	 * @return
+	 */
 	private String getSigningProfilePlugin(Profile profile,	List<PluginExecution> execution) {
-		for (PluginExecution pluginExecution : execution) {
-			List<Element> any = pluginExecution.getConfiguration().getAny();
-			for (Element element : any) {
-				if(element.getTagName().equals("keystore")) {
-					return profile.getId();
+		if(model.getProfiles() != null && model.getProfiles().getProfile() != null) {
+			for (PluginExecution pluginExecution : execution) {
+				if(pluginExecution.getConfiguration() != null){
+				List<Element> any = pluginExecution.getConfiguration().getAny();
+					for (Element element : any) {
+						if(element.getTagName().equals(PomConstants.KEYSTORE)) {
+							return profile.getId();
+						}
+					}
 				}
 			}
 		} return "";
