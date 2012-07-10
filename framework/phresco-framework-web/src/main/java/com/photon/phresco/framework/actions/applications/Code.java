@@ -230,19 +230,20 @@ public class Code extends FrameworkBaseAction {
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
             } else {
             	actionType = ActionType.SONAR;
+            	validateAgainst(validateAgainst, project, projectCode);
             }
-            if(!StringUtils.isEmpty(codeTechnology)) { // if js is selected in popup , have to pass setting map to form mvn command
+            
+            if (StringUtils.isNotEmpty(codeTechnology)) { // set sonar.branch parameter
             	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
-            if (!TechnologyTypes.IPHONES.contains(technology)) {
-            	validateAgainst(validateAgainst, project,projectCode);
-            }
+            
             if (FUNCTIONALTEST.equals(validateAgainst)) {
-            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
+            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator + "functional");
             	actionType.setWorkingDirectory(projectPath.toString());
             } else {
             	actionType.setWorkingDirectory(null);
             }
+            
             actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
