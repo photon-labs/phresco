@@ -77,27 +77,28 @@
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <!-- jquery file tree ends -->
 <script type="text/javascript">
-	if (localStorage["color"] != null) {
-		$("link[title='phresco']").attr("href", localStorage["color"]);
-	} else {
+	if (localStorage["color"] == null || localStorage["color"] == "null" || localStorage["color"] == "") {
 		$("link[title='phresco']").attr("href", "themes/photon/css/red.css");
+	} else {
+		$("link[title='phresco']").attr("href", localStorage["color"]);
 	}
 	
 	$(document).ready(function() {
 		 $(".styles").click(function() {
 	  		 localStorage.clear();
+			 sessionStorage.clear();
 	  		 var key = $(this).attr("id");
 	  		 var value = $(this).attr("rel");
 	  		 localStorage["color"]= value;
 	  		 localstore = localStorage["color"];
+			 sessionStorage["color"] = localstore;
 	  		 $("link[title='phresco']").attr("href",localstore);
-	  		 showHeaderImage();
-	  		 $("iframe").attr({
-	             src: $("iframe").attr("src")
-	         });
+			 $("iframe").attr({
+				 src: $("iframe").attr("src")
+			 });
+	  		showHeaderImage();
 	  	 });
 	});
-	
 </script>
 </head>
 <body>

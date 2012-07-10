@@ -620,7 +620,7 @@
         </action>
         
         <action name="createReportConfig" method="createReportConfig" class="com.photon.phresco.framework.actions.applications.SiteReport">
-<!--             <result name="configure">/pages/applications/siteReport/configure.jsp</result> -->
+            <result name="siteReport">/pages/applications/siteReport/iframe.jsp</result>
         </action>
         
         <action name="advancedBuildSettings" method="advancedBuildSettings" class="com.photon.phresco.framework.actions.applications.Build">

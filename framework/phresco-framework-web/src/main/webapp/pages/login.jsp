@@ -33,7 +33,7 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet"  class="changeme" id="theme">
+<link type="text/css" rel="stylesheet" href="themes/photon/css/red.css" class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -45,20 +45,6 @@ $(document).ready(function() {
 	%>
 		createBookmarkLink('Phresco', '<%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= request.getContextPath() %>');
 	<% } %>
-	/* $('#Login').click(function() {
-		$("#logimErrMesg").html("");
-		if(isBlank($.trim($("input[name='username']").val()))){
-			$("#logimErrMesg").html("Enter the Username");
-			$("#username").focus();
-			$("#username").val("");
-			return false;
-		}
-		if(isBlank($.trim($("input[name='password']").val()))){
-			$("#logimErrMesg").html("Enter the Password");
-			$("#password").focus();
-			return false;
-		}
-	}); */
 });
 
 /* function createBookmarkLink(title, url) {
@@ -81,22 +67,26 @@ $(document).ready(function() {
 } */
 
 function showWelcomeImage() {
-   
- 	if (localStorage["color"] != null) {
-		$("link[id='theme']").attr("href", localStorage["color"]);
-	} else {
-		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+		localstore = sessionStorage["color"];
+		localStorage["color"] = localstore; 
+		sessionStorage.clear();
+
+		if (localStorage["color"] == null || localStorage["color"] == "null" || localStorage["color"] == "") {
+			$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+		}
+		else {
+			$("link[id='theme']").attr("href", localStorage["color"]);
+		} 
+	 
+	 var theme = localStorage["color"]; 
+	
+	if(theme == "themes/photon/css/blue.css") {
+		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
+		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
+		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
 	}
- 	
- 	var theme = localStorage["color"]; 
+}	
 
-    if(theme == "themes/photon/css/blue.css") {
-        $('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
-        $('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
-        $('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
-    }
-
-}
 
 </script>
 </head>

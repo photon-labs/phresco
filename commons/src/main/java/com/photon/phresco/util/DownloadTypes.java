@@ -31,4 +31,6 @@ public interface DownloadTypes {
 	String DATABASE = "Database";
 	
 	String EDITOR = "Editor";
+	
+	String TOOLS = "Tools";
 }

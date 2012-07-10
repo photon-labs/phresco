@@ -210,7 +210,7 @@
 			<configuration>
 				<groupId>org.codehaus.jstestrunner</groupId>
 				<artifactId>jstestrunner-junit</artifactId>
-				<version>1.2.0.5003-SNAPSHOT</version>
+				<version>1.2.0.6001-SNAPSHOT</version>
 			</configuration>
 		</component>
 
@@ -241,11 +241,11 @@
 
 						<phases>
 							<process-sources>
-								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5003-SNAPSHOT:jslint,
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5003-SNAPSHOT:import-js
+								org.codehaus.mojo:jslint-maven-plugin:1.2.0.6001-SNAPSHOT:jslint,
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.6001-SNAPSHOT:import-js
 							</process-sources>
 							<generate-resources>
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5003-SNAPSHOT:generate-html
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.6001-SNAPSHOT:generate-html
 							</generate-resources>
 							<process-resources>
 								org.apache.maven.plugins:maven-resources-plugin:2.5:resources
@@ -254,11 +254,11 @@
                         		org.apache.maven.plugins:maven-compiler-plugin:2.5.1:compile
                     		</compile>
 							<process-test-sources>
-								org.codehaus.mojo:jslint-maven-plugin:1.2.0.5003-SNAPSHOT:test-jslint,
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5003-SNAPSHOT:test-import-js
+								org.codehaus.mojo:jslint-maven-plugin:1.2.0.6001-SNAPSHOT:test-jslint,
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.6001-SNAPSHOT:test-import-js
 							</process-test-sources>
 							<generate-test-resources>
-								org.codehaus.mojo:js-import-maven-plugin:1.2.0.5003-SNAPSHOT:test-generate-html
+								org.codehaus.mojo:js-import-maven-plugin:1.2.0.6001-SNAPSHOT:test-generate-html
 							</generate-test-resources>
 							<process-test-resources>
 								org.apache.maven.plugins:maven-resources-plugin:2.5:testResources

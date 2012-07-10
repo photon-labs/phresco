@@ -4720,3 +4720,10 @@ a[id='androidSigning']:hover {
 }
     
 /** CI multiple jobs css ends **/
+
+/** Report category css  **/
+
+#reportcategy {
+	margin-left: 75px;
+	text-align: justify;
+}

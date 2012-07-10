@@ -528,6 +528,7 @@ public interface FrameworkConstants {
 	String REQ_SERVER_DOWNLOAD_INFO = "serverDownloadInfos";
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
 	String REQ_EDITOR_DOWNLOAD_INFO = "editorDownloadInfos";
+	String REQ_TOOLS_DOWNLOAD_INFO = "toolsDownloadInfos";
 	
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
@@ -1098,8 +1099,8 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORT_PATH = "siteReportPath";
    String SITE_TARGET = "target/site";
    String REQ_SITE_REPORTS = "reports";
-   String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
-   String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
+   String REQ_SITE_SLECTD_REPORTS = "selectedReports";
+   String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";
    
    /* Android Key store file */
    String SIGNING_TYPES="keystore";
