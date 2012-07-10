@@ -42,6 +42,7 @@
 	List<DownloadInfo> serverDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_SERVER_DOWNLOAD_INFO);
 	List<DownloadInfo> dbDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_DB_DOWNLOAD_INFO);
 	List<DownloadInfo> editorDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_EDITOR_DOWNLOAD_INFO);
+	List<DownloadInfo> toolsDownloadInfos = (List<DownloadInfo>) request.getAttribute(FrameworkConstants.REQ_TOOLS_DOWNLOAD_INFO);
 %>
 
 <div class="theme_accordion_container" id="Downloadtab_div">
@@ -149,6 +150,45 @@
 		                    			<td><%= editorDownloadInfo.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= editorDownloadInfo.getDownloadURL() %>">
+		                    					<img src="images/icons/download.png" title="Download"/>
+		                    				</a>
+		                    			</td>
+		                    		</tr>
+	                    		<%	} %>
+	                    		</tbody>
+                        	</table>
+                        </section>
+                    </div>
+                </div>
+                
+                
+                <% 
+                	} if(toolsDownloadInfos != null && toolsDownloadInfos.size() > 0) { 
+                %>
+                <span class="siteaccordion"><span><s:text name="label.tools"/></span></span>
+                <div class="mfbox siteinnertooltiptxt">
+                    <div class="scrollpanel">
+                        <section class="scrollpanel_inner">
+                        	<table class="download_tbl">
+	                        	<thead>
+	                            	<tr class="download_tbl_header">
+                            			<th><s:text name="label.name"/></th>
+                            			<th><s:text name="label.version"/></th>
+                            			<th><s:text name="label.size"/></th>
+                            			<th class="label_center"><s:text name="label.download"/></th>
+                            		</tr>	
+	                            </thead>
+	                            
+	                        	<tbody>
+		                    	<%
+		                    		for (DownloadInfo toolsDownloadInfo : toolsDownloadInfos) {
+		                    	%>
+		                    		<tr>
+		                    			<td><%= toolsDownloadInfo.getName() %></td>
+		                    			<td><%= toolsDownloadInfo.getVersion() %></td>
+		                    			<td><%= toolsDownloadInfo.getFileSize() %></td>
+		                    			<td class="label_center">
+		                    				<a href="<%= toolsDownloadInfo.getDownloadURL() %>">
 		                    					<img src="images/icons/download.png" title="Download"/>
 		                    				</a>
 		                    			</td>

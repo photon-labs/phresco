@@ -4501,7 +4501,6 @@ div[class*='display_msg'] {
    	padding: 4px 6px;
 }
 
-
 .labelWarn {
     color:#000000;
     width:auto;
@@ -4604,6 +4603,7 @@ ul#display-inline-block-example li {
     text-align: center;
 }
 
+
 .topFifty {
 	top: 50%;
 }
@@ -4613,7 +4613,7 @@ ul#display-inline-block-example li {
 }
 
 input.xlarge.javastd {
-	  width: 73%;
+	 width: 73%;
 }
 
 /** generate build advanced settings starts **/
@@ -4740,4 +4740,11 @@ a[id='androidSigning']:hover {
 
 .labelbold {
     font-weight:bold;
+}
+
+/** Report category css  **/
+
+#reportcategy {
+	margin-left: 75px;
+	text-align: justify;
 }
