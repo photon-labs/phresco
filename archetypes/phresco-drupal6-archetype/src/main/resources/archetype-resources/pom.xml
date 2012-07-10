@@ -41,7 +41,7 @@
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
-		<sonar.phpCodesniffer.standardArgument>Drupal/sonar.phpCodesniffer.standardArgument>
+		<sonar.phpCodesniffer.standardArgument>Drupal</sonar.phpCodesniffer.standardArgument>
     </properties>
 	
 	<build>
