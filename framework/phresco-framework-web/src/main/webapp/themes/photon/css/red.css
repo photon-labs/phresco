@@ -1222,16 +1222,12 @@ background-color: #ffffff;
    /*  border-bottom: 1px solid #000; */
 }
 
-.closereg span:hover { 
-	 color: #fff;
-}
-
 /* .closereg span {
     border-bottom: 1px solid #3A090B;
 } */
 
 .closereg:hover {
-    color: #FFFFFF;
+   /*  color: #FFFFFF; */
    /*  background: #850E11; */
    /*  border-top:1px solid #000000;
     border-bottom:1px solid #000000; */
@@ -1260,6 +1256,24 @@ background-color: #ffffff;
     border-bottom-right-radius:5px;
     border-bottom: 1px solid #3A090B;
 }
+
+.reportcolor {
+	/*  color: #FFFFFF; */
+    background: #e0e0e0; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e0e0e0 0%, #cecece 53%, #f7f7f7 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e0e0e0), color-stop(53%,#cecece), color-stop(100%,#f7f7f7)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #e0e0e0 0%,#cecece 53%,#f7f7f7 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #e0e0e0 0%,#cecece 53%,#f7f7f7 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #e0e0e0 0%,#cecece 53%,#f7f7f7 100%); /* IE10+ */
+	background: linear-gradient(top,  #e0e0e0 0%,#cecece 53%,#f7f7f7 100%); /* W3C */
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    color: #000000;
+}
+
+/* #siteaccordion_active{
+	background: -moz-linear-gradient(center top , #470411 1%, #2B0007 100%) repeat scroll 0 0 transparent);
+} */
 
 .openreg {
     border-bottom: 1px solid #3A090B;

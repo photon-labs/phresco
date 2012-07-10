@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -41,6 +42,7 @@ import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 
 public class SiteReport extends FrameworkBaseAction {
@@ -133,16 +135,9 @@ public class SiteReport extends FrameworkBaseAction {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			ProjectInfo projectInfo = administrator.getProject(projectCode).getProjectInfo();
 			List<Reports> reports = administrator.getReports(projectInfo);
-			File file = new File(getReportConfigPath(projectInfo));
-			List<Reports> selectedReports = ApplicationsUtil.readReportConfig(file);
-			List<String> selectedReportNames = new ArrayList<String>();
-			if (CollectionUtils.isNotEmpty(selectedReports)) {
-				for (Reports selectedReport : selectedReports) {
-					selectedReportNames.add(selectedReport.getDisplayName());
-				}
-			}
+			List<Reports> selectedReports = administrator.getPomReports(projectInfo);
 			getHttpRequest().setAttribute(REQ_SITE_REPORTS, reports);
-			getHttpRequest().setAttribute(REQ_SITE_SLECTD_RPT_NMS, selectedReportNames);
+			getHttpRequest().setAttribute(REQ_SITE_SLECTD_REPORTS, selectedReports);
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of SiteReport.configure()"
 					+ FrameworkUtil.getStackTraceAsString(e));
@@ -158,80 +153,37 @@ public class SiteReport extends FrameworkBaseAction {
 		try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			ProjectInfo projectInfo = administrator.getProject(projectCode).getProjectInfo();
-			List<Reports> allReports = administrator.getReports(projectInfo);
 			
-			String alreadySelectedRptNames = getHttpRequest().getParameter(REQ_SITE_ALRDY_SLECTD_RPT_NMS);
-			String[] temp = alreadySelectedRptNames.split(COMMA);
-			List<String> listAlreadySelectedRptNames = Arrays.asList(temp);
-			
+			//To get the selected reports from the UI
 			String[] arraySelectedReports = getHttpRequest().getParameterValues(REQ_SITE_REPORTS);
-			List<String> selectedReportNames = null;
-			if (arraySelectedReports != null) {
-				selectedReportNames = Arrays.asList(arraySelectedReports);
+			List<String> selectedReports = null; 
+			if (!ArrayUtils.isEmpty(arraySelectedReports)) {
+				selectedReports = Arrays.asList(arraySelectedReports);
 			}
 			
-			/** To get the list report names to be removed **/
-			List<String> reportNamesToBeRemoved = new ArrayList<String>();
-			if (CollectionUtils.isNotEmpty(listAlreadySelectedRptNames) && CollectionUtils.isNotEmpty(selectedReportNames)) {
-				for (String listAlreadySelectedRptName : listAlreadySelectedRptNames) {
-					if (!selectedReportNames.contains(listAlreadySelectedRptName)) {
-						reportNamesToBeRemoved.add(listAlreadySelectedRptName);
-					}
-				}
-			} else if (CollectionUtils.isEmpty(selectedReportNames)) {
-				reportNamesToBeRemoved.addAll(listAlreadySelectedRptNames);
-			}
-			
-			/** To get the list report names to be added **/
-			List<String> reportNamesToBeAdded = new ArrayList<String>();
-			if (CollectionUtils.isNotEmpty(selectedReportNames) && CollectionUtils.isNotEmpty(listAlreadySelectedRptNames)) {
-				for (String selectedReportName : selectedReportNames) {
-					if (!listAlreadySelectedRptNames.contains(selectedReportName)) {
-						reportNamesToBeAdded.add(selectedReportName);
-					}
+			//To get the selected ReportCategories from the UI
+			String[] arraySelectedRptCategories = getHttpRequest().getParameterValues(REQ_SITE_SLECTD_REPORTSCATEGORIES);
+			List<ReportCategories> selectedReportCategories = new ArrayList<ReportCategories>();
+			if (!ArrayUtils.isEmpty(arraySelectedRptCategories)) {
+				for (String arraySelectedRptCategory : arraySelectedRptCategories) {
+					ReportCategories cat = new ReportCategories();
+					cat.setName(arraySelectedRptCategory);
+					selectedReportCategories.add(cat);
 				}
 			}
 			
-			/** To get the list of Reports to be added  **/
+			// To get the list of Reports to be added
+			List<Reports> allReports = administrator.getReports(projectInfo);
 			List<Reports> reportsToBeAdded = new ArrayList<Reports>();
-			if (arraySelectedReports != null && CollectionUtils.isNotEmpty(allReports) && CollectionUtils.isEmpty(listAlreadySelectedRptNames) &&
-					CollectionUtils.isNotEmpty(selectedReportNames)) {
+			if (CollectionUtils.isNotEmpty(selectedReports) && CollectionUtils.isNotEmpty(allReports)) {
 				for (Reports report : allReports) {
-					if (selectedReportNames.contains(report.getDisplayName())) {
-						reportsToBeAdded.add(report);
-					}
-				}
-			} else if (CollectionUtils.isNotEmpty(allReports) && CollectionUtils.isNotEmpty(reportNamesToBeAdded)) {
-				for (Reports report : allReports) {
-					if (reportNamesToBeAdded.contains(report.getDisplayName())) {
+					if (selectedReports.contains(report.getArtifactId())) {
 						reportsToBeAdded.add(report);
 					}
 				}
 			}
 			
-			/** To get the list of Reports to be added  **/
-			List<Reports> reportsToBeRemoved = new ArrayList<Reports>();
-			if (CollectionUtils.isNotEmpty(allReports) && CollectionUtils.isNotEmpty(reportNamesToBeRemoved)) {
-				for (Reports report : allReports) {
-					if (reportNamesToBeRemoved.contains(report.getDisplayName())) {
-						reportsToBeRemoved.add(report);
-					}
-				}
-			}
-			
-			/** To get the list of selected Reports to be to store in the reportConfig.info **/
-			List<Reports> selecedReports = new ArrayList<Reports>();
-			if (CollectionUtils.isNotEmpty(allReports) && CollectionUtils.isNotEmpty(selectedReportNames)) {
-				for (Reports report : allReports) {
-					if (selectedReportNames.contains(report.getDisplayName())) {
-						selecedReports.add(report);
-					}
-				}
-			}
-			
-			File file = new File(getReportConfigPath(projectInfo));
-			ApplicationsUtil.storeAsJSON(file, selecedReports);
-			administrator.updateRptPluginInPOM(projectInfo, reportsToBeAdded, reportsToBeRemoved);
+			administrator.updateRptPluginInPOM(projectInfo, reportsToBeAdded, selectedReportCategories);
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of SiteReport.createReportConfig()"
 					+ FrameworkUtil.getStackTraceAsString(e));
@@ -239,19 +191,6 @@ public class SiteReport extends FrameworkBaseAction {
 		}
 		
 		return checkForSiteReport();
-	}
-	
-	private String getReportConfigPath(ProjectInfo projectInfo) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(Utility.getProjectHome());
-		sb.append(File.separator);
-		sb.append(projectInfo.getCode());
-		sb.append(File.separator);
-		sb.append(FOLDER_DOT_PHRESCO);
-		sb.append(File.separator);
-		sb.append("reportConfig.info");
-		
-		return sb.toString();
 	}
 	
 	public String getProjectCode() {

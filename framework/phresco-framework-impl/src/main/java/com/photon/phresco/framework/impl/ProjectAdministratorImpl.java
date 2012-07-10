@@ -50,7 +50,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -77,7 +76,6 @@ import com.photon.phresco.model.CIBuild;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.LogInfo;
-import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
@@ -97,11 +95,12 @@ import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
+import com.phresco.pom.util.SiteConfigurator;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
-import com.phresco.pom.util.SiteConfigurator;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants {
 
@@ -112,6 +111,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<DownloadInfo> serverDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> dbDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<DownloadInfo> editorDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
+	private List<DownloadInfo> toolsDownloadInfos = Collections.synchronizedList(new ArrayList<DownloadInfo>(64));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
@@ -668,7 +668,28 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 		 return editorDownloadInfos;
 	 }
+	 
+	 @Override
+	 public List<DownloadInfo> getToolsDownloadInfo() throws PhrescoException {
 
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getToolsDownloadInfo()");
+
+		 setDownloadInfoFromService();
+
+		 if (CollectionUtils.isEmpty(downloadInfos)) {
+			 downloadInfos = PhrescoFrameworkFactory.getServiceManager().getDownloadsFromService();
+		 }
+		 if (CollectionUtils.isNotEmpty(toolsDownloadInfos)) {
+			 return toolsDownloadInfos;
+		 }
+		 for (DownloadInfo downloadInfo : downloadInfos) {
+			 if (DownloadTypes.TOOLS.equals(downloadInfo.getType())){
+				 toolsDownloadInfos.add(downloadInfo);
+			 }
+		 }
+		 return toolsDownloadInfos;
+	 }
+	 
 	 /**
 	  * This method is to fetch the settings template through REST service
 	  * @return List of settings template stored in the server [Database, Server and Email]
@@ -2034,16 +2055,22 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 	}
 	
-	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+	public List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException {
 		try {
 			SiteConfigurator configurator = new SiteConfigurator();
 			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
-				configurator.addReportPlugin(reportsToBeAdded, file);
-			}
-			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
-				configurator.removeReportPlugin(reportsToBeRemoved, file);
-			}
+			List<Reports> reports = configurator.getReports(file);
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+				configurator.addReportPlugin(reports, reportCategories, file);
 		} catch (Exception e) {
 			throw new PhrescoException();
 		}

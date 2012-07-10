@@ -55,6 +55,7 @@ public class PhrescoReportService implements ServerConstants {
 	
 	public static void initializeReportMap() {
 		List<Reports> javaReports = new ArrayList<Reports>();
+		javaReports.add(Reports.PROJECT_INFO);
 		javaReports.add(Reports.JAVADOC);
 		javaReports.add(Reports.COBERTURA);
 		javaReports.add(Reports.JDEPEND);
