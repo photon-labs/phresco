@@ -67,7 +67,8 @@ public class LoginService extends DbService {
         User user = response.getEntity(genericType);
         
         
-        UserDAO userDao = mongoOperation.findOne(ServiceConstants.USERDAO_COLLECTION_NAME, new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
+        UserDAO userDao = mongoOperation.findOne(ServiceConstants.USERDAO_COLLECTION_NAME, 
+                new Query(Criteria.whereId().is(user.getName())), UserDAO.class);
         user.setId(user.getName());
         Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);
         User convertedUser = new User();

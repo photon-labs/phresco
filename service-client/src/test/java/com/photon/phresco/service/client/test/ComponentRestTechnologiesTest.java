@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Technology;
@@ -167,4 +166,6 @@ public class ComponentRestTechnologiesTest {
     	ClientResponse response = techClient.deleteById();
     	System.out.println(response.getStatus());
     }
+	
+	
 }
