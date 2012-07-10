@@ -32,6 +32,7 @@ public class Login extends ServiceBaseAction {
 					request.setAttribute("css", css);
 				}  
 			} 
+			
 			return LOGIN_RESULT;	
 		}
 
@@ -45,22 +46,22 @@ public class Login extends ServiceBaseAction {
 	private String authenticate() {
 		S_LOGGER.debug("Entering Method  Login.authenticate()");
 		
-		User User = null;
+		User user = null;
 			try {
 				byte[] encodeBase64 = Base64.encodeBase64(password.getBytes());
 				String encodedPassword = new String(encodeBase64);
 				
-				User = doLogin(username, encodedPassword);
-				if (StringUtils.isEmpty(User.getDisplayName())) {
-					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+				user = doLogin(username, encodedPassword);
+				if (StringUtils.isEmpty(user.getDisplayName())) {
+					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_ERROR_LOGIN));
 					return LOGIN_FAILURE;
 				}
-				if (!User.isPhrescoEnabled()) {
-					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_ACCESS_DENIED));
+				if (!user.isPhrescoEnabled()) {
+					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_ERROR_LOGIN_ACCESS_DENIED));
 					return LOGIN_FAILURE;
-				} 
+				}
+				getHttpSession().setAttribute(SESSION_USER_INFO, user);
 			} catch (Exception e) {
-				e.printStackTrace();
 				return LOGIN_FAILURE;
 			}
 			

@@ -4501,7 +4501,6 @@ div[class*='display_msg'] {
    	padding: 4px 6px;
 }
 
-
 .labelWarn {
     color:#000000;
     width:auto;
@@ -4604,6 +4603,7 @@ ul#display-inline-block-example li {
     text-align: center;
 }
 
+
 .topFifty {
 	top: 50%;
 }
@@ -4613,7 +4613,7 @@ ul#display-inline-block-example li {
 }
 
 input.xlarge.javastd {
-	  width: 73%;
+	 width: 73%;
 }
 
 /** generate build advanced settings starts **/
@@ -4711,3 +4711,40 @@ a[id='androidSigning']:hover {
     
 /** CI multiple jobs css ends **/
 
+.customer_name {
+    float: right;
+    left: 73%;
+    margin-bottom: 0;
+    position: absolute;
+    top: 10px;
+    width: auto;
+}
+
+.customer_listbox {
+    height: 22px;
+    padding: 0;
+    float: right;
+    left: 97%;
+    margin-bottom: 0;
+    position: absolute;
+    top: 0px;
+    width: auto;
+}
+
+.custom_label {
+    float: left;
+    margin-right: 10px;
+    width: 62px;
+    padding-top: 3px;
+}
+
+.labelbold {
+    font-weight:bold;
+}
+
+/** Report category css  **/
+
+#reportcategy {
+	margin-left: 75px;
+	text-align: justify;
+}

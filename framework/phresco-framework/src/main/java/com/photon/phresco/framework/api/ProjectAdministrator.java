@@ -47,6 +47,7 @@ import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 
 public interface ProjectAdministrator {
@@ -317,7 +318,7 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      */
     List<BuildInfo> readBuildInfo(File path) throws IOException;
-
+    
     BuildInfo getBuildInfo(Project project, int buildNumber) throws PhrescoException;
 
     List<BuildInfo> getBuildInfos(Project project, int[] buildNumbers) throws PhrescoException;
@@ -376,6 +377,12 @@ public interface ProjectAdministrator {
      */
     List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
+	/**
+     * Returns tools DownloadInfo from the service
+     * @return
+     * @throws PhrescoException
+     */
+    List<DownloadInfo> getToolsDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
     /**
      * Returns the jForum path from the service
      * @return
@@ -664,8 +671,10 @@ public interface ProjectAdministrator {
 	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
 
 	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
-	 
-	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
+	
+	 List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException;	 
+
+	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException;
 	 
 	 List<Database> getDatabases() throws PhrescoException;
 	 

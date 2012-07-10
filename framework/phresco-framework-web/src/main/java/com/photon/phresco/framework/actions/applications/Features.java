@@ -332,20 +332,20 @@ public class Features extends FrameworkBaseAction {
 		if (CollectionUtils.isNotEmpty(coreModule)) {
 			getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
 		}
-		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
+//		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
 		
 		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
 				.getCustomModules(selectedTechnology.getId());
 		if (CollectionUtils.isNotEmpty(customModule)) {
 			getHttpRequest().setAttribute(REQ_CUSTOM_MODULES, customModule);
 		}
-		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
+//		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
 		
 		List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId());
 		if (CollectionUtils.isNotEmpty(jsLibs)) {
 			getHttpRequest().setAttribute(REQ_ALL_JS_LIBS, jsLibs);
 		}
-		System.out.println("jsLibs in setFeaturesInRequest() in Features.java:::" + jsLibs.size());
+//		System.out.println("jsLibs in setFeaturesInRequest() in Features.java:::" + jsLibs.size());
 		
 		// This attribute for Pilot Project combo box
 		getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
@@ -372,7 +372,7 @@ public class Features extends FrameworkBaseAction {
 
 	public String fetchPilotProjectModules() {
 		try {
-			System.out.println("inside fetchPilotProjectModules()...");
+//			System.out.println("inside fetchPilotProjectModules()...");
 			String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
 			pilotModules = new ArrayList<String>();
 			
@@ -393,7 +393,7 @@ public class Features extends FrameworkBaseAction {
 					pilotModules.add(jsLibId + "#VSEP#" + jsLibVersion);
 				}
 			}
-			System.out.println("final pilot modules in getPilotProjectModules():::::" + pilotModules);
+//			System.out.println("final pilot modules in getPilotProjectModules():::::" + pilotModules);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,10 +25,11 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.photon.phresco.commons.model.Element;
 
-@SuppressWarnings("restriction")
+
 @XmlRootElement
-public class Technology implements Cloneable, Serializable {
+public class Technology extends Element implements Cloneable, Serializable {
 
     /**
      *
@@ -36,11 +37,6 @@ public class Technology implements Cloneable, Serializable {
     private static final long serialVersionUID = 1L;
 
     private String appTypeId;
-
-    private String id;
-
-    //Name of the Technology. [PHP, PHP with Drupal]
-    private String name;
 
     //List of applicable frameworks
     private List<ModuleGroup> frameworks;
@@ -66,7 +62,8 @@ public class Technology implements Cloneable, Serializable {
 	private String appJar;
 	private String pluginJar;
 	private List<String> versions;
-
+	private boolean system;
+	
     public Technology() {
         super();
     }
@@ -189,7 +186,15 @@ public class Technology implements Cloneable, Serializable {
 		this.versionComment = versionComment;
 	}
 
-	public List<String> getAppType() {
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    public List<String> getAppType() {
 		return appType;
 	}
 

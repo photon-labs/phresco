@@ -21,6 +21,7 @@ package com.photon.phresco.service.client.api;
 
 import java.util.List;
 
+import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
@@ -63,4 +64,14 @@ public interface ServiceManager {
 	List<ModuleGroup> getModules(String techId) throws PhrescoException;
 	
 	List<ModuleGroup> getJSLibs(String techId) throws PhrescoException;
+	
+	List<Customer> getCustomers() throws PhrescoException;
+	
+	Customer getCustomer(String customerId) throws PhrescoException;
+	
+	ClientResponse createCustomers(List<Customer> customers) throws PhrescoException;
+	
+	void updateCustomer(Customer customer, String customerId) throws PhrescoException;
+	
+	ClientResponse deleteCustomer(String customerId) throws PhrescoException;
 }

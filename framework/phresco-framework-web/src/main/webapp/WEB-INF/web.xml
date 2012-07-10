@@ -48,12 +48,6 @@
 	   <welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<!-- <servlet>
-        <servlet-name>InitServlet</servlet-name>
-        <servlet-class>com.photon.phresco.framework.actions.InitServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-    </servlet> --> 
-	
 	<!-- [INSERT FRAGMENT HERE] -->
 	
 </web-app>

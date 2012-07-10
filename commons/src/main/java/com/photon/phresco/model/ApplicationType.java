@@ -25,11 +25,12 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.photon.phresco.commons.model.Element;
 import com.photon.phresco.util.SizeConstants;
 
 @SuppressWarnings("restriction")
 @XmlRootElement
-public class ApplicationType implements Serializable {
+public class ApplicationType extends Element implements Serializable {
 
 	/**
 	 * 
@@ -45,9 +46,11 @@ public class ApplicationType implements Serializable {
 	private String displayName;
 
 	private String description;
-
+	
 	//List of technologies supported for the application type. [Web - PHP, PHP with Drupal]
 	private List<Technology> technologies = new ArrayList<Technology>(SizeConstants.SIZE_TECHNOLOGIES_MAP);
+	
+	private boolean system;
 
 	public ApplicationType() {
 		super();
@@ -121,7 +124,15 @@ public class ApplicationType implements Serializable {
 		this.description = description;
 	}
 
-	@Override
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ApplicationType [getName()=");

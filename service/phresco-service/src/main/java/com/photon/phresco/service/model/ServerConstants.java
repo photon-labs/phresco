@@ -123,7 +123,7 @@ public interface ServerConstants {
 	  //Authentication Constants
 	 String AUTHENTICATE = "/authenticate";
 
-	String REST_API_COMPONENT =  "/component";
+	String REST_API_COMPONENT =  "/components";
 	String REST_API_ADMIN =  "/admin-temp";
 	String REST_API_CUSTOMERS = "/customers";
 	String REST_API_APPTYPES = "/apptypes";
