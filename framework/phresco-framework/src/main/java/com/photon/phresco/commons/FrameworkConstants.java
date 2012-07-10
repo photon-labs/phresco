@@ -1087,7 +1087,7 @@ public interface FrameworkConstants {
    String SESSION_PRJT_VLDT_STATUS  = "_PrjtVldtStatus";
    
    /* Code validate */
-   String CODE_VALIDATE_PARAM = "sonar.language";
+   String CODE_VALIDATE_PARAM = "sonar.branch";
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
