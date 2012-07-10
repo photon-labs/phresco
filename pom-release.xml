@@ -10,7 +10,7 @@
 
 	<properties>
 	 	<current.version>2.0.0.6000</current.version>
-		<next.version>2.0.0.6001-SNAPSHOT</next.version>
+		<next.version>2.0.0.6001-SNAPDHOT</next.version>
 	</properties>
 
 <build>
