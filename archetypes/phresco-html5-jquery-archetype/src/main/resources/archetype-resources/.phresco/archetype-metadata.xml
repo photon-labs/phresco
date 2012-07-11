@@ -76,21 +76,21 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/java</directory> 
+			<directory>src/test/java/com/photon/phresco/service</directory> 
 			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/qunit/java</directory> 
-			<includes>
-				<include>AllTest.java</include>
+				<include>TestCase.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/test/qunit/js/HelloWorld/widgets</directory> 
 			<includes>
 				<include>HelloWorldTest.js</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>src/test/qunit/js/com/qunit</directory> 
+			<includes>
+				<include>AllTest.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -147,7 +147,6 @@
 			<directory>test/functional/src/main/java/com/photon/phresco/uiconstants</directory>
 			<includes>
 				<include>PhrescoUiConstants.java</include>
-				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
                 <include>JQueryWidgetData.java</include>
                 <include>TestConfig.java</include>
@@ -157,7 +156,6 @@
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
-				<include>config.ini</include>
 				<include>phresco-env-config.xml</include>
                 <include>JQueryWidgetHWData.xml</include>
                 <include>UIConstants.xml</include>

@@ -131,7 +131,7 @@
 				              		     if(configuration.getEnvName().equals(enves.getName()))	{
 							%>
 								<tr>
-				              		<td>
+				              		<td class="checkbox_list">
 				              			<input type="checkbox" class="check" name="check" value="<%=configuration.getEnvName() + "," + configuration.getName() %>">
 				              		</td>
 				              		<td>
