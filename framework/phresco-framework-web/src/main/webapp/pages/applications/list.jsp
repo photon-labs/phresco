@@ -130,7 +130,7 @@
 								ProjectInfo projectInfo = project.getProjectInfo();
 						%>
 			            	<tr>
-			              		<td>
+			              		<td class="checkbox_list">
 			              			<input type="checkbox" class="check" name="selectedProjects" value="<%= projectInfo.getCode() %>">
 			              		</td>
 			              		<td>

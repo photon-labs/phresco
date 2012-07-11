@@ -101,7 +101,7 @@
 			          		for (BuildInfo buildInfo : buildInfos) {
 						%>
 			            	<tr>
-			              		<td>
+			              		<td class="checkbox_list">
 			              			<input type="checkbox" class="check" name="build-number" value="<%= buildInfo.getBuildNo() %>">
 			              		</td>
 			              		<td><%= buildInfo.getBuildNo() %></td>
@@ -112,7 +112,7 @@
 			              			<a href="<s:url action='downloadBuild'>
 					          		     <s:param name="buildNumber"><%= buildInfo.getBuildNo() %></s:param>
 					          		     <s:param name="projectCode"><%= projectCode %></s:param>
-					          		     </s:url>"><img src="images/icons/download.png" title="Download"/>
+					          		     </s:url>"><img src="images/icons/download.png" title="<%= buildInfo.getBuildName()%>"/>
 		                            </a>
 		                            
 		                            <% 

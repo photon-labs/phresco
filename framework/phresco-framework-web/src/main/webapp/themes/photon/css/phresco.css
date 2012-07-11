@@ -4717,3 +4717,7 @@ a[id='androidSigning']:hover {
 	margin-left: 75px;
 	text-align: justify;
 }
+/** All checkbox list page css**/
+.checkbox_list {
+    width:0.1%;
+}
