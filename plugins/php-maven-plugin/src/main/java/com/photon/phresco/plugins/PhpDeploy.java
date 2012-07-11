@@ -122,7 +122,8 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails,baseDir, PHP_SQL_DIR, PHP_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (PhrescoException e) {

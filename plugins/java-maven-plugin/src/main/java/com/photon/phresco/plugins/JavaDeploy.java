@@ -155,7 +155,8 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails, getProjectRoot(baseDir), JAVA_SQL_DIR, JAVA_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (PhrescoException e) {
