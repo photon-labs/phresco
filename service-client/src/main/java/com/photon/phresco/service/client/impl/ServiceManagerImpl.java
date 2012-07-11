@@ -156,6 +156,18 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	return appInfoValues;
 	}
     
+    public ApplicationType getApplicationType(String appTypeId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getApplicationType(String appTypeId)");
+        }
+
+        RestClient<ApplicationType> appTypeClient = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
+        appTypeClient.setPath(appTypeId);
+        GenericType<ApplicationType> genericType = new GenericType<ApplicationType>(){};
+        
+        return appTypeClient.getById(genericType);
+    }
+    
     public ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.createApplicationTypes(List<ApplicationType> appTypes)");

@@ -60,8 +60,8 @@ public class ComponentRestDatabaseTest implements ServiceConstants {
 	@Ignore
     public void testGetDatabasesByTechnology() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<Database> dbClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_DATABASESBYID);
-    	dbClient.setPath(techId);
+    	RestClient<Database> dbClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_DATABASES);
+    	dbClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<Database>> genericType = new GenericType<List<Database>>(){};
 		List<Database> databases = dbClient.get(genericType);
         System.out.println("databases.size():" + databases.size());

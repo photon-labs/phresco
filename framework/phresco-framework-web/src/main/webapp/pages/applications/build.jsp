@@ -164,7 +164,7 @@
     			<!-- Command Display Heading starts -->
 				<div class="tblheader" style="height: 29px;">
 					<div class="clipboard" style="position:absolute; right:44px; top:144px;">
-                    	<img src="images/icons/clipboard.png" alt="clipboard" id="clipboard" style= "height:25px; width:25px; cursor:pointer;" title="Copy to clipboard"> 
+                    	<img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" style= "height:21px; width:21px; cursor:pointer; margin-top: 3px; margin-right: 15px;" title="Copy to clipboard"> 
 					</div>
 					<table class="zebra-striped" style="height: 29px;"> 
 						<tr class="tr_color">

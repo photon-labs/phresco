@@ -20,7 +20,9 @@
 
 package com.photon.phresco.service.client.test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -52,8 +54,11 @@ public class ComponentRestModulesTest implements ServiceConstants{
 	@Ignore
 	public void getModules() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+        moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
     	System.out.println("modules.size():" + modules.size());
@@ -67,8 +72,11 @@ public class ComponentRestModulesTest implements ServiceConstants{
 	@Ignore
 	public void getCoreModules() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+        moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
     	System.out.println("modules.size():" + modules.size());
@@ -84,8 +92,11 @@ public class ComponentRestModulesTest implements ServiceConstants{
 	@Ignore
 	public void getCustomModules() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+        moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
     	System.out.println("modules.size():" + modules.size());
@@ -101,8 +112,11 @@ public class ComponentRestModulesTest implements ServiceConstants{
 	@Ignore
 	public void getDefaultCoreModules() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+        moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
     	System.out.println("modules.size():" + modules.size());
@@ -118,8 +132,11 @@ public class ComponentRestModulesTest implements ServiceConstants{
 	@Ignore
 	public void getDefaultCustomModules() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-    	moduleGroupClient.setPath(techId);
+    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+        moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
     	System.out.println("modules.size():" + modules.size());

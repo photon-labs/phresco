@@ -20,7 +20,9 @@
 
 package com.photon.phresco.service.client.test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -53,7 +55,10 @@ public class ComponentRestjsLibsTest implements ServiceConstants {
 	public void getJSLibs() throws PhrescoException {
 		String techId = "tech-php";
     	RestClient<ModuleGroup> jsLibClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_JSBYID);
-    	jsLibClient.setPath(techId);
+    	Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_JS);
+        jsLibClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	List<ModuleGroup> jsLibs = jsLibClient.get(genericType);
     	System.out.println("jsLibs.size():" + jsLibs.size());

@@ -50,7 +50,6 @@ import org.xml.sax.SAXException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.FrameworkConstants;
-import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.applications.Applications;
@@ -192,7 +191,6 @@ public class ApplicationsUtil implements FrameworkConstants {
     			List<ModuleGroup> pilotModules = projectInfo.getTechnology().getModules();
     			if (CollectionUtils.isNotEmpty(pilotModules)) {
     				for (ModuleGroup pilotModule : pilotModules) {
-    					System.out.println("pilotModule.getModuleId() in getPilotModuleIds() in ApplicationUtil.java:::" + pilotModule.getModuleId());
     					if (CollectionUtils.isNotEmpty(pilotModule.getVersions())) {
     						mapPilotModules.put(pilotModule.getModuleId(), pilotModule.getVersions().get(0).getVersion());
     					}

@@ -13,13 +13,17 @@ public class Login extends ServiceBaseAction {
 
 	private static final long serialVersionUID = -1858839078372821734L;
 	private static final Logger S_LOGGER = Logger.getLogger(Login.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
+	
 	private String username = null;
 	private String password = null;
 	private boolean loginFirst = true;
 	private String css = null;
 	
 	public String login() {
-		S_LOGGER.debug("Entering Method  Login.login()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.login()");
+	    }
 
 		if (loginFirst) {
 			HttpServletRequest request = getHttpRequest();
@@ -44,7 +48,9 @@ public class Login extends ServiceBaseAction {
 	}
 	
 	private String authenticate() {
-		S_LOGGER.debug("Entering Method  Login.authenticate()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.authenticate()");
+	    }
 		
 		User user = null;
 			try {
@@ -69,7 +75,9 @@ public class Login extends ServiceBaseAction {
 	}
 
 	private boolean validateLogin() {
-		S_LOGGER.debug("Entering Method  Login.validateLogin()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.validateLogin()");
+	    }
 		
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_LOGIN_EMPTY_CRED));
