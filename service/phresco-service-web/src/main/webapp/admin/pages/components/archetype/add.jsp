@@ -76,7 +76,11 @@
 	}
 	
 	function addpluginjar() {
-		var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'><label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'><input id='input01' class='input-xlarge' type='file'>&nbsp;<img src='images/add_icon.png' class='addplugin imagealign' onclick='addpluginjar();'>&nbsp;<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
+		var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'>" +
+		   "<label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'>" + 
+		   "<input id='input01' class='input-xlarge' type='file'>&nbsp;" + 
+		   "<img src='images/add_icon.png' class='addplugin imagealign' onclick='addpluginjar();'>&nbsp;" + 
+		   "<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
 		$("div[id='jar']:last").after(appendTxt);
 	}
 </script>
@@ -109,7 +113,8 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name' />
 			</label>
 			<div class="controls">
-				<input id="name" placeholder="Archetype Name" class="input-xlarge" type="text" name="name" value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="name" placeholder="Archetype Name" class="input-xlarge" type="text" name="name" 
+				    value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -118,7 +123,8 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.comp.desc' /> </label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
+				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" 
+				    maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
 			</div>
 		</div>
 
@@ -127,7 +133,8 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.version' />
 			</label>
 			<div class="controls">
-				<input id="version" placeholder="Version" class="input-xlarge" type="text" name="version" value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="version" placeholder="Version" class="input-xlarge" type="text" name="version" 
+				    value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
@@ -136,7 +143,8 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.com.vercmnt' /> </label>
 			<div class="controls">
-				<textarea name="versionComment" placeholder="Version Comment" class="input-xlarge" rows="2" cols="10" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
+				<textarea name="versionComment" placeholder="Version Comment" class="input-xlarge" rows="2" cols="10" 
+				    maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
 			</div>
 		</div>
 
@@ -199,9 +207,8 @@
 		<%
 			}
 		%>
-	 	<input type="button" id="archetypeCancel" class="btn btn-primary"
-			onclick="loadContent('archetypesList', $('#subcontainer'));"
-			value="<s:text name='lbl.hdr.comp.cancel'/>" />
+	 	<input type="button" id="archetypeCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
+            onclick="loadContent('archetypesList', $('#subcontainer'));"/>
 	</div>
 	
 	<!-- Hidden Fields -->

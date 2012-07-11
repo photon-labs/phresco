@@ -60,8 +60,8 @@ public class ComponentRestServerTest implements ServiceConstants {
 	@Ignore
     public void testGetServersByTechnology() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<Server> serverClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERBYID);
-    	serverClient.setPath(techId);
+    	RestClient<Server> serverClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
+    	serverClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<Server>> genericType = new GenericType<List<Server>>(){};
 		List<Server> servers = serverClient.get(genericType);
         System.out.println("servers.size() in testGetServers():" + servers.size());

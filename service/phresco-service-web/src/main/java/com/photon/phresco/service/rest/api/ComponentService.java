@@ -54,11 +54,10 @@ import com.photon.phresco.service.api.Converter;
 import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.converters.ConvertersFactory;
 import com.photon.phresco.service.dao.ApplicationTypeDAO;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
 @Component
-@Path(ServerConstants.REST_API_COMPONENT)
+@Path(ServiceConstants.REST_API_COMPONENT)
 public class ComponentService extends DbService implements ServiceConstants {
 	
 	private static final Logger S_LOGGER= Logger.getLogger(ComponentService.class);
@@ -186,7 +185,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			ApplicationType appType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME, 
+			ApplicationType appType = mongoOperation.findOne(APPTYPESDAO_COLLECTION_NAME, 
 			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
 			if(appType != null) {
 				return Response.status(Response.Status.OK).entity(appType).build();

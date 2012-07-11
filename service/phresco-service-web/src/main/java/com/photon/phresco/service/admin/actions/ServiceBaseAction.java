@@ -34,10 +34,9 @@ import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
-public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant, ServerConstants {
+public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant, ServiceConstants {
 
 //	private static final Logger S_LOGGER = Logger.getLogger(ServiceBaseAction.class);
     private static final long serialVersionUID = 1L;
@@ -51,12 +50,12 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
 	protected User doLogin(String userName, String password) throws PhrescoException {
 		StringBuilder serverURL = new StringBuilder();
 		serverURL.append(getHttpRequest().getScheme());
-		serverURL.append(ServiceConstants.COLON_DOUBLE_SLASH);
+		serverURL.append(COLON_DOUBLE_SLASH);
 		serverURL.append(getHttpRequest().getServerName());
-		serverURL.append(ServiceConstants.COLON);
+		serverURL.append(COLON);
 		serverURL.append(getHttpRequest().getServerPort());
 		serverURL.append(getHttpRequest().getContextPath());
-		serverURL.append(ServiceConstants.SLASH_REST_SLASH_API);
+		serverURL.append(SLASH_REST_SLASH_API);
     	ServiceContext context = new ServiceContext();
 		context.put(SERVICE_URL, serverURL.toString());
 		context.put(SERVICE_USERNAME, userName);

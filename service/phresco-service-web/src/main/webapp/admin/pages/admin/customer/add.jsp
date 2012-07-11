@@ -44,7 +44,8 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Customer Name" class="input-xlarge" name="name" type="text" value="<%= customer != null ? customer.getName() : "" %>">
+				<input id="input01" placeholder="Customer Name" class="input-xlarge" name="name" type="text" 
+				    value="<%= customer != null ? customer.getName() : "" %>">
 					<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -54,7 +55,8 @@
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Description" class="input-xlarge" rows="3" name="description"><%= customer != null ? customer.getDescription() : "" %></textarea>
+				<textarea id="textarea" placeholder="Description" class="input-xlarge" rows="3" 
+				    name="description"><%= customer != null ? customer.getDescription() : "" %></textarea>
 			</div>
 		</div>
 
@@ -65,7 +67,8 @@
 			<div class="controls">
 				<div class="input-prepend">
 					<span class="add-on"> <i class="icon-envelope"></i></span> 
-					<input id="inputIcon" class="span2" type="text" name="email" value="">
+					<input id="inputIcon" class="span2" type="text" name="email" 
+                        value="<%= customer != null ? customer.getEmailId() : "" %>">
 					<span class="help-inline" id="mailError"></span>
 				</div>
 			</div>
@@ -76,7 +79,8 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.adrs'/>
 			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Address" class="input-xlarge" rows="3" name="address"></textarea>
+				<textarea id="textarea" placeholder="Address" class="input-xlarge" rows="3" 
+				    name="address"><%= customer != null ? customer.getAddress() : "" %></textarea>
 				<span class="help-inline applyerror" id="addresError"></span>
 			</div>
 		</div>
@@ -344,7 +348,8 @@
 				<s:text name='lbl.hdr.adm.cust.state'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="State" class="input-xlarge" type="text" name="state">
+				<input id="input01" placeholder="State" class="input-xlarge" type="text" name="state"
+				    value="<%= customer != null ? customer.getState() : "" %>">
 			</div>
 		</div>
 
@@ -353,7 +358,8 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.zipcode'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Zipcode" class="input-xlarge" type="text" name="zipcode">
+				<input id="input01" placeholder="Zipcode" class="input-xlarge" type="text" name="zipcode"
+				    value="<%= customer != null ? customer.getZipcode() : "" %>">
 				<span class="help-inline" id="zipError"></span>
 			</div>
 		</div>
@@ -363,7 +369,8 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cont'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Contact Number" class="input-xlarge" type="text" name="number">
+				<input id="input01" placeholder="Contact Number" class="input-xlarge" type="text" name="number"
+				    value="<%= customer != null ? customer.getContactNumber() : "" %>">
 				<span class="help-inline" id="numError"></span>
 			</div>
 		</div>
@@ -373,7 +380,8 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.fax'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Fax Number" class="input-xlarge" type="text" name="fax">
+				<input id="input01" placeholder="Fax Number" class="input-xlarge" type="text" name="fax"
+				    value="<%= customer != null ? customer.getFax() : "" %>">
 				<span class="help-inline" id="faxError"></span>
 			</div>
 		</div>
@@ -383,7 +391,8 @@
 				<s:text name='lbl.hdr.adm.cust.hlptxt'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Help text" class="input-xlarge" type="text" name="helpText">
+				<input id="input01" placeholder="Help text" class="input-xlarge" type="text" name="helpText"
+				    value="<%= customer != null ? customer.getHelpText() : "" %>">
 			</div>
 		</div>
 
@@ -394,9 +403,9 @@
 			<div class="controls">
 				<select id="select01" name="licence">
 					<option value="">- select -</option>
-					<option value="GD">Gold</option>
-					<option value="PN">Platinum</option>
-					<option value="SL">silver</option>
+					<option value="5">Silver</option>
+					<option value="10">Gold</option>
+					<option value="15">Platinum</option>
 				</select>
 				<span class="help-inline" id="licenError"></span>
 			</div>
@@ -407,7 +416,8 @@
 				<s:text name='lbl.hdr.adm.cust.Vlddatefrom'/>
 			</label>
 			<div class="controls">
-				<input id="fromdate" class="datealign" type="text" name="validFrom" value="<%= customer != null ? customer.getValidFrom() : "" %>">
+				<input id="fromdate" class="datealign" type="text" name="validFrom" 
+				    value="<%= customer != null ? customer.getValidFrom() : "" %>">
 			</div>
 		</div>
 
@@ -416,7 +426,8 @@
 					<s:text name='lbl.hdr.adm.cust.vlddateto'/>
 			</label>
 			<div class="controls">
-				<input id="todate" class="datealign" type="text" name="validUpTo" value="<%= customer != null ? customer.getValidUpto() : "" %>">
+				<input id="todate" class="datealign" type="text" name="validUpTo" 
+				    value="<%= customer != null ? customer.getValidUpto() : "" %>">
 			</div>
 		</div>
 
@@ -425,18 +436,22 @@
 					<s:text name='lbl.hdr.adm.cust.url'/>
 			</label>
 			<div class="controls">
-				<input id="repUrl" class="datealign" type="text" name="repoURL">
+				<input id="repUrl" class="datealign" type="text" name="repoURL"
+				    value="<%= customer != null ? customer.getRepoURL() : "" %>">
 			</div>
 		</div>
 	</div>
 
 	<div class="bottom_button">
 		<% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<input type="button" id="customerUpdate" class="btn btn-primary" onclick="clickSave('customerUpdate', $('#subcontainer'), 'Updating Customer');" value="<s:text name='lbl.hdr.comp.update'/>"/>
+				<input type="button" id="customerUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				    onclick="validate('customerUpdate', $('#subcontainer'), 'Updating Customer');" />
 		<% } else { %>
-				<input type="button" id="customerSave" class="btn btn-primary" onclick="clickSave('customerSave', $('#subcontainer'), 'Creating Customer');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+				<input type="button" id="customerSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
+				    onclick="validate('customerSave', $('#subcontainer'), 'Creating Customer');" />
 		<% } %>
-		<input type="button" id="customerCancel" class="btn btn-primary" onclick="loadContent('customerList', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="customerCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
+            onclick="loadContent('customerList', $('#subcontainer'));" />
 	</div>
 	
 	<!-- Hidden Fields -->
@@ -470,49 +485,49 @@
 	});
 	
 	function findError(data) {
-		if(data.nameError != undefined) {
+		if (data.nameError != undefined) {
 			showError($("#nameControl"), $("#nameError"), data.nameError);
 		} else {
 			hideError($("#nameControl"), $("#nameError"));
 		}
 		
-		if(data.mailError != undefined) {
+		if (data.mailError != undefined) {
 			showError($("#mailControl"), $("#mailError"), data.mailError);
 		} else {
 			hideError($("#mailControl"), $("#mailError"));
 		}
 		
-		if(data.addressError != undefined) {
+		if (data.addressError != undefined) {
 			showError($("#addresControl"), $("#addresError"), data.addressError);
 		} else {
 			hideError($("#addresControl"), $("#addresError"));
 		}
 		
-		if(data.zipError != undefined) {
+		if (data.zipError != undefined) {
 			showError($("#zipControl"), $("#zipError"), data.zipError);
 		} else {
 			hideError($("#zipControl"), $("#zipError"));
 		}
 		
-		if(data.numError != undefined) {
+		if (data.numError != undefined) {
 			showError($("#numControl"), $("#numError"), data.numError);
 		} else {
 			hideError($("#numControl"), $("#numError"));
 		}
 		
-		if(data.faxError != undefined) {
+		if (data.faxError != undefined) {
 			showError($("#faxControl"), $("#faxError"), data.faxError);
 		} else {
 			hideError($("#faxControl"), $("#faxError"));
 		}
 		
-		if(data.conError != undefined) {
+		if (data.conError != undefined) {
 			showError($("#conControl"), $("#conError"), data.conError);
 		} else {
 			hideError($("#conControl"), $("#conError"));
 		}
 		
-		if(data.licenError != undefined) {
+		if (data.licenError != undefined) {
 			showError($("#licenControl"), $("#licenError"), data.licenError);
 		} else {
 			hideError($("#licenControl"), $("#licenError"));

@@ -17,9 +17,11 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
 
@@ -28,8 +30,10 @@
 %>
 <form class="customer_list">
 	<div class="operation" id="operation">
-		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" onclick="loadContent('applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
-		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>" onclick="loadContent('applicationDelete', $('#subcontainer'));"/>
+		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" 
+            onclick="loadContent('applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
+		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>" 
+            onclick="loadContent('applicationDelete', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
@@ -62,39 +66,50 @@
 								</th>
 							</tr>
 					</thead>
-								
+
 					<tbody>
-								<%
-									if (CollectionUtils.isNotEmpty(appTypes)) {
-										for ( ApplicationType appType : appTypes) {
-											
-								%>
-											<tr>
-												<td class="checkboxwidth">
-													<input type="checkbox" class="check" name="apptypeId" value="<%= appType.getId() %>" onclick="checkboxEvent();" />
-												</td>
-												<td class="namelabel-width">
-													<a href="#" onclick="editAppType('<%= appType.getId() %>');"><%= appType.getName() %></a>
-												</td>
-												<td class="desclabel-width"><%= appType.getDescription() %></td>	
-											</tr>	
-								<%		
-										}
-									}
-								%>
-						
+						<%
+							if (CollectionUtils.isNotEmpty(appTypes)) {
+								for ( ApplicationType appType : appTypes) {
+								    String disabledStr = "";
+								    if (appType.isSystem()) {
+								        disabledStr = "disabled";
+								    } else {
+								        disabledStr = "";
+								    }
+						%>
+									<tr>
+										<td class="checkboxwidth">
+											<%  if (appType.isSystem()) { %>
+	                                                <input type="checkbox" name="apptypeId" value="<%= appType.getId() %>" <%= disabledStr %>/>
+	                                        <% } else { %>
+	                                                <input type="checkbox" class="check" name="apptypeId" value="<%= appType.getId() %>" 
+	                                                onclick="checkboxEvent();" <%= disabledStr %>/>
+	                                        <% } %>
+										</td>
+										<td class="namelabel-width">
+                                            <%  if (appType.isSystem()) { %>
+                                                    <a href="#"><%= appType.getName() %></a>
+                                            <% } else { %>
+                                                    <a href="#" onclick="editAppType('<%= appType.getId() %>');"><%= appType.getName() %></a>
+											<% } %>
+										</td>
+										<td class="desclabel-width">
+                                            <%= StringUtils.isNotEmpty(appType.getDescription()) ? appType.getDescription() : "" %>
+                                        </td>	
+                                    </tr>
+						<%
+								}
+							}
+						%>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </form>
+
 <script type="text/javascript">
-	/** To edit the customer **/
-	/* $(document).ready(function() {
-		$("#errorDiv").show();
-	}); */
-	
 	function editAppType(id) {
 		var params = "appTypeId=";
 		params = params.concat(id);

@@ -24,7 +24,6 @@ package com.photon.phresco.service.dao;
 public class ApplicationTypeDAO extends BaseDAO {
 	
 	private String name;
-	private String displayName;
 	private String description;
 	private boolean system;
 	
@@ -38,14 +37,6 @@ public class ApplicationTypeDAO extends BaseDAO {
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public String getDisplayName() {
-		return displayName;
-	}
-	
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	
 	public String getDescription() {
@@ -66,9 +57,7 @@ public class ApplicationTypeDAO extends BaseDAO {
 
     @Override
     public String toString() {
-        return "ApplicationTypeDAO [name=" + name + ", displayName="
-                + displayName + ", description=" + description + ", system="
-                + system + "]";
+        return "ApplicationTypeDAO [name=" + name + ", description=" + description + ", system=" + system + "]";
     }
 	
 }

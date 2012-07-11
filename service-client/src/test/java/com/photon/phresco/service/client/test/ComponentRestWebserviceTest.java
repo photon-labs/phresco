@@ -60,8 +60,8 @@ public class ComponentRestWebserviceTest implements ServiceConstants {
 	@Ignore
     public void testGetWebservicesByTechnology() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<WebService> webserviceClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICESBYID);
-    	webserviceClient.setPath(techId);
+    	RestClient<WebService> webserviceClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICES);
+    	webserviceClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<WebService>> genericType = new GenericType<List<WebService>>(){};
 		List<WebService> webservices = webserviceClient.get(genericType);
         System.out.println("webservices.size():" + webservices.size());

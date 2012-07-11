@@ -53,6 +53,8 @@ public interface ServiceManager {
 	
 	List<ApplicationType> getApplicationTypes() throws PhrescoException;
 	
+	ApplicationType getApplicationType(String appTypeId) throws PhrescoException;
+	
 	List<Server> getServers(String techId) throws PhrescoException;
 	
 	List<Database> getDatabases(String techId) throws PhrescoException;
