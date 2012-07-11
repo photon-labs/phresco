@@ -224,9 +224,21 @@
         <action name="buildView" method="view" class="com.photon.phresco.framework.actions.applications.Build">
             <result name="build">/pages/applications/build.jsp</result>
         </action>
-        
+
         <action name="generateBuild" method="generateBuild" class="com.photon.phresco.framework.actions.applications.Build">
             <result name="generateBuild">/pages/applications/generate_build.jsp</result>
+        </action>
+        
+        <action name="getSqlDatabases" method="getSqlDatabases" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="getSQLFiles" method="getSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="configureSqlExecution" method="configureSqlExecution" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
         </action>
         
         <action name="openFolder" method="openFolder" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
