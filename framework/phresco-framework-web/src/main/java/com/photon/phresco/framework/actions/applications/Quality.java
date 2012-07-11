@@ -1391,17 +1391,17 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 	windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                 	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI);
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
                     windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI);
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else {
                 	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI);
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 }
                 S_LOGGER.debug("Windows machine browsers list " + windowsBrowsersMap);
                 getHttpRequest().setAttribute(REQ_TEST_BROWSERS, windowsBrowsersMap);
