@@ -4721,3 +4721,8 @@ a[id='androidSigning']:hover {
 .checkbox_list {
     width:0.1%;
 }
+
+/** Print pdf image **/
+.printAsPdf {
+	width: 70px;
+}
