@@ -61,6 +61,8 @@ import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.SettingsInfo;
+import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.Utility;
 
 public class PluginUtils {
 	private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
@@ -177,7 +179,7 @@ public class PluginUtils {
 	public void getSqlFilePath(SettingsInfo databaseDetails, File basedir, String databaseType) throws PhrescoException {
 		List<String> filepaths = new ArrayList<String>();
 		try {
-			File jsonFile = new File(basedir.getPath() + Constants.JSON_PATH);
+			File jsonFile = new File(basedir.getPath() + "/.phresco/sqlfile.json");
 			if (jsonFile.exists()) {
 				Gson gson = new Gson();
 				Type mapObjectType = new TypeToken<Map<String, List<String>>>() {
@@ -287,7 +289,7 @@ public class PluginUtils {
 			serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 			serializer.transform(new DOMSource(doc), new StreamResult(stw));
-			encryptString encryptstring = new encryptString();
+			EncryptString encryptstring = new EncryptString();
 			encryptstring.Crypto("D4:6E:AC:3F:F0:BE");
 			String encryptXmlString = encryptstring.encrypt(stw.toString());
 			writeXml(encryptXmlString, fileName);
