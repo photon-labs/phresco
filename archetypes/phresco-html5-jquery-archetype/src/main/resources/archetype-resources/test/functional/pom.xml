@@ -1,38 +1,18 @@
-<!--
-  ###
-  PHR_jquery-widget-hw
-  %%
-  Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  %%
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-       http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  ###
-  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.photon.phresco</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <artifactId>HTML5Mobile_WebDriver</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
-  <name>HelloWorld</name>
+  <name>HTML5Mobile_Widget</name>
   <url>http://maven.apache.org</url>
   
-  
-  <repositories>
+ <repositories>
     <repository>      
       <id>seleniumserver</id>
       <name>seleniumserver</name>
-      <url>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</url>
+      <url>http://172.16.18.178:8080/nexus/content/groups/public/</url>
     </repository>
   </repositories>
   
@@ -46,12 +26,21 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
-              <groupId>org.seleniumhq.selenium.server</groupId>
-              <artifactId>selenium-webdriver</artifactId>
-              <version>2.19.0</version>
-        </dependency>
-        
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.21.0</version>
+		</dependency>
+		
+		<!--  ***************For Windows operadriver ******************-->
+		<dependency>
+				<groupId>com.opera</groupId>
+				<artifactId>operadriver</artifactId>
+				<version>0.14</version>
+		</dependency>
+		
+       
     <!--  ***************For Windows chromedriver ******************-->    
         <dependency>
 		   <groupId>org.seleniumhq.selenium</groupId>
@@ -62,12 +51,13 @@
 		</dependency>
 	<!-- **************** For Mac machine chromedriver***************** -->   
 			<dependency>
-					  <groupId>org.seleniumhq.selenium</groupId>
-					  <artifactId>chromedriver</artifactId>
-					  <version>19.0.1068.0</version>
-					  <classifier>mac</classifier>
-					  <type>zip</type>
-				</dependency>
+					<groupId>org.seleniumhq.selenium</groupId>
+					<artifactId>chromedriver</artifactId>
+					<version>21.0.1180.4</version>
+					<classifier>mac</classifier>
+					<type>zip</type>
+		</dependency>
+
     <!-- **************** For Linux-32 machine chromedriver***************** -->     
         <dependency>
 			  <groupId>org.seleniumhq.selenium</groupId>
@@ -102,7 +92,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.1</version>
+				<version>2.1</version>
 				<executions>
 		          <execution>
 		            <phase>test</phase>
@@ -127,7 +117,7 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<markersDirectory>target/test/chromedriver</markersDirectory>
+							<markersDirectory>chromedriver</markersDirectory>
 						<artifactItems>
 								<artifactItem>
 										 	  <groupId>org.seleniumhq.selenium</groupId>
@@ -136,16 +126,17 @@
 											   <classifier>win</classifier>
 											   <type>zip</type>
 											   <overWrite>false</overWrite>
-											   <outputDirectory>target/test/chromedriver/windows</outputDirectory>
+											   <outputDirectory>chromedriver/windows</outputDirectory>
 								  </artifactItem>
 								  <artifactItem>
-								                 <groupId>org.seleniumhq.selenium</groupId>
-												  <artifactId>chromedriver</artifactId>
-												  <version>19.0.1068.0</version>
-												  <classifier>mac</classifier>
-												  <type>zip</type>
-												  <overWrite>false</overWrite>
-											      <outputDirectory>target/test/chromedriver/mac</outputDirectory>
+								                 
+												<groupId>org.seleniumhq.selenium</groupId>
+												<artifactId>chromedriver</artifactId>
+												<version>21.0.1180.4</version>
+												<classifier>mac</classifier>
+												<type>zip</type>
+												<overWrite>false</overWrite>
+											    <outputDirectory>chromedriver/mac</outputDirectory>
 								</artifactItem>	
 								<artifactItem>
 											  <groupId>org.seleniumhq.selenium</groupId>
@@ -154,7 +145,7 @@
 											  <classifier>linux32</classifier>
 											  <type>zip</type>
 											  <overWrite>false</overWrite>
-											  <outputDirectory>target/test/chromedriver/linux-32</outputDirectory>
+											  <outputDirectory>chromedriver/linux-32</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 											  <groupId>org.seleniumhq.selenium</groupId>
@@ -163,13 +154,29 @@
 											  <classifier>linux64</classifier>
 											  <type>zip</type>
 											  <overWrite>false</overWrite>
-											  <outputDirectory>target/test/chromedriver/linux-64</outputDirectory>
+											  <outputDirectory>chromedriver/linux-64</outputDirectory>
 								</artifactItem>
 						</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>  
+                <artifactId>maven-antrun-plugin</artifactId>  
+                <executions>  
+                  <execution>  
+                  <phase>compile</phase>  
+                    <configuration>  
+                      <tasks>                     
+                        <chmod file="${project.basedir}/chromedriver/mac/chromedriver" perm="777"/>
+                      </tasks>  
+                    </configuration>  
+                    <goals>  
+                      <goal>run</goal>  
+                    </goals>  
+                  </execution>  
+                </executions>  
+              </plugin>  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
