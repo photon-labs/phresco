@@ -131,7 +131,7 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
 										       if(setting.getEnvName().equals(enves.getName())) {
 							%>
 							<tr>
-					              		<td>
+					              		<td class="checkbox_list">
 					              			<input type="checkbox" class="check" name="check" value="<%=setting.getEnvName() + "," +setting.getName() %>">
 					              		</td>
 					              		<td>

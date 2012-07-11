@@ -64,7 +64,7 @@
    	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 
-<form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm"> 
+<form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
 <div class="popup_Modal topFouty" id="generateBuild_Modal">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
@@ -108,13 +108,13 @@
 		        <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.name"/></label>
 				    <div class="input">
-						<input type="text" placeholder="specify build name" class="xlarge javastd" id="userBuildName" name="userBuildName" maxlength="20" title="20 Characters only"/>
+						<input type="text" placeholder="<s:text name="build.name"/>" class="xlarge javastd" id="userBuildName" name="userBuildName" maxlength="20" title="20 Characters only"/>
 				    </div>
 				</div>
 				<div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 				    <div class="input">
-						<input type="text" placeholder="specify build number" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
+						<input type="text" placeholder="<s:text name="build.number"/>" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
 				    </div>
 				</div>
 				
