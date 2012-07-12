@@ -114,7 +114,7 @@
 				<div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 				    <div class="input">
-						<input type="text" placeholder="<s:text name="build.number"/>" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="20" title="10 Characters only"/>
+						<input type="text" placeholder="<s:text name="build.number"/>" class="xlarge javastd" id="userBuildNumber" name="userBuildNumber" maxlength="6" title="6 Characters only"/>
 				    </div>
 				</div>
 				
