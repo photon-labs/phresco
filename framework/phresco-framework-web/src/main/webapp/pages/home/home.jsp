@@ -54,15 +54,15 @@ if(localStorage.welcome) {
 
 <script type="text/javascript">
 
-	if(localStorage["welcome"]) {
+	if (localStorage["welcome"]) {
 		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none");
-	 }else if (localStorage.menuSelected == 'video'){// To hide the welcome overlay page.
-		 $(".errorOverlay").show().css("display","none");
+	 } else if (localStorage.menuSelected == 'video'){ // To hide the welcome overlay page.
+		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none"); 
-	 }else {
-		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
-		 $(".intro_container").show().css("display","<%= showWelcome %>");
+	 } else {
+		$(".errorOverlay").show().css("display","<%= showWelcome %>");
+		$(".intro_container").show().css("display","<%= showWelcome %>");
 	}
 
 </script>
@@ -155,7 +155,7 @@ $(document).ready(function() {
 
     $("#dontShowCheck").click(function() { 
          if ($(this).is(":checked"))
-        	 localStorage.welcome = no;
+        	 localStorage.welcome = true;
     });
  
     $(".homegostart").click(function () {
