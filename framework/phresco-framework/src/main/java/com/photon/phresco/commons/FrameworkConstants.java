@@ -714,6 +714,7 @@ public interface FrameworkConstants {
      */
     String HIDE_LOG_MSG ="Only Error Messages will be displayed";
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
+    String SELECT_DB ="Select atleast one DB Sql File for Execution";
     
     /*
      * Quality Info keys

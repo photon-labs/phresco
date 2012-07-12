@@ -297,6 +297,51 @@
 				</div>	
 			</div>
 		</fieldset>
+		
+		<!-- sql execution starts  -->
+		<fieldset class="popup-fieldset fieldset_center_align" id="sqlExecutionContain" style="display: none;">
+			<legend class="fieldSetLegend"><s:text name="label.sql.execute"/></legend>
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label" style="width: 210px;"><s:text name="label.databases"/></label>
+				<div class="input" style="text-align: left; margin-left: 250px;">
+					<select id="databases" name="database" class="xlarge" >
+			       	</select>
+				</div>
+			</div>
+	        <table>
+	            <tbody>
+					<tr>
+		                <td style="border-bottom: none;">
+	                        <select id="avaliableSourceScript" multiple="multiple" style="height: 150px; width:200px;">
+	
+	                        </select>                     
+		                </td>
+		                <td style="border-bottom: none; padding-left: 15px; padding-right: 15px;">
+		                	<ul style="list-style : none;">
+		                		<li style="padding-bottom: 5px; margin-top:10px;"><input type="button" class="btn primary" id="btnAddAll" value=">>" style="width:30px;"></li>
+		                		<li style="padding-bottom: 5px;"><input type="button" class="btn primary" id="btnAdd" value=">" style="width:30px;"></li>
+								<li style="padding-bottom: 5px;"><input type="button" class="btn primary" id="btnRemove" value="<" style="width:30px;"></li>
+								<li style="padding-bottom: 5px;"><input type="button" class="btn primary" id="btnRemoveAll" value="<<" style="width:30px;"></li>
+		                	</ul>
+		                </td>
+		                <td style="border-bottom: none; padding-left: 31px;">
+	                        <select id="selectedSourceScript" name="selectedSourceScript" multiple="multiple" style="height: 150px; width:200px;">
+							</select>
+		                </td>
+		                <td style="border-bottom: none;padding-right: 25px">
+	                		<img src="images/icons/top_arrow.png" title="Move up" id="up" style="cursor: pointer;"><br>
+	                		<img src="images/icons/btm_arrow.png" title="Move down" id="down" style="cursor: pointer; margin-top: 16px;" >
+		                </td>
+	            	</tr>
+	        	</tbody>
+			</table>
+			<input id="DbWithSqlFiles" value="" type="hidden">
+			<%-- <div style="text-align: left;padding-left: 2%; padding-bottom: 5px; font-weight: bold;">
+				<input type="checkbox" id="rollBack" name="rollBack" /> &nbsp;<span class="textarea_span popup-span"><s:text name="label.rollback"/></span>
+			</div> --%>
+		</fieldset>
+		<!-- sql execution ends  -->
+		
 <!-- 		advanced settingd -->
 		<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %>
 		<div class="theme_accordion_container clearfix" style="float: none;">
@@ -337,6 +382,7 @@
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
+			<img class="popupLoadingIcon" style="position: relative;"> 
 			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
 			<div style="float: right;">
 				<input type="hidden" name="from" value="<%= from %>" id="from">
@@ -412,26 +458,45 @@
 		});
 		
 		$('#deploy').click(function() {
+			var isChecked = $('#importSql').is(":checked");
+			if ($('#importSql').is(":checked") && $('#selectedSourceScript option').length == 0) {
+				$("#errMsg").html('<%= FrameworkConstants.SELECT_DB %>');
+				return false;
+			}
 			buildValidateSuccess("deploy", '<%= FrameworkConstants.REQ_FROM_TAB_DEPLOY %>');
 		});
 		
 		/** NodeJS run against source **/
 		$('#runAgainstSrc').click(function() {
+			var isChecked = $('#importSql').is(":checked");
+			if ($('#importSql').is(":checked") && $('#selectedSourceScript option').length == 0) {
+				$("#errMsg").html('<%= FrameworkConstants.SELECT_DB %>');
+				return false;
+			}
 			buildValidateSuccess('NodeJSRunAgainstSource', '<%= FrameworkConstants.REQ_READ_LOG_FILE %>');
 		});
 		
 		/** Java run against source **/
 		$('#javaRunAgainstSrc').click(function() {
+			var isChecked = $('#importSql').is(":checked");
+			if ($('#importSql').is(":checked") && $('#selectedSourceScript option').length == 0) {
+				$("#errMsg").html('<%= FrameworkConstants.SELECT_DB %>');
+				return false;
+			}
 			buildValidateSuccess('runAgainstSource', '<%= FrameworkConstants.REQ_JAVA_START %>');
 		});
 		
-		$('#importSql').change(function() {
+		$('#importSql').click(function() {
 			var isChecked = $('#importSql').is(":checked");
 			if (isChecked) {
-				$("#errMsg").html('<%= FrameworkConstants.EXEC_SQL_MSG %>');
+<%-- 				$("#errMsg").html('<%= FrameworkConstants.EXEC_SQL_MSG %>'); --%>
+				// getting database list based on environment and and execute sqk checkbox
 		    } else {
+		    	$('#DbWithSqlFiles').val("");
 		    	$("#errMsg").empty();
 		    }
+			// show hide sql execution fieldset
+			executeSqlShowHide();
 		});
 		
 		$('#hideLog').change(function() {
@@ -453,8 +518,184 @@
 // 			}
 		})
 		
-	});
+		//execute sql codes
+		$('#btnAdd').click(function(e) {
+			addDbWithVersions();
+			$('#avaliableSourceScript > option:selected').appendTo('#selectedSourceScript');
+		});
+			
+		$('#btnAddAll').click(function(e) {
+			var sqlFiles = "";
+			$('#avaliableSourceScript option').each(function(i, available) {
+				sqlFiles = $(available).val();
+				$('#DbWithSqlFiles').val($('#DbWithSqlFiles').val() + $('#databases').val()+ "#VSEP#" + sqlFiles + "#NAME#" + $(available).text() + "#SEP#");
+			});		
+			$('#avaliableSourceScript > option').appendTo('#selectedSourceScript');
+		});
+
+		$('#btnRemove').click(function() {
+			updateDbWithVersionsForRemove();
+   			$('#selectedSourceScript > option:selected').appendTo('#avaliableSourceScript');
+		});
+
+		$('#btnRemoveAll').click(function() {
+			updateDbWithVersionsForRemoveAll();
+   			$('#selectedSourceScript > option').appendTo('#avaliableSourceScript');
+		});
 		
+		//To move up the values
+		$('#up').bind('click', function() {
+			$('#selectedSourceScript option:selected').each( function() {
+				var newPos = $('#selectedSourceScript  option').index(this) - 1;
+				if (newPos > -1) {
+					$('#selectedSourceScript  option').eq(newPos).before("<option value='"+$(this).val()+"' selected='selected'>"+$(this).text()+"</option>");
+					$(this).remove();
+				}
+			});
+		});
+		
+		//To move down the values
+		$('#down').bind('click', function() {
+			var countOptions = $('#selectedSourceScript option').size();
+			$('#selectedSourceScript option:selected').each( function() {
+				var newPos = $('#selectedSourceScript  option').index(this) + 1;
+				if (newPos < countOptions) {
+					$('#selectedSourceScript  option').eq(newPos).after("<option value='"+$(this).val()+"' selected='selected'>"+$(this).text()+"</option>");
+					$(this).remove();
+				}
+			});
+		});
+		
+		$('#environments').change(function() {
+			loadingIconShow();
+			$('#DbWithSqlFiles').val("");
+			executeSqlShowHide();
+		});
+		
+		//execute Sql script
+		executeSqlShowHide();
+	});
+	
+	function addDbWithVersions() {
+		//creating new data list
+		var sqlFiles = "";
+		$("#avaliableSourceScript :selected").each(function(i, available) {
+			sqlFiles = $(available).val();
+			$('#DbWithSqlFiles').val($('#DbWithSqlFiles').val() + $('#databases').val()+ "#VSEP#" + sqlFiles + "#NAME#" + $(available).text() + "#SEP#");
+		});
+	}
+	
+	function hideDbWithVersions() {
+		// getting existing data list
+		var nameSep = new Array();
+		nameSep = $('#DbWithSqlFiles').val().split("#SEP#");
+		for (var i=0; i < nameSep.length - 1; i++) {
+			var addedDbs = nameSep[i].split("#VSEP#");
+			var addedSqlName = addedDbs[1].split("#NAME#");
+			if($('#databases').val() == addedDbs[0]) {
+				$("#avaliableSourceScript option[value='" + addedSqlName[0] + "']").remove();
+			}
+		}
+		// show corresponding DB sql files
+		showSelectedDBWithVersions();
+	}
+	
+	function showSelectedDBWithVersions() {
+		$('#selectedSourceScript').empty();
+		var nameSep = new Array();
+		nameSep = $('#DbWithSqlFiles').val().split("#SEP#");
+		for (var i=0; i < nameSep.length - 1; i++) {
+			var addedDbs = nameSep[i].split("#VSEP#");
+			var addedSqlName = addedDbs[1].split("#NAME#");
+			if($('#databases').val() == addedDbs[0]) {
+				$('#selectedSourceScript').append($("<option></option>").attr("value",addedSqlName[0]).text(addedSqlName[1])); 
+			}
+		}
+		
+		//hiding loading icon..
+		hideLoadingIcon();
+	}
+	
+	function updateDbWithVersionsForRemove() {
+		var toBeUpdatedDbwithVersions = "";
+		$("#selectedSourceScript option:selected").each(function(i, alreadySelected) {
+			var nameSep = new Array();
+			nameSep = $('#DbWithSqlFiles').val().split("#SEP#");
+			for (var i=0; i < nameSep.length - 1; i++) {
+				var addedDbs = nameSep[i].split("#VSEP#");
+				var addedSqlName = addedDbs[1].split("#NAME#");
+				if(($('#databases').val() == addedDbs[0]) && $(alreadySelected).val() != addedSqlName[0]) {
+					toBeUpdatedDbwithVersions = toBeUpdatedDbwithVersions + nameSep[i] + "#SEP#";
+				} else if(($('#databases').val() != addedDbs[0]) && $(alreadySelected).val() != addedSqlName[0]) {
+					toBeUpdatedDbwithVersions = toBeUpdatedDbwithVersions + nameSep[i] + "#SEP#";
+				}
+			}
+			$('#DbWithSqlFiles').val(toBeUpdatedDbwithVersions);
+		});
+	}
+	
+	function updateDbWithVersionsForRemoveAll() {
+		var toBeUpdatedDbwithVersions = "";
+		$("#selectedSourceScript option").each(function(i, alreadySelected) {
+			var nameSep = new Array();
+			nameSep = $('#DbWithSqlFiles').val().split("#SEP#");
+			for (var i=0; i < nameSep.length - 1; i++) {
+				var addedDbs = nameSep[i].split("#VSEP#");
+				var addedSqlName = addedDbs[1].split("#NAME#");
+				if(($('#databases').val() != addedDbs[0]) && $(alreadySelected).val() != addedSqlName[0]) {
+					toBeUpdatedDbwithVersions = toBeUpdatedDbwithVersions + nameSep[i] + "#SEP#";
+				} else if(($('#databases').val() == addedDbs[0]) && $(alreadySelected).val() == addedSqlName[0]) {
+					toBeUpdatedDbwithVersions = toBeUpdatedDbwithVersions + nameSep[i] + "#SEP#";
+				}
+			}
+			$('#DbWithSqlFiles').val(toBeUpdatedDbwithVersions);
+		});
+	}
+	
+	function executeSqlShowHide() {
+		if($('#importSql').is(":checked")) {
+			$('#sqlExecutionContain').show();
+		} else {
+			$('#sqlExecutionContain').hide();
+		}
+		// after fieldset completed, we have to load db and sql files
+		getDatabases();
+	}
+	
+	function getDatabases() {
+		if(!isBlank($("#environments").val())) { 
+			var params = 'environments=';
+		    params = params.concat($("#environments").val());
+		    params = params.concat("&projectCode=");
+		    params = params.concat('<%= projectCode %>');
+			performAction("getSqlDatabases", params, '', true);
+		}
+	}
+	
+	$("#databases").change(function() {
+		loadingIconShow();
+		getSQLFiles();
+	});
+	
+	function getSQLFiles() {
+		if(!isBlank($("#databases").val())) {
+			var params = 'selectedDb=';
+		    params = params.concat($("#databases").val());
+		    params = params.concat("&projectCode=");
+		    params = params.concat('<%= projectCode %>');
+			performAction("getSQLFiles", params, '', true);
+		}
+	}
+
+	function loadingIconShow() {
+		$('.popupLoadingIcon').show();
+		getCurrentCSS();
+	}
+	
+	function hideLoadingIcon() {
+		$('.popupLoadingIcon').hide();
+	}
+	
 	function checkObj(obj) {
 		if(obj == "null" || obj == undefined) {
 			return "";
@@ -494,6 +735,8 @@
 		var params = "";
 		params = params.concat("&environments=");
 		params = params.concat(getSelectedEnvs());
+		params = params.concat("&DbWithSqlFiles=");
+		params = params.concat($('#DbWithSqlFiles').val());
 		readerHandlerSubmit(url, '<%= projectCode %>', testType, params, true);
 	}
 	

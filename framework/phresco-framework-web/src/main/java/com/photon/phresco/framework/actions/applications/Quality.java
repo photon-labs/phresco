@@ -181,9 +181,17 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String uname = null;
     private String dbUrl = null;
     private String driver = null;
+	
+    // report generation 
+    private String reportName = null;
+    private String reoportLocation = null;
     
-    private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
-
+    // download report
+	private InputStream fileInputStream;
+	private String fileName = "";
+	private String reportFileName = null;
+	
+	private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
     
     public String unit() {
     	S_LOGGER.debug("Entering Method Quality.unit()");
@@ -1383,15 +1391,17 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 	windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                 	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
                     windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
                     windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-                   /* windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI);*/
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else {
                 	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-                    windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);   
+                    windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+                    windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 }
                 S_LOGGER.debug("Windows machine browsers list " + windowsBrowsersMap);
                 getHttpRequest().setAttribute(REQ_TEST_BROWSERS, windowsBrowsersMap);
@@ -1402,13 +1412,15 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
                 	macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                 	macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+                	macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
                     macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                     macBrowsersMap.put(MAC_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
                     macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-                   /* macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI);*/
+                    macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else {
                     macBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+                    macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 }
                 S_LOGGER.debug("Mac machine browsers list " + macBrowsersMap);
                 getHttpRequest().setAttribute(REQ_TEST_BROWSERS, macBrowsersMap);
@@ -1419,13 +1431,15 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
                 	linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                 	linuxBrowsersMap.put(LINUX_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+                	linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
                     linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
                     linuxBrowsersMap.put(LINUX_BROWSER_CHROME_KEY,BROWSER_CHROME_VALUE);
                     linuxBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-                    /*linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI);*/
+                    linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 } else {
                     linuxBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+                    linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
                 }
                 
                 S_LOGGER.debug("Linux machine browsers list " + linuxBrowsersMap);
@@ -1674,6 +1688,19 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             return name.endsWith(filter_);
         }
     }
+    
+    public class FileNameFileFilter implements FilenameFilter {
+        private String filter_;
+        private String startWith_;
+        public FileNameFileFilter(String filter, String startWith) {
+            filter_ = filter;
+            startWith_ = startWith;
+        }
+
+        public boolean accept(File dir, String name) {
+            return name.endsWith(filter_) && name.startsWith(startWith_);
+        }
+    }
 
     public String getSettingCaption() {
            S_LOGGER.debug("Entering Method Quality.getSettingCaption()");
@@ -1882,6 +1909,65 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 			// TODO: handle exception
 		}
     	return SUCCESS;
+    }
+    
+    public String printAsPdfPopup () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
+        try {
+        	List<String> pdfFiles = new ArrayList<String>();
+            // popup showing list of pdf's already created
+			String pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES;
+            File pdfFileDir = new File(pdfDirLoc);
+            File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, testType));
+        	for (File child : children) {
+				pdfFiles.add(child.getName().replace(DOT + PDF, "").replace(testType + UNDERSCORE, ""));
+			}
+            
+            if(pdfFiles != null) {
+                getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
+            }
+			//read all pdf files from dir
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
+        }
+        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
+        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+        return SUCCESS;
+    }
+    
+    public void printAsPdf () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdf()");
+        try {
+            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            reportGeneration(project, testType);
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        }
+        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
+        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+//        return SUCCESS;
+    }
+    
+    public void reportGeneration(Project project, String testType) {
+        PhrescoReportGeneration.generatePdfReport(project, testType);
+    }
+    
+    public String downloadReport() {
+        S_LOGGER.debug("Entering Method Quality.downloadReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            String pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+    			fileInputStream = new FileInputStream(pdfFile);
+    			fileName = reportFileName;
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return SUCCESS;
     }
     
     public List<SettingsInfo> getServerSettings() {
@@ -2261,4 +2347,44 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 		this.showDebug = showDebug;
 	}
 
+    public String getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
+    public String getReoportLocation() {
+        return reoportLocation;
+    }
+
+    public void setReoportLocation(String reoportLocation) {
+        this.reoportLocation = reoportLocation;
+    }
+
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getReportFileName() {
+		return reportFileName;
+	}
+
+	public void setReportFileName(String reportFileName) {
+		this.reportFileName = reportFileName;
+	}
+    
 }
