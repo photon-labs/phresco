@@ -36,7 +36,7 @@
 	});
 
 	function findError(data) {
-		if(data.nameError != undefined) {
+		if (data.nameError != undefined) {
 			showError($("#nameControl"), $("#nameError"), data.nameError);
 		} else {
 			hideError($("#nameControl"), $("#nameError"));
@@ -52,9 +52,9 @@
 <form class="form-horizontal customer_list">
   <h4 class="hdr">
    <% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<s:label for="description" key="lbl.hdr.comp.apln.edit.title" theme="simple" />
+				<s:label key="lbl.hdr.comp.apln.edit.title" theme="simple" />
 		<% } else { %>
-	            <s:label for="description" key="lbl.hdr.comp.apln.title" theme="simple"/>	
+	            <s:label key="lbl.hdr.comp.apln.title" theme="simple"/>	
 	    <% } %>
      </h4>       
 	<div class="content_adder">
@@ -63,7 +63,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="name" class="input-xlarge" placeholder="Application Type Name" type="text" name="name" value="<%= apptype != null ? apptype.getName() : "" %>" maxlength="30" title="30 Characters only">
+				<input id="name" class="input-xlarge" placeholder='<s:text name="lbl.appltype.appname.placeholder"/>'  type="text" name="name" value="<%= apptype != null ? apptype.getName() : "" %>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -73,20 +73,24 @@
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
+				<textarea id="description" class="input-xlarge" placeholder='<s:text name="lbl.description.placeholder"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
 			</div>
 		</div>
 	</div>
 	
 	<div class="bottom_button">
 	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<input type="button" id="applicationUpdate" class="btn btn-primary" onclick="clickSave('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" value="<s:text name='lbl.hdr.comp.update'/>"/>
+				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				    onclick="validate('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
 		<% } else { %>
-				<input type="button" id="applicationSave" class="btn btn-primary" onclick="clickSave('applicationSave', $('#subcontainer'), 'Creating Application Type');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+				<input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
+				    onclick="validate('applicationSave', $('#subcontainer'), 'Creating Application Type');" />
 		<% } %>
-		<input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applntypesList', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
-   </div>
+		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
+            onclick="loadContent('applntypesList', $('#subcontainer'));" />
+    </div>
 	
+	<!-- Hidden Fields -->
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
 	<input type="hidden" name="appTypeId" value="<%= apptype != null ? apptype.getId() : "" %>"/>
 	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/> 

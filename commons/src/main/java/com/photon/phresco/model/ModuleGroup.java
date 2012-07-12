@@ -44,6 +44,8 @@ public class ModuleGroup implements Serializable {
 	private List<Documentation> docs;
 	private String techId;
 	private List<Module> versions = new ArrayList<Module>(SizeConstants.SIZE_VERSIONS_MAP);
+	private String imageURL;
+	private boolean system;
 
 	public ModuleGroup() {
 	}
@@ -182,7 +184,23 @@ public class ModuleGroup implements Serializable {
 		this.moduleId = moduleId;
 	}
 
-	/* (non-Javadoc)
+	public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    /* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

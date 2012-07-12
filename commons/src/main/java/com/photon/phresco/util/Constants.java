@@ -120,6 +120,7 @@ public interface Constants {
     //Action constants
     String TEST_FUNCTIONAL = "Functional";
 	String SITE_SQL = "site.sql";
+	String JSON_PATH = "/.phresco/sqlfile.json";
 	String DB_MYSQL   = "mysql";
 	/*
 	 * Constants for String

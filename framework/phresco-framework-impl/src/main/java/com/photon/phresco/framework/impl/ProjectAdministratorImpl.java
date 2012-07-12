@@ -103,6 +103,7 @@ import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.phresco.pom.util.SiteConfigurator;
@@ -700,6 +701,48 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 return editorDownloadInfos;
 	 }
 
+	 @Override
+	 public List<DownloadInfo> getToolsDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getToolsDownloadInfo()");
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
+		 }
+		 
+		 List<DownloadInfo> toolsDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.TOOLS.equals(downloadInfo.getType())){
+					 toolsDownloadInfos.add(downloadInfo);
+				 }
+			 }
+		 }
+		 
+		 return toolsDownloadInfos;
+	 }
+	 
+	 
+	 @Override
+	 public List<DownloadInfo> getOtherDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getOtherDownloadInfo()");
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
+		 }
+		 
+		 List<DownloadInfo> othersDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.OTHERS.equals(downloadInfo.getType())){
+					 othersDownloadInfos.add(downloadInfo);
+				 }
+			 }
+		 }
+		 return othersDownloadInfos;
+	 }
+	 
 	 /**
 	  * This method is to fetch the settings template through REST service
 	  * @return List of settings template stored in the server [Database, Server and Email]
@@ -2111,16 +2154,22 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 	}
 	
-	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+	public List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException {
 		try {
 			SiteConfigurator configurator = new SiteConfigurator();
 			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
-				configurator.addReportPlugin(reportsToBeAdded, file);
-			}
-			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
-				configurator.removeReportPlugin(reportsToBeRemoved, file);
-			}
+			List<Reports> reports = configurator.getReports(file);
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+				configurator.addReportPlugin(reports, reportCategories, file);
 		} catch (Exception e) {
 			throw new PhrescoException();
 		}

@@ -1,30 +1,42 @@
-<%@ taglib uri="/struts-tags" prefix="s" %>
+<%--
+  ###
+  Service Web Archive
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  --%>
+  
+<%@ taglib uri="/struts-tags" prefix="s"%>
+
+<%@ page import="com.photon.phresco.commons.model.User"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <!DOCTYPE html>
 <html>
 	<head>
-<%
-		   String css = null;
-		   Cookie[] cookies = request.getCookies();
-     	   for(int i = 0; i < cookies.length; i++) { 
-           Cookie cookiecss = cookies[i];
-           if (cookiecss.getName().equals("css")) {
-           	css = cookiecss.getValue();
-           	css = css.replace("%2F","/");
-           	session.setAttribute("css", css);
-           }  
-       } 
-%>
 		<title>Phresco</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-		<link rel="stylesheet" href="<%= session.getAttribute("css") %>" class="changeme">
+		<link rel="stylesheet" href="" class="changeme" title="phresco">
 		<link rel="stylesheet" href="css/media-queries.css">
 		<link rel="stylesheet" href="css/datepicker.css"> <!-- used for date picker-->
 		<link rel="stylesheet" href="css/jquery.ui.all.css"> <!-- used for date picker -->
 		
+        <script type="text/javascript" src="js/main.js"></script>
 		<!-- basic js -->
 		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
@@ -51,66 +63,49 @@
 
 			
 		<script type="text/javascript">
+		     changeTheme(); 
+		
 			$(document).ready(function() {
-				var theme = $("link.changeme").attr("href");
-				/* var theme = $.cookie("css"); */
-				if(theme != null && theme != "theme/photon/css/red.css") {
-					$("link.changeme").attr("href", "theme/photon/css/blue.css");
-					showHeaderImage();
-					$.cookie("css", $("link.changeme").attr("href"));
-				}
-				
-				else {
-					$("link.changeme").attr("href", "theme/photon/css/red.css");
-					showHeaderImage();
-					$.cookie("css", $("link.changeme").attr("href"));
-				} 
-				
 				$(".styles").click(function() {
-					$("link.changeme").attr("href",$(this).attr('rel'));
-					$.cookie("css", $("link.changeme").attr("href"));
-					var theme = $.cookie("css");
-					showHeaderImage();
-					return false;
+					localStorage.clear();
+		             var value = $(this).attr("rel");
+		             localStorage["color"]= value;
+		             localstore = localStorage["color"];
+		             $("link[title='phresco']").attr("href",localstore);
+		             showWelcomeImage();
 				});
-	
+
 				// function to show user info in toggle 
 				$('div li.usersettings div').hide(0);
-				$('div li.usersettings').click(function () {
-					 $('div li.usersettings div').slideToggle(0);
+				$('div li.usersettings').click(function() {
+					$('div li.usersettings div').slideToggle(0);
 				});
-				
+
 				// to show user info on mouse over
-				$('#signOut li').mouseenter(function(){
+				$('#signOut li').mouseenter(function() {
 					$("div li.usersettings div").hide(0);
 					$(this).children("div li.usersettings div").show(0);
-				}).mouseleave(function(){
+				}).mouseleave(function() {
 					$("div li.usersettings div").hide(0);
-				}); 
-				
+				});
+
 				clickMenu($("a[name='headerMenu']"), $("#container"));
 				loadContent("dashboard", $("#container"));
 				activateMenu($("#dashboard"));
-				showHeaderImage();
+				showWelcomeImage();
 			});
 			
-			function showHeaderImage() {
-				var theme = $.cookie("css");
-				if(theme != undefined && theme != "theme/photon/css/red.css") {
-					$('#progressBar').removeClass("progress-danger");
-					$('#progressBar').addClass("progress-info");
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_blue.png");
-					$('.loadingIcon').attr("src", "theme/photon/images/loading_blue.gif");
-				} else {
-					$('#progressBar').removeClass("progress-info");
-					$('#progressBar').addClass("progress-danger");
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_red.png");
-					$('.loadingIcon').attr("src", "theme/photon/images/loading_red.gif");
-				}
-			}
 		</script>
 	</head>
 	<body>
+        <%
+            User userInfo = (User) session.getAttribute(ServiceUIConstants.SESSION_USER_INFO);
+            String displayName = "";
+            if (userInfo != null) {
+                displayName = userInfo.getDisplayName();
+            }
+        %>
+	   
 		<div class="modal-backdrop fade in popupalign"></div>
 	    
 	    <div id="progressBar" class="progress active progress_bar">
@@ -121,15 +116,21 @@
 		<header>
 			<div class="header">
 				<div class="Logo">
-					 <a href="#" id="goToHome"><img class="headerlogoimg" src="images/phresco_header_red.png" alt="logo"></a>
+					 <a href="#" id="goToHome"><img class="headerlogoimg" src="theme/photon/images/phresco_header_red.png" alt="logo"></a>
 				</div>
 				<div class="headerInner">
 					<div class="nav_slider">
 						<nav class="headerInnerTop">
 							<ul>
-								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard"><s:label for="description" key="lbl.hdr.dash"  theme="simple"/></a></li>
-								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components"><s:label for="description" key="lbl.hdr.comp" theme="simple"/></a></li>
-								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu"><s:label for="description" key="lbl.hdr.adm"  theme="simple"/></a></li>
+								<li class="wid_home"><a href="#" class="inactive" name="headerMenu" id="dashboard">
+								    <s:label key="lbl.hdr.dash"  theme="simple"/></a>
+                                </li>
+								<li class="wid_app"><a href="#" class="inactive" name="headerMenu" id="components">
+								    <s:label key="lbl.hdr.comp" theme="simple"/></a>
+								</li>
+								<li class="wid_set"><a href="#" class="inactive" name="headerMenu" id="adminMenu">
+								    <s:label key="lbl.hdr.adm"  theme="simple"/></a>
+								</li>
 							</ul>
 							<div class="close_links" id="close_links">
 								<a href="JavaScript:void(0);">
@@ -143,25 +144,25 @@
 					<div class="quick_lnk" id="quick_lnk">
 						<a href="JavaScript:void(0);">
 							<div class="quick_links_outer">
-								<s:label for="description" key="lbl.hdr.quicklink" theme="simple"/>
+								<s:label key="lbl.hdr.quicklink" theme="simple"/>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div id="signOut" class="signOut">
 					<li class="usersettings">
-						<s:label for="description" key="lbl.hdr.usersettings" theme="simple"/>
+						<%= displayName %>
 						<img src="images/downarrow.png" class="arrow">
-						  <div class="userInfo">&nbsp;<s:label for="description" key="lbl.usrset.skins"  theme="simple"/>&nbsp;
-								<a class="styles" href="#"  rel="theme/photon/css/red.css">
-									<img src="images/red_themer.jpg" class="skinImage">
-								</a>
-								<a class="styles" href="#"  rel="theme/photon/css/blue.css">
-									<img src="images/blue_themer.jpg" class="skinImage">
-								</a>
-						 </div>
-						 <div class="userInfo"><a href="#" class="abtPopUp about"><s:label for="description" key="lbl.usrset.abtservice" theme="simple"/></a></div>
-						 <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label for="description" key="lbl.usrset.signout" theme="simple"/></a></div>
+                        <div class="userInfo">&nbsp;<s:label key="lbl.usrset.skins"  theme="simple"/>&nbsp;
+                            <a class="styles" href="#"  rel="theme/photon/css/red.css">
+								<img src="images/red_themer.jpg" class="skinImage">
+							</a>
+							<a class="styles" href="#"  rel="theme/photon/css/blue.css">
+								<img src="images/blue_themer.jpg" class="skinImage">
+							</a>
+                        </div>
+                        <div class="userInfo"><a href="#" class="abtPopUp about"><s:label key="lbl.usrset.abtservice" theme="simple"/></a></div>
+                        <div class="userInfo"><a href="<s:url action='logout'/>" id="signOut"><s:label key="lbl.usrset.signout" theme="simple"/></a></div>
 					</li>
 				</div>
 			</div>
@@ -180,14 +181,14 @@
 							class="arrow_links_top">
 							<span class="shortcutRed" id=""></span>
 							<span class="shortcutWh" id="">
-							<s:label for="description" key="lbl.hdr.topleftnavlab"  theme="simple"/></span>
+							<s:label key="lbl.hdr.topleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="righttopnav">
 						<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 							class="shortcutRed" id=""></span><span class="shortcutWh"
 							id="">
-							<s:label for="description" key="lbl.hdr.toprightnavlab" theme="simple"/></span>
+							<s:label key="lbl.hdr.toprightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>
@@ -204,13 +205,13 @@
 				   <div class="leftbotnav">
 						<a href="JavaScript:void(0);" id="forum" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id=""></span><span
-							class="shortcutWh" id=""><s:label for="description" key="lbl.hdr.bottomleftnavlab"  theme="simple"/></span>
+							class="shortcutWh" id=""><s:label key="lbl.hdr.bottomleftnavlab"  theme="simple"/></span>
 						</a>
 					</div>
 					<div class="rightbotnav">
 						<a href="JavaScript:void(0);" id="settings" name="headerMenu"
 							class="arrow_links_bottom"><span class="shortcutRed" id="lf_tp1"></span><span
-							class="shortcutWh" id="lf_tp2"><s:label for="description" key="lbl.hdr.bottomrightnavlab" theme="simple"/></span>
+							class="shortcutWh" id="lf_tp2"><s:label key="lbl.hdr.bottomrightnavlab" theme="simple"/></span>
 						</a>
 					</div>
 				</aside>

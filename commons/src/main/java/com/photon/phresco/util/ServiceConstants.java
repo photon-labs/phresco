@@ -37,7 +37,7 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
-	String REST_API_COMPONENT =  "/component";
+	String REST_API_COMPONENT =  "/components";
 	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
 	String REST_API_APPTYPES = "/apptypes";
@@ -56,10 +56,6 @@ public interface ServiceConstants {
 	String REST_API_LDAP = "/settings/ldap";
 	String REST_API_SETTINGS = "/settings";
 	String REST_API_TWEETS = "/tweets";
-	String REST_API_SERVERBYID = "/servers/id";
-	String REST_API_DATABASESBYID = "/databases/id";
-	String REST_API_WEBSERVICESBYID = "/webservices/id";
-	String REST_API_MODULESBYID = "/modules/mod";
 	String REST_API_JSBYID = "/modules/js";
 	String REST_API_PILOTSBYID = "/pilots/id";
 	String REST_API_LOGIN = "/login";
@@ -81,7 +77,6 @@ public interface ServiceConstants {
 	 /*
      * Constants for MongoDB Collections
      */
-
 	String CUSTOMERS_COLLECTION_NAME = "customers";
 	String VIDEOS_COLLECTION_NAME = "videos";
 	String USERS_COLLECTION_NAME = "users";
@@ -112,7 +107,6 @@ public interface ServiceConstants {
 	/*
      * Constants for Operatins
      */
-	
 	String UPDATE = "Update";
 	String INSERT = "Insert";
 	String DELETE = "Delete";

@@ -58,11 +58,11 @@ public class Code extends FrameworkBaseAction {
 	private String skipTest = null;
     private String codeTechnology = null;
     private String validateAgainst = null;
-    private String target = null;
-    private static String SOURCE = "source";
+	private String target = null;
+	private static String SOURCE = "source";
 	private static String FUNCTIONALTEST = "functionalTest";
     
-    private static void initializeSourceMap() {
+	private static void initializeSourceMap() {
 		// TODO: This should come from database
 		sourceFolderPathMap.put(TechnologyTypes.PHP, "source");
 		sourceFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "source");
@@ -79,7 +79,7 @@ public class Code extends FrameworkBaseAction {
 		sourceFolderPathMap.put(TechnologyTypes.IPHONE_NATIVE, "source");
 		sourceFolderPathMap.put(TechnologyTypes.DOT_NET, "source");
 	}
-    
+
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
     	try {
@@ -88,7 +88,7 @@ public class Code extends FrameworkBaseAction {
         	Project project = administrator.getProject(projectCode); 
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(APPLICATION_PROJECT, project);
-           	FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+      		FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
             String serverUrl = "";
     	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
     	    	serverUrl = frameworkConfig.getSonarUrl();
@@ -230,21 +230,21 @@ public class Code extends FrameworkBaseAction {
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
             } else {
             	actionType = ActionType.SONAR;
+            	validateAgainst(validateAgainst, project, projectCode);
             }
-            if(!StringUtils.isEmpty(codeTechnology)) { // if js is selected in popup , have to pass setting map to form mvn command
+            
+            if (StringUtils.isNotEmpty(codeTechnology)) { // set sonar.branch parameter
             	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
-            validateAgainst(validateAgainst, project,projectCode);
-            if (!TechnologyTypes.IPHONES.contains(technology)) {
-            	validateAgainst(validateAgainst, project,projectCode);
-            }
+            
             if (FUNCTIONALTEST.equals(validateAgainst)) {
-            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" +File.separator +"functional");
+            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator + "functional");
             	actionType.setWorkingDirectory(projectPath.toString());
             } else {
             	actionType.setWorkingDirectory(null);
             }
-			actionType.setSkipTest(Boolean.parseBoolean(skipTest));
+            
+            actionType.setSkipTest(Boolean.parseBoolean(skipTest));
             BufferedReader reader = runtimeManager.performAction(project, actionType, codeValidateMap, null);
             getHttpSession().setAttribute(projectCode + REQ_SONAR_PATH, reader);
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -257,7 +257,8 @@ public class Code extends FrameworkBaseAction {
         return APP_ENVIRONMENT_READER;
     }
     
-    private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
+
+	private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
 		initializeSourceMap();
 		String sourceFolderName = "";
 		File projectPath = null;
@@ -287,8 +288,7 @@ public class Code extends FrameworkBaseAction {
 			throw new PhrescoException(e);
 		}
 	}
-    
-
+	
 	public String showCodeValidatePopUp(){
 		String technology = null;
 		Project project = null;
@@ -340,7 +340,7 @@ public class Code extends FrameworkBaseAction {
 	public void setSkipTest(String skipTest) {
 		this.skipTest = skipTest;
 	}
-
+	
 	public String getValidateAgainst() {
 		return validateAgainst;
 	}

@@ -41,6 +41,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class RestClient<E> {
 	
 	private static final Logger S_LOGGER= Logger.getLogger(RestClient.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private WebResource resource = null;
 	private Builder builder = null;
 	private String path = null;
@@ -56,8 +57,11 @@ public class RestClient<E> {
 	 * @param id
 	 */
 	public void setPath(String path) {
-		S_LOGGER.debug("Entered into RestClient.setPath(String path)" + path);
-		this.path = path;
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.setPath(String path)" + path);
+	    }
+	
+	    this.path = path;
 	}
 	
 	/**
@@ -66,7 +70,9 @@ public class RestClient<E> {
 	 * @param value
 	 */
 	public void addHeader(String key, String value) {
-		S_LOGGER.debug("Entered into RestClient.addHeader(String key, String value)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.addHeader(String key, String value)" + value);
+	    }
 		
 		header.put(key, value);
 	}
@@ -77,7 +83,9 @@ public class RestClient<E> {
 	 * @param value
 	 */
 	public void queryString(String key, String value) {
-		S_LOGGER.debug("Entered into RestClient.addQueryString(String key, String value)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.addQueryString(String key, String value)" + value);
+	    }
 		
 		resource = resource.queryParam(key, value);
 	}
@@ -87,7 +95,9 @@ public class RestClient<E> {
 	 * @param headers
 	 */
 	public void queryStrings(Map<String, String> headers) {
-		S_LOGGER.debug("Entered into RestClient.addQueryStrings(Map<String, String> headers)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.addQueryStrings(Map<String, String> headers)");
+	    }
 		
 		Set<String> keySet = headers.keySet();
 		MultivaluedMap<String, String> queryStrings = new MultivaluedMapImpl();
@@ -97,8 +107,14 @@ public class RestClient<E> {
 		resource = resource.queryParams(queryStrings);
 	}
 	
+	/**
+     * To update the builder with header and path
+     */
 	private void updateBuilder() {
-		
+	    if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.updateBuilder()");
+        }
+	    
 		if (StringUtils.isNotEmpty(path)) {
 			resource = resource.path(path);
 		}
@@ -121,7 +137,9 @@ public class RestClient<E> {
 	 * @return
 	 */
 	public List<E> get(GenericType<List<E>> genericType) {
-		S_LOGGER.debug("Entered into RestClient.get(Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.get(GenericType<List<E>> genericType)");
+	    }
 		
 		return get(genericType, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -132,7 +150,9 @@ public class RestClient<E> {
 	 * @return
 	 */
 	public List<E> get(GenericType<List<E>> genericType, String accept, String type) {
-		S_LOGGER.debug("Entered into RestClient.get(Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.get(GenericType<List<E>> genericType, String accept, String type)");
+	    }
 		
 		updateBuilder();
 		builder = builder.accept(accept).type(type);
@@ -145,7 +165,9 @@ public class RestClient<E> {
 	 * @return
 	 */
 	public E getById(GenericType<?> genericType) {
-		S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
+	    }
 		
 		return getById(genericType, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -157,7 +179,9 @@ public class RestClient<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public E getById(GenericType<?> genericType, String accept, String type) {
-		S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.getById(GenericType<?> genericType, String accept, String type)");
+	    }
 		
 		updateBuilder();
 		builder = builder.accept(accept).type(type);
@@ -170,7 +194,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public ClientResponse create(List<E> infos) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+	    }
 		
 		return create(infos, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -181,7 +207,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public ClientResponse create(List<E> infos, String accept, String type) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.create(List<E> infos, String accept, String type)");
+	    }
 		
 		updateBuilder();
 		builder = builder.accept(accept).type(type);
@@ -198,7 +226,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public List<E> update(List<E> infos, GenericType<List<E>> type) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.update(List<E> infos, GenericType<List<E>> type)");
+	    }
 
 		return update(infos, type, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -211,7 +241,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public List<E> update(List<E> infos, GenericType<List<E>> gtype, String accept, String type) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.update(List<E> infos, Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.update(List<E> infos, GenericType<List<E>> gtype, String accept, String type)");
+	    }
 		
 		updateBuilder();
 		builder = builder.accept(accept).type(type);
@@ -228,7 +260,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public E updateById(E obj, GenericType<E> genericType) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.updateById(E obj, Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.updateById(E obj, GenericType<E> genericType)");
+	    }
 		
 		return updateById(obj, genericType, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
@@ -241,7 +275,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public E updateById(E obj, GenericType<E> genericType, String accept, String type) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.updateById(E obj, Type type)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.updateById(E obj, GenericType<E> genericType, String accept, String type)");
+	    }
 		
 		updateBuilder();
 		builder = builder.accept(accept).type(type);
@@ -256,7 +292,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	public void delete(List<E> infos) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.delete(List<E> infos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.delete(List<E> infos)");
+	    }
 		
 		updateBuilder();
 		ClientResponse clientResponse = builder.delete(ClientResponse.class, infos);
@@ -269,7 +307,9 @@ public class RestClient<E> {
 	 * @throws PhrescoException
 	 */
 	private void isErrorThrow(ClientResponse clientResponse) throws PhrescoException {
-		S_LOGGER.debug("Entered into RestClient.isErrorThrow(ClientResponse clientResponse)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.isErrorThrow(ClientResponse clientResponse)");
+	    }
 		
 		int status = clientResponse.getStatus();
 		System.out.println(status);
@@ -296,7 +336,9 @@ public class RestClient<E> {
 	 * Delete the object by given id parameter
 	 */
 	public ClientResponse deleteById() {
-		S_LOGGER.debug("Entered into RestClient.deleteById()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into RestClient.deleteById()");
+	    }
 		
 		updateBuilder();
 		return builder.delete(ClientResponse.class);

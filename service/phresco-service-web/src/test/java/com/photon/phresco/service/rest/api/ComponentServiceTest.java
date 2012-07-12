@@ -8,7 +8,6 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 
 import org.junit.Ignore;
-import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
@@ -25,10 +24,10 @@ import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.api.DbService;
-import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 
 
-public class ComponentServiceTest extends DbService implements ServerConstants{
+public class ComponentServiceTest extends DbService implements ServiceConstants{
 	
 	public ComponentServiceTest() throws PhrescoException {
 		super();

@@ -72,7 +72,7 @@ class WordPressCommonFun extends RequiredFunction
 			$password;
 			$property = new WordPressCommonFun;
 			$doc = new DOMDocument();
-			$doc->load('test-classes/phresco/tests/WpSetting.xml');
+			$doc->load('test-classes/phresco/tests/UserInfo.xml');
 			$users = $doc->getElementsByTagName("user");
 		foreach( $users as $user )
 		{

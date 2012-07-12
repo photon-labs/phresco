@@ -56,6 +56,7 @@ import com.photon.phresco.util.ServiceConstants;
 public class AdminService extends DbService implements ServiceConstants {
 	
 	private static final Logger S_LOGGER= Logger.getLogger(AdminService.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	
     public AdminService() throws PhrescoException {
     	super();
@@ -69,7 +70,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @Path (REST_API_CUSTOMERS)
     @Produces (MediaType.APPLICATION_JSON)
     public Response findCustomer() {
-    	S_LOGGER.debug("Entered into AdminService.findCustomer()");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.findCustomer()");
+        }
     	
     	try {
     		List<Customer> customerList = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME , Customer.class);
@@ -92,7 +95,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @Consumes (MediaType.APPLICATION_JSON)
     @Path (REST_API_CUSTOMERS)
     public Response createCustomer(List<Customer> customer) {
-    	S_LOGGER.debug("Entered into AdminService.createCustomer(List<Customer> customer)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.createCustomer(List<Customer> customer)");
+        }
     	
     	try {
     		mongoOperation.insertList(CUSTOMERS_COLLECTION_NAME , customer);
@@ -113,7 +118,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @Produces (MediaType.APPLICATION_JSON)
     @Path (REST_API_CUSTOMERS)
     public Response updateCustomer(List<Customer> customers) {
-    	S_LOGGER.debug("Entered into AdminService.updateCustomer(List<Customer> customers)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.updateCustomer(List<Customer> customers)");
+        }
     	
     	try {
     		for (Customer customer : customers) {
@@ -138,8 +145,10 @@ public class AdminService extends DbService implements ServiceConstants {
     @DELETE
     @Path (REST_API_CUSTOMERS)
     public void deleteCustomer(List<Customer> deleteCustomers) throws PhrescoException {
-    	S_LOGGER.debug("Entered into AdminService.deleteCustomer(List<Customer> deleteCustomers)");
-    	
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.deleteCustomer(List<Customer> deleteCustomers)");
+        }
+        
     	PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
     	S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
     	throw phrescoException;
@@ -154,7 +163,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @Produces (MediaType.APPLICATION_JSON)
     @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response getCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-    	S_LOGGER.debug("Entered into AdminService.getCustomer(String id)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.getCustomer(String id)" + id);
+        }
     	
     	try {
     		Customer customer = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, 
@@ -179,7 +190,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @Produces (MediaType.APPLICATION_JSON)
     @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response updateCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id , Customer updateCustomers) {
-    	S_LOGGER.debug("Entered into AdminService.updateCustomer(String id , Customer updateCustomers)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.updateCustomer(String id , Customer updateCustomers)" + id);
+        }
     	
     	try {
     		if (id.equals(updateCustomers.getId())) {
@@ -202,7 +215,9 @@ public class AdminService extends DbService implements ServiceConstants {
     @DELETE
     @Path (REST_API_CUSTOMERS + REST_API_PATH_ID)
     public Response deleteCustomer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-    	S_LOGGER.debug("Entered into AdminService.deleteCustomer(String id)");
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into AdminService.deleteCustomer(String id)" + id);
+        }
     	
     	try {
     		mongoOperation.remove(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Customer.class);
@@ -222,7 +237,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Path (REST_API_VIDEOS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findVideos() {
-		S_LOGGER.debug("Entered into AdminService.findVideos()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.findVideos()");
+	    }
 		
 		try {
 			List<VideoInfo> videoList = mongoOperation.getCollection(VIDEOS_COLLECTION_NAME , VideoInfo.class);
@@ -245,7 +262,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_VIDEOS)
 	public Response createVideo(List<VideoInfo> videos) {
-		S_LOGGER.debug("Entered into AdminService.createVideo(List<VideoInfo> videos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.createVideo(List<VideoInfo> videos)");
+	    }
 		
 		try {
 			mongoOperation.insertList(VIDEOS_COLLECTION_NAME , videos);
@@ -266,7 +285,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_VIDEOS)
 	public Response updateVideos(List<VideoInfo> videos) {
-		S_LOGGER.debug("Entered into AdminService.updateVideos(List<VideoInfo> videos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateVideos(List<VideoInfo> videos)");
+	    }
 		
 		try {
 			for (VideoInfo video : videos) {
@@ -291,7 +312,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path(REST_API_VIDEOS)
 	public void deleteVideos(List<VideoInfo> videos) throws PhrescoException {
-		S_LOGGER.debug("Entered into AdminService.deleteVideos(List<VideoInfo> videos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteVideos(List<VideoInfo> videos)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -307,7 +330,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_VIDEOS + REST_API_PATH_ID)
 	public Response getVideo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.getVideo(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.getVideo(String id)" + id);
+	    }
 		
 		try {
 			VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME, 
@@ -332,7 +357,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_VIDEOS + REST_API_PATH_ID)
 	public Response updateVideo(@PathParam(REST_API_PATH_PARAM_ID) String id , VideoInfo videoInfo) {
-		S_LOGGER.debug("Entered into AdminService.updateVideo(String id , VideoInfo videoInfo)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateVideo(String id , VideoInfo videoInfo)" + id);
+	    }
 		
 		try {
 			if (id.equals(videoInfo.getId())) {
@@ -355,7 +382,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path(REST_API_VIDEOS + REST_API_PATH_ID)
 	public Response deleteVideo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.deleteVideo(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteVideo(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(VIDEOS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), VideoInfo.class);
@@ -375,7 +404,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Path (REST_API_USERS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findUsers() {
-		S_LOGGER.debug("Entered into AdminService.findUsers()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.findUsers()");
+	    }
 		
 		try {
 			List<UserDAO> userList = mongoOperation.getCollection(USERDAO_COLLECTION_NAME, UserDAO.class);
@@ -404,7 +435,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_USERS)
 	public Response createUser(List<User> users) {
-		S_LOGGER.debug("Entered into AdminService.createUser(List<User> users)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.createUser(List<User> users)");
+	    }
 		
 		try {
 			Converter<UserDAO, User> converter = (Converter<UserDAO, User>) ConvertersFactory.getConverter(UserDAO.class);			
@@ -430,7 +463,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_USERS)
 	public Response updateUsers(List<User> users) {
-		S_LOGGER.debug("Entered into AdminService.updateUsers(List<User> users)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateUsers(List<User> users)");
+	    }
 		
 		try {
 			for (User user : users) {
@@ -455,7 +490,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_USERS)
 	public void deleteUsers(List<User> users) throws PhrescoException {
-		S_LOGGER.debug("Entered into AdminService.deleteUsers(List<User> users)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteUsers(List<User> users)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -471,7 +508,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response getUser(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.getUser(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.getUser(String id)" + id);
+	    }
 		
 		try {
 			User userInfo = mongoOperation.findOne(USERS_COLLECTION_NAME, 
@@ -496,7 +535,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response updateUser(@PathParam(REST_API_PATH_PARAM_ID) String id , User user) {
-		S_LOGGER.debug("Entered into AdminService.updateUser(String id , User user)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateUser(String id , User user)" + id);
+	    }
 		
 		try {
 			if (id.equals(user.getId())) {
@@ -518,7 +559,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_USERS + REST_API_PATH_ID)
 	public Response deleteUser(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.deleteUser(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteUser(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(USERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), User.class);
@@ -538,7 +581,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Path (REST_API_DOWNLOADS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findDownloadInfo() {
-		S_LOGGER.debug("Entered into AdminService.findDownloadInfo()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.findDownloadInfo()");
+	    }
 		
 		try {
 			List<DownloadInfo> downloadList = mongoOperation.getCollection(DOWNLOAD_COLLECTION_NAME , DownloadInfo.class);
@@ -561,7 +606,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DOWNLOADS)
 	public Response createDownloadInfo(List<DownloadInfo> downloadInfos) {
-		S_LOGGER.debug("Entered into AdminService.createDownloadInfo(List<DownloadInfo> downloadInfos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.createDownloadInfo(List<DownloadInfo> downloadInfos)");
+	    }
 		
 		try {
 			mongoOperation.insertList(DOWNLOAD_COLLECTION_NAME , downloadInfos);
@@ -582,7 +629,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DOWNLOADS)
 	public Response updateDownloadInfo(List<DownloadInfo> downloads) {
-		S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(List<DownloadInfo> downloads)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(List<DownloadInfo> downloads)");
+	    }
 		
 		try {
 			for (DownloadInfo download : downloads) {
@@ -607,7 +656,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_DOWNLOADS)
 	public void deleteDownloadInfo(List<DownloadInfo> downloadInfos) throws PhrescoException {
-		S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(List<DownloadInfo> downloadInfos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(List<DownloadInfo> downloadInfos)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is"  + phrescoException.getErrorMessage());
@@ -623,7 +674,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response getDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.getDownloadInfo(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.getDownloadInfo(String id)" + id);
+	    }
 		
 		try {
 			DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME, 
@@ -648,7 +701,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response updateDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id , DownloadInfo downloadInfo) {
-		S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(String id , DownloadInfo downloadInfos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateDownloadInfo(String id , DownloadInfo downloadInfos)" + id);
+	    }
 		
 		try {
 			if (id.equals(downloadInfo.getId())) {
@@ -670,7 +725,9 @@ public class AdminService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_DOWNLOADS + REST_API_PATH_ID)
 	public Response deleteDownloadInfo(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteDownloadInfo(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(DOWNLOAD_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);

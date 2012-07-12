@@ -36,7 +36,6 @@ import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
 import com.photon.phresco.service.client.impl.RestClient;
-import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
@@ -44,9 +43,9 @@ public class Archetypes extends ServiceBaseAction {
 
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(Archetypes.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 
 	private String name = null;
-	private String id = null;
 	private String nameError = null;
 	private String version = null;
 	private List<String> versionList = null;
@@ -75,9 +74,12 @@ public class Archetypes extends ServiceBaseAction {
 
 
 	public String list() throws PhrescoException {
-		S_LOGGER.debug("Entering Method Archetypes.list()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method Archetypes.list()");
+	    }
+		
 		try {
-			RestClient<Technology> technology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
+			RestClient<Technology> technology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
 			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
 			List<Technology> technologys = technology.get(genericType);
 			getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
@@ -89,11 +91,13 @@ public class Archetypes extends ServiceBaseAction {
 	}
 
 	public String add() throws PhrescoException {
-		S_LOGGER.debug("Entering Method Archetypes.add()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method Archetypes.add()");
+	    }
 
 		RestClient<ApplicationType> appType;
 		try {
-			appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
+			appType = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
 			List<ApplicationType> appTypes = appType.get(genericType);
 			getHttpRequest().setAttribute(REQ_APP_TYPES, appTypes);
@@ -106,10 +110,13 @@ public class Archetypes extends ServiceBaseAction {
 	}
 
 	public String edit() throws PhrescoException {
-		S_LOGGER.debug("Entering Method Archetypes.edit()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method Archetypes.edit()");
+	    }
+		
 		try {
 
-			RestClient<Technology> technologies = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			RestClient<Technology> technologies = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES + "/" + techId);
 			GenericType<Technology> genericType = new GenericType<Technology>(){};
 			Technology technology = technologies.getById(genericType);
 			getHttpRequest().setAttribute(REQ_ARCHE_TYPE,  technology);
@@ -117,7 +124,7 @@ public class Archetypes extends ServiceBaseAction {
 			
 			//In ArcheType show ApplcationTypes
 			RestClient<ApplicationType> appType;
-			appType = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES);
+			appType = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 			GenericType<List<ApplicationType>> type = new GenericType<List<ApplicationType>>(){};
 			List<ApplicationType> appTypes = appType.get(type);
 			getHttpRequest().setAttribute(REQ_APP_TYPES, appTypes);
@@ -130,7 +137,10 @@ public class Archetypes extends ServiceBaseAction {
 	}
 
 	public String save() throws PhrescoException {
-		S_LOGGER.debug("Entering Method Archetypes.save()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method Archetypes.save()");
+	    }
+		
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
@@ -154,7 +164,7 @@ public class Archetypes extends ServiceBaseAction {
 			List<Technology> technologies = new ArrayList<Technology>();
 			Technology technology = new Technology(name, description, versionList, appType);	
 			technologies.add(technology);
-			RestClient<Technology> newTechnology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
+			RestClient<Technology> newTechnology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
 			ClientResponse clientResponse = newTechnology.create(technologies);
 
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
@@ -170,7 +180,9 @@ public class Archetypes extends ServiceBaseAction {
 	}
 
 	public String update() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  Architypes.update()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Architypes.update()");
+	    }
 
 		try {
 			if (validateForm()) {
@@ -179,23 +191,26 @@ public class Archetypes extends ServiceBaseAction {
 			}
 			Technology technology = new Technology(name, description, versionList, appType);
 			technology.setId(techId);
-			RestClient<Technology> editTechnology = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES + "/" + techId);
+			RestClient<Technology> editTechnology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES + "/" + techId);
 			GenericType<Technology> type = new GenericType<Technology>() {};
-			Technology updatedArchetype = editTechnology.updateById(technology, type);
+			editTechnology.updateById(technology, type);
 		} catch(Exception e) {
 			throw new PhrescoException(e);
 		}
+		
 		return list();
 	}
 
 	public String delete() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  ArcheType.delete()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  ArcheType.delete()");
+	    }
 
 		try {
 			String[] techTypeIds = getHttpRequest().getParameterValues(REQ_ARCHE_TECHID);
 			if (techTypeIds != null) {
 				for (String techId : techTypeIds) {
-					RestClient<Technology> deleteTech = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT +ServiceConstants.REST_API_TECHNOLOGIES);
+					RestClient<Technology> deleteTech = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
 					deleteTech.setPath(techId);
 					ClientResponse clientResponse = deleteTech.deleteById();
 					if (clientResponse.getStatus() != 200) {
@@ -210,7 +225,6 @@ public class Archetypes extends ServiceBaseAction {
 
 		return list();
 	}
-
 
 	private boolean validateForm() {
 		boolean success = false;
@@ -410,5 +424,4 @@ public class Archetypes extends ServiceBaseAction {
 	public void setPluginJar(String pluginJar) {
 		this.pluginJar = pluginJar;
 	}
-
 }

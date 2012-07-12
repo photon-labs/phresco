@@ -111,7 +111,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    	showHeaderImage();
+    	var key = "color";
+    	showHeaderImage(key);
+		
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
 		
@@ -182,13 +184,14 @@
         })
     });
        
-    function showHeaderImage() {
-        var theme = localStorage["color"];
-        if(theme != undefined && theme != "themes/photon/css/red.css") {
-             $('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
+    function showHeaderImage(key) {
+    	var theme = localStorage["color"]
+    	if(theme == "themes/photon/css/red.css" || theme == null || theme == undefined || theme == "undefined" || theme == "null") {
+    	    $('.headerlogoimg').attr("src", "images/phresco_header_red.png");
         }
-        else
-        	$('.headerlogoimg').attr("src", "images/phresco_header_red.png");
+    	else {
+    	    $('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
+    	}
     }
     
     function disableCreateProject() {

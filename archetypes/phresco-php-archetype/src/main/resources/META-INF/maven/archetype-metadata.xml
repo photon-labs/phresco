@@ -25,6 +25,8 @@
 			<directory>docs</directory> 
 			<includes> 
 				<include>README.txt</include> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -32,13 +34,6 @@
 			<includes> 
 				<include>archetype-metadata.xml</include> 
 				<include>excludefiles.txt</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>docs</directory> 
-			<includes> 
-				<include>PHTN_Reference_Guide.doc</include> 
-				<include>PHTN_Release_Notes.doc</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -150,10 +145,11 @@
 			<directory>test/functional/src/test/php/phresco/tests</directory> 
 			<includes> 
 				<include>phresco-env-config.xml</include>
-				<include>Homepage.php</include>
 				<include>PhpCommonFun.php</include>
 				<include>UserModules.php</include>
 				<include>Dashboard_Cat.php</include>
+                <include>PhpData.xml</include>
+                <include>UserInfo.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false"> 

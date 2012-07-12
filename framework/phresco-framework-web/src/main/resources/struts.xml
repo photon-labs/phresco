@@ -229,6 +229,18 @@
             <result name="generateBuild">/pages/applications/generate_build.jsp</result>
         </action>
         
+        <action name="getSqlDatabases" method="getSqlDatabases" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="getSQLFiles" method="getSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="configureSqlExecution" method="configureSqlExecution" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
         <action name="openFolder" method="openFolder" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
         
         <action name="copyPath" method="copyPath" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
@@ -620,9 +632,9 @@
         </action>
         
         <action name="createReportConfig" method="createReportConfig" class="com.photon.phresco.framework.actions.applications.SiteReport">
-<!--             <result name="configure">/pages/applications/siteReport/configure.jsp</result> -->
+            <result name="siteReport">/pages/applications/siteReport/iframe.jsp</result>
         </action>
-                
+        
         <action name="advancedBuildSettings" method="advancedBuildSettings" class="com.photon.phresco.framework.actions.applications.Build">
         	<result name="success">/pages/applications/generate_build_adv_settings.jsp</result>
         </action>

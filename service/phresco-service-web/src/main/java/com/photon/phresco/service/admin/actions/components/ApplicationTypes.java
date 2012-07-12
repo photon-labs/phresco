@@ -29,19 +29,13 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
-import com.photon.phresco.service.client.api.ServiceClientConstant;
-import com.photon.phresco.service.client.api.ServiceContext;
-import com.photon.phresco.service.client.api.ServiceManager;
-import com.photon.phresco.service.client.factory.ServiceClientFactory;
-import com.photon.phresco.service.client.impl.RestClient;
-import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 
 public class ApplicationTypes extends ServiceBaseAction { 
 
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(ApplicationTypes.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 
 	private String name = null;
 	private String description = null;
@@ -52,7 +46,9 @@ public class ApplicationTypes extends ServiceBaseAction {
 	private String oldName = null;
 
 	public String list() throws PhrescoException {
-		S_LOGGER.debug("Entering Method ApplicationTypes.list()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method ApplicationTypes.list()");
+	    }
 
 		try {
 			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
@@ -65,37 +61,38 @@ public class ApplicationTypes extends ServiceBaseAction {
 	}
 
 	public String add() {
-		S_LOGGER.debug("Entering Method ApplicationTypes.add()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method ApplicationTypes.add()");
+	    }
 		
 		return COMP_APPTYPE_ADD;
 	}
 
-	public String edit() throws PhrescoException {	
-		S_LOGGER.debug("Entering Method ApplicationTypes.edit()");
+	public String edit() throws PhrescoException {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method ApplicationTypes.edit()");
+	    }
 		
 		try {
-			RestClient<ApplicationType> appTypes = getServiceManager().getRestClient(ServiceConstants.REST_API_COMPONENT + ServiceConstants.REST_API_APPTYPES + "/" + appTypeId);
-			GenericType<ApplicationType> genericType = new GenericType<ApplicationType>(){};
-			ApplicationType appType = appTypes.getById(genericType);
+		    ApplicationType appType = getServiceManager().getApplicationType(appTypeId);
 			getHttpRequest().setAttribute(REQ_APP_TYPE, appType);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 		} catch (Exception e) {
-			throw new PhrescoException(e);
+		    throw new PhrescoException(e);
 		}
+		
 		return COMP_APPTYPE_ADD;
 	}
 
 	public String save() throws PhrescoException {
-		S_LOGGER.debug("Entering Method ApplicationTypes.save()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method ApplicationTypes.save()");
+	    }
 		
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
 			List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 			ApplicationType appType = new ApplicationType(name, description);
-			appType.setDisplayName(name);
+			appType.setName(name);
 			appTypes.add(appType);
 			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes);
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
@@ -106,17 +103,16 @@ public class ApplicationTypes extends ServiceBaseAction {
 		}catch (Exception e) {
 			throw new PhrescoException(e);
 		}
+		
 		return  list();
 	}
 
 	public String update() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  Apptypes.update()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method Apptypes.update()");
+	    }
 
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
 			appType.setDescription(description);
@@ -129,7 +125,9 @@ public class ApplicationTypes extends ServiceBaseAction {
 	}
 
 	public String delete() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  AppType.delete()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method AppType.delete()");
+	    }
 
 		try {
 			String[] appTypeIds = getHttpRequest().getParameterValues(REQ_APP_TYPEID);
@@ -149,13 +147,22 @@ public class ApplicationTypes extends ServiceBaseAction {
 		return list();
 	}
 
-	private boolean validateForm() {
+	public String validateForm() {
+	    if (isDebugEnabled) {
+            S_LOGGER.debug("Entering Method AppType.validateForm()");
+        }
+	    
 		boolean isError = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
 			isError = true;
 		}
-		return isError;
+		
+		if (isError) {
+            setErrorFound(true);
+        }
+		
+		return SUCCESS;
 	}
 
 	public String getName() {

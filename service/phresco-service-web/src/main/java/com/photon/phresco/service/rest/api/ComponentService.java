@@ -1,3 +1,23 @@
+/*
+ * ###
+ * Phresco Service Implemenation
+ * 
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
+
 package com.photon.phresco.service.rest.api;
 
 import java.util.ArrayList;
@@ -34,14 +54,14 @@ import com.photon.phresco.service.api.Converter;
 import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.converters.ConvertersFactory;
 import com.photon.phresco.service.dao.ApplicationTypeDAO;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
 @Component
-@Path(ServerConstants.REST_API_COMPONENT)
+@Path(ServiceConstants.REST_API_COMPONENT)
 public class ComponentService extends DbService implements ServiceConstants {
 	
 	private static final Logger S_LOGGER= Logger.getLogger(ComponentService.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	
 	public ComponentService() throws PhrescoException {
 		super();
@@ -56,7 +76,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_APPTYPES)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findAppTypes() throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.findAppTypes()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findAppTypes()");
+	    }
 		
 		List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>();
 		try {
@@ -83,7 +105,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_APPTYPES)
 	public Response createAppTypes(List<ApplicationType> appTypes) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createAppTypes(List<ApplicationType> appTypes)");
+        }
 		
 		try {
 			Converter<ApplicationTypeDAO, ApplicationType> converter = 
@@ -110,7 +134,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_APPTYPES)
 	public Response updateAppTypes(List<ApplicationType> appTypes) {
-		S_LOGGER.debug("Entered into ComponentService.updateAppTypes(List<ApplicationType> appTypes)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateAppTypes(List<ApplicationType> appTypes)");
+	    }
 		
 		try {
 			for (ApplicationType appType : appTypes) {
@@ -136,7 +162,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_APPTYPES)
 	@Produces (MediaType.TEXT_PLAIN)
 	public void deleteAppTypes(List<ApplicationType> appTypes) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteAppTypes(List<ApplicationType> appTypes)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteAppTypes(List<ApplicationType> appTypes)");
+        }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -152,10 +180,12 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response getApptype(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getApptype(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getApptype(String id)" + id);
+	    }
 		
 		try {
-			ApplicationType appType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME, 
+			ApplicationType appType = mongoOperation.findOne(APPTYPESDAO_COLLECTION_NAME, 
 			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
 			if(appType != null) {
 				return Response.status(Response.Status.OK).entity(appType).build();
@@ -177,7 +207,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response updateAppType(@PathParam(REST_API_PATH_PARAM_ID) String id , ApplicationType appType) {
-		S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , ApplicationType appType)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , ApplicationType appType)" + id);
+	    }
 		
 		try {
 			if (id.equals(appType.getId())) {
@@ -199,7 +231,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
 	public Response deleteAppType(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteAppType(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteAppType(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(APPTYPES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
@@ -218,7 +252,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_SETTINGS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findSettings() {
-		S_LOGGER.debug("Entered into ComponentService.findSettings()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findSettings()");
+	    }
 		
 		try {
 			List<SettingsTemplate> settingsList = mongoOperation.getCollection(SETTINGS_COLLECTION_NAME , SettingsTemplate.class);
@@ -241,7 +277,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SETTINGS)
 	public Response createSettings(List<SettingsTemplate> settings) {
-		S_LOGGER.debug("Entered into ComponentService.createSettings(List<SettingsTemplate> settings)");
+		if (isDebugEnabled) {
+		    S_LOGGER.debug("Entered into ComponentService.createSettings(List<SettingsTemplate> settings)");
+		}
 		
 		try {
 			mongoOperation.insertList(SETTINGS_COLLECTION_NAME , settings);
@@ -262,7 +300,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SETTINGS)
 	public Response updateSettings(List<SettingsTemplate> settings) {
-		S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
+	    }
 		
 		try {
 			for (SettingsTemplate settingTemplate : settings) {
@@ -287,7 +327,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_SETTINGS)
 	public void deleteSettings(List<SettingsTemplate> settings) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateSettings(List<SettingsTemplate> settings)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -304,7 +346,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response getSettingsTemplate(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getSettingsTemplate(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getSettingsTemplate(String id)" + id);
+	    }
 		
 		try {
 			SettingsTemplate settingTemplate = mongoOperation.findOne(SETTINGS_COLLECTION_NAME, 
@@ -329,7 +373,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response updateSetting(@PathParam(REST_API_PATH_PARAM_ID) String id , SettingsTemplate settingsTemplate) {
-		S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , SettingsTemplate settingsTemplate)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , SettingsTemplate settingsTemplate)" + id);
+	    }
 		
 		try {
 			if (id.equals(settingsTemplate.getId())) {
@@ -351,7 +397,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_SETTINGS + REST_API_PATH_ID)
 	public Response deleteSettingsTemplate(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteSettingsTemplate(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteSettingsTemplate(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(SETTINGS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class);
@@ -370,7 +418,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_MODULES)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findModules(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_TYPE) String type) {
-		S_LOGGER.debug("Entered into ComponentService.findModules()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findModules()" + techId + type);
+	    }
 		
 		List<ModuleGroup> foundModules = new ArrayList<ModuleGroup>();
 		try {
@@ -408,7 +458,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_MODULES)
 	public Response createModules(List<ModuleGroup> modules) {
-		S_LOGGER.debug("Entered into ComponentService.createModules(List<ModuleGroup> modules)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createModules(List<ModuleGroup> modules)");
+	    }
 		
 		try {
 			mongoOperation.insertList(MODULES_COLLECTION_NAME , modules);
@@ -429,7 +481,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_MODULES)
 	public Response updateModules(List<ModuleGroup> modules) {
-		S_LOGGER.debug("Entered into ComponentService.updateModules(List<ModuleGroup> modules)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateModules(List<ModuleGroup> modules)");
+	    }
 		
 		try {
 			for (ModuleGroup moduleGroup : modules) {
@@ -454,7 +508,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_MODULES)
 	public void deleteModules(List<ModuleGroup> modules) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteModules(List<ModuleGroup> modules)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteModules(List<ModuleGroup> modules)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -470,7 +526,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response getModule(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getModule(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getModule(String id)" + id);
+	    }
 		
 		try {
 			ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME, 
@@ -496,7 +554,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response updatemodule(@PathParam(REST_API_PATH_PARAM_ID) String id , ModuleGroup module) {
-		S_LOGGER.debug("Entered into ComponentService.updatemodule(String id , ModuleGroup module)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updatemodule(String id , ModuleGroup module)" + id);
+	    }
 		
 		try {
 			if (id.equals(module.getId())) {
@@ -518,7 +578,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_MODULES + REST_API_PATH_ID)
 	public Response deleteModules(String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteModules(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteModules(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(MODULES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
@@ -537,7 +599,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_PILOTS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.findPilots()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findPilots()" + techId);
+	    }
 		 
 		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		try {
@@ -565,7 +629,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_PILOTS)
 	public Response createPilots(List<ProjectInfo> projectInfos) {
-		S_LOGGER.debug("Entered into ComponentService.createPilots(List<ProjectInfo> projectInfos)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createPilots(List<ProjectInfo> projectInfos)");
+	    }
 		
 		try {
 			mongoOperation.insertList(PILOTS_COLLECTION_NAME , projectInfos);
@@ -586,7 +652,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_PILOTS)
 	public Response updatePilots(List<ProjectInfo> pilots) {
-		S_LOGGER.debug("Entered into ComponentService.updatePilots(List<ProjectInfo> pilots)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updatePilots(List<ProjectInfo> pilots)");
+	    }
 		
 		try {
 			for (ProjectInfo pilot : pilots) {
@@ -610,7 +678,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_PILOTS)
 	public void deletePilots(List<ProjectInfo> pilots) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deletePilots(List<ProjectInfo> pilots)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deletePilots(List<ProjectInfo> pilots)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -626,7 +696,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response getPilot(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getPilot(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getPilot(String id)" + id);
+	    }
 		
 		try {
 			ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
@@ -651,7 +723,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response updatePilot(@PathParam(REST_API_PATH_PARAM_ID) String id , ProjectInfo pilot) {
-		S_LOGGER.debug("Entered into ComponentService.updatePilot(String id, ProjectInfo pilot)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updatePilot(String id, ProjectInfo pilot)" + id); 
+	    }
 		
 		try {
 			if (id.equals(pilot.getId())) {
@@ -673,7 +747,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_PILOTS + REST_API_PATH_ID)
 	public Response deletePilot(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deletePilot(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deletePilot(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
@@ -692,7 +768,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_SERVERS)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findServers(@QueryParam(REST_QUERY_TECHID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.findServers()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findServers()" + techId);
+	    }
 		
 		List<Server> serverList = new ArrayList<Server>();
 		try {
@@ -718,7 +796,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SERVERS)
 	public Response createServers(List<Server> servers) {
-		S_LOGGER.debug("Entered into ComponentService.createServers(List<Server> servers)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createServers(List<Server> servers)");
+	    }
 		
 		try {
 			mongoOperation.insertList(SERVERS_COLLECTION_NAME , servers);
@@ -739,7 +819,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SERVERS)
 	public Response updateServers(List<Server> servers) {
-		S_LOGGER.debug("Entered into ComponentService.updateServers(List<Server> servers)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateServers(List<Server> servers)");
+	    }
 		
 		try {
 			for (Server server : servers) {
@@ -764,7 +846,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_SERVERS)
 	public void deleteServers(List<Server> servers) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteServers(List<Server> servers)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteServers(List<Server> servers)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -780,9 +864,11 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response getServer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getServer(String id)");
-		
-		try {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getServer(String id)" + id);
+	    }
+
+	    try {
 			Server server = mongoOperation.findOne(SERVERS_COLLECTION_NAME, 
 			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
 			if (server != null ) {
@@ -806,7 +892,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response updateServer(@PathParam(REST_API_PATH_PARAM_ID) String id , Server server) {
-		S_LOGGER.debug("Entered into ComponentService.updateServer(String id, Server server)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateServer(String id, Server server)" + id);
+	    }
 		
 		try {
 			if (id.equals(server.getId())) {
@@ -828,7 +916,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_SERVERS + REST_API_PATH_ID)
 	public Response deleteServer(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteServer(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteServer(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(SERVERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
@@ -847,7 +937,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_DATABASES)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findDatabases(@QueryParam(REST_QUERY_TECHID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.findDatabases()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteServer(String id)" + techId);
+	    }
 		
 		List<Database> databaseList = new ArrayList<Database>();
 		try {
@@ -873,7 +965,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DATABASES)
 	public Response createDatabases(List<Database> databases) {
-		S_LOGGER.debug("Entered into ComponentService.createDatabases(List<Database> databases)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createDatabases(List<Database> databases)");
+	    }
 		
 		try {
 			mongoOperation.insertList(DATABASES_COLLECTION_NAME , databases);
@@ -894,7 +988,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DATABASES)
 	public Response updateDatabases(List<Database> databases) {
-		S_LOGGER.debug("Entered into ComponentService.updateDatabases(List<Database> databases)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateDatabases(List<Database> databases)");
+	    }
 		
 		try {
 			for (Database dataBase : databases) {
@@ -919,7 +1015,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_DATABASES)
 	public void deleteDatabases(List<Database> databases) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteDatabases(List<Database> databases)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteDatabases(List<Database> databases)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -935,7 +1033,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response getDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getDatabase(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getDatabase(String id)" + id);
+	    }
 		
 		try {
 			Database database = mongoOperation.findOne(DATABASES_COLLECTION_NAME, 
@@ -961,7 +1061,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response updateDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id , Database database) {
-		S_LOGGER.debug("Entered into ComponentService.updateDatabase(String id, Database database)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateDatabase(String id, Database database)" + id);
+	    }
 		
 		try {
 			if (id.equals(database.getId())) {
@@ -983,7 +1085,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_DATABASES + REST_API_PATH_ID)
 	public Response deleteDatabase(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteDatabase(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteDatabase(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(DATABASES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Database.class);
@@ -1002,7 +1106,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_WEBSERVICES)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findWebServices(@QueryParam(REST_QUERY_TECHID) String techId) {
-		S_LOGGER.debug("Entered into ComponentService.findWebServices()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findWebServices()" + techId);
+	    }
 		
 		List<WebService> webServiceList = new ArrayList<WebService>();
 		try {
@@ -1028,7 +1134,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_WEBSERVICES)
 	public Response createWebServices(List<WebService> webServices) {
-		S_LOGGER.debug("Entered into ComponentService.createWebServices(List<WebService> webServices)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createWebServices(List<WebService> webServices)");
+	    }
 		
 		try {
 			mongoOperation.insertList(WEBSERVICES_COLLECTION_NAME , webServices);
@@ -1049,7 +1157,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_WEBSERVICES)
 	public Response updateWebServices(List<WebService> webServices) {
-		S_LOGGER.debug("Entered into ComponentService.updateWebServices(List<WebService> webServices)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateWebServices(List<WebService> webServices)");
+	    }
 		
 		try {
 			for (WebService webService : webServices) {
@@ -1073,7 +1183,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_WEBSERVICES)
 	public void deleteWebServices(List<WebService> webServices) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteWebServices(List<WebService> webServices)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteWebServices(List<WebService> webServices)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -1089,7 +1201,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response getWebService(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getWebService(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getWebService(String id)" + id);
+	    }
 		
 		try {
 			WebService webService = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
@@ -1114,7 +1228,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response updateWebService(@PathParam(REST_API_PATH_PARAM_ID) String id , WebService webService) {
-		S_LOGGER.debug("Entered into ComponentService.updateWebService(String id, WebService webService)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateWebService(String id, WebService webService)" + id);
+	    }
 		
 		try {
 			if (id.equals(webService.getId())) {
@@ -1136,7 +1252,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_WEBSERVICES + REST_API_PATH_ID)
 	public Response deleteWebService(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteWebService(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteWebService(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
@@ -1155,7 +1273,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Path (REST_API_TECHNOLOGIES)
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response findTechnologies() {
-		S_LOGGER.debug("Entered into ComponentService.findTechnologies()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.findTechnologies()");
+	    }
 		
 		try {
 			List<Technology> techList = mongoOperation.getCollection(TECHNOLOGIES_COLLECTION_NAME , Technology.class);
@@ -1177,7 +1297,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Path (REST_API_TECHNOLOGIES)
 	public Response createTechnologies(@QueryParam(REST_QUERY_TECHID) String appTypeId, List<Technology> technologies) {
-		S_LOGGER.debug("Entered into ComponentService.createTechnologies(List<Technology> technologies)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.createTechnologies(List<Technology> technologies)" + appTypeId);
+	    }
 		
 		try {
 		    for (Technology technology : technologies) {
@@ -1201,7 +1323,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_TECHNOLOGIES)
 	public Response updateTechnologies(List<Technology> technologies) {
-		S_LOGGER.debug("Entered into ComponentService.updateTechnologies(List<Technology> technologies)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.updateTechnologies(List<Technology> technologies)");
+	    }
 		
 		try {
 			for (Technology tech : technologies) {
@@ -1225,7 +1349,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_TECHNOLOGIES)
 	public void deleteTechnologies(List<WebService> technologies) throws PhrescoException {
-		S_LOGGER.debug("Entered into ComponentService.deleteTechnologies(List<WebService> technologies)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteTechnologies(List<WebService> technologies)");
+	    }
 		
 		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
 		S_LOGGER.error("PhrescoException Is" + phrescoException.getErrorMessage());
@@ -1241,7 +1367,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response getTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.getTechnology(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getTechnology(String id)" + id);
+	    }
 		
 		try {
 			Technology technology = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
@@ -1266,7 +1394,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response updateTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id , Technology technology) {
-		S_LOGGER.debug("Entered into ComponentService.getTechnology(String id, Technology technology)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.getTechnology(String id, Technology technology)" + id);
+	    }
 		
 		try {
 			if (id.equals(technology.getId())) {
@@ -1288,7 +1418,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@DELETE
 	@Path (REST_API_TECHNOLOGIES + REST_API_PATH_ID)
 	public Response deleteTechnology(@PathParam(REST_API_PATH_PARAM_ID) String id) {
-		S_LOGGER.debug("Entered into ComponentService.deleteTechnology(String id)");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into ComponentService.deleteTechnology(String id)" + id);
+	    }
 		
 		try {
 			mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);

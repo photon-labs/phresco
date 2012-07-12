@@ -21,43 +21,62 @@ package com.photon.phresco.service.admin.commons;
 
 public interface ServiceUIConstants {
 
-	/*****************************
-     * Request Constants
-     * String REQ_LOGIN_XXX
-     *****************************/	
-    String REQ_LOGIN_ERROR	= "loginError";
-    String REQ_FROM_PAGE	= "fromPage";
-    String REQ_USER_INFO = "userInfo";
-    String REQ_APP_TYPE = "appType";
-    String REQ_APP_TYPES = "appTypes";  
-    String REQ_APP_TYPEID = "apptypeId";
-    String REQ_ARCHE_TYPES = "technologys";
-    String REQ_ARCHE_TYPE = "technology";
-    String REQ_ARCHE_TECHID = "techId";
-    String ERROR_LOGIN = "err.login.invalid.cred";
-    String ERROR_LOGIN_ACCESS_DENIED = "err.login.access.denied";
-    
-    
-	/*****************************
+    /*****************************
      * Common Constants
-     *****************************/	
+     *****************************/ 
     String SQUARE_CLOSE = "]";
     String COMMA = ",";
     String SQUARE_OPEN = "[";
     String ADD = "add";
+    String REQ_FROM_PAGE = "fromPage";
+    String REQ_EDIT = "edit";
+    String REQ_USER_INFO = "userInfo";
+    String SESSION_USER_INFO = "userInfo";
     
     
+	/*****************************
+     * Login Request Constants
+     * String REQ_LOGIN_XXX
+     *****************************/	
+    String REQ_LOGIN_ERROR = "loginError";
     
-
+    
+    /*****************************
+     * AppType Request Constants
+     * String REQ_APP_XXX
+     *****************************/
+    String REQ_APP_TYPE = "appType";
+    String REQ_APP_TYPES = "appTypes";  
+    String REQ_APP_TYPEID = "apptypeId";
+    
+    
+    /*****************************
+     * Archetype Request Constants
+     * String REQ_ARCHE_XXX
+     *****************************/
+    String REQ_ARCHE_TYPES = "technologys";
+    String REQ_ARCHE_TYPE = "technology";
+    String REQ_ARCHE_TECHID = "techId";
+    
+    
+    /*****************************
+     * Customer Request Constants
+     * String REQ_CUST_XXX
+     *****************************/ 
+    String REQ_CUST_CUSTOMER = "customer";
+    String REQ_CUST_CUSTOMERS = "customers";
+    String REQ_CUST_CUSTOMER_ID = "customerId";
+    
+    
 	/*****************************
      * I18N Keys Constants
      * String KEY_I18N_XXX_YYY
      *****************************/	
-
-    String KEY_I18N_LOGIN_INVALID_CRED		= "err.login.invalid.cred";
-    String KEY_I18N_LOGIN_EMPTY_CRED		= "err.login.empty.cred";
-    String KEY_I18N_LOGIN_ACCESS_DENIED		= "err.login.invalid.cred";
-    
+    String KEY_I18N_ERROR_LOGIN = "err.login.invalid.cred";
+    String KEY_I18N_ERROR_LOGIN_ACCESS_DENIED = "err.login.access.denied";
+    String KEY_I18N_LOGIN_INVALID_CRED = "err.login.invalid.cred";
+    String KEY_I18N_LOGIN_EMPTY_CRED = "err.login.empty.cred";
+    String KEY_I18N_LOGIN_ACCESS_DENIED	= "err.login.invalid.cred";
 
     String KEY_I18N_ERR_NAME_EMPTY = "err.msg.name.empty";
     String KEY_I18N_ERR_DESC_EMPTY = "err.msg.desc.empty";
@@ -68,7 +87,6 @@ public interface ServiceUIConstants {
     String KEY_I18N_ERR_APPLIES_EMPTY = "err.msg.applies.empty";
     String KEY_I18N_ERR_APPLNJAR_EMPTY = "err.msg.applnjar.empty";
     String KEY_I18N_ERR_PLTPROJ_EMPTY = "err.msg.pltproj.empty";
-    
     
     String KEY_I18N_ERR_EMAIL_EMPTY = "err.msg.email.empty";
     String KEY_I18N_ERR_ADDRS_EMPTY	= "err.msg.addrs.empty";
@@ -108,7 +126,6 @@ public interface ServiceUIConstants {
     String CUSTOMER_NOT_UPDATED = "customer.update.fail";
     String CUSTOMER_NOT_DELETED = "customer.delete.fail";
     String DOWNLOAD_NOT_ADDED = "download.add.fail";
-    String ROLE_NOT_ADDED     = "role.add.fail";
-    String URL_NOT_ADDED      = "url.add.fail";
-
+    String ROLE_NOT_ADDED = "role.add.fail";
+    String URL_NOT_ADDED = "url.add.fail";
 }

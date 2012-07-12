@@ -22,18 +22,21 @@
 <%@ page import="org.apache.commons.collections.CollectionUtils"%>
 <%@ page import="java.util.List"%>
 
-<%@ page import="com.photon.phresco.commons.model.Customer" %>
+<%@ page import="com.photon.phresco.commons.model.Customer"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <%
-	List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+	List<Customer> customers = (List<Customer>) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMERS);
 %>
 
 <form class="customer_list">
 	<div class="operation" id="operation">
-		<input type="button" id="customerAdd" class="btn btn-primary" name="customer_add" value="<s:text name='lbl.hdr.adm.cust.add'/>" onclick="loadContent('customerAdd', $('#subcontainer'));"/>
-		<input type="button"  id="del"  class="btn del" class="btn btn-primary" disabled value="<s:text name='lbl.hdr.adm.delete'/>" onclick="loadContent('customerDelete', $('#subcontainer'));"/>
+		<input type="button" id="customerAdd" class="btn btn-primary" name="customer_add" value="<s:text name='lbl.hdr.adm.cust.add'/>" 
+		      onclick="loadContent('customerAdd', $('#subcontainer'));"/>
+		<input type="button"  id="del"  class="btn del" class="btn btn-primary" disabled value="<s:text name='lbl.hdr.adm.delete'/>" 
+		      onclick="loadContent('customerDelete', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success"  id="successmsg">
+			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
 			</div>
 		</s:if>
@@ -43,59 +46,68 @@
 			</div>
 		</s:if>
 	</div>
-	
-	<div class="table_div">
-		<div class="fixed-table-container">
-			<div class="header-background"> </div>
-			<div class="fixed-table-container-inner">
-				<table cellspacing="0" class="zebra-striped">
-					<thead>
-						<tr>
-							<th class="first">
-								<div class="th-inner">
-									<input type="checkbox" id="checkAllAuto" class="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
-								</div>
-							</th>
-							<th class="second">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.name" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.desc" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.cuslt.vldupto" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><div class="th-inner"><s:label for="description" key="lbl.hdr.adm.cusrlt.linctype" theme="simple"/></div></div>
-							</th>
-						</tr>
-					</thead>
-		
-					<tbody>
-						<%
-							if (CollectionUtils.isNotEmpty(customers)) {
-								for (Customer customer : customers) {
-						%>
-									<tr>
-										<td class="checkboxwidth">
-											<input type="checkbox" class="check" name="customerId" value="<%= customer.getId() %>" onclick="checkboxEvent();" />
-										</td>
-										<td class="namelabel-width">
-											<a href="#" onclick="editCustomer('<%= customer.getId() %>');"><%= customer.getName() %></a>
-										</td>
-										<td class="desclabel-width"><%= customer.getDescription() %></td>
-										<td><%= customer.getValidUpto() %></td>
-										<td><%= customer.getType() %></td>		
-									</tr>	
-						<%		
-								}
-							}
-						%>
-					</tbody>
-				</table>
+	<% if (CollectionUtils.isEmpty(customers)) { %>
+            <div class="alert alert-block">
+                <s:text name='cust.not.available.alert.msg'/>
+            </div>
+	<% } else { %>
+			<div class="table_div">
+				<div class="fixed-table-container">
+					<div class="header-background"> </div>
+					<div class="fixed-table-container-inner">
+						<table cellspacing="0" class="zebra-striped">
+							<thead>
+								<tr>
+									<th class="first">
+										<div class="th-inner">
+											<input type="checkbox" id="checkAllAuto" class="checkAllAuto" name="checkAllAuto" 
+                                                onclick="checkAllEvent(this);">
+										</div>
+									</th>
+									<th class="second">
+										<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.name" theme="simple"/></div>
+									</th>
+									<th class="third">
+										<div class="th-inner tablehead"><s:label key="lbl.hdr.admim.cuslt.desc" theme="simple"/></div>
+									</th>
+									<th class="third">
+										<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.cuslt.vldupto" theme="simple"/></div>
+									</th>
+									<th class="third">
+										<div class="th-inner tablehead">
+                                            <div class="th-inner">
+                                                <s:label key="lbl.hdr.adm.cusrlt.linctype" theme="simple"/>
+                                            </div>
+                                        </div>
+									</th>
+								</tr>
+							</thead>
+				
+							<tbody>
+								<%
+									for (Customer customer : customers) {
+								%>
+										<tr>
+											<td class="checkboxwidth">
+												<input type="checkbox" class="check" name="customerId" value="<%= customer.getId() %>" 
+												   onclick="checkboxEvent();" />
+											</td>
+											<td class="namelabel-width">
+												<a href="#" onclick="editCustomer('<%= customer.getId() %>');"><%= customer.getName() %></a>
+											</td>
+											<td class="desclabel-width"><%= customer.getDescription() %></td>
+											<td><%= customer.getValidUpto() %></td>
+											<td><%= customer.getType() %></td>		
+										</tr>	
+								<%		
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
+	<% } %>
 </form>
 
 <script type="text/javascript">

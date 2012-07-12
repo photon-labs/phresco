@@ -193,9 +193,10 @@ public class BaseScreen {
 		if(chromeService!=null){
 			chromeService.stop();
 			}
-		} else {
-			throw new NullPointerException();
-		}
+		} 
+    //  else {
+//	throw new NullPointerException();
+//}
 		// selenium.stop();
 		/*
 		 * driver.quit(); selenium.stop();

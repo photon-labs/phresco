@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>2.0.0.1000-SNAPSHOT</version>
+        <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -25,39 +25,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.photon.phresco.commons</groupId>
-            <artifactId>phresco-commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.photon.phresco.service</groupId>
-            <artifactId>phresco-service</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.photon.phresco.service</groupId>
-            <artifactId>phresco-service-impl</artifactId>
-            <version>${project.version}</version>
+			  <groupId>com.photon.phresco</groupId>
+			  <artifactId>phresco-ldap</artifactId>
+              <version>${project.version}</version>
         </dependency>
         
         <dependency>
             <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
+            <artifactId>jersey-bundle</artifactId>
             <version>${jersey-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.0.1</version>
         </dependency>
         
         <dependency>
@@ -68,47 +44,9 @@
         </dependency>
         
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.glassfish.distributions</groupId>
-            <artifactId>web-all</artifactId>
-            <version>10.0-build-20080430</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.glassfish.embedded</groupId>
-            <artifactId>gf-embedded-api</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>3.0</version>
-        </dependency>
-        
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.7.2</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.sonatype.plexus</groupId>
-            <artifactId>plexus-cipher</artifactId>
-            <version>1.7</version>
         </dependency>
         
         <dependency>
@@ -120,7 +58,7 @@
     </dependencies>
     
     <build>
-        <finalName>service</finalName>
+        <finalName>auth</finalName>
         
         <resources>
           <resource>
@@ -135,7 +73,7 @@
               <artifactId>tomcat-maven-plugin</artifactId>
               <version>1.1</version>            
               <configuration>
-                <path>/service</path>
+                <path>/auth</path>
                 <server>auth-service</server>
                 <port>8765</port>
               </configuration>

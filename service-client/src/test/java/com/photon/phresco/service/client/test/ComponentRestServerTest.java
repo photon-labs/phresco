@@ -1,10 +1,29 @@
+/*
+ * ###
+ * Phresco Service Client
+ * %%
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
+
 package com.photon.phresco.service.client.test;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.Server;
@@ -41,8 +60,8 @@ public class ComponentRestServerTest implements ServiceConstants {
 	@Ignore
     public void testGetServersByTechnology() throws PhrescoException {
 		String techId = "tech-php";
-    	RestClient<Server> serverClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERBYID);
-    	serverClient.setPath(techId);
+    	RestClient<Server> serverClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
+    	serverClient.queryString(REST_QUERY_TECHID, techId);
 		GenericType<List<Server>> genericType = new GenericType<List<Server>>(){};
 		List<Server> servers = serverClient.get(genericType);
         System.out.println("servers.size() in testGetServers():" + servers.size());

@@ -1,28 +1,9 @@
-<!--
-  ###
-  Archetype - phresco-nodejs-archetype
-  
-  Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-  
-       http://www.apache.org/licenses/LICENSE-2.0
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  ###
-  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>Nodejs_EShopjson</groupId>
   <artifactId>nodejs</artifactId>
-  <version>0.0.1</version>
+  <version>2.0.0.6001-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>nodejs</name>
   <url>http://maven.apache.org</url>
@@ -31,7 +12,7 @@
     <repository>      
       <id>seleniumserver</id>
       <name>seleniumserver</name>
-      <url>http://dev-repo.photoninfotech.com:8080/nexus/content/groups/testing/</url>
+      <url>http://172.16.18.178:8080/nexus/content/groups/public/</url>
     </repository>
   </repositories>
   
@@ -53,10 +34,10 @@
 		</dependency>
 		
 		<dependency>
-              <groupId>org.seleniumhq.selenium.server</groupId>
-              <artifactId>selenium-webdriver</artifactId>
-              <version>2.19.0</version>
-        </dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.21.0</version>
+		</dependency>
         
     <!--  ***************For Windows chromedriver ******************-->    
         <dependency>
@@ -67,13 +48,14 @@
 		   <type>zip</type>
 		</dependency>
 	<!-- **************** For Mac machine chromedriver***************** -->   
-			<dependency>
-					  <groupId>org.seleniumhq.selenium</groupId>
-					  <artifactId>chromedriver</artifactId>
-					  <version>19.0.1068.0</version>
-					  <classifier>mac</classifier>
-					  <type>zip</type>
-				</dependency>
+		<dependency>
+					<groupId>org.seleniumhq.selenium</groupId>
+					<artifactId>chromedriver</artifactId>
+					<version>21.0.1180.4</version>
+					<classifier>mac</classifier>
+					<type>zip</type>
+		</dependency>
+
     <!-- **************** For Linux-32 machine chromedriver***************** -->     
         <dependency>
 			  <groupId>org.seleniumhq.selenium</groupId>
@@ -133,7 +115,7 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<markersDirectory>test/chromedriver</markersDirectory>
+							<markersDirectory>chromedriver</markersDirectory>
 						<artifactItems>
 								<artifactItem>
 										 	  <groupId>org.seleniumhq.selenium</groupId>
@@ -142,16 +124,16 @@
 											   <classifier>win</classifier>
 											   <type>zip</type>
 											   <overWrite>false</overWrite>
-											   <outputDirectory>test/chromedriver/windows</outputDirectory>
+											   <outputDirectory>chromedriver/windows</outputDirectory>
 								  </artifactItem>
-								  <artifactItem>
-								                 <groupId>org.seleniumhq.selenium</groupId>
-												  <artifactId>chromedriver</artifactId>
-												  <version>19.0.1068.0</version>
-												  <classifier>mac</classifier>
-												  <type>zip</type>
-												  <overWrite>false</overWrite>
-											      <outputDirectory>test/chromedriver/mac</outputDirectory>
+								  <artifactItem>								                
+												<groupId>org.seleniumhq.selenium</groupId>
+												<artifactId>chromedriver</artifactId>
+												<version>21.0.1180.4</version>
+												<classifier>mac</classifier>
+												<type>zip</type>	
+												<overWrite>false</overWrite>
+											     <outputDirectory>chromedriver/mac</outputDirectory>
 								</artifactItem>	
 								<artifactItem>
 											  <groupId>org.seleniumhq.selenium</groupId>
@@ -160,7 +142,7 @@
 											  <classifier>linux32</classifier>
 											  <type>zip</type>
 											  <overWrite>false</overWrite>
-											  <outputDirectory>test/chromedriver/linux-32</outputDirectory>
+											  <outputDirectory>chromedriver/linux-32</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 											  <groupId>org.seleniumhq.selenium</groupId>
@@ -169,13 +151,30 @@
 											  <classifier>linux64</classifier>
 											  <type>zip</type>
 											  <overWrite>false</overWrite>
-											  <outputDirectory>test/chromedriver/linux-64</outputDirectory>
+											  <outputDirectory>chromedriver/linux-64</outputDirectory>
 								</artifactItem>
 						</artifactItems>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			<!--  MAVEN ANTRUN PLUGIN -->
+			<plugin>  
+                <artifactId>maven-antrun-plugin</artifactId>  
+                <executions>  
+                  <execution>  
+                  <phase>compile</phase>  
+                    <configuration>  
+                      <tasks>                     
+                        <chmod file="${project.basedir}/chromedriver/mac/chromedriver" perm="777"/>
+                      </tasks>  
+                    </configuration>  
+                    <goals>  
+                      <goal>run</goal>  
+                    </goals>  
+                  </execution>  
+                </executions>  
+              </plugin>  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>

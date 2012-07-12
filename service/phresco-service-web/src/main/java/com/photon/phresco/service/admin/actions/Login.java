@@ -13,26 +13,21 @@ public class Login extends ServiceBaseAction {
 
 	private static final long serialVersionUID = -1858839078372821734L;
 	private static final Logger S_LOGGER = Logger.getLogger(Login.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
+	
 	private String username = null;
 	private String password = null;
 	private boolean loginFirst = true;
 	private String css = null;
 	
 	public String login() {
-		S_LOGGER.debug("Entering Method  Login.login()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.login()");
+	    }
 
 		if (loginFirst) {
-			HttpServletRequest request = getHttpRequest();
-			Cookie[] cookies = request.getCookies();
-			for(int i = 0; i < cookies.length; i++) { 
-				Cookie cookiecss = cookies[i];
-				if (cookiecss.getName().equals("css")) {
-					css = cookiecss.getValue();
-					css = css.replace("%2F","/");
-					request.setAttribute("css", css);
-				}  
-			} 
-			return LOGIN_RESULT;	
+		
+        	return LOGIN_RESULT;	
 		}
 
 		if (validateLogin()) {
@@ -43,24 +38,26 @@ public class Login extends ServiceBaseAction {
 	}
 	
 	private String authenticate() {
-		S_LOGGER.debug("Entering Method  Login.authenticate()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.authenticate()");
+	    }
 		
-		User User = null;
+		User user = null;
 			try {
 				byte[] encodeBase64 = Base64.encodeBase64(password.getBytes());
 				String encodedPassword = new String(encodeBase64);
 				
-				User = doLogin(username, encodedPassword);
-				if (StringUtils.isEmpty(User.getDisplayName())) {
-					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+				user = doLogin(username, encodedPassword);
+				if (StringUtils.isEmpty(user.getDisplayName())) {
+					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_ERROR_LOGIN));
 					return LOGIN_FAILURE;
 				}
-				if (!User.isPhrescoEnabled()) {
-					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_ACCESS_DENIED));
+				if (!user.isPhrescoEnabled()) {
+					getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_ERROR_LOGIN_ACCESS_DENIED));
 					return LOGIN_FAILURE;
-				} 
+				}
+				getHttpSession().setAttribute(SESSION_USER_INFO, user);
 			} catch (Exception e) {
-				e.printStackTrace();
 				return LOGIN_FAILURE;
 			}
 			
@@ -68,7 +65,9 @@ public class Login extends ServiceBaseAction {
 	}
 
 	private boolean validateLogin() {
-		S_LOGGER.debug("Entering Method  Login.validateLogin()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method  Login.validateLogin()");
+	    }
 		
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(KEY_I18N_LOGIN_EMPTY_CRED));
