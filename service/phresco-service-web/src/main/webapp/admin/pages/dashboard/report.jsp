@@ -18,8 +18,9 @@
   ###
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<div class="dashboard">
-	<section id="dashboard-panel1" class="dashboard-panel">
+
+<div class="dashboard" style="width: 100%;">
+	<section id="dashboard-panel1" class="dashboard-panel" style="width: 31%; margin: 1px 0 1px 0;">
 		<div class="list-wrapper">
 			<div class="header-background">
 				<div class="list-header">
@@ -174,7 +175,7 @@
 				<div class="table_div">
 					<div class="fixed-table-container">
 						<div class="header-background"></div>
-						<div class="fixed-table-container-inner">
+						  <div class="fixed-table-container-inner">  
 							<table cellspacing="0" class="zebra-striped">
 								<thead>
 									<tr>
@@ -219,7 +220,7 @@
 									<td>55</td>
 								</tr>
 							</table>
-						</div>
+						 </div> 
 					</div>
 				</div>
 			</div>
@@ -228,44 +229,45 @@
 </div>
 
 <script type="text/javascript">
+
 	$(document).ready(function() {
-		$('#replaceimg1').click(function () {
+		$('#replaceimg1').click(function() {
 			$('.list-slide1').slideToggle();
 			if ($("#list-header-toggle1").is(":hidden")) {
-				$("#replaceimg1").attr('src','images/add_icon.png');
-	            $("#list-header-toggle1").show();
-	            $("#dashboard-panel1").css("height", "auto");
-	        } else {
-			    $("#replaceimg1").attr('src','images/minus_icon.png');
-	            $("#list-header-toggle1").hide();
-	            $("#dashboard-panel1").css("height", "97%");
-	        }
-		});	
-			
-		$('#replaceimg2').click(function () {
-			$('.list-slide2').slideToggle();
-			if($('#list-header-toggle2').is(":hidden")) {
-				$("#replaceimg2").attr('src','images/add_icon.png');
-	            $("#list-header-toggle2").show();
-	            $("#dashboard-panel2").css("height", "auto");
-	        } else {
-	            
-			    $("#replaceimg2").attr('src','images/minus_icon.png');
-	            $("#list-header-toggle2").hide();
-	            $("#dashboard-panel2").css("height", "97%");
+				$("#replaceimg1").attr('src', 'images/add_icon.png');
+				$("#list-header-toggle1").show();
+				$("#dashboard-panel1").css("height", "auto");
+			} else {
+				$("#replaceimg1").attr('src', 'images/minus_icon.png');
+				$("#list-header-toggle1").hide();
+				$("#dashboard-panel1").css("height", "97%");
 			}
 		});
-		
+
+		$('#replaceimg2').click(function() {
+			$('.list-slide2').slideToggle();
+			if ($('#list-header-toggle2').is(":hidden")) {
+				$("#replaceimg2").attr('src', 'images/add_icon.png');
+				$("#list-header-toggle2").show();
+				$("#dashboard-panel2").css("height", "auto");
+			} else {
+
+				$("#replaceimg2").attr('src', 'images/minus_icon.png');
+				$("#list-header-toggle2").hide();
+				$("#dashboard-panel2").css("height", "97%");
+			}
+		});
+
 		$('#replaceimg3').click(function() {
 			$('.list-slide3').slideToggle();
-			if($('#list-header-toggle3').is(":hidden")) {
-				$('#replaceimg3').attr('src','images/add_icon.png');
+			if ($('#list-header-toggle3').is(":hidden")) {
+				$('#replaceimg3').attr('src', 'images/add_icon.png');
 				$('#list-header-toggle3').show();
 				$("#dashboard-panel3").css("height", "auto");
 			} else {
-				$('#replaceimg3').attr('src','images/minus_icon.png');
-				 $("#list-header-toggle3").hide();
-				 $("#dashboard-panel3").css("height", "97%");
+				$('#replaceimg3').attr('src', 'images/minus_icon.png');
+				$("#list-header-toggle3").hide();
+				$("#dashboard-panel3").css("height", "97%");
 			}
 		});
 	});

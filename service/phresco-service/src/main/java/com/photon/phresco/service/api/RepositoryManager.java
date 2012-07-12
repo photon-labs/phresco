@@ -47,10 +47,6 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
-import com.photon.phresco.service.jaxb.ArchetypeInfo;
-import com.photon.phresco.service.jaxb.Documents;
-import com.photon.phresco.service.jaxb.Library;
-import com.photon.phresco.service.jaxb.Module;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.service.model.EntityType;
 
@@ -76,32 +72,6 @@ import com.photon.phresco.service.model.EntityType;
      * @throws PhrescoException
      */
     void addTechnology(String apptype, Technology tech) throws PhrescoException;
-
-    /**
-     * Returns the Archetype info for the project
-     * @param info
-     * @return
-     * @throws PhrescoException
-     */
-    ArchetypeInfo getArchetype(ProjectInfo info) throws PhrescoException;
-
-    Documents getDocument(String id, EntityType type) throws PhrescoException;
-
-    Library getJsLibrary(String id) throws PhrescoException;
-
-    void addJsLibrary(String techId, Module module, File moduleContent, File modulePOM) throws PhrescoException;
-
-    void removeJsLibrary(String techId, Module modules)throws PhrescoException;
-
-    List<ProjectInfo> getPilotProjects(String techId) throws PhrescoException;
-
-    void addPilotProjects(String techId, List<ProjectInfo> projectInfos) throws PhrescoException;
-
-    String addArtifact(ArtifactInfo info, File artifact)throws PhrescoException;
-
-    void addModule(String techId, Module module, File moduleContent, File modulePOM) throws PhrescoException;
-
-    void removeModule(String techId, Module modules)throws PhrescoException;
 
     void addVideo(VideoInfo videoInfo, File dirPath) throws PhrescoException;
 
@@ -152,7 +122,7 @@ import com.photon.phresco.service.model.EntityType;
 	 
 	 String getEmailExtFile() throws PhrescoException;
 
-	 String getServiceContextName() throws PhrescoException;
+	List<ProjectInfo> getPilotProjects(String id);
 
 
 }

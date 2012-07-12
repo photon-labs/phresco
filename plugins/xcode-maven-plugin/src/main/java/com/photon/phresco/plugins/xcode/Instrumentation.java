@@ -48,7 +48,6 @@ import org.apache.maven.project.MavenProject;
 
 import org.w3c.dom.*;
 
-import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
 import com.photon.phresco.plugins.xcode.utils.XMLConstants;
 
@@ -80,7 +79,7 @@ public class Instrumentation extends AbstractXcodeMojo {
 	protected MavenProject project;
 	
 	/**
-	 * @parameter expression="${template}" default-value="/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"
+	 * @parameter expression="${template}" default-value="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"
 	 */
 	private String template;
 	
@@ -134,16 +133,6 @@ public class Instrumentation extends AbstractXcodeMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 			getLog().info("Instrumentation command" + command);
 			
-			try {	
-			if(SdkVerifier.isAvailable("iphonesimulator5.1")) {
-                template = "/Applications/Xcode.app/Contents" + template;
-              }
-          } catch (IOException e2) {
-              throw new MojoExecutionException("Template not found");
-          } catch (InterruptedException e2) {
-               throw new MojoExecutionException("Template interrupted!");
-           }
-
 		    try {
 				outputFolder = project.getBasedir().getAbsolutePath();
 				File f = new File(outputFolder);

@@ -1,22 +1,3 @@
-/*
- * ###
- * Service Web Archive
- * %%
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.service.rest.api;
 
 import static org.junit.Assert.assertEquals;
@@ -27,10 +8,10 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 
 import org.junit.Ignore;
-import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
+import com.google.gson.Gson;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
 import com.photon.phresco.model.AppType;
@@ -42,10 +23,11 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
+import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.util.ServiceConstants;
 
 
-public class ComponentServiceTest extends DbService implements ServiceConstants {
+public class ComponentServiceTest extends DbService implements ServiceConstants{
 	
 	public ComponentServiceTest() throws PhrescoException {
 		super();
@@ -520,6 +502,25 @@ public class ComponentServiceTest extends DbService implements ServiceConstants 
 		String id = "4fe8262e230d8aa51d425aa1";
 		mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
+	}
+	
+	@Ignore
+	public void testGetModuleById() {
+		String techId = "tech-php";
+		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
+		try {
+			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+			
+			for (ModuleGroup moduleGroup : modulesList) {
+//				if(moduleGroup.getTechId().equals(techId) ) {
+//					modules.add(moduleGroup);
+//				}
+			}
+			String json = new Gson().toJson(modules);
+			System.out.println(json);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }

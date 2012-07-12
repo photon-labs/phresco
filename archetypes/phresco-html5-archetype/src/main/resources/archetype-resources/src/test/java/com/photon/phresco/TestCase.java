@@ -17,7 +17,7 @@
  * limitations under the License.
  * ###
  */
-package com.photon.phresco;
+package com.photon.phresco.service;
 
 import static org.junit.Assert.assertTrue;
 

@@ -124,7 +124,7 @@
             <result type="json" />
         </action>
         
-        <action name="getPilotProjectModules" method="getPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
+        <action name="getPilotProjectModules" method="fetchPilotProjectModules" class="com.photon.phresco.framework.actions.applications.Features">
             <result type="json" />
         </action>
         
@@ -227,6 +227,18 @@
         
         <action name="generateBuild" method="generateBuild" class="com.photon.phresco.framework.actions.applications.Build">
             <result name="generateBuild">/pages/applications/generate_build.jsp</result>
+        </action>
+        
+        <action name="getSqlDatabases" method="getSqlDatabases" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="getSQLFiles" method="getSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
+        </action>
+        
+        <action name="configureSqlExecution" method="configureSqlExecution" class="com.photon.phresco.framework.actions.applications.Build">
+            <result type="json" />
         </action>
         
         <action name="openFolder" method="openFolder" class="com.photon.phresco.framework.actions.FrameworkBaseAction"/>
@@ -584,8 +596,8 @@
         	<result type="json"><param name="root">testResultFiles</param></result>
         </action>
         
-       	<action name="getBuildsSize" method="getTotalBuilds" class="com.photon.phresco.framework.actions.applications.CI">
-            <result type="json"><param name="root">totalBuildSize</param></result>
+        <action name="getNoOfJobsIsInProgress" method="numberOfJobsIsInProgress" class="com.photon.phresco.framework.actions.applications.CI">
+            <result type="json"><param name="root">numberOfJobsInProgress</param></result>
         </action>
         
         <action name="getBuildProgress" method="buildProgress" class="com.photon.phresco.framework.actions.applications.CI">
@@ -620,9 +632,9 @@
         </action>
         
         <action name="createReportConfig" method="createReportConfig" class="com.photon.phresco.framework.actions.applications.SiteReport">
-<!--             <result name="configure">/pages/applications/siteReport/configure.jsp</result> -->
+            <result name="siteReport">/pages/applications/siteReport/iframe.jsp</result>
         </action>
-                
+        
         <action name="advancedBuildSettings" method="advancedBuildSettings" class="com.photon.phresco.framework.actions.applications.Build">
         	<result name="success">/pages/applications/generate_build_adv_settings.jsp</result>
         </action>

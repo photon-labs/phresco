@@ -19,9 +19,20 @@
  */
 package com.photon.phresco.service.client.api;
 
+import java.util.List;
+
+import com.photon.phresco.commons.model.Customer;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
+import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.Database;
+import com.photon.phresco.model.ModuleGroup;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Server;
+import com.photon.phresco.model.VideoInfo;
+import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.client.impl.RestClient;
+import com.sun.jersey.api.client.ClientResponse;
 
 /**
  * Interface for making service calls to Phresco Framework
@@ -30,6 +41,39 @@ public interface ServiceManager {
 	
 	<E> RestClient<E> getRestClient(String contextPath) throws PhrescoException;
 	
-	UserInfo getUserInfo() throws PhrescoException;
+	User getUserInfo() throws PhrescoException;
 	
+	List<VideoInfo> getVideoInfos() throws PhrescoException;
+	
+	ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException;
+	
+	void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException;
+	
+	ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException;
+	
+	List<ApplicationType> getApplicationTypes() throws PhrescoException;
+	
+	ApplicationType getApplicationType(String appTypeId) throws PhrescoException;
+	
+	List<Server> getServers(String techId) throws PhrescoException;
+	
+	List<Database> getDatabases(String techId) throws PhrescoException;
+	
+	List<WebService> getWebServices(String techId) throws PhrescoException;
+	
+	List<ProjectInfo> getPilots(String techId) throws PhrescoException;
+	
+	List<ModuleGroup> getModules(String techId) throws PhrescoException;
+	
+	List<ModuleGroup> getJSLibs(String techId) throws PhrescoException;
+	
+	List<Customer> getCustomers() throws PhrescoException;
+	
+	Customer getCustomer(String customerId) throws PhrescoException;
+	
+	ClientResponse createCustomers(List<Customer> customers) throws PhrescoException;
+	
+	void updateCustomer(Customer customer, String customerId) throws PhrescoException;
+	
+	ClientResponse deleteCustomer(String customerId) throws PhrescoException;
 }

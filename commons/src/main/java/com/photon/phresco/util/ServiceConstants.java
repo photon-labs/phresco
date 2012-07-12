@@ -37,10 +37,8 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
-	
-
-	String REST_API_COMPONENT =  "/component";
-	String REST_API_ADMIN =  "/admin-temp";
+	String REST_API_COMPONENT =  "/components";
+	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
 	String REST_API_APPTYPES = "/apptypes";
 	String REST_API_CONFIG_TEMPLATES= "/configtemplates";
@@ -50,40 +48,35 @@ public interface ServiceConstants {
 	String REST_API_DATABASES = "/databases";
 	String REST_API_WEBSERVICES = "/webservices";
 	String REST_API_TECHNOLOGIES= "/technologies";
-	String REST_API_DOWNLOADS = "/downloads-temp";
+	String REST_API_DOWNLOADS = "/downloads";
 	String REST_API_VIDEOS = "/videos";
 	String REST_API_USERS = "/users";
 	String REST_API_ROLES = "/roles";
 	String REST_API_PERMISSIONS = "/permissions";
 	String REST_API_LDAP = "/settings/ldap";
-	String REST_API_SETTINGS = "/settings_temp";
+	String REST_API_SETTINGS = "/settings";
 	String REST_API_TWEETS = "/tweets";
-	String REST_API_SERVERBYID = "/servers/id";
-	String REST_API_DATABASESBYID = "/databases/id";
-	String REST_API_WEBSERVICESBYID = "/webservices/id";
-	String REST_API_MODULESBYID = "/modules/mod";
 	String REST_API_JSBYID = "/modules/js";
 	String REST_API_PILOTSBYID = "/pilots/id";
-	
+	String REST_API_LOGIN = "/login";
+	String REST_LOGIN_PATH = "/service/rest/api/login";
 	String REST_API_LDAP_PARAM_ID = "ldap";
-	
-	
-
-
 	String REST_API_PATH_ID = "/{id}";
 	String REST_API_PATH_PARAM_ID = "id";
 	String REST_API_QUERY_PARAM_SESSION_ID = "sessionId";
 	String REST_API_QUERY_PARAM_LIMIT = "limit";
 	String REST_API_QUERY_PARAM_OFFSET = "offset";
-
 	String ERROR_MSG_UNSUPPORTED_OPERATION = "{0} operation is not allowed";
 	String ERROR_MSG_NOT_FOUND = "Content Not Found";
 	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
+	String REST_QUERY_TECHID = "techId";
+	String REST_QUERY_TYPE = "type";
+	String REST_QUERY_TYPE_MODULE = "module";
+	String REST_QUERY_TYPE_JS = "js";
 	
 	 /*
      * Constants for MongoDB Collections
      */
-
 	String CUSTOMERS_COLLECTION_NAME = "customers";
 	String VIDEOS_COLLECTION_NAME = "videos";
 	String USERS_COLLECTION_NAME = "users";
@@ -96,6 +89,9 @@ public interface ServiceConstants {
 	String WEBSERVICES_COLLECTION_NAME = "webservices";
 	String SETTINGS_COLLECTION_NAME = "settings";
 	String TECHNOLOGIES_COLLECTION_NAME = "technologies";
+	String USERDAO_COLLECTION_NAME = "userdaos";
+	String ROLES_COLLECTION_NAME = "roles";
+	String APPTYPESDAO_COLLECTION_NAME = "apptypedao";
 	
 	/*
      * Constants for Exception Message keys
@@ -106,11 +102,11 @@ public interface ServiceConstants {
 	String EX_PHEX00004 = "PHEX00004";
 	String EX_PHEX00005 = "PHEX00005";
 	String EX_PHEX00006 = "PHEX00006";
+	String EX_PHEX00007 = "PHEX00007";
 	
 	/*
      * Constants for Operatins
      */
-	
 	String UPDATE = "Update";
 	String INSERT = "Insert";
 	String DELETE = "Delete";
@@ -121,4 +117,10 @@ public interface ServiceConstants {
 	String COLON_DOUBLE_SLASH = "://";
 	String COLON = ":";
 	String SLASH_REST_SLASH_API = "/rest/api";
+	
+	/*
+     * Constants for Fields
+     */
+	String REST_API_FIELD_TECH = "technologies";
+	String REST_API_FIELD_APPID = "appTypeId";
 }

@@ -29,6 +29,7 @@ import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.CIBuild;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
@@ -42,11 +43,11 @@ import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.util.Credentials;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 
 public interface ProjectAdministrator {
@@ -59,7 +60,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException;
+    Project createProject(ProjectInfo info, File path, User userInfo) throws PhrescoException;
 
     /**
      * Update the project with the given project information
@@ -71,7 +72,7 @@ public interface ProjectAdministrator {
      * @throws PhrescoException
      * 
      */
-    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path,UserInfo userInfo) throws PhrescoException;
+    Project updateProject(ProjectInfo delta,ProjectInfo projectInfo,File path, User userInfo) throws PhrescoException;
 
     /**
      * Returns the project for the specified project code
@@ -311,6 +312,13 @@ public interface ProjectAdministrator {
      */
     List<BuildInfo> getBuildInfos(Project project) throws PhrescoException;
 
+    /**
+     * Returns all the build info details from build.info file
+     * @return
+     * @throws PhrescoException
+     */
+    List<BuildInfo> readBuildInfo(File path) throws IOException;
+    
     BuildInfo getBuildInfo(Project project, int buildNumber) throws PhrescoException;
 
     List<BuildInfo> getBuildInfos(Project project, int[] buildNumbers) throws PhrescoException;
@@ -346,7 +354,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    UserInfo doLogin(Credentials credentials) throws PhrescoException;
+    User doLogin(Credentials credentials) throws PhrescoException;
 
     /**
      * Returns Server DownloadInfo from the service
@@ -369,11 +377,24 @@ public interface ProjectAdministrator {
      */
     List<DownloadInfo> getEditorDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
 
+	/**
+     * Returns tools DownloadInfo from the service
+     * @return
+     * @throws PhrescoException
+     */
+    List<DownloadInfo> getToolsDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
     /**
      * Returns the jForum path from the service
      * @return
      * @throws PhrescoException
      */
+    
+    /**
+     * Returns others DownloadInfo from the service
+     * @return
+     * @throws PhrescoException
+     */
+    List<DownloadInfo> getOtherDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException;
     String getJforumPath() throws PhrescoException;
 
     void createJob(Project project, CIJob job) throws PhrescoException;
@@ -382,9 +403,58 @@ public interface ProjectAdministrator {
 
     CIJob getJob(Project project) throws PhrescoException;
 
+    /**
+     * Returns the list of user created jobs
+     * @return
+     * @throws PhrescoException
+     */
+    List<CIJob> getJobs(Project project) throws PhrescoException;
+    
+    /**
+     * Returns particular job object
+     * @return
+     * @throws PhrescoException
+     */
+    CIJob getJob(Project project, String jobName) throws PhrescoException;
+    
+    /**
+     * Writes particular jobs object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void writeJsonJobs(Project project, List<CIJob> job, String status) throws PhrescoException;
+    
+    /**
+     * Delete jobs object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void deleteJsonJobs(Project project, List<CIJob> job) throws PhrescoException;
+    
+    /**
+     * Delete job object in .phresco folder
+     * @return
+     * @throws PhrescoException
+     */
+    void updateJsonJob(Project project, CIJob job) throws PhrescoException;
+    
     CIJobStatus buildJob(Project project) throws PhrescoException;
 
+    /**
+     * Returns build of jobs
+     * @return
+     * @throws PhrescoException
+     */
+    CIJobStatus buildJobs(Project project, List<String> jobs) throws PhrescoException;
+
     List<CIBuild> getBuilds(Project project) throws PhrescoException;
+
+    /**
+     * Returns build of a particular job
+     * @return
+     * @throws PhrescoException
+     */
+    List<CIBuild> getBuilds(CIJob ciJob) throws PhrescoException;
 
 	String sendReport(LogInfo loginfo) throws PhrescoException ;
 
@@ -425,10 +495,28 @@ public interface ProjectAdministrator {
 	CIJobStatus deleteCI(Project project, List<String> builds) throws PhrescoException;
 	
     /**
+     * Delete job. If build is null job ll be deleted
+     * @throws PhrescoException
+     */
+	CIJobStatus deleteCIBuild(Project project, Map<String, List<String>> builds) throws PhrescoException;
+
+    /**
+     * Delete job. If build is null job ll be deleted
+     * @throws PhrescoException
+     */
+	CIJobStatus deleteCIJobs(Project project, List<String> jobs) throws PhrescoException;
+	
+    /**
      * Checks whether job is in progress
      * @throws PhrescoException
      */
 	int getProgressInBuild(Project project) throws PhrescoException;
+	
+    /**
+     * Checks whether job is in progress
+     * @throws PhrescoException
+     */
+	boolean isJobCreatingBuild(CIJob ciJob) throws PhrescoException;
 	
     /**
      * gets exmail ext plugin from nexus and stores it in jenkins plugin dir
@@ -590,12 +678,24 @@ public interface ProjectAdministrator {
 	 void deleteSqlFolder(List<String> dbList, ProjectInfo projectInfo) throws PhrescoException;
 
 	 List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException;
-	 
-	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException;
+	
+	 List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException;	 
+
+	 void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException;
 	 
 	 List<Database> getDatabases() throws PhrescoException;
 	 
 	 List<Server> getServers() throws PhrescoException;
 	 
 	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
+	 
+	List<ModuleGroup> getJSLibs(String technologyId) throws PhrescoException;
+
+	/**
+	 * Returns CI build object for build number
+	 * @param job, buildNumber
+	 * @return BuildInfo
+	 * @throws PhrescoException
+	 */
+	 BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
 }

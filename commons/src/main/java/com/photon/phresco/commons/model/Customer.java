@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
 @XmlRootElement
 public class Customer extends Element {
 
@@ -31,25 +30,22 @@ public class Customer extends Element {
 	public static final int TYPE_SILVER = 1;
 	public static final int TYPE_BRONZE = 2;
 
+	private String emailId;
+    private String address;
+    private String country;
+    private String state;
+    private String zipcode;
+    private String contactNumber;
+    private String fax;
+    private String helpText;
+    private int type;
 //	Date validFrom;
 //	Date validUpto;
-	String validFrom;
-	String validUpto;
-	String repoURL;
-	int type;
-	int status;
-	String name;
-	String description;
+	private String validFrom;
+	private String validUpto;
+	private String repoURL;
+	private int status;
 	
-	String address;
-	String country;
-	String state;
-	String zipcode;
-	String contactNumber;
-	String fax;
-	String helpText;
-	
-
 	public Customer() {
 		super();
 	}
@@ -72,22 +68,6 @@ public class Customer extends Element {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getCreationDate() {
@@ -137,7 +117,7 @@ public class Customer extends Element {
 	public void setRepoURL(String repoURL) {
 		this.repoURL = repoURL;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -193,7 +173,7 @@ public class Customer extends Element {
 	public void setHelpText(String helpText) {
 		this.helpText = helpText;
 	}
-	
+
 	public String getValidFrom() {
 		return validFrom;
 	}
@@ -209,28 +189,22 @@ public class Customer extends Element {
 	public void setValidUpto(String validUpto) {
 		this.validUpto = validUpto;
 	}
+	
+	public String getEmailId() {
+        return emailId;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Customer [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", creationDate=");
-		builder.append(creationDate);
-		builder.append(", validFrom=");
-		builder.append(validFrom);
-		builder.append(", validUpto=");
-		builder.append(validUpto);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append("]");
-		return builder.toString();
-	}
-
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+    
+    @Override
+    public String toString() {
+        return "Customer [emailId=" + emailId + ", address=" + address
+                + ", country=" + country + ", state=" + state + ", zipcode="
+                + zipcode + ", contactNumber=" + contactNumber + ", fax=" + fax
+                + ", helpText=" + helpText + ", type=" + type + ", validFrom="
+                + validFrom + ", validUpto=" + validUpto + ", repoURL="
+                + repoURL + ", status=" + status + "]";
+    }
 }

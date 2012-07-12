@@ -1,22 +1,3 @@
-/*
- * ###
- * Phresco Pom
- * %%
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.phresco.pom.site;
 
 import java.io.Serializable;
@@ -52,7 +33,7 @@ public class Reports implements Serializable{
 	/**
 	 * @param reportCategories the reportCategories to set
 	 */
-	private void setReportCategories(List<ReportCategories> reportCategories) {
+	public void setReportCategories(List<ReportCategories> reportCategories) {
 		this.reportCategories = reportCategories;
 	}
 
@@ -117,8 +98,8 @@ public class Reports implements Serializable{
 
 	public static final Reports SUREFIRE_REPORT = new Reports(
 			SiteMessages.getString("Reports.surefireReport.display.name") ,
-			SiteMessages.getString("Reports.surefireReport.group.id"), 
 			SiteMessages.getString("Reports.surefireReport.artifact.id"), 
+			SiteMessages.getString("Reports.surefireReport.group.id"), 
 			SiteMessages.getString("Reports.surefireReport.version")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 

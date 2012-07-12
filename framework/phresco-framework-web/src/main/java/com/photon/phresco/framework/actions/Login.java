@@ -44,12 +44,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.FrameworkUtil;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
 
@@ -68,8 +68,8 @@ public class Login extends FrameworkBaseAction {
 			S_LOGGER.debug("Entering Method  Login.login()");
 		}
 
-		UserInfo userInfo = null;
-		UserInfo sessionUserInfo = (UserInfo)getHttpSession().getAttribute(REQ_USER_INFO);
+		User userInfo = null;
+		User sessionUserInfo = (User)getHttpSession().getAttribute(REQ_USER_INFO);
 		if (sessionUserInfo != null) {
 			loginSuccess(sessionUserInfo);
 			return LOGIN_SUCCESS;
@@ -127,12 +127,12 @@ public class Login extends FrameworkBaseAction {
         return SUCCESS;
     }
 	
-	public void loginSuccess(UserInfo userInfo) {
+	public void loginSuccess(User userInfo) {
 		if (debugEnabled) {
 			S_LOGGER.debug("Entering Method  Login.loginSuccess(UserInfo userInfo)");
 		}
 		if (debugEnabled) {
-			S_LOGGER.debug("loginSuccess()  UserName = "+ userInfo.getUserName());
+			S_LOGGER.debug("loginSuccess()  UserName = "+ userInfo.getName());
 		}
 		getHttpSession().setAttribute(REQ_USER_INFO, userInfo);
     	getHttpRequest().setAttribute(REQ_SHOW_WELCOME, getText(WELCOME_SHOW));

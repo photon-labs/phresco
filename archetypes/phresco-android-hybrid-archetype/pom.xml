@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>2.0.0.1000-SNAPSHOT</version>
+        <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -49,6 +49,57 @@
                     </execution>
                 </executions>
             </plugin>
+            
+             <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+	<profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+		        <plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+						  <execution>
+							<id>default-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+							  <goal>clean</goal>
+							</goals>
+						  </execution>
+						</executions>
+						<configuration>
+						  <filesets>
+							<fileset>
+							  <directory>do_not_checkin/build</directory>
+							  <includes>
+								<include>**/*</include>
+							  </includes>
+							  <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+						</configuration>
+					  </plugin>
+		        </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

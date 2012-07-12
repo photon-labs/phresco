@@ -22,8 +22,8 @@ package com.photon.phresco.service.client.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
@@ -31,7 +31,7 @@ import com.photon.phresco.service.client.impl.ServiceManagerImpl;
 
 public class ServiceClientFactory implements ServiceClientConstant {
 	
-	private static final Map<UserInfo, ServiceManager> CONTEXT_MANAGER_MAP = new HashMap<UserInfo, ServiceManager>();
+	private static final Map<User, ServiceManager> CONTEXT_MANAGER_MAP = new HashMap<User, ServiceManager>();
 	
  	private ServiceClientFactory() {
 

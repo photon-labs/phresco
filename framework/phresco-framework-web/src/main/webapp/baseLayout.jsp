@@ -128,6 +128,16 @@
 						class="shortcutWh" id="lf_tp2"><s:text name="label.appln"/></span>
 					</a>
 				</div>
+				<div class="control-group customer_name">
+                    <s:label for="input01" key="label.customer" cssClass="control-label custom_label labelbold"/>
+                    <select class="customer_listbox">
+                        <option>Walgreens</option>
+                        <option>NBO</option>
+                        <option>Cengage</option>
+                        <option>Horizon Blue</option>
+                        <option>Photon</option>
+                    </select>				
+				</div>
 				<div class="righttopnav">
 					<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 						class="shortcutRed" id="lf_tp1"><s:text name="label.about"/></span><span class="shortcutWh"

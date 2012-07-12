@@ -3,7 +3,7 @@
    <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>2.0.0.1000-SNAPSHOT</version>
+        <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -42,10 +42,10 @@
     </dependency>
     
     <dependency>
-        <groupId>com.photon.phresco</groupId>
-		<artifactId>plugin-commons</artifactId>
-        <version>${phresco-commons-version}</version>
-    </dependency>
+         <groupId>com.photon.phresco</groupId>
+ 		<artifactId>plugin-commons</artifactId>
+         <version>${phresco-commons-version}</version>
+     </dependency>
     
     <dependency>
         <groupId>org.apache.maven</groupId>
@@ -72,5 +72,24 @@
         <version>2.2.1</version>
     </dependency>
   </dependencies>
+  
+  <build>   
+        <plugins>
+            <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

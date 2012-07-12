@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>2.0.0.1000-SNAPSHOT</version>
+        <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -23,12 +23,19 @@
     </distributionManagement>
 
     <dependencies>
+    
         <dependency>
             <groupId>com.photon.phresco.commons</groupId>
             <artifactId>phresco-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+  
+        <dependency>
+	        <groupId>com.photon.phresco</groupId>
+        	<artifactId>phresco-ldap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+      
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -40,6 +47,26 @@
             <artifactId>jersey-client</artifactId>
             <version>1.9-ea07</version>
         </dependency>
+        
+        <!-- mongodb java driver -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.0.0.M2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		
     </dependencies>
     
     <build>
@@ -57,6 +84,21 @@
                         </manifest>
                     </archive>
                 </configuration>    
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

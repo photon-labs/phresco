@@ -19,8 +19,6 @@
  */
 package com.photon.phresco.service.admin.actions.admin;
 
-import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,19 +26,16 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
-import com.photon.phresco.service.client.impl.RestClient;
-import com.photon.phresco.util.ServiceConstants;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 
-public class Customers extends ServiceBaseAction implements ServiceConstants { 
+public class Customers extends ServiceBaseAction  { 
 	
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(Customers.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	
 	private String name = null;
 	private String nameError = null;
@@ -57,7 +52,8 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	private String faxError = null;
 	private String country = null;
 	private String conError = null;
-	private String licence = null;
+	private String state = null;
+    private String licence = null;
 	private String licenError = null;
 	private boolean errorFound = false;
 	private String validFrom = null;
@@ -66,15 +62,16 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	private String fromPage = null;
 	private String customerId = null;
 	private String oldName = null;
+	private String helpText = null;
 
-	public String list() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  CustomerList.list()");
+    public String list() throws PhrescoException {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.list()");
+	    }
 		
 		try {
-            RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
-            GenericType<List<Customer>> genericType = new GenericType<List<Customer>>(){};
-            List<Customer> customers = customersClient.get(genericType);
-			getHttpRequest().setAttribute("customers", customers);
+            List<Customer> customers = getServiceManager().getCustomers();
+			getHttpRequest().setAttribute(REQ_CUST_CUSTOMERS, customers);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -83,15 +80,15 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	}
 	
 	public String add() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  CustomerList.add()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.add()");
+	    }
 		
 		try {
-			if ("edit".equals(fromPage)) {
-				RestClient<Customer> customersClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
-	            GenericType<Customer> genericType = new GenericType<Customer>(){};
-	            Customer customer = customersClient.getById(genericType);
-	            getHttpRequest().setAttribute("customer", customer);
-	            getHttpRequest().setAttribute("fromPage", fromPage);
+			if (REQ_EDIT.equals(fromPage)) {
+	            Customer customer = getServiceManager().getCustomer(customerId);
+	            getHttpRequest().setAttribute(REQ_CUST_CUSTOMER, customer);
+	            getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 			}
 		} catch (Exception e) {
 			throw new PhrescoException(e);
@@ -101,20 +98,27 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	}
 	
 	public String save() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  CustomerList.save()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.save()");
+	    }
+	    
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
 			List<Customer> customers = new ArrayList<Customer>();
 			Customer customer = new Customer(name, description);
+			customer.setEmailId(email);
+			customer.setAddress(address);
+			customer.setCountry(country);
+			customer.setState(state);
+			customer.setZipcode(zipcode);
+			customer.setContactNumber(number);
+			customer.setFax(fax);
+			customer.setHelpText(helpText);
+			customer.setType(Integer.parseInt(licence));
 			customer.setValidFrom(validFrom);
 			customer.setValidUpto(validUpTo);
 			customer.setRepoURL(repoURL);
 			customers.add(customer);
-			RestClient<Customer> newCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
-			ClientResponse clientResponse = newCustomer.create(customers);
+			ClientResponse clientResponse = getServiceManager().createCustomers(customers);
 			if (clientResponse.getStatus() != 200) {
 				addActionError(getText(CUSTOMER_NOT_ADDED, Collections.singletonList(name)));
 			} else {
@@ -128,28 +132,37 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	}
 
 	public String update() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  CustomerList.update()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.update()");
+	    }
 
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
-
 			Customer customer = new Customer(customerId, name, description);
-			customer.setValidFrom(validFrom);
-			customer.setValidUpto(validUpTo);
-			customer.setRepoURL(repoURL);
-			RestClient<Customer> editCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
-	        GenericType<Customer> genericType = new GenericType<Customer>(){};
-	        Customer updatedCustomer = editCustomer.updateById(customer, genericType);
+			customer.setEmailId(email);
+            customer.setAddress(address);
+            customer.setCountry(country);
+            customer.setState(state);
+            customer.setZipcode(zipcode);
+            customer.setContactNumber(number);
+            customer.setFax(fax);
+            customer.setHelpText(helpText);
+            customer.setType(Integer.parseInt(licence));
+            customer.setValidFrom(validFrom);
+            customer.setValidUpto(validUpTo);
+            customer.setRepoURL(repoURL);
+			getServiceManager().updateCustomer(customer, customerId);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
+		
 		return list();
 	}
 
-	private boolean validateForm() {
+	public String validateForm() {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.validateForm()");
+        }
+	    
 		boolean isError = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY));
@@ -189,19 +202,25 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 		if (StringUtils.isEmpty(licence)) {
 			setLicenError(getText(KEY_I18N_ERR_LICEN_EMPTY));
 			isError = true;
-		} 
-		return isError;
+		}
+		
+		if (isError) {
+            setErrorFound(true);
+        }
+		
+		return SUCCESS;
 	}
 	
 	public String delete() throws PhrescoException {
-		S_LOGGER.debug("Entering Method  CustomerList.delete()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method CustomerList.delete()");
+	    }
 		
 		try {
-			String[] customerIds = getHttpRequest().getParameterValues("customerId");
+			String[] customerIds = getHttpRequest().getParameterValues(REQ_CUST_CUSTOMER_ID);
 			if (customerIds != null) {
 				for (String customerId : customerIds) {
-					 RestClient<Customer> deleteCustomer = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS + "/" + customerId);
-			    	ClientResponse clientResponse = deleteCustomer.deleteById();
+			    	ClientResponse clientResponse =getServiceManager().deleteCustomer(customerId);
 			    	if (clientResponse.getStatus() != 200) {
 			        	addActionError(getText(CUSTOMER_NOT_DELETED));
 			        }
@@ -213,12 +232,6 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 		}
 		
 		return list();
-	}
-	
-	public String cancel() {
-		S_LOGGER.debug("Entering Method  CustomerList.cancel()");
-		
-		return ADMIN_CUSTOMER_CANCEL;
 	}
 	
 	public String getName() {
@@ -412,4 +425,20 @@ public class Customers extends ServiceBaseAction implements ServiceConstants {
 	public void setOldName(String oldName) {
 		this.oldName = oldName;
 	}
+	
+	public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+    
+    public String getHelpText() {
+        return helpText;
+    }
+
+    public void setHelpText(String helpText) {
+        this.helpText = helpText;
+    }
 }

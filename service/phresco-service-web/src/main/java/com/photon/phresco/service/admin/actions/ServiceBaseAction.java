@@ -26,37 +26,36 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.service.admin.commons.ServiceActions;
 import com.photon.phresco.service.admin.commons.ServiceUIConstants;
+import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
-import com.photon.phresco.service.client.api.ServiceClientConstant;
-import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.ServiceConstants;
 
-public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant, ServerConstants {
+public class ServiceBaseAction extends ActionSupport implements ServiceActions, ServiceUIConstants, ServiceClientConstant, ServiceConstants {
 
 //	private static final Logger S_LOGGER = Logger.getLogger(ServiceBaseAction.class);
     private static final long serialVersionUID = 1L;
     
     private static ServiceManager serviceManager = null;
     
-    public ServiceManager getServiceManager() {
+    protected ServiceManager getServiceManager() {
 		return serviceManager;
 	}
 
-	protected UserInfo doLogin(String userName, String password) throws PhrescoException {
+	protected User doLogin(String userName, String password) throws PhrescoException {
 		StringBuilder serverURL = new StringBuilder();
 		serverURL.append(getHttpRequest().getScheme());
-		serverURL.append(ServiceConstants.COLON_DOUBLE_SLASH);
+		serverURL.append(COLON_DOUBLE_SLASH);
 		serverURL.append(getHttpRequest().getServerName());
-		serverURL.append(ServiceConstants.COLON);
+		serverURL.append(COLON);
 		serverURL.append(getHttpRequest().getServerPort());
 		serverURL.append(getHttpRequest().getContextPath());
-		serverURL.append(ServiceConstants.SLASH_REST_SLASH_API);
+		serverURL.append(SLASH_REST_SLASH_API);
     	ServiceContext context = new ServiceContext();
 		context.put(SERVICE_URL, serverURL.toString());
 		context.put(SERVICE_USERNAME, userName);
@@ -65,13 +64,11 @@ public class ServiceBaseAction extends ActionSupport implements ServiceActions, 
 		return serviceManager.getUserInfo();
     }
     
-    
-    public HttpServletRequest getHttpRequest() {
+    protected HttpServletRequest getHttpRequest() {
         return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
     }
     
-    public HttpSession getHttpSession() {
+    protected HttpSession getHttpSession() {
         return getHttpRequest().getSession();
     }
-    
 }

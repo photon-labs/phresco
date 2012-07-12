@@ -43,7 +43,6 @@ import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.codehaus.plexus.util.StringUtils;
 
 import com.itextpdf.text.pdf.PdfCopy;
 import com.photon.phresco.exception.PhrescoException;
@@ -53,11 +52,7 @@ import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.DocumentGenerator;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.docs.impl.DocConvertor;
 import com.photon.phresco.service.docs.impl.DocumentUtil;
-import com.photon.phresco.service.docs.impl.PdfInput;
-import com.photon.phresco.service.jaxb.Document;
-import com.photon.phresco.service.jaxb.Documents;
 import com.photon.phresco.service.model.EntityType;
 import com.photon.phresco.util.Utility;
 
@@ -103,21 +98,21 @@ public class DocumentGeneratorImpl implements DocumentGenerator {
             DocumentUtil.addPages(titleSection, pdfCopy);
 
             Technology technology = info.getTechnology();
-            Documents documentInfo = repoManager.getDocument(technology.getId(), EntityType.TECHNOLOGY);
-            if(documentInfo!= null){
-                List<Document> docs = documentInfo.getDocument();
-                for (Document document : docs) {
-                    if(!StringUtils.isEmpty(document.getUrl())){
-                        PdfInput convertToPdf = DocConvertor.convertToPdf(document.getUrl());
-                        if(convertToPdf != null) {
-                            DocumentUtil.addPages(convertToPdf.getInputStream(), pdfCopy);
-                        }
-                    } else {
-                        InputStream stringAsPDF = DocumentUtil.getStringAsPDF(document.getContent());
-                        DocumentUtil.addPages(stringAsPDF, pdfCopy);
-                    }
-                }
-            }
+//            Documents documentInfo = repoManager.getDocument(technology.getId(), EntityType.TECHNOLOGY);
+//            if(documentInfo!= null){
+//                List<Document> docs = documentInfo.getDocument();
+//                for (Document document : docs) {
+//                    if(!StringUtils.isEmpty(document.getUrl())){
+//                        PdfInput convertToPdf = DocConvertor.convertToPdf(document.getUrl());
+//                        if(convertToPdf != null) {
+//                            DocumentUtil.addPages(convertToPdf.getInputStream(), pdfCopy);
+//                        }
+//                    } else {
+//                        InputStream stringAsPDF = DocumentUtil.getStringAsPDF(document.getContent());
+//                        DocumentUtil.addPages(stringAsPDF, pdfCopy);
+//                    }
+//                }
+//            }
 
             List<ModuleGroup> tuples = technology.getModules();
             DocumentUtil.addPages(repoManager, tuples, EntityType.MODULE, pdfCopy, MODULES);

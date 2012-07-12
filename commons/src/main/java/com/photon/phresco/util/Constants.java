@@ -120,5 +120,24 @@ public interface Constants {
     //Action constants
     String TEST_FUNCTIONAL = "Functional";
 	String SITE_SQL = "site.sql";
+	String JSON_PATH = "/.phresco/sqlfile.json";
 	String DB_MYSQL   = "mysql";
+	/*
+	 * Constants for String
+	 */
+	String STR_BLANK_SPACE = " ";
+	String STR_EQUALS = "=";
+	String STR_COMMA = ",";
+	String CMD_ARG_VAR = "-D";
+	String STR_UNDER_SCORE="_";
+	/*
+	 *  Constants for System properties
+	 */
+	String USER_HOME_DIR = "user.home";
+	String OS_NAME = "os.name";
+	
+	/*
+	 * Constants for Rest
+	 */
+	String PHR_AUTH_TOKEN = "X-phr-auth-token";
 }

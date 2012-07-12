@@ -46,7 +46,7 @@ public class ComponentRestTechnologiesTest {
 	@Before
 	public void Initilaization() {
 		context = new ServiceContext();
-        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service/rest");
+        context.put(ServiceClientConstant.SERVICE_URL, "http://localhost:3030/service/rest/api");
         context.put(ServiceClientConstant.SERVICE_USERNAME, "demouser");
         context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
 	}
@@ -80,7 +80,7 @@ public class ComponentRestTechnologiesTest {
 		techs.add(tech3);
     	
 		serviceManager = ServiceClientFactory.getServiceManager(context);
-		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
+		RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
 		ClientResponse response = techClient.create(techs);
 		System.out.println("response " + response.getStatus());
     }
@@ -89,8 +89,7 @@ public class ComponentRestTechnologiesTest {
     public void testGetTechnologies() {
         try {
             serviceManager = ServiceClientFactory.getServiceManager(context);            
-            RestClient<Technology> techClient = serviceManager.getRestClient("component");
-            techClient.setPath("technologies");
+            RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
             GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
             List<Technology> list = techClient.get(genericType);
             id = list.get(0).getId();
@@ -107,7 +106,7 @@ public class ComponentRestTechnologiesTest {
     }
     
 	@Ignore
-    public void testPutServer() throws PhrescoException {
+    public void testPutTechnologies() throws PhrescoException {
     	List<Technology> techs = new ArrayList<Technology>();
     	Technology tech = new Technology();
     	System.out.println("id = " + id);
@@ -119,7 +118,7 @@ public class ComponentRestTechnologiesTest {
 		tech.setVersions(versions);
 		techs.add(tech);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
-		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies");
+		RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
 		GenericType<List<Technology>> type = new GenericType<List<Technology>>(){};
 		List<Technology> entity = techClient.update(techs, type);
 		for (Technology technology : entity) {
@@ -128,10 +127,10 @@ public class ComponentRestTechnologiesTest {
     }
     
 	@Ignore
-    public void testGetServerById() throws PhrescoException {
+    public void testGetTechnologyById() throws PhrescoException {
         try {
 	    	serviceManager=ServiceClientFactory.getServiceManager(context);
-	    	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/");
+	    	RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
 	    	techClient.setPath(id2);
 	    	GenericType<Technology> genericType = new GenericType<Technology>()  {};
 	    	Technology tech = techClient.getById(genericType);
@@ -143,7 +142,7 @@ public class ComponentRestTechnologiesTest {
     }
     
 	@Ignore
-    public void testPutServerById() throws PhrescoException {
+    public void testPutTechnologyById() throws PhrescoException {
     	Technology tech = new Technology();
     	tech.setId(id2);
     	tech.setName("android-native");
@@ -152,7 +151,7 @@ public class ComponentRestTechnologiesTest {
     	versions.add("3.0");
 		tech.setVersions(versions);
     	serviceManager = ServiceClientFactory.getServiceManager(context);
-		RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/");
+		RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
 		techClient.setPath(id2);
 		GenericType<Technology> genericType = new GenericType<Technology>()  {};
 		Technology technology = techClient.updateById(tech, genericType);
@@ -160,11 +159,13 @@ public class ComponentRestTechnologiesTest {
     }
 
 	@Ignore
-    public void testDeleteServerById() throws PhrescoException {
+    public void testDeleteTechnologyById() throws PhrescoException {
     	serviceManager = ServiceClientFactory.getServiceManager(context);            
-    	RestClient<Technology> techClient = serviceManager.getRestClient("component/technologies/");
+    	RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
     	techClient.setPath(id3);
     	ClientResponse response = techClient.deleteById();
     	System.out.println(response.getStatus());
     }
+	
+	
 }

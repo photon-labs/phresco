@@ -43,10 +43,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.ModuleGroup;
+import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.jaxb.Library;
 import com.photon.phresco.util.TechnologyTypes;
 
 public abstract class AbstractJsLibDependencyProcessor extends AbstractDependencyProcessor {
@@ -88,18 +87,18 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 			libPath = new File(path, modulesPathString);
 		}
 
-		for (ModuleGroup tupleBean : jsLibraries) {
-			Library library = getRepositoryManager().getJsLibrary(tupleBean.getId());
-
-			if (library == null) {
-				S_LOGGER.warn("JS library not found " + tupleBean.getId() + "  --> Path" + path.getPath());
-			}
-
-			String contentURL = library.getContentURL();
-			if(!StringUtils.isEmpty(contentURL)){
-				DependencyUtils.extractFiles(contentURL, libPath);
-			}
-		}
+//		for (ModuleGroup tupleBean : jsLibraries) {
+//			Library library = getRepositoryManager().getJsLibrary(tupleBean.getId());
+//
+//			if (library == null) {
+//				S_LOGGER.warn("JS library not found " + tupleBean.getId() + "  --> Path" + path.getPath());
+//			}
+//
+//			String contentURL = library.getContentURL();
+//			if(!StringUtils.isEmpty(contentURL)){
+//				DependencyUtils.extractFiles(contentURL, libPath);
+//			}
+//		}
 	}
 
 	protected abstract String getJsLibPathKey();

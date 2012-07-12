@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.jstestrunner</groupId>
 	<artifactId>jstestrunner-junit</artifactId>
-	<version>1.2.0.2000-SNAPSHOT</version>
+	<version>2.0.0.6001-SNAPSHOT</version>
 	<name>JS Test Runner for JUnit</name>
 	<description>Runs JavaScript headlessly and reports details of the test back through JUnit.</description>
 
@@ -11,11 +11,6 @@
 		<artifactId>codehaus-parent</artifactId>
 		<version>4</version>
 	</parent>
-
-	<ciManagement>
-		<system>Bamboo</system>
-		<url>http://bamboo.ci.codehaus.org/browse/JSTR</url>
-	</ciManagement>
     
     <distributionManagement>
         <repository>
@@ -33,52 +28,7 @@
        </site>
     </distributionManagement>
    	
-	<developers>
-		<developer>
-			<id>huntc</id>
-			<name>Christopher Hunt</name>
-			<organization>Class Action PL</organization>
-			<organizationUrl>http://www.classactionpl.com/</organizationUrl>
-			<roles>
-				<role>Despot</role>
-				<role>Developer</role>
-			</roles>
-			<timezone>10</timezone>
-			<url>http://christopherhunt-software.blogspot.com/</url>
-		</developer>
-		<developer>
-			<id>johnomalley</id>
-			<name>John O' Malley</name>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>-5</timezone>
-		</developer>
-		<developer>
-			<name>Ben Jones</name>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>10</timezone>
-			<url>http://octopod.org</url>
-		</developer>
-	</developers>
-	
-	<distributionManagement>
-		<downloadUrl>https://nexus.codehaus.org/content/groups/public</downloadUrl>
-		<site>
-			<id>org.codehaus.js-testrunner</id>
-			<name>Website</name>
-			<url>dav:https://dav.codehaus.org/js-testrunner/</url>
-		</site>
-	</distributionManagement>
-	
 	<inceptionYear>2011</inceptionYear>
-	
-	<issueManagement>
-		<system>JIRA</system>
-		<url>http://jira.codehaus.org/browse/JSTR</url>
-	</issueManagement>
 	
 	<licenses>
 		<license>
@@ -87,39 +37,7 @@
 		</license>
 	</licenses>
 	
-	<mailingLists>
-		<mailingList>
-			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.user</archive>
-			<name>user@js-testrunner.codehaus.org</name>
-		</mailingList>
-		<mailingList>
-			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.dev</archive>
-			<name>dev@js-testrunner.codehaus.org</name>
-		</mailingList>
-		<mailingList>
-			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.announce</archive>
-			<name>announce@js-testrunner.codehaus.org</name>
-		</mailingList>
-		<mailingList>
-			<archive>http://archive.codehaus.org/lists/org.codehaus.js-testrunner.scm</archive>
-			<name>scm@js-testrunner.codehaus.org</name>
-		</mailingList>
-	</mailingLists>
-	
-	<organization>
-		<name>Class Action PL</name>
-		<url>http://www.classactionpl.com/</url>
-	</organization>
-
-	<scm>
-		<connection>scm:git:git://git.codehaus.org/js-testrunner.git</connection>
-		<developerConnection>scm:git:ssh://git@git.codehaus.org/js-testrunner.git</developerConnection>
-		<url>http://git.codehaus.org/gitweb.cgi?p=js-testrunner.git</url>
-	</scm>
-	
-	<url>http://js-testrunner.codehaus.org/</url>
-
-	<dependencies>
+    <dependencies>
 		<!-- compile dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -131,7 +49,7 @@
 			<artifactId>plexus-utils</artifactId>
 			<version>1.5.15</version>
 		</dependency>
-		<dependency>
+        <dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>7.4.2.v20110526</version>
@@ -276,6 +194,22 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
+            
+            <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
 		</plugins>
 		
 		<extensions> 
@@ -287,32 +221,6 @@
 		</extensions> 
 		
 	</build>
-	
-	<repositories>		<!-- For developing against latest Spring milestones -->
-		<repository>
-			<id>org.springframework.maven.milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories><!-- For using MOJO snapshots -->
-		<pluginRepository>
-			<id>snapshots</id>
-			<url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	
-   
                  
    
 </project>

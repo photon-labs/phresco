@@ -58,6 +58,7 @@ public interface FrameworkConstants {
     String CI_JOB_BUILD_ID = "id";
     String CI_JOB_BUILD_TIME_STAMP = "timestamp";
     String CI_JOB_BUILD_ARTIFACTS = "artifacts";
+    String CI_JOB_BUILD_ARTIFACT = "artifact";
     String CI_JOB_BUILD_DOWNLOAD_PATH = "relativePath";
     String CI_CREATE_JOB_COMMAND = "create-job";
     String CI_UPDATE_JOB_COMMAND = "update-job";
@@ -65,6 +66,14 @@ public interface FrameworkConstants {
     String CI_BUILD_DELETE_COMMAND = "delete-builds";
     String CI_JOB_DELETE_COMMAND = "delete-job";
     String CI_RELOAD_CONFIGS = "reload-configuration";
+    String CI_APPEND_JOBS = "appendJobs";
+    String CI_CREATE_NEW_JOBS = "createNewJobs";
+    String CI_JENKINS_ALIVE = "jenkinsAlive";
+    String CI_BUILD_JENKINS_ALIVE = "buildJenkinsAlive";
+    String CI_BUILD_IS_IN_PROGRESS = "isBuildInProgress";
+    String CI_NO_OF_JOBS_IN_PROGRESS = "noOfJobsIsInProgress";
+    String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
+    String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
@@ -339,6 +348,9 @@ public interface FrameworkConstants {
     String REQ_ERROR = "error";
     String REQ_SELECTED_ITEMS = "check";
     String REQ_SELECTED_BUILDS = "selectedBuilds";
+    String REQ_SELECTED_BUILDS_LIST = "builds";
+    String REQ_SELECTED_JOBS_LIST = "Jobs";
+    String REQ_SELECTED_ALL_BUILDS_LIST = "allBuilds";
     String REQ_SETTINGS = "settings";
     String REQ_BUILD = "build";
     String REQ_RELEASE = "release";
@@ -439,6 +451,7 @@ public interface FrameworkConstants {
     String REQ_SERVER_LOG = "serverLog";
     
     String REQ_EXISTING_JOB = "existingJob";
+    String REQ_EXISTING_JOBS = "existingJobs";
     String REQ_CRON_BY = "cronBy";
     String REQ_HOURS = "hours";
     String REQ_MINUTES = "minutes";
@@ -510,6 +523,8 @@ public interface FrameworkConstants {
 	String REQ_SERVER_DOWNLOAD_INFO = "serverDownloadInfos";
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
 	String REQ_EDITOR_DOWNLOAD_INFO = "editorDownloadInfos";
+	String REQ_TOOLS_DOWNLOAD_INFO = "toolsDownloadInfos";
+	String REQ_OTHERS_DOWNLOAD_INFO = "othersDownloadInfos";
 	
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
@@ -604,6 +619,9 @@ public interface FrameworkConstants {
     
     String CI_SAVE_UPDATE_FAILED = "Save Or Updation failed.";
     String CI_BUILD_FAILED = "Build triggered failed.";
+    String CI_ONE_JOB_REQUIRED = "Select only one job at a time for configuration";
+    String CI_BUILD_LOADED_SHORTLY = "Builds will be loaded shortly";
+    String CI_NO_JOBS_AVAILABLE = "No Job (s) Available";
     
     /*
      * Create Project keys
@@ -692,6 +710,7 @@ public interface FrameworkConstants {
      */
     String HIDE_LOG_MSG ="Only Error Messages will be displayed";
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
+    String SELECT_DB ="Select atleast one DB Sql File for Execution";
     
     /*
      * Quality Info keys
@@ -1069,7 +1088,7 @@ public interface FrameworkConstants {
    String SESSION_PRJT_VLDT_STATUS  = "_PrjtVldtStatus";
    
    /* Code validate */
-   String CODE_VALIDATE_PARAM = "sonar.language";
+   String CODE_VALIDATE_PARAM = "sonar.branch";
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
@@ -1079,10 +1098,13 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORT_PATH = "siteReportPath";
    String SITE_TARGET = "target/site";
    String REQ_SITE_REPORTS = "reports";
-   String REQ_SITE_ALRDY_SLECTD_RPT_NMS = "alreadySelectedRptNames";
-   String REQ_SITE_SLECTD_RPT_NMS = "selectedReportNames";
+   String REQ_SITE_SLECTD_REPORTS = "selectedReports";
+   String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";
    
    /* Android Key store file */
    String SIGNING_TYPES="keystore";
-   
+  
+   /* Unit test report directory */
+   String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
+   String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
   }

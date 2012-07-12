@@ -4,7 +4,7 @@
    <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>2.0.0.1000-SNAPSHOT</version>
+        <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -20,7 +20,7 @@
         <site>
             <id>phresco.service.web</id>
             <name>Phresco Service Web</name>
-            <url>${siteBaseUrl}/service/phresco-service-web/</url>
+            <url>scp://phresco.org/home/projects/service/web/public_html/</url>
         </site>
     </distributionManagement>
 		
@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>11.0.2</version>
+			<version>13.0-rc1</version>
 		</dependency>
     	
     	<!-- Jersey -->
@@ -65,25 +65,6 @@
 			<version>3.0.5.RELEASE</version>
 		</dependency>
 		
-		<!-- mongodb java driver -->
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>2.5.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.0.0.M2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>2.2</version>
-		</dependency>
-
 		<!-- Jersey + Spring -->
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
@@ -335,6 +316,12 @@
             <version>2.2.3.1</version>
         </dependency>
 		
+		<dependency>
+		    <groupId>com.sun.jersey.contribs</groupId>
+		    <artifactId>jersey-multipart</artifactId>
+		    <version>1.8</version>
+		</dependency>
+		
     </dependencies>
     
     <build>
@@ -348,14 +335,39 @@
         
         <plugins>
             <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>tomcat-maven-plugin</artifactId>
-              <version>1.1</version>            
-              <configuration>
-                <path>/service</path>
-                <server>dev-service</server>
-                <port>3030</port>
-              </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>            
+                <configuration>
+                    <path>/service</path>
+                    <server>dev-service</server>
+                    <port>3030</port>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jspc-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jspc</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <injectString>&lt;!-- [INSERT FRAGMENT HERE] --&gt;</injectString>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>target/jspweb.xml</webXml>
+                    <warSourceExcludes>**/*.jsp</warSourceExcludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

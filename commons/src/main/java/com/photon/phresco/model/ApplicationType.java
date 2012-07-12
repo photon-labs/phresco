@@ -25,29 +25,21 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.photon.phresco.commons.model.Element;
 import com.photon.phresco.util.SizeConstants;
 
-@SuppressWarnings("restriction")
 @XmlRootElement
-public class ApplicationType implements Serializable {
+public class ApplicationType extends Element implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String id;
-
-	//Name of the application type.[Web, Mobile, HTML5]
-	private String name;
-
-	//String to be displayed in the UI
-	private String displayName;
-
-	private String description;
-
 	//List of technologies supported for the application type. [Web - PHP, PHP with Drupal]
 	private List<Technology> technologies = new ArrayList<Technology>(SizeConstants.SIZE_TECHNOLOGIES_MAP);
+	
+	private boolean system;
 
 	public ApplicationType() {
 		super();
@@ -60,35 +52,10 @@ public class ApplicationType implements Serializable {
 
 	}
 
-	public ApplicationType(String name, String displayName, List<Technology> technologies) {
+	public ApplicationType(String name, List<Technology> technologies) {
 		super();
 		this.name = name;
-		this.displayName = displayName;
 		this.technologies = technologies;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 
 	public List<Technology> getTechnologies() {
@@ -113,28 +80,22 @@ public class ApplicationType implements Serializable {
 		return null;
 	}
 
-	public String getDescription() {
-		return description;
-	}
+	public boolean isSystem() {
+        return system;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
 
-	@Override
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ApplicationType [getName()=");
 		builder.append(getName());
-		builder.append(", getDisplayName()=");
-		builder.append(getDisplayName());
 		builder.append(", getTechnologies()=");
 		builder.append(getTechnologies());
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public static void main(String[] args) {
-
 	}
 }

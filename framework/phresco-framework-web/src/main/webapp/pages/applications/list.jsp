@@ -25,7 +25,6 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.framework.api.ValidationResult" %>
 
 <%@ include file="../userInfoDetails.jsp" %>
@@ -130,7 +129,7 @@
 								ProjectInfo projectInfo = project.getProjectInfo();
 						%>
 			            	<tr>
-			              		<td>
+			              		<td class="checkbox_list">
 			              			<input type="checkbox" class="check" name="selectedProjects" value="<%= projectInfo.getCode() %>">
 			              		</td>
 			              		<td>

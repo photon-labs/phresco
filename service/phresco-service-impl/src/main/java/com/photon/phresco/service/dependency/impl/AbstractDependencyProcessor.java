@@ -1,4 +1,5 @@
 /*
+/*
  * ###
  * Phresco Service Implemenation
  * 
@@ -55,6 +56,7 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.DependencyProcessor;
 import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;
@@ -219,7 +221,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
                         String groupId = "jslibraries.files";
                         String artifactId = "jslib_" + jsLibrary.getName().toLowerCase();
                         processor.addDependency(groupId, artifactId, jsLibrary.getVersions()
-                                .get(0).getVersion(), "", "js");
+                                .get(0).getVersion(), "", "js","");
                     }
                 }
                 processor.save();

@@ -67,7 +67,7 @@
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.svn.url"/></label>
 				<div class="input">
-					<input type="text" id="svnurl" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
+					<input type="text" id="svnurl" class="ciSvnUrlWidth" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
 				</div>
 			</div>
 			
@@ -449,7 +449,7 @@
 					<input type="checkbox" id="showSettings" name="showSettings" value="showsettings" <%= showSettings %>> <s:text name="label.show.setting"/>
 						&nbsp;
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
-						<input type="checkbox" id="proguard" name="proguard" value="false" disabled="disabled">
+						<input type="checkbox" id="proguard" name="proguard" value="false" >
 						<span><s:text name="label.progurad"/></span>
 				<% } %>
 				</div>
@@ -461,6 +461,7 @@
 					<div id="errMsg"></div>
 				    <img src="themes/photon/images/loading_red.gif" class="popupLoadingIcon" style="display: none;"> 
 	    	 </div> 
+ 	    	<input type="hidden" name="oldJobName" value="<%= existingJob == null ? "" : existingJob.getName()%>" >
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
             <input type="button" class="btn primary" value="<s:text name="label.save"/>" id="actionBtn">
             <input type="button" class="btn primary" value="<s:text name="label.next"/>" id="nextBtn">
@@ -568,15 +569,6 @@
 		    loadSchedule(selectedSchedule);
 		});
 		show(selectedSchedule);
-		
-		// It allows user type text without spaces
-	    $("#name").keydown(function(event) {
-	        if ( event.keyCode == 32 ) {
-	        	event.preventDefault();
-	        }
-	    });
-		
-		
 		
 		<% 
 			if(existingJob != null) {

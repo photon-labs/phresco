@@ -44,7 +44,7 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>src/main/webapp</directory> 
 			<includes>
-				<include>index.html</include>
+				<include>index.jsp</include>
 				<include>environment.jsp</include>
 			</includes>
 		</fileSet>
@@ -83,6 +83,12 @@
 			<directory>src/main/webapp/WEB-INF</directory> 
 			<includes>
 				<include>web.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/webapp/WEB-INF/resources</directory> 
+			<includes>
+				<include>phresco-env-config.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

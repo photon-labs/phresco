@@ -36,11 +36,11 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.plugin.commons.PluginConstants;
-import com.photon.phresco.plugin.commons.PluginUtils;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.plugin.commons.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginUtils;
 
 /**
  * Goal which deploys the Drupal project
@@ -191,7 +191,8 @@ public class WordpressDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					utils.executeSql(databaseDetails, baseDir, WORDPRESS_SQL_DIR, WORDPRESS_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					utils.getSqlFilePath(databaseDetails,baseDir, databaseType);
 					utils.updateSqlQuery(databaseDetails, serverHost, context, serverport);
 				}
 				

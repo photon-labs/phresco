@@ -28,7 +28,6 @@
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
-<%@ page import="com.photon.phresco.model.UserInfo" %>
 
 <%@ include file="../userInfoDetails.jsp" %>
 

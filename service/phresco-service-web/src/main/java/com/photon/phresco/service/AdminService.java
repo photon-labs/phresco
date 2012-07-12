@@ -43,7 +43,6 @@ import com.photon.phresco.model.LogInfo;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
-import com.photon.phresco.util.ServiceConstants;
 
 /**
  * Admin config file and Log service"

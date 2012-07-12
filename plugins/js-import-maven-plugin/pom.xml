@@ -1,19 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>mojo-parent</artifactId>
-		<version>30</version>
-	</parent>
-
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>js-import-maven-plugin</artifactId>
-	<version>2.0.0.1000-SNAPSHOT</version>
-
+	<version>2.0.0.6001-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
-
 	<name>JavaScript Import Maven Plugin</name>
 	<description>Provides tooling for managing JavaScript dependencies.</description>
 	<inceptionYear>2010</inceptionYear>
@@ -22,15 +12,6 @@
 		<maven>3.0</maven>
 	</prerequisites>
 
-	<ciManagement>
-		<system>Codehaus Bamboo</system>
-		<url>http://bamboo.ci.codehaus.org/browse/MOJO-JSIMP</url>
-	</ciManagement>
-
-	<issueManagement>
-		<system>jira</system>
-		<url>http://jira.codehaus.org/browse/MJSIMP</url>
-	</issueManagement>
 
 	<licenses>
 		<license>
@@ -40,32 +21,17 @@
 		</license>
 	</licenses>
 	
-	<developers>
-		<developer>
-			<name>Christopher Hunt</name>
-			<organization>Class Action PL</organization>
-			<organizationUrl>http://www.classactionpl.com/</organizationUrl>
-			<roles>
-				<role>Lead Developer</role>
-			</roles>
-		</developer>
-	</developers>
-	
-	<scm>
-		<connection>scm:svn:http://svn.codehaus.org/mojo/tags/js-import-maven-plugin-1.0.1</connection>
-		<developerConnection>scm:svn:https://svn.codehaus.org/mojo/tags/js-import-maven-plugin-1.0.1</developerConnection>
-		<url>http://svn.codehaus.org/mojo/tags/js-import-maven-plugin-1.0.1</url>
-	</scm>
-
-	<properties>
-		<mojo.java.target>1.5</mojo.java.target>
-		<!-- For Velocity filtering - can't use dot notations -->
-		<projectVersion>${project.version}</projectVersion>
-		<!-- The following two properties are defined for filtering also - cannot 
-			seem to escape them within the doco. -->
-		<jsContextJs>${context.js}</jsContextJs>
-		<JsMyfolderMytestfileJs>${myfolder/mytestfile.js}</JsMyfolderMytestfileJs>
-	</properties>
+        
+    <distributionManagement>
+		<repository>
+			<id>${releases.repo.id}</id>
+			<url>${releases.repo.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>${snapshots.repo.id}</id>
+			<url>${snapshots.repo.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 		<!-- Compile time dependencies -->
@@ -166,6 +132,20 @@
 					<excludeModules>apt</excludeModules>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>

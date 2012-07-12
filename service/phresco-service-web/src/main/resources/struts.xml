@@ -78,10 +78,6 @@
             <result type="json" />
         </action>
 		
-		<action name="archetypeCancel" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="cancel">
-            <result name="archetypeCancel">/admin/pages/components/archetype/list.jsp</result>
-        </action>
-        
         <action name="archetypeEdit" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="edit">
 			<result name="archetypeAdd">/admin/pages/components/archetype/add.jsp</result>
         </action>
@@ -105,23 +101,25 @@
 		<action name="applicationAdd" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="add">
             <result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
         </action>
+        
+        <action name="applicationSaveValidate" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="validateForm">
+            <result type="json" />
+        </action>
 		
 		<action name="applicationSave" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="save">
             <result name="applntypesList">/admin/pages/components/application/list.jsp</result>
-			<result type="json" />
         </action>
 		
-		<action name="applicationCancel" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="cancel">
-            <result name="applicationCancel">/admin/pages/components/application/list.jsp</result>
-        </action>
-        
         <action name="applicationEdit" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="edit">
 			<result name="applicationAdd">/admin/pages/components/application/add.jsp</result>
         </action>
         
+        <action name="applicationUpdateValidate" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="validateForm">
+            <result type="json" />
+        </action>
+        
         <action name="applicationUpdate" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="update">
 			<result name="applntypesList">/admin/pages/components/application/list.jsp</result>
-			<result type="json" />
         </action>
         
          <action name="applicationDelete" class="com.photon.phresco.service.admin.actions.components.ApplicationTypes" method="delete">
@@ -181,22 +179,24 @@
 			<result name="customerAdd">/admin/pages/admin/customer/add.jsp</result>
         </action>
 		
-		<action name="customerSave" class="com.photon.phresco.service.admin.actions.admin.Customers" method="save">
-			<result name="customerList">/admin/pages/admin/customer/list.jsp</result>
+		<action name="customerSaveValidate" class="com.photon.phresco.service.admin.actions.admin.Customers" method="validateForm">
 			<result type="json" />
         </action>
-		
-		<action name="customerCancel" class="com.photon.phresco.service.admin.actions.admin.Customers" method="cancel">
-			<result name="customerCancel">/admin/pages/admin/customer/list.jsp</result>
-        </action>
         
+        <action name="customerSave" class="com.photon.phresco.service.admin.actions.admin.Customers" method="save">
+            <result name="customerList">/admin/pages/admin/customer/list.jsp</result>
+        </action>
+		
         <action name="customerEdit" class="com.photon.phresco.service.admin.actions.admin.Customers" method="edit">
 			<result name="customerEdit">/admin/pages/admin/customer/add.jsp</result>
         </action>
         
+        <action name="customerUpdateValidate" class="com.photon.phresco.service.admin.actions.admin.Customers" method="validateForm">
+            <result type="json" />
+        </action>
+        
         <action name="customerUpdate" class="com.photon.phresco.service.admin.actions.admin.Customers" method="update">
 			<result name="customerList">/admin/pages/admin/customer/list.jsp</result>
-			<result type="json" />
         </action>
         
         <action name="customerDelete" class="com.photon.phresco.service.admin.actions.admin.Customers" method="delete">

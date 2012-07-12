@@ -99,14 +99,14 @@
 				<form name="login" action="login" method="post" class="marginBottomZero">
 					<!--  UserName starts -->
 					<div class="clearfix">
-						 <label class="labellg" for="xlInput">Username:</label>
+						 <label class="labellg">Username:</label>
 						 <input class="xlarge settings_text lgnField" id="xlInput" name="username" autofocus="" placeholder="Enter Your Insight User Name" type="text">
 						</div>
 					<!--  UserName ends -->
 						  
 					<!--  Password starts -->
 					<div class="clearfix">
-						<label class="labellg" for="xlInput">Password:</label>
+						<label class="labellg">Password:</label>
 						<input class="xlarge settings_text lgnField" id="xlInput" name="password" value="" type="password">
 					</div>
 					<!--  Password ends -->

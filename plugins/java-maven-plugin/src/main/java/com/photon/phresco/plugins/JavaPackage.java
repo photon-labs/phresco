@@ -36,13 +36,16 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.photon.phresco.plugin.commons.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -52,13 +55,11 @@ import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
-import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.plugin.commons.PluginConstants;
-import com.photon.phresco.plugin.commons.PluginUtils;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
+
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.util.PomProcessor;
@@ -108,6 +109,8 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected String buildNumber;
 
+	protected int buildNo;
+
 	/**
 	 * @parameter expression="${mainClassName}" required="true"
 	 */
@@ -118,6 +121,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected String jarName;
 	
+
 	private File targetDir;
 	private File buildDir;
 	private File buildInfoFile;
@@ -127,7 +131,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	private String zipName;
 	private Date currentDate;
 	private String context;
-	protected int buildNo;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();	
@@ -247,24 +250,29 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
+	
 	private void executeMvnPackage() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			getLog().info("Packaging the project...");
-			String mavenHome = System.getProperty(MVN_HOME);
-			ProcessBuilder pb = new ProcessBuilder(mavenHome + MVN_EXE_PATH);
-			pb.redirectErrorStream(true);
-			List<String> commands = pb.command();
-			commands.add(MVN_PHASE_CLEAN);
-			commands.add(MVN_PHASE_PACKAGE);
-			commands.add(SKIP_TESTS);
-			pb.directory(baseDir);
-			Process process = pb.start();
-			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append(MVN_CMD);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_CLEAN);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_PACKAGE);
+			sb.append(STR_SPACE);
+			sb.append(SKIP_TESTS);
+
+			Commandline cl = new Commandline(sb.toString());
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
@@ -472,7 +480,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
 }
 
 class WarFileNameFilter implements FilenameFilter {

@@ -39,13 +39,10 @@ import java.io.File;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.sonatype.aether.deployment.DeploymentException;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.service.jaxb.Module;
 import com.photon.phresco.service.model.ArtifactInfo;
-import com.photon.phresco.util.TechnologyTypes;
 
 public class RepositoryManagerTest {
 
@@ -64,8 +61,8 @@ public class RepositoryManagerTest {
         System.out.println("RepoMan " + repoManager);
         ArtifactInfo info = new ArtifactInfo("phresco", "test", "", "xml", "0.1");
         File artifact = new File("D:\\work\\projects\\phresco\\src\\trunk\\server\\tools\\repo\\config\\editors\\android-native.xml");
-        String message = repoManager.addArtifact(info, artifact);
-        System.out.println("artifact " + message);
+  //      String message = repoManager.addArtifact(info, artifact);
+  //      System.out.println("artifact " + message);
     }
 
 //	@Test
@@ -78,15 +75,15 @@ public class RepositoryManagerTest {
 
 //    @Test
     public void testAddModule() throws PhrescoException, DeploymentException {
-        RepositoryManager repoManager = PhrescoServerFactory.getRepositoryManager();
-        System.out.println("RepoMan " + repoManager);
-        Module module = new Module();
-        module.setId("mod_facebook-0.7.3");
-        module.setName("facebook");
-        module.setVersion("0.7.3");
-        File moduleContent = new File("D:\\work\\projects\\phresco\\phresco-projects\\trunk\\files\\android-native\\modules\\DOGRA\\DOGRA.zip");
-        repoManager.addModule(TechnologyTypes.ANDROID_NATIVE, module, moduleContent, null);
-        System.out.println("module uploaded succesfully ");
+//        RepositoryManager repoManager = PhrescoServerFactory.getRepositoryManager();
+//        System.out.println("RepoMan " + repoManager);
+//        Module module = new Module();
+////        module.setId("mod_facebook-0.7.3");
+////        module.setName("facebook");
+////        module.setVersion("0.7.3");
+///        File moduleContent = new File("D:\\work\\projects\\phresco\\phresco-projects\\trunk\\files\\android-native\\modules\\DOGRA\\DOGRA.zip");
+//        repoManager.addModule(TechnologyTypes.ANDROID_NATIVE, module, moduleContent, null);
+//        System.out.println("module uploaded succesfully ");
     }
 
 }

@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -63,7 +64,6 @@ public class Home extends FrameworkBaseAction implements FrameworkActions {
 		if (DebugEnabled) {
 			S_LOGGER.debug("Entering Method  Home.video()");
 		}
-
 
 		try {
 			String videoName = getHttpRequest().getParameter(REQ_VIDEO);

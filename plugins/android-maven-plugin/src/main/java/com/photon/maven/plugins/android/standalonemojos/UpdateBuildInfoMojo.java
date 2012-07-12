@@ -47,7 +47,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import com.photon.phresco.plugin.commons.PluginUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -57,7 +57,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
 import com.photon.phresco.commons.BuildInfo;
-import com.photon.phresco.plugin.commons.PluginUtils;
+
 
 /**
  * Creates the apk file. By default signs it with debug keystore.<br/>

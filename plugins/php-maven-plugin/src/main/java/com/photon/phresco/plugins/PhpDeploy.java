@@ -28,16 +28,17 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
+import com.photon.phresco.plugin.commons.PluginConstants;
+import com.photon.phresco.plugin.commons.PluginUtils;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.SettingsInfo;
-import com.photon.phresco.plugin.commons.PluginConstants;
-import com.photon.phresco.plugin.commons.PluginUtils;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
+
 
 /**
  * Goal which deploys the PHP project
@@ -121,7 +122,8 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails,baseDir, PHP_SQL_DIR, PHP_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (PhrescoException e) {

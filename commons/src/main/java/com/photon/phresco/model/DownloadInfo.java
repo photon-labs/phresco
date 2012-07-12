@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,16 +28,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DownloadInfo implements Serializable {
 
 	private static final long serialVersionUID = -9197395975210628328L;
-
-	String id;
-	String name;
-	String version;
-	String downloadURL;
-	String type;
-	String fileName;
-	String fileSize;
-	String[] appliesTo;
-	String[] platform;
+	private String id;
+	private String name;
+	private String version;
+	private String downloadURL;
+	private String type;
+	private String fileName;
+	private String fileSize;
+	private String[] appliesTo;
+	private String[] platform;
 
 	public DownloadInfo() {
 	}
@@ -51,8 +50,8 @@ public class DownloadInfo implements Serializable {
 		this.version = version;
 		this.downloadURL = downloadURL;
 		this.type = type;
-		this.appliesTo = appliesTo;
-		this.platform = platform;
+		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
+		this.platform = Arrays.copyOf(platform, platform.length);
 	}
 
 	public String getId() {
@@ -100,7 +99,7 @@ public class DownloadInfo implements Serializable {
 	}
 
 	public void setAppliesTo(String[] appliesTo) {
-		this.appliesTo = appliesTo;
+		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
 	}
 
 	public String[] getPlatform() {
@@ -108,9 +107,9 @@ public class DownloadInfo implements Serializable {
 	}
 
 	public void setPlatform(String[] platform) {
-		this.platform = platform;
+		this.platform = Arrays.copyOf(platform, platform.length);
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}

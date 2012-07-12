@@ -53,20 +53,9 @@
 				<plugin>
 					<groupId>com.photon.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>2.0.0.1000-SNAPSHOT</version>
+					<version>2.0.0.6001-SNAPSHOT</version>
 					<extensions>true</extensions>
 				</plugin>
-				<plugin>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>3.1</version>
-			<dependencies>
-				<dependency>
-				<groupId>org.apache.maven.doxia</groupId>
-				<artifactId>doxia-module-confluence</artifactId>
-				<version>1.2</version>
-				</dependency>
-			</dependencies>
-		</plugin>
 			</plugins>
 		</pluginManagement>
     <!-- To use the plugin goals in your POM or parent POM -->

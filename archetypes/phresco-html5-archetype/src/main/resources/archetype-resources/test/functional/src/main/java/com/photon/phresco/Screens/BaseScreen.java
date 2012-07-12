@@ -20,6 +20,8 @@
 package com.photon.phresco.Screens;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +38,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+import com.opera.core.systems.OperaDriver;
 import com.photon.phresco.selenium.util.Constants;
 import com.photon.phresco.selenium.util.ScreenActionFailedException;
 import com.photon.phresco.selenium.util.ScreenException;
@@ -138,11 +141,41 @@ public class BaseScreen {
 				 * selenium.open(context);
 				 */
 			} 
-		else {
-			throw new ScreenException(
-					"------Only FireFox,InternetExplore and Chrome works-----------");
-		}			
-}
+		
+		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
+				log.info("-------------***LAUNCHING OPERA***--------------");
+				WebDriver driver = new OperaDriver();
+				System.out.println("******entering window maximize********");
+				Robot robot;
+				try {
+					robot = new Robot();
+					robot.keyPress(KeyEvent.VK_ALT);
+					robot.keyPress(KeyEvent.VK_SPACE);
+					robot.keyRelease(KeyEvent.VK_ALT);
+					robot.keyRelease(KeyEvent.VK_SPACE);
+					robot.keyPress(KeyEvent.VK_X);
+					robot.keyRelease(KeyEvent.VK_X);
+				} catch (AWTException e) {
+
+					e.printStackTrace();
+				}
+
+				System.out.println("******window maximized********");
+				System.out.println("URL = " + url);
+				driver.navigate().to(url + context);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} else {
+				throw new ScreenException(
+						"------Only FireFox,InternetExplore,Chrome and Opera works-----------");
+			}
+		}
+		
+
+	
 
 	public static void windowMaximizeFirefox() {
 		driver.manage().window().setPosition(new Point(0, 0));
@@ -160,9 +193,10 @@ public class BaseScreen {
 		if(chromeService!=null){
 			chromeService.stop();
 			}
-		} else {
-			throw new NullPointerException();
-		}
+		} 
+    //  else {
+//	throw new NullPointerException();
+//}
 		// selenium.stop();
 		/*
 		 * driver.quit(); selenium.stop();

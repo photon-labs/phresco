@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +50,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -63,6 +63,7 @@ import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.CIJobStatus;
 import com.photon.phresco.commons.DownloadTypes;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Configuration;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
@@ -79,14 +80,12 @@ import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
 import com.photon.phresco.model.LogInfo;
-import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
-import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.VideoType;
 import com.photon.phresco.model.WebService;
@@ -94,7 +93,6 @@ import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
 import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
-import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
@@ -103,13 +101,14 @@ import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model;
+import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 import com.phresco.pom.util.PomProcessor;
 import com.phresco.pom.util.SiteConfigurator;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants, ServiceClientConstant, ServiceConstants {
 
@@ -145,7 +144,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 *
 	 * @return Project based on the given information
 	 */
-	public Project createProject(ProjectInfo info, File path,UserInfo userInfo) throws PhrescoException {
+	public Project createProject(ProjectInfo info, File path, User userInfo) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.createProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("createProject() > info name : " + info.getName());
@@ -155,7 +154,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (StringUtils.isEmpty(info.getVersion())) {
 			info.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
-		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info,userInfo);
+		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info, userInfo);
 
 		S_LOGGER.debug("createProject response code " + response.getStatus());
 
@@ -230,7 +229,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 * @return Project based on the given information
 	 */
 
-	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path,UserInfo userInfo) throws PhrescoException {
+	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path, User userInfo) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.updateProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("updateProject() > info name : " + delta.getName());
@@ -245,7 +244,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			excludeModule(delta);
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
-		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(projectInfo, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta,userInfo);
 		 if(response.getStatus() == 401){
@@ -259,12 +257,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
 			createSqlFolder(delta, path);
 		}
-		updatePomProject(delta,projectInfoClone);
+		updatePomProject(delta,projectInfo);
 		try {
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
@@ -312,8 +310,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		String techId = delta.getTechnology().getId();
 		File path = new File(Utility.getProjectHome() + File.separator + delta.getCode() + File.separator + POM_FILE);
 		boolean flag1 = techId.equals(TechnologyTypes.JAVA_WEBSERVICE) || techId.equals(TechnologyTypes.JAVA_STANDALONE) || techId.equals(TechnologyTypes.HTML5_WIDGET) || 
-		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET);
-		boolean flag2 = techId.equals(TechnologyTypes.ANDROID_HYBRID) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
+		techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) || techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		if (flag1) {
 			try {
 				ServerPluginUtil spUtil = new ServerPluginUtil();
@@ -324,17 +321,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException(e);
 			}
 		} 
-		if(flag2) {
-			try { 
-				if(projectInfoClone.getTechnology().getModules() != null) {
-					updateAndroidPomProject(projectInfoClone);
-				}
-			} catch (JDOMException e) {
-				throw new PhrescoException(e);
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
-		}
 	}
 
 	/**
@@ -492,89 +478,32 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return null;
 	}
 
-	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
+	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, PhrescoPomException {
 		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
 		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
+			PomProcessor pomProcessor = new PomProcessor(path);
 			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
 			if(CollectionUtils.isEmpty(modules)){
 				return;
 			}
 			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(moduleGroup.getGroupId()));
-				dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getArtifactId()));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
+				pomProcessor.addDependency(moduleGroup.getGroupId(), moduleGroup.getArtifactId(), moduleGroup.getVersions().get(0).getVersion());
+				pomProcessor.save();
 			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
-		}
-	}
-	/**
-	 * TODO: need to change this to use Phresco POM processor module.
-	 * @param projectInfo
-	 * @throws PhrescoException
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void updateAndroidPomProject(ProjectInfo projectInfo) throws PhrescoException, JDOMException, IOException {
-		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(path);
-			Element rootNode = doc.getRootElement();
-			Element dependencies = rootNode.getChild("dependencies",rootNode.getNamespace());
-			Namespace ns = rootNode.getNamespace();
-			List<ModuleGroup> modules = projectInfo.getTechnology().getModules();
-			if(CollectionUtils.isEmpty(modules)){
-				return;
-			}
-			for (ModuleGroup moduleGroup : modules) {
-				Element dependency = new Element("dependency", ns);
-				dependency.addContent(new Element("groupId", ns).setText(getGroupId(projectInfo.getTechnology())));
-				List<Module> versions = moduleGroup.getVersions();
-				for (Module version : versions) {
-					dependency.addContent(new Element("artifactId", ns).setText(moduleGroup.getId()));
-					dependency.addContent(new Element("version", ns).setText(version.getVersion()));
-				}
-				dependencies.addContent(dependency);
-			}
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(path));
-		} catch (Exception e) {
-			throw new PhrescoException(e);
+			} catch (JAXBException e) {
+				throw new PhrescoException(e);
+			} catch (IOException e) {
+				throw new PhrescoException(e);
 		}
 	}
 
-	private  String getGroupId(Technology technology) {
-		return "modules." + technology.getId() + ".files";
-	}
 
 	@Override
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
 		try{
-			RestClient<ApplicationType> applicationTypeClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
-			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
-			List<ApplicationType> applicationTypes = applicationTypeClient.get(genericType);
+			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
 			return applicationTypes;
-		} catch (ClientHandlerException ex) {
-			ex.printStackTrace();
-			S_LOGGER.error(ex.getLocalizedMessage());
-			throw new PhrescoException(ex);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		}
 	}
@@ -582,9 +511,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	@Override
 	public ApplicationType getApplicationType(String name) throws PhrescoException {
 		try {
-			RestClient<ApplicationType> applicationTypeClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
-			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
-			List<ApplicationType> applicationTypes = applicationTypeClient.get(genericType);
+			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
 			if (CollectionUtils.isNotEmpty(applicationTypes)) {
 				for (ApplicationType applicationType : applicationTypes) {
 					if (applicationType.getName().equals(name)) {
@@ -682,7 +609,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 return projects;
 	 }
 
-	 public UserInfo doLogin(Credentials credentials) throws PhrescoException {
+	 public User doLogin(Credentials credentials) throws PhrescoException {
 
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.doLogin(Credentials credentials)");
 
@@ -774,6 +701,48 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 return editorDownloadInfos;
 	 }
 
+	 @Override
+	 public List<DownloadInfo> getToolsDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getToolsDownloadInfo()");
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
+		 }
+		 
+		 List<DownloadInfo> toolsDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.TOOLS.equals(downloadInfo.getType())){
+					 toolsDownloadInfos.add(downloadInfo);
+				 }
+			 }
+		 }
+		 
+		 return toolsDownloadInfos;
+	 }
+	 
+	 
+	 @Override
+	 public List<DownloadInfo> getOtherDownloadInfo(DownloadPropertyInfo downloadPropertyInfo) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getOtherDownloadInfo()");
+		 
+		 if (CollectionUtils.isEmpty(downloadInfosMap.get(downloadPropertyInfo.getTechId()))) {
+			 setDownloadInfoFromService(downloadPropertyInfo);
+		 }
+		 
+		 List<DownloadInfo> othersDownloadInfos = new ArrayList<DownloadInfo>();
+		 List<DownloadInfo> downloadInfos = downloadInfosMap.get(downloadPropertyInfo.getTechId());
+		 if (CollectionUtils.isNotEmpty(downloadInfos)) {
+			 for (DownloadInfo downloadInfo : downloadInfos) {
+				 if (DownloadTypes.OTHERS.equals(downloadInfo.getType())){
+					 othersDownloadInfos.add(downloadInfo);
+				 }
+			 }
+		 }
+		 return othersDownloadInfos;
+	 }
+	 
 	 /**
 	  * This method is to fetch the settings template through REST service
 	  * @return List of settings template stored in the server [Database, Server and Email]
@@ -1283,7 +1252,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 
-	 private List<BuildInfo> readBuildInfo(File path) throws IOException {
+	 public List<BuildInfo> readBuildInfo(File path) throws IOException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.readBuildInfo(File path)");
 		 S_LOGGER.debug("getBuildInfos() File Path = "+path.getPath());
 
@@ -1510,9 +1479,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 @Override
 	 public List<VideoInfo> getVideoInfos() throws PhrescoException {
 		 try {
-			 RestClient<VideoInfo> videoInfosClient = getServiceManager().getRestClient(REST_API_ADMIN + REST_API_VIDEOS);
-			 GenericType<List<VideoInfo>> genericType = new GenericType<List<VideoInfo>>(){};
-			 List<VideoInfo> videoInfos = videoInfosClient.get(genericType);
+			 List<VideoInfo> videoInfos = getServiceManager().getVideoInfos();
 			 return videoInfos;
 		 } catch (ClientHandlerException ex) {
 			 S_LOGGER.error(ex.getLocalizedMessage());
@@ -1545,10 +1512,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 coreModules = new ArrayList<ModuleGroup>();
-			 RestClient<ModuleGroup> moduleGroupClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-			 moduleGroupClient.setPath(techId);
-			 GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-			 List<ModuleGroup> modules = moduleGroupClient.get(genericType);
+			 List<ModuleGroup> modules = getServiceManager().getModules(techId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (module.isCore()) {
@@ -1577,10 +1541,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 customModules = new ArrayList<ModuleGroup>();
-			 RestClient<ModuleGroup> moduleGroupClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_MODULESBYID);
-			 moduleGroupClient.setPath(techId);
-			 GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-			 List<ModuleGroup> modules = moduleGroupClient.get(genericType);
+			 List<ModuleGroup> modules = getServiceManager().getModules(techId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (!module.isCore()) {
@@ -1607,20 +1568,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 if (jobStatus.getCode() == -1) {
 				 throw new PhrescoException(jobStatus.getMessage());
 			 }
-
 			 S_LOGGER.debug("ProjectInfo = " + project.getProjectInfo());
-
-			 File ciJobFile = new File(getCIJobPath(project));
-			 Gson gson = new Gson();
-			 String jobJson = gson.toJson(job);
-			 writer = new FileWriter(ciJobFile);
-			 writer.write(jobJson);
-			 writer.flush();
-		 } catch (IOException e) {
-			 throw new PhrescoException(e);
+			 writeJsonJobs(project, Arrays.asList(job), CI_APPEND_JOBS);
 		 } catch (ClientHandlerException ex) {
 			 S_LOGGER.error(ex.getLocalizedMessage());
-
 			 throw new PhrescoException(ex);
 		 } finally {
 			 if (writer != null) {
@@ -1636,9 +1587,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 	 @Override
 	 public void updateJob(Project project, CIJob job) throws PhrescoException {
-
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.updateJob(Project project, CIJob job)");
-
 		 FileWriter writer = null;
 		 try {
 			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
@@ -1646,21 +1595,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 if (jobStatus.getCode() == -1) {
 				 throw new PhrescoException(jobStatus.getMessage());
 			 }
-
 			 S_LOGGER.debug("getCustomModules() ProjectInfo = "+project.getProjectInfo());
-
-			 File ciJobFile = new File(getCIJobPath(project));
-			 Gson gson = new Gson();
-			 String jobJson = gson.toJson(job);
-			 writer = new FileWriter(ciJobFile);
-			 writer.write(jobJson);
-			 writer.flush();
-		 } catch (IOException e) {
-			 throw new PhrescoException(e);
+			 updateJsonJob(project, job);
 		 } catch (ClientHandlerException ex) {
-
 			 S_LOGGER.error(ex.getLocalizedMessage());
-
 			 throw new PhrescoException(ex);
 		 } finally {
 			 if (writer != null) {
@@ -1684,12 +1622,118 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 return job;
 		 } catch (FileNotFoundException e) {
 			 return null;
-			 //            throw new PhrescoException(e);
 		 } catch (IOException e) {
 			 throw new PhrescoException(e);
 		 }
 	 }
 
+	 @Override
+	 public List<CIJob> getJobs(Project project) throws PhrescoException {
+		 try {
+			 Gson gson = new Gson();
+			 BufferedReader br = new BufferedReader(new FileReader(getCIJobPath(project)));
+			 Type type = new TypeToken<List<CIJob>>(){}.getType();
+			 List<CIJob> jobs = gson.fromJson(br, type);
+			 br.close();
+			 return jobs;
+		 } catch (FileNotFoundException e) {
+			 return null;
+		 } catch (IOException e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
+	 
+	 @Override
+	 public CIJob getJob(Project project, String jobName) throws PhrescoException {
+		 try {
+			 if (StringUtils.isEmpty(jobName)) {
+				 return null;
+			 }
+			 List<CIJob> jobs = getJobs(project);
+			 for (CIJob job : jobs) {
+				 if (job.getName().equals(jobName)) {
+					 return job;
+				 }
+			 }
+			 return null;
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
+	 
+	 @Override
+	 public void writeJsonJobs(Project project, List<CIJob> jobs, String status) throws PhrescoException {
+		 try {
+			 if (jobs == null) {
+				 return;
+			 }
+			 Gson gson = new Gson();
+			 List<CIJob> existingJobs = getJobs(project);
+			 if (CI_CREATE_NEW_JOBS.equals(status) || existingJobs == null) {
+				 existingJobs = new ArrayList<CIJob>();
+			 }
+			 existingJobs.addAll(jobs);
+			 FileWriter writer = null;
+			 File ciJobFile = new File(getCIJobPath(project));
+			 String jobJson = gson.toJson(existingJobs);
+			 writer = new FileWriter(ciJobFile);
+			 writer.write(jobJson);
+			 writer.flush();
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
+	 
+	 @Override
+	 public void deleteJsonJobs(Project project, List<CIJob> selectedJobs) throws PhrescoException {
+		 try {
+			 if (CollectionUtils.isEmpty(selectedJobs)) {
+				 return;
+			 }
+			 Gson gson = new Gson();
+			 List<CIJob> jobs = getJobs(project);
+			 if (CollectionUtils.isEmpty(jobs)) {
+				 return;
+			 }
+			//all values
+			 Iterator<CIJob> iterator = jobs.iterator();
+			//deletable values
+			 for (CIJob selectedInfo : selectedJobs) {
+				 while (iterator.hasNext()) {
+					 CIJob itrCiJob = iterator.next();
+					 if (itrCiJob.getName().equals(selectedInfo.getName())) {
+						 iterator.remove();
+						 break;
+					 }
+				 }
+			 }
+			 writeJsonJobs(project, jobs, CI_CREATE_NEW_JOBS);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
+	 
+	 @Override
+	 public void updateJsonJob(Project project, CIJob job) throws PhrescoException {
+		 Gson gson = new Gson();
+		 try {
+			 deleteJsonJobs(project, Arrays.asList(job));
+			 writeJsonJobs(project, Arrays.asList(job), CI_APPEND_JOBS);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+	 }
+	 
+	 @Override
+	 public List<CIBuild> getBuilds(CIJob ciJob) throws PhrescoException {
+		 try {
+			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			 return ciManager.getCIBuilds(ciJob);
+		 } catch (ClientHandlerException ex) {
+			 return null;
+		 }
+	 }
+	 
 	 @Override
 	 public CIJobStatus buildJob(Project project) throws PhrescoException {
 		 try {
@@ -1702,6 +1746,22 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 
+	 @Override
+	 public CIJobStatus buildJobs(Project project, List<String> jobsName) throws PhrescoException {
+		 try {
+			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			 CIJobStatus jobStatus = null;
+			 for (String jobName : jobsName) {
+				 CIJob ciJob = getJob(project, jobName);
+				 jobStatus = ciManager.buildJob(ciJob);
+			 }
+			 return jobStatus;
+		 } catch (ClientHandlerException ex) {
+			 S_LOGGER.error(ex.getLocalizedMessage());
+			 throw new PhrescoException(ex);
+		 }
+	 }
+	 
 	 @Override
 	 public List<CIBuild> getBuilds(Project project) throws PhrescoException {
 		 try {
@@ -1739,10 +1799,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 	 @Override
 	 public String sendReport(LogInfo loginfo) throws PhrescoException {
-
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.sendReport(LogInfo loginfo)");
 		 S_LOGGER.debug("Loginfo values : " + loginfo.toString());
-
 		 try {
 			 ClientResponse response = PhrescoFrameworkFactory.getServiceManager().sendReport(loginfo);
 			 if (response.getStatus() != 204) {
@@ -1839,13 +1897,52 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 			 return deleteCI;
 		 } catch (ClientHandlerException ex) {
-
 			 S_LOGGER.error("Entered into catch block of ProjectAdministratorImpl.deleteCI()" + ex.getLocalizedMessage());
-
 			 throw new PhrescoException(ex);
 		 }
 	 }
 
+	 public CIJobStatus deleteCIBuild(Project project,  Map<String, List<String>> builds) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.deleteCI()");
+		 	try {
+		 		CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+				CIJobStatus deleteCI = null;
+				Iterator iterator = builds.keySet().iterator();  
+				while (iterator.hasNext()) {
+				   String jobName = iterator.next().toString();  
+				   List<String> deleteBuilds = builds.get(jobName);
+				   S_LOGGER.debug("jobName " + jobName + " builds " + deleteBuilds);
+				   CIJob ciJob = getJob(project, jobName);
+					 //job and build numbers
+				   deleteCI = ciManager.deleteCI(ciJob, deleteBuilds);
+				}
+			 return deleteCI;
+		 } catch (ClientHandlerException ex) {
+			 S_LOGGER.error("Entered into catch block of ProjectAdministratorImpl.deleteCI()" + ex.getLocalizedMessage());
+			 throw new PhrescoException(ex);
+		 }
+	 }
+
+	 public CIJobStatus deleteCIJobs(Project project,  List<String> jobNames) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.deleteCI()");
+		 try {
+			CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			CIJobStatus deleteCI = null;
+			for (String jobName : jobNames) {
+				S_LOGGER.debug(" Deleteable job name " + jobName);
+				CIJob ciJob = getJob(project, jobName);
+				 //job and build numbers
+				 deleteCI = ciManager.deleteCI(ciJob, null);
+				 S_LOGGER.debug("write back json data after job deletion successfull");
+				 deleteJsonJobs(project, Arrays.asList(ciJob));
+			}
+			 return deleteCI;
+		 } catch (ClientHandlerException ex) {
+			 S_LOGGER.error("Entered into catch block of ProjectAdministratorImpl.deleteCI()" + ex.getLocalizedMessage());
+			 throw new PhrescoException(ex);
+		 }
+	 }
+	 
 	 public int getProgressInBuild(Project project) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.isBuilding()");
 		 try {
@@ -1856,6 +1953,21 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 } catch (ClientHandlerException ex) {
 			 S_LOGGER.error("Entered into catch block of ProjectAdministratorImpl.isBuilding()" + ex.getLocalizedMessage());
 			 throw new PhrescoException(ex);
+		 }
+	 }
+	 
+	 public boolean isJobCreatingBuild(CIJob ciJob) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.isBuilding()");
+		 try {
+			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			 int isBuilding = ciManager.getProgressInBuild(ciJob);
+			 if (isBuilding > 0) {
+				 return true;
+			 } else {
+				 return false;
+			 }
+		 } catch (Exception ex) {
+			 return false;
 		 }
 	 }
 
@@ -2042,16 +2154,22 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 	}
 	
-	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reportsToBeAdded, List<Reports> reportsToBeRemoved) throws PhrescoException {
+	public List<Reports> getPomReports(ProjectInfo projectInfo) throws PhrescoException {
 		try {
 			SiteConfigurator configurator = new SiteConfigurator();
 			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
-			if (CollectionUtils.isNotEmpty(reportsToBeAdded)) {
-				configurator.addReportPlugin(reportsToBeAdded, file);
-			}
-			if (CollectionUtils.isNotEmpty(reportsToBeRemoved)) {
-				configurator.removeReportPlugin(reportsToBeRemoved, file);
-			}
+			List<Reports> reports = configurator.getReports(file);
+			return reports;
+		} catch (Exception ex) {
+			throw new PhrescoException(ex);
+		}
+	}
+	
+	public void updateRptPluginInPOM(ProjectInfo projectInfo, List<Reports> reports, List<ReportCategories> reportCategories) throws PhrescoException {
+		try {
+			SiteConfigurator configurator = new SiteConfigurator();
+			File file = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
+				configurator.addReportPlugin(reports, reportCategories, file);
 		} catch (Exception e) {
 			throw new PhrescoException();
 		}
@@ -2059,39 +2177,27 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	
 	public List<Server> getServers(String techId) throws PhrescoException {
 		try {
-			RestClient<Server> serverClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_SERVERBYID);
-			serverClient.setPath(techId);
-			GenericType<List<Server>> genericType = new GenericType<List<Server>>(){};
-			List<Server> servers = serverClient.get(genericType);
+			List<Server> servers = getServiceManager().getServers(techId);
 			return servers;
 		} catch (PhrescoException e) {
-			e.printStackTrace();
 			throw new PhrescoException();
 		}
 	}
 	
 	public List<Database> getDatabases(String techId) throws PhrescoException {
 		try {
-			RestClient<Database> dbClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_DATABASESBYID);
-			dbClient.setPath(techId);
-			GenericType<List<Database>> genericType = new GenericType<List<Database>>(){};
-			List<Database> databases = dbClient.get(genericType);
+			List<Database> databases = getServiceManager().getDatabases(techId);
 			return databases;
 		} catch (PhrescoException e) {
-			e.printStackTrace();
 			throw new PhrescoException();
 		}
 	}
 	
 	public List<WebService> getWebServices(String techId) throws PhrescoException {
 		try {
-			RestClient<WebService> webServiceClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICESBYID);
-			webServiceClient.setPath(techId);
-			GenericType<List<WebService>> genericType = new GenericType<List<WebService>>(){};
-			List<WebService> webServices = webServiceClient.get(genericType);
+			List<WebService> webServices =  getServiceManager().getWebServices(techId);
 			return webServices;
 		} catch (PhrescoException e) {
-			e.printStackTrace();
 			throw new PhrescoException();
 		}
 	}
@@ -2107,7 +2213,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 	 public List<Server> getServers() throws PhrescoException {
 		 try {
-
 			 return PhrescoFrameworkFactory.getServiceManager().getServers();
 		 } catch (Exception ex) {
 			 throw new PhrescoException(ex);
@@ -2118,13 +2223,32 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getPilots()");
 		 
 		 try {
-			 RestClient<ProjectInfo> pilotClient = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_PILOTSBYID);
-			 pilotClient.setPath(techId);
-			 GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
-			 pilotClient.getById(genericType);
+			 List<ProjectInfo> pilots = getServiceManager().getPilots(techId);
+			 return pilots;
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
 		 }
-		 return null;
+	 }
+	 
+	 public BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCIBuildInfo(CIJob job, int buildNumber)");
+		 BuildInfo buildInfo = null;
+		 try {
+			 CIManager ciManager = PhrescoFrameworkFactory.getCIManager();
+			 buildInfo = ciManager.getBuildInfo(job,buildNumber);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
+		 return buildInfo;
+	 }
+	 
+	 public List<ModuleGroup> getJSLibs(String techId) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getPilots()");
+		 
+		 try {
+			 return getServiceManager().getJSLibs(techId);
+		 } catch (Exception e) {
+			 throw new PhrescoException(e);
+		 }
 	 }
 }

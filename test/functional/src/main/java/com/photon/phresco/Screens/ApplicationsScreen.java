@@ -13,12 +13,12 @@ public class ApplicationsScreen extends WebDriverAbstractBaseScreen {
 		this.phrescoConst = phrescoConst;
 	}
 
-	public AddApplicationScreen gotoAddApplicationScreen(String methodName)
+	public AddApplicationScreen gotoAddApplicationScreen()
 			throws Exception {
 		element=getXpathWebElement(phrescoConst.ADD_APPLICATION_BUTTON);
-		waitForElementPresent(phrescoConst.ADD_APPLICATION_BUTTON,methodName);
+		waitForElementPresent(phrescoConst.ADD_APPLICATION_BUTTON);
 		element.click();
-		waitForElementPresent(phrescoConst.APPINFO_NAME,methodName);
+		waitForElementPresent(phrescoConst.APPINFO_NAME);
 		return new AddApplicationScreen(phrescoConst);
 	}
 

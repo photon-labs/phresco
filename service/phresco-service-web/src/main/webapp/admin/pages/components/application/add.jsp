@@ -18,16 +18,30 @@
   ###
   --%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
+
 <%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
+
 <script type="text/javascript">
-function findError(data) {
-	if(data.nameError != undefined) {
-		showError($("#nameControl"), $("#nameError"), data.nameError);
-	} else {
-		hideError($("#nameControl"), $("#nameError"));
+	$(document).ready(function() {
+		//To focus the name textbox by default
+		$('#name').focus();
+		
+		// To check for the special character in name
+		$('#name').bind('input propertychange', function (e) {
+			var name = $(this).val();
+			name = checkForSplChr(name);
+	    	$(this).val(name);
+		});	
+	});
+
+	function findError(data) {
+		if (data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
 	}
-}
 </script>
 
 <%
@@ -38,41 +52,47 @@ function findError(data) {
 <form class="form-horizontal customer_list">
   <h4 class="hdr">
    <% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<s:label for="description" key="lbl.hdr.comp.apln.edit.title" theme="simple" />
+				<s:label key="lbl.hdr.comp.apln.edit.title" theme="simple" />
 		<% } else { %>
-	            <s:label for="description" key="lbl.hdr.comp.apln.title" theme="simple"/>	
+	            <s:label key="lbl.hdr.comp.apln.title" theme="simple"/>	
 	    <% } %>
      </h4>       
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Application Type Name" class="input-xlarge" type="text" name="name" value="<%= apptype != null ? apptype.getName() : "" %>">
+				<input id="name" class="input-xlarge" placeholder="Application Type Name" type="text" name="name" 
+				    value="<%= apptype != null ? apptype.getName() : "" %>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Description" class="input-xlarge" rows="3" name="description"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
+				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" 
+				    maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
 			</div>
 		</div>
 	</div>
 	
 	<div class="bottom_button">
 	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
-			   <input type="button" id="applicationUpdate" class="btn btn-primary" onclick="clickSave('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" value="<s:text name='lbl.hdr.comp.update'/>"/>
+				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				    onclick="validate('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
 		<% } else { %>
-		       <input type="button" id="applicationSave" class="btn btn-primary" onclick="clickSave('applicationSave', $('#subcontainer'), 'Creating Application Type');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+				<input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
+				    onclick="validate('applicationSave', $('#subcontainer'), 'Creating Application Type');" />
 		<% } %>
-		      <input type="button" id="applicationCancel" class="btn btn-primary" onclick="loadContent('applicationCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
-   </div>
+		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
+            onclick="loadContent('applntypesList', $('#subcontainer'));" />
+    </div>
 	
+	<!-- Hidden Fields -->
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
 	<input type="hidden" name="appTypeId" value="<%= apptype != null ? apptype.getId() : "" %>"/>
 	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/> 

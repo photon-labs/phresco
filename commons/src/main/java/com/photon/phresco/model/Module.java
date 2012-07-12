@@ -1,15 +1,15 @@
 /*
  * ###
  * Phresco Commons
- * 
+ *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @XmlRootElement
-@JsonIgnoreProperties(ignoreUnknown=true) 
+@JsonIgnoreProperties(ignoreUnknown=true)
 
 public class Module implements Serializable {
 
@@ -234,7 +234,7 @@ public class Module implements Serializable {
 
 	public Module(String id, String contentType, String contentURL,
 			List<String> technolgoyRef, List dependentModules,
-			String documentsId, String name, String version, Boolean core,
+			int documentsId, String name, String version, Boolean core,
 			Boolean required, String groupId, String artifactId) {
 		super();
 		this.id = id;
@@ -242,7 +242,7 @@ public class Module implements Serializable {
 		this.contentURL = contentURL;
 		this.technolgoyRef = technolgoyRef;
 //		this.dependentModules = dependentModules;
-		this.documentsid = documentsid;
+		this.documentsid = documentsId;
 		this.name = name;
 		this.version = version;
 		this.core = core;
@@ -273,9 +273,7 @@ public class Module implements Serializable {
 	public Module() {
 		// TODO Auto-generated constructor stub
 	}
-	public void Modules () {
 
-	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

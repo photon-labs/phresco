@@ -300,7 +300,6 @@
 		var alreadyAddedVersions = new Array();
 		var newVersions;
 		var eleAttr = name.replace(/\s+/g, '');
-		
 		/** To append the version to the existing versions if the pilot server/db and the already selected server/db are same **/
 		if ("showPilotProjectConfigs" == from) {
 			if (type == "Server") {
@@ -309,17 +308,19 @@
 				alreadyAddedDetails = $("#selectedDatabase").val();
 			}
 			var nameSep = new Array();
-			nameSep = alreadyAddedDetails.split("#SEP#");
-			for (var i=0; i < nameSep.length; i++) {
-				var addedName = nameSep[i].split("#VSEP#");
-				if (addedName[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
-					if (addedName[1].indexOf(",") != -1) {
-						alreadyAddedVersions = addedName[1].split(",");
-					} else {
-						alreadyAddedVersions[0] = addedName[1];
+			if (alreadyAddedDetails != undefined) {
+				nameSep = alreadyAddedDetails.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var addedName = nameSep[i].split("#VSEP#");
+					if (addedName[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+						if (addedName[1].indexOf(",") != -1) {
+							alreadyAddedVersions = addedName[1].split(",");
+						} else {
+							alreadyAddedVersions[0] = addedName[1];
+						}
+						isAlreadyAdded = true;
+						break;
 					}
-					isAlreadyAdded = true;
-					break;
 				}
 			}
 			
@@ -354,12 +355,10 @@
 		} else { // This is for adding the new server/db
 			newVersions = versions;
 		}
-		
 		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 						+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 						+ name + " [ " + newVersions + " ] " + '</div></div>');
 		$("#"+type).css("margin-left", "320px");
-		
 		updateHiddenFields(type, name, newVersions, from);			
 	}
 	
@@ -427,32 +426,36 @@
 				var alreadySelectedServers = $("#selectedServer").val();
 				var pilotServerConfigDet = $("#pilotServerConfigDet").val();
 				var nameSep = new Array();
-				nameSep = alreadySelectedServers.split("#SEP#");
-				for (var i=0; i < nameSep.length; i++) {
-					var addedServers = nameSep[i].split("#VSEP#");
-					if (addedServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
-						if (addedServers[1].indexOf(",") != -1) {
-							alreadyAddedVersions = addedServers[1].split(",");
-							
-						} else {
-							alreadyAddedVersions[0] = addedServers[1];
+				if (alreadySelectedServers != undefined) {
+					nameSep = alreadySelectedServers.split("#SEP#");
+					for (var i=0; i < nameSep.length; i++) {
+						var addedServers = nameSep[i].split("#VSEP#");
+						if (addedServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+							if (addedServers[1].indexOf(",") != -1) {
+								alreadyAddedVersions = addedServers[1].split(",");
+								
+							} else {
+								alreadyAddedVersions[0] = addedServers[1];
+							}
+							break;
 						}
-						break;
-					}
+					}					
 				}
 				
 				var pilotNameSep = new Array();
-				pilotNameSep = pilotServerConfigDet.split("#SEP#");
-				for (var i=0; i < pilotNameSep.length; i++) {
-					var pilotServers = pilotNameSep[i].split("#VSEP#");
-					if (pilotServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
-						if (pilotServers[1].indexOf(",") != -1) {
-							arrayPilotVersions = pilotServers[1].split(",");
-						} else {
-							arrayPilotVersions[0] = pilotServers[1];
+				if (pilotServerConfigDet != undefined) {
+					pilotNameSep = pilotServerConfigDet.split("#SEP#");
+					for (var i=0; i < pilotNameSep.length; i++) {
+						var pilotServers = pilotNameSep[i].split("#VSEP#");
+						if (pilotServers[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+							if (pilotServers[1].indexOf(",") != -1) {
+								arrayPilotVersions = pilotServers[1].split(",");
+							} else {
+								arrayPilotVersions[0] = pilotServers[1];
+							}
+							break;
 						}
-						break;
-					}
+					}					
 				}
 				
 				for (var i=0; i < arrayPilotVersions.length; i++) {
@@ -478,29 +481,34 @@
 				var alreadySelectedDbs = $("#selectedDatabase").val();
 				var pilotDbConfigDet = $("#pilotDbConfigDet").val();
 				var nameSep = new Array();
-				nameSep = alreadySelectedDbs.split("#SEP#");
-				for (var i=0; i < nameSep.length; i++) {
-					var addedDbs = nameSep[i].split("#VSEP#");
-					if (addedDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
-						if (addedDbs[1].indexOf(",") != -1) {
-							alreadyAddedVersions = addedDbs[1].split(",");
-						} else {
-							alreadyAddedVersions[0] = addedDbs[1];
+				if (alreadySelectedDbs != undefined) {
+					nameSep = alreadySelectedDbs.split("#SEP#");
+					for (var i=0; i < nameSep.length; i++) {
+						var addedDbs = nameSep[i].split("#VSEP#");
+						if (addedDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+							if (addedDbs[1].indexOf(",") != -1) {
+								alreadyAddedVersions = addedDbs[1].split(",");
+							} else {
+								alreadyAddedVersions[0] = addedDbs[1];
+							}
+							break;
 						}
-						break;
 					}
 				}
+				
 				var pilotNameSep = new Array();
-				pilotNameSep = pilotDbConfigDet.split("#SEP#");
-				for (var i=0; i < pilotNameSep.length; i++) {
-					var pilotDbs = pilotNameSep[i].split("#VSEP#");
-					if (pilotDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
-						if (pilotDbs[1].indexOf(",") != -1) {
-							arrayPilotVersions = pilotDbs[1].split(",");
-						} else {
-							arrayPilotVersions[0] = pilotDbs[1];
+				if (alreadySelectedDbs != undefined) {
+					pilotNameSep = pilotDbConfigDet.split("#SEP#");
+					for (var i=0; i < pilotNameSep.length; i++) {
+						var pilotDbs = pilotNameSep[i].split("#VSEP#");
+						if (pilotDbs[0].replace(/\s/g, '') == name.replace(/\s/g, '')) {
+							if (pilotDbs[1].indexOf(",") != -1) {
+								arrayPilotVersions = pilotDbs[1].split(",");
+							} else {
+								arrayPilotVersions[0] = pilotDbs[1];
+							}
+							break;
 						}
-						break;
 					}
 				}
 				
@@ -595,43 +603,48 @@
 		var selectedValues = $("#selected"+type).val();
 		var nameSep = new Array();
 		var finalValue = "";
-		
 		if (from == "delete") { //During delete
-			nameSep = selectedValues.split("#SEP#");
-			for (var i=0; i < nameSep.length; i++) {
-				var name = nameSep[i].split("#VSEP#");
-				if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
-					delete nameSep[i];
-					//nameSep.splice(i, 1);
-				} else {
-					if(nameSep[i] != "") {
-						finalValue = finalValue + nameSep[i] + "#SEP#";
+			if (selectedValues != undefined) {
+				nameSep = selectedValues.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var name = nameSep[i].split("#VSEP#");
+					if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
+						delete nameSep[i];
+						//nameSep.splice(i, 1);
+					} else {
+						if(nameSep[i] != "") {
+							finalValue = finalValue + nameSep[i] + "#SEP#";
+						}
 					}
-				}
+				}				
 			}
 		} else if (from == "edit") { //During edit
-			nameSep = selectedValues.split("#SEP#");
-			for (var i=0; i < nameSep.length; i++) {
-				var name = nameSep[i].split("#VSEP#");
-				if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '') && selectedVersions != "") {
-					var newVal = selectedName + "#VSEP#" + selectedVersions;
-					delete nameSep[i];
-					nameSep[i] = newVal;
+			if (selectedValues != undefined) {
+				nameSep = selectedValues.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var name = nameSep[i].split("#VSEP#");
+					if (name[0].replace(/\s/g, '') == selectedName.replace(/\s/g, '') && selectedVersions != "") {
+						var newVal = selectedName + "#VSEP#" + selectedVersions;
+						delete nameSep[i];
+						nameSep[i] = newVal;
+					}
+					if(nameSep[i] != "") {
+						finalValue = finalValue + nameSep[i] + "#SEP#";
+				  	}
 				}
-				if(nameSep[i] != "") {
-					finalValue = finalValue + nameSep[i] + "#SEP#";
-			  	}
 			}
 		} else if (from == "removePilotProjConfig") { //During add
-			nameSep = selectedValues.split("#SEP#");
-			for (var i=0; i < nameSep.length; i++) {
-				var servers = nameSep[i].split("#VSEP#");
-				var availName = servers[0]; 
-				var availVersions = servers[1];
-				if (availName.replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
-					finalValue = finalValue + availName + "#VSEP#" + selectedVersions + "#SEP#";
-				} else if (nameSep[i] != "") {
-					finalValue = finalValue + nameSep[i] + "#SEP#";
+			if (selectedValues != undefined) {
+				nameSep = selectedValues.split("#SEP#");
+				for (var i=0; i < nameSep.length; i++) {
+					var servers = nameSep[i].split("#VSEP#");
+					var availName = servers[0]; 
+					var availVersions = servers[1];
+					if (availName.replace(/\s/g, '') == selectedName.replace(/\s/g, '')) {
+						finalValue = finalValue + availName + "#VSEP#" + selectedVersions + "#SEP#";
+					} else if (nameSep[i] != "") {
+						finalValue = finalValue + nameSep[i] + "#SEP#";
+					}
 				}
 			}
 		} else {
@@ -656,12 +669,13 @@
 				size = '<%= databases.size() %>';
 			<% } %>
 		}
-		
-		nameSep = selectedValues.split("#SEP#");
-		if(nameSep.length > size) {
-			$("#"+type).hide();
-		} else {
-			$("#"+type).show();
+		if (selectedValues != undefined) {
+			nameSep = selectedValues.split("#SEP#");
+			if(nameSep.length > size) {
+				$("#"+type).hide();
+			} else {
+				$("#"+type).show();
+			}			
 		}
 	}
 	

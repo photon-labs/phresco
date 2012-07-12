@@ -277,12 +277,20 @@
     }
     
     /** To fill the versions in the select box **/
-	function fillVersions(element, data) {
+	function fillVersions(element, data, from) {
 		$('#' + element).empty();
     	if ((data != undefined || !isBlank(data)) && data != "") {
-			for (i in data) {
-				$('#' + element).append($("<option></option>").attr("value",data[i]).text(data[i]));
-			}
+    		if ("getSQLFiles" == from) {
+    			for (i in data) {
+	    			var sep = new Array();
+	    			sep = data[i].split("#SEP#");
+	    			$('#' + element).append($("<option></option>").attr("value", sep[0] + "/" + sep[1]).text(sep[1]));
+    			}
+    		} else {
+				for (i in data) {
+					$('#' + element).append($("<option></option>").attr("value", data[i]).text(data[i]));
+				}
+    		}
 			return true;
 		}
 	}
@@ -356,4 +364,20 @@
 	    $('.siteaccordion').click(function(){ 
 	    	$('#siteaccordion_active').attr("id", "");   	
 	    });
+	}
+	
+	function isAllCheckBoxCheked(tagControlId) {
+		if (!$("tbody#" + tagControlId + " input[type=checkbox]:not(:checked)").length) {
+			 return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function isAtleastOneCheckBoxCheked(tagControlId) {
+		if ($("tbody." + tagControlId + " input[type=checkbox]:checked").length > 0) {
+			 return true;
+		} else {
+			return false;
+		}
 	}

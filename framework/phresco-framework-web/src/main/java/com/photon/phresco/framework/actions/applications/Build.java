@@ -45,7 +45,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -54,6 +54,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
@@ -130,9 +131,16 @@ public class Build extends FrameworkBaseAction {
 	private String profileCreationMessage = null;
 	private String profileAvailable = null;
 	private String signing = null;
-
+	private List<String> databases = null;	
+	private List<String> sqlFiles = null;	
 	private static Map<String, List<String>> projectModuleMap = Collections.synchronizedMap(new HashMap<String, List<String>>(8));
-
+	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
+	
+	// DbWithSqlFiles
+	private String DbWithSqlFiles = null;
+	static {
+		initDbPathMap();
+	}
 	public String view() {
 		if (debugEnabled)
 			S_LOGGER.debug("Entering Method  Build.view()");
@@ -146,6 +154,7 @@ public class Build extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_PROJECT, project);
 			String techId = project.getProjectInfo().getTechnology().getId();
 			String readLogFile = "";
+			boolean tempConnectionAlive = false;
 			int serverPort = 0;
 			if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(techId)) {
 				String serverProtocol = (String) getHttpSession().getAttribute(projectCode + SESSION_NODEJS_SERVER_PROTOCOL_VALUE);
@@ -171,15 +180,16 @@ public class Build extends FrameworkBaseAction {
 					serverPort = Integer.parseInt(serverPortStr);
 				}
 				if (serverProtocol != null && serverHost != null && serverPort != 0) {
-					boolean tempConnectionAlive = DiagnoseUtil
-							.isConnectionAlive(serverProtocol, serverHost, serverPort);
+					tempConnectionAlive = DiagnoseUtil.isConnectionAlive(serverProtocol, serverHost, serverPort);
+					getHttpSession().setAttribute(projectCode + SESSION_NODEJS_SERVER_STATUS, tempConnectionAlive);
+				}
 					if (tempConnectionAlive) {
 						readLogFile = readLogFile(project, READ_LOG_VIEW);
 					} else {
+						deleteNodejsLogFile(projectCode);
 						readLogFile = "";
+						
 					}
-					getHttpSession().setAttribute(projectCode + SESSION_NODEJS_SERVER_STATUS, tempConnectionAlive);
-				}
 			}
 			if (TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_WIDGET.equals(techId)
 					|| TechnologyTypes.JAVA_WEBSERVICE.equals(techId)
@@ -404,7 +414,7 @@ public class Build extends FrameworkBaseAction {
 					// if the checkbox is selected value should be set to false otherwise true
 					proguard = TRUE;
 				}
-				/*settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);*/
+				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 //				settingsInfoMap.put(SKIPTESTS, TRUE);
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
@@ -581,6 +591,9 @@ public class Build extends FrameworkBaseAction {
 		String buildNumber = getHttpRequest().getParameter(REQ_DEPLOY_BUILD_NUMBER);
 		String simulatorVersion = getHttpRequest().getParameter(REQ_DEPLOY_IPHONE_SIMULATOR_VERSION);
 		try {
+			if(StringUtils.isNotEmpty(importSql)) {
+				configureSqlExecution();
+			}
 			ActionType actionType = null;
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
@@ -867,6 +880,9 @@ public class Build extends FrameworkBaseAction {
 		int serverPort = 0;
 		
 		try {
+			if(StringUtils.isNotEmpty(importSql)) {
+				configureSqlExecution();
+			}
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
 			String projectCode = project.getProjectInfo().getCode();
@@ -879,7 +895,10 @@ public class Build extends FrameworkBaseAction {
 				 serverHost = settingsInfo.getPropertyInfo(Constants.SERVER_HOST).getValue();
 				 serverProtocol = settingsInfo.getPropertyInfo(Constants.SERVER_PROTOCOL).getValue();
 				 serverPort = Integer.parseInt(settingsInfo.getPropertyInfo(Constants.SERVER_PORT).getValue());
-				
+			}
+			boolean tempConnectionAlive = DiagnoseUtil.isConnectionAlive(serverProtocol, serverHost, serverPort);
+			if(!tempConnectionAlive) {
+				deleteNodejsLogFile(projectCode);
 			}
 			Map<String, String> valueMap = new HashMap<String, String>(2);
 			valueMap.put(ENVIRONMENT_NAME, environments);
@@ -892,17 +911,10 @@ public class Build extends FrameworkBaseAction {
 					&& !line.startsWith("[INFO] server startup failed")) {
 				line = reader.readLine();
 			}
-			if (line.startsWith("[INFO] server startup failed")) {
-				StringReader sb = new StringReader("Server startup failed");
-				reader = new BufferedReader(sb);
-				getHttpSession().setAttribute(projectCode + REQ_READ_LOG_FILE, reader);
-				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
-				getHttpRequest().setAttribute(REQ_TEST_TYPE, REQ_READ_LOG_FILE);
-			} else {
+				waitForTime(2);
 				readLogFile(project, "");
-			}
 			
-			boolean tempConnectionAlive = DiagnoseUtil.isConnectionAlive(serverProtocol, serverHost, serverPort);
+			tempConnectionAlive = DiagnoseUtil.isConnectionAlive(serverProtocol, serverHost, serverPort);
 			getHttpSession().setAttribute(projectCode + SESSION_NODEJS_SERVER_PROTOCOL_VALUE, serverProtocol);
 			getHttpSession().setAttribute(projectCode + SESSION_NODEJS_SERVER_HOST_VALUE, serverHost);
 			getHttpSession().setAttribute(projectCode + SESSION_NODEJS_SERVER_PORT_VALUE, new Integer(serverPort).toString());
@@ -1037,7 +1049,7 @@ public class Build extends FrameworkBaseAction {
 			// It executed when file not exist and return reader
 			if (!file.exists()) {
 				StringReader sb = new StringReader(
-						"Server started successfully...");
+						"Server startup failed");
 				reader = new BufferedReader(sb);
 				// getHttpSession().setAttribute(REQ_READER, reader);
 				getHttpSession().setAttribute(projectCode + REQ_READ_LOG_FILE,
@@ -1047,21 +1059,7 @@ public class Build extends FrameworkBaseAction {
 			}
 			// It executed when file existence and return reader
 			if (file.exists()) {
-				waitForTime(2);
 				reader = new BufferedReader(new FileReader(file));
-				// getHttpSession().setAttribute(REQ_READER, reader);
-				@SuppressWarnings("unused")
-				String line = null;
-				if (reader.markSupported()) {
-					reader.mark(1);
-					if ((line = reader.readLine()) == null) {
-						reader = new BufferedReader(new StringReader(
-								"Server started successfully..."));
-					} else {
-						reader.reset();
-					}
-				}
-
 				getHttpSession().setAttribute(projectCode + REQ_READ_LOG_FILE,
 						reader);
 				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -1086,6 +1084,9 @@ public class Build extends FrameworkBaseAction {
 		if (debugEnabled)
 			S_LOGGER.debug("Entering Method Build.javaRunAgainstSource()");
 		try {
+			if(StringUtils.isNotEmpty(importSql)) {
+				configureSqlExecution();
+			}
 			String serverHost = null;
 			String serverProtocol = null;
 			int serverPort = 0;
@@ -1413,6 +1414,21 @@ public class Build extends FrameworkBaseAction {
 		return env;
 	}
 	
+	
+	private void deleteNodejsLogFile(String projectcode) {
+		StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+		builder.append(projectcode);
+		builder.append(File.separator);
+		builder.append(DO_NOT_CHECKIN_DIR);
+		builder.append(File.separator);
+		builder.append(NODEJS_LOG_DIR);
+		builder.append(File.separator);
+		builder.append(NODEJS_LOG_FILE);
+		File nodejsLogFile = new File(builder.toString());
+		if (nodejsLogFile.exists()) {
+			nodejsLogFile.delete();
+		}
+	}
 	private void getValueFromJavaStdAlonePom() throws PhrescoException {
 		try {
 			File file = new File(Utility.getProjectHome() + File.separator + projectCode + File.separator + POM_FILE);
@@ -1555,6 +1571,106 @@ public class Build extends FrameworkBaseAction {
 		return SUCCESS;
 	}
 	
+	public String getSqlDatabases() {
+		String dbtype = "";
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			databases = new ArrayList<String>();
+			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos( Constants.SETTINGS_TEMPLATE_DB,
+					projectCode, environments);
+			for (SettingsInfo databasedetail : databaseDetails) {
+				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+				databases.add(dbtype);
+			}
+		} catch (PhrescoException e) {
+			S_LOGGER.error("Entered into catch block of  Build.configSQL()"	+ FrameworkUtil.getStackTraceAsString(e));
+		}
+	 	return SUCCESS;
+	}
+	
+	public String getSQLFiles() {
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project project = administrator.getProject(projectCode);
+			String techId = project.getProjectInfo().getTechnology().getId();
+			String selectedDb = getHttpRequest().getParameter("selectedDb");
+			String sqlPath = sqlFolderPathMap.get(techId);
+			File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb).listFiles();
+			sqlFiles = new ArrayList<String>();
+			showFiles(dbSqlFiles, selectedDb, sqlPath);
+		} catch (PhrescoException e) {
+			S_LOGGER.error("Entered into catch block of  Build.getSQLFiles()" + FrameworkUtil.getStackTraceAsString(e));
+		}
+		return SUCCESS;
+	}
+	
+	private void showFiles(File[] dbSqlFiles, String selectedDb, String sqlPath) {
+		String versionName = null;
+		String sqlFileName = null;
+		String path = null;
+		if (!ArrayUtils.isEmpty(dbSqlFiles)) {
+			for (File dbSqlFile : dbSqlFiles) {
+				if (dbSqlFile.isDirectory()) {
+					showFiles(dbSqlFile.listFiles(), selectedDb, sqlPath);
+				} else {
+					 sqlFileName = dbSqlFile.getName();
+					 versionName = dbSqlFile.getParentFile().getName();
+					 path = sqlPath + selectedDb + FILE_SEPARATOR +  versionName + "#SEP#" +  sqlFileName ;
+					 sqlFiles.add(path);
+				}
+			}
+		}
+	}
+	
+	private static void initDbPathMap() {
+		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL7, "/source/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, "/source/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "/src/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, "/src/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "/src/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "/src/sql/");
+		sqlFolderPathMap.put(TechnologyTypes.WORDPRESS, "/source/sql/");
+	}
+
+	public void configureSqlExecution() {
+		Map<String, List<String>> dbsWithSqlFiles = new HashMap<String, List<String>>();
+		String[] dbWithSqlFiles = DbWithSqlFiles.split("#SEP#");
+		for (String dbWithSqlFile : dbWithSqlFiles) {
+			String[] sqlFiles = dbWithSqlFile.split("#VSEP#");
+			String[] sqlFileWithName = sqlFiles[1].split("#NAME#");
+			if(dbsWithSqlFiles.containsKey(sqlFiles[0])) {
+				List<String> sqlFilesList = dbsWithSqlFiles.get(sqlFiles[0]);
+				sqlFilesList.add(sqlFileWithName[0]);
+				dbsWithSqlFiles.put(sqlFiles[0], sqlFilesList);
+			} else {
+				List<String> sqlFilesList = new ArrayList<String>();
+				sqlFilesList.add(sqlFileWithName[0]);
+				dbsWithSqlFiles.put(sqlFiles[0], sqlFilesList);
+			}
+		}
+		FileWriter writer = null;
+		try {
+			File sqlInfoFilePath = new File(Utility.getProjectHome() + projectCode + Constants.JSON_PATH);
+			String json = new Gson().toJson(dbsWithSqlFiles);
+			writer = new FileWriter(new File(sqlInfoFilePath.getPath()));
+			writer.write(json);
+		} catch (IOException e) {
+			S_LOGGER.error("Entered into catch block of  Build.configureSqlExecution()"
+					+ FrameworkUtil.getStackTraceAsString(e));
+		} finally {
+			try {
+				if (writer != null) {
+					writer.close();
+				}
+			} catch (IOException e) {
+				S_LOGGER.error("Entered into catch block of  Build.configureSqlExecution()"
+						+ FrameworkUtil.getStackTraceAsString(e));
+			}
+		}
+	}
+
 	public String getShowSettings() {
 		return showSettings;
 	}
@@ -1831,6 +1947,30 @@ public class Build extends FrameworkBaseAction {
 
 	public void setSigning(String signing) {
 		this.signing = signing;
+	}
+
+	public List<String> getSqlFiles() {
+		return sqlFiles;
+	}
+
+	public void setSqlFiles(List<String> sqlFiles) {
+		this.sqlFiles = sqlFiles;
+	}
+
+	public List<String> getDatabases() {
+		return databases;
+	}
+
+	public void setDatabases(List<String> databases) {
+		this.databases = databases;
+	}
+
+	public String getDbWithSqlFiles() {
+		return DbWithSqlFiles;
+	}
+
+	public void setDbWithSqlFiles(String dbWithSqlFiles) {
+		DbWithSqlFiles = dbWithSqlFiles;
 	}
 	
 }

@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-nodejs-archetype
- * 
+ * PHR_NodeJSWebService
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -54,7 +54,7 @@ public class Constants {
 	
 	public static  String MAC_OS = "Mac";
 	
-	public static String DIRECTORY="/test"+"/chromedriver";
+	public static String DIRECTORY="/chromedriver";
 	
 	public static String WINDOWS_DIRECTORY=DIRECTORY+"/windows";
 	

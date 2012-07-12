@@ -42,7 +42,7 @@
 	String technology = (String)project.getProjectInfo().getTechnology().getId();
 	String sonarError = (String)request.getAttribute(FrameworkConstants.REQ_ERROR);
 	String disabledStr = "";
-	if (StringUtils.isNotEmpty(sonarError)) {
+	if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) {
 		disabledStr = "disabled";
 	}
 %>
@@ -50,7 +50,7 @@
 <div class="operation">
     <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
 </div>
-<% if (StringUtils.isNotEmpty(sonarError)) { %>
+<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
 	<div class="alert-message warning sonar">
 		<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
 	</div>
@@ -63,37 +63,37 @@
 <script>
     $(document).ready(function() {
 		/** To enable/disable the validate button based on the sonar startup **/
-    	<% if (StringUtils.isNotEmpty(sonarError)) { %>
+    	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
     			$("#validate").removeClass("primary");	
     			$("#validate").addClass("disabled");
     	<% } else { %>
     			$("#validate").addClass("primary");	
-				$("#validate").removeClass("disabled");
+				  $("#validate").removeClass("disabled");
     	<% } %>
 
     	changeStyle("code");
     	sonarReport();
     	enableScreen();
 		
-        $('#validate').click(function() {
+		$('#validate').click(function() {
 			getCodeValidatePopUp();
-        });
-        
-       	$('#closeGenTest, #closeGenerateTest').click(function() {
-       		closePopup();
-       		sonarReport();
-        });
+  		});
+  
+		$('#closeGenTest, #closeGenerateTest').click(function() {
+ 			closePopup();
+ 			sonarReport();
+  		});
     });
     
     function progress() {
+    	
     	getCurrentCSS();
     	$('#loadingDiv').show();
     	$('#build-output').empty();
     	$('#build-output').html("Validating code...");
-        $('#build-outputOuter').show().css("display","block");
-        $(".wel_come").show().css("display","block");
-        
-        readerHandlerSubmit('progressValidate', '<%= projectCode %>', '<%= FrameworkConstants.REQ_SONAR_PATH %>');
+		$('#build-outputOuter').show().css("display","block");
+		$(".wel_come").show().css("display","block");
+		readerHandlerSubmit('progressValidate', '<%= projectCode %>', '<%= FrameworkConstants.REQ_SONAR_PATH %>');
 	}
     
     function sonarReport() {
@@ -103,8 +103,8 @@
     
     function getCodeValidatePopUp() {
     	$('#popup_div').empty();
-		showPopup();
-        popup('getCodeValidatePopUp', '', $('#popup_div'));
+		  showPopup();
+      popup('getCodeValidatePopUp', '', $('#popup_div'));
     }
     
 	function checkObj(obj) {

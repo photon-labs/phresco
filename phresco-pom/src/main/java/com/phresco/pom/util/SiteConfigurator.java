@@ -21,8 +21,12 @@ package com.phresco.pom.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
 
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.ReportPlugin;
@@ -37,88 +41,60 @@ import com.phresco.pom.site.Reports;
  */
 public class SiteConfigurator {
 
+	private static final Logger LOGGER = Logger.getLogger(SiteConfigurator.class);
 
 	/**
 	 * 
 	 */
 	private ReportPlugin reportPlugin = null;
 	/**
-	 * @param reports
+	 * @param iterateReport
 	 * @param file
 	 * @return
 	 */
-	public ReportPlugin addReportPlugin(Reports reports,File file) {
+	public ReportPlugin addReportPlugin(List<Reports> report, List<ReportCategories> reportCategories, File file) {
 		try {
 			PomProcessor processor = new PomProcessor(file);
-			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null) {
+			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID) == null) {
 				processor.addSitePlugin();
 			}
-			reportPlugin = new ReportPlugin();
-			reportPlugin.setGroupId(reports.getGroupId());
-			reportPlugin.setArtifactId(reports.getArtifactId());
-			reportPlugin.setVersion(reports.getVersion());
-			processor.siteReportConfig(reportPlugin);
-			processor.save();
-			return reportPlugin;
-		} catch (JAXBException e) {
-		} catch (IOException e) {
-		} catch (PhrescoPomException e) {
-		}
-		return null;
-	}
-
-	/**
-	 * @param reports
-	 * @param report
-	 * @param file
-	 * @throws JAXBException
-	 * @throws IOException
-	 * @throws PhrescoPomException 
-	 */
-	public void addInfoReportPlugin(List<Reports> reports,File file) {
-
-		try{
-			PomProcessor processor = new PomProcessor(file);
-			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID)==null){
-				processor.addSitePlugin();
+			if(getReports(file) != null) {
+				processor.removeAllReportingPlugin();
 			}
-			for (Reports iterateReport : reports) {
+
+			for (Reports iterateReport : report) {
 				reportPlugin = new ReportPlugin();
 				reportPlugin.setGroupId(iterateReport.getGroupId());
 				reportPlugin.setArtifactId(iterateReport.getArtifactId());
 				reportPlugin.setVersion(iterateReport.getVersion());
-				processor.siteReportConfig(reportPlugin);
-				ReportSets reportSets = reportPlugin.getReportSets();
-				ReportSet reportSet = new ReportSet();
-				com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
-				if(reportSets == null){
-					reportPlugin.setReportSets(new ReportSets());
-					List<ReportCategories> reportCategories = iterateReport.getReportCategories();
-					for (ReportCategories reportCategories2 : reportCategories) {
-						reportSet.setReports(repo);		
-						reportSet.getReports().getReport().add(reportCategories2.getName());
+
+				if(reportPlugin.getArtifactId().equals(Reports.PROJECT_INFO.getArtifactId())) {
+					ReportSets reportSets = reportPlugin.getReportSets();
+					ReportSet reportSet = new ReportSet();
+					com.phresco.pom.model.ReportSet.Reports repo = new com.phresco.pom.model.ReportSet.Reports();
+					if(reportSets == null){
+						reportPlugin.setReportSets(new ReportSets());
+						if(reportCategories != null){
+							for (ReportCategories reportCategories2 : reportCategories) {
+								reportSet.setReports(repo);		
+								reportSet.getReports().getReport().add(reportCategories2.getName());
+							} reportPlugin.getReportSets().getReportSet().add(reportSet);
+						} 
 					}
-				} reportPlugin.getReportSets().getReportSet().add(reportSet);
+				}
+				processor.siteReportConfig(reportPlugin);
+			}
 				processor.save();
-			} 
-		}catch (JAXBException e) {
+		} catch (JAXBException e) {
+			LOGGER.debug(e);
 		} catch (IOException e) {
+			LOGGER.debug(e);
 		} catch (PhrescoPomException e) {
+			LOGGER.debug(e);
 		}
+		return reportPlugin;
 	}
 
-	/**
-	 * @param reports
-	 * @param file
-	 * @return
-	 */
-	public ReportPlugin addReportPlugin(List<Reports> reports,File file){
-		for (Reports iterateReport : reports) {
-			return addReportPlugin(iterateReport,file);
-		}
-		return null;
-	}
-	
 	/**
 	 * @param reports
 	 * @param file
@@ -134,7 +110,65 @@ public class SiteConfigurator {
 				processor.save();
 			}
 		} catch (JAXBException e) {
+			LOGGER.debug(e);
 		} catch (IOException e) {
+			LOGGER.debug(e);
+		}
+	}
+
+	/**
+	 * @param file
+	 * @return
+	 * @deprecated
+	 */
+	public void addReportPlugin(List<Reports> reports , File file) {
+		addReportPlugin(reports, null, file);
+	}
+	
+	public List<Reports> getReports(File file) {
+		try {
+			PomProcessor processor = new PomProcessor(file);
+			List<ReportPlugin> reportPlugin = processor.getReportPlugin();
+			if(reportPlugin != null) {
+				List<Reports> reports = new ArrayList<Reports>();
+				List<ReportCategories> categories = new ArrayList<ReportCategories>();
+				for (ReportPlugin reportPlugin2 : reportPlugin) {
+					Reports reports1 = new Reports();
+					reports1.setGroupId(reportPlugin2.getGroupId());
+					reports1.setArtifactId(reportPlugin2.getArtifactId());
+					List<String> projectInfoReportCategories = processor.getProjectInfoReportCategories();
+					if(projectInfoReportCategories != null && reportPlugin2.getArtifactId().equals(Reports.PROJECT_INFO.getArtifactId())){
+						for (String name : projectInfoReportCategories) {
+							ReportCategories reportCategories = new ReportCategories();
+							reportCategories.setName(name);
+							categories.add(reportCategories);
+							reports1.setReportCategories(categories);
+						}
+					} reports.add(reports1);
+				} 
+				return reports;
+			}
+		} catch (JAXBException e) {
+			LOGGER.debug(e);
+		} catch (IOException e) {
+			LOGGER.debug(e);
+		}
+		return null;
+	}
+
+	/**
+	 * @param file
+	 * @param reportCategories
+	 */
+	public void removeReportCategory(File file,List<ReportCategories> reportCategories){
+		try {
+			PomProcessor processor = new PomProcessor(file);
+			processor.removeProjectInfoReportCategory(reportCategories);
+			processor.save();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

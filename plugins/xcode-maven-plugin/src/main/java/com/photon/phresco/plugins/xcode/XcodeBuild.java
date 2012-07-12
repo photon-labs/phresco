@@ -50,7 +50,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.photon.phresco.plugin.commons.PluginUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -66,7 +66,6 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.commons.XCodeConstants;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.plugin.commons.PluginUtils;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
 

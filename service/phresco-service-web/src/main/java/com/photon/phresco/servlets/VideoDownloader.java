@@ -41,10 +41,15 @@ import com.photon.phresco.service.model.ServerConstants;
 
 public class VideoDownloader extends Thread implements ServerConstants {
 
-	private static final String VIDEO_FOLDER = "/webapps/";
+	private static final String VIDEO_FOLDER = "/webapps";
 	private static final Logger s_logger = Logger.getLogger(VideoDownloader.class);
 	private static Boolean debugEnabled = s_logger.isDebugEnabled();
-
+	private String serverContext;
+	
+	public VideoDownloader(String serverContext) {
+		this.serverContext = serverContext;
+	}
+	
 	public void run()  {
 		if (debugEnabled) {
 			s_logger.debug("Entering Method  VideoDownloader.run()");
@@ -98,7 +103,7 @@ public class VideoDownloader extends Thread implements ServerConstants {
 			int index = videoURL.lastIndexOf("/");
 			String fileName = videoURL.substring(index + 1);
 			String filePathStr = videoURL.substring(0, index);
-			File filePath = new File("../" + VIDEO_FOLDER + getServerName() + filePathStr);
+			File filePath = new File("../" + VIDEO_FOLDER + serverContext + filePathStr);
 			if (!filePath.exists()) {
 				filePath.mkdirs();
 			}
@@ -139,11 +144,4 @@ public class VideoDownloader extends Thread implements ServerConstants {
 		String repositoryUrl = PhrescoServerFactory.getRepositoryManager().getRepositoryURL();
 		return repositoryUrl;
 	}
-	
-	private String getServerName() throws PhrescoException {
-	    PhrescoServerFactory.initialize();
-	    String serviceName = PhrescoServerFactory.getRepositoryManager().getServiceContextName();
-        return serviceName;
-	}
-	
 }

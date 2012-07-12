@@ -1,9 +1,9 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<%@ page import="com.photon.phresco.model.UserInfo" %>
+<%@ page import="com.photon.phresco.commons.model.User" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 
-<% UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); %>
+<% User userInfo = (User)session.getAttribute(FrameworkConstants.REQ_USER_INFO); %>
 
 <div class="popup_Modal topFifty" id="repoDet">
     <form name="repoDetails" action="import" method="post" autocomplete="off" class="repo_form">
@@ -194,8 +194,8 @@
 	 		$("#password").val('');
 	 		localStorage["svnImport"] = "credentials";
 	 	} else {
- 			$("#userName").val('<%= userInfo.getCredentials().getUsername() %>');
- 			$("#password").val('<%= userInfo.getCredentials().getPassword() %>');
+ 			$("#userName").val('<%= userInfo.getName() %>');
+<%--  			$("#password").val('<%= userInfo.getCredentials().getPassword() %>'); --%>
  			disableSvnFormDet();
  			localStorage["svnImport"] = "";
 	 	}

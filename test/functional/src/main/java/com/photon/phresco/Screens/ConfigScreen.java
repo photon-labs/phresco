@@ -7,6 +7,7 @@ import com.photon.phresco.uiconstants.JavaWebServConstantsXml;
 import com.photon.phresco.uiconstants.MobWidgetConstantsXml;
 import com.photon.phresco.uiconstants.NodeJSConstantsXml;
 import com.photon.phresco.uiconstants.PhpConstantsXml;
+import com.photon.phresco.uiconstants.PhrescoUiConstants;
 import com.photon.phresco.uiconstants.PhrescoUiConstantsXml;
 import com.photon.phresco.uiconstants.SharepointConstantsXml;
 import com.photon.phresco.uiconstants.YuiConstantsXml;
