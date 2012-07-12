@@ -4676,6 +4676,14 @@ a[id='androidSigning']:hover {
 .desc_text {
 	 width:79%;
 	 float:right; 
+	 height:113px; 
+	 overflow-y:hidden;
+}
+
+.description {
+	text-align:justify; 
+	margin-right:7px; 
+	margin-bottom:0px;
 }
 
 /** CI multiple jobs css starts **/
@@ -4726,4 +4734,17 @@ a[id='androidSigning']:hover {
 #reportcategy {
 	margin-left: 75px;
 	text-align: justify;
+
 }
+
+/** All checkbox list page css**/
+.checkbox_list {
+    width:0.1%;
+}
+
+/** Print pdf image **/
+.printAsPdf {
+	width: 70px;
+}
+
+

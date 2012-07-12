@@ -249,10 +249,11 @@
 												String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
 												String url = "";
 												String featureUrl = "";
+												featureUrl = module.getImageURL();
 												if(StringUtils.isEmpty(featureUrl)) {
 													url = "images/right1.png";
 												} else {
-													url = serverUrl + featureUrl;
+													url = serverUrl + "/" + featureUrl;
 												}
 												String helpTextContent = "";
 												if (module.getDoc(DocumentationType.HELP_TEXT) != null) { 

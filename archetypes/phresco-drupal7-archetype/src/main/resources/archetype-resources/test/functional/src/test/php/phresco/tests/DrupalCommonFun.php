@@ -51,15 +51,6 @@ class DrupalCommonFun extends RequiredFunction
 		}
 		$serverUrl = $protocol .':'. '//' . $host . ':' . $port . '/'. $context . '/';
 		$this->webdriver->get($serverUrl);
-		/* /* if (window.screen){
-        window.moveTo(0, 0);
-        window.resizeTo(window.screen.availWidth,window.screen.availHeight); 
-		 
-		
-		$this->diver.manage().window().maximize(); $this->windowMaxmize();
- 
-		 $this->maximize();
-		$this->windowFocus(); */ 
 		sleep(2);
 	}
 	function DoLogin($testCaseName)
@@ -72,7 +63,7 @@ class DrupalCommonFun extends RequiredFunction
 		$password;
 		$property = new DrupalCommonFun;
 		$doc = new DOMDocument();
-		$doc->load('test-classes/phresco/tests/drupalsetting.xml');
+		$doc->load('test-classes/phresco/tests/UserInfo.xml');
 		$users = $doc->getElementsByTagName("user");
 		foreach( $users as $user )
 		{
@@ -102,14 +93,6 @@ class DrupalCommonFun extends RequiredFunction
 		$this->clickandLoad(DRU_LOGOUT_TEXT);
 		sleep(1);
 	}
-	
-    /*  function maximize(){
-
-        String script = if (window.screen){window.moveTo(0,0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};;
-        ((JavascriptExecutor) driver).executeScript(script);  } 
- */
-  
-	
 	
 	}
 ?>

@@ -65,29 +65,11 @@
 			       </select>
 				</div>
 			</div>
-			
-		<% } else if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
-				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
-				<fieldset class="popup-fieldset">
-					<legend class="fieldSetLegend"><s:text name="label.select.tech"/></legend>
-					<!-- Show Settings -->
-					<div class="clearfix">
-						<div class="xlInput">
-							<ul class="inputs-list">
-								<li class="popup-li"> 
-									<input type="radio" name="codeTechnology" value="" checked>
-									<span class="textarea_span popup-span"><s:text name="label.tech.java"/></span>
-									<input type="radio" name="codeTechnology" value="js" >
-									<span class="textarea_span popup-span"><s:text name="label.tech.javascript"/></span>
-								</li>
-							</ul>
-						</div>	
-					</div>
-				</fieldset>
-		<% } %>
+		<% }  else { %>
 		
 		<fieldset class="popup-fieldset">
-			<legend class="fieldSetLegend"><s:text name="label.select.validate.against"/></legend>
+			<legend class="fieldSetLegend" style="font-weight:normal"><s:text name="label.select.validate.against"/></legend>
+
 			<!-- Show Settings -->
 			<div class="clearfix">
 				<div class="xlInput">
@@ -101,13 +83,44 @@
 					</ul>
 				</div>	
 			</div>
+
+			<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
+				<li class="popup-li"> 
+					<input type="checkbox" id="skipTest" name="skipTest" value="true" />
+					<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
+				</li>
+			</ul>
+
+			<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
+
+				<div class="clearfix">
+					<div class="xlInput">
+						<ul class="inputs-list">
+							<li class="popup-li"> 
+								<span class="popup-span"><s:text name="label.technology"/></span>
+								<select class="xlarge" id="technology" name="codeTechnology">
+									<option value="java" ><s:text name="label.tech.java"/></option>
+									<option value="js" ><s:text name="label.tech.javascript"/></option>
+									<option value="web" ><s:text name="label.tech.jsp"/></option>
+								</select>
+								<!--<span class="textarea_span popup-span"><s:text name="label.technology"/></span>
+								<input type="radio" name="codeTechnology" value="" checked>
+								<span class="textarea_span popup-span"><s:text name="label.tech.java"/></span>
+								<input type="radio" name="codeTechnology" value="js" >
+								<span class="textarea_span popup-span"><s:text name="label.tech.javascript"/></span>
+								<input type="radio" name="codeTechnology" value="jsp" >
+								<span class="textarea_span popup-span"><s:text name="label.tech.jsp"/></span>-->
+							</li>
+						</ul>
+					</div>	
+				</div>
+
+			<% } %>
+
 		</fieldset>
-		<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
-			<li class="popup-li"> 
-				<input type="checkbox" name="skipTest" value="true" />
-				<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
-			</li>
-		</ul>
+		<% } %>
+
 	</div>
 	
 	<div class="modal-footer">
@@ -136,22 +149,24 @@
 		$('input[name="validateAgainst"]').click(function() {
 			var selectedVal = $(this).val();
 			if (selectedVal == "functionalTest") {
-				$('#skipTestUl').hide();
+				$('#skipTest').prop("disabled", true);
+				$('#skipTest').attr("checked", false);
 			} else if (selectedVal == "source") {
-				$('#skipTestUl').show();
+				$('#skipTest').prop("disabled", false);
 			}
 		});
 		
-		 $('input[name="codeTechnology"]').click(function() {
-			var selectedval = $(this).val();
-			if (selectedval == "js") {
-				$('#funTestRadio').hide();
-				$('#funTestText').hide();
+		 $('#technology').change(function() {
+			var selectedval = $("#technology option:selected").val();
+			if (selectedval == "js" || selectedval == "jsp") {
+				$('#funTestRadio').prop("disabled", true);
+				//$('#funTestText').hide();
 				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
  				$('#skipTestUl').show();
 			} else {
-				$('#funTestRadio').show();
-				$('#funTestText').show();
+				$('#funTestRadio').prop("disabled", false);
+				//$('#funTestRadio').show();
+				//$('#funTestText').show();
 				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
  				$('#skipTestUl').show();
 			}

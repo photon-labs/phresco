@@ -120,7 +120,7 @@
 					<%= log.getErrorMessage() %>
 				</div>
 				<div class="clipboard" style="position:absolute; right:10px; top:35px;">
-                    <img src="images/icons/clipboard.png" alt="clipboard" id="clipboard" style= "height:25px; width:25px; cursor:pointer;" title="Copy to clipboard"> 
+                    <img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" style= "height:25px; width:25px; cursor:pointer;" title="Copy to clipboard"> 
 				</div>
 				<div style="display:none;" id="errorOrigin">
 					<s:if test="hasActionErrors()">

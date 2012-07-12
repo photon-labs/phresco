@@ -32,8 +32,8 @@
 				<div class = "desc_img">
 					<img id="featureImg" border="0" alt="image" src="">
 				</div>
-				<div class = "desc_text" style="height:113px; overflow-y:hiiden;">
-					<p id="moduleDescription" style= "text-align:justify; margin-right:7px;"><s:text name="label.modal.description"/></p>
+				<div class = "desc_text">
+					<p id="moduleDescription" class = "description"><s:text name="label.modal.description"/></p>
 				</div>
 			</div>
 			

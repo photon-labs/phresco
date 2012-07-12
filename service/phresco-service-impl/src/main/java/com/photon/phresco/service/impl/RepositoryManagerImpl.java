@@ -428,6 +428,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		modBean.setArtifactId(module.getArtifactId());
 		modBean.setGroupId(module.getGroupId());
 		modBean.setType(module.getContentType());
+		modBean.setImageURL(module.getImageUrl());
 		
 		List<Documentation> docs = getDocumentation(module.getDocuments());
 		modBean.setDocs(docs);

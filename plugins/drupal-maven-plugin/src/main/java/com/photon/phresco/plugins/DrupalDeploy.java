@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -88,7 +89,6 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 	private File buildDir;
 	private File buildFile;
 	private File tempDir;
-	private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
 
 	public void execute() throws MojoExecutionException {
 		init();
@@ -140,7 +140,8 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails,baseDir, DRUPAL_SQL_DIR, DRUPAL_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (Exception e) {

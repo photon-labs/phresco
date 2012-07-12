@@ -529,6 +529,7 @@ public interface FrameworkConstants {
 	String REQ_DB_DOWNLOAD_INFO = "dbDownloadInfos";
 	String REQ_EDITOR_DOWNLOAD_INFO = "editorDownloadInfos";
 	String REQ_TOOLS_DOWNLOAD_INFO = "toolsDownloadInfos";
+	String REQ_OTHERS_DOWNLOAD_INFO = "othersDownloadInfos";
 	
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
@@ -713,6 +714,7 @@ public interface FrameworkConstants {
      */
     String HIDE_LOG_MSG ="Only Error Messages will be displayed";
     String EXEC_SQL_MSG ="Existing DB with the same name will be overwritten";
+    String SELECT_DB ="Select atleast one DB Sql File for Execution";
     
     /*
      * Quality Info keys
@@ -1089,7 +1091,7 @@ public interface FrameworkConstants {
    String SESSION_PRJT_VLDT_STATUS  = "_PrjtVldtStatus";
    
    /* Code validate */
-   String CODE_VALIDATE_PARAM = "sonar.language";
+   String CODE_VALIDATE_PARAM = "sonar.branch";
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
