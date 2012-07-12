@@ -4,11 +4,12 @@
 	<groupId>com.photon.phresco.framework</groupId>
 	<artifactId>PhrescoFrameworkRuntime</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.0.6002-SNAPSHOT</version>
+	<version>2.0.0.6001-SNAPSHOT</version>
 	<name>Phresco Framework Web Application</name>
 
     <properties>
-		<phresco.framework.version>1.2.0.6002-SNAPSHOT</phresco.framework.version>		
+		<phresco.framework.version>2.0.0.6001-SNAPSHOT</phresco.framework.version>		
+		<sonar.version>2.12</sonar.version>
 	</properties>
 
 	<dependencies>
@@ -30,7 +31,7 @@
 	  <dependency>
 		<groupId>sonar</groupId>
 		<artifactId>sonar</artifactId>
-		<version>2.12</version>
+		<version>${sonar.version}</version>
 		<type>war</type>
 	  </dependency>
 	  
@@ -40,20 +41,6 @@
 		<version>2.5.1</version>
 		<type>zip</type>
 	  </dependency>
-      
-      <dependency>
-		<groupId>softwares.iphone.files</groupId>
-		<artifactId>checker-267</artifactId>
-		<version>0.1</version>
-		<type>zip</type>
-	  </dependency>
-      
-     <dependency>
-          <groupId>softwares.iphone.files</groupId>
-          <artifactId>device-deploy</artifactId>
-          <version>1.0</version>
-          <type>zip</type>
-      </dependency>
 	  
 	  <dependency>
 		<groupId>com.photon.phresco.file.server</groupId>
@@ -107,7 +94,7 @@
 								<artifactItem>
 									<groupId>sonar</groupId>
 									<artifactId>sonar</artifactId>
-									<version>2.12</version>
+									<version>${sonar.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools/war/sonar.war</outputDirectory>
@@ -117,30 +104,10 @@
 								<artifactItem>
 									<groupId>sonar</groupId>
 									<artifactId>sonar</artifactId>
-									<version>2.12</version>
+									<version>${sonar.version}</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
-								</artifactItem>
-                                
-                                <!-- extracting checkers zip file -->
-								<artifactItem>
-									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>checker-267</artifactId>
-                                    <version>0.1</version>
-                                    <type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools</outputDirectory>
-								</artifactItem>
-                                
-                                <!-- extracting chief zip file -->
-								<artifactItem>
-									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>device-deploy</artifactId>
-                                    <version>1.0</version>
-                                    <type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools/chief</outputDirectory>
 								</artifactItem>
 								
 								<!-- extracting JMeter zip file -->
@@ -191,11 +158,11 @@
 						  <goal>run</goal>
 						</goals>
 						<configuration>
-							<target>  
+							<tasks>  
 								<property name="file-server-location" value="${maven.dependency.com.photon.phresco.file.server.file-server.jar.path}"/>
 								<echo message="file server location: ${file-server-location}"/>
 								<ant antfile="build.xml" target="run-phresco" inheritRefs="true" inheritAll="true"/>
-							</target>
+							</tasks>
 						</configuration>
 					</execution>
 					<execution>
@@ -215,12 +182,5 @@
 			
 		</plugins>
 	</build>
-	
-	<repositories>
-		<repository>		
-			<id>phresco</id>
-			<url>http://dev-repo.photoninfotech.com:8880/repo/content/groups/public</url>
-		</repository>
-	</repositories>
 
 </project>
