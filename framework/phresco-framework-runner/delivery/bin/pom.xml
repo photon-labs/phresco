@@ -8,7 +8,7 @@
 	<name>Phresco Framework Web Application</name>
 
     <properties>
-		<phresco.framework.version>2.0.0.6001-SNAPSHOT</phresco.framework.version>		
+		<phresco.framework.version>1.2.0.6003-SNAPSHOT</phresco.framework.version>		
 		<sonar.version>2.12</sonar.version>
 	</properties>
 
