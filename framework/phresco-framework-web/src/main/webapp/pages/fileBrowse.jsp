@@ -41,6 +41,8 @@
 
 <%
 	String projectLocation = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_LOCATION);
+	String fileTypes = (String) request.getAttribute(FrameworkConstants.FILE_TYPES);
+	String fileorfolder = (String) request.getAttribute(FrameworkConstants.FILE_BROWSE);
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="browseLocation">
@@ -77,11 +79,21 @@
 		
 		$('#fileBrowseClose, #fileBrowseCancel').click(function() {
 			showAdvBuildSettings();
+			showFunctionalTestForm();
 		});
 		
+		// android build advanced technology
 		$('#fileBrowseOkay').click(function() {
 			$("input[name=keystore]").val($('#browseSelectedLocation').val());
 			$('#advancedSettingsBuildForm').show();
+			$('#generateBuild_Modal').hide();
+			$('#browseLocation').hide();
+		});
+		
+		// java standalone functional test jar browse location
+		$('#fileBrowseOkay').click(function() {
+			$("input[name=jarLocation]").val($('#browseSelectedLocation').val());
+			$('.build_form').show();
 			$('#browseLocation').hide();
 		});
 
@@ -91,8 +103,8 @@
 			expandSpeed: 1000,
 			collapseSpeed: 1000,
 			multiFolder: true,
-			fileTypes: '<%= FrameworkConstants.SIGNING_TYPES %>',
-			fileOrFolder: 'File'
+			fileTypes: '<%= fileTypes %>',
+			fileOrFolder: '<%= fileorfolder %>'
 		}, function(file) {
 			$('#browseSelectedLocation').val(file);
 		});
@@ -109,6 +121,11 @@
 	
 	function showAdvBuildSettings() {
 		$('#browseLocation').hide();
-		$('#advancedSettingsBuildForm').show();
+		$('#generateBuild_Modal').hide();
+	}
+	
+	function showFunctionalTestForm() {
+		$('#browseLocation').empty();
+		$('.build_form').show();
 	}
 </script>

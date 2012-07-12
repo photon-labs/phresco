@@ -123,12 +123,13 @@
 			<directory>test/functional/src/test/php/phresco/tests</directory> 
 			<includes> 
 				<include>WordPressCommonFun.php</include>
-				<include>WpSetting.xml</include>
+				<include>UserInfo.xml</include>
 				<include>CommonSuite.php</include>
 				<include>phresco-env-config.xml</include>
 				<include>Login_NewUsers.php</include>
 				<include>UserSuite.php</include>
 				<include>Welcompage.php</include>
+                <include>WordPressData.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

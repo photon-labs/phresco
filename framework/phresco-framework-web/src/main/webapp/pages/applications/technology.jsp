@@ -45,7 +45,7 @@
 	String projectCode = ""; 
 	String appType = (String)request.getAttribute(FrameworkConstants.REQ_APPLICATION_TYPE);
 	Technology selectedTechnology = (Technology) request.getAttribute(FrameworkConstants.SESSION_SELECTED_TECHNOLOGY);
-    ProjectInfo selectedInfo = (ProjectInfo) session.getAttribute((String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE));
+	ProjectInfo selectedInfo = (ProjectInfo) session.getAttribute((String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE));
 	String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
 	String disabled = "disabled";
     if (StringUtils.isEmpty(fromPage)) {
@@ -62,7 +62,7 @@
     boolean isEmailSupportSelected = false;
     String selectedPilotProj = null;
     String projectInfoDbNames = "";
-	if(selectedInfo != null && appType.equals(selectedInfo.getApplication()) && selectedTechnology.getId().equals(selectedInfo.getTechnology().getId())) {
+   	if(selectedInfo != null && appType.equals(selectedInfo.getApplication()) && selectedTechnology.getId().equals(selectedInfo.getTechnology().getId())) {
 		projectCode = selectedInfo.getCode();
 		selectedServers =  selectedInfo.getTechnology().getServers();
 		selectedDatabases =  selectedInfo.getTechnology().getDatabases();
@@ -129,7 +129,7 @@
 
 <form id="deleteObjects">
 	<!-- Servers are loaded here starts -->
-	<div class="clearfix">
+	<div class="clearfix" id="server">
 		<label for="xlInput" class="new-xlInput"><s:text name="label.supported.servers"/></label>
 	    
 	    <div class="input new-input" id="dispServer" style="color: #ffffff;">
@@ -143,7 +143,7 @@
 	<!-- Servers are loaded here ends -->
 
 	<!-- Databases are loaded here starts -->
-	<div class="clearfix">
+	<div class="clearfix" id="database">
 		<label for="xlInput" Class="new-xlInput"><s:text name="label.supported.dbs"/></label>
 		<div class="input new-input" id="dispDatabase" style="color: #ffffff">
 	
@@ -276,6 +276,8 @@
 			updateHiddenConfigNames();
 			return false;
 	    });
+		
+		 
 	});
 	
 	/** To retain values during project edit, previous and next **/
@@ -668,6 +670,8 @@
 	        } else {
 				$("#technologyVersionDiv").hide();
 	        }
+			var technology = $("#technology").val();
+			hideServerAndDatabase(technology);
 		} else if (pageUrl == "checkForRespectiveConfig") {
 			if (data.hasConfiguration) {
 				if (type == "Database") {
@@ -879,8 +883,18 @@
 						}
 					});
 		<%
-				}
+			    }
 			}
 		%>
 	}
+ 	
+	function hideServerAndDatabase(technology) {
+		if(technology == "tech-java-standalone") {
+			$("#server").hide();
+			$("#database").hide();
+		} else {
+			$("#server").show();
+			$("#database").show();
+		}
+	} 
 </script>
