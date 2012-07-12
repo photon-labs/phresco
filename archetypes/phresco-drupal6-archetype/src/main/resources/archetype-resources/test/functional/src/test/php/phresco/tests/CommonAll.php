@@ -1,6 +1,13 @@
 <?php
-/*Author by {phresco} QA Automation Team*/
+/*Need to provide locations for each test case:
+
+Author by {phresco} QA Automation Team
+
+*/
 require_once 'CreateNewAC.php';
+
+
+
 class  CommonAll extends PHPUnit_Framework_TestSuite
 {
  
