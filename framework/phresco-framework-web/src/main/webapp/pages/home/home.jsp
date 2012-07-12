@@ -37,33 +37,19 @@
 <div class="intro_container">
 <!-- Phresco js -->
 <script type="text/javascript" src="../../js/phresco/common.js"></script>
-
-<!-- 
 <script type="text/javascript">
 
-<!--
-if(localStorage.welcome) {
-    $(".errorOverlay").show().css("display","none");
-    $(".intro_container").show().css("display","none");
- } else {
-     $(".errorOverlay").show().css("display","<%= showWelcome %>");
-     $(".intro_container").show().css("display","<%= showWelcome %>");
- }
--->
-
-<script type="text/javascript">
-<!--
-	if(localStorage["welcome"]) {
+	if (localStorage["welcome"]) {
 		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none");
-	 }else if (localStorage.menuSelected == 'video'){
-		 $(".errorOverlay").show().css("display","none");
+	 } else if (localStorage.menuSelected == 'video'){ // To hide the welcome overlay page.
+		$(".errorOverlay").show().css("display","none");
 		$(".intro_container").show().css("display","none"); 
-	 }else {
-		 $(".errorOverlay").show().css("display","<%= showWelcome %>");
-		 $(".intro_container").show().css("display","<%= showWelcome %>");
+	 } else {
+		$(".errorOverlay").show().css("display","<%= showWelcome %>");
+		$(".intro_container").show().css("display","<%= showWelcome %>");
 	}
-//-->
+
 </script>
     <div class="intro_container_left">
         <h1>Welcome to <span class="hed_red">Phres</span>co<span class="hed_gray">.com</span></h1>
@@ -154,7 +140,7 @@ $(document).ready(function() {
 
     $("#dontShowCheck").click(function() { 
          if ($(this).is(":checked"))
-        	 localStorage.welcome = no;
+        	 localStorage.welcome = true;
     });
  
     $(".homegostart").click(function () {
@@ -183,9 +169,9 @@ $(document).ready(function() {
     });
     
     if (localStorage.menuSelected) {
-    	if(localStorage.menuSelected == 'video'){
+    	if (localStorage.menuSelected == 'video') {
     		localStorage.menuSelected = 'home';
-    	}else{
+    	} else {
     		$("a[name='navMenu']").attr("class", "inactive");
     		$(this).attr("class", "active");
             var selectedNav = localStorage.menuSelected;
