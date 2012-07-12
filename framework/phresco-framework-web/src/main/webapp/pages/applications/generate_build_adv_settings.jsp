@@ -155,7 +155,8 @@
 // 				$('input[type=checkbox][name=signing]').removeAttr("checked");
 // 			}
 			$('#advancedSettingsBuildForm').hide();
-			$('#generateBuildForm').show();
+			/* $('#generateBuildForm').show(); */
+			$('#generateBuild_Modal').show();
 			$("#advSettingsErrMsg").html("");
 			$("#errMsg").html('');
 		});
@@ -190,7 +191,9 @@
 		$('.browseFileLocation').click(function(){
 			$('#browseLocation').remove();
 			$('#advancedSettingsBuildForm').hide();
-			popup('browse', '', $('#popup_div'), '', true);
+			var params = "fileType=keystore";
+			params = params.concat("&fileorfolder=File");
+			popup('browse', params, $('#popup_div'), '', true);
 		});
 
 	});
