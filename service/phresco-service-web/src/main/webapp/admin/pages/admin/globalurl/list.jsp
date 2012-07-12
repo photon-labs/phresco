@@ -51,13 +51,13 @@
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.lurllst.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.lurllst.name" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.urllst.desc" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.urllst.desc" theme="simple"/></div>
 							</th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.urllst.url" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.urllst.url" theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>

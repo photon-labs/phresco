@@ -1,8 +1,5 @@
 package com.photon.phresco.service.admin.actions;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -18,7 +15,6 @@ public class Login extends ServiceBaseAction {
 	private String username = null;
 	private String password = null;
 	private boolean loginFirst = true;
-	private String css = null;
 	
 	public String login() {
 	    if (isDebugEnabled) {

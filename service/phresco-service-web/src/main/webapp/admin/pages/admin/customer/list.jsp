@@ -48,7 +48,7 @@
 	</div>
 	<% if (CollectionUtils.isEmpty(customers)) { %>
             <div class="alert alert-block">
-                <s:text name='cust.not.available.alert.msg'/>
+                <s:text name='alert.msg.cust.not.available'/>
             </div>
 	<% } else { %>
 			<div class="table_div">

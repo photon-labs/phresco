@@ -54,7 +54,7 @@ public interface ServiceUIConstants {
      * Archetype Request Constants
      * String REQ_ARCHE_XXX
      *****************************/
-    String REQ_ARCHE_TYPES = "technologys";
+    String REQ_ARCHE_TYPES = "technologies";
     String REQ_ARCHE_TYPE = "technology";
     String REQ_ARCHE_TECHID = "techId";
     
@@ -98,34 +98,43 @@ public interface ServiceUIConstants {
     String KEY_I18N_ERR_URL_EMPTY = "err.msg.url.empty";
     String KEY_I18N_ERR_APPLNPLTF_EMPTY = "err.msg.applnpltf.empty";
     String KEY_I18N_ERR_GROUP_EMPTY = "err.msg.group.empty";
-    String FEATURE_ADDED = "feature.add.success";
-    String FEATURE_NOT_ADDED = "feature.add.fail";
-    String APPLNTYPES_ADDED = "applntypes.add.success";
-    String APPLNTYPES_NOT_ADDED = "applntypes.add.fail";
-    String APPLNTYPES_UPDATED = "applntypes.update.success";
-    String APPLNTYPES_NOT_UPDATED = "applntypes.update.fail";
-    String APPLNTYPES_DELETED = "appTyep.delete.success";
-    String APPLNTYPES_NOT_DELETED = "appType.delete.fail" ;
-    String CONFIGTEMPLATE_ADDED = "congiftemplate.add.success";
-    String CONFIGTEMPLATE_NOT_ADDED = "congiftemplate.add.fail";
-    String ARCHETYPE_ADDED = "archetype.add.success";
-    String ARCHETYPE_NOT_ADDED = "archetype.add.fail";
-    String ARCHETYPE_UPDATED = "archetype.update.success";
-    String ARCHETYPE_NOT_UPDATED = "archetype.update.fail";
-    String ARCHETYPE_DELETED = "archetype.delete.success";
-    String ARCHETYPE_NOT_DELETED = "archetype.delete.fail" ;
-    String PLTPROJ_ADDED = "pltproj.add.success";
-    String PLTPROJ_NOT_ADDED = "pltproj.add.fail";
-    String CUSTOMER_ADDED = "customer.add.success";
-    String CUSTOMER_UPDATED = "customer.update.success";
-    String CUSTOMER_DELETED = "customer.delete.success";
-    String ROLE_ADDED = "role.add.success";
-    String URL_ADDED = "url.add.success";
-    String DOWNLOAD_ADDED = "download.add.success";
-    String CUSTOMER_NOT_ADDED = "customer.add.fail";
-    String CUSTOMER_NOT_UPDATED = "customer.update.fail";
-    String CUSTOMER_NOT_DELETED = "customer.delete.fail";
-    String DOWNLOAD_NOT_ADDED = "download.add.fail";
-    String ROLE_NOT_ADDED = "role.add.fail";
-    String URL_NOT_ADDED = "url.add.fail";
+    
+    String FEATURE_ADDED = "succ.feature.add";
+    String FEATURE_NOT_ADDED = "fail.feature.add";
+    
+    String APPLNTYPES_ADDED = "succ.appType.add";
+    String APPLNTYPES_NOT_ADDED = "fail.appType.add";
+    String APPLNTYPES_UPDATED = "succ.appType.update";
+    String APPLNTYPES_NOT_UPDATED = "fail.appType.update";
+    String APPLNTYPES_DELETED = "succ.appType.delete";
+    String APPLNTYPES_NOT_DELETED = "fail.appType.delete" ;
+    
+    String CONFIGTEMPLATE_ADDED = "succ.congiftemplate.add";
+    String CONFIGTEMPLATE_NOT_ADDED = "fail.congiftemplate.add";
+    
+    String ARCHETYPE_ADDED = "succ.archetype.add";
+    String ARCHETYPE_NOT_ADDED = "fail.archetype.add";
+    String ARCHETYPE_UPDATED = "succ.archetype.update";
+    String ARCHETYPE_NOT_UPDATED = "fail.archetype.update";
+    String ARCHETYPE_DELETED = "succ.archetype.delete";
+    String ARCHETYPE_NOT_DELETED = "fail.archetype.delete" ;
+    
+    String PLTPROJ_ADDED = "succ.pltproj.add";
+    String PLTPROJ_NOT_ADDED = "fail.pltproj.add";
+    
+    String CUSTOMER_ADDED = "succ.customer.add";
+    String CUSTOMER_UPDATED = "succ.customer.update";
+    String CUSTOMER_DELETED = "succ.customer.delete";
+    String CUSTOMER_NOT_ADDED = "fail.customer.add";
+    String CUSTOMER_NOT_UPDATED = "fail.customer.update";
+    String CUSTOMER_NOT_DELETED = "fail.customer.delete";
+    
+    String ROLE_ADDED = "succ.role.add";
+    String ROLE_NOT_ADDED = "fail.role.add";
+    
+    String URL_ADDED = "succ.url.add";
+    String URL_NOT_ADDED = "fail.url.add";
+    
+    String DOWNLOAD_ADDED = "succ.download.add";
+    String DOWNLOAD_NOT_ADDED = "fail.download.add";
 }

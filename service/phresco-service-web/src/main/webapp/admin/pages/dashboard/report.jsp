@@ -25,7 +25,7 @@
 			<div class="header-background">
 				<div class="list-header">
 					<aside class="left-list-header tabletitle">
-					<s:label for="description" key="lbl.hdr.dash.archtyp"  theme="simple"/>
+					<s:label key="lbl.hdr.dash.archtyp"  theme="simple"/>
 					</aside>
 					<div id="list-header-toggle1"></div>
 					<aside class="right-list-header">
@@ -44,19 +44,19 @@
 									<tr>
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.archtyp.archtyp"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.archtyp.archtyp"  theme="simple"/>
 											</div>
 										</th>
 									
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.archtyp.cus"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.archtyp.cus"  theme="simple"/>
 											</div>
 										</th>
 										
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.archtyp.hits"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.archtyp.hits"  theme="simple"/>
 											</div>
 										</th>
 									</tr>	
@@ -96,7 +96,7 @@
 		<div class="list-wrapper">
 			<div class="header-background">
 				<div class="list-header">
-					<aside class="left-list-header tabletitle"><s:label for="description" key="lbl.hdr.dash.featrs"  theme="simple"/></aside>
+					<aside class="left-list-header tabletitle"><s:label key="lbl.hdr.dash.featrs"  theme="simple"/></aside>
 					<div id="list-header-toggle2"> </div>
 					<aside class="right-list-header">
 						<img id="replaceimg2" src="images/minus_icon.png" alt="open" />
@@ -114,18 +114,18 @@
 									<tr>
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.featrs.featrs"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.featrs.featrs"  theme="simple"/>
 											</div>
 										</th>
 									
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.featrs.tech"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.featrs.tech"  theme="simple"/>
 											</div>
 										</th>
 										<th class="first">
 											<div class="th-inner tablehead">
-											<s:label for="description" key="lbl.hdr.dash.featrs.hits"  theme="simple"/>	
+											<s:label key="lbl.hdr.dash.featrs.hits"  theme="simple"/>	
 											</div>
 										</th>
 									</tr>	
@@ -164,7 +164,7 @@
 		<div class="list-wrapper">
 			<div class="header-background">
 				<div class="list-header">
-					<aside class="left-list-header tabletitle"><s:label for="description" key="lbl.hdr.dash.pltprjt"  theme="simple"/></aside>
+					<aside class="left-list-header tabletitle"><s:label key="lbl.hdr.dash.pltprjt"  theme="simple"/></aside>
 					<div id="list-header-toggle3"> </div>
 					<aside class="right-list-header">
 						<img id="replaceimg3" src="images/minus_icon.png" alt="open" />
@@ -181,18 +181,18 @@
 									<tr>
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.plt.plprjt"  theme="simple"/>
+												<s:label key="lbl.hdr.dash.plt.plprjt"  theme="simple"/>
 											</div>
 										</th>
 									
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.plt.cus" cssClass="slideheading  subtablemenu" theme="simple"/>
+												<s:label key="lbl.hdr.dash.plt.cus" cssClass="slideheading  subtablemenu" theme="simple"/>
 											</div>
 										</th>
 										<th class="first">
 											<div class="th-inner tablehead">
-												<s:label for="description" key="lbl.hdr.dash.plt.hits" cssClass="slideheading  subtablemenu" theme="simple"/>
+												<s:label key="lbl.hdr.dash.plt.hits" cssClass="slideheading  subtablemenu" theme="simple"/>
 											</div>
 										</th>
 									</tr>	
