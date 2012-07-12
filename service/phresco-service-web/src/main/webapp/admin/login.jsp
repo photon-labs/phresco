@@ -18,22 +18,17 @@
   ###
   --%>
 <!DOCTYPE html>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 <html>
 	<head>
-		<% 
-		String css = (String) request.getAttribute("css");
-		if(StringUtils.isEmpty(css)){
-			css = "theme/photon/css/red.css";
-		   }
-		%>
 		<title>Phresco Admin</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-		<link rel="stylesheet" href="<%= css  %>" class="changeme"> 
+        <link type="text/css" rel="stylesheet"  class="changeme" id="theme">
 		
 		<!-- basic js -->
 		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
@@ -43,36 +38,18 @@
 		<script type="text/javascript" src="js/home.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		
+		<!-- commons.js -->
+		<script type="text/javascript" src="js/common.js"></script>
 	   
 		<!-- document resizer -->
 		<script type="text/javascript" src="js/windowResizer.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-				var theme = $("link.changeme").attr("href");
-				if(theme != null && theme != "theme/photon/css/red.css") {
-					$("link.changeme").attr("href", "theme/photon/css/blue.css");
-					$.cookie("css", $("link.changeme").attr("href"));
-					showHeaderImage();
-				} else {
-					$("link.changeme").attr("href", "theme/photon/css/red.css");
-					$.cookie("css", $("link.changeme").attr("href"));
-					showHeaderImage();
-				}
+				showWelcomeImage();
 			});
 			
-			function showHeaderImage() {
-				var theme = $.cookie("css");
-				if(theme != undefined && theme != "theme/photon/css/red.css") {
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_blue.png");
-					$('.phtaccinno').attr("src", "theme/photon/images/acc_inov_blue.png");
-					$('.welcomeimg').attr("src", "theme/photon/images/welcome_photon_blue.png");
-				} else {
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_red.png");
-					$('.phtaccinno').attr("src", "theme/photon/images/acc_inov_red.png");
-					$('.welcomeimg').attr("src", "theme/photon/images/welcome_photon_red.png");
-				}
-			}
 		</script>
 	</head>
 
@@ -80,33 +57,33 @@
 		<header>
 			<div class="header">
 				<div class="Logo">
-					 <a href="#" id="goToHome"><img class="headerlogoimg" src="" alt="logo"></a>
+					 <a href="#" id="goToHome"><img class="headerlogoimg" src="theme/photon/images/phresco_header_red.png" alt="logo"></a>
 				</div>
 			</div>
 			
 			<div class="innoimg">
-			   <img class="phtaccinno" src="" alt="" border="0" onclick="window.open('http://www.photon.in','_blank');">
+			   <img class="phtaccinno" src="theme/photon/images/acc_inov_red.png" alt="" border="0" onclick="window.open('http://www.photon.in','_blank');">
 			</div>
 		</header>
       
 		<div class="lgnintro_container lgnContainer">
 	        <div class="welcome" id="welcome">
-                  <img class="welcomeimg" src="">
+                  <img class="welcomeimg" src="theme/photon/images/welcome_photon_red.png">
              </div> 
 			<div class="lgnintro_container_left">
-			<h1 class="l_align">Login</h1><h1 class="lp_align"></h1>    
+			<h1 class="l_align"><s:text name="lbl.login"/></h1><h1 class="lp_align"></h1>    
 			   
 				<form name="login" action="login" method="post" class="marginBottomZero">
 					<!--  UserName starts -->
 					<div class="clearfix">
-						 <label class="labellg">Username:</label>
-						 <input class="xlarge settings_text lgnField" id="xlInput" name="username" autofocus="" placeholder="Enter Your Insight User Name" type="text">
+						 <label class="labellg"><s:text name="lbl.username"/></label>
+						 <input class="xlarge settings_text lgnField" id="xlInput" name="username" autofocus="" placeholder="<s:text name="lbl.enter.name.placeholder"/>" type="text">
 						</div>
 					<!--  UserName ends -->
 						  
 					<!--  Password starts -->
 					<div class="clearfix">
-						<label class="labellg">Password:</label>
+						<label class="labellg"><s:text name="lbl.password"/></label>
 						<input class="xlarge settings_text lgnField" id="xlInput" name="password" value="" type="password">
 					</div>
 					<!--  Password ends -->
@@ -114,7 +91,7 @@
 					<!-- Remember me check starts  -->
 					<div class="login_check">
 						  <input name="rememberme" type="checkbox">
-						  <labelrem>Remember me</labelrem>
+						  <labelrem><s:text name="lbl.rememberme"/></labelrem>
 						
 					</div>
 					<!-- Remember me check ends  -->
@@ -131,7 +108,7 @@
 							&nbsp;&nbsp;&nbsp;<div class="lgnError"><%= loginError == null ? "" : loginError %></div>
 						</div>
 					</div>
-					<input name="fromPage" value="login" type="hidden">
+					<input name="fromPage" value="<s:text name="lbl.login"/>" type="hidden">
 				</form>
 			</div>
 		</div>

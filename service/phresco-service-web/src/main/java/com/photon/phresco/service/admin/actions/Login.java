@@ -26,18 +26,8 @@ public class Login extends ServiceBaseAction {
 	    }
 
 		if (loginFirst) {
-			HttpServletRequest request = getHttpRequest();
-			Cookie[] cookies = request.getCookies();
-			for(int i = 0; i < cookies.length; i++) { 
-				Cookie cookiecss = cookies[i];
-				if (cookiecss.getName().equals("css")) {
-					css = cookiecss.getValue();
-					css = css.replace("%2F","/");
-					request.setAttribute("css", css);
-				}  
-			} 
-			
-			return LOGIN_RESULT;	
+		
+        	return LOGIN_RESULT;	
 		}
 
 		if (validateLogin()) {

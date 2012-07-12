@@ -24,6 +24,7 @@
 
 <%@ page import="com.photon.phresco.model.ApplicationType"%>
 <%@ page import="com.photon.phresco.model.Technology"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -86,9 +87,9 @@
 </script>
 
 <%
-	Technology technology = (Technology)request.getAttribute("technology");
-	String fromPage = (String) request.getAttribute("fromPage");
-	List<ApplicationType> appTypes = (List<ApplicationType>)request.getAttribute("appTypes");
+	Technology technology = (Technology)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPE);
+	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+	List<ApplicationType> appTypes = (List<ApplicationType>)request.getAttribute(ServiceUIConstants.REQ_APP_TYPES);
 %>
 
 <form class="form-horizontal customer_list">
@@ -113,8 +114,7 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name' />
 			</label>
 			<div class="controls">
-				<input id="name" placeholder="Archetype Name" class="input-xlarge" type="text" name="name" 
-				    value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="name" placeholder='<s:text name="lbl.archetype.name.placeholder"/>' class="input-xlarge" type="text" name="name" value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -123,8 +123,7 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.comp.desc' /> </label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" 
-				    maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
+				<textarea id="description" class="input-xlarge" placeholder='<s:text name="lbl.description.placeholder"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
 			</div>
 		</div>
 
@@ -133,8 +132,7 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.version' />
 			</label>
 			<div class="controls">
-				<input id="version" placeholder="Version" class="input-xlarge" type="text" name="version" 
-				    value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="version" placeholder='<s:text name="lbl.archetype.version.placeholder"/>' class="input-xlarge" type="text" name="version" value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
@@ -143,8 +141,7 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.com.vercmnt' /> </label>
 			<div class="controls">
-				<textarea name="versionComment" placeholder="Version Comment" class="input-xlarge" rows="2" cols="10" 
-				    maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
+				<textarea name="versionComment" placeholder='<s:text name="lbl.archetype.versioncomment.placeholder"/>' class="input-xlarge" rows="2" cols="10" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
 			</div>
 		</div>
 
