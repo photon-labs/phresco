@@ -126,7 +126,7 @@
 					</a>
 				</div>
 				<div class="control-group customer_name">
-                    <s:label for="input01" key="label.customer" cssClass="control-label custom_label labelbold"/>
+                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
                     <select class="customer_listbox">
                         <option>Walgreens</option>
                         <option>NBO</option>

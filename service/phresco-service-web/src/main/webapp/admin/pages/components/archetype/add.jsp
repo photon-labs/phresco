@@ -114,7 +114,7 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name' />
 			</label>
 			<div class="controls">
-				<input id="name" placeholder='<s:text name="lbl.archetype.name.placeholder"/>' class="input-xlarge" type="text" name="name" value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="name" placeholder='<s:text name="place.hldr.archetype.add.name"/>' class="input-xlarge" type="text" name="name" value="<%=technology != null ? technology.getName() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -123,7 +123,7 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.comp.desc' /> </label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder='<s:text name="lbl.description.placeholder"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
+				<textarea id="description" class="input-xlarge" placeholder='<s:text name="place.hldr.archetype.add.desc"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getDescription() : ""%></textarea>
 			</div>
 		</div>
 
@@ -132,7 +132,7 @@
 				class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.version' />
 			</label>
 			<div class="controls">
-				<input id="version" placeholder='<s:text name="lbl.archetype.version.placeholder"/>' class="input-xlarge" type="text" name="version" value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
+				<input id="version" placeholder='<s:text name="place.hldr.archetype.add.version"/>' class="input-xlarge" type="text" name="version" value="<%=technology != null ? technology.getVersions() : ""%>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
@@ -141,7 +141,7 @@
 			<label class="control-label labelbold"> <s:text
 					name='lbl.hdr.com.vercmnt' /> </label>
 			<div class="controls">
-				<textarea name="versionComment" placeholder='<s:text name="lbl.archetype.versioncomment.placeholder"/>' class="input-xlarge" rows="2" cols="10" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
+				<textarea name="versionComment" placeholder='<s:text name="place.hldr.archetype.add.ver.comment"/>' class="input-xlarge" rows="2" cols="10" maxlength="150" title="150 Characters only"><%=technology != null ? technology.getVersionComment() : ""%></textarea>
 			</div>
 		</div>
 

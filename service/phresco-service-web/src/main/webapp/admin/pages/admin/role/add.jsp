@@ -31,24 +31,24 @@ function findError(data) {
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.hdr.adm.rle.add" theme="simple"/></h4>
+	<h4><s:label key="lbl.hdr.adm.rle.add" theme="simple"/></h4>
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Role Name" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.role.add.name'/>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
+				<input id="input01" placeholder="<s:text name='place.hldr.role.add.desc'/>" class="input-xlarge" type="text">
 			</div>
 		</div>
 	</div>

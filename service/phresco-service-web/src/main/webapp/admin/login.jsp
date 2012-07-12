@@ -76,22 +76,22 @@
 				<form name="login" action="login" method="post" class="marginBottomZero">
 					<!--  UserName starts -->
 					<div class="clearfix">
-						 <label class="labellg"><s:text name="lbl.username"/></label>
-						 <input class="xlarge settings_text lgnField" id="xlInput" name="username" autofocus="" placeholder="<s:text name="lbl.enter.name.placeholder"/>" type="text">
+						 <label class="labellg"><s:text name="lbl.login.username"/></label>
+						 <input class="xlarge settings_text lgnField" id="xlInput" name="username" autofocus placeholder="<s:text name="place.hldr.login.name"/>" type="text">
 						</div>
 					<!--  UserName ends -->
 						  
 					<!--  Password starts -->
 					<div class="clearfix">
-						<label class="labellg"><s:text name="lbl.password"/></label>
-						<input class="xlarge settings_text lgnField" id="xlInput" name="password" value="" type="password">
+						<label class="labellg"><s:text name="lbl.login.pwd"/></label>
+						<input class="xlarge settings_text lgnField" id="xlInput" name="password" value="" type="password" placeholder="<s:text name="place.hldr.login.pwd"/>">
 					</div>
 					<!--  Password ends -->
 						  
 					<!-- Remember me check starts  -->
 					<div class="login_check">
 						  <input name="rememberme" type="checkbox">
-						  <labelrem><s:text name="lbl.rememberme"/></labelrem>
+						  <labelrem><s:text name="lbl.login.rembr.me"/></labelrem>
 						
 					</div>
 					<!-- Remember me check ends  -->
@@ -108,7 +108,6 @@
 							&nbsp;&nbsp;&nbsp;<div class="lgnError"><%= loginError == null ? "" : loginError %></div>
 						</div>
 					</div>
-					<input name="fromPage" value="<s:text name="lbl.login"/>" type="hidden">
 				</form>
 			</div>
 		</div>

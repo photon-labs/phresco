@@ -133,7 +133,7 @@
 		if (CollectionUtils.isNotEmpty(servers)) {
 	%>
 		<!-- Servers are loaded here starts -->
-		<div class="clearfix">
+		<div class="clearfix" id="server">
 			<label for="xlInput" class="new-xlInput"><s:text name="label.supported.servers"/></label>
 		    
 		    <div class="input new-input" id="dispServer" style="color: #ffffff;">
@@ -153,7 +153,7 @@
 		if (CollectionUtils.isNotEmpty(databases)) {
 	%>
 		<!-- Databases are loaded here starts -->
-		<div class="clearfix">
+		<div class="clearfix" id="database">
 			<label for="xlInput" Class="new-xlInput"><s:text name="label.supported.dbs"/></label>
 			<div class="input new-input" id="dispDatabase" style="color: #ffffff">
 		
@@ -693,6 +693,8 @@
 	        } else {
 				$("#technologyVersionDiv").hide();
 	        }
+			var technology = $("#technology").val();
+			hideServerAndDatabase(technology);
 		} else if (pageUrl == "checkForRespectiveConfig") {
 			if (data.hasConfiguration) {
 				if (type == "Database") {
@@ -908,4 +910,14 @@
 			}
 		%>
 	}
+ 	
+	function hideServerAndDatabase(technology) {
+		if(technology == "tech-java-standalone") {
+			$("#server").hide();
+			$("#database").hide();
+		} else {
+			$("#server").show();
+			$("#database").show();
+		}
+	} 
 </script>

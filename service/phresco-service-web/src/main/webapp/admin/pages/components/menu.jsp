@@ -30,24 +30,24 @@
 <nav>
 	<ul class="tabs">
 		<li>
-			<a href="#" class="active" name="compTab" id="featuresList"><s:label for="description" key="lbl.hdr.comp.featrs" theme="simple"/></a>
+			<a href="#" class="active" name="compTab" id="featuresList"><s:label key="lbl.hdr.comp.featrs" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="archetypesList"><s:label for="description" key="lbl.hdr.comp.arhtyp" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="archetypesList"><s:label key="lbl.hdr.comp.arhtyp" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="applntypesList"><s:label for="description" key="lbl.hdr.comp.aplntyp" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="applntypesList"><s:label key="lbl.hdr.comp.aplntyp" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="configtempList"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="configtempList"><s:label key="lbl.hdr.comp.cnfigtmplt" theme="simple"/></a>
 		</li>
 		<li>
-			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label for="description" key="lbl.hdr.comp.pltprjt" theme="simple"/></a>
+			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label key="lbl.hdr.comp.pltprjt" theme="simple"/></a>
 		</li>
 			
 	</ul>
 	<div class="control-group customer_name">
-		<s:label for="input01" key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
+		<s:label key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
 		<div class="controls customer_select_div">
 			<select id="select01" class="customer_listbox">
 				<option>Walgreens</option>

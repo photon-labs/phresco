@@ -86,50 +86,50 @@
 </script>
 
 <form class="form-horizontal customer_list" method="post" enctype="multipart/form-data">
-	<h4 class="hdr"><s:label for="description" key="lbl.hdr.comp.featrs.title" theme="simple"/></h4>	
+	<h4 class="hdr"><s:label key="lbl.hdr.comp.featrs.title" theme="simple"/></h4>	
 	<div class="content_adder">
 
 		<div class="control-group" id="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Feature Name" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.feature.add.name'/>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
+				<input id="input01" placeholder="<s:text name='place.hldr.feature.add.desc'/>" class="input-xlarge" type="text">
 				
 			</div>
 		</div>
 		
 		<div class="control-group" id="verControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.version'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Version" class="input-xlarge" type="text" name="version">
+				<input id="input01" placeholder="<s:text name='place.hldr.feature.add.version'/>" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.help'/>
 			</label>
 			<div class="controls">
-				<textarea id="input01" placeholder="Help Text" class="input-xlarge" rows="2" cols="10" ></textarea>
+				<textarea id="input01" placeholder="<s:text name='place.hldr.feature.add.help.text'/>" class="input-xlarge" rows="2" cols="10" ></textarea>
 			</div>
 		</div>
 		
 		<div class="control-group" id="fileControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.file'/>
 			</label>
 			<div class="controls">
@@ -139,7 +139,7 @@
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.dependency'/>
 			</label>
 			<div class="controls">
@@ -151,7 +151,7 @@
 	<div id="myModal" class="modal hide fade">
 		<div class="modal-header">
 		  <a class="close" data-dismiss="modal" >&times;</a>
-		  <h3><s:label for="description" key="lbl.hdr.comp.featr.popup.title" theme="simple"/></h3>
+		  <h3><s:label key="lbl.hdr.comp.featr.popup.title" theme="simple"/></h3>
 		</div>
 		<div class="modal-body">
 			<div class="control-group">
@@ -173,8 +173,8 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 														</tr>
 													</thead>
 																										
@@ -212,8 +212,8 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 														</tr>
 													</thead>
 																										
@@ -251,8 +251,8 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 														</tr>
 													</thead>
 																										
@@ -290,8 +290,8 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-															<th class="accordiantable modallbl-color"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+															<th class="accordiantable modallbl-color"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 														</tr>
 													</thead>
 																										
@@ -320,8 +320,8 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-		  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.hdr.comp.cancel" theme="simple"/></a>
-		  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.hdr.comp.ok" theme="simple"/></a>
+		  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label key="lbl.hdr.comp.cancel" theme="simple"/></a>
+		  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label key="lbl.hdr.comp.ok" theme="simple"/></a>
 		</div>
 	</div>
 	<div class="bottom_button">

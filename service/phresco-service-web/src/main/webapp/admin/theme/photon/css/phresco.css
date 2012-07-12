@@ -1750,5 +1750,6 @@ input[class*='sample'] {
     padding-top: 6px;
     margin-left: 5px;
     margin-right: 5px;
-    text-align:center;
+    text-align: center;
+    font-weight: bold;
 }

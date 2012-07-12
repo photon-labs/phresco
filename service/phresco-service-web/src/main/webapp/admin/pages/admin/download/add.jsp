@@ -57,29 +57,29 @@
 </script>
 
 <form class="form-horizontal customer_list">
-	<h4><s:label for="description" key="lbl.hdr.adm.dwnlad.title" theme="simple"/></h4>	
+	<h4><s:label key="lbl.hdr.adm.dwnlad.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Download Name" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 			
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01"  placeholder="Description" class="input-xlarge" type="text">
+				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" class="input-xlarge" type="text">
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.dwnld.fle'/>
 			</label>
 			<div class="controls">
@@ -88,7 +88,7 @@
 		</div>
 		
 		<div class="control-group" id="appltControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.appltfrm'/>
 			</label>
 			<div class="controls">
@@ -103,7 +103,7 @@
 		</div>
 			
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.adm.dwnld.icon'/>
 			</label>
 			<div class="controls">
@@ -112,17 +112,17 @@
 		</div>
 			
 		<div class="control-group" id="verControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.ver'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Version" class="input-xlarge" type="text" name="version">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.version'/>" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
 			
 		<div class="control-group" id="groupControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.group'/>
 			</label>	
 			<div class="controls">
@@ -138,12 +138,12 @@
 		</div>
         
         <div class="control-group popupalign" id="othersDiv">
-			<%-- <s:label for="input01" cssClass="control-label labelbold" theme="simple"/> --%>
-			<label for="input01" class="control-label labelbold">
+			<%-- <s:label cssClass="control-label labelbold" theme="simple"/> --%>
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Others" class="input-xlarge" type="text" name="others">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.others'/>" class="input-xlarge" type="text" name="others">
 				<span class="help-inline" id="othersError"></span>
 			</div>
 		</div>
