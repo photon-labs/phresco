@@ -191,11 +191,11 @@ public class WordpressDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					utils.executeSql(databaseDetails, baseDir, WORDPRESS_SQL_DIR, WORDPRESS_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					utils.getSqlFilePath(databaseDetails,baseDir, databaseType);
 					utils.updateSqlQuery(databaseDetails, serverHost, context, serverport);
+					}
 				}
-				
-			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} 

@@ -101,8 +101,8 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_DB, baseDir
 						.getName(), environmentName);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-				util.executeSql(databaseDetails,baseDir, NODE_SQL_DIR, NODE_SQL_FILE);
-					
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (PhrescoException e) {
@@ -123,29 +123,28 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 			cl.addArguments(args1);
 			cl.setWorkingDirectory(baseDir.getPath() + "/source");
 			Process proc = cl.execute();
+			File file = new File(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			isr = new InputStreamReader(proc.getInputStream());
+			br = new BufferedReader(isr);
+			fileWriter = new FileWriter(baseDir.getPath()
+					+ NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
+			LogWriter logWriter = new LogWriter();
 			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
 					.getName(), environmentName);
 			for (SettingsInfo serverDetails : settingsInfos) {
 				String serverhost = serverDetails.getPropertyInfo(Constants.SERVER_HOST).getValue();
 				int serverport = Integer.parseInt(serverDetails.getPropertyInfo(Constants.SERVER_PORT).getValue());
 				String serverProtocol = serverDetails.getPropertyInfo(Constants.SERVER_PROTOCOL).getValue();
-				 tempConnectionAlive =isConnectionAlive(serverProtocol, serverhost, serverport);
+				 tempConnectionAlive = isConnectionAlive(serverProtocol, serverhost, serverport);
 			}
-			if(!tempConnectionAlive) {
-				getLog().info("server startup failed");
+			if(tempConnectionAlive) {
+				getLog().info("server started");
 			} else {
-			getLog().info("server started");
+				getLog().info("server startup failed");
 			}
-			File file = new File(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-
-			isr = new InputStreamReader(proc.getInputStream());
-			br = new BufferedReader(isr);
-			fileWriter = new FileWriter(baseDir.getPath()
-					+ NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
-			LogWriter logWriter = new LogWriter();
 			logWriter.writeLog(br, fileWriter);
 		} catch (Exception e) {
 			getLog().info("server startup failed");
@@ -187,7 +186,7 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 		}
 	}
 	
-	public static boolean isConnectionAlive(String protocol, String host, int port) {
+	private static boolean isConnectionAlive(String protocol, String host, int port) {
 		boolean isAlive = true;
 		try {
 			URL url = new URL(protocol, host, port, "");

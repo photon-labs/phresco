@@ -52,6 +52,7 @@
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/videos/*</url-pattern>
+		<url-pattern>/images/*</url-pattern>
     </servlet-mapping>
 	
 	<!--  <filter>

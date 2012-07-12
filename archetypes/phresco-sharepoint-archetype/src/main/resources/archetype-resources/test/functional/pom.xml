@@ -98,7 +98,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>binaries</groupId>
-			<artifactId>Nunit</artifactId>
+			<artifactId>NUnit</artifactId>
 			<version>2.5.9.10348</version>
 			<type>zip</type>
 		</dependency>

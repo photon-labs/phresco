@@ -122,4 +122,5 @@ public interface Constants {
     
     String SITE_SQL = "site.sql";
 	String DB_MYSQL   = "mysql";
+	String JSON_PATH = "/.phresco/sqlfile.json";
 }
