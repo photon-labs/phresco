@@ -125,6 +125,11 @@ public interface TechnologyTypes {
      */
     String HTML5_MULTICHANNEL_JQUERY_WIDGET = "tech-html5-jquery-widget";
     
+	/**
+     * Technology HTML Jquery mobile widget
+     */
+    String HTML5_JQUERY_MOBILE_WIDGET = "tech-html5-jquery-mobile-widget";
+	
     /**
      * Technology Java Web Service
      */

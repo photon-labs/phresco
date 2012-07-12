@@ -33,12 +33,12 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet" href="themes/photon/css/red.css" class="changeme" id="theme">
+<link type="text/css" rel="stylesheet" class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
-    showWelcomeImage();
-
+	var key = "color";
+    showWelcomeImage(key);
     <%
 		String cmdLogin = (String) request.getAttribute("cmdLogin");
 		if (cmdLogin != null) {
@@ -65,28 +65,6 @@ $(document).ready(function() {
 		});
 	}
 } */
-
-function showWelcomeImage() {
-		localstore = sessionStorage["color"];
-		localStorage["color"] = localstore; 
-		sessionStorage.clear();
-
-		if (localStorage["color"] == null || localStorage["color"] == "null" || localStorage["color"] == "") {
-			$("link[id='theme']").attr("href", "themes/photon/css/red.css");
-		}
-		else {
-			$("link[id='theme']").attr("href", localStorage["color"]);
-		} 
-	 
-	 var theme = localStorage["color"]; 
-	
-	if(theme == "themes/photon/css/blue.css") {
-		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
-		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
-		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
-	}
-}	
-
 
 </script>
 </head>
