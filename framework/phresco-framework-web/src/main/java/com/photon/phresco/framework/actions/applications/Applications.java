@@ -108,6 +108,8 @@ public class Applications extends FrameworkBaseAction {
 	private String svnImportMsg = null;
 	List<String> deletableDbs = new ArrayList<String>();
 	private String fromTab = null;
+	private String fileType = null;
+	private String fileorfolder = null;
 	//svn info
 	private String credential = null;
 
@@ -1247,6 +1249,8 @@ public class Applications extends FrameworkBaseAction {
 	public String browse() {
 		S_LOGGER.debug("Entering Method  Applications.browse()");
 		try {
+			getHttpRequest().setAttribute(FILE_TYPES, fileType);
+			getHttpRequest().setAttribute(FILE_BROWSE, fileorfolder);
 			String projectLocation = Utility.getProjectHome() + projectCode;
 			getHttpRequest()
 					.setAttribute(REQ_PROJECT_LOCATION, projectLocation);
@@ -1483,4 +1487,20 @@ public class Applications extends FrameworkBaseAction {
 		this.credential = credential;
 	}
 
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileorfolder() {
+		return fileorfolder;
+	}
+
+	public void setFileorfolder(String fileorfolder) {
+		this.fileorfolder = fileorfolder;
+	}
+	
 }

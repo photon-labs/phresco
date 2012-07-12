@@ -31,6 +31,8 @@
 <%@ page import="com.photon.phresco.util.Constants"%>
 <%@ page import="com.photon.phresco.configuration.Environment"%>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="com.photon.phresco.util.TechnologyTypes" %>
+<%@ page import="com.photon.phresco.model.Technology" %>
 
 <script src="js/reader.js" ></script>
 <script src="js/select-envs.js"></script>
@@ -39,6 +41,8 @@
 	Project project = (Project) request.getAttribute(FrameworkConstants.REQ_PROJECT);
 	String projectCode = (String)project.getProjectInfo().getCode();
 	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
+	String technology =  project.getProjectInfo().getTechnology().getName();
+    String techId = project.getProjectInfo().getTechnology().getId();
     List<BuildInfo> buildInfos = (List<BuildInfo>) request.getAttribute(FrameworkConstants.REQ_TEST_BUILD_INFOS);
     if(buildInfos == null) {
         buildInfos = new ArrayList<BuildInfo>();
@@ -64,16 +68,28 @@
                         <ul class="inputs-list">
                             <li class="popup-li"> 
                                 <input type="radio" id="showBuild" name="testAgainst" value="<%= FrameworkConstants.REQ_BUILD %>" checked>
-                                <span class="textarea_span popup-span"><s:text name="label.against.build"/></span>
+                                <span class="textarea_span popup-span" id="buildspan"><s:text name="label.against.build"/></span>
                                 <input type="radio" id="showServer" name="testAgainst" value="<%= FrameworkConstants.REQ_DEPLOY_SERVER %>" >
-                                <span class="textarea_span popup-span"><s:text name="label.against.server"/></span>
+                                <span class="textarea_span popup-span" id="server"><s:text name="label.against.server"/></span>
                                 <input type="radio" id="showrelease" name="testAgainst" value="<%= FrameworkConstants.REQ_RELEASE %>" disabled="disabled">
-                                <span class="textarea_span popup-span"><s:text name="label.against.release"/></span>
+                                <span class="textarea_span popup-span" id="release"><s:text name="label.against.release"/></span>
+                                <input type="radio" id="showjarrelease" name="testAgainst" value="<%= FrameworkConstants.REQ_JAR %>" checked>
+                                <span class="textarea_span popup-span" id="againstjar"><s:text name="label.against.jar"/></span>
                             </li>
                         </ul>
                     </div>  
                 </div>
             </fieldset>
+            
+            <div id="agnJarRelease"  class="JarRelease" style="display:none;">
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.jar.location"/></label>
+					<div class="input">
+						<input type="text" name="jarLocation" class="jarlocation" id="jarlocation" value="">
+						<input type="button" id="fileLocation" class="btn primary btn_browse browseFileLocation" value="<s:text name="label.select.file"/>">
+					</div>
+				</div>
+			</div>
             
             <div id="agnBuildid"  class="build">
 				<!--  Build No -->
@@ -118,7 +134,7 @@
             	<div class="clearfix" id="agnBuild" style="display: none;">
 				    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
 				    <div class="input">
-				        <select id="environments" name="environment" class="xlarge agnBuildEnv">
+				        <select id="environments" name="environment" id="environmentlabel" class="xlarge agnBuildEnv">
 				        
 				        </select>
 					</div>
@@ -196,9 +212,34 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		 <%
+			if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
+		 %>
+			hideOtherTechnologyDiv();
+			if ($('#buildId').val() == null){
+				$('#showBuild').attr('disabled', 'disabled');
+				if($('input:radio[name=testAgainst]:checked').val() == "jar") {
+					$("#agnJarRelease").show();
+				}
+			} else {
+				$('#showBuild').prop('checked', true);
+				if($('input:radio[name=testAgainst]:checked').val() == "build"){
+					$("#agnJarRelease").hide();
+					$('#agnBuildid').show();
+				} else {
+					$("#agnJarRelease").show();
+					$('#agnBuildid').hide();
+				}
+			}
+		<% } else { %>	
+			showOtherTechologyDiv();
+		<%
+			}
+		%>
 		if ($('#buildId').val() == null){
 			$('#showBuild').attr('disabled', 'disabled');
 			$('#showServer').prop('checked', true);
+			$('#showjarrelease').prop('checked', true);
 			$(".agnServerEnv").prop("id", "environments");
 			$(".agnBuildEnv").prop("id", "");
 			hideAll();
@@ -206,12 +247,21 @@
 			$('#agnServer').show();
 			$('#agnBuild').hide();
 		} else {
+			$('#showBuild').prop('checked', true);
 			$(".agnServerEnv").prop("id", "");
 			$(".agnBuildEnv").prop("id", "environments");
 			$('#agnBuild').show();
 			$('#agnServer').hide();
 			showBuildEnvs();
 		}
+	
+		$('.browseFileLocation').click(function(){
+			$('#browseLocation').remove();
+			$('.build_form').hide();
+			var params = "fileType=jar";
+			params = params.concat("&fileorfolder=File");
+			popup('browse', params, $('#popup_div'), '', true);
+		});
 		
 		$('#close, #cancel').click(function() {
 			showParentPage();
@@ -223,32 +273,53 @@
 		    if($(this).val() == "release") {
 		    	hideAll();
             }
+		    
 		    if($(this).val() == "build") {
+		    	$("#agnJarRelease").hide();
 		    	$(".agnServerEnv").prop("id", "");
 				$(".agnBuildEnv").prop("id", "environments");
 		    	$('#agnBuild').show();
 				$('#agnServer').hide();
 		    	showBuildEnvs();
             }
+		    
 		    if($(this).val() == "server") {
 		    	$(".agnServerEnv").prop("id", "environments");
 				$(".agnBuildEnv").prop("id", "");
 		    	$('#agnBuild').hide();
 				$('#agnServer').show();
             }
+		    
+		    if($(this).val() == "jar") {
+		    	$("#agnJarRelease").show();
+            }
 	    });
-
+		
 		$("#buildId").change(function() {
 			showBuildEnvs();
 		});
 
 		$('#test').click(function() {
-			checkForConfigType('<%= Constants.SETTINGS_TEMPLATE_SERVER %>');
-		});
+			<%
+				if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
+			%>
+					var selectedval = $('input:radio[name=testAgainst]:checked').val();
+					if(selectedval == "jar"){
+					    if($('#jarlocation').val() == null || $('#jarlocation').val() == "") {
+					        showErrorMsg('errMsg', "Select JAR");
+						    $("#jarlocation").val("");
+						   	$("#jarlocation").focus();
+							return false;
+						}
+					}
+			<%
+				}
+			%>
+				checkForConfigType('<%= Constants.SETTINGS_TEMPLATE_SERVER %>');
+			});
+			showPopup();
+	  });
 		
-		showPopup();
-	});
-
 	function showBuildEnvs() {
     	var params = "projectCode=";
     	params = params.concat('<%= projectCode %>');
@@ -258,14 +329,28 @@
     }
 
 	function successEnvValidation(data) {
-		if(data.hasError == true) {
-			showError(data);
-		} else {
-			$('#tests').show().css("display","none");
-		    $('#build-outputOuter').show().css("display","block");
-		    getCurrentCSS();
-		    functional();
-		}
+		<%
+			if(!TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
+		%>
+			if(data.hasError == true) {
+				showError(data);
+			} else {
+				functionalTestExecution();
+			}
+		<% 
+			} else {
+		%>
+			functionalTestExecution();
+		<% 
+			}
+		%>
+	}
+	
+	function functionalTestExecution() {
+		 $('#tests').show().css("display","none");
+		 $('#build-outputOuter').show().css("display","block");
+		 getCurrentCSS();
+		 functional();
 	}
 
 	function hideAll() {
@@ -274,6 +359,18 @@
         $('.server').hide();
 	}
 
+	function hideOtherTechnologyDiv() {
+		$("#showServer, #showrelease, #server, #release, #showSetting, #environments, #agnBrowser .clearfix, #agnServer .clearfix, #environmentlabel, #agnBuild, .agnBuildEnv, #agnBuildid").hide();  
+		$("#agnJarRelease").show();
+	}
+	
+	function showOtherTechologyDiv() {
+		$("#showServer, #showrelease, #server, #release, #showSetting, #environments, #agnBrowser .clearfix, #agnServer .clearfix, #environmentlabel, #agnBuild, .agnBuildEnv, #agnBuildid").show();
+		$("#showjarrelease").hide();
+		$("#againstjar").hide();
+		$("#agnJarRelease").hide();
+	}
+	
     function functional(envs) {
         var params = "envs=";
         params = params.concat(getSelectedEnvs());

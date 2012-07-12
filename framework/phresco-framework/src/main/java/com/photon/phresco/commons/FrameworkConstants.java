@@ -111,6 +111,10 @@ public interface FrameworkConstants {
     String NODEJS_RUN_AGAINST = "nodeJS_runAgnSrc";
     String JAVA_RUN_AGAINST = "runAgnSrc";
 	
+    String JAVA_STAND_ALONE = "tech-java-standalone";
+    String JAVA_STANDALONE = "Javastandalone";
+    String DEPENDENCY_VERSION = "1.0";
+    String SYSTEM = "system";
 	String JAVA_POM_MANIFEST = "manifest";
 	String JAVA_POM_MAINCLASS = "mainClass";
 	String FINAL_NAME = "finalName";
@@ -218,6 +222,12 @@ public interface FrameworkConstants {
     String ELEMENT_TARGET = "do_not_checkin/target/*.apk";
     String ELEMENT_VERBOS = "verbose";
     String ELEMENT_VERIFY = "verify";
+    
+    /*
+     *  File Types for Browse in Functional
+     */
+    String FILE_TYPES = "FileType";
+    String FILE_BROWSE = "File";
     
     String POST = "POST";
     String GET = "GET";
@@ -354,6 +364,7 @@ public interface FrameworkConstants {
     String REQ_SETTINGS = "settings";
     String REQ_BUILD = "build";
     String REQ_RELEASE = "release";
+    String REQ_JAR = "jar";
     String REQ_SELECTED_APP_TYPE = "selectedAppType";
     String REQ_SETTINGS_INFO = "settingsInfo";
     String REQ_CURRENT_SETTINGS_TEMPLATE = "CurrentTemplate";
@@ -764,6 +775,7 @@ public interface FrameworkConstants {
     String ERROR_INVALID_NAME = "Invalid Name";
     String ERROR_SELECT = "Select database and server";
     String ERROR_TEST_SUITE = "Test result is not available for this project";
+    String ERROR_PARSE_EXCEPTION = "quality.xml.parse.error";
     String ERROR_TEST_CASE = "Test case is not available for this project";
     String ERROR_MANDATORY_FIELDS = "Some mandatory values are not filled";
     String ERROR_SETTINGS = "ERROR_SETTINGS";
