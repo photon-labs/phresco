@@ -87,8 +87,7 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 	private File buildDir;
 	private File buildFile;
 	private File tempDir;
-	private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
-
+	
 	public void execute() throws MojoExecutionException {
 		init();
 		createDb();
@@ -139,7 +138,8 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails,baseDir, DRUPAL_SQL_DIR, DRUPAL_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (Exception e) {

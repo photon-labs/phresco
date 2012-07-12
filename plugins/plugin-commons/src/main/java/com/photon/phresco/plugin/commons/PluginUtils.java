@@ -24,17 +24,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,6 +53,10 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
 import com.photon.phresco.exception.PhrescoException;
@@ -93,66 +101,105 @@ public class PluginUtils {
 		dbDriverMap.put("mongodb", "com.mongodb.jdbc.MongoDriver");
 	}
 	
-	public void executeSql(SettingsInfo info,File basedir,String filePath,String fileName) throws PhrescoException {
-	    initDriverMap();
-        String host = info.getPropertyInfo(Constants.DB_HOST).getValue();
-        String port = info.getPropertyInfo(Constants.DB_PORT).getValue();
-        String userName = info.getPropertyInfo(Constants.DB_USERNAME).getValue();
-        String password = info.getPropertyInfo(Constants.DB_PASSWORD).getValue();
-        String databaseName = info.getPropertyInfo(Constants.DB_NAME).getValue();
-        String databaseType = info.getPropertyInfo(Constants.DB_TYPE).getValue();
-        String version = info.getPropertyInfo(Constants.DB_VERSION).getValue();
-        String connectionProtocol = findConnectionProtocol(databaseType, host, port, databaseName);
+	private void executeSql(SettingsInfo info, File basedir, List<String> filepaths) throws PhrescoException {
+		initDriverMap();
+		String host = info.getPropertyInfo(Constants.DB_HOST).getValue();
+		String port = info.getPropertyInfo(Constants.DB_PORT).getValue();
+		String userName = info.getPropertyInfo(Constants.DB_USERNAME).getValue();
+		String password = info.getPropertyInfo(Constants.DB_PASSWORD).getValue();
+		String databaseName = info.getPropertyInfo(Constants.DB_NAME).getValue();
+		String databaseType = info.getPropertyInfo(Constants.DB_TYPE).getValue();
+		String connectionProtocol = findConnectionProtocol(databaseType, host, port, databaseName);
 		Connection con = null;
-		FileInputStream file = null;
+		FileInputStream fis = null;
 		Statement st = null;
 		try {
-		    Class.forName(getDbDriver(databaseType)).newInstance();
-			file = new FileInputStream(basedir.getPath() + filePath + databaseType.toLowerCase() + 
-					File.separator + version + fileName);
-			Scanner s = new Scanner(file);
-			s.useDelimiter("(;(\r)?\n)|(--\n)");
+			Class.forName(getDbDriver(databaseType)).newInstance();
 			con = DriverManager.getConnection(connectionProtocol, userName, password);
 			con.setAutoCommit(false);
-			st = con.createStatement();
-			while (s.hasNext()) {
-				String line = s.next().trim();
-				if(databaseType.equals("oracle")) {
-					if(line.startsWith("--")){
-						String comment = line.substring(line.indexOf("--"), line.lastIndexOf("--"));
-						line = line.replace(comment, "");
-						line = line.replace("--", "");
+			for (String sqlFile : filepaths) {
+				fis = new FileInputStream(basedir.getPath() + sqlFile);
+				Scanner s = new Scanner(fis);
+				s.useDelimiter("(;(\r)?\n)|(--\n)");
+				st = con.createStatement();
+				while (s.hasNext()) {
+					String line = s.next().trim();
+					if (databaseType.equals("oracle")) {
+						if (line.startsWith("--")) {
+							String comment = line.substring(line.indexOf("--"), line.lastIndexOf("--"));
+							line = line.replace(comment, "");
+							line = line.replace("--", "");
+						}
+						if (line.startsWith(Constants.REM_DELIMETER)) {
+							String comment = line.substring(0, line.lastIndexOf("\n"));
+							line = line.replace(comment, "");
+						}
 					}
-					if (line.startsWith(Constants.REM_DELIMETER)) {
-						String comment = line.substring(0, line.lastIndexOf("\n"));
-						line = line.replace(comment, "");
+
+					if (line.startsWith("/*!") && line.endsWith("*/")) {
+						line = line.substring(line.indexOf("/*"), line.indexOf("*/") + 2);
+					}
+
+					if (line.trim().length() > 0) {
+						st.execute(line);
 					}
 				}
-				if (line.startsWith("/*!") && line.endsWith("*/")) {
-					line = line.substring(line.indexOf("/*"), line.indexOf("*/") + 2);
-				}
-				if (line.trim().length() > 0) {
-					st.execute(line);
-				}			
 			}
 		} catch (SQLException e) {
-			throw new PhrescoException(e);
-		} catch (FileNotFoundException e) {
-			throw new PhrescoException(e);
-		} catch (Exception e) {
-		    throw new PhrescoException(e);
-        } finally {
 			try {
 				if (con != null) {
-				    con.commit();
+					con.rollback();
+				}
+			} catch (SQLException e1) {
+				throw new PhrescoException(e1);
+			}
+		} catch (FileNotFoundException e) {
+			throw new PhrescoException(e);
+		} catch (InstantiationException e) {
+			throw new PhrescoException(e);
+		} catch (IllegalAccessException e) {
+			throw new PhrescoException(e);
+		} catch (ClassNotFoundException e) {
+			throw new PhrescoException(e);
+		} finally {
+			try {
+				if (con != null) {
+					con.commit();
 					con.close();
 				}
-				if (file != null) {
-					file.close();
+				if (fis != null) {
+					fis.close();
 				}
 			} catch (Exception e) {
 				throw new PhrescoException(e);
 			}
+		}
+	}
+	
+	public void getSqlFilePath(SettingsInfo databaseDetails, File basedir, String databaseType) throws PhrescoException {
+		List<String> filepaths = new ArrayList<String>();
+		try {
+			File jsonFile = new File(basedir.getPath() + "/.phresco/sqlfile.json");
+			if (jsonFile.exists()) {
+				Gson gson = new Gson();
+				Type mapObjectType = new TypeToken<Map<String, List<String>>>() {
+				}.getType();
+				Map<String, List<String>> dbMap = gson.fromJson(new FileReader(jsonFile.getPath()), mapObjectType);
+				Iterator<Entry<String, List<String>>> iterator = dbMap.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Entry<String, List<String>> entry = iterator.next();
+					if (entry.getKey().equals(databaseType)) {
+						filepaths =entry.getValue();
+							executeSql(databaseDetails, basedir, filepaths);
+					}
+				}
+			}
+		} catch (JsonIOException e) {
+			throw new PhrescoException(e);
+		} catch (JsonSyntaxException e) {
+			throw new PhrescoException(e);
+		} catch (FileNotFoundException e) {
+			throw new PhrescoException(e);
 		}
 	}
 
@@ -200,7 +247,6 @@ public class PluginUtils {
 			stmt.executeUpdate(updateQuery);
 			stmt.executeUpdate(updateHomeQuery);
 		} catch (Exception e) {
-			System.out.println("Update Failed");
 		} finally {
 			try {
 				if (conn != null) {

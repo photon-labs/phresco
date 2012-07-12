@@ -396,6 +396,14 @@
     		fillVersions("environments", data.buildInfoEnvs);
     	} else if (pageUrl == "createProfile") {
 			successProfileCreation(data);
-		}
+		} else if (pageUrl == "getSqlDatabases") {
+			fillVersions("databases", data.databases , "");
+			//getting sql files to be executed
+			getSQLFiles();
+		} else if (pageUrl == "getSQLFiles") {
+			fillVersions("avaliableSourceScript", data.sqlFiles , "getSQLFiles");
+			// after sql files are loaded, already selected value should be hidden in available list
+			hideDbWithVersions();
+		} 
     }
 </script>
