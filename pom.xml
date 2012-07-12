@@ -46,8 +46,10 @@
         <maven.api.version>3.0.3</maven.api.version>
         <sitePluginVersion>3.1</sitePluginVersion>
         <jersey-version>1.9-ea07</jersey-version>
+
 		<siteBaseUrl>file://C:/apache-tomcat-7.0.26/webapps/ROOT/phresco-site/</siteBaseUrl>
         <phresco.server.dependency.config.file>/config/dependency/1.2.0.6001/dependency-1.2.0.6001.properties</phresco.server.dependency.config.file>
+
     </properties>
     
     <distributionManagement>
@@ -69,9 +71,8 @@
 	   <licenses>
 			<license>
 				<name>The Apache Software License, Version 2.0</name>
-				<comments>A business-friendly OSS license</comments>
-				<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 				<distribution>repo</distribution>
+				<comments>A business-friendly OSS license</comments>
 			</license>
 		</licenses>
 		

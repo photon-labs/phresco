@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.Action;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.ProjectAdministrator;
@@ -192,7 +193,9 @@ public class Features extends FrameworkBaseAction {
 			}
 			getHttpRequest().setAttribute(REQ_CONFIG_SERVER_NAMES, configServerNames);
 			getHttpRequest().setAttribute(REQ_CONFIG_DB_NAMES, configDbNames);
-
+			FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+			getHttpRequest().setAttribute(REQ_SERVER_URL, configuration.getServerPath());
+			
 		} catch (PhrescoException e) {
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Features.list()"

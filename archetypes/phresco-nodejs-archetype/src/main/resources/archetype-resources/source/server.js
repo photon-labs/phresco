@@ -17,6 +17,7 @@ require('dns').lookup(require('os').hostname(), function (err, address, fam) {
 		+ ':' + serverConfig.port  + '/' + serverConfig.context;
 		console.log('Server running at ' + serverUrl);
 	} else {
+		  console.log("Server startup failed");
 		  console.log("Invaldid IP Address is Configured");		
 	}
 })

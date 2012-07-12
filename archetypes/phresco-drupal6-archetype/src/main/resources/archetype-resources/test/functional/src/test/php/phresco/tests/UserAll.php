@@ -1,5 +1,6 @@
 <?php
-/*Author by {phresco} QA Automation Team*/
+/*Author by {phresco} QA Automation Team
+*/
 require_once 'Login_NewUsers.php';
 
 
@@ -14,10 +15,8 @@ class UserAll extends PHPUnit_Framework_TestSuite
     {
 	$testSuite= new UserAll();
 	$testSuite->setName('UserTestSuite');
-    $testSuite->addTestSuite('Login_NewUsers');
+	$testSuite->addTestSuite('Login_NewUsers');
 	return $testSuite;
 	}
 	}
 ?>
-
-

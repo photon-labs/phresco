@@ -17,6 +17,31 @@
  * limitations under the License.
  * ###
  */
+	
+	function setLocalstorage(key, value){
+    	localStorage[key] = value;
+    }
+
+    function getLocalstorage(key, title){
+    	var localstore = localStorage[key];
+    	$("link[title=" +title + "]").attr("href", localstore);
+    	showWelcomeImage(key);
+    }
+    
+    function showWelcomeImage(key) {
+    	var theme = localStorage[key];
+    	if (theme == "themes/photon/css/blue.css") {
+    		$("link[id='theme']").attr("href", localStorage["color"]);
+    		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
+    		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
+    		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
+    	} else if(theme == null || theme == undefined || theme == "undefined" || theme == "null" || theme == "themes/photon/css/red.css") {
+    		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
+    		$('.welcomeimg').attr("src", "images/welcome_photon_red.png");
+    		$('.phtaccinno').attr("src", "images/acc_inov_red.png");
+    		$('.logoimage').attr("src", "images/photon_phresco_logo_red.png");
+    	}
+    }
 
 	// Enables button
 	function enableControl(tagControl, css) {
@@ -66,7 +91,7 @@
     function showLoadingIcon(tagControl) {
 		var src = "themes/photon/images/loading_blue.gif";
     	var theme =localStorage["color"];
-        if(theme == undefined || theme == "themes/photon/css/red.css") {
+        if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	src = "themes/photon/images/loading_red.gif";
         }
      	tagControl.empty();
@@ -182,7 +207,7 @@
     
     function getCurrentCSS() {
         var theme =localStorage["color"];
-        if(theme == undefined || theme == "themes/photon/css/red.css") {
+        if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
         else {
@@ -296,12 +321,20 @@
     }
     
     /** To fill the versions in the select box **/
-	function fillVersions(element, data) {
+	function fillVersions(element, data, from) {
 		$('#' + element).empty();
     	if ((data != undefined || !isBlank(data)) && data != "") {
-			for (i in data) {
-				$('#' + element).append($("<option></option>").attr("value",data[i]).text(data[i]));
-			}
+    		if ("getSQLFiles" == from) {
+    			for (i in data) {
+	    			var sep = new Array();
+	    			sep = data[i].split("#SEP#");
+	    			$('#' + element).append($("<option></option>").attr("value", sep[0] + "/" + sep[1]).text(sep[1]));
+    			}
+    		} else {
+				for (i in data) {
+					$('#' + element).append($("<option></option>").attr("value", data[i]).text(data[i]));
+				}
+    		}
 			return true;
 		}
 	}

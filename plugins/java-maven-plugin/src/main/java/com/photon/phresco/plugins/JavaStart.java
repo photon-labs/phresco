@@ -158,7 +158,8 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
 				for (SettingsInfo databaseDetails : settingsInfos) {
-					util.executeSql(databaseDetails,baseDir, JAVA_SQL_DIR, JAVA_SQL_FILE);
+					String databaseType = databaseDetails.getPropertyInfo(Constants.DB_TYPE).getValue();
+					util.getSqlFilePath(databaseDetails,baseDir, databaseType);
 				}
 			}
 		} catch (PhrescoException e) {
@@ -190,10 +191,6 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_CLEAN);
-			sb.append(STR_SPACE);
-			sb.append(MVN_PHASE_INSTALL);
 			sb.append(STR_SPACE);
 			sb.append(T7_START_GOAL);
 			sb.append(STR_SPACE);
