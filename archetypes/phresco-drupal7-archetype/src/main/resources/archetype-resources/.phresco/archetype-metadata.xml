@@ -142,7 +142,8 @@
 				<include>Login_NewUsers.php</include>
 				<include>UserAll.php</include>
 				<include>phresco-env-config.xml</include>
-				<include>drupalsetting.xml</include>
+				<include>UserInfo.xml</include>
+                <include>Drupal7Data.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false"> 

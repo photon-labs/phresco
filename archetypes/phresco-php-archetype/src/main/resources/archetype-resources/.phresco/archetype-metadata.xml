@@ -150,10 +150,12 @@
 			<directory>test/functional/src/test/php/phresco/tests</directory> 
 			<includes> 
 				<include>phresco-env-config.xml</include>
-				<include>Homepage.php</include>
 				<include>PhpCommonFun.php</include>
 				<include>UserModules.php</include>
 				<include>Dashboard_Cat.php</include>
+                <include>PhpData.xml</include>
+                <include>UserInfo.xml</include>
+                
 			</includes>
 		</fileSet>
 		<fileSet filtered="false"> 
