@@ -66,27 +66,6 @@ $(document).ready(function() {
 	}
 } */
 
-/* function showWelcomeImage() {
-	var localstore = sessionStorage["color"];
-	localStorage["color"] = localstore; 
-	sessionStorage.clear();
-	
-    var theme = localStorage["color"]; 
-    if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
-		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
-	}
-	else {
-		$("link[id='theme']").attr("href", localStorage["color"]);
-	} 
-	 
-	if(theme == "themes/photon/css/blue.css") {
-		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
-		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
-		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
-	}
-} */	
-
-
 </script>
 </head>
 <body class="lgnBg">

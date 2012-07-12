@@ -38,20 +38,6 @@
 <div class="intro_container">
 <!-- Phresco js -->
 <script type="text/javascript" src="../../js/phresco/common.js"></script>
-
-<!-- 
-<script type="text/javascript">
-
-<!--
-if(localStorage.welcome) {
-    $(".errorOverlay").show().css("display","none");
-    $(".intro_container").show().css("display","none");
- } else {
-     $(".errorOverlay").show().css("display","<%= showWelcome %>");
-     $(".intro_container").show().css("display","<%= showWelcome %>");
- }
--->
-
 <script type="text/javascript">
 
 	if (localStorage["welcome"]) {
