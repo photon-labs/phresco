@@ -193,6 +193,7 @@
 		<fileSet filtered="false"> 
 			<directory>test/unit/src/main/php/phresco/tests</directory> 
 			<includes> 
+                <include>**/*</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false"> 
