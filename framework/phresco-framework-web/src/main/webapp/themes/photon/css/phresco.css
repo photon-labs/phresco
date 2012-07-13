@@ -4676,6 +4676,14 @@ a[id='androidSigning']:hover {
 .desc_text {
 	 width:79%;
 	 float:right; 
+	 height:113px; 
+	 overflow-y:hidden;
+}
+
+.description {
+	text-align:justify; 
+	margin-right:7px; 
+	margin-bottom:0px;
 }
 
 /** CI multiple jobs css starts **/
