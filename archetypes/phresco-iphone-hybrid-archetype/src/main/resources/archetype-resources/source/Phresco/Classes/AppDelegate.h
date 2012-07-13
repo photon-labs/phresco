@@ -49,7 +49,7 @@
 // http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
 
 @property (copy)  NSString* invokeString;
-
+NSString*  urlString;
 -(void) urlParsing;
 @end
 

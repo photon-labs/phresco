@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ConfigurationReader.h"
 #ifdef PHONEGAP_FRAMEWORK
 	#import <PhoneGap/PhoneGapViewController.h>
     #import <PhoneGap/Reachability.h>
