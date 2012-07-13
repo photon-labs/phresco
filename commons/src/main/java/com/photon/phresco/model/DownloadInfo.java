@@ -37,6 +37,7 @@ public class DownloadInfo implements Serializable {
 	private String fileSize;
 	private String[] appliesTo;
 	private String[] platform;
+	private String customerId;
 
 	public DownloadInfo() {
 	}
@@ -126,12 +127,29 @@ public class DownloadInfo implements Serializable {
 		this.fileSize = fileSize;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
 	@Override
 	public String toString() {
 		return "DownloadInfo [id=" + id + ", name=" + name + ", version="
 				+ version + ", downloadURL=" + downloadURL + ", type=" + type
+				+ ", fileName=" + fileName + ", fileSize=" + fileSize
 				+ ", appliesTo=" + Arrays.toString(appliesTo) + ", platform="
-				+ Arrays.toString(platform) + "]";
+				+ Arrays.toString(platform) + ", customerId=" + customerId
+				+ ", getId()=" + getId() + ", getName()=" + getName()
+				+ ", getVersion()=" + getVersion() + ", getDownloadURL()="
+				+ getDownloadURL() + ", getType()=" + getType()
+				+ ", getAppliesTo()=" + Arrays.toString(getAppliesTo())
+				+ ", getPlatform()=" + Arrays.toString(getPlatform())
+				+ ", getFileName()=" + getFileName() + ", getFileSize()="
+				+ getFileSize() + ", getCustomerId()=" + getCustomerId() + "]";
 	}
 
+	
 }

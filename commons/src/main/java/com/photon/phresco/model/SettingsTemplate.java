@@ -39,7 +39,7 @@ public class SettingsTemplate implements Serializable {
     private List<PropertyTemplate> properties = new ArrayList<PropertyTemplate>(SizeConstants.SIZE_PROPERTIES_MAP);
     //List of technology ids
     private List<String> appliesTo;
-
+    private String customerId;
     public SettingsTemplate() {
         super();
     }
@@ -83,10 +83,21 @@ public class SettingsTemplate implements Serializable {
         this.appliesTo = appliesTo;
     }
 
-    @Override
-    public String toString() {
-        return "SettingsTemplate [type=" + type + ", properties=" + properties
-                + ", appliesTo=" + appliesTo + "]";
-    }
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	@Override
+	public String toString() {
+		return "SettingsTemplate [id=" + id + ", type=" + type
+				+ ", properties=" + properties + ", appliesTo=" + appliesTo
+				+ ", customerId=" + customerId + "]";
+	}
+
+   
 
 }

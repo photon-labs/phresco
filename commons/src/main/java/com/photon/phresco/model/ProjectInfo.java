@@ -47,6 +47,8 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String projectCode;
 	private String groupId;
 	private String artifactId;
+	private String customerId;
+	
 
 	/**
 	 * @return the pilotid
@@ -165,15 +167,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		return "ProjectInfo [id=" + id + ", name=" + name + ", projectCode=" + projectCode + ", code=" + code
-				+ ", version=" + version + ", description=" + description + ", groupId=" + groupId + ", artifactId=" + artifactId
-				+ ", technology=" + technology + ", application=" + application
-				+ ", pilotProjectUrls=" + Arrays.toString(pilotProjectUrls)
-				+ ", techID=" + techID + ", contentURLId=" + contentURLId + "]";
-	}
-
+	
 	/**
 	 * @return the pilotProjectUrls
 	 */
@@ -196,7 +190,30 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+    
+	
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+    
+	
+	@Override
+	public String toString() {
+		return "ProjectInfo [pilotid=" + pilotid + ", id=" + id + ", name="
+				+ name + ", code=" + code + ", version=" + version
+				+ ", description=" + description + ", technology=" + technology
+				+ ", application=" + application + ", pilotProjectUrls="
+				+ Arrays.toString(pilotProjectUrls) + ", techID=" + techID
+				+ ", contentURLId=" + contentURLId + ", pilotProjectName="
+				+ pilotProjectName + ", projectCode=" + projectCode
+				+ ", groupId=" + groupId + ", artifactId=" + artifactId
+				+ ", customerId=" + customerId + "]";
+	}
 
 	public ProjectInfo clone()throws CloneNotSupportedException{
 		ProjectInfo infos = new ProjectInfo();

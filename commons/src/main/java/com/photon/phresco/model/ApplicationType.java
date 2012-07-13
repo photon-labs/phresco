@@ -40,7 +40,7 @@ public class ApplicationType extends Element implements Serializable {
 	private List<Technology> technologies = new ArrayList<Technology>(SizeConstants.SIZE_TECHNOLOGIES_MAP);
 	
 	private boolean system;
-
+	private String customerId;
 	public ApplicationType() {
 		super();
 	}
@@ -88,14 +88,19 @@ public class ApplicationType extends Element implements Serializable {
         this.system = system;
     }
 
-    @Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ApplicationType [getName()=");
-		builder.append(getName());
-		builder.append(", getTechnologies()=");
-		builder.append(getTechnologies());
-		builder.append("]");
-		return builder.toString();
+	public String getCustomerId() {
+		return customerId;
 	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	@Override
+	public String toString() {
+		return "ApplicationType [technologies=" + technologies + ", system="
+				+ system + ", customerId=" + customerId + "]";
+	}
+
+    
 }

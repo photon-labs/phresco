@@ -63,6 +63,7 @@ public class Technology extends Element implements Cloneable, Serializable {
 	private String pluginJar;
 	private List<String> versions;
 	private boolean system;
+	private String customerId;
 	
     public Technology() {
         super();
@@ -218,33 +219,30 @@ public class Technology extends Element implements Cloneable, Serializable {
 		this.pluginJar = pluginJar;
 	}
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder(1024);
-        builder.append("Technology [getId()=");
-        builder.append(getId());
-        builder.append(", getName()=");
-        builder.append(getName());
-        builder.append(", getAppTypeId()=");
-        builder.append(getAppTypeId());
-        builder.append(", getVersions()=");
-        builder.append(getVersions());
-        builder.append(", getFrameworks()=");
-        builder.append(getFrameworks());
-        builder.append(", getJsLibraries()=");
-        builder.append(getJsLibraries());
-        builder.append(", getModules()=");
-        builder.append(getModules());
-        builder.append(", getServers()=");
-        builder.append(getServers());
-        builder.append(", getDatabases()=");
-        builder.append(getDatabases());
-        builder.append(", getWebservices()=");
-        builder.append(getWebservices());
-        builder.append("]");
-        return builder.toString();
-    }
+	public String getCustomerId() {
+		return customerId;
+	}
 
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+    
+	
+	
+
+	@Override
+	public String toString() {
+		return "Technology [appTypeId=" + appTypeId + ", frameworks="
+				+ frameworks + ", jsLibraries=" + jsLibraries + ", modules="
+				+ modules + ", servers=" + servers + ", databases=" + databases
+				+ ", webservices=" + webservices + ", emailSupported="
+				+ emailSupported + ", description=" + description
+				+ ", versionComment=" + versionComment + ", appType=" + appType
+				+ ", appJar=" + appJar + ", pluginJar=" + pluginJar
+				+ ", versions=" + versions + ", system=" + system
+				+ ", customerId=" + customerId + ", id=" + id + ", name="
+				+ name + "]";
+	}
 
 	@SuppressWarnings("unchecked")
     public Technology clone() throws CloneNotSupportedException{

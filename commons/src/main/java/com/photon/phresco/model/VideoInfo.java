@@ -33,6 +33,7 @@ public class VideoInfo {
 	private String categories;
 	private String helpText;
 	private List<VideoType> videoList;
+	private String customerId;
 
 	public VideoInfo() {
 	}
@@ -103,4 +104,21 @@ public class VideoInfo {
 		this.id = id;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	@Override
+	public String toString() {
+		return "VideoInfo [id=" + id + ", name=" + name + ", description="
+				+ description + ", imageurl=" + imageurl + ", categories="
+				+ categories + ", helpText=" + helpText + ", videoList="
+				+ videoList + ", customerId=" + customerId + "]";
+	}
+    
+	
 }

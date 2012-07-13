@@ -129,6 +129,8 @@
 				<include>Login_NewUsers.php</include>
 				<include>UserAll.php</include>
 				<include>phresco-env-config.xml</include>
+				<include>Drupal6Data.xml</include>
+                <include>UserInfo.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false"> 

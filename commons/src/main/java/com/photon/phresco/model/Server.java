@@ -37,7 +37,7 @@ public class Server implements Serializable {
     private List<String> versions;
     private String description;
     private List<String> technologies = new ArrayList<String>();
-
+    private String customerId;
 	public Server() {
 		super();
 	}
@@ -96,10 +96,20 @@ public class Server implements Serializable {
 		this.technologies = technologies;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
 	@Override
 	public String toString() {
 		return "Server [id=" + id + ", name=" + name + ", versions=" + versions
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", technologies="
+				+ technologies + ", customerId=" + customerId + "]";
 	}
 
+	
 }

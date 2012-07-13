@@ -34,7 +34,7 @@ public class WebService implements Serializable {
 	private String version;
 	private String description;
 	private List<String> technologies = new ArrayList<String>();
-
+	private String customerId;
 	public WebService() {
 		super();
 	}
@@ -93,10 +93,20 @@ public class WebService implements Serializable {
 		this.technologies = technologies;
 	}
 
-	@Override
-	public String toString() {
-		return "WebService [id=" + id + ", name=" + name + ", version=" + version
-				+ ", description=" + description + "]";
+	public String getCustomerId() {
+		return customerId;
 	}
 
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	@Override
+	public String toString() {
+		return "WebService [id=" + id + ", name=" + name + ", version="
+				+ version + ", description=" + description + ", technologies="
+				+ technologies + ", customerId=" + customerId + "]";
+	}
+    
+	
 }
