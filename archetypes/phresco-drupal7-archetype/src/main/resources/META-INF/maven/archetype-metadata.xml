@@ -233,6 +233,7 @@
 				<include>DrupalBaseclass.php</include>
                 <include>Node.php</include>
                 <include>NodeModules.php</include>
+            <includes>    
 		</fileSet>
 	</fileSets>
 </archetype-descriptor> 
