@@ -18,8 +18,14 @@
  * ###
  */ ?>
 <?php
-include('sites/default/config/config.php');
 
+    if(DRUPAL_ROOT){
+        $cwd = DRUPAL_ROOT; 
+    }else { 
+        $cwd = getcwd(); 
+    }
+
+    include($cwd."/sites/default/config/config.php");
 /**
  * @file
  * Drupal site-specific configuration file.
