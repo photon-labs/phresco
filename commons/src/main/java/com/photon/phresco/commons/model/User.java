@@ -1,6 +1,6 @@
 /*
  * ###
- * Phresco Commons
+\ * Phresco Commons
  *
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  *
@@ -132,21 +132,13 @@ public class User extends Element {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [status=");
-		builder.append(status);
-		builder.append(", roles=");
-		builder.append(roles);
-		builder.append(", id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", creationDate=");
-		builder.append(creationDate);
-		builder.append("]");
-		return builder.toString();
+		return "User [loginId=" + loginId + ", email=" + email + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", status=" + status
+				+ ", roles=" + roles + ", phrescoEnabled=" + phrescoEnabled
+				+ ", displayName=" + displayName + ", customers=" + customers
+				+ ", token=" + token + ", id=" + id + ", name=" + name
+				+ ", description=" + description + "]";
 	}
+
 
 }

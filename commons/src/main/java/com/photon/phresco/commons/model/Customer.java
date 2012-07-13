@@ -197,14 +197,17 @@ public class Customer extends Element {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+
+	@Override
+	public String toString() {
+		return "Customer [emailId=" + emailId + ", address=" + address
+				+ ", country=" + country + ", state=" + state + ", zipcode="
+				+ zipcode + ", contactNumber=" + contactNumber + ", fax=" + fax
+				+ ", helpText=" + helpText + ", type=" + type + ", validFrom="
+				+ validFrom + ", validUpto=" + validUpto + ", repoURL="
+				+ repoURL + ", status=" + status + ", id=" + id + ", name="
+				+ name + ", description=" + description + ", creationDate="
+				+ creationDate + "]";
+	}
     
-    @Override
-    public String toString() {
-        return "Customer [emailId=" + emailId + ", address=" + address
-                + ", country=" + country + ", state=" + state + ", zipcode="
-                + zipcode + ", contactNumber=" + contactNumber + ", fax=" + fax
-                + ", helpText=" + helpText + ", type=" + type + ", validFrom="
-                + validFrom + ", validUpto=" + validUpto + ", repoURL="
-                + repoURL + ", status=" + status + "]";
-    }
 }
