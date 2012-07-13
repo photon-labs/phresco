@@ -185,7 +185,7 @@ public interface FrameworkConstants {
     String MVN_IPHONE_FUNCTIONAL_COMMAND = "mvn xcode:instruments"; // IPhone functional test command
     String MVN_IPHONE_NATIVE_UNITTEST = "mvn xcode:xcodebuild"; // IPhone unit test command
     String MVN_IPHONE_CODE_VALIDATE = "mvn xcode:codevalidate"; // IPhone code validate command
-    String MVN_SITE_COMMAND = "mvn site";
+    String MVN_SITE_COMMAND = "mvn clean site";
     String PHRESCO_FILE_SERVER_PORT_NO = "phresco.file.server.port";
     String APPLICATIONS = "applications";
     String SETTINGS = "settings";
@@ -1118,6 +1118,9 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORTS = "reports";
    String REQ_SITE_SLECTD_REPORTS = "selectedReports";
    String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";
+   
+   /* Site report success message */
+   String SUCCESS_SITE_CONFIGURE = "configured.site.success";
    
    /* Android Key store file */
    String SIGNING_TYPES="keystore";

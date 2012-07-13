@@ -97,7 +97,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>java-maven-plugin</artifactId>
-				<version>1.2.0.6002-SNAPSHOT</version>
+				<version>1.2.0.6003-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
