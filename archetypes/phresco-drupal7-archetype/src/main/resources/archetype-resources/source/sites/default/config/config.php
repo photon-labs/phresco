@@ -20,7 +20,13 @@
 <?php
 
 function getConfigByName($currentEnv, $type, $name) {
-	$fileContents = file_get_contents("sites/default/config/phresco-env-config.xml");
+	if(DRUPAL_ROOT) {
+		$cwd = DRUPAL_ROOT; 
+	} else { 
+		$cwd = getcwd(); 
+	} 
+
+	$fileContents = file_get_contents($cwd."/sites/default/config/phresco-env-config.xml");
 	$file = getOriginalString($fileContents);
 	
 	$document = new DOMDocument();
