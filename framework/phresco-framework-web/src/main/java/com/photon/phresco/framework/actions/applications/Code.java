@@ -52,33 +52,14 @@ import com.phresco.pom.util.PomProcessor;
 public class Code extends FrameworkBaseAction {
     private static final long serialVersionUID = 8217209827121703596L;
     private static final Logger S_LOGGER = Logger.getLogger(Code.class);
-    private static Map<String, String> sourceFolderPathMap = new HashMap<String, String>();
     
     private String projectCode = null;
 	private String skipTest = null;
     private String codeTechnology = null;
+    private String report = null;
     private String validateAgainst = null;
 	private String target = null;
-	private static String SOURCE = "source";
 	private static String FUNCTIONALTEST = "functionalTest";
-    
-	private static void initializeSourceMap() {
-		// TODO: This should come from database
-		sourceFolderPathMap.put(TechnologyTypes.PHP, "source");
-		sourceFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "source");
-		sourceFolderPathMap.put(TechnologyTypes.PHP_DRUPAL7, "source");
-		sourceFolderPathMap.put(TechnologyTypes.SHAREPOINT, "source");
-		sourceFolderPathMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, "source");
-		sourceFolderPathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "src");
-		sourceFolderPathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, "src");
-		sourceFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "src");
-		sourceFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "src");
-		sourceFolderPathMap.put(TechnologyTypes.JAVA_STANDALONE, "src");
-		sourceFolderPathMap.put(TechnologyTypes.WORDPRESS, "source");
-		sourceFolderPathMap.put(TechnologyTypes.IPHONE_HYBRID, "source");
-		sourceFolderPathMap.put(TechnologyTypes.IPHONE_NATIVE, "source");
-		sourceFolderPathMap.put(TechnologyTypes.DOT_NET, "source");
-	}
 
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
@@ -189,6 +170,12 @@ public class Code extends FrameworkBaseAction {
 	        	sb.append(groupId);
 	        	sb.append(COLON);
 	        	sb.append(artifactId);
+	        	
+	        	if (StringUtils.isNotEmpty(report)) {
+	        		sb.append(COLON);
+	        		sb.append(report);
+	        	}
+	        	
 	    		try {
 					URL sonarURL = new URL(sb.toString());
 					HttpURLConnection connection = (HttpURLConnection) sonarURL.openConnection();
@@ -202,7 +189,7 @@ public class Code extends FrameworkBaseAction {
 		            }
 				} catch (Exception e) {
 					S_LOGGER.error("Entered into catch block of Code.check()"+ FrameworkUtil.getStackTraceAsString(e));
-//					new LogErrorReport(e, "Code review");
+					new LogErrorReport(e, "Code review");
 					getHttpRequest().setAttribute(REQ_ERROR, getText(FAILURE_CODE_REVIEW));
 					return APP_CODE;
 				}
@@ -230,18 +217,16 @@ public class Code extends FrameworkBaseAction {
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
             } else {
             	actionType = ActionType.SONAR;
-            	validateAgainst(validateAgainst, project, projectCode);
-            }
-            
-            if (StringUtils.isNotEmpty(codeTechnology)) { // set sonar.branch parameter
-            	codeValidateMap.put(CODE_VALIDATE_PARAM, codeTechnology);
             }
             
             if (FUNCTIONALTEST.equals(validateAgainst)) {
-            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator + "functional");
+            	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
+            	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
+            	validateAgainst(validateAgainst, project, projectCode);
             } else {
             	actionType.setWorkingDirectory(null);
+            	actionType.setProfileId(codeTechnology);
             }
             
             actionType.setSkipTest(Boolean.parseBoolean(skipTest));
@@ -259,30 +244,15 @@ public class Code extends FrameworkBaseAction {
     
 
 	private void validateAgainst(String validateAgainst, Project project, String projectCode) throws PhrescoException {
-		initializeSourceMap();
-		String sourceFolderName = "";
-		File projectPath = null;
-		if (validateAgainst.contains(SOURCE)) {
-			sourceFolderName = sourceFolderPathMap.get(project.getProjectInfo().getTechnology().getId());
-			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator	+ POM_FILE);
-			editSonarIncludes(projectPath, sourceFolderName, projectCode);
-		} else if (validateAgainst.contains(FUNCTIONALTEST)) {
-			if (!TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
-				sourceFolderName = "src";
-			}else {
-				sourceFolderName = "AllTest";
-			}
-			projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
-			editSonarIncludes(projectPath, sourceFolderName, projectCode);
-		}
+		File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + "test" + File.separator+"functional" + File.separator + POM_FILE);
+		editSonarIncludes(projectPath, projectCode);
 	}
 	
-	private static void editSonarIncludes(File projectPath, String sourceFolderName, String projectCode)
+	private static void editSonarIncludes(File projectPath, String projectCode)
 			throws PhrescoException {
 		try {
 			PomProcessor pomprocessor = new PomProcessor(projectPath);
 			pomprocessor.setName(projectCode);
-			pomprocessor.setSourceDirectory(sourceFolderName);
 			pomprocessor.save();
 		} catch (Exception e) {
 			throw new PhrescoException(e);
@@ -323,6 +293,14 @@ public class Code extends FrameworkBaseAction {
 
 	public void setCodeTechnology(String codeTechnology) {
 		this.codeTechnology = codeTechnology;
+	}
+
+	public String getReport() {
+		return report;
+	}
+
+	public void setReport(String report) {
+		this.report = report;
 	}
 
 	public String getTarget() {
