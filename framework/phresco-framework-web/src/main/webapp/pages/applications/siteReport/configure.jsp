@@ -26,7 +26,10 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.phresco.pom.site.ReportCategories"%>
 
+<script type="text/javascript" src="js/delete.js" ></script>
+
 <%
+    String projectCode = (String)request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
 	List<Reports> reports = (List<Reports>) request.getAttribute(FrameworkConstants.REQ_SITE_REPORTS);
 	List<Reports> selectedReports = (List<Reports>) request.getAttribute(FrameworkConstants.REQ_SITE_SLECTD_REPORTS);
 %>
@@ -47,6 +50,9 @@
 							if (CollectionUtils.isNotEmpty(reports)) {
 								for (Reports report : reports) {
 									String checkedStr = "";
+									if(report.getArtifactId().equals(FrameworkConstants.REQ_SITE_SLECTD_REPORTSCATEGORIES)){
+										checkedStr="checked";
+									}
 									List<ReportCategories> selectedReportCategories = null;
 									if (CollectionUtils.isNotEmpty(selectedReports)) {
 										for (Reports selectedReport : selectedReports) {
@@ -57,47 +63,70 @@
 										}
 									}
 						%>
-									<div class="theme_accordion_container">
-									    <section class="accordion_panel_wid">
+									<div class="theme_accordion_container" style="border: none;">
+									    <section class="accordion_panel_wid" style="margin-top: -6px;">
 									        <div class="accordion_panel_inner">
 									            <section class="lft_menus_container">
-									                <span class="siteaccordion closereg reportcolor" ><span><input type="checkbox" name="reports" value="<%= report.getArtifactId() %>" <%= checkedStr %>>&nbsp;<%= report.getDisplayName() %></span></span>
+									                <span class="siteaccordion <%= CollectionUtils.isEmpty(report.getReportCategories()) ? "closereg_empty" : "closereg" %> reportcolor" style="border: none;">
+										                <span id="reportList">
+										                  <input type="checkbox" name="reports" value="<%= report.getArtifactId() %>" <%= checkedStr %>>&nbsp;<%= report.getDisplayName() %>
+										                </span>
+									                </span>
 									                <%
 										                List<ReportCategories> reportCategories = report.getReportCategories();
 														if (CollectionUtils.isNotEmpty(reportCategories)) {
 									                %>
-									                <div class="mfbox siteinnertooltiptxt">
+									                <div class="mfbox siteinnertooltiptxt" style="display: none;">
 									                    <div class="scrollpanel adv_setting_accordian_bottom">
 									                        <section class="scrollpanel_inner">
-																<fieldset class="popup-fieldset fieldset_center_align">
-																	<div class="clearfix">
-																		<div class="xlInput" id="reportcategy">
-																			<ul class="inputs-list">
-																					<%
-																						String categoryChk = "";
-																						for (ReportCategories reportCategory : reportCategories) {
-																							if (CollectionUtils.isNotEmpty(selectedReports)) {
-																								for (ReportCategories selectedReportCategory : selectedReportCategories) {
-																									if(reportCategory.getName().equals(selectedReportCategory.getName())) {
-																										categoryChk = "checked";
-																										break;
-																									} else {
-																										categoryChk = "";
-																									}
-																								}
-																							}
-																					%>
-																							<li class="environment_list">
-																								<input type="checkbox" name="<%= report.getArtifactId() %>" value="<%= reportCategory.getName() %>" <%= categoryChk %>><%= reportCategory.getName() %>
-																							</li>
-																					<%	
-																							
-																					}		
-																					%>
-																			</ul>
-																		</div>	
-																	</div>
-																</fieldset>
+							                                   <table class="download_tbl">
+									                                <thead>
+									                                    <tr class="download_tbl_header" id="categoryListAll">
+									                                        <th style="padding:2px 0 5px 10px;">
+                                                                                <input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">&nbsp;<s:text name="label.categories"/>
+										                                    </th>
+									                                    </tr>   
+									                                </thead>
+                                                                       <tbody>
+                                                                       <tr>
+                                                                        <td style="padding: 0; border: none;">
+                                                                             <fieldset class="popup-fieldset fieldset_center_align" style="border: none;">
+			                                                                    <div class="clearfix">
+			                                                                        <div class="xlInput" id="reportcategy">
+			                                                                        
+                                                                                  <%
+                                                                                      String categoryChk = "";
+                                                                                      for (ReportCategories reportCategory : reportCategories) {
+                                                                                          String indexCheck = "";
+                                                                                          if(reportCategory.getName().equals("index")){
+                                                                                              indexCheck = "checked";
+                                                                                          }
+                                                                                          if (CollectionUtils.isNotEmpty(selectedReports)) {
+                                                                                              for (ReportCategories selectedReportCategory : selectedReportCategories) {
+                                                                                                  if(reportCategory.getName().equals(selectedReportCategory.getName())) {
+                                                                                                      categoryChk = "checked";
+                                                                                                      break;
+                                                                                                  } else {
+                                                                                                      categoryChk = "";
+                                                                                                  }
+                                                                                              }
+                                                                                          }
+                                                                                  %>
+                                                                                       
+                                                                                          <li class="environment_list" id ="categoryList" style="margin: 0;">
+                                                                                              <input type="checkbox" class="check" name="<%= report.getArtifactId() %>" value="<%= reportCategory.getName() %>" <%= indexCheck %> <%= categoryChk %>>&nbsp;<%= reportCategory.getName() %>
+                                                                                          </li>
+                                                                                  <%  
+                                                                                          
+                                                                                  }       
+                                                                                  %>
+                                                                                  </div>    
+			                                                                    </div>
+			                                                                </fieldset>
+			                                                                </td>
+			                                                                </tr>
+									                                </tbody>
+									                            </table>
 									                        </section>
 									                    </div>
 									                </div>
@@ -108,7 +137,6 @@
 									        </div>
 									    </section>
 									</div>
-									
 						<%
 								}
 							}
@@ -129,7 +157,38 @@
 
 <script type="text/javascript">
 
-	/* JQuery scroll bar */
+    /** To make accordion as open when only one report is available **/
+    
+    <% if (CollectionUtils.isNotEmpty(reports) && reports.size() == 1) {%>
+           $(".mfbox").css("display", "block");
+           $('.siteaccordion').removeClass('closereg_empty').addClass('openreg');
+    <% } %>
+    
+    /** To Make project-info-reports and index as default checked **/
+    
+    var index = 'index';
+    var project_info = 'maven-project-info-reports-plugin';
+    
+	$('#reportList').click(function(e) {
+		$('input:checkbox[value="' + project_info + '"]').prop('checked', true);
+      });
+
+	$('#categoryListAll').click(function(e) {
+        $('input:checkbox[value="' + index + '"]').prop('checked', true);
+      });
+	
+	if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
+	    $('#checkAllAuto').prop('checked', true);
+     }
+	
+	$('input:checkbox[value="' + index + '"]').click(function(e) {
+	    $('input:checkbox[value="' + index + '"]').prop('checked', true);
+		  if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
+			   $('#checkAllAuto').prop('checked', true);
+		   }
+	});
+	
+    /* jquery scroll bar */
 	$(".report_scroll").scrollbars();
 	
 	$(document).ready(function() {
@@ -139,7 +198,7 @@
 	    
 	    $('.siteaccordion').bind('click',function(e){
 	        var _tempIndex = $('.siteaccordion').index(this);
-	            $('.siteaccordion').removeClass('openreg').addClass('closereg');
+	            $('.siteaccordion').removeClass('openreg').addClass('closereg_empty');
 	            $('.mfbox').each(function(e){
 	                if($(this).css('display')=='block'){
 	                    $(this).find('.scrollpanel').slideUp('300');
@@ -147,16 +206,12 @@
 	                }
 	            })
 	        if($('.mfbox').eq(_tempIndex).css('display')=='none'){
-	            $(this).removeClass('closereg').addClass('openreg');
+	            $(this).removeClass('closereg_empty').addClass('openreg');
 	            $('.mfbox').eq(_tempIndex).slideDown(300,function(){
 	                $('.mfbox').eq(_tempIndex).find('.scrollpanel').slideDown('300');
 	            });
 	        }
 	    });
-	    
-	    $(".theme_accordion_container").css('border','none');
-	    $(".mfbox").css('display','none');
-	    
 	    /** Accordian ends **/
 		
 		$('#close, #cancel').click(function() {
@@ -170,6 +225,7 @@
 	
 	function configureSite() {
 		showParentPage();
-		popup('createReportConfig', '', $('#site_report'));
+		var params = $('form').serialize();
+		performAction('createReportConfig', params, $("#tabDiv"));
 	}
 </script>

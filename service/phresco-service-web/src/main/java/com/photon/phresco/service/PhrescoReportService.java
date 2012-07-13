@@ -77,7 +77,7 @@ public class PhrescoReportService implements ServerConstants {
 		infoReports.add(Reports.PROJECT_INFO);
 		siteReport.put(TechnologyTypes.PHP, infoReports);
 		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoReports);
-		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoReports);
+		siteReport.put(TechnologyTypes.PHP_DRUPAL6, infoReports);
 		siteReport.put(TechnologyTypes.NODE_JS_WEBSERVICE, infoReports);
 		siteReport.put(TechnologyTypes.SHAREPOINT, infoReports);
 		siteReport.put(TechnologyTypes.WORDPRESS, infoReports);
