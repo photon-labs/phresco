@@ -26,28 +26,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<%
-		   String css = null;
-		   Cookie[] cookies = request.getCookies();
-     	   for(int i = 0; i < cookies.length; i++) { 
-           Cookie cookiecss = cookies[i];
-           if (cookiecss.getName().equals("css")) {
-           	css = cookiecss.getValue();
-           	css = css.replace("%2F","/");
-           	session.setAttribute("css", css);
-           }  
-       } 
-%>
 		<title>Phresco</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-		<link rel="stylesheet" href="<%= session.getAttribute("css") %>" class="changeme">
+		<link rel="stylesheet" href="" class="changeme" title="phresco">
 		<link rel="stylesheet" href="css/media-queries.css">
 		<link rel="stylesheet" href="css/datepicker.css"> <!-- used for date picker-->
 		<link rel="stylesheet" href="css/jquery.ui.all.css"> <!-- used for date picker -->
 		
+        <script type="text/javascript" src="js/main.js"></script>
 		<!-- basic js -->
 		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
@@ -74,63 +63,38 @@
 
 			
 		<script type="text/javascript">
+		     changeTheme(); 
+		
 			$(document).ready(function() {
-				var theme = $("link.changeme").attr("href");
-				/* var theme = $.cookie("css"); */
-				if(theme != null && theme != "theme/photon/css/red.css") {
-					$("link.changeme").attr("href", "theme/photon/css/blue.css");
-					showHeaderImage();
-					$.cookie("css", $("link.changeme").attr("href"));
-				}
-				
-				else {
-					$("link.changeme").attr("href", "theme/photon/css/red.css");
-					showHeaderImage();
-					$.cookie("css", $("link.changeme").attr("href"));
-				} 
-				
 				$(".styles").click(function() {
-					$("link.changeme").attr("href",$(this).attr('rel'));
-					$.cookie("css", $("link.changeme").attr("href"));
-					var theme = $.cookie("css");
-					showHeaderImage();
-					return false;
+					localStorage.clear();
+		             var value = $(this).attr("rel");
+		             localStorage["color"]= value;
+		             localstore = localStorage["color"];
+		             $("link[title='phresco']").attr("href",localstore);
+		             showWelcomeImage();
 				});
-	
+
 				// function to show user info in toggle 
 				$('div li.usersettings div').hide(0);
-				$('div li.usersettings').click(function () {
-					 $('div li.usersettings div').slideToggle(0);
+				$('div li.usersettings').click(function() {
+					$('div li.usersettings div').slideToggle(0);
 				});
-				
+
 				// to show user info on mouse over
-				$('#signOut li').mouseenter(function(){
+				$('#signOut li').mouseenter(function() {
 					$("div li.usersettings div").hide(0);
 					$(this).children("div li.usersettings div").show(0);
-				}).mouseleave(function(){
+				}).mouseleave(function() {
 					$("div li.usersettings div").hide(0);
-				}); 
-				
+				});
+
 				clickMenu($("a[name='headerMenu']"), $("#container"));
 				loadContent("dashboard", $("#container"));
 				activateMenu($("#dashboard"));
-				showHeaderImage();
+				showWelcomeImage();
 			});
 			
-			function showHeaderImage() {
-				var theme = $.cookie("css");
-				if(theme != undefined && theme != "theme/photon/css/red.css") {
-					$('#progressBar').removeClass("progress-danger");
-					$('#progressBar').addClass("progress-info");
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_blue.png");
-					$('.loadingIcon').attr("src", "theme/photon/images/loading_blue.gif");
-				} else {
-					$('#progressBar').removeClass("progress-info");
-					$('#progressBar').addClass("progress-danger");
-					$('.headerlogoimg').attr("src", "theme/photon/images/phresco_header_red.png");
-					$('.loadingIcon').attr("src", "theme/photon/images/loading_red.gif");
-				}
-			}
 		</script>
 	</head>
 	<body>
@@ -152,7 +116,7 @@
 		<header>
 			<div class="header">
 				<div class="Logo">
-					 <a href="#" id="goToHome"><img class="headerlogoimg" src="images/phresco_header_red.png" alt="logo"></a>
+					 <a href="#" id="goToHome"><img class="headerlogoimg" src="theme/photon/images/phresco_header_red.png" alt="logo"></a>
 				</div>
 				<div class="headerInner">
 					<div class="nav_slider">

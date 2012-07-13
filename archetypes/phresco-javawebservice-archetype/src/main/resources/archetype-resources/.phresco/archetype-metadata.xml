@@ -201,7 +201,7 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>src/test/java/com/photon/phresco/</directory> 
+			<directory>src/test/java/com/photon/phresco/service</directory> 
 			<includes>
 				<include>TestCase.java</include>
 			</includes>

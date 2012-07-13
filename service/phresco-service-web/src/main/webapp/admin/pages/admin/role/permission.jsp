@@ -42,25 +42,25 @@ clickButton($("#permissionCancel"), $("#subcontainer"));
 								</div>
 							</th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.name" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.name" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:19px;">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.dvlpr" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.dvlpr" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:16px;">
-								<div class="th-inner tablehead" ><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.phscoadmn" theme="simple"/></div>
+								<div class="th-inner tablehead" ><s:label key="lbl.hdr.adm.rles.asgnprm.phscoadmn" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:21px;">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.tstng" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.tstng" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:16px;">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.frmwrk" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.frmwrk" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:23px;">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.mcyadmn" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.mcyadmn" theme="simple"/></div>
 							</th>
 							<th class="third" style="padding-left:15px;">
-								<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.rles.asgnprm.phtnemp" theme="simple"/></div>
+								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.rles.asgnprm.phtnemp" theme="simple"/></div>
 							</th>
 						</tr>
 					</thead>

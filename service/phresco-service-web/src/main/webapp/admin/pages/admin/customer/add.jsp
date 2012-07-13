@@ -44,7 +44,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Customer Name" class="input-xlarge" name="name" type="text" 
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.name'/>" class="input-xlarge" name="name" type="text" 
 				    value="<%= customer != null ? customer.getName() : "" %>">
 					<span class="help-inline" id="nameError"></span>
 			</div>
@@ -55,7 +55,7 @@
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Description" class="input-xlarge" rows="3" 
+				<textarea id="textarea" placeholder="<s:text name='place.hldr.cust.add.desc'/>" class="input-xlarge" rows="3" 
 				    name="description"><%= customer != null ? customer.getDescription() : "" %></textarea>
 			</div>
 		</div>
@@ -79,7 +79,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.adrs'/>
 			</label>
 			<div class="controls">
-				<textarea id="textarea" placeholder="Address" class="input-xlarge" rows="3" 
+				<textarea id="textarea" placeholder="<s:text name='place.hldr.cust.add.address'/>" class="input-xlarge" rows="3" 
 				    name="address"><%= customer != null ? customer.getAddress() : "" %></textarea>
 				<span class="help-inline applyerror" id="addresError"></span>
 			</div>
@@ -348,7 +348,7 @@
 				<s:text name='lbl.hdr.adm.cust.state'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="State" class="input-xlarge" type="text" name="state"
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.state'/>" class="input-xlarge" type="text" name="state"
 				    value="<%= customer != null ? customer.getState() : "" %>">
 			</div>
 		</div>
@@ -358,7 +358,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.zipcode'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Zipcode" class="input-xlarge" type="text" name="zipcode"
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.zipcode'/>" class="input-xlarge" type="text" name="zipcode"
 				    value="<%= customer != null ? customer.getZipcode() : "" %>">
 				<span class="help-inline" id="zipError"></span>
 			</div>
@@ -369,7 +369,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.cont'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Contact Number" class="input-xlarge" type="text" name="number"
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.contact.no'/>" class="input-xlarge" type="text" name="number"
 				    value="<%= customer != null ? customer.getContactNumber() : "" %>">
 				<span class="help-inline" id="numError"></span>
 			</div>
@@ -380,7 +380,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.cust.fax'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Fax Number" class="input-xlarge" type="text" name="fax"
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.fax.no'/>" class="input-xlarge" type="text" name="fax"
 				    value="<%= customer != null ? customer.getFax() : "" %>">
 				<span class="help-inline" id="faxError"></span>
 			</div>
@@ -391,7 +391,7 @@
 				<s:text name='lbl.hdr.adm.cust.hlptxt'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Help text" class="input-xlarge" type="text" name="helpText"
+				<input id="input01" placeholder="<s:text name='place.hldr.cust.add.help.text'/>" class="input-xlarge" type="text" name="helpText"
 				    value="<%= customer != null ? customer.getHelpText() : "" %>">
 			</div>
 		</div>

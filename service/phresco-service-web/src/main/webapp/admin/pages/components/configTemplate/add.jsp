@@ -35,29 +35,29 @@ function findError(data) {
 </script>
 
 <form name="configForm" class="form-horizontal customer_list">
-	<h4 class="hdr"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.title" theme="simple"/></h4>	
+	<h4 class="hdr"><s:label key="lbl.hdr.comp.cnfigtmplt.title" theme="simple"/></h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="configname" placeholder="Config Template Name" class="input-xlarge" type="text" name="name">
+				<input id="configname" placeholder="<s:text name='place.hldr.configTemp.add.name'/>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Description" class="input-xlarge" type="text">
+				<input id="input01" placeholder="<s:text name='place.hldr.configTemp.add.desc'/>" class="input-xlarge" type="text">
 			</div>
 		</div>
 		
 		<div class="control-group" id="applyControl">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.appliesto'/>
 			</label>
 			<div class="controls">
@@ -73,16 +73,16 @@ function findError(data) {
 		</div>
 		
 		<div class="control-group">
-			<label for="input01" class="control-label labelbold">
+			<label class="control-label labelbold">
 				<s:text name='lbl.hdr.comp.help'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="Help Text" class="input-xlarge" type="text">
+				<input id="input01" placeholder="<s:text name='place.hldr.configTemp.add.help.text'/>" class="input-xlarge" type="text">
 			</div>
 		</div>						
 			
 		<fieldset class = "configFieldset">
-			<legend class = "configLegend"><s:label for="description" key="lbl.hdr.comp.proptemplate" cssClass="labelbold" theme="simple"/></legend>
+			<legend class = "configLegend"><s:label key="lbl.hdr.comp.proptemplate" cssClass="labelbold" theme="simple"/></legend>
 			<div class = "table_div">
 				<div class="fixed-table-container prpt-header">
 					<div class="fixed-table-container-inner">
@@ -91,19 +91,19 @@ function findError(data) {
 								<thead class = "fieldset-tableheader">
 									<tr>
 										<th class="second">
-											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.key.title" theme="simple"/></div>
+											<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.cnfigtmplt.key.title" theme="simple"/></div>
 										</th>
 										<th class="second">
-											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.type.title" theme="simple"/></div>
+											<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.cnfigtmplt.type.title" theme="simple"/></div>
 										</th>
 										<th class="third">
-											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.psblvalue.title"  theme="simple"/></div>
+											<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.cnfigtmplt.psblvalue.title"  theme="simple"/></div>
 										</th>
 										<th class="third">
-											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.mndtry.title"  theme="simple"/></div>
+											<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.cnfigtmplt.mndtry.title"  theme="simple"/></div>
 										</th>
 										<th class="third">
-											<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.mltpl.title" theme="simple"/></div>
+											<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.cnfigtmplt.mltpl.title" theme="simple"/></div>
 										</th>
 										<th class="third">
 											<div class="th-inner">
@@ -149,15 +149,15 @@ function findError(data) {
 						<div id="myModal" class="modal hide fade">
 							<div class="modal-header">
 								<a class="close" data-dismiss="modal" >&times;</a>
-								<h3><s:label for="description" key="lbl.hdr.comp.cnfigtmplt.popup.title" theme="simple"/></h3>
+								<h3><s:label key="lbl.hdr.comp.cnfigtmplt.popup.title" theme="simple"/></h3>
 							</div>
 							<div class="modal-body">
 								<div class="control-group">
-									<s:label for="description" key="lbl.hdr.comp.popup.enter" cssClass="control-label labelbold modallbl-color" theme="simple"/>
+									<s:label key="lbl.hdr.comp.popup.enter" cssClass="control-label labelbold modallbl-color" theme="simple"/>
 									<div class="controls">
 										<input type="text" name="txtCombo" id="txtCombo" class="span3"/>
 										<button type="button" value="" id="addValues" class="btn btn-primary popupadd">
-											<s:label for="description" key="lbl.hdr.comp.popup.add" theme="simple"/>
+											<s:label key="lbl.hdr.comp.popup.add" theme="simple"/>
 										</button>
 									</div>
 								</div>
@@ -177,8 +177,8 @@ function findError(data) {
 							</div>
 							
 							<div class="modal-footer">
-								<a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.hdr.comp.cancel" theme="simple"/></a>
-								<a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.hdr.comp.ok" theme="simple"/></a>
+								<a href="#" class="btn btn-primary" data-dismiss="modal"><s:label key="lbl.hdr.comp.cancel" theme="simple"/></a>
+								<a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label key="lbl.hdr.comp.ok" theme="simple"/></a>
 							</div>
 						</div>
 					</div>	

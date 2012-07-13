@@ -1,8 +1,5 @@
 package com.photon.phresco.service.admin.actions;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -18,7 +15,6 @@ public class Login extends ServiceBaseAction {
 	private String username = null;
 	private String password = null;
 	private boolean loginFirst = true;
-	private String css = null;
 	
 	public String login() {
 	    if (isDebugEnabled) {
@@ -26,18 +22,8 @@ public class Login extends ServiceBaseAction {
 	    }
 
 		if (loginFirst) {
-			HttpServletRequest request = getHttpRequest();
-			Cookie[] cookies = request.getCookies();
-			for(int i = 0; i < cookies.length; i++) { 
-				Cookie cookiecss = cookies[i];
-				if (cookiecss.getName().equals("css")) {
-					css = cookiecss.getValue();
-					css = css.replace("%2F","/");
-					request.setAttribute("css", css);
-				}  
-			} 
-			
-			return LOGIN_RESULT;	
+		
+        	return LOGIN_RESULT;	
 		}
 
 		if (validateLogin()) {

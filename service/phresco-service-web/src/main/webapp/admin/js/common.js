@@ -209,11 +209,11 @@ function accordion() {
 
 function showLoadingIcon(tag) {
 	var src = "theme/photon/images/loading_blue.gif";
-	var theme = $.cookie("css");
-	if (theme == undefined || theme == "theme/photon/css/red.css") {
-		src = "theme/photon/images/loading_red.gif";
-	}
-	/* tag.empty();*/
+	var theme =localStorage["color"];
+    if(theme == undefined || theme == "theme/photon/css/red.css") {
+    	src = "theme/photon/images/loading_red.gif";
+    }
+ 	tag.empty();
 	tag.html("<img class='loadingIcon' src='"+ src +"' style='display: block'>");
 }
 
@@ -237,4 +237,26 @@ function checkForSplChr(inputStr) {
 /** It allows A-Z, a-z, 0-9, - , _ and . **/
 function checkForSplChrExceptDot(inputStr) {
 	return inputStr.replace(/[^a-zA-Z 0-9\.\-\_]+/g, '');
+}
+function changeTheme() {
+  	if (localStorage["color"] != null) {
+        $("link[title='phresco']").attr("href", localStorage["color"]);
+    } else {
+        $("link[title='phresco']").attr("href", "theme/photon/css/red.css");
+    } 
+}
+function showWelcomeImage() {
+	var theme = localStorage['color'];
+	if (theme == "theme/photon/css/blue.css") {
+		$("link[id='theme']").attr("href", localStorage["color"]);
+		$('.headerlogoimg').attr("src","theme/photon/images/phresco_header_blue.png");
+		$('.phtaccinno').attr("src","theme/photon/images/acc_inov_blue.png");
+		$('.welcomeimg').attr("src","theme/photon/images/welcome_photon_blue.png");
+	} else if(theme == null || theme == "theme/photon/css/red.css") {
+		$("link[id='theme']").attr("href", "theme/photon/css/red.css");
+		$('.headerlogoimg').attr("src","theme/photon/images/phresco_header_red.png");
+		$('.phtaccinno').attr("src","theme/photon/images/acc_inov_red.png");
+		$('.welcomeimg').attr("src","theme/photon/images/welcome_photon_red.png");
+
+	}
 }

@@ -53,9 +53,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.desc" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 													
@@ -93,9 +93,9 @@
 												<thead>
 													<tr>
 														<th class="accordiantable"></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver"  theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.comp.ver"  theme="simple"/></th>
 													</tr>
 												</thead>
 																									
@@ -133,9 +133,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 																									
@@ -173,9 +173,9 @@
 												<thead>
 													<tr>
 														<th></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.name" theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.cmp.desc"  theme="simple"/></th>
-														<th class="accordiantable"><s:label for="description" key="lbl.hdr.comp.ver" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.name" theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></th>
+														<th class="accordiantable"><s:label key="lbl.hdr.comp.ver" theme="simple"/></th>
 													</tr>
 												</thead>
 																									

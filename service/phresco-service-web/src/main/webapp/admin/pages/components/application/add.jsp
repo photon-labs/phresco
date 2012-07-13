@@ -63,8 +63,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="name" class="input-xlarge" placeholder="Application Type Name" type="text" name="name" 
-				    value="<%= apptype != null ? apptype.getName() : "" %>" maxlength="30" title="30 Characters only">
+				<input id="name" class="input-xlarge" placeholder='<s:text name="place.hldr.appType.add.name"/>'  type="text" name="name" value="<%= apptype != null ? apptype.getName() : "" %>" maxlength="30" title="30 Characters only">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -74,8 +73,7 @@
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder="Description" rows="3" name="description" 
-				    maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
+				<textarea id="description" class="input-xlarge" placeholder='<s:text name="place.hldr.appType.add.desc"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
 			</div>
 		</div>
 	</div>

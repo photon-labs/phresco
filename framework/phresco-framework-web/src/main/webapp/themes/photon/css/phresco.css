@@ -4668,6 +4668,24 @@ a[id='androidSigning']:hover {
 }
 /** generate build advanced settings ends **/
 
+.desc_img {
+	width:20%; 
+	float:left;
+}
+
+.desc_text {
+	 width:79%;
+	 float:right; 
+	 height:113px; 
+	 overflow-y:hidden;
+}
+
+.description {
+	text-align:justify; 
+	margin-right:7px; 
+	margin-bottom:0px;
+}
+
 /** CI multiple jobs css starts **/
 .ciFormJob {
 	height: 98%; 

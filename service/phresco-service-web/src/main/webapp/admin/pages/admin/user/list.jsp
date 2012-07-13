@@ -127,16 +127,16 @@ function moveAllOptions(theSelFrom, theSelTo){
 									</div>
 								</th>
 								<th class="second">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.usrlst.name" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.usrlst.name" theme="simple"/></div>
 								</th>
 								<th class="third">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.usrlst.mail" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.usrlst.mail" theme="simple"/></div>
 								</th>
 								<th class="third">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.usrlst.status" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.usrlst.status" theme="simple"/></div>
 								</th>
 								<th class="third">
-									<div class="th-inner tablehead"><s:label for="description" key="lbl.hdr.adm.usrlst.asignrole" theme="simple"/></div>
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.usrlst.asignrole" theme="simple"/></div>
 								</th>
 							</tr>
 						</thead>
@@ -216,15 +216,15 @@ function moveAllOptions(theSelFrom, theSelTo){
 				<div id="myModal" class="modal hide fade">
 					<div class="modal-header">
 					  <a class="close" data-dismiss="modal" >&times;</a>
-					  <h3><s:label for="description" key="lbl.hdr.adm.usrlst.role.popup.title" theme="simple"/></h3>
+					  <h3><s:label key="lbl.hdr.adm.usrlst.role.popup.title" theme="simple"/></h3>
 					</div>
 					<div class="modal-body">
 						<div class="popupbody">
-							<div class="popupusr"><s:label for="input01" key="lbl.hdr.adm.usrname" cssClass="popuplabel" theme="simple"/></div> <div class="popupusr-name">Smith</div>
+							<div class="popupusr"><s:label key="lbl.hdr.adm.usrname" cssClass="popuplabel" theme="simple"/></div> <div class="popupusr-name">Smith</div>
 						</div>
 						<div class="pouproles">
-							<div class="popuprls"><s:label for="input01" key="lbl.hdr.adm.availrole" cssClass="popuplabel" theme="simple"/></div> 
-							<div class="popuprole-select"><s:label for="input01" key="lbl.hdr.adm.selrole" cssClass="popuplabel" theme="simple"/></div>
+							<div class="popuprls"><s:label key="lbl.hdr.adm.availrole" cssClass="popuplabel" theme="simple"/></div> 
+							<div class="popuprole-select"><s:label key="lbl.hdr.adm.selrole" cssClass="popuplabel" theme="simple"/></div>
 						</div>
 						<div class="popuplist">
 							<div class="popup-list">
@@ -296,8 +296,8 @@ function moveAllOptions(theSelFrom, theSelTo){
 						</script>
 					</div>
 					<div class="modal-footer">
-					  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label for="description" key="lbl.hdr.comp.cancel" theme="simple"/></a>
-					  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label for="description" key="lbl.hdr.comp.ok" theme="simple"/></a>
+					  <a href="#" class="btn btn-primary" data-dismiss="modal"><s:label key="lbl.hdr.comp.cancel" theme="simple"/></a>
+					  <a href="#" class="btn btn-primary" data-dismiss="modal" ><s:label key="lbl.hdr.comp.ok" theme="simple"/></a>
 					</div>
 				</div>
 			</div>

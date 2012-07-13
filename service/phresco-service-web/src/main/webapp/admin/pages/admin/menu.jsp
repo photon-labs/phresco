@@ -31,35 +31,35 @@
 	<ul class="tabs">
 		<li>
 			<a id="customerList" class="active" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.cust"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.cust"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="userList" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.users"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.users"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="roleList" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.rles"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.rles"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="permissionList" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.perms"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.perms"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="ldap" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.ldapstng"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.ldapstng"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="video" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.vdos"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.vdos"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="globalurlList" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.glblurl"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.glblurl"  theme="simple"/></a>
 		</li>
 		<li>
 			<a id="downloadList" class="inactive" name="adminTab" href="#">
-			<s:label for="description" key="lbl.hdr.adm.dwnld"  theme="simple"/></a>
+			<s:label key="lbl.hdr.adm.dwnld"  theme="simple"/></a>
 		</li>
 	</ul>		
 </nav>

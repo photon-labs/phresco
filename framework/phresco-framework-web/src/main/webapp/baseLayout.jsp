@@ -77,27 +77,25 @@
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <!-- jquery file tree ends -->
 <script type="text/javascript">
+    
 	if (localStorage["color"] != null) {
-		$("link[title='phresco']").attr("href", localStorage["color"]);
-	} else {
-		$("link[title='phresco']").attr("href", "themes/photon/css/red.css");
-	}
-	
-	$(document).ready(function() {
-		 $(".styles").click(function() {
-	  		 localStorage.clear();
-	  		 var key = $(this).attr("id");
-	  		 var value = $(this).attr("rel");
-	  		 localStorage["color"]= value;
-	  		 localstore = localStorage["color"];
-	  		 $("link[title='phresco']").attr("href",localstore);
-	  		showHeaderImage();
-			$("iframe").attr({
-	             src: $("iframe").attr("src")
-	         });
-	  	 });
-	});
-	
+        $("link[title='phresco']").attr("href", localStorage["color"]);
+    } else {
+        $("link[title='phresco']").attr("href", "themes/photon/css/red.css");
+    }  
+
+    $(document).ready(function() {
+        $(".styles").click(function() {
+            var key = "color";
+            var title = "phresco";
+            var value = $(this).attr("rel");
+            setLocalstorage(key,value);
+            getLocalstorage(key, title);
+            $("iframe").attr({
+                src: $("iframe").attr("src")
+            });
+        });
+    });
 </script>
 </head>
 <body>
@@ -128,7 +126,7 @@
 					</a>
 				</div>
 				<div class="control-group customer_name">
-                    <s:label for="input01" key="label.customer" cssClass="control-label custom_label labelbold"/>
+                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
                     <select class="customer_listbox">
                         <option>Walgreens</option>
                         <option>NBO</option>
