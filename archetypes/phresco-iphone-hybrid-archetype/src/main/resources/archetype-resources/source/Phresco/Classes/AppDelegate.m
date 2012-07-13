@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #ifdef PHONEGAP_FRAMEWORK
 	#import <PhoneGap/PhoneGapViewController.h>
+    #import <PhoneGap/Reachability.h>
 #else
 	#import "PhoneGapViewController.h"
 #endif
@@ -25,17 +26,102 @@
     return [super init];
 }
 
+
++ (NSString*) startPage
+
+{
+    
+    return urlString;  
+    
+}
+
+-(void) urlParsing
+{
+    ConfigurationReader *configReader = [[ConfigurationReader alloc]init];
+    [configReader parseXMLFileAtURL:@"phresco-env-config" environment:@"myWebservice"];
+    
+    NSString *protocol = [[configReader.stories objectAtIndex: 0] objectForKey:@"protocol"];
+    protocol = [protocol stringByTrimmingCharactersInSet:
+                [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString *host = [[configReader.stories objectAtIndex: 0] objectForKey:@"host"];
+    host = [host stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString *port = [[configReader.stories objectAtIndex: 0] objectForKey:@"port"];
+    port = [port stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString *context = [[configReader.stories objectAtIndex: 0] objectForKey:@"context"];
+    context = [context stringByTrimmingCharactersInSet:
+               [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString *strCheck = [NSString stringWithFormat:@"%@://%@.%@/%@", protocol,host, port, context];
+    if([strCheck isEqualToString:NULL])
+    {
+        UIAlertView *alertCheck = [[UIAlertView alloc]initWithTitle:@"" message:@"Server is unavailable" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [alertCheck show];
+    }
+    else {
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            NSString *striPad = [[NSString alloc]initWithString:@"useragent=ipad"];
+            
+            urlString = [NSString stringWithFormat:@"%@://%@.%@/%@?%@", protocol,host, port, context,striPad];
+            NSLog(@"Configuration urlString: %@",urlString);
+        }
+        else {
+            
+            NSString *striPhone = [[NSString alloc]initWithString:@"useragent=iphone"];
+            
+            urlString = [NSString stringWithFormat:@"%@://%@.%@/%@?%@", protocol,host, port, context,striPhone];
+            NSLog(@"Configuration urlString: %@",urlString);
+        }
+    }
+    
+}
+
 /**
  * This is main kick off after the app inits, the views and Settings are setup here. (preferred - iOS4 and up)
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    NSURL* url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+   /* NSURL* url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     if (url && [url isKindOfClass:[NSURL class]])
     {
         self.invokeString = [url absoluteString];
 		NSLog(@"Phresco launchOptions = %@",url);
-    }    
+    }    */
+    Reachability* wifiReach = [[Reachability reachabilityWithHostName: @"www.apple.com"] retain];
+    NetworkStatus netStatus = [wifiReach currentReachabilityStatus];
+    
+    switch (netStatus)
+    {
+        case NotReachable:
+        {
+            NSLog(@"Access Not Available");
+            
+            UIAlertView *alertCheck = [[UIAlertView alloc]initWithTitle:@"" message:@"Network not available." delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            [alertCheck show];
+            
+            break;
+        }
+            
+        case ReachableViaWWAN:
+        {
+            NSLog(@"Reachable WWAN");
+            //[self urlParsing];
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"Reachable WiFi");
+            //[self urlParsing];
+            break;
+        }
+    }
+    
 		
 	return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
