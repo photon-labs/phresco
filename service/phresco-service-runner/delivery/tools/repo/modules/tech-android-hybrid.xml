@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules xmlns="http://www.example.org/Phresco">
-    <module id="mod_androidannotations_2.1.2" name="AndroidAnnotations" version="2.1.2" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_androidannotations_2.1.2">
+    <module id="mod_androidannotations_2.1.2" name="AndroidAnnotations" version="2.1.2" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_androidannotations_2.1.2">
         <contentURL>/modules/tech-android-hybrid/files/mod_androidannotations_2.1.2/2.1.2/mod_androidannotations_2.1.2-2.1.2.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/AndroidAnnotations.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>AndroidAnnotations works in a very simple way. It automatically adds an extra compilation step that generates source code, using the standard Java Annotation Processing tool.</content>
@@ -11,8 +12,9 @@
             </document>
         </documents>
     </module>
-    <module id="mod_simplexml_2.6.1" name="SimpleXML" version="2.6.1" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_simplexml_2.6.1">
+    <module id="mod_simplexml_2.6.1" name="SimpleXML" version="2.6.1" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_simplexml_2.6.1">
         <contentURL>/modules/tech-android-hybrid/files/mod_simplexml_2.6.1/2.6.1/mod_simplexml_2.6.1-2.6.1.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/SimpleXML.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Simple is a high performance XML serialization and configuration framework for Java. Its goal is to provide an XML framework that enables rapid development of XML configuration and communication systems. This framework aids the development of XML systems with minimal effort and reduced errors. It offers full object serialization and deserialization, maintaining each reference encountered. In essence it is similar to C# XML serialization for the Java platform, but offers additional features for interception and manipulation.</content>
@@ -22,8 +24,9 @@
             </document>
         </documents>
     </module>
-    <module id="mod_googlegson_2.2.1" name="GoogleGSON" version="2.2.1" core="false" required="false" groupId="com.google.code.gson" artifactId="gson">
+    <module id="mod_googlegson_2.2.1" name="GoogleGSON" version="2.2.1" core="true" required="false" groupId="com.google.code.gson" artifactId="gson">
         <contentURL>/modules/tech-android-hybrid/files/mod_googlegson_2.2.1/2.2.1/mod_googlegson_2.2.1-2.2.1.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/GoogleGSON.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Gson can work with arbitrary Java objects including pre-existing objects that you do not have source-code of
@@ -35,8 +38,9 @@
             </document>
         </documents>
     </module>
-    <module id="mod_ormlite_4.41" name="ORMLite" version="4.41" core="false" required="false" groupId="com.j256.ormlite" artifactId="ormlite-core">
+    <module id="mod_ormlite_4.41" name="ORMLite" version="4.41" core="true" required="false" groupId="com.j256.ormlite" artifactId="ormlite-core">
         <contentURL>/modules/tech-android-hybrid/files/mod_ormlite_4.41/4.41/mod_ormlite_4.41-4.41.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/ORMLite.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Object Relational Mapping Lite (ORM Lite) provides some lightweight functionality for persisting Java objects to SQL databases while avoiding the complexity and overhead of more standard ORM packages.
@@ -48,8 +52,9 @@ ORMLite supports JDBC connections to MySQL, PostgreSQL, Microsoft SQL Server, H2
             </document>
         </documents>
     </module>
-    <module id="mod_jackcess_1.2.7" name="Jackcess" version="1.2.7" core="false" required="false" groupId="com.healthmarketscience.jackcess" artifactId="jackcess">
+    <module id="mod_jackcess_1.2.7" name="Jackcess" version="1.2.7" core="true" required="false" groupId="com.healthmarketscience.jackcess" artifactId="jackcess">
         <contentURL>/modules/tech-android-hybrid/files/mod_jackcess_1.2.7/1.2.7/mod_jackcess_1.2.7-1.2.7.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/Jackcess.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Jackcess is a pure Java library for reading from and writing to MS Access databases (currently supporting versions 2000-2007).It is part of the OpenHMS project from Health Market Science, Inc.. It is not an application. There is no GUI. It's a library, intended for other developers to use to build Java applications. Jackcess is licensed under the GNU Lesser General Public License</content>
@@ -59,8 +64,9 @@ ORMLite supports JDBC connections to MySQL, PostgreSQL, Microsoft SQL Server, H2
             </document>
         </documents>
     </module>
-    <module id="mod_twitter4j_2.1.0" name="Twitter4J" version="2.1.0" core="false" required="false" groupId="net.homeip.yusuke" artifactId="twitter4j-core">
+    <module id="mod_twitter4j_2.1.0" name="Twitter4J" version="2.1.0" core="true" required="false" groupId="net.homeip.yusuke" artifactId="twitter4j-core">
         <contentURL>/modules/tech-android-hybrid/files/mod_twitter4j_2.1.0/2.1.0/mod_twitter4j_2.1.0-2.1.0.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/Twitter4J.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Twitter4J is an unofficial Java library for the Twitter API. With Twitter4J, you can easily integrate your Java application with the Twitter service.
@@ -76,8 +82,9 @@ Twitter4J  feature:
             </document>
         </documents>
     </module>
-    <module id="mod_facebook_3.0.4" name="Facebook" version="3.0.4" core="false" required="false" groupId="com.google.code.facebookapi" artifactId="facebook-java-api-schema">
+    <module id="mod_facebook_3.0.4" name="Facebook" version="3.0.4" core="true" required="false" groupId="com.google.code.facebookapi" artifactId="facebook-java-api-schema">
         <contentURL>/modules/tech-android-hybrid/files/mod_facebook_3.0.4/3.0.4/mod_facebook_3.0.4-3.0.4.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/Facebook.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Facebook is a reference library project, which user need to add to their native application.facebook features like login to facebook, post on wall, etc from their own android application
@@ -89,8 +96,9 @@ Note: jar file is created for this reference library project, but the suggested 
             </document>
         </documents>
     </module>
-    <module id="mod_adcolony_1.0" name="AdColony" version="1.0" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_adcolony_1.0">
+    <module id="mod_adcolony_1.0" name="AdColony" version="1.0" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_adcolony_1.0">
         <contentURL>/modules/tech-android-hybrid/files/mod_adcolony_1.0/1.0/mod_adcolony_1.0-1.0.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/AdColony.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>AdColony helps to create  high-definition (HD), Instant-Play video advertisements that can be played
@@ -104,8 +112,9 @@ anywhere within your application.</content>
             </document>
         </documents>
     </module>
-    <module id="mod_urbanairship_2.3.0" name="UrbanAirShip" version="2.3.0" core="false" required="false" groupId="com.google.protobuf" artifactId="protobuf-java">
+    <module id="mod_urbanairship_2.3.0" name="UrbanAirShip" version="2.3.0" core="true" required="false" groupId="com.google.protobuf" artifactId="protobuf-java">
         <contentURL>/modules/tech-android-hybrid/files/mod_urbanairship_2.3.0/2.3.0/mod_urbanairship_2.3.0-2.3.0.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/Urban-Airship.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Urbanairship sends push notifications directly to people who have installed the app. Rich Push allows you to go beyond simple alerts by adding engaging experiences into your notifications. Add HTML, video, audio, maps and other rich media components to your push messages. Track delivery and message views, and allow your Rich Push messages to be kept in a persistent inbox located within your app.
@@ -117,8 +126,8 @@ Urban Airship primarily provides app developers the ability to easily add featur
             </document>
         </documents>
     </module>
-    <module id="mod_phonegap_0.0.2" name="PhoneGap" version="0.0.2" core="false" required="false" groupId="com.github.chrisprice" artifactId="phonegap-build-api">
-        <contentURL>/modules/tech-android-hybrid/files/mod_phonegap_0.0.2/0.0.2/mod_phonegap_0.0.2-0.0.2.jar</contentURL>
+    <module id="mod_phonegap_1.2.0" name="PhoneGap" version="1.2.0" core="true" required="true" groupId="modules.tech-android-hybrid.files" artifactId="mod_phonegap_1.2.0">
+        <contentURL>/modules/tech-android-hybrid/files/mod_phonegap_1.2.0/1.2.0/mod_phonegap_1.2.0-1.2.0.jar</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.Even though user works on web based application[hybrid apps] while using phone gap user feel as if they are working on native applications.</content>
@@ -128,7 +137,7 @@ Urban Airship primarily provides app developers the ability to easily add featur
             </document>
         </documents>
     </module>
-    <module id="mod_commons_io_2.0" name="Commons IO" version="2.0" core="false" required="false" groupId="commons-io" artifactId="commons-io">
+    <module id="mod_commons_io_2.0" name="Commons IO" version="2.0" core="true" required="false" groupId="commons-io" artifactId="commons-io">
         <contentURL>/modules/tech-android-hybrid/files/mod_commons_io_2.0/2.0/mod_commons_io_2.0-2.0.jar</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -149,7 +158,7 @@ There are six main areas included:
             </document>
         </documents>
     </module>
-    <module id="mod_httpclient_3.1" name="HttpClient" version="3.1" core="false" required="false" groupId="Commons-httpclient" artifactId="commons-httpclient">
+    <module id="mod_httpclient_3.1" name="HttpClient" version="3.1" core="true" required="false" groupId="Commons-httpclient" artifactId="commons-httpclient">
         <contentURL>/modules/tech-android-hybrid/files/mod_httpclient_3.1/3.1/mod_httpclient_3.1-3.1.jar</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -164,42 +173,63 @@ First add the import statement import HTTPClient.*; to user file(s). Please crea
             </document>
         </documents>
     </module>
-    <module id="mod_google_map_2.2_2.2" name="Google Map 2.2" version="2.2" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_2.2">
+    <module id="mod_google_map_2.2_2.2" name="Google Map 2.2" version="2.2" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_2.2">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>POM was created by Sonatype Nexus</content>
             </document>
         </documents>
     </module>
-    <module id="mod_google_map_2.3.3_2.3.3" name="Google Map 2.3.3" version="2.3.3" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_2.3.3">
+    <module id="mod_google_map_2.3.3_2.3.3" name="Google Map 2.3.3" version="2.3.3" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_2.3.3">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>POM was created by Sonatype Nexus</content>
             </document>
         </documents>
     </module>
-    <module id="mod_google_map_4.0.3_4.0.3" name="Google Map 4.0.3" version="4.0.3" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_4.0.3">
+    <module id="mod_google_map_4.0.3_4.0.3" name="Google Map 4.0.3" version="4.0.3" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_4.0.3">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>POM was created by Sonatype Nexus</content>
             </document>
         </documents>
     </module>
-    <module id="mod_contactslib_1.0.1" name="ContactsLib" version="1.0.1" core="false" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_contactslib_1.0.1">
+    <module id="mod_contactslib_1.0.1" name="ContactsLib" version="1.0.1" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_contactslib_1.0.1">
         <contentURL>/modules/tech-android-hybrid/files/mod_contactslib_1.0.1/1.0.1/mod_contactslib_1.0.1-1.0.1.jar</contentURL>
+		<imageUrl>images/tech-android-hybrid/ContactsLib.png</imageUrl>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>ContactsLib is an Android library for developers, wishing to work easily with Contacts,without knowing how a Content Provider operates.
-
-This library provides methods to :
-1. Get information about a contact
-2. Search record by name, phone number or others attributes
-3. Insert new contact in the Content Provider
-4. Update contact's data
-5. Delete a contact</content>
+				This library provides methods to :
+				1. Get information about a contact
+				2. Search record by name, phone number or others attributes
+				3. Insert new contact in the Content Provider
+				4. Update contact's data
+				5. Delete a contact</content>
             </document>
             <document documentType="DESCRIPTION">
                 <content>ContactsLib is an Android library for developers, wishing to work easily with Contacts.</content>
+            </document>
+        </documents>
+    </module>
+	<module id="mod_cordova_1.7.0" name="Cordova" version="1.7.0" core="true" required="false" groupId="modules.tech-android-native.files" artifactId="mod_cordova_1.7.0">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>POM was created by Sonatype Nexus</content>
+            </document>
+        </documents>
+    </module>
+	<module id="mod_commons_io_2.4" name="Commons IO" version="2.4" core="true" required="false" groupId="modules.tech-android-native.files" artifactId="mod_commons_io_2.4">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>POM was created by Sonatype Nexus</content>
+            </document>
+        </documents>
+    </module>
+	<module id="mod_google_map_4.0.3_4.0.3" name="Google Map 4.0.3" version="4.0.3" core="true" required="false" groupId="modules.tech-android-hybrid.files" artifactId="mod_google_map_4.0.3">
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>POM was created by Sonatype Nexus</content>
             </document>
         </documents>
     </module>
