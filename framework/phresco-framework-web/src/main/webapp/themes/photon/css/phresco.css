@@ -3529,13 +3529,23 @@ table {
     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
     padding-left:5%;
     width:92%;
-    /* padding-bottom:9px;
-    padding-top:9px; */
     line-height: 25px;
 }
 
-.closereg span:hover {
-     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
+.closereg_empty {
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
+    font-weight: bold;
+}
+
+.closereg_empty span {
+    float:left;
+    margin:0px;
+    padding-left:5%;
+    width:92%;
+    line-height: 25px;
 }
 
 .openreg {
@@ -4668,6 +4678,24 @@ a[id='androidSigning']:hover {
 }
 /** generate build advanced settings ends **/
 
+.desc_img {
+	width:20%; 
+	float:left;
+}
+
+.desc_text {
+	 width:79%;
+	 float:right; 
+	 height:113px; 
+	 overflow-y:hidden;
+}
+
+.description {
+	text-align:justify; 
+	margin-right:7px; 
+	margin-bottom:0px;
+}
+
 /** CI multiple jobs css starts **/
 .ciFormJob {
 	height: 98%; 
@@ -4716,7 +4744,9 @@ a[id='androidSigning']:hover {
 #reportcategy {
 	margin-left: 75px;
 	text-align: justify;
+
 }
+
 /** All checkbox list page css**/
 .checkbox_list {
     width:0.1%;
@@ -4726,3 +4756,5 @@ a[id='androidSigning']:hover {
 .printAsPdf {
 	width: 70px;
 }
+
+

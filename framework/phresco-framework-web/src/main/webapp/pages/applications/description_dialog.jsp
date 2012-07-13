@@ -28,8 +28,13 @@
 				<a id="close" href="#" class="close">&times;</a>
 			</div>
 			
-			<div class="modal-body" style="height:100px; overflow-y:auto">
-				<p id="moduleDescription"><s:text name="label.modal.description"/></p>
+			<div class="modal-body" style="height:113px; overflow-y:hidden">
+				<div class = "desc_img">
+					<img id="featureImg" border="0" alt="image" src="">
+				</div>
+				<div class = "desc_text">
+					<p id="moduleDescription" class = "description"><s:text name="label.modal.description"/></p>
+				</div>
 			</div>
 			
 			<div class="modal-footer">
@@ -40,3 +45,10 @@
 		<!-- Description dialog ends -->
 	</div>
 <!-- Description dialog ends -->	
+
+
+<script type="text/javascript">
+if(!isiPad()){
+		$(".desc_text").scrollbars();
+	}
+</script>

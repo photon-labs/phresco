@@ -17,14 +17,14 @@ class DrupalCommonFun extends RequiredFunction
 	
 	protected function setUp()
 	{
-		 $doc = new DOMDocument();
+		$doc = new DOMDocument();
 		$doc->load('test-classes/phresco/tests/phresco-env-config.xml');
 		$environment = $doc->getElementsByTagName("Browser");
 		
 		$browser = $environment->item(0)->nodeValue;
 		$this->webdriver = new WebDriver("localhost", 4444); 
 		$this->webdriver->connect($browser);
-		$screenShotsPath = getcwd()."/"."surefire-reports/screenshots";
+		$screenShotsPath = getcwd()."//"."surefire-reports/screenshots";
 		if (!file_exists($screenShotsPath)) {
 			mkdir($screenShotsPath);
 		}
@@ -53,17 +53,17 @@ class DrupalCommonFun extends RequiredFunction
 		$this->webdriver->get($serverUrl);
 		sleep(2);
 	}
-	function DoLogin( $testCaseName)
+	function DoLogin($testCaseName)
 	{
-	 if($testCaseName==null )
-		{
-         $testCaseName = __FUNCTION__;
+	    if($testCaseName == null)
+	    {
+        $testCaseName = __FUNCTION__;
         }
 	    $name;
 		$password;
 		$property = new DrupalCommonFun;
 		$doc = new DOMDocument();
-		$doc->load('test-classes/phresco/tests/drupalsetting.xml');
+		$doc->load('test-classes/phresco/tests/UserInfo.xml');
 		$users = $doc->getElementsByTagName("user");
 		foreach( $users as $user )
 		{
@@ -83,7 +83,7 @@ class DrupalCommonFun extends RequiredFunction
 			$this->assertTrue($this->isTextPresent(DRU_LOGIN_CONFIRM_MSG));
 		    } 
 		catch (PHPUnit_Framework_AssertionFailedError $e) {
-		 	$this->doCreateScreenShot( $testCaseName);
+		 	$this->doCreateScreenShot($testCaseName);
 			
 		}
 	}   
@@ -93,6 +93,7 @@ class DrupalCommonFun extends RequiredFunction
 		$this->clickandLoad(DRU_LOGOUT_TEXT);
 		sleep(1);
 	}
-}
+	
+	}
 ?>
 

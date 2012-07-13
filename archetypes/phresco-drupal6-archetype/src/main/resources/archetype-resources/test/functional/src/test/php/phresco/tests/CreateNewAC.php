@@ -8,14 +8,14 @@ class CreateNewAC extends DrupalCommonFun
 		parent::setUp();
 	}
 	public function testNewAC()
-	{
+	{ 
 	    $testCaseName = __FUNCTION__;
 		parent::Title();
 		 $name;
 		$email;
 		$property = new DrupalCommonFun;
 		$doc = new DOMDocument();
-		$doc->load('test-classes/phresco/tests/drupalsetting.xml');
+		$doc->load('test-classes/phresco/tests/Drupal6Data.xml');
 		$users = $doc->getElementsByTagName("user");
 		foreach( $users as $user )
 		{

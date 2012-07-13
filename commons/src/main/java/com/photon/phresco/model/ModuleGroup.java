@@ -41,6 +41,7 @@ public class ModuleGroup implements Serializable {
 	boolean required;
 	List<Documentation> docs;
 	List<Module> versions = new ArrayList<Module>(SizeConstants.SIZE_VERSIONS_MAP);
+	String imageURL;
 
 	public ModuleGroup() {
 	}
@@ -161,6 +162,14 @@ public class ModuleGroup implements Serializable {
 		}
 		
 		return null;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 
 	/* (non-Javadoc)

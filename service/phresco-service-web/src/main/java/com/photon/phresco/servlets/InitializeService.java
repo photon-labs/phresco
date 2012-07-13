@@ -52,6 +52,7 @@ public class InitializeService extends HttpServlet {
 			throw new ServletException(e);
 		}
 		new VideoDownloader().start();
+		new ImageDownloader().start();
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

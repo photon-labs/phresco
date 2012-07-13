@@ -240,7 +240,17 @@
 													if (coreModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
 													  	descContent = coreModule.getDoc(DocumentationType.DESCRIPTION).getContent();
 													}
-													  
+													
+													String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+													String url = "";
+													String featureUrl = "";
+													featureUrl = coreModule.getImageURL();
+													if(StringUtils.isEmpty(featureUrl)) {
+														url = "images/right1.png";
+													} else {
+														url = serverUrl + "/" + featureUrl;
+													}
+													
 													String helpTextContent = "";
 													if (coreModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
 													  	helpTextContent = coreModule.getDoc(DocumentationType.HELP_TEXT).getContent();
@@ -268,7 +278,7 @@
 															</td>
 															<td class="editFeatures_td2">
 																<% descContent = descContent.replaceAll("\"","&quot;"); %>
-																<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= coreModule.getId()%>" id="<%= helpTextContent %>" ><%= coreModule.getName() %></a>
+																<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= coreModule.getId()%>" id="<%= helpTextContent %>" ><%= coreModule.getName() %></a>
 															</td>
 															<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 														</tr>
@@ -346,7 +356,17 @@
 														if (jslibrary.getDoc(DocumentationType.DESCRIPTION) != null) { 
 														  	descContent = jslibrary.getDoc(DocumentationType.DESCRIPTION).getContent();
 														}
-														  
+														
+														String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+														String url = "";
+														String featureUrl = "";
+														featureUrl = jslibrary.getImageURL();
+														if(StringUtils.isEmpty(featureUrl)) {
+															url = "images/right1.png";
+														} else {
+															url = serverUrl + "/" + featureUrl;
+														}
+		 												
 														String helpTextContent = "";
 														if (jslibrary.getDoc(DocumentationType.HELP_TEXT) != null) { 
 														  	helpTextContent = jslibrary.getDoc(DocumentationType.HELP_TEXT).getContent();
@@ -375,7 +395,7 @@
 																</td>
 																<td class="editFeatures_td2">
 																	<% descContent = descContent.replaceAll("\"","&quot;"); %>
-																	<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= jslibrary.getId()%>" id="<%= helpTextContent %>"><%= jslibrary.getName() %></a>
+																	<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= jslibrary.getId()%>" id="<%= helpTextContent %>"><%= jslibrary.getName() %></a>
 																</td>
 																<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 															</tr>
@@ -454,6 +474,16 @@
 														if (customModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
 															descContent = customModule.getDoc(DocumentationType.DESCRIPTION).getContent();
 														}
+														
+														String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+														String url = "";
+														String featureUrl = "";
+														featureUrl = customModule.getImageURL();
+														if(StringUtils.isEmpty(featureUrl)) {
+															url = "images/right1.png";
+														} else {
+															url = serverUrl + "/" + featureUrl;
+														}
 														  
 														String helpTextContent = "";
 														if (customModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
@@ -482,7 +512,7 @@
 																</td>
 																<td class="editFeatures_td2">
 																	<% descContent = descContent.replaceAll("\"","&quot;"); %>
-																	<a href="#" name="ModuleDesc" title="<%= descContent %>" class="<%= customModule.getId()%>" id="<%= helpTextContent %>"><%= customModule.getName() %></a>
+																	<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= customModule.getId()%>" id="<%= helpTextContent %>"><%= customModule.getName() %></a>
 																</td>
 																<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
 															</tr>

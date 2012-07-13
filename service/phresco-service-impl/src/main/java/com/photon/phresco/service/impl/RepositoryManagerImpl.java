@@ -146,8 +146,8 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	
 	private void initMap() {
 		versionMap.put(TechnologyTypes.PHP, new String[]{"5.4.x", "5.3.x", "5.2.x", "5.1.x", "5.0.x"});
-		versionMap.put(TechnologyTypes.PHP_DRUPAL6, new String[]{"6.3", "6.25", "6.19"});
-		versionMap.put(TechnologyTypes.PHP_DRUPAL7, new String[]{"7.8"});
+		versionMap.put(TechnologyTypes.PHP_DRUPAL6, new String[]{"6.3", "6.25", "6.19","6.14"});
+		versionMap.put(TechnologyTypes.PHP_DRUPAL7, new String[]{"7.8","7.12","7.14"});
 		versionMap.put(TechnologyTypes.JAVA_WEBSERVICE, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.JAVA_STANDALONE, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
@@ -160,7 +160,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		versionMap.put(TechnologyTypes.WORDPRESS, new String[]{"3.3.1"});
 		versionMap.put(TechnologyTypes.DOT_NET, new String[]{"3.5", "3.0", "2.0"});
 		versionMap.put(TechnologyTypes.SHAREPOINT, new String[]{"3.5", "3.0", "2.0"});
-		versionMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, new String[]{"6.14","6.11", "6.8","6.7", "6.1"});
+		versionMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, new String[]{"0.6.x","0.7.x", "0.8.x"});
 		
 	}
 	
@@ -428,6 +428,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		modBean.setArtifactId(module.getArtifactId());
 		modBean.setGroupId(module.getGroupId());
 		modBean.setType(module.getContentType());
+		modBean.setImageURL(module.getImageUrl());
 		
 		List<Documentation> docs = getDocumentation(module.getDocuments());
 		modBean.setDocs(docs);
