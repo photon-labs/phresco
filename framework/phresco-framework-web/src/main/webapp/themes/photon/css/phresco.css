@@ -3534,8 +3534,20 @@ table {
     line-height: 25px;
 }
 
-.closereg span:hover {
-     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
+.closereg_empty {
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
+    font-weight: bold;
+}
+
+.closereg_empty span {
+    float:left;
+    margin:0px;
+    padding-left:5%;
+    width:92%;
+    line-height: 25px;
 }
 
 .openreg {

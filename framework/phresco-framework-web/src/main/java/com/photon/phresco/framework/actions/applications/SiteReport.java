@@ -55,6 +55,10 @@ public class SiteReport extends FrameworkBaseAction {
 		S_LOGGER.debug("Entering Method  SiteReport.viewSiteReport()");
 		
 		try {
+		    ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+		    ProjectInfo projectInfo = administrator.getProject(projectCode).getProjectInfo();
+		    List<Reports> selectedReports = administrator.getPomReports(projectInfo);
+            getHttpRequest().setAttribute(REQ_SITE_SLECTD_REPORTS, selectedReports);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of SiteReport.viewSiteReport()"
@@ -138,6 +142,7 @@ public class SiteReport extends FrameworkBaseAction {
 			List<Reports> selectedReports = administrator.getPomReports(projectInfo);
 			getHttpRequest().setAttribute(REQ_SITE_REPORTS, reports);
 			getHttpRequest().setAttribute(REQ_SITE_SLECTD_REPORTS, selectedReports);
+			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of SiteReport.configure()"
 					+ FrameworkUtil.getStackTraceAsString(e));
@@ -184,13 +189,14 @@ public class SiteReport extends FrameworkBaseAction {
 			}
 			
 			administrator.updateRptPluginInPOM(projectInfo, reportsToBeAdded, selectedReportCategories);
+			addActionMessage(getText(SUCCESS_SITE_CONFIGURE));
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of SiteReport.createReportConfig()"
 					+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "Configuring site report");
 		}
 		
-		return checkForSiteReport();
+		return viewSiteReport();
 	}
 	
 	public String getProjectCode() {
