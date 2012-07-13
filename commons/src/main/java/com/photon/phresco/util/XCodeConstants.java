@@ -128,7 +128,7 @@ public interface XCodeConstants {
 	/**
 	 * Default config file location for iphone hybrid application
 	 */
-	String HYBRID_PLIST = "www/" + CONFIG_FILE;
+	String HYBRID_PLIST = "Phresco/" + CONFIG_FILE;
 	
 	/**
 	 * Default debug simulator build folder
