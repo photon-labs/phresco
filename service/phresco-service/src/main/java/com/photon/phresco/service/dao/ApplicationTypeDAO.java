@@ -26,6 +26,7 @@ public class ApplicationTypeDAO extends BaseDAO {
 	private String name;
 	private String description;
 	private boolean system;
+	private String customerId;
 	
 	public ApplicationTypeDAO() {
 		super();
@@ -53,6 +54,14 @@ public class ApplicationTypeDAO extends BaseDAO {
 
     public void setSystem(boolean system) {
         this.system = system;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     @Override
