@@ -81,36 +81,29 @@
 							<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
 						</li>
 					</ul>
+					<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
+						<li class="popup-li"> 
+							<input type="checkbox" id="skipTest" name="skipTest" value="true" />
+							<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
+						</li>
+					</ul>
 				</div>	
 			</div>
 
-			<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
-				<li class="popup-li"> 
-					<input type="checkbox" id="skipTest" name="skipTest" value="true" />
-					<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
-				</li>
-			</ul>
 
 			<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
 				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
 
-				<div class="clearfix">
+				<div class="clearfix" id="techDiv">
 					<div class="xlInput">
 						<ul class="inputs-list">
 							<li class="popup-li"> 
 								<span class="popup-span"><s:text name="label.technology"/></span>
-								<select class="xlarge" id="technology" name="codeTechnology">
+								<select class="xlarge" id="codeTechnology" name="codeTechnology">
 									<option value="java" ><s:text name="label.tech.java"/></option>
 									<option value="js" ><s:text name="label.tech.javascript"/></option>
 									<option value="web" ><s:text name="label.tech.jsp"/></option>
 								</select>
-								<!--<span class="textarea_span popup-span"><s:text name="label.technology"/></span>
-								<input type="radio" name="codeTechnology" value="" checked>
-								<span class="textarea_span popup-span"><s:text name="label.tech.java"/></span>
-								<input type="radio" name="codeTechnology" value="js" >
-								<span class="textarea_span popup-span"><s:text name="label.tech.javascript"/></span>
-								<input type="radio" name="codeTechnology" value="jsp" >
-								<span class="textarea_span popup-span"><s:text name="label.tech.jsp"/></span>-->
 							</li>
 						</ul>
 					</div>	
@@ -149,24 +142,20 @@
 		$('input[name="validateAgainst"]').click(function() {
 			var selectedVal = $(this).val();
 			if (selectedVal == "functionalTest") {
-				$('#skipTest').prop("disabled", true);
-				$('#skipTest').attr("checked", false);
+				$('#techDiv, #skipTestUl').hide();
 			} else if (selectedVal == "source") {
-				$('#skipTest').prop("disabled", false);
+				$('#techDiv, #skipTestUl').show();
 			}
 		});
 		
 		 $('#technology').change(function() {
-			var selectedval = $("#technology option:selected").val();
+			var selectedval = $("#codeTechnology option:selected").val();
 			if (selectedval == "js" || selectedval == "jsp") {
 				$('#funTestRadio').prop("disabled", true);
-				//$('#funTestText').hide();
 				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
  				$('#skipTestUl').show();
 			} else {
 				$('#funTestRadio').prop("disabled", false);
-				//$('#funTestRadio').show();
-				//$('#funTestText').show();
 				$('input:radio[name="validateAgainst"]').filter('[value="source"]').attr('checked', true);
  				$('#skipTestUl').show();
 			}
