@@ -120,6 +120,9 @@
 				              	<th class="third">
 				                	<div class="th-inner"><s:text name="label.technology"/></div>
 				              	</th>
+<!-- 				              	<th class="third"> -->
+<%-- 				                	<div class="th-inner"><s:text name="label.print"/></div> --%>
+<!-- 				              	</th> -->
 				            </tr>
 			          	</thead>
 			
@@ -137,6 +140,9 @@
 			              		</td>
 			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
+<!-- 			              		<td> -->
+<%-- 			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_icon.png" title="generate pdf" style="height: 20px; width: 20px;"/></a> --%>
+<!-- 			              		</td> -->
 			            	</tr>
 			            <%
 							}
@@ -235,6 +241,16 @@
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
 	        performAction('applicationDetails', params, $('#container'));
+	    });
+		
+        $('.pdfCreation').click(function() {
+    		showPopup();
+    		$('#popup_div').empty();
+    		var params = "";
+    		params = params.concat("projectCode=");
+			params = params.concat($(this).attr("id"));
+    		popup('printAsPdfPopup', params, $('#popup_div'));
+    	    escPopup();
 	    });
 	});
 	

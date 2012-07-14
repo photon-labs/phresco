@@ -187,6 +187,16 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String dbUrl = null;
     private String driver = null;
 	
+    // report generation 
+    private String reportName = null;
+    private String reoportLocation = null;
+    private String reportDataType = null;
+    
+    // download report
+	private InputStream fileInputStream;
+	private String fileName = "";
+	private String reportFileName = null;
+	
 	private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
 
     
@@ -1716,7 +1726,20 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             return name.endsWith(filter_);
         }
     }
+    
+    public class FileNameFileFilter implements FilenameFilter {
+        private String filter_;
+        private String startWith_;
+        public FileNameFileFilter(String filter, String startWith) {
+            filter_ = filter;
+            startWith_ = startWith;
+        }
 
+        public boolean accept(File dir, String name) {
+            return name.endsWith(filter_) && name.startsWith(startWith_);
+        }
+    }
+    
     public String getSettingCaption() {
            S_LOGGER.debug("Entering Method Quality.getSettingCaption()");
         try {
@@ -1924,6 +1947,86 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 			// TODO: handle exception
 		}
     	return SUCCESS;
+    }
+    
+    public String printAsPdfPopup () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
+        try {
+        	List<String> pdfFiles = new ArrayList<String>();
+            // popup showing list of pdf's already created
+        	String pdfDirLoc = "";
+        	String fileFilterName = "";
+        	if (StringUtils.isEmpty(testType)) {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE;
+        		fileFilterName = projectCode;
+        	} else {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType;
+        		fileFilterName = testType;
+        	}
+            File pdfFileDir = new File(pdfDirLoc);
+            if(pdfFileDir.isDirectory()) {
+                File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
+            	for (File child : children) {
+    				pdfFiles.add(child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, ""));
+    			}
+            }
+            
+            if(pdfFiles != null) {
+                getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
+            }
+			//read all pdf files from dir
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
+        }
+        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
+        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+        return SUCCESS;
+    }
+    
+    public void printAsPdf () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdf()");
+        try {
+            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            reportGeneration(project, testType);
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        }
+        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
+        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+//        return SUCCESS;
+    }
+    
+    public void reportGeneration(Project project, String testType) {
+    	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
+    	try {
+    		PhrescoReportGeneration prg = new PhrescoReportGeneration();
+            if (StringUtils.isEmpty(testType)) { 
+            	prg.cumulativePdfReport(project, testType, reportDataType);
+            } else {
+            	prg.generatePdfReport(project, testType, reportDataType);
+            }
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Quality.reportGeneration()" + e);
+		}
+
+    }
+    
+    public String downloadReport() {
+        S_LOGGER.debug("Entering Method Quality.downloadReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            String pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+    			fileInputStream = new FileInputStream(pdfFile);
+    			fileName = reportFileName;
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return SUCCESS;
     }
     
     public List<SettingsInfo> getServerSettings() {
@@ -2333,6 +2436,53 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	public void setSystemPath(File systemPath) {
 		this.systemPath = systemPath;
 	}
-	
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
+
+	public String getReoportLocation() {
+		return reoportLocation;
+	}
+
+	public void setReoportLocation(String reoportLocation) {
+		this.reoportLocation = reoportLocation;
+	}
+
+	public String getReportDataType() {
+		return reportDataType;
+	}
+
+	public void setReportDataType(String reportDataType) {
+		this.reportDataType = reportDataType;
+	}
+
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getReportFileName() {
+		return reportFileName;
+	}
+
+	public void setReportFileName(String reportFileName) {
+		this.reportFileName = reportFileName;
+	}
 	
 }

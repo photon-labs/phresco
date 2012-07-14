@@ -648,5 +648,25 @@
         	<result name="success">/pages/fileBrowse.jsp</result>
         </action>
         <!-- file or folder browse option ends -->
+        
+        <!-- Print pdf operations starts -->
+       	<action name="printAsPdfPopup" method="printAsPdfPopup" class="com.photon.phresco.framework.actions.applications.Quality">
+       		<result name="success">/pages/applications/report_popup.jsp</result>
+		</action>
+		
+		<action name="printAsPdf" method="printAsPdf" class="com.photon.phresco.framework.actions.applications.Quality">
+<!--        		<result name="showPrintAsPopUp">/pages/applications/report_popup.jsp</result> -->
+		</action>
+		
+		<action name="downloadReport" method="downloadReport" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}.pdf"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+		<!-- Print pdf operations endss -->
+		
     </package>
 </struts>
