@@ -46,16 +46,23 @@
 		disabledStr = "disabled";
 	}
 %>
-
-<div class="operation">
-    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
-</div>
-<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
-	<div class="alert-message warning sonar">
-		<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+<form action="check" id="check">
+	<div class="operation">
+	    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
+		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.technology"/></strong>&nbsp;
+		<select class="xlarge" id="report" name="report">
+			<option value="java" ><s:text name="label.tech.java"/></option>
+			<option value="js" ><s:text name="label.tech.javascript"/></option>
+			<option value="web" ><s:text name="label.tech.jsp"/></option>
+			<option value="functional" ><s:text name="label.funtional"/></option>
+		</select>
 	</div>
-<% } %>
- 
+	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
+		<div class="alert-message warning sonar">
+			<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+		</div>
+	<% } %>
+</form> 
 <div id="sonar_report" class="sonar_report">
 
 </div>
@@ -74,14 +81,19 @@
     	changeStyle("code");
     	sonarReport();
     	enableScreen();
-		
+    	
 		$('#validate').click(function() {
 			getCodeValidatePopUp();
+  		});
+		
+		$('#report').change(function() {
+			sonarReport();
   		});
   
 		$('#closeGenTest, #closeGenerateTest').click(function() {
  			closePopup();
  			sonarReport();
+ 			$('#popup_div').empty();
   		});
     });
     
@@ -103,8 +115,8 @@
     
     function getCodeValidatePopUp() {
     	$('#popup_div').empty();
-		  showPopup();
-      popup('getCodeValidatePopUp', '', $('#popup_div'));
+		showPopup();
+      	popup('getCodeValidatePopUp', '', $('#popup_div'));
     }
     
 	function checkObj(obj) {
