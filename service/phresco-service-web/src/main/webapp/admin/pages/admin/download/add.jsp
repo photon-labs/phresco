@@ -19,6 +19,9 @@
   --%>
 
 <%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="com.photon.phresco.model.DownloadInfo" %>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
 
 <script type="text/javascript">
 	function findError(data) {
@@ -56,15 +59,26 @@
 	}
 </script>
 
+<%
+    DownloadInfo downloadInfo = (DownloadInfo)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO);
+    String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+%>
+
 <form class="form-horizontal customer_list">
-	<h4><s:label key="lbl.hdr.adm.dwnlad.title" theme="simple"/></h4>	
+	<h4>
+	<%if(StringUtils.isNotEmpty(fromPage)) { %>
+	       <s:label key="lbl.hdr.adm.dwnlad.edit.title" theme="simple"/>
+	 <% } else { %>	
+	       <s:label key="lbl.hdr.adm.dwnlad.add.title" theme="simple"/>
+	  <%} %> 
+	 </h4>      
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
 			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -74,7 +88,7 @@
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" class="input-xlarge" type="text">
+				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" value="<%= downloadInfo != null ? downloadInfo.getDescription() : "" %>" class="input-xlarge" type="text" name="description">
 			</div>
 		</div>
 		
@@ -116,7 +130,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.ver'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.download.add.version'/>" class="input-xlarge" type="text" name="version">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.version'/>" value="<%= downloadInfo != null ? downloadInfo.getVersion() : "" %>" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
@@ -150,8 +164,17 @@
 	</div>
 
 	<div class="bottom_button">
-		<input type="hidden" name="fromPage" value="add" />
+	   <% if (StringUtils.isNotEmpty(fromPage)) { %>
+                <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+                    onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" />
+        <% } else { %>
 		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<% } %>
 		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
+	
+	<!-- Hidden Fields -->
+    <input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
+    <input type="hidden" name="id" value="<%= downloadInfo != null ? downloadInfo.getId() : "" %>"/>
+    <input type="hidden" name="oldName" value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>"/> 
 </form>

@@ -65,8 +65,8 @@ public class DownloadsService implements ServerConstants {
 		Gson gson = new Gson();
 		List<DownloadInfo> downloadInfoList = gson.fromJson(downloadInfoJSON, type);
     	for (DownloadInfo downloadInfo : downloadInfoList) {
-			List<String> platforms = Arrays.asList(downloadInfo.getPlatform());
-			List<String> appliesTo = Arrays.asList(downloadInfo.getAppliesTo());
+			List<String> platforms = downloadInfo.getPlatform();
+			List<String> appliesTo = downloadInfo.getAppliesTo();
 			if (platforms.contains(downloadPropertyInfo.getOsName()) && appliesTo.contains(downloadPropertyInfo.getTechId())) {
 				downloadList.add(downloadInfo);
 			}

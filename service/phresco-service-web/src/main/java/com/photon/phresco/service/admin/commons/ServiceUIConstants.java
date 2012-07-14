@@ -67,6 +67,18 @@ public interface ServiceUIConstants {
     String REQ_CUST_CUSTOMERS = "customers";
     String REQ_CUST_CUSTOMER_ID = "customerId";
     
+    /*****************************
+     * ConfigTemp Request Constants
+     * String REQ_CONFIG_XXX
+     *****************************/ 
+    String REQ_CONFIG_TEMP = "configTemp";
+    
+    /*****************************
+     * Download Request Constants
+     * String REQ_DOWNLOAD_XXX
+     *****************************/ 
+    String REQ_DOWNLOAD_INFO = "downloadInfo";
+    String REQ_DOWNLOAD_ID = "downloadId";
     
 	/*****************************
      * I18N Keys Constants
@@ -121,6 +133,9 @@ public interface ServiceUIConstants {
     
     String PLTPROJ_ADDED = "succ.pltproj.add";
     String PLTPROJ_NOT_ADDED = "fail.pltproj.add";
+    String PLTPROJ_DELETED = "succ.pltproj.delete";
+    String PLTPROJ_NOT_DELETED = "fail.pltproj.delete";
+    
     
     String CUSTOMER_ADDED = "succ.customer.add";
     String CUSTOMER_UPDATED = "succ.customer.update";
@@ -137,4 +152,6 @@ public interface ServiceUIConstants {
     
     String DOWNLOAD_ADDED = "succ.download.add";
     String DOWNLOAD_NOT_ADDED = "fail.download.add";
+    String DOWNLOAD_DELETED = "succ.download.delete";
+    String DOWNLOAD_NOT_DELETED = "fail.download.delete";
 }

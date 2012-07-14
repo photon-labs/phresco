@@ -174,7 +174,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 				// projectInfo.getTechnology().getModules());
 				// extractLibraries(modulesPath,
 				// projectInfo.getTechnology().getLibraries());
-				String urls[] = projectInfo.getPilotProjectUrls();
+				List<String> urls = projectInfo.getPilotProjectUrls();
 				if (urls != null) {
 					for (String url : urls) {
 						DependencyUtils.extractFiles(url, path);

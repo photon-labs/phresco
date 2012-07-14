@@ -17,7 +17,13 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>
+<%@page import="com.photon.phresco.model.ProjectInfo"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@page import="java.util.List"  %>
+
 <script type="text/javascript">
 function findError(data) {
 	if(data.nameError != undefined) {
@@ -33,16 +39,26 @@ function findError(data) {
 		}
 }
 </script>
+<% ProjectInfo pilotProjectInfo = (ProjectInfo)request.getAttribute("pilotProjectInfo"); 
+   String fromPage = (String)request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE); 
+%>
 
 <form class="form-horizontal customer_list">
-	<h4 class="hdr"><s:label key="lbl.hdr.comp.pltprjt.title" theme="simple"/></h4>	
+	<h4 class="hdr">
+	<% if (StringUtils.isNotEmpty(fromPage)) { %>
+	      <s:label key="lbl.hdr.comp.edit.pltprjt.title" theme="simple"/>
+	    <% } else { %>
+	      <s:label key="lbl.hdr.comp.add.pltprjt.title" theme="simple"/>
+	     <% } %> 
+	
+	</h4>	
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
 			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.comp.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.pilot.add.cust.name'/>" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.pilot.add.name'/>" value="<%= pilotProjectInfo != null ? pilotProjectInfo.getName() : "" %>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -52,7 +68,7 @@ function findError(data) {
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.pilot.add.desc'/>" class="input-xlarge" type="text">
+				<input id="input01" placeholder="<s:text name='place.hldr.pilot.add.desc'/>" value="<%= pilotProjectInfo != null ? pilotProjectInfo.getDescription() : "" %>"  class="input-xlarge" type="text" name="description">
 			</div>
 		</div>
 		
@@ -68,7 +84,17 @@ function findError(data) {
 	</div>
 	
 	<div class="bottom_button">
+	    <% if (StringUtils.isNotEmpty(fromPage)) { %>
+                <input type="button" id="pilotprojUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+                    onclick="formSubmitFileUpload('pilotprojUpdate', 'projArc', $('#subcontainer'), 'Updating Pilotproject');" />
+        <% } else { %>
 		<input type="button" id="pilotprojSave" class="btn btn-primary" onclick="formSubmitFileUpload('pilotprojSave', 'projArc', $('#subcontainer'), 'Creating Pilotproject');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+		<% } %>
 		<input type="button" id="pilotprojCancel" class="btn btn-primary" onclick="loadContent('pilotprojCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
+	
+    <!-- Hidden Fields -->
+    <input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
+    <input type="hidden" name="projectId" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getId() : "" %>"/>
+    <input type="hidden" name="oldName" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getName() : "" %>"/>  
 </form>

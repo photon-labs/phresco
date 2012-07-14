@@ -106,7 +106,7 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
 	            for (ProjectInfo projectInfo : pilotProjects) {
 	//                extractModules(modulesPath, projectInfo.getTechnology().getModules());
 	//				extractLibraries(modulesPath, projectInfo.getTechnology().getLibraries());
-	                String urls[] = projectInfo.getPilotProjectUrls();
+	                List<String> urls = projectInfo.getPilotProjectUrls();
 	                if(urls != null){
 	                    for (String url : urls) {
 	                        DependencyUtils.extractFiles(url, path);

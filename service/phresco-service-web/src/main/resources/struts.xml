@@ -159,6 +159,19 @@
             <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
 			<result type="json" />
         </action>
+        
+          <action name="pilotprojEdit" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="edit">
+            <result name="pilotprojAdd">/admin/pages/components/pilotproject/add.jsp</result>
+        </action>
+        
+        <action name="pilotprojUpdate" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="update">
+            <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="pilotprojDelete" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="delete">
+            <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
+        </action>
 		
 		<action name="pilotprojCancel" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="cancel">
             <result name="pilotprojCancel">/admin/pages/components/pilotproject/list.jsp</result>
@@ -265,20 +278,33 @@
 		<!-- ADMIN GLOBALURL ENDS-->
 			
 		<!-- ADMIN DOWNLOAD STARTS-->
-		<action name="downloadList" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="list">
+		<action name="downloadList" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="list">
 			<result name="downloadList">/admin/pages/admin/download/list.jsp</result>
         </action>
 		
-		<action name="downloadAdd" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="add">
+		<action name="downloadAdd" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="add">
 			<result name="downloadAdd">/admin/pages/admin/download/add.jsp</result>
         </action>
 		
-		<action name="downloadSave" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="save">
+		<action name="downloadSave" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="save">
 			<result name="downloadList">/admin/pages/admin/download/list.jsp</result>
 			<result type="json" />
         </action>
+        
+         <action name="downloadEdit" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="edit">
+            <result name="downloadAdd">/admin/pages/admin/download/add.jsp</result>
+        </action>
+        
+        <action name="downloadUpdate" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="update">
+            <result name="downloadList">/admin/pages/admin/download/list.jsp</result>
+            <result type="json" />
+        </action>
+        
+		<action name="downloadDelete" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="delete">
+            <result name="downloadList">/admin/pages/admin/download/list.jsp</result>
+        </action>
 		
-		<action name="downloadCancel" class="com.photon.phresco.service.admin.actions.admin.DownloadList" method="cancel">
+		<action name="downloadCancel" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="cancel">
 			<result name="downloadCancel">/admin/pages/admin/download/list.jsp</result>
         </action>
 		<!-- ADMIN DOWNLOAD ENDS-->
