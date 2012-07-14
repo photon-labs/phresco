@@ -348,7 +348,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.getSettings()");
         }
         
-        RestClient<SettingsTemplate> settingClient = getRestClient("/components" + REST_API_SETTINGS);
+        RestClient<SettingsTemplate> settingClient = getRestClient(REST_API_COMPONENT + REST_API_SETTINGS);
         GenericType<List<SettingsTemplate>> genericType = new GenericType<List<SettingsTemplate>>(){};
         
         return settingClient.get(genericType);
@@ -359,7 +359,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.getSettings(String settingsId)" + settingsId);
         }
         
-        RestClient<SettingsTemplate> settingClient = getRestClient("/components" + REST_API_SETTINGS);
+        RestClient<SettingsTemplate> settingClient = getRestClient(REST_API_COMPONENT + REST_API_SETTINGS);
         settingClient.setPath(settingsId);
         GenericType<SettingsTemplate> genericType = new GenericType<SettingsTemplate>(){};
         
@@ -371,7 +371,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.createSettings(List<SettingTemplate> settings)");
         }
         
-        RestClient<SettingsTemplate> settingsClient = getRestClient("/components" + REST_API_SETTINGS);
+        RestClient<SettingsTemplate> settingsClient = getRestClient(REST_API_COMPONENT + REST_API_SETTINGS);
         
         return settingsClient.create(settings);
     }
@@ -382,7 +382,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     		S_LOGGER.debug("Entered into RestClient.getPilotProjects(List<ProjectInfo> proInfo)");
     	}
 
-    	RestClient<ProjectInfo> pilotClient = getRestClient("/components" + REST_API_PILOTS);
+    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
     	GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
 
     	return pilotClient.get(genericType); 
@@ -393,7 +393,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     		S_LOGGER.debug("Entered into RestClient.getPilotsProjects(List<ProjectInfo> proInfo)");
     	}
     	
-    	RestClient<ProjectInfo> pilotClient = getRestClient("/components" + REST_API_PILOTS );
+    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS );
     	pilotClient.setPath(projectId);
     	GenericType<ProjectInfo> genericType = new GenericType<ProjectInfo>(){};
     	
@@ -405,7 +405,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.createPilotProjects(List<ProjectInfo> proInfo)");
         }
         
-        RestClient<ProjectInfo> pilotClient = getRestClient("/components" + REST_API_PILOTS);
+        RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
         
         return pilotClient.create(proInfo);
     }
@@ -415,7 +415,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.updatePilotProjects(ProjectInfo projectInfo, String id)" + projectId);
         }
         
-        RestClient<ProjectInfo> pilotproClient = getRestClient("/components" + REST_API_PILOTS);
+        RestClient<ProjectInfo> pilotproClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
         pilotproClient.setPath(projectId);
         GenericType<ProjectInfo> genericType = new GenericType<ProjectInfo>() {};
         pilotproClient.updateById(projectInfo, genericType);
@@ -426,7 +426,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.deletePilotProjects(String id)" + projectId);
         }
         
-        RestClient<ProjectInfo> pilotproClient = getRestClient("/components" + REST_API_PILOTS);
+        RestClient<ProjectInfo> pilotproClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
         pilotproClient.setPath(projectId);
         
         return pilotproClient.deleteById();
