@@ -5,6 +5,7 @@
 <%@ page import="java.util.Set"%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <script src="js/reader.js" ></script>
 
@@ -29,21 +30,21 @@
 		<a class="close" href="#" id="close">&times;</a>
 	</div>
 
-	<div class="modal-body" style="padding-bottom: 20px;">
+	<div class="modal-body" style="padding-bottom: 20px;height: 220px;">
 		<%
 			if (CollectionUtils.isNotEmpty(reportFiles)) {
 		%>
-			<div class="fixed-table-container" style="padding-bottom: 20px;">
+			<div class="tabl-fixed-table-container" style="padding-bottom: 20px;">
 	      		<div class="header-background"></div>
-	      		<div class="fixed-table-container-inner validatePopup_tbl">
+	      		<div id="reportPopupTbl" class="tabl-fixed-table-container-inner validatePopup_tbl" style="height: 200px;overflow-x: hidden; overflow-y: auto;">
 			        <table cellspacing="0" class="zebra-striped">
 			          	<thead>
 				            <tr>
 								<th class="first validate_tblHdr">
-				                	<div class="th-inner">Existing Reports</div>
+				                	<div class="pdfth-inner">Existing Reports</div>
 				              	</th>
 				              	<th class="second validate_tblHdr">
-				                	<div class="th-inner">Download</div>
+				                	<div class="pdfth-inner">Download</div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -100,8 +101,14 @@
 	</div>
 	
 	<div class="modal-footer">
-		<div class="action popup-action">
-		<div id="errMsg"></div>
+		<div class="action popup-action" style="text-align: center;">
+			<div id="errMsg"></div>
+			
+            <input type="radio" name="reportDataType" value="crisp" checked>
+            <span class="textarea_span popup-span"><s:text name="label.report.overall"/></span>
+            <input type="radio" name="reportDataType" value="detail">
+            <span class="textarea_span popup-span"><s:text name="label.report.detail"/></span>
+            
 			<input type="button" class="btn primary" value="Cancel" id="cancel">
 			<input type="button" id="generateReport" class="btn primary" value="Generate">
 		</div>
@@ -110,6 +117,10 @@
 </form>
 
 <script type="text/javascript">
+	if(!isiPad()){
+		/* JQuery scroll bar */
+// 		$("#reportPopupTbl").scrollbars();
+	}
 	$(document).ready(function() {
 		escPopup();
 		
@@ -124,15 +135,21 @@
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
- 	    	params = params.concat("&testType=");
-	    	params = params.concat('<%= testType %>');
+	    	<%
+				if (StringUtils.isEmpty(testType)) {
+			%>
+	 	    	params = params.concat("&projectCode=");
+		    	params = params.concat('<%= projectCode %>');
+			<%
+				} else {    	
+	    	%>
+	 	    	params = params.concat("&testType=");
+		    	params = params.concat('<%= testType %>');
+	    	<%
+				}
+	    	%>
             performAction('printAsPdf', params, '', '');
 		});
-		
-// 		function showParentPage() {
-// 			$(".wel_come").show().css("display","none");
-// 			$('.popup_div').show().css("display","none");
-// 		}
 	});
 	
 </script>

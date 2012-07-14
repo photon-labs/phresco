@@ -23,6 +23,7 @@
 	<parameter name="totalThroughput" class="java.lang.String"/>
 	<parameter name="totalKbPerSec" class="java.lang.String"/>
 	<parameter name="totalAvgBytes" class="java.lang.String"/>
+	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="label" class="java.lang.String"/>
 	<field name="noOfSamples" class="java.lang.Integer"/>
 	<field name="avg" class="java.lang.Double"/>
@@ -280,9 +281,11 @@
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="485">
+		<band height="712">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="25" width="555" height="232" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="25" width="555" height="232" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 				<rectangle radius="10">
 					<reportElement x="13" y="0" width="100" height="20"/>
 				</rectangle>
@@ -314,7 +317,9 @@
 				</barChart>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="257" width="555" height="227" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="257" width="555" height="227" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 				<barChart>
 					<chart>
 						<reportElement mode="Transparent" x="0" y="36" width="554" height="191"/>
@@ -343,6 +348,38 @@
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Min Response Time]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" mode="Opaque" x="-1" y="484" width="555" height="227" backcolor="#FFFFFF"/>
+				<barChart>
+					<chart>
+						<reportElement mode="Transparent" x="0" y="36" width="554" height="191"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["Min Response Time"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{label}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{max}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<barPlot>
+						<plot labelRotation="60.0"/>
+						<itemLabel/>
+					</barPlot>
+				</barChart>
+				<rectangle radius="10">
+					<reportElement x="12" y="0" width="100" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="25" y="5" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Max Response Time]]></text>
 				</staticText>
 			</frame>
 		</band>

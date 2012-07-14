@@ -180,7 +180,7 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>jasperreports-maven-plugin</artifactId>
             <version>1.0-beta-2</version>
-              <exclusions>
+            <exclusions>
                  <exclusion>
                     <artifactId>plexus-container-default</artifactId>
                     <groupId>org.codehaus.plexus</groupId>

@@ -190,6 +190,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     // report generation 
     private String reportName = null;
     private String reoportLocation = null;
+    private String reportDataType = null;
     
     // download report
 	private InputStream fileInputStream;
@@ -1961,12 +1962,22 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         try {
         	List<String> pdfFiles = new ArrayList<String>();
             // popup showing list of pdf's already created
-			String pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES;
+        	String pdfDirLoc = "";
+        	String fileFilterName = "";
+        	if (StringUtils.isEmpty(testType)) {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE;
+        		fileFilterName = projectCode;
+        	} else {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType;
+        		fileFilterName = testType;
+        	}
             File pdfFileDir = new File(pdfDirLoc);
-            File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, testType));
-        	for (File child : children) {
-				pdfFiles.add(child.getName().replace(DOT + PDF, "").replace(testType + UNDERSCORE, ""));
-			}
+            if(pdfFileDir.isDirectory()) {
+                File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
+            	for (File child : children) {
+    				pdfFiles.add(child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, ""));
+    			}
+            }
             
             if(pdfFiles != null) {
                 getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
@@ -1996,14 +2007,25 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     }
     
     public void reportGeneration(Project project, String testType) {
-        PhrescoReportGeneration.generatePdfReport(project, testType);
+    	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
+    	try {
+    		PhrescoReportGeneration prg = new PhrescoReportGeneration();
+            if (StringUtils.isEmpty(testType)) { 
+            	prg.cumulativePdfReport(project, testType, reportDataType);
+            } else {
+            	prg.generatePdfReport(project, testType, reportDataType);
+            }
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Quality.reportGeneration()" + e);
+		}
+
     }
     
     public String downloadReport() {
         S_LOGGER.debug("Entering Method Quality.downloadReport()");
         try {
         	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
-            String pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+            String pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
             File pdfFile = new File(pdfLOC);
             if (pdfFile.isFile()) {
     			fileInputStream = new FileInputStream(pdfFile);
@@ -2430,6 +2452,14 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setReportFileName(String reportFileName) {
 		this.reportFileName = reportFileName;
+	}
+
+	public String getReportDataType() {
+		return reportDataType;
+	}
+
+	public void setReportDataType(String reportDataType) {
+		this.reportDataType = reportDataType;
 	}
     
 	public String getJarLocation() {

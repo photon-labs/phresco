@@ -42,6 +42,7 @@ public interface FrameworkConstants {
    
     String DO_NOT_CHECKIN_DIR = "do_not_checkin";
     String ARCHIVES = "archives";
+    String CUMULATIVE = "cumulativeReports";
     String BUILD_DIR = DO_NOT_CHECKIN_DIR + File.separator + "build";
     String CHECKIN_DIR = "do_not_checkin";
     String BUILD_PATH = "build";
@@ -468,6 +469,8 @@ public interface FrameworkConstants {
     String REQ_KEY_SUCCESS_EMAILS = "successEmails";
     String REQ_KEY_FAILURE_EMAILS = "failureEmails";
     String REQ_SERVER_LOG = "serverLog";
+    String REQ_REPORT_CRISP="crisp";
+    String REQ_REPORT_DETAILED="detail";
     
     String REQ_EXISTING_JOB = "existingJob";
     String REQ_EXISTING_JOBS = "existingJobs";

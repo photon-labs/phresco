@@ -15,6 +15,7 @@
 	</style>
 	<parameter name="testType" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="projectCode" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="fileName" class="java.lang.String"/>
 	<field name="testResults" class="java.util.List"/>
 	<title>
@@ -105,6 +106,9 @@
 				<reportElement x="2" y="26" width="555" height="37"/>
 				<subreport>
 					<reportElement x="2" y="0" width="553" height="36" isRemoveLineWhenBlank="true"/>
+					<subreportParameter name="reportsDataType">
+						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
+					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{testResults})]]></dataSourceExpression>
 					<subreportExpression><![CDATA["reports/jasper/PhrescoLoadTestDatas.jasper"]]></subreportExpression>
 				</subreport>

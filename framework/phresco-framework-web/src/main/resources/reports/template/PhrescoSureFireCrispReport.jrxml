@@ -213,7 +213,7 @@
 						</categorySeries>
 					</categoryDataset>
 					<barPlot>
-						<plot/>
+						<plot labelRotation="60.0"/>
 						<itemLabel/>
 					</barPlot>
 				</barChart>

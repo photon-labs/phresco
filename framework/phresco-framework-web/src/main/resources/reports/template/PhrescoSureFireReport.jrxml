@@ -15,6 +15,7 @@
 	</style>
 	<parameter name="testType" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="projectCode" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="testSuites" class="java.util.List"/>
 	<field name="allTestSuites" class="java.util.List"/>
 	<background>
@@ -105,7 +106,7 @@
 				</reportElement>
 				<subreport>
 					<reportElement x="2" y="0" width="553" height="36" isRemoveLineWhenBlank="true">
-						<printWhenExpression><![CDATA[!$F{testSuites}.isEmpty()]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
 					</reportElement>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{testSuites})]]></dataSourceExpression>
 					<subreportExpression><![CDATA["reports/jasper/PhrescoSureFireDetailReport.jasper"]]></subreportExpression>

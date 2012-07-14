@@ -16,6 +16,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/kaleeswaran/root/branches/agra/framework/trunk/phresco-framework-web/src/main/resources/reports/template/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="fileName" class="java.lang.String"/>
 	<field name="totalThroughput" class="java.lang.String"/>
 	<field name="totalStdDev" class="java.lang.String"/>
@@ -62,11 +63,11 @@
 					<subreportParameter name="totalAvgBytes">
 						<subreportParameterExpression><![CDATA[$F{totalAvgBytes}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="totalKbPerSec">
-						<subreportParameterExpression><![CDATA[$F{totalKbPerSec}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="totalThroughput">
 						<subreportParameterExpression><![CDATA[$F{totalThroughput}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="totalKbPerSec">
+						<subreportParameterExpression><![CDATA[$F{totalKbPerSec}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="totalStdDev">
 						<subreportParameterExpression><![CDATA[$F{totalStdDev}]]></subreportParameterExpression>
@@ -74,11 +75,14 @@
 					<subreportParameter name="totalErr">
 						<subreportParameterExpression><![CDATA[$F{totalErr}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="totalAvg">
-						<subreportParameterExpression><![CDATA[$F{totalAvg}]]></subreportParameterExpression>
+					<subreportParameter name="reportsDataType">
+						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="totalNoOfSample">
 						<subreportParameterExpression><![CDATA[$F{totalNoOfSample}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="totalAvg">
+						<subreportParameterExpression><![CDATA[$F{totalAvg}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{jmeterTestResult})]]></dataSourceExpression>
 					<subreportExpression><![CDATA["reports/jasper/PhrescoPerfFileDatas.jasper"]]></subreportExpression>

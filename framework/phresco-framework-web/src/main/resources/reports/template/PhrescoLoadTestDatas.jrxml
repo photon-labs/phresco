@@ -13,6 +13,7 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="time" class="java.lang.Integer"/>
 	<field name="latencyTime" class="java.lang.Integer"/>
 	<field name="timeStamp" class="java.lang.String"/>
@@ -28,7 +29,9 @@
 	<title>
 		<band height="24">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 				<rectangle>
 					<reportElement x="0" y="3" width="555" height="20"/>
 				</rectangle>
@@ -66,7 +69,9 @@
 	<detail>
 		<band height="27" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="27" y="5" width="189" height="15"/>
 					<textElement>
@@ -91,13 +96,19 @@
 				</textField>
 			</frame>
 			<line>
-				<reportElement x="1" y="24" width="555" height="1"/>
+				<reportElement x="1" y="24" width="555" height="1" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="0" y="0" width="1" height="25"/>
+				<reportElement x="0" y="0" width="1" height="25" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="555" y="0" width="1" height="25"/>
+				<reportElement x="555" y="0" width="1" height="25" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
 			</line>
 		</band>
 	</detail>
