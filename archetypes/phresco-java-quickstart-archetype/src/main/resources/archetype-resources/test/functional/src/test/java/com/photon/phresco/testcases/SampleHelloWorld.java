@@ -9,9 +9,9 @@ import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.junit.testcase.FestSwingJUnitTestCase;
 import org.junit.Test;
 
-import com.photon.phresco.HelloWorld;
+import com.photon.phresco.Screens.HelloWorld;
 
-public class HelloWorldTest extends FestSwingJUnitTestCase {
+public class SampleHelloWorld extends FestSwingJUnitTestCase {
 
 	private FrameFixture phresco;
 
