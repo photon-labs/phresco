@@ -50,7 +50,7 @@
 	<div class="operation">
 	    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
 		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.technology"/></strong>&nbsp;
-		<select class="xlarge" id="report" name="report">
+		<select id="report" name="report">
 			<option value="java" ><s:text name="label.tech.java"/></option>
 			<option value="js" ><s:text name="label.tech.javascript"/></option>
 			<option value="web" ><s:text name="label.tech.jsp"/></option>
