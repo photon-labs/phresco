@@ -113,7 +113,7 @@
     </div>
 </s:if>
 
-<div class="alert-message warning"  id="warningmsg" style="">
+<div class="alert-message warning"  id="warningmsg" style="display:none;">
 	<s:label cssClass="labelWarn" key="build.warn.message" />
 </div>
 

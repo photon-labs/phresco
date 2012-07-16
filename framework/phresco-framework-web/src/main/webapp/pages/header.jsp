@@ -22,7 +22,6 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.model.UserInfo" %>
 
-<%-- <script type="text/javascript" src="js/windowResizer.js"></script> --%>
 <script src="js/reader.js" ></script>
 
 <%
@@ -111,8 +110,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    	var key = "color";
-    	showHeaderImage(key);
     	
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
@@ -178,19 +175,12 @@
         $("#forum").click(function(){
         	$(".loadingIcon").show();
         	getCurrentCSS();
+        	$("iframe").attr({
+                src: $("iframe").attr("src")
+            });
         })
     });
        
-    function showHeaderImage(key) {
-    	var theme = localStorage["color"]
-    	if(theme == "themes/photon/css/red.css" || theme == null || theme == undefined || theme == "undefined" || theme == "null") {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_red.png");
-        }
-    	else {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
-    	}
-    }
-    
     function disableCreateProject() {
     	disableControl($("#add"), "btn disabled");
     }
