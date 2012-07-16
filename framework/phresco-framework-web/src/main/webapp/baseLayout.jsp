@@ -20,6 +20,14 @@
 <!doctype html>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+
+<%@ page import="com.photon.phresco.commons.model.User"%>
+<%@ page import="com.photon.phresco.commons.model.Customer"%>
+<%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=0.25, maximum-scale=1.6">
@@ -125,14 +133,22 @@
 						class="shortcutWh" id="lf_tp2"><s:text name="label.appln"/></span>
 					</a>
 				</div>
+				<%
+				    User userInfo = (User) session.getAttribute(FrameworkConstants.REQ_USER_INFO);
+				    List<Customer> customers = userInfo.getCustomers();
+				%>
 				<div class="control-group customer_name">
                     <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
-                    <select class="customer_listbox">
-                        <option>Walgreens</option>
-                        <option>NBO</option>
-                        <option>Cengage</option>
-                        <option>Horizon Blue</option>
-                        <option>Photon</option>
+                    <select id="customerId" class="customer_listbox">
+                        <% 
+		                    if (CollectionUtils.isNotEmpty(customers)) {
+		                        for (Customer customer : customers) {
+		                %>
+                                    <option value="<%= customer.getId() %>"><%= customer.getName() %></option>
+		                <%
+		                        }
+		                    } 
+		                %>
                     </select>				
 				</div>
 				<div class="righttopnav">

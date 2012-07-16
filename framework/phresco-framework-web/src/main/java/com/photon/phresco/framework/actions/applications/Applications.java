@@ -112,8 +112,9 @@ public class Applications extends FrameworkBaseAction {
 	private String fileorfolder = null;
 	//svn info
 	private String credential = null;
+	private String customerId = null;
 
-	public String list() {
+    public String list() {
 		long start = System.currentTimeMillis();
 		S_LOGGER.debug("Entering Method  Applications.list()");
 		try {
@@ -171,7 +172,7 @@ public class Applications extends FrameworkBaseAction {
 			if (StringUtils.isNotEmpty(fromPage)) {
 				getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 			}
-			FrameworkUtil.setAppInfoDependents(getHttpRequest());
+			FrameworkUtil.setAppInfoDependents(getHttpRequest(), customerId);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
 					.getProjectAdministrator();
@@ -228,7 +229,7 @@ public class Applications extends FrameworkBaseAction {
 		String appType = getHttpRequest().getParameter(REQ_APPLICATION_TYPE);
 		try {
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType);
+					.getApplicationType(getHttpRequest(), appType, customerId);
 			getHttpRequest().setAttribute(SESSION_APPLICATION_TYPE,
 					applicationType);
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
@@ -272,20 +273,20 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_PROJECT_INFO, projectInfo);
 			}
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType);
+					.getApplicationType(getHttpRequest(), appType, customerId);
 			Technology techonology = applicationType
 					.getTechonology(selectedTechnology);
-			List<Server> servers = administrator.getServers(selectedTechnology);
+			List<Server> servers = administrator.getServers(selectedTechnology, customerId);
 			List<Database> databases = administrator
-					.getDatabases(selectedTechnology);
+					.getDatabases(selectedTechnology, customerId);
 			List<WebService> webServices = administrator
-					.getWebServices(selectedTechnology);
+					.getWebServices(selectedTechnology, customerId);
 			S_LOGGER.debug("Selected technology" + techonology.toString());
 			// This attribute for Pilot Project combo box
 			getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-			ApplicationsUtil.getPilotNames(techonology.getId()));
+			ApplicationsUtil.getPilotNames(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_PILOT_PROJECT_INFO,
-			ApplicationsUtil.getPilotProjectInfo(techonology.getId()));
+			ApplicationsUtil.getPilotProjectInfo(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_SELECTED_TECHNOLOGY, techonology);
 			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, appType);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
@@ -309,7 +310,7 @@ public class Applications extends FrameworkBaseAction {
 			String selectedTechnology = getHttpRequest().getParameter(
 					REQ_TECHNOLOGY);
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType);
+					.getApplicationType(getHttpRequest(), appType, customerId);
 			Technology techonology = applicationType
 					.getTechonology(selectedTechnology);
 			techVersions = techonology.getVersions();
@@ -355,7 +356,7 @@ public class Applications extends FrameworkBaseAction {
 				}
 			}
 			getHttpSession().setAttribute(projectCode, projectInfo);
-			FrameworkUtil.setAppInfoDependents(getHttpRequest());
+			FrameworkUtil.setAppInfoDependents(getHttpRequest(), customerId);
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of  Applications.previous()"
 					+ FrameworkUtil.getStackTraceAsString(e));
@@ -522,7 +523,7 @@ public class Applications extends FrameworkBaseAction {
 		String module = getHttpRequest().getParameter(REQ_SELECTEDMODULES);
 		String[] modules = module.split(",");
 		ApplicationType applicationType = administrator
-				.getApplicationType(projectInfo.getApplication());
+				.getApplicationType(projectInfo.getApplication(), customerId);
 		if (S_LOGGER.isDebugEnabled()) {
 			S_LOGGER.debug("Application Type object value "
 					+ applicationType.toString());
@@ -848,7 +849,7 @@ public class Applications extends FrameworkBaseAction {
 			String attrName = null;
 			if (Constants.SETTINGS_TEMPLATE_SERVER.equals(type)) {
 				List<String> listSelectedServerIds = null;
-				List<Server> servers = administrator.getServers(techId);
+				List<Server> servers = administrator.getServers(techId, customerId);
 				if (StringUtils.isEmpty(from)) {
 					List<String> listSelectedServers = null;
 					List<String> listSelectedServerNames = null;
@@ -898,7 +899,7 @@ public class Applications extends FrameworkBaseAction {
 			}
 			if (Constants.SETTINGS_TEMPLATE_DB.equals(type)) {
 				List<String> listSelectedDatabaseIds = null;
-				List<Database> databases = administrator.getDatabases(techId);
+				List<Database> databases = administrator.getDatabases(techId, customerId);
 				if (StringUtils.isEmpty(from)) {
 					List<String> listSelectedDbs = null;
 					List<String> listSelectedDbNames = null;
@@ -1000,7 +1001,7 @@ public class Applications extends FrameworkBaseAction {
 			String selectedId = getHttpRequest().getParameter("selectedId");
 
 			if (Constants.SETTINGS_TEMPLATE_SERVER.equals(type)) {
-				List<Server> servers = administrator.getServers(techId);
+				List<Server> servers = administrator.getServers(techId, customerId);
 				for (Server server : servers) {
 					if (server.getId().equals(selectedId)) {
 						versions = server.getVersions();
@@ -1008,7 +1009,7 @@ public class Applications extends FrameworkBaseAction {
 				}
 			}
 			if (Constants.SETTINGS_TEMPLATE_DB.equals(type)) {
-				List<Database> databases = administrator.getDatabases(techId);
+				List<Database> databases = administrator.getDatabases(techId, customerId);
 				for (Database database : databases) {
 					if (database.getId().equals(selectedId)) {
 						versions.addAll(database.getVersions());
@@ -1502,5 +1503,12 @@ public class Applications extends FrameworkBaseAction {
 	public void setFileorfolder(String fileorfolder) {
 		this.fileorfolder = fileorfolder;
 	}
-	
+
+	public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 }

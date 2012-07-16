@@ -24,7 +24,7 @@
 
 <form class="customer_list">
 	<div class="operation" id="operation">
-		<input type="button" id="globalurlAdd" class="btn btn-primary" name="url_add" onclick="loadContent('globalurlAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.urllst.title'/>"/>
+		<input type="button" id="globalurlAdd" class="btn btn-primary" name="url_add" onclick="loadContent('globalurlAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.urllst.title'/>"/>
 		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success"  id="successmsg">

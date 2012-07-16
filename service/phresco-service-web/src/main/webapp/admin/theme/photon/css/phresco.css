@@ -1010,7 +1010,7 @@ legend {
 	margin-bottom: 0;
 	position: absolute;
 	top: 0px;
-	width: auto;
+	width: 100px;
 }
 
 .textbox_size {

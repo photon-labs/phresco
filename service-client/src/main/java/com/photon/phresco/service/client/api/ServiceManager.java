@@ -54,21 +54,19 @@ public interface ServiceManager {
 	
 	ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException;
 	
-	List<ApplicationType> getApplicationTypes() throws PhrescoException;
+	List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException;
 	
 	ApplicationType getApplicationType(String appTypeId) throws PhrescoException;
 	
-	List<Server> getServers(String techId) throws PhrescoException;
+	List<Server> getServers(String techId, String customerId) throws PhrescoException;
 	
-	List<Database> getDatabases(String techId) throws PhrescoException;
+	List<Database> getDatabases(String techId, String customerId) throws PhrescoException;
 	
-	List<WebService> getWebServices(String techId) throws PhrescoException;
+	List<WebService> getWebServices(String techId, String customerId) throws PhrescoException;
 	
-	List<ProjectInfo> getPilots(String techId) throws PhrescoException;
+	List<ModuleGroup> getModules(String techId, String customerId) throws PhrescoException;
 	
-	List<ModuleGroup> getModules(String techId) throws PhrescoException;
-	
-	List<ModuleGroup> getJSLibs(String techId) throws PhrescoException;
+	List<ModuleGroup> getJSLibs(String techId, String customerId) throws PhrescoException;
 	
 	List<Customer> getCustomers() throws PhrescoException;
 	
@@ -80,15 +78,13 @@ public interface ServiceManager {
 	
 	ClientResponse deleteCustomer(String customerId) throws PhrescoException;
 	
-	//ConfigTemplate Object
 	List<SettingsTemplate> getSettings() throws PhrescoException;
 	
 	SettingsTemplate getSettings(String settingsId) throws PhrescoException;
 	
 	ClientResponse createSettings(List<SettingsTemplate> settings) throws PhrescoException;
 	
-	//PilotProject Object
-	List<ProjectInfo> getPilotProjects() throws PhrescoException;
+	List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException;
 	
 	ProjectInfo getPilotProject(String projectId) throws PhrescoException;
 	
@@ -98,14 +94,12 @@ public interface ServiceManager {
 	
 	ClientResponse deletePilotProject(String projectId) throws PhrescoException;
 	
-	//Roles Object
 	List<Role> getRoles() throws PhrescoException;
 	
 	Role getRole(String roleId) throws PhrescoException;
 
 	ClientResponse createRoles(List<Role> role) throws PhrescoException;
 	
-	//Download Object
 	List<DownloadInfo> getDownloads() throws PhrescoException;
 	
 	DownloadInfo getDownload(String id) throws PhrescoException;

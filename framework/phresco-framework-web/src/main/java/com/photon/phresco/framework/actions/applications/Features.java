@@ -40,7 +40,6 @@ import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
-import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
@@ -82,8 +81,9 @@ public class Features extends FrameworkBaseAction {
 	private String configDbNames = null;
 	private String fromTab = null;
 	private List<String> defaultModules =  null;
+	private String customerId = null;
 
-	public String features() {
+    public String features() {
 		if (debugEnabled) {
 			S_LOGGER.debug("Entering Method  Features.features()");
 		}
@@ -228,12 +228,12 @@ public class Features extends FrameworkBaseAction {
 		projectInfo.setPilotProjectName(pilotProjectName);
 		
 		setTechnology(projectInfo, administrator);
-		FrameworkUtil.setAppInfoDependents(request);
+		FrameworkUtil.setAppInfoDependents(request, customerId);
 	}
 
 	private void setTechnology(ProjectInfo projectInfo, ProjectAdministrator administrator) throws PhrescoException {
 		ProjectInfo tempprojectInfo = null;
-		Technology selectedTechnology = administrator.getApplicationType(application).getTechonology(technology);
+		Technology selectedTechnology = administrator.getApplicationType(application, customerId).getTechonology(technology);
 		Technology technology = new Technology();
 
 		technology.setId(selectedTechnology.getId());
@@ -332,20 +332,20 @@ public class Features extends FrameworkBaseAction {
 		}
 		Technology selectedTechnology = projectInfo.getTechnology();
 
-		List<ModuleGroup> coreModule = administrator.getCoreModules(selectedTechnology.getId());
+		List<ModuleGroup> coreModule = administrator.getCoreModules(selectedTechnology.getId(), customerId);
 		if (CollectionUtils.isNotEmpty(coreModule)) {
 			getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
 		}
 //		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
 		
 		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
-				.getCustomModules(selectedTechnology.getId());
+				.getCustomModules(selectedTechnology.getId(), customerId);
 		if (CollectionUtils.isNotEmpty(customModule)) {
 			getHttpRequest().setAttribute(REQ_CUSTOM_MODULES, customModule);
 		}
 //		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
 		
-		List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId());
+		List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId(), customerId);
 		if (CollectionUtils.isNotEmpty(jsLibs)) {
 			getHttpRequest().setAttribute(REQ_ALL_JS_LIBS, jsLibs);
 		}
@@ -353,7 +353,7 @@ public class Features extends FrameworkBaseAction {
 		
 		// This attribute for Pilot Project combo box
 		getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-				ApplicationsUtil.getPilotNames(selectedTechnology.getId()));
+				ApplicationsUtil.getPilotNames(selectedTechnology.getId(), customerId));
 		if (CollectionUtils.isNotEmpty(selectedTechnology.getModules())) {
 			// pilotModules.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getModules()));
 			getHttpRequest().setAttribute(
@@ -380,7 +380,7 @@ public class Features extends FrameworkBaseAction {
 			String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
 			pilotModules = new ArrayList<String>();
 			
-			Map<String, String> pilotModuleIds = ApplicationsUtil.getPilotModuleIds(techId);
+			Map<String, String> pilotModuleIds = ApplicationsUtil.getPilotModuleIds(techId, customerId);
 			if (pilotModuleIds != null) {
 				for (Map.Entry entry: pilotModuleIds.entrySet()) {
 					String moduleId = (String) entry.getKey();
@@ -389,7 +389,7 @@ public class Features extends FrameworkBaseAction {
 				}
 			}
 			
-			Map<String, String> pilotJsLibIds = ApplicationsUtil.getPilotJsLibIds(techId);
+			Map<String, String> pilotJsLibIds = ApplicationsUtil.getPilotJsLibIds(techId, customerId);
 			if (pilotJsLibIds != null) {
 				for (Map.Entry entry: pilotJsLibIds.entrySet()) {
 					String jsLibId = (String) entry.getKey();
@@ -410,7 +410,7 @@ public class Features extends FrameworkBaseAction {
 			defaultModules = new ArrayList<String>();
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Technology technology = administrator.getTechnology(techId);
-			List<ModuleGroup> coreModules = (List<ModuleGroup>) administrator.getCoreModules(techId);
+			List<ModuleGroup> coreModules = (List<ModuleGroup>) administrator.getCoreModules(techId, customerId);
 			if (CollectionUtils.isNotEmpty(coreModules) && coreModules != null) {
 				for (ModuleGroup coreModule : coreModules) {
 					if (coreModule.isRequired()) {
@@ -418,7 +418,7 @@ public class Features extends FrameworkBaseAction {
 					}
 				}
 			}
-			List<ModuleGroup> customModules = (List<ModuleGroup>) administrator.getCustomModules(techId);
+			List<ModuleGroup> customModules = (List<ModuleGroup>) administrator.getCustomModules(techId, customerId);
 			if (CollectionUtils.isNotEmpty(customModules) && customModules != null) {
 				for (ModuleGroup customModule : customModules) {
 					if (customModule.isRequired()) {
@@ -484,11 +484,11 @@ public class Features extends FrameworkBaseAction {
 				.getProjectAdministrator();
 		Technology technology = administrator.getTechnology(techId);
 		if (REQ_CORE_MODULE.equals(moduleType)) {
-			return administrator.getCoreModules(techId);
+			return administrator.getCoreModules(techId, customerId);
 		}
 
 		if (REQ_CUSTOM_MODULE.equals(moduleType)) {
-			return administrator.getCustomModules(techId);
+			return administrator.getCustomModules(techId, customerId);
 		}
 
 		if (REQ_JSLIB_MODULE.equals(moduleType)) {
@@ -729,4 +729,12 @@ public class Features extends FrameworkBaseAction {
 	public void setDefaultModules(List<String> defaultModules) {
 		this.defaultModules = defaultModules;
 	}
+	
+	public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 }

@@ -51,31 +51,37 @@ public class PilotProjects extends ServiceBaseAction {
 	private String projArcFileName;
 	private String projArcContentType;
 
-	//proInfo 
 	private String description = null;
 	private String projectId = null;
 	private String fromPage = null;
+	private String customerId = null;
+	private String techId = null;
 
-
-	public String list() throws PhrescoException {
-		S_LOGGER.debug("Entering Method PilotProjects.list()");
+    public String list() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entering Method PilotProjects.list()");
+        }
 
 		try {
-			List<ProjectInfo> pilotProjects = getServiceManager().getPilotProjects();
+			List<ProjectInfo> pilotProjects = getServiceManager().getPilots(techId, customerId);
 			getHttpRequest().setAttribute("pilotProjects", pilotProjects);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
+		
 		return COMP_PILOTPROJ_LIST;
 	}
 	
 	public String add() {
 		S_LOGGER.debug("Entering Method PilotProjects.add()");
+		
 		return COMP_PILOTPROJ_ADD;
 	}
 	
 	public String save() throws PhrescoException {
-		S_LOGGER.debug("Entering Method PilotProjects.save()");
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method PilotProjects.save()");
+	    }
 
 		try {
 			if (validateForm()) {
@@ -98,7 +104,8 @@ public class PilotProjects extends ServiceBaseAction {
 			}
 		} catch (Exception e) {
           throw new PhrescoException(e);
-		} 
+		}
+		
 		return list();
 	}
 	
@@ -128,11 +135,11 @@ public class PilotProjects extends ServiceBaseAction {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-		ProjectInfo pilotProInfo = new ProjectInfo();
-		pilotProInfo.setId(projectId);
-		pilotProInfo.setName(name);
-		pilotProInfo.setDescription(description);
-		getServiceManager().updatePilotProject(pilotProInfo, projectId);
+    		ProjectInfo pilotProInfo = new ProjectInfo();
+    		pilotProInfo.setId(projectId);
+    		pilotProInfo.setName(name);
+    		pilotProInfo.setDescription(description);
+    		getServiceManager().updatePilotProject(pilotProInfo, projectId);
 		} catch(Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -162,7 +169,6 @@ public class PilotProjects extends ServiceBaseAction {
 
 		return list();
 	}
-
 	
 	private boolean validateForm() {
 		boolean success = false;
@@ -175,12 +181,8 @@ public class PilotProjects extends ServiceBaseAction {
 			setFileError(getText(KEY_I18N_ERR_PLTPROJ_EMPTY));
 			success = true;
 		}
+		
 		return success;
-	}
-	
-	public String cancel() {
-		S_LOGGER.debug("Entering Method PilotProjects.cancel()");
-		return COMP_PILOTPROJ_CANCEL;
 	}
 
 	public String getName() {
@@ -262,5 +264,20 @@ public class PilotProjects extends ServiceBaseAction {
 	public void setFromPage(String fromPage) {
 		this.fromPage = fromPage;
 	}
-	
+
+	public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+    
+    public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
 }

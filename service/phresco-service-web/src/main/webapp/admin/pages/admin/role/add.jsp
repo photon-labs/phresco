@@ -55,6 +55,6 @@ function findError(data) {
 	
 	<div class="bottom_button">
 		<input type="button" id="roleSave" class="btn btn-primary" onclick="clickSave('roleSave', $('#subcontainer'), 'Creating Role');" value="<s:text name='lbl.hdr.comp.save'/>"/>
-		<input type="button" id="roleCancel" class="btn btn-primary" onclick="loadContent('roleCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="roleCancel" class="btn btn-primary" onclick="loadContent('roleCancel', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>
