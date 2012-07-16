@@ -18,84 +18,102 @@
   ###
   --%>
 
-<%@ taglib uri="/struts-tags" prefix="s" %>	
+
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.photon.phresco.model.ProjectInfo"%>
+<%@page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
+
+<%
+	List<ProjectInfo> pilotProjectInfo = (List<ProjectInfo>) request.getAttribute("pilotProjects");
+%>
+
+
 <form class="customer_list">
 	<div class="operation">
-		<input type="button" class="btn btn-primary" name="pilotproj_add" id="pilotprojAdd" onclick="loadContent('pilotprojAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.pltprjt.add'/>"/>
-		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
+		<input type="button" class="btn btn-primary" name="pilotproj_add" id="pilotprojAdd" 
+		 onclick="loadContent('pilotprojAdd', $('#subcontainer'));"
+			value="<s:text name='lbl.hdr.comp.pltprjt.add'/>" /> 
+			<input type="button" class="btn" id="del" disabled onclick="loadContent('pilotprojDelete', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.delete'/>" />
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success"  id="successmsg">
+			<div class="alert alert-success alert-message" id="successmsg">
 				<s:actionmessage />
 			</div>
 		</s:if>
 		<s:if test="hasActionErrors()">
-			<div class="alert alert-error"  id="errormsg">
+			<div class="alert alert-error" id="errormsg">
 				<s:actionerror />
 			</div>
 		</s:if>
 	</div>
-	
+     <% if (CollectionUtils.isEmpty(pilotProjectInfo)) { %>
+            <div class="alert alert-block">
+                <s:text name='alert.msg.pilotpro.not.available'/>
+            </div>
+    <% } else { %> 
 	<div class="table_div">
 		<div class="fixed-table-container">
-			<div class="header-background"> </div>
+			<div class="header-background"></div>
 			<div class="fixed-table-container-inner">
 				<table cellspacing="0" class="zebra-striped">
 					<thead>
 						<tr>
 							<th class="first">
 								<div class="th-inner">
-									<input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
-								</div>
-							</th>
+									<input type="checkbox" value="" id="checkAllAuto"
+										name="checkAllAuto" onclick="checkAllEvent(this);">
+								</div></th>
 							<th class="second">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.name" theme="simple"/></div>
-							</th>
+								<div class="th-inner tablehead">
+									<s:label key="lbl.hdr.cmp.name" theme="simple" />
+								</div></th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.desc" theme="simple"/></div>
-							</th>
+								<div class="th-inner tablehead">
+									<s:label key="lbl.hdr.cmp.desc" theme="simple" />
+								</div></th>
 							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.tchngy" theme="simple"/></div>
-							</th>
+								<div class="th-inner tablehead">
+									<s:label key="lbl.hdr.comp.tchngy" theme="simple" />
+								</div></th>
 						</tr>
 					</thead>
-		
+
 					<tbody>
+
+						<%
+							if (CollectionUtils.isNotEmpty(pilotProjectInfo)) {
+								for (ProjectInfo proInfo : pilotProjectInfo) {
+						%>
 						<tr>
-							<td class="checkboxwidth">
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
+							<td class="checkboxwidth"><input type="checkbox" class="check" name="projectId" value="<%=proInfo.getId() %>" onclick="checkboxEvent();">
 							</td>
-							<td>
-								<a href="#" name="edit" id="" >Eshop</a>
+							<td><a href="#" onclick="editPilotProject('<%=proInfo.getId() %>');" name="edit" id=""><%=proInfo.getName()%></a>
 							</td>
-							<td>Eshop</td>
-							<td>Drupal</td>
+							<td><%=StringUtils.isNotEmpty(proInfo.getDescription()) ? proInfo
+							.getDescription() : ""%></td>
+							<td>JAVA</td>
 						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Leave Management System</a>
-							</td>
-							<td>Leave Management System</td>
-							<td>Drupal</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" value="" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Forum</a>
-							</td>
-							<td>Discussion group</td>
-							<td>Java</td>
-						</tr>
+
+						<%
+							}
+							}
+						%>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	<% } %>
 </form>
+<script type="text/javascript">
+    /** To edit the pilot project **/
+    function editPilotProject(id) {
+        var params = "projectId=";
+        params = params.concat(id);
+        params = params.concat("&fromPage=");
+        params = params.concat("edit");
+        loadContent("pilotprojEdit", $('#subcontainer'), params);
+    }
+</script>
 

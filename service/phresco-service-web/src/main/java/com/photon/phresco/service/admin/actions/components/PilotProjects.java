@@ -22,21 +22,25 @@ package com.photon.phresco.service.admin.actions.components;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.itextpdf.text.pdf.codec.Base64.OutputStream;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
+import com.sun.jersey.api.client.ClientResponse;
 
 public class PilotProjects extends ServiceBaseAction { 
 	
 	private static final long serialVersionUID = 6801037145464060759L;
 	private static final Logger S_LOGGER = Logger.getLogger(PilotProjects.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	
 	private String name = null;
 	private String nameError = null;
@@ -47,32 +51,123 @@ public class PilotProjects extends ServiceBaseAction {
 	private String projArcFileName;
 	private String projArcContentType;
 
-	public String list() {
-		S_LOGGER.debug("Entering Method PilotProjects.list()");
+	private String description = null;
+	private String projectId = null;
+	private String fromPage = null;
+	private String customerId = null;
+	private String techId = null;
+
+    public String list() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entering Method PilotProjects.list()");
+        }
+
+		try {
+			List<ProjectInfo> pilotProjects = getServiceManager().getPilots(techId, customerId);
+			getHttpRequest().setAttribute("pilotProjects", pilotProjects);
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		
 		return COMP_PILOTPROJ_LIST;
 	}
 	
 	public String add() {
 		S_LOGGER.debug("Entering Method PilotProjects.add()");
+		
 		return COMP_PILOTPROJ_ADD;
 	}
 	
-	public String save() {
-		S_LOGGER.debug("Entering Method PilotProjects.save()");
-		
+	public String save() throws PhrescoException {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entering Method PilotProjects.save()");
+	    }
+
 		try {
 			if (validateForm()) {
 				setErrorFound(true);
 				return SUCCESS;
 			}
-				InputStream inputStream = new FileInputStream(projArc);
-				/* FileOutputStream outputStream = new FileOutputStream(new File("c:/" + projArcFileName));
-				IOUtils.copy(inputStream, outputStream);*/
+			InputStream inputStream = new FileInputStream(projArc);
+			FileOutputStream outputStream = new FileOutputStream(new File("c:/" + projArcFileName));
+				IOUtils.copy(inputStream, outputStream);
+			List<ProjectInfo> pilotProInfo = new ArrayList<ProjectInfo>();
+			ProjectInfo proInfo = new ProjectInfo();
+			proInfo.setName(name);
+			proInfo.setDescription(description);
+			pilotProInfo.add(proInfo);
+			ClientResponse clientResponse = getServiceManager().createPilotProject(pilotProInfo);
+			if(clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201  ){
+				addActionError(getText(PLTPROJ_NOT_ADDED, Collections.singletonList(name)));
+			} else {
 				addActionMessage(getText(PLTPROJ_ADDED, Collections.singletonList(name)));
+			}
 		} catch (Exception e) {
-			addActionError(getText(PLTPROJ_NOT_ADDED, Collections.singletonList(name)));
-		} 
-		return COMP_PILOTPROJ_LIST;
+          throw new PhrescoException(e);
+		}
+		
+		return list();
+	}
+	
+	public String edit() throws PhrescoException {
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method pilotProject.edit()");
+		}
+
+		try {
+			ProjectInfo pilotProjectInfo = getServiceManager().getPilotProject(projectId);
+			getHttpRequest().setAttribute("pilotProjectInfo", pilotProjectInfo);
+			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return COMP_PILOTPROJ_ADD;
+	}
+	
+	public String update() throws PhrescoException {
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method  PilotProject.update()");
+		}
+
+		try {
+			if (validateForm()) {
+				setErrorFound(true);
+				return SUCCESS;
+			}
+    		ProjectInfo pilotProInfo = new ProjectInfo();
+    		pilotProInfo.setId(projectId);
+    		pilotProInfo.setName(name);
+    		pilotProInfo.setDescription(description);
+    		getServiceManager().updatePilotProject(pilotProInfo, projectId);
+		} catch(Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return list();
+	}
+	
+	public String delete() throws PhrescoException {
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method pilotProject.delete()");
+		}
+
+		try {
+			String[] projectIds = getHttpRequest().getParameterValues("projectId");
+			if (projectIds != null) {
+				for (String projectID : projectIds) {
+					ClientResponse clientResponse =getServiceManager().deletePilotProject( projectID);
+					if (clientResponse.getStatus() != 200) {
+						addActionError(getText(PLTPROJ_NOT_DELETED));
+					}
+				}
+				addActionMessage(getText(PLTPROJ_DELETED));
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return list();
 	}
 	
 	private boolean validateForm() {
@@ -86,12 +181,8 @@ public class PilotProjects extends ServiceBaseAction {
 			setFileError(getText(KEY_I18N_ERR_PLTPROJ_EMPTY));
 			success = true;
 		}
+		
 		return success;
-	}
-	
-	public String cancel() {
-		S_LOGGER.debug("Entering Method PilotProjects.cancel()");
-		return COMP_PILOTPROJ_CANCEL;
 	}
 
 	public String getName() {
@@ -150,4 +241,43 @@ public class PilotProjects extends ServiceBaseAction {
 		this.errorFound = errorFound;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	
+	public String getFromPage() {
+		return fromPage;
+	}
+
+	public void setFromPage(String fromPage) {
+		this.fromPage = fromPage;
+	}
+
+	public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+    
+    public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
 }

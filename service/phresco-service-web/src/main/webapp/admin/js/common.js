@@ -17,20 +17,20 @@
  * limitations under the License.
  * ###
  */
-function clickMenu(menu, tag) {
+function clickMenu(menu, tag, params) {
 	menu.click(function() {
 		showLoadingIcon(tag);
 		inActivateAllMenu(menu);
 		activateMenu($(this));
 		var selectedMenu = $(this).attr("id");
-		loadContent(selectedMenu, tag);
+		loadContent(selectedMenu, params, tag);
 	});
 }
 
 function clickButton(button, tag) {
 	button.click(function() {
 		var selectedMenu = $(this).attr("id");
-		loadContent(selectedMenu, tag);
+		loadContent(selectedMenu, '', tag);
 	});
 }
 
@@ -76,15 +76,11 @@ function formSerializeToJson(a) {
     return o;
 }
 
-function loadContent(pageUrl, tag, params) {
-	var finalParam = $('form').serialize();
-	if (params !== undefined) {
-		finalParam = finalParam + params;
-	}
+function loadContent(pageUrl, params, tag) {
 	showLoadingIcon(tag);
 	$.ajax({
 		url : pageUrl,
-		data : finalParam,
+		data : params,
 		type : "POST",
 		success : function(data) {
 			loadData(data, tag);
@@ -92,11 +88,11 @@ function loadContent(pageUrl, tag, params) {
 	});
 }
 
-function clickSave(pageUrl, tag, progressText) {
+function clickSave(pageUrl, params, tag, progressText) {
 	showProgressBar(progressText);
 	$.ajax({
 		url : pageUrl,
-		data : $('form').serialize(),
+		data : params,
 		type : "POST",
 		success : function(data) {
 			hideProgressBar();
@@ -105,16 +101,16 @@ function clickSave(pageUrl, tag, progressText) {
 	});
 }
 
-function validate(pageUrl, tag, progressText) {
+function validate(pageUrl, params, tag, progressText) {
 	$.ajax({
 		url : pageUrl + "Validate",
-		data : $('form').serialize(),
+		data : params,
 		type : "POST",
 		success : function(data) {
 			if (data.errorFound != undefined && data.errorFound == true) {
 				findError(data);
 			} else {
-				clickSave(pageUrl, tag, progressText);
+				clickSave(pageUrl, params, tag, progressText);
 			}
 		}
 	});
@@ -210,7 +206,7 @@ function accordion() {
 function showLoadingIcon(tag) {
 	var src = "theme/photon/images/loading_blue.gif";
 	var theme =localStorage["color"];
-    if(theme == undefined || theme == "theme/photon/css/red.css") {
+    if (theme == undefined || theme == "theme/photon/css/red.css") {
     	src = "theme/photon/images/loading_red.gif";
     }
  	tag.empty();
@@ -238,6 +234,7 @@ function checkForSplChr(inputStr) {
 function checkForSplChrExceptDot(inputStr) {
 	return inputStr.replace(/[^a-zA-Z 0-9\.\-\_]+/g, '');
 }
+
 function changeTheme() {
   	if (localStorage["color"] != null) {
         $("link[title='phresco']").attr("href", localStorage["color"]);
@@ -245,6 +242,7 @@ function changeTheme() {
         $("link[title='phresco']").attr("href", "theme/photon/css/red.css");
     } 
 }
+
 function showWelcomeImage() {
 	var theme = localStorage['color'];
 	if (theme == "theme/photon/css/blue.css") {
@@ -252,11 +250,15 @@ function showWelcomeImage() {
 		$('.headerlogoimg').attr("src","theme/photon/images/phresco_header_blue.png");
 		$('.phtaccinno').attr("src","theme/photon/images/acc_inov_blue.png");
 		$('.welcomeimg').attr("src","theme/photon/images/welcome_photon_blue.png");
-	} else if(theme == null || theme == "theme/photon/css/red.css") {
+	} else if (theme == null || theme == "theme/photon/css/red.css") {
 		$("link[id='theme']").attr("href", "theme/photon/css/red.css");
 		$('.headerlogoimg').attr("src","theme/photon/images/phresco_header_red.png");
 		$('.phtaccinno').attr("src","theme/photon/images/acc_inov_red.png");
 		$('.welcomeimg').attr("src","theme/photon/images/welcome_photon_red.png");
 
 	}
+}
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
 }

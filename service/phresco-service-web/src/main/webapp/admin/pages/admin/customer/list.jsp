@@ -32,9 +32,9 @@
 <form class="customer_list">
 	<div class="operation" id="operation">
 		<input type="button" id="customerAdd" class="btn btn-primary" name="customer_add" value="<s:text name='lbl.hdr.adm.cust.add'/>" 
-		      onclick="loadContent('customerAdd', $('#subcontainer'));"/>
+		      onclick="loadContent('customerAdd', '', $('#subcontainer'));"/>
 		<input type="button"  id="del"  class="btn del" class="btn btn-primary" disabled value="<s:text name='lbl.hdr.adm.delete'/>" 
-		      onclick="loadContent('customerDelete', $('#subcontainer'));"/>
+		      onclick="loadContent('customerDelete', '', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
@@ -117,6 +117,6 @@
 		params = params.concat(id);
 		params = params.concat("&fromPage=");
 		params = params.concat("edit");
-		loadContent("customerAdd", $('#subcontainer'), params);
+		loadContent("customerAdd", '', $('#subcontainer'), params);
 	}
 </script>

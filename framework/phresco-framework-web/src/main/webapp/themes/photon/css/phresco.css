@@ -4758,7 +4758,7 @@ a[id='androidSigning']:hover {
     margin-bottom: 0;
     position: absolute;
     top: 0px;
-    width: auto;
+    width: 100px;
 }
 
 .custom_label {

@@ -133,14 +133,14 @@ public class ApplicationsUtil implements FrameworkConstants {
         return null;
     }
     
-    private static List<ProjectInfo> getPilots(String technologyId) {
+    private static List<ProjectInfo> getPilots(String technologyId, String customerId) {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method ApplicationsUtil.getPilots(String technologyId)");
 			S_LOGGER.debug("getPilots() TechnologyId = "+technologyId);
 		}
         try {
         	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-            return administrator.getPilots(technologyId);
+            return administrator.getPilots(technologyId, customerId);
         } catch (ClientHandlerException e) {
             if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of ApplicationsUtil.getPilots()" + e);
@@ -155,14 +155,14 @@ public class ApplicationsUtil implements FrameworkConstants {
         return null;
     }
     
-    public static Collection<String> getPilotNames(String technologyId) {
+    public static Collection<String> getPilotNames(String technologyId, String customerId) {
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
     	Collection<String> pilotNames = mapPilotNames.get(technologyId);
     	if (pilotNames != null) {
     		return pilotNames;
     	}
     	if (pilots == null) {
-    		pilots = getPilots(technologyId);
+    		pilots = getPilots(technologyId, customerId);
     		mapPilotProjectInfos.put(technologyId, pilots);
     	}
     	
@@ -176,14 +176,14 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return pilotNames;
     }
     
-    public static Map<String, String> getPilotModuleIds(String technologyId) {
+    public static Map<String, String> getPilotModuleIds(String technologyId, String customerId) {
     	Map<String, String> mapPilotModules = mapPilotModuleIds.get(technologyId);
     	if (mapPilotModules != null) {
     		return mapPilotModules;
     	}
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
     	if (pilots == null) {
-    		pilots = getPilots(technologyId);
+    		pilots = getPilots(technologyId, customerId);
     	}
     	mapPilotModules = new HashMap<String, String>(15);
     	if (CollectionUtils.isNotEmpty(pilots)) {
@@ -202,14 +202,14 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return mapPilotModules;
     }
     
-    public static Map<String, String> getPilotJsLibIds(String technologyId) {
+    public static Map<String, String> getPilotJsLibIds(String technologyId, String customerId) {
     	Map<String, String> mapPilotModules = mapPilotJsLibs.get(technologyId);
     	if (mapPilotModules != null) {
     		return mapPilotModules;
     	}
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
     	if (pilots == null) {
-    		pilots = getPilots(technologyId);
+    		pilots = getPilots(technologyId, customerId);
     	}
     	mapPilotModules = new HashMap<String, String>(15);
     	if (CollectionUtils.isNotEmpty(pilots)) {
@@ -228,7 +228,7 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return mapPilotModules;
     }
     
-    public static ProjectInfo getPilotProjectInfo(String technologyId) {
+    public static ProjectInfo getPilotProjectInfo(String technologyId, String customerId) {
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
     	ProjectInfo pilotProjectInfo = null;
     	if (pilots != null) {
@@ -237,7 +237,7 @@ public class ApplicationsUtil implements FrameworkConstants {
 			}
     		return pilotProjectInfo;
     	}
-    	pilots = getPilots(technologyId);
+    	pilots = getPilots(technologyId, customerId);
     	mapPilotProjectInfos.put(technologyId, pilots);
     	for (ProjectInfo projectInfo : pilots) {
     		pilotProjectInfo = projectInfo;
@@ -245,7 +245,7 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return pilotProjectInfo;
     }
     
-    public static ApplicationType getApplicationType(HttpServletRequest request, String appTypeName) throws PhrescoException {
+    public static ApplicationType getApplicationType(HttpServletRequest request, String appTypeName, String customerId) throws PhrescoException {
     	ApplicationType applicationtype = null;
     	try{
             String appType = request.getParameter(REQ_APPLICATION_TYPE);
@@ -253,7 +253,7 @@ public class ApplicationsUtil implements FrameworkConstants {
     			S_LOGGER.debug("Selected application type" + appType);
     		}
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-            applicationtype = administrator.getApplicationType(appType);
+            applicationtype = administrator.getApplicationType(appType, customerId);
     	} catch(Exception e) {
             if (debugEnabled) {
                 S_LOGGER.error("Entered into catch block of  Applications.getApplicationType()" + FrameworkUtil.getStackTraceAsString(e));

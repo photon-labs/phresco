@@ -66,7 +66,9 @@ public class ApplicationTypeDAO extends BaseDAO {
 
     @Override
     public String toString() {
-        return "ApplicationTypeDAO [name=" + name + ", description=" + description + ", system=" + system + "]";
+        return "ApplicationTypeDAO [name=" + name + ", description="
+                + description + ", system=" + system + ", customerId="
+                + customerId + ", id=" + id + "]";
     }
-	
+
 }
