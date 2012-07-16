@@ -1753,3 +1753,7 @@ input[class*='sample'] {
     text-align: center;
     font-weight: bold;
 }
+
+.form {
+    margin: 0;
+}

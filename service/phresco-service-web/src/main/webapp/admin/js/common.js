@@ -17,13 +17,13 @@
  * limitations under the License.
  * ###
  */
-function clickMenu(menu, tag, params) {
+function clickMenu(menu, tag, form) {
 	menu.click(function() {
 		showLoadingIcon(tag);
 		inActivateAllMenu(menu);
 		activateMenu($(this));
 		var selectedMenu = $(this).attr("id");
-		loadContent(selectedMenu, params, tag);
+		loadContent(selectedMenu, form, tag);
 	});
 }
 
@@ -76,8 +76,11 @@ function formSerializeToJson(a) {
     return o;
 }
 
-function loadContent(pageUrl, params, tag) {
+function loadContent(pageUrl, form, tag) {
 	showLoadingIcon(tag);
+	if (form != undefined && !isBlank(form)) {
+		var params = form.serialize();
+	}
 	$.ajax({
 		url : pageUrl,
 		data : params,

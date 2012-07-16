@@ -29,11 +29,12 @@
 
 <%
 	List<ApplicationType> appTypes = (List<ApplicationType>) request.getAttribute(ServiceUIConstants.REQ_APP_TYPES);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 <form id="formAppTypeList" class="customer_list">
 	<div class="operation" id="operation">
 		<input type="button" class="btn btn-primary" name="application_add" id="applicationAdd" 
-            onclick="loadContent('applicationAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
+            onclick="constructParams('loadContent', 'applicationAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.apln.add'/>"/>
 		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>" 
             onclick="constructParams('loadContent', 'applicationDelete', $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
@@ -114,16 +115,14 @@
 				</div>
 			</div>
 	<% } %>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" name="customerId" value="<%= customerId %>">
 </form>
 
 <script type="text/javascript">
 	function constructParams(mthdName, url, tag) {
-	    var params = "";
-	    if (!isBlank($('#formAppTypeList').serialize())) {
-	        params = $('#formAppTypeList').serialize() + "&";
-	    }
-	    params = params.concat($('#formCustomerId').serialize());
-	    window[mthdName](url, params, tag); //This is to call methods dynamically
+	    window[mthdName](url, $('#formAppTypeList'), tag); //This is to call methods dynamically
 	}
 
 	function editAppType(id) {

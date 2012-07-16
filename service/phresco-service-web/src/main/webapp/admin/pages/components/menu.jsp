@@ -30,15 +30,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		var params = $('#formCustomerId').serialize();
-		clickMenu($("a[name='compTab']"), $("#subcontainer"), params);
-		loadContent("featuresList", params, $("#subcontainer"));
+		clickMenu($("a[name='compTab']"), $("#subcontainer"), $('#formCustomerId'));
+		loadContent("featuresList", $('#formCustomerId'), $("#subcontainer"));
 		activateMenu($("#features"));
 		
 		$("select[name='customerId']").change(function() {
 			var selectedMenu = $("a[name='compTab'][class='active']").prop("id");
-			params = $('#formCustomerId').serialize();
-			loadContent(selectedMenu, params, $("#subcontainer"));
+			loadContent(selectedMenu, $('#formCustomerId'), $("#subcontainer"));
 		});
 	});
 </script>
@@ -66,7 +64,7 @@
 			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label key="lbl.hdr.comp.pltprjt" theme="simple"/></a>
 		</li>
 	</ul>
-	<form id="formCustomerId">
+	<form id="formCustomerId" class="form">
 		<div class="control-group customer_name">
 			<s:label key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
 			<div class="controls customer_select_div">

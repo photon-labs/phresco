@@ -21,6 +21,7 @@
 
 <%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -44,18 +45,14 @@
 	}
 	
 	function constructParams(mthdName, url, tag, progText) {
-		var params = "";
-		if (!isBlank($('#formAppTypeAdd').serialize())) {
-			params = $('#formAppTypeAdd').serialize() + "&";
-		}
-		params = params.concat($('#formCustomerId').serialize());
-		window[mthdName](url, params, tag, progText); //This is call methods dynamically
+		window[mthdName](url, $('#formAppTypeAdd'), tag, progText); //This is call methods dynamically
 	}
 </script>
 
 <%
-	ApplicationType apptype = (ApplicationType)request.getAttribute("appType");
-	String fromPage = (String) request.getAttribute("fromPage");
+	ApplicationType apptype = (ApplicationType)request.getAttribute(ServiceUIConstants.REQ_APP_TYPE);
+	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
 <form id="formAppTypeAdd" class="form-horizontal customer_list">
@@ -102,5 +99,6 @@
 	<!-- Hidden Fields -->
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
 	<input type="hidden" name="appTypeId" value="<%= apptype != null ? apptype.getId() : "" %>"/>
-	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/> 
+	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/>
+    <input type="hidden" name="customerId" value="<%= customerId %>">
 </form>
