@@ -42,6 +42,15 @@
 			hideError($("#nameControl"), $("#nameError"));
 		}
 	}
+	
+	function constructParams(mthdName, url, tag, progText) {
+		var params = "";
+		if (!isBlank($('#formAppTypeAdd').serialize())) {
+			params = $('#formAppTypeAdd').serialize() + "&";
+		}
+		params = params.concat($('#formCustomerId').serialize());
+		window[mthdName](url, params, tag, progText); //This is call methods dynamically
+	}
 </script>
 
 <%
@@ -49,7 +58,7 @@
 	String fromPage = (String) request.getAttribute("fromPage");
 %>
 
-<form class="form-horizontal customer_list">
+<form id="formAppTypeAdd" class="form-horizontal customer_list">
   <h4 class="hdr">
    <% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<s:label key="lbl.hdr.comp.apln.edit.title" theme="simple" />
@@ -81,13 +90,13 @@
 	<div class="bottom_button">
 	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				    onclick="validate('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
+				    onclick="constructParams('validate', 'applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
 		<% } else { %>
-				<input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
-				    onclick="validate('applicationSave', $('#subcontainer'), 'Creating Application Type');" />
+                <input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>"
+                    onclick="constructParams('validate', 'applicationSave', $('#subcontainer'), 'Creating Application Type');" />
 		<% } %>
 		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="loadContent('applntypesList', $('#subcontainer'));" />
+            onclick="constructParams('loadContent', 'applntypesList', $('#subcontainer'));" />
     </div>
 	
 	<!-- Hidden Fields -->

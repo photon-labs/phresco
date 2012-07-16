@@ -113,6 +113,6 @@
 		params = params.concat(id);
 		params = params.concat("&fromPage=");
 		params = params.concat("edit");
-		loadContent("archetypeEdit", $('#subcontainer'), params);
+		loadContent("archetypeEdit", '', $('#subcontainer'), params);
 	}
 </script>

@@ -499,9 +499,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 
 	@Override
-	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
+	public List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException {
 		try{
-			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
+			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes(customerId);
 			return applicationTypes;
 		} catch (Exception e) {
 			throw new PhrescoException(e);
@@ -509,9 +509,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	}
 
 	@Override
-	public ApplicationType getApplicationType(String name) throws PhrescoException {
+	public ApplicationType getApplicationType(String name, String customerId) throws PhrescoException {
 		try {
-			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
+			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes(customerId);
 			if (CollectionUtils.isNotEmpty(applicationTypes)) {
 				for (ApplicationType applicationType : applicationTypes) {
 					if (applicationType.getName().equals(name)) {
@@ -1501,7 +1501,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 
 	 @Override
-	 public List<ModuleGroup> getCoreModules(String techId) throws PhrescoException {
+	 public List<ModuleGroup> getCoreModules(String techId, String customerId) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCoreModules(Technology technology)");
 		 S_LOGGER.debug("getCoreModules() TechnologyName = "+techId);
 		 
@@ -1512,7 +1512,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 coreModules = new ArrayList<ModuleGroup>();
-			 List<ModuleGroup> modules = getServiceManager().getModules(techId);
+			 List<ModuleGroup> modules = getServiceManager().getModules(techId, customerId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (module.isCore()) {
@@ -1530,7 +1530,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 
 	 @Override
-	 public List<ModuleGroup> getCustomModules(String techId) throws PhrescoException {
+	 public List<ModuleGroup> getCustomModules(String techId, String customerId) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCustomModules(Technology technology)");
 		 S_LOGGER.debug("getCustomModules() TechnologyId = "+techId);
 
@@ -1541,7 +1541,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 customModules = new ArrayList<ModuleGroup>();
-			 List<ModuleGroup> modules = getServiceManager().getModules(techId);
+			 List<ModuleGroup> modules = getServiceManager().getModules(techId, customerId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (!module.isCore()) {
@@ -2175,27 +2175,27 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 	}
 	
-	public List<Server> getServers(String techId) throws PhrescoException {
+	public List<Server> getServers(String techId, String customerId) throws PhrescoException {
 		try {
-			List<Server> servers = getServiceManager().getServers(techId);
+			List<Server> servers = getServiceManager().getServers(techId, customerId);
 			return servers;
 		} catch (PhrescoException e) {
 			throw new PhrescoException();
 		}
 	}
 	
-	public List<Database> getDatabases(String techId) throws PhrescoException {
+	public List<Database> getDatabases(String techId, String customerId) throws PhrescoException {
 		try {
-			List<Database> databases = getServiceManager().getDatabases(techId);
+			List<Database> databases = getServiceManager().getDatabases(techId, customerId);
 			return databases;
 		} catch (PhrescoException e) {
 			throw new PhrescoException();
 		}
 	}
 	
-	public List<WebService> getWebServices(String techId) throws PhrescoException {
+	public List<WebService> getWebServices(String techId, String customerId) throws PhrescoException {
 		try {
-			List<WebService> webServices =  getServiceManager().getWebServices(techId);
+			List<WebService> webServices =  getServiceManager().getWebServices(techId, customerId);
 			return webServices;
 		} catch (PhrescoException e) {
 			throw new PhrescoException();
@@ -2219,11 +2219,11 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 	 
-	 public List<ProjectInfo> getPilots(String techId) throws PhrescoException {
+	 public List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getPilots()");
 		 
 		 try {
-			 List<ProjectInfo> pilots = getServiceManager().getPilots(techId);
+			 List<ProjectInfo> pilots = getServiceManager().getPilots(techId, customerId);
 			 return pilots;
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
@@ -2242,11 +2242,11 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 return buildInfo;
 	 }
 	 
-	 public List<ModuleGroup> getJSLibs(String techId) throws PhrescoException {
+	 public List<ModuleGroup> getJSLibs(String techId, String customerId) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getPilots()");
 		 
 		 try {
-			 return getServiceManager().getJSLibs(techId);
+			 return getServiceManager().getJSLibs(techId, customerId);
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
 		 }

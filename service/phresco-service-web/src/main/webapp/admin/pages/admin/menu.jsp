@@ -23,7 +23,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		clickMenu($("a[name='adminTab']"),$("#subcontainer"));
-		loadContent("customerList",$("#subcontainer"));
+		loadContent("customerList", '', $("#subcontainer"));
 		activateMenu($("#customerList"));
 	});
 </script>

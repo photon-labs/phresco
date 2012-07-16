@@ -123,6 +123,8 @@
 	    	}
 			params = params.concat("fromPage=");
 			params = params.concat($('#fromPage').val());
+			params = params.concat("&customerId=");
+	    	params = params.concat($("#customerId").val());
 			showLoadingIcon($("#tabDiv")); // Loading Icon
 		    performAction('previous', params, $('#tabDiv'));
 		});
