@@ -85,7 +85,6 @@
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <!-- jquery file tree ends -->
 <script type="text/javascript">
-    
 	if (localStorage["color"] != null) {
         $("link[title='phresco']").attr("href", localStorage["color"]);
     } else {
@@ -96,9 +95,10 @@
         $(".styles").click(function() {
             var key = "color";
             var title = "phresco";
-            var value = $(this).attr("rel");
-            setLocalstorage(key,value);
-            getLocalstorage(key, title);
+            localStorage[key] = $(this).attr("rel");
+            $("link[title=" + title + "]").attr("href", localStorage[key]);
+            showWelcomeImage(key);
+            
             $("iframe").attr({
                 src: $("iframe").attr("src")
             });
