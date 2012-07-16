@@ -99,7 +99,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 		
 		List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>();
 		try {
-		    List<ApplicationTypeDAO> appDAOList = mongoOperation.getCollection(APPTYPESDAO_COLLECTION_NAME, ApplicationTypeDAO.class);
+		    List<ApplicationTypeDAO> appDAOList = mongoOperation.find(APPTYPESDAO_COLLECTION_NAME, 
+		            new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(customerId)
+		                    .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ApplicationTypeDAO.class);
 	        Converter<ApplicationTypeDAO, ApplicationType> converter = 
 	            (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);   
 	        for (ApplicationTypeDAO applicationTypeDAO : appDAOList) {
