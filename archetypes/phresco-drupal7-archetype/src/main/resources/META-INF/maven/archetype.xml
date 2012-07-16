@@ -27,7 +27,6 @@
 		<source>source/sites/all/themes/README.txt</source>
 	</sources>
 	<testSources>
-		<source>test/functional/src/main/php/phresco/tests/basescreen.php</source>
 		<source>test/functional/src/test/php/phresco/AllTest.php</source>
 		<source>test/functional/src/test/php/phresco/tests/CommonAll.php</source>
 		<source>test/functional/src/test/php/phresco/tests/CreateNewAC.php</source>
@@ -38,7 +37,6 @@
 		<source>test/performance/server/tests/PhrescoFrameWork_TestPlan.jmx</source>
 		<source>test/performance/database/tests/PhrescoFrameWork_TestPlan.jmx</source>
 		<source>test/unit/src/main/php/phresco/tests/basescreen.php</source>
-		<source>test/unit/src/test/php/phresco/tests/Home.php</source>
 		<source>test/unit/src/test/php/phresco/AllTest.php</source>
 	</testSources>
 	<resources>
