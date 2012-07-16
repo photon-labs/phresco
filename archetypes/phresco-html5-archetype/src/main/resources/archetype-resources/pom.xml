@@ -114,6 +114,39 @@
 		        </plugins>
             </build>
         </profile>
+		
+		<profile> 
+			<id>web</id> 
+			<properties>
+			<sonar.language>web</sonar.language>
+			<sonar.branch>web</sonar.branch>	 
+			<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+			<sonar.web.sourceDirectory>src/main/webapp</sonar.web.sourceDirectory>
+			</properties> 
+		</profile>
+		
+		<profile>
+			<id>js</id> 
+			<properties>
+			<sonar.language>js</sonar.language>
+			<sonar.branch>js</sonar.branch>
+			<phresco.source.directory>src/main/webapp/</phresco.source.directory>
+			<sonar.exclusions>**/lib/**</sonar.exclusions>
+			</properties>	
+		</profile>
+		
+		<profile>
+			<id>java</id> 
+				<activation>
+					<activeByDefault>true</activeByDefault>
+				</activation>
+			<properties>
+			<sonar.language>java</sonar.language>
+			<sonar.branch>java</sonar.branch>
+			<phresco.source.directory>src/main/java</phresco.source.directory>
+			</properties>
+		</profile>
+		
     </profiles>
 
 </project>
