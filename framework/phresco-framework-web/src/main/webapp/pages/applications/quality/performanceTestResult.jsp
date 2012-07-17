@@ -233,6 +233,17 @@
 		if ($.browser.safari) {
     		$(".th-inner-test").css("top","235px"); 
 		}
+		
+		var OSName="Unknown OS";
+        if (navigator.appVersion.indexOf("Mac")!=-1) {
+              OSName="MacOS";
+        }
+        
+        if (OSName == "MacOS") { 
+            $(".th-inner-test").css("top","225px");  
+            $(".th-inner-testtech").css("top","225px");
+        }
+		
 		canvasInit();
 		
 		 $(".styles").click(function() {
