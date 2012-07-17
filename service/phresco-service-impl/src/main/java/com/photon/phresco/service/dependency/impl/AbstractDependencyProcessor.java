@@ -155,6 +155,11 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		Technology technology = info.getTechnology();
 		extractModules(modulesPath, technology.getModules());
 		// pilot projects
+		extractPilots(info, path, technology);
+	}
+
+	protected void extractPilots(ProjectInfo info, File path,
+			Technology technology) throws PhrescoException {
 		if (StringUtils.isNotBlank(info.getPilotProjectName())) {
 			List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
 			if (CollectionUtils.isEmpty(pilotProjects)) {
