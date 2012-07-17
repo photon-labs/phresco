@@ -147,16 +147,16 @@
 			<includes>
 				<include>PhrescoUiConstants.java</include>
 				<include>ReadXMLFile.java</include>
-                <include>MobileWidgetData.java</include>
-                <include>TestConfig.java</include>
+                <include>UIConstants.java</include>
                 <include>UserInfoConstants.java</include>
+                <include>WidgetData.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
 				<include>phresco-env-config.xml</include>
-                <include>MobileWidgetHWData.xml</include>
+                <include>WidgetData.xml</include>
                 <include>UIConstants.xml</include>
                 <include>UserInfo.xml</include>
 			</includes>
