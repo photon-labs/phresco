@@ -116,9 +116,9 @@
 			</div>
 			<div style="float: right;">
 	            <input type="radio" name="reportDataType" value="crisp" checked>
-	            <span class="textarea_span popup-span"><s:text name="label.report.overall"/></span>
+	            <span class="popup-span"><s:text name="label.report.overall"/></span>
 	            <input type="radio" name="reportDataType" value="detail">
-	            <span class="textarea_span popup-span"><s:text name="label.report.detail"/></span>
+	            <span class="popup-span"><s:text name="label.report.detail"/></span>
 	            
 				<input type="button" class="btn primary" value="Close" id="cancel">
 				<input type="button" id="generateReport" class="btn primary" value="Generate">
