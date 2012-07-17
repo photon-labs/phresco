@@ -39,7 +39,8 @@ function showSettings() {
 /** This method is to fill select box with data in ShowSettings **/
 function fillData(element, data) {
 	var from = $("#from").val();
-	if (from == "generateBuild") {
+	var mobile = $("#mobile").val();
+	if (from == "generateBuild" && mobile !== "mobile") {
 		if ((data != undefined || !isBlank(data)) && data != "") {
 			var list = '<li class="build_type" value="Settings" class="optgrplbl" id="' + element + 'Group">Settings';
 			$('#' + element).append(list);
@@ -93,8 +94,9 @@ function checkForConfigType(type) {
 /** To get the selected environments as comma delimited string **/
 function getSelectedEnvs() {
 	var envs = "";
+	var mobile = $("#mobile").val();
 	var from = $("#from").val();
-	if (from == "generateBuild") {
+	if (from == "generateBuild" && mobile !== "mobile") {
 		$('input[id=environments]:checkbox:checked').each(function(index) {
 			envs = envs + $(this).val() + ",";
 		});

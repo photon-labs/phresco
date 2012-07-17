@@ -359,7 +359,6 @@ public class Build extends FrameworkBaseAction {
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
-			
 
 			if (StringUtils.isNotEmpty(userBuildName)) {
 				settingsInfoMap.put(BUILD_NAME, userBuildName);
@@ -368,7 +367,6 @@ public class Build extends FrameworkBaseAction {
 			if (StringUtils.isNotEmpty(userBuildNumber)) {
 				settingsInfoMap.put(BUILD_NUMBER, userBuildNumber);
 			}
-
 
 			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,	androidVersion);
