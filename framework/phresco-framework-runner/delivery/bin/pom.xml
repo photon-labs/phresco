@@ -30,7 +30,7 @@
 	  <dependency>
 		<groupId>sonar</groupId>
 		<artifactId>sonar</artifactId>
-		<version>2.12</version>
+		<version>3.1.1</version>
 		<type>war</type>
 	  </dependency>
 	  
