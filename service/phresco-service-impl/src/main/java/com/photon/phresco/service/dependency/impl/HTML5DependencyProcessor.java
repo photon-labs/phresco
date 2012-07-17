@@ -68,7 +68,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		} else {
 		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
-		createSqlFolder(info, path);
+		extractPilots(info, path, info.getTechnology());
 	}
 
 	protected void updatePom(File path, List<ModuleGroup> modules)	throws PhrescoException {
@@ -82,6 +82,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		} catch (PhrescoPomException e) {
 			throw new PhrescoException(e);
 		}
+		
 	}
 	
 	@Override

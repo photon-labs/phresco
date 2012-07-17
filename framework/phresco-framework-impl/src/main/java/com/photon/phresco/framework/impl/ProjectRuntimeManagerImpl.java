@@ -242,23 +242,8 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
     	if (DebugEnabled) {
     		S_LOGGER.debug("Entering Method ProjectRuntimeManagerImpl.buildMavenArgCommand(ActionType actionType, Map<String, String> paramsMap)");
 		}
-        StringBuilder builder = new StringBuilder();
-        if (paramsMap == null || paramsMap.isEmpty()) {
-            return builder;
-        }
-        
-        Set<String> keys = paramsMap.keySet();
-        for (String key : keys) {
-            String value = paramsMap.get(key);
-            builder.append(Constants.STR_MINUSD);
-            builder.append(key);
-            builder.append(Constants.STR_EQUAL);
-            builder.append(Constants.STR_DOUBLE_QUOTES);
-            builder.append(value);
-            builder.append(Constants.STR_DOUBLE_QUOTES);
-            builder.append(Constants.SPACE);
-        }
-        
+
+    	StringBuilder builder = new StringBuilder();
         if (actionType.canHideLog()) {
             builder.append("-q");
             builder.append(Constants.SPACE);
@@ -285,6 +270,22 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         if (!actionType.getProfileId().isEmpty()) {
             builder.append("-P");
             builder.append(actionType.getProfileId());
+        }
+        
+        if (paramsMap == null || paramsMap.isEmpty()) {
+            return builder;
+        }
+        
+        Set<String> keys = paramsMap.keySet();
+        for (String key : keys) {
+            String value = paramsMap.get(key);
+            builder.append(Constants.STR_MINUSD);
+            builder.append(key);
+            builder.append(Constants.STR_EQUAL);
+            builder.append(Constants.STR_DOUBLE_QUOTES);
+            builder.append(value);
+            builder.append(Constants.STR_DOUBLE_QUOTES);
+            builder.append(Constants.SPACE);
         }
         
         if (DebugEnabled) {

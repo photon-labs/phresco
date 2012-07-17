@@ -227,15 +227,15 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (StringUtils.isEmpty(delta.getVersion())) {
 			delta.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
+		
 		ClientResponse response = null;
 		String techId = delta.getTechnology().getId();
 		if(techId.equals(TechnologyTypes.PHP_DRUPAL6)|| techId.equals(TechnologyTypes.PHP_DRUPAL7)) {
 			excludeModule(delta);
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
-		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(delta, path);
-		response = PhrescoFrameworkFactory.getServiceManager().updateProject( projectInfo,userInfo);
+		response = PhrescoFrameworkFactory.getServiceManager().updateProject(projectInfo,userInfo);
 		if(response.getStatus() == 401){
 			throw new PhrescoException("Session expired");
 		}
@@ -247,12 +247,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		else if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
 			createSqlFolder(delta, path);
 		}
-		updatePomProject(delta,projectInfoClone);
+		updatePomProject(delta, projectInfo);
 		try {
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
