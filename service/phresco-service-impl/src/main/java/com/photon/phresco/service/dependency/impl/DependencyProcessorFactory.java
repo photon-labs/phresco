@@ -53,8 +53,8 @@ import com.photon.phresco.util.TechnologyTypes;
  */
 public final class DependencyProcessorFactory {
 	private static final Logger S_LOGGER = Logger.getLogger(DependencyProcessorFactory.class);
-	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
-    /**
+
+	/**
      * Cache for dependency processors
      */
     private static Map<String, DependencyProcessor> processors = new HashMap<String, DependencyProcessor>();
@@ -72,12 +72,10 @@ public final class DependencyProcessorFactory {
      * @return {@link DependencyProcessor}
      */
     public static synchronized DependencyProcessor getDependencyProcessor(ProjectInfo projectInfo){
-    	if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DependencyProcessorFactory.getDependencyProcessor(ProjectInfo projectInfo)");
-			S_LOGGER.debug("getDependencyProcessor() projectCode="+projectInfo.getCode());
-		}
+    	S_LOGGER.debug("Entering Method DependencyProcessorFactory.getDependencyProcessor(ProjectInfo projectInfo)");
+    	S_LOGGER.debug("getDependencyProcessor() projectCode="+projectInfo.getCode());
     	assert projectInfo != null;
-        Technology technology = projectInfo.getTechnology();
+    	Technology technology = projectInfo.getTechnology();
         String techId = technology.getId();
         DependencyProcessor dependencyProcessor = processors.get(techId);
         if(dependencyProcessor == null){
@@ -93,10 +91,8 @@ public final class DependencyProcessorFactory {
      * @return
      */
     private static DependencyProcessor initializeProcessors(String techId) {
-    	if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DependencyProcessorFactory.initializeProcessors(String techId)");
-			S_LOGGER.debug("getDependencyProcessor() TechnologyID="+techId);
-		}
+    	S_LOGGER.debug("Entering Method DependencyProcessorFactory.initializeProcessors(String techId)");
+    	S_LOGGER.debug("getDependencyProcessor() TechnologyID="+techId);
 
     	DependencyProcessor dependencyProcessor = null;
         
