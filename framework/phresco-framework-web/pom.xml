@@ -153,6 +153,48 @@
            <version>20090211</version>
        </dependency>
    
+       <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.1.2</version>
+       	</dependency>
+       	
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itext-xtra</artifactId>
+		    <version>5.1.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>4.5.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.struts</groupId>
+		    <artifactId>struts2-jasperreports-plugin</artifactId>
+		    <version>2.2.3.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.lowagie</groupId>
+		    <artifactId>itext</artifactId>
+		    <version>2.1.7</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>jasperreports-maven-plugin</artifactId>
+		    <version>1.0-beta-2</version>
+		    <exclusions>
+		         <exclusion>
+		            <artifactId>plexus-container-default</artifactId>
+		            <groupId>org.codehaus.plexus</groupId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+		
     </dependencies>
     
     <build>
@@ -193,6 +235,43 @@
                 <server>dev-server</server>
                 <port>2468</port>
                 </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jasperreports-maven-plugin</artifactId>
+                <version>1.0-beta-2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile-reports</goal>
+                        </goals>
+                        <configuration>
+                            <!-- define where is your jrxml file -->
+                            <sourceDirectory>src\\main\\resources\\reports\\template</sourceDirectory>
+                            <sourceFileExt>.jrxml</sourceFileExt>
+                            <compiler>net.sf.jasperreports.engine.design.JRJavacCompiler</compiler>
+                            <!-- define where is the jasper file will be generated -->
+                            <outputDirectory>src\\main\\resources\\reports\\jasper</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!-- Note this must be repeated here to pick up correct xml validation -->
+					
+                    <dependency>
+                        <groupId>net.sf.jasperreports</groupId>
+                        <artifactId>jasperreports</artifactId>
+                        <version>4.5.0</version>
+                    </dependency>
+                    
+                    <dependency>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                        <version>1.2.16</version>
+                    </dependency>
+        
+                </dependencies>
             </plugin>
             
         </plugins>
