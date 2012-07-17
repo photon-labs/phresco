@@ -259,6 +259,7 @@ $(document).ready(function() {
 	accordion();
 	
 	$("#popup_div").css("display","none");
+	$("#popup_div").empty();
 	enableScreen();
 	
 	hideProgessBar();

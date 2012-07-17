@@ -155,8 +155,7 @@
 // 				$('input[type=checkbox][name=signing]').removeAttr("checked");
 // 			}
 			$('#advancedSettingsBuildForm').hide();
-		    /* $('#generateBuildForm').show(); */
-		    $('#generateBuild_Modal').show();
+		    $('#generateBuildForm').show(); 
 			$("#advSettingsErrMsg").html("");
 			$("#errMsg").html('');
 		});
