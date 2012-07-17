@@ -26,7 +26,10 @@ import java.io.OutputStream;
 import java.io.Reader;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import java.sql.Connection;
+import java.sql.SQLException;
 import org.codehaus.plexus.util.FileUtils;
+
 
 import com.photon.phresco.exception.PhrescoWebServiceException;
 
@@ -61,6 +64,21 @@ public final class Utility implements Constants {
             }
             //FIXME: should be logged.
         }
+    }
+	
+	/**
+     * Closes the SQL connection and logs the error message(TODO)
+     * @param connection
+     */
+    public static void closeConnection(Connection connection) {
+    	try {
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+            //FIXME: should be logged.
+		}
     }
 
 
