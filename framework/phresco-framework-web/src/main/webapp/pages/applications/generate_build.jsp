@@ -461,6 +461,18 @@
         	$(this).val(userBuildName);
 		});
 		
+		$('#mainClassName').bind('input propertychange', function (e) { 	//mainClassName validation for JavaStandAlone Projects
+			var mainClassName = $(this).val();
+			mainClassName = checkForClassName(mainClassName);
+        	$(this).val(mainClassName);
+		});
+		
+		$('#jarName').bind('input propertychange', function (e) { 	//jarName validation for JavaStandAlone Projects
+			var jarName = $(this).val();
+			jarName = checkForJarName(jarName);
+        	$(this).val(jarName);
+		});
+		
 		$('#deploy').click(function() {
 			var isChecked = $('#importSql').is(":checked");
 			if ($('#importSql').is(":checked") && $('#selectedSourceScript option').length == 0) {
