@@ -123,16 +123,14 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 			cl.addArguments(args1);
 			cl.setWorkingDirectory(baseDir.getPath() + "/source");
 			Process proc = cl.execute();
-		
-			File file = new File(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY);
+			File file = new File(baseDir.getPath() + LOG_FILE_DIRECTORY);
 			if (!file.exists()) {
 				file.mkdirs();
 			}
-
 			isr = new InputStreamReader(proc.getInputStream());
 			br = new BufferedReader(isr);
 			fileWriter = new FileWriter(baseDir.getPath()
-					+ NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
+					+ LOG_FILE_DIRECTORY + SERVER_LOG_FILE, false);
 			LogWriter logWriter = new LogWriter();
 			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
 					.getName(), environmentName);
