@@ -138,7 +138,7 @@
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
 		    <div class="input">
-		    	<% if (from.equals("generateBuild")) { %>
+		    	<% if (from.equals("generateBuild") && !TechnologyTypes.MOBILES.contains(technology)) { %>
 		    		<div class="generate_build">
 			        	<ul id="environments" name="environment" class="xlarge">
 				        	<li class="config_tab">
@@ -400,6 +400,10 @@
 		</div>
 	</div>
 </div>
+
+<% if (TechnologyTypes.MOBILES.contains(technology)) { %>
+		<input type="hidden" id="mobile" value="mobile">
+<% } %>
 </form> 
 
 <script type="text/javascript">
@@ -567,9 +571,11 @@
 		});
 		
 		$('#environments').change(function() {
-			loadingIconShow();
-			$('#DbWithSqlFiles').val("");
-			executeSqlShowHide();
+			if ($("#from").val() != "generateBuild") {
+				loadingIconShow();
+				$('#DbWithSqlFiles').val("");
+				executeSqlShowHide();
+			}
 		});
 		
 		//execute Sql script
