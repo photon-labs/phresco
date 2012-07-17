@@ -302,7 +302,24 @@
     	
     	if ($.browser.safari) {
             $(".th-inner-test").css("top","231px");  
-            $(".th-inner-testtech").css("top","263px"); 
+            $(".th-inner-testtech").css("top","266px"); 
+        }
+    	
+    	var OSName="Unknown OS";
+        if (navigator.appVersion.indexOf("Mac")!=-1) {
+	       	  OSName="MacOS";
+	    }
+        
+        if (OSName == "MacOS") { 
+        	if ($('#label').hasClass('techLabel')){
+        		$(".th-inner-test").css("top","250px");
+            } else {
+	            $(".th-inner-test").css("top","225px");  
+	            $(".th-inner-testtech").css("top","225px");
+            }
+        	if ($.browser.safari) {
+                $(".th-inner-testtech").css("top","255px"); 
+            }
         }
     	
     	changeView();

@@ -55,7 +55,7 @@
 			</div>
         </div>
         <div class="modal-footer">
-            <img class="popupLoadingIcon" style="position: relative;"> 
+            <img class="popupLoadingIcon" style="position: relative; float: left; display: none;"> 
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
             <input type="button" id="svnImport" class="btn primary" value="<s:text name="label.ok"/>">
             <div id="errMsg" class="envErrMsg"></div>
