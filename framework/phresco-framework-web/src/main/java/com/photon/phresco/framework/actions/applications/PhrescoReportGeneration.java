@@ -69,6 +69,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
     private static Boolean debugEnabled  =S_LOGGER.isDebugEnabled();
 	private Project project = null;
 	private String techId = null;
+	private String techName = null;
 	private String testType = null;
 	private String projectCode = null;
 	private String projectName = null;
@@ -93,6 +94,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			techId = project.getProjectInfo().getTechnology().getId();
 			projectCode = project.getProjectInfo().getCode();
 			projectName = project.getProjectInfo().getName();
+			techName = project.getProjectInfo().getTechnology().getName();
 			reportDatasType = reportDataType;
 			// Report generation for unit and functional
 			if (UNIT.equals(testType) || FUNCTIONAL.equals(testType)) {
@@ -128,6 +130,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			project = proj;
 			testType = tstType;
 			techId = project.getProjectInfo().getTechnology().getId();
+			techName = project.getProjectInfo().getTechnology().getName();
 			projectCode = project.getProjectInfo().getCode();
 			projectName = project.getProjectInfo().getName();
 			reportDatasType = reportDataType;
@@ -165,7 +168,9 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		S_LOGGER.debug("loadTestResults " + loadTestResults);
 		
 		Map<String, Object> cumulativeReportparams = new HashMap<String,Object>();
-		cumulativeReportparams.put("projectCode", projectName);
+		cumulativeReportparams.put("projectCode", projectCode);
+		cumulativeReportparams.put("projectName", projectName);
+		cumulativeReportparams.put("techName", techName);
 		cumulativeReportparams.put("reportsDataType", reportDatasType);
 		cumulativeReportparams.put("unitTestReports", Arrays.asList(unitTestSureFireReports));
 		cumulativeReportparams.put("functionalTestReports", Arrays.asList(functionalSureFireReports));
@@ -185,7 +190,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	public void generateCumulativeTestReport(Map<String, Object> cumulativeReportparams) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateCumulativeTestReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String jasperFile = "PhrescoCumulativeReport.jasper";
 			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
@@ -201,7 +206,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			S_LOGGER.debug("Cumulative Report generation completed" + outFileNamePDF);
 		} catch(Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
-			S_LOGGER.error("Report generation errorrrrrrrrrrrrrr ");
+			S_LOGGER.error("Report generation errorr ");
 		}
 		
 	}
@@ -210,14 +215,16 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	public void generateUnitAndFunctionalReport(SureFireReport sureFireReports) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateUnitAndFunctionalReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String containerJasperFile = "PhrescoSureFireReport.jasper";
 			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ containerJasperFile);
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
 			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
 			parameters.put("testType", testType);
-			parameters.put("projectCode", projectName);
 			parameters.put("reportsDataType", reportDatasType);
 			JRBeanArrayDataSource dataSource = new JRBeanArrayDataSource(new SureFireReport[]{sureFireReports});
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
@@ -238,11 +245,13 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateJmeterPerformanceReport()");
 		try {
 			ArrayList<JmeterTypeReport> jmeterTstResults = jmeterTestResults;
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			String jasperFile = "PhrescoPerfContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
 			parameters.put("testType", testType);
-			parameters.put("projectCode", projectName);
 			parameters.put("reportsDataType", reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jmeterTstResults);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
@@ -256,11 +265,13 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	public void generateAndroidPerformanceReport(List<AndroidPerfReport> androidPerReports)  throws Exception {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateAndroidPerformanceReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + "android" + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			String jasperFile = "PhrescoAndroidPerfContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
 			parameters.put("testType", testType);
-			parameters.put("projectCode", projectName);
 			parameters.put("reportsDataType", reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(androidPerReports);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
@@ -274,11 +285,13 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	public void generateLoadTestReport(List<LoadTestReport> loadTestResults)  throws Exception {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateLoadTestReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			String jasperFile = "PhrescoLoadTestContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
 			parameters.put("testType", testType);
-			parameters.put("projectCode", projectName);
 			parameters.put("reportsDataType", reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loadTestResults);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
@@ -1042,6 +1055,14 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 
 	public void setNoOfTstSuiteErrors(float noOfTstSuiteErrors) {
 		this.noOfTstSuiteErrors = noOfTstSuiteErrors;
+	}
+
+	public String getTechName() {
+		return techName;
+	}
+
+	public void setTechName(String techName) {
+		this.techName = techName;
 	}
     
 }

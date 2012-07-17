@@ -4811,3 +4811,17 @@ a[id='androidSigning']:hover {
   overflow-y: auto;
   height: 100%;
 }
+
+.printIconAlign {
+	vertical-align: middle; 
+	padding-bottom: 0px;
+}
+
+.pdfName {
+	height:auto;
+	word-wrap:break-word;
+}
+
+.pdfType {
+	text-align: center;
+}

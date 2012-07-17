@@ -655,7 +655,7 @@
 		</action>
 		
 		<action name="printAsPdf" method="printAsPdf" class="com.photon.phresco.framework.actions.applications.Quality">
-<!--        		<result name="showPrintAsPopUp">/pages/applications/report_popup.jsp</result> -->
+       		<result name="success">/pages/applications/report_popup.jsp</result>
 		</action>
 		
 		<action name="downloadReport" method="downloadReport" class="com.photon.phresco.framework.actions.applications.Quality">

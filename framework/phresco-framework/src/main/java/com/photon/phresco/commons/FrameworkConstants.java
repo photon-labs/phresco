@@ -380,6 +380,7 @@ public interface FrameworkConstants {
     String REQ_APPLICATION_TYPE = "applicationType";
     String REQ_OLD_CONFIG_NAME = "configName";
     String REQ_TEST_TYPE = "testType";
+    String REQ_REPORT_STATUS = "reportStatus";
     String REQ_SELECTEDPROJECTS = "selectedProjects";
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
@@ -629,6 +630,10 @@ public interface FrameworkConstants {
      */
     String MSG_PROJECT_INFORMATION_EMPTY = "Project information should not be empty";
     String MSG_FILE_PATH_EMPTY = "File path should not be empty";
+    String SUCCESS_REPORT_STATUS = "label.report.success";
+    String ERROR_REPORT_STATUS = "label.report.failure";
+    String MSG_REPORT_OVERALL = "Overall";
+    String MSG_REPORT_DETAIL = "Detailed";
     
     /*
      * CI Message keys

@@ -18,6 +18,20 @@
 	<parameter name="reportsDataType" class="java.lang.String"/>
 	<field name="fileName" class="java.lang.String"/>
 	<field name="testResults" class="java.util.List"/>
+	<pageHeader>
+		<band height="29">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC"/>
+				<staticText>
+					<reportElement x="15" y="3" width="191" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Load Test Report]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</pageHeader>
 	<detail>
 		<band height="64" splitType="Stretch">
 			<frame>
@@ -41,9 +55,9 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="2" y="26" width="555" height="37" isRemoveLineWhenBlank="true"/>
+				<reportElement x="0" y="26" width="555" height="37" isRemoveLineWhenBlank="true"/>
 				<subreport>
-					<reportElement x="2" y="0" width="553" height="36" isRemoveLineWhenBlank="true"/>
+					<reportElement x="0" y="0" width="553" height="36" isRemoveLineWhenBlank="true"/>
 					<subreportParameter name="reportsDataType">
 						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
 					</subreportParameter>

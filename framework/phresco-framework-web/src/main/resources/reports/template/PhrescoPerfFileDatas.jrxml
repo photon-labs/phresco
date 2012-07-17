@@ -210,70 +210,70 @@
 				<staticText>
 					<reportElement x="2" y="0" width="91" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="96" y="0" width="52" height="20"/>
 					<textElement textAlignment="Center">
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{totalNoOfSample}]]></textFieldExpression>
 				</textField>
 				<textField pattern="">
 					<reportElement x="148" y="0" width="66" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""+Math.round((Double.valueOf($P{totalAvg})))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="216" y="0" width="34" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{min}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="269" y="0" width="41" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{max}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="324" y="0" width="43" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{totalStdDev}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="371" y="0" width="41" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{totalErr}]]></textFieldExpression>
 				</textField>
 				<textField pattern="">
 					<reportElement x="514" y="0" width="41" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""+Math.round((Double.valueOf($P{totalAvgBytes})))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="412" y="0" width="51" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{totalThroughput}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="463" y="0" width="51" height="20"/>
 					<textElement>
-						<font fontName="Times New Roman" size="14"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{totalKbPerSec}]]></textFieldExpression>
 				</textField>
