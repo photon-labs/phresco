@@ -160,6 +160,7 @@ public interface FrameworkConstants {
     String FALSE = "false";
     String NODE_JS_ID = "tech-nodejs-webservice";
     String TEST_DIR = "test";
+    String SAFARI_WARNING_MSG = "Safari browser is only supported for SeleniumRC";
     String TARGET_DIR = "target";
     String JMETER_REPORTS = "jmeter-reports";
     String FUNCTIONAL = "functional";
