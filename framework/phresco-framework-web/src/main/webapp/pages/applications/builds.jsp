@@ -106,7 +106,11 @@
 			              		</td>
 			              		<td><%= buildInfo.getBuildNo() %></td>
 			              		<td style="width: 40%;">
-			              			<label class="bldLable" title="Configured with <%= buildInfo.getEnvironments() %>"><%= buildInfo.getTimeStamp() %></label>
+			              				<% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+			              					<label class="bldLable"><%= buildInfo.getTimeStamp() %></label>
+			              				<% } else { %>
+			              					<label class="bldLable" title="Configured with <%= buildInfo.getEnvironments() %>"><%= buildInfo.getTimeStamp() %></label>
+			              				<% } %>	
 			              		</td>
 			              		<td>
 			              			<a href="<s:url action='downloadBuild'>
