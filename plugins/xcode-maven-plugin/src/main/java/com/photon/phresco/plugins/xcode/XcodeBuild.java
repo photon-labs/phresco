@@ -532,20 +532,20 @@ public class XcodeBuild extends AbstractMojo {
 		if (StringUtils.isEmpty(environmentName)) {
 			return;
 		}
-//		try {
-		getLog().info("Configuring the project....");
-		getLog().info("environment name :" + environmentName);
-		getLog().info("base dir name :" + baseDir.getName());
-		File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
-		String basedir = baseDir.getName();
-		PluginUtils pu = new PluginUtils();
-		pu.executeUtil(environmentName, basedir, srcConfigFile);
-	//	if(encrypt) {
-	//	pu.encode(srcConfigFile);
-	//	}
-//		} catch (PhrescoException e) {
-//			throw new MojoExecutionException(e.getMessage(), e);
-//		}
-
+		try {
+			getLog().info("Configuring the project....");
+			getLog().info("environment name :" + environmentName);
+			getLog().info("base dir name :" + baseDir.getName());
+			File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
+			String basedir = baseDir.getName();
+			PluginUtils pu = new PluginUtils();
+			pu.executeUtil(environmentName, basedir, srcConfigFile);
+			pu.setDefaultEnvironment(environmentName, srcConfigFile);
+			// if(encrypt) {
+			// pu.encode(srcConfigFile);
+			// }
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 }
