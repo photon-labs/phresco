@@ -24,9 +24,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.FileUtils;
+
 
 public final class Utility implements Constants {
 
@@ -86,6 +89,21 @@ public final class Utility implements Constants {
         }
     }
 
+    /**
+     * Closes the SQL connection and logs the error message(TODO)
+     * @param connection
+     */
+    public static void closeConnection(Connection connection) {
+    	try {
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+            //FIXME: should be logged.
+		}
+    }
+    
     public static String getPhrescoHome() {
         String phrescoHome = System.getenv(PHRESCO_HOME);
         if (phrescoHome == null) {
