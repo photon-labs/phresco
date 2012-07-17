@@ -293,7 +293,15 @@
 		    	$("#agnJarRelease").show();
             }
 	    });
-
+		
+		$("#browser").change(function(){
+			if($("#browser").val() == "safari"){
+				$("#errMsg").html('<%= FrameworkConstants.SAFARI_WARNING_MSG %>')
+			} else {
+				$("#errMsg").html('');
+			}
+		});
+		
 		$("#buildId").change(function() {
 			showBuildEnvs();
 		});

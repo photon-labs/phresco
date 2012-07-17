@@ -97,7 +97,7 @@ $(document).ready(function() {
 	            <!--  Password starts -->
 	            <div class="clearfix" >
 	                <label class="labellg" for="xlInput" class="lgnFieldLbl">Password:</label>
-	                <input class="xlarge settings_text lgnField" id="xlInput" id="password" name="password" type="password"  maxlength="63" title="63 Characters only" value =""/>
+	                <input class="xlarge settings_text lgnField" id="xlInput" id="password" name="password" type="password"  maxlength="63" title="63 Characters only" value ="" placeholder="Enter the password"/>
 	            </div>
 	            <!--  Password ends -->
 		              

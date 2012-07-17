@@ -1082,12 +1082,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                S_LOGGER.debug("Performance test directory path from framework util " + frameworkUtil.getPerformanceTestDir(project.getProjectInfo().getTechnology().getId()));
                builder.append(performanceTestDir);
                S_LOGGER.debug("Performance test directory path " + builder.toString());
-            
             if (!TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
             	if ("WebService".equals(jmeterTestAgainst)) {
             		jmeterTestAgainst = "webservices";
             	}
-	            builder.append(jmeterTestAgainst);
+	            builder.append(jmeterTestAgainst.toLowerCase());
 	            QualityUtil.changeTestName(builder.toString(), testName);
 	            QualityUtil.adaptTestConfig(builder.toString(), selectedSettings);
 	            if (!Constants.SETTINGS_TEMPLATE_DB.equals(jmeterTestAgainst)) {
@@ -1107,7 +1106,6 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpSession().setAttribute(projectCode + PERFORMACE, reader);
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(REQ_TEST_TYPE,PERFORMACE );
-
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
                 getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
