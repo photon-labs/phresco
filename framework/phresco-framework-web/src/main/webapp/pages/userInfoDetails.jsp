@@ -24,16 +24,10 @@
 	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO);
 	boolean disableCI = false;
 	if (userInfo == null || userInfo.getDisplayName() == null) {
-	request.setAttribute(FrameworkConstants.REQ_LOGIN_ERROR, "Session expired");
+	session.setAttribute(FrameworkConstants.REQ_LOGIN_ERROR, FrameworkConstants.SESSION_EXPIRED);
 %>
-	 <script type="text/javascript"> 
-	    $.ajax({
-	  			url : 'logout',
-	  			success : function(data) {
-	  			   $("html").html(data);
-	             }
-	  			
-	   	}); 
+	 <script type="text/javascript">
+	 	window.location.href = "logout.action";
 	 </script>
 <%
 	} else {

@@ -158,7 +158,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException(e);
 			}
 		}  else if(response.getStatus() == 401){
-			throw new PhrescoException("Session Expired ! Please Relogin.");
+			throw new PhrescoException("Session expired");
 		}
 		else {
 			throw new PhrescoException("Project creation failed");
@@ -237,7 +237,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		updateDocument(delta, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject( projectInfo,userInfo);
 		if(response.getStatus() == 401){
-			throw new PhrescoException("Session Expired ! Please Relogin.");
+			throw new PhrescoException("Session expired");
 		}
 		else if (flag) {
 			if (response.getStatus() != 200) {

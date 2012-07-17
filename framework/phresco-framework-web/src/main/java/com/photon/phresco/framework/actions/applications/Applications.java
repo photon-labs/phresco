@@ -360,8 +360,10 @@ public class Applications extends FrameworkBaseAction {
 					Collections.singletonList(projectInfo.getName())));
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of  Applications.save()"
-						+ FrameworkUtil.getStackTraceAsString(e));
-			new LogErrorReport(e, "Save Project");
+					+ FrameworkUtil.getStackTraceAsString(e));
+			if ("Session expired".equalsIgnoreCase(e.getMessage())) {
+				getHttpSession().removeAttribute(REQ_USER_INFO);
+			}
 		}
 		getHttpSession().removeAttribute(projectCode);
 		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
@@ -437,7 +439,9 @@ public class Applications extends FrameworkBaseAction {
 				removeConfiguration();
 				addActionMessage(getText(UPDATE_PROJECT,Collections.singletonList(projectInfo.getName())));
 			} catch (Exception e) {
-				throw new PhrescoException(e);
+				if ("Session expired".equalsIgnoreCase(e.getMessage())) {
+					getHttpSession().removeAttribute(REQ_USER_INFO);
+				}
 			}
 
 		} catch (PhrescoException e) {
