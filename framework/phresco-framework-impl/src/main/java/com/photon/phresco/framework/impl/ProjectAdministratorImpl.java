@@ -158,7 +158,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException(e);
 			}
 		}  else if(response.getStatus() == 401){
-			throw new PhrescoException("Session Expired ! Please Relogin.");
+			throw new PhrescoException("Session expired");
 		}
 		else {
 			throw new PhrescoException("Project creation failed");
@@ -235,9 +235,9 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(delta, path);
-		response = PhrescoFrameworkFactory.getServiceManager().updateProject(delta,userInfo);
+		response = PhrescoFrameworkFactory.getServiceManager().updateProject( projectInfo,userInfo);
 		if(response.getStatus() == 401){
-			throw new PhrescoException("Session Expired ! Please Relogin.");
+			throw new PhrescoException("Session expired");
 		}
 		else if (flag) {
 			if (response.getStatus() != 200) {
@@ -252,7 +252,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(projectInfo, path);
+			ProjectUtils.updateProjectInfo(delta, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);

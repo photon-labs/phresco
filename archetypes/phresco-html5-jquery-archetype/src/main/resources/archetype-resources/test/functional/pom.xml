@@ -2,20 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.photon.phresco</groupId>
-  <artifactId>HTML5Mobile_WebDriver</artifactId>
+  <artifactId>HelloWorld</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
-  <name>HTML5Mobile_Widget</name>
-  <url>http://maven.apache.org</url>
-  
- <repositories>
-    <repository>      
-      <id>seleniumserver</id>
-      <name>seleniumserver</name>
-      <url>http://172.16.18.178:8080/nexus/content/groups/public/</url>
-    </repository>
-  </repositories>
-  
+  <name>HelloWorld</name>
+  <url>http://maven.apache.org</url> 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

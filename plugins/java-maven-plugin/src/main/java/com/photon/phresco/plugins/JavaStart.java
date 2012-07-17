@@ -28,7 +28,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -190,23 +189,20 @@ public class JavaStart extends AbstractMojo implements PluginConstants {
 	private void executePhase() throws MojoExecutionException {
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append(MVN_CMD);
+			sb.append(MVN_CMD);			
 			sb.append(STR_SPACE);
-			sb.append(T7_START_GOAL);
+			sb.append(JAVA_TOMCAT_RUN);
 			sb.append(STR_SPACE);
-			sb.append(SERVER_PORT);
-			sb.append(serverport);
-			sb.append(STR_SPACE);
-			sb.append(SERVER_SHUTDOWN_PORT);
-			sb.append(shutdownport);
-			sb.append(STR_SPACE);
-			sb.append(SKIP_TESTS);
+			sb.append("-Dserver.port=");
+			sb.append(serverport);			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir);
 			Process process = cl.execute();
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
+			getLog().info("Server started successfully...");
+			getLog().info("Server running at http://localhost:" + serverport + "/" + context);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
+		} 
 	}
 
 	private List<SettingsInfo> getSettingsInfo(String configType) throws PhrescoException {

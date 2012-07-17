@@ -22,16 +22,45 @@
 <%
 	String error = (String) request.getAttribute(FrameworkConstants.REQ_ERROR);
 	
+	String sonarPath = "";
+	
 	if(error != null) {
+		System.out.println("error " + error);
 %>
         <div class="alert-message block-message warning" >
 			<center><label Class="errorMsgLabel"><%= error %></label></center>
 		</div>
         
    <% } else { 
-		String sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
-		
+		sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
    %>
-		 <iframe src="<%= sonarPath %>" frameBorder="0" class="iframe_container"></iframe>
+		 <iframe src="" frameBorder="0" class="iframe_container"></iframe>
 		
 	<% } %>
+	
+<script>
+	var localstore = $("link[title='phresco']").attr("href");
+	localStorage["color"] =localstore;
+	
+	$(document).ready(function() {
+	    reloadIframe();
+	    $(".styles").click(function() {
+	        reloadIframe();
+	    });
+	});
+	
+	function reloadIframe() {
+		var theme = localStorage["color"];
+	    if(theme == null || theme == undefined || theme == "undefined" || theme == "null" || theme == "themes/photon/css/red.css") {
+	         theme = "themes/photon/css/red.css";
+	    }
+	    var source = "<%= sonarPath %>?css=" + theme;
+	    
+	    $("iframe").attr({
+	        src: source
+	    });
+	    $('iframe').load(function() {
+	        $(".loadingIcon").hide();
+	    });
+	}
+</script>

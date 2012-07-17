@@ -77,7 +77,7 @@
 		                    			<td><%= serverDownloadInfo.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= serverDownloadInfo.getDownloadURL() %>">
-		                    					<img src="images/icons/download.png" title="Download" />
+		                    					<img src="images/icons/download.png" title="<%=serverDownloadInfo.getName() %>" />
 		                    				</a>
 		                    			</td>
 		                    		</tr>
@@ -114,7 +114,7 @@
 		                    			<td><%= dbDownloadInfo.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= dbDownloadInfo.getDownloadURL() %>">
-		                    					<img src="images/icons/download.png" title="Download"/>
+		                    					<img src="images/icons/download.png" title="<%=dbDownloadInfo.getName()%>"/>
 		                    				</a>
 		                    			</td>
 		                    		</tr>
@@ -151,7 +151,7 @@
 		                    			<td><%= editorDownloadInfo.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= editorDownloadInfo.getDownloadURL() %>">
-		                    					<img src="images/icons/download.png" title="Download"/>
+		                    					<img src="images/icons/download.png" title="<%= editorDownloadInfo.getName()%>"/>
 		                    				</a>
 		                    			</td>
 		                    		</tr>
@@ -190,7 +190,7 @@
 		                    			<td><%= toolsDownloadInfo.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= toolsDownloadInfo.getDownloadURL() %>">
-		                    					<img src="images/icons/download.png" title="Download"/>
+		                    					<img src="images/icons/download.png" title="<%=toolsDownloadInfo.getName() %>"/>
 		                    				</a>
 		                    			</td>
 		                    		</tr>
@@ -228,7 +228,7 @@
 		                    			<td><%= otherDownloadInfos.getFileSize() %></td>
 		                    			<td class="label_center">
 		                    				<a href="<%= otherDownloadInfos.getDownloadURL() %>">
-		                    					<img src="images/icons/download.png" title="Download"/>
+		                    					<img src="images/icons/download.png" title="<%= otherDownloadInfos.getName() %>"/>
 		                    				</a>
 		                    			</td>
 		                    		</tr>

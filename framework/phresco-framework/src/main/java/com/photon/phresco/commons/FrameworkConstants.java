@@ -94,15 +94,12 @@ public interface FrameworkConstants {
     String STOP_SERVER = "stop";
     String NODEJS_SERVER_NAME = "serverName";
     String NODEJS_DB_NAME = "databaseName";
-    String NODEJS_IMPORT_VALUE = "importSql";
     String SERVER_PROTOCOL = "server.protocol";
     String SERVER_HOST = "server.host";
     String SERVER_PORT = "server.port";
-    String NODEJS_LOG_DIR = "log";
+    String LOG_DIR = "log";
     String RUN_AGS_ENV_FILE = "runagainstsource.info";
-    String NODEJS_LOG_FILE = "nodejsLog.log";
-    String NODEJS_ERROR_LOG_FILE = "nodejserrorLog.log";
-    String JAVA_LOG_FILE = "javaLog.log";
+    String LOG_FILE = "server.log";
     String LINE_SEPERATOR = "line.separator";
     String READ_LOG_VIEW = "view";
     String READ_ERROR_LOG_VIEW = "errorLogView";
@@ -753,6 +750,7 @@ public interface FrameworkConstants {
     String ERROR_LOGIN_ACCESS_DENIED = "login.error.access.denied.message";
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
+    String SESSION_EXPIRED = "Session Expired ! Please Relogin";
 
     /*
      * login keys

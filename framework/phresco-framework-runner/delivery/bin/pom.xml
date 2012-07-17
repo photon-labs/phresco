@@ -4,11 +4,11 @@
 	<groupId>com.photon.phresco.framework</groupId>
 	<artifactId>PhrescoFrameworkRuntime</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.0.6003-SNAPSHOT</version>
+	<version>1.2.0.7001-SNAPSHOT</version>
 	<name>Phresco Framework Web Application</name>
 
     <properties>
-		<phresco.framework.version>1.2.0.6003-SNAPSHOT</phresco.framework.version>		
+		<phresco.framework.version>1.2.0.7001-SNAPSHOT</phresco.framework.version>		
 	</properties>
 
 	<dependencies>
@@ -30,7 +30,7 @@
 	  <dependency>
 		<groupId>sonar</groupId>
 		<artifactId>sonar</artifactId>
-		<version>2.12</version>
+		<version>3.1.1</version>
 		<type>war</type>
 	  </dependency>
 	  
@@ -107,7 +107,7 @@
 								<artifactItem>
 									<groupId>sonar</groupId>
 									<artifactId>sonar</artifactId>
-									<version>2.12</version>
+									<version>3.1.1</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools/war/sonar.war</outputDirectory>
@@ -117,7 +117,7 @@
 								<artifactItem>
 									<groupId>sonar</groupId>
 									<artifactId>sonar</artifactId>
-									<version>2.12</version>
+									<version>3.1.1</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>

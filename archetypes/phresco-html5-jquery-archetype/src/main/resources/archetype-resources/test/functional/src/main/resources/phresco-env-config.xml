@@ -25,12 +25,14 @@
                <context>yuiHW</context>
                <protocol>http</protocol>
                <host>localhost</host>
-               <port>8090</port>
+               <port>8080</port>
            </Server>
            <selenium>
                <server.host>localhost</server.host>
                <server.port>4444</server.port>
                <speed>300</speed>
            </selenium>
-           
+           <loginpage>
+              <loginText>Hello World</loginText>
+           </loginpage>
 </environment>

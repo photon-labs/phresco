@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-html5-archetype
- * 
+ * PHR_widget-hw
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -28,14 +28,14 @@ import org.openqa.selenium.server.SeleniumServer;
 import com.photon.phresco.Screens.MenuScreen;
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
-import com.photon.phresco.uiconstants.TestConfig;
+import com.photon.phresco.uiconstants.UIConstants;
 import com.thoughtworks.selenium.Selenium;
 
 public class WelcomePage extends TestCase {
 
 
 	private PhrescoUiConstants phrsc;
-	private TestConfig uiconst;
+	private UIConstants phr;
 	private WelcomeScreen wel;
 	private int SELENIUM_PORT;
 	private String browserAppends;
@@ -45,7 +45,8 @@ public class WelcomePage extends TestCase {
 
 		try {
 
-			
+			phrsc = new PhrescoUiConstants();
+			phr = new UIConstants();
 			String serverURL = phrsc.PROTOCOL + "://"
 					+ phrsc.HOST + ":"
 					+ phrsc.PORT + "/";
@@ -58,7 +59,7 @@ public class WelcomePage extends TestCase {
 					browserAppends, serverURL, phrsc.SPEED,
 					phrsc.CONTEXT );
 			assertNotNull(wel);
-			MenuScreen menuObj = wel.menuScreen(uiconst);
+			MenuScreen menuObj = wel.menuScreen(phr);
 			assertNotNull(menuObj);
 		} catch (Exception t) {
 			t.printStackTrace();
@@ -69,7 +70,6 @@ public class WelcomePage extends TestCase {
 
 	public void setUp() throws Exception {
 		phrsc = new PhrescoUiConstants();
-		uiconst = new TestConfig();
 	}
 
 	public void tearDown() {

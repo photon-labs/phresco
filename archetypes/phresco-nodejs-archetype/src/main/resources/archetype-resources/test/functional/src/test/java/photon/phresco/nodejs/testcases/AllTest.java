@@ -30,16 +30,10 @@ import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.server.SeleniumServer;
-import org.testng.annotations.BeforeTest;
-
-
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
-
-import com.thoughtworks.selenium.Selenium;
 
 public class AllTest extends TestCase {
 	

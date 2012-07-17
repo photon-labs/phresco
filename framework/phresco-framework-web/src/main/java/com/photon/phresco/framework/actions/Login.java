@@ -42,6 +42,7 @@ package com.photon.phresco.framework.actions;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -123,7 +124,14 @@ public class Login extends FrameworkBaseAction {
 			S_LOGGER.debug("Entering Method  Login.logout()");
 		}
 		getHttpSession().removeAttribute(REQ_USER_INFO);
-		getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(SUCCESS_LOGOUT));
+
+		String errorTxt = (String) getHttpSession().getAttribute(REQ_LOGIN_ERROR);
+		getHttpSession().removeAttribute(REQ_LOGIN_ERROR);
+		if (StringUtils.isNotEmpty(errorTxt)) {
+			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, errorTxt);
+		} else {
+			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(SUCCESS_LOGOUT));
+		}
         return SUCCESS;
     }
 	
