@@ -1010,7 +1010,7 @@ legend {
 	margin-bottom: 0;
 	position: absolute;
 	top: 0px;
-	width: auto;
+	width: 100px;
 }
 
 .textbox_size {
@@ -1752,4 +1752,8 @@ input[class*='sample'] {
     margin-right: 5px;
     text-align: center;
     font-weight: bold;
+}
+
+.form {
+    margin: 0;
 }

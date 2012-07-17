@@ -19,6 +19,8 @@
  */
 package com.photon.phresco.service.rest.api;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
+import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.api.Converter;
@@ -49,6 +52,7 @@ import com.sun.jersey.api.client.WebResource;
 public class LoginService extends DbService {
 	
 	 
+	
 	public LoginService() {
 		super();
 	}
@@ -75,12 +79,13 @@ public class LoginService extends DbService {
         if(userDao != null) {
         	convertedUser = converter.convertDAOToObject(userDao, mongoOperation);
         }
-        
+        List<Customer> customers = mongoOperation.getCollection(ServiceConstants.CUSTOMERS_COLLECTION_NAME , Customer.class);
         AuthenticationUtil authTokenUtil = AuthenticationUtil.getInstance();
         convertedUser.setLoginId(credentials.getUsername());
         convertedUser.setToken(authTokenUtil.generateToken(credentials.getUsername()));
         convertedUser.setDisplayName(user.getDisplayName());
         convertedUser.setPhrescoEnabled(user.isPhrescoEnabled());
+        convertedUser.setCustomers(customers);
         return convertedUser;
     }
 }

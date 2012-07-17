@@ -20,7 +20,7 @@
 package com.photon.phresco.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,13 +40,15 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String description;
 	private Technology technology;
 	private String application;
-	private String[] pilotProjectUrls;
+	private List<String> pilotProjectUrls;
 	private String techID;
 	private String contentURLId;
 	private String pilotProjectName;
 	private String projectCode;
 	private String groupId;
 	private String artifactId;
+	private String customerId;
+	
 
 	/**
 	 * @return the pilotid
@@ -165,29 +167,25 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		return "ProjectInfo [id=" + id + ", name=" + name + ", projectCode=" + projectCode + ", code=" + code
-				+ ", version=" + version + ", description=" + description + ", groupId=" + groupId + ", artifactId=" + artifactId
-				+ ", technology=" + technology + ", application=" + application
-				+ ", pilotProjectUrls=" + Arrays.toString(pilotProjectUrls)
-				+ ", techID=" + techID + ", contentURLId=" + contentURLId + "]";
-	}
-
+	
+       
 	/**
 	 * @return the pilotProjectUrls
-	 */
-	public String[] getPilotProjectUrls() {
+	 */	
+ 
+   public List<String> getPilotProjectUrls() {
 		return pilotProjectUrls;
 	}
-
-	/**
+    
+    /**
 	 * @param pilotProjectUrls the pilotProjectUrls to set
 	 */
-	public void setPilotProjectUrls(String[] pilotProjectUrls) {
-		//this.pilotProjectUrls = pilotProjectUrls;
-		this.pilotProjectUrls =Arrays.copyOf(pilotProjectUrls, pilotProjectUrls.length);
+
+	public void setPilotProjectUrls(List<String> pilotProjectUrls) {
+		this.pilotProjectUrls = pilotProjectUrls;
 	}
+    
+	
 
 	public String getId() {
 		return id;
@@ -196,7 +194,30 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+    
+	
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+    
+	
+	@Override
+	public String toString() {
+		return "ProjectInfo [pilotid=" + pilotid + ", id=" + id + ", name="
+				+ name + ", code=" + code + ", version=" + version
+				+ ", description=" + description + ", technology=" + technology
+				+ ", application=" + application + ", pilotProjectUrls="
+				+ pilotProjectUrls + ", techID=" + techID
+				+ ", contentURLId=" + contentURLId + ", pilotProjectName="
+				+ pilotProjectName + ", projectCode=" + projectCode
+				+ ", groupId=" + groupId + ", artifactId=" + artifactId
+				+ ", customerId=" + customerId + "]";
+	}
 
 	public ProjectInfo clone()throws CloneNotSupportedException{
 		ProjectInfo infos = new ProjectInfo();

@@ -2696,7 +2696,7 @@ fieldset {
     margin-top: 6px;
 }
 .btn.lgnBtn {
-    margin: 24px -4px 0 0;
+    margin: 24px 0px 0 0;
 }
 div.lgnBtnLabel {
     margin-left: 0;
@@ -3534,8 +3534,20 @@ table {
     line-height: 25px;
 }
 
-.closereg span:hover {
-     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
+.closereg_empty {
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
+    font-weight: bold;
+}
+
+.closereg_empty span {
+    float:left;
+    margin:0px;
+    padding-left:5%;
+    width:92%;
+    line-height: 25px;
 }
 
 .openreg {
@@ -4746,7 +4758,7 @@ a[id='androidSigning']:hover {
     margin-bottom: 0;
     position: absolute;
     top: 0px;
-    width: auto;
+    width: 100px;
 }
 
 .custom_label {

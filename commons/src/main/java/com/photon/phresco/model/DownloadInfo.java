@@ -20,7 +20,7 @@
 package com.photon.phresco.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,28 +30,31 @@ public class DownloadInfo implements Serializable {
 	private static final long serialVersionUID = -9197395975210628328L;
 	private String id;
 	private String name;
+	private String description;
 	private String version;
 	private String downloadURL;
 	private String type;
 	private String fileName;
 	private String fileSize;
-	private String[] appliesTo;
-	private String[] platform;
+	private String customerId;
+	private List<String> appliesTo;
+	private List<String> platform;
 
 	public DownloadInfo() {
 	}
 
-	public DownloadInfo(String id, String name, String version,
-			String downloadURL, String type, String[] appliesTo,
-			String[] platform) {
+	public DownloadInfo(String id, String name, String description, String version,
+			String downloadURL, String type, List<String> appliesTo,
+			List<String> platform) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
 		this.version = version;
 		this.downloadURL = downloadURL;
 		this.type = type;
-		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
-		this.platform = Arrays.copyOf(platform, platform.length);
+		this.appliesTo = appliesTo;
+		this.platform = platform;
 	}
 
 	public String getId() {
@@ -94,22 +97,6 @@ public class DownloadInfo implements Serializable {
 		this.type = type;
 	}
 
-	public String[] getAppliesTo() {
-		return appliesTo;
-	}
-
-	public void setAppliesTo(String[] appliesTo) {
-		this.appliesTo = Arrays.copyOf(appliesTo, appliesTo.length);
-	}
-
-	public String[] getPlatform() {
-		return platform;
-	}
-
-	public void setPlatform(String[] platform) {
-		this.platform = Arrays.copyOf(platform, platform.length);
-	}
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -126,12 +113,54 @@ public class DownloadInfo implements Serializable {
 		this.fileSize = fileSize;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+    }
+
+ 	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<String> getAppliesTo() {
+		return appliesTo;
+	}
+
+	public void setAppliesTo(List<String> appliesTo) {
+		this.appliesTo = appliesTo;
+	}
+
+	public List<String> getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(List<String> platform) {
+		this.platform = platform;
+	}
+
 	@Override
 	public String toString() {
 		return "DownloadInfo [id=" + id + ", name=" + name + ", version="
 				+ version + ", downloadURL=" + downloadURL + ", type=" + type
-				+ ", appliesTo=" + Arrays.toString(appliesTo) + ", platform="
-				+ Arrays.toString(platform) + "]";
+				+ ", fileName=" + fileName + ", fileSize=" + fileSize
+				+ ", appliesTo=" + appliesTo + ", platform="
+				+ platform + ", customerId=" + customerId
+				+ ", getId()=" + getId() + ", getName()=" + getName()
+				+ ", getVersion()=" + getVersion() + ", getDownloadURL()="
+				+ getDownloadURL() + ", getType()=" + getType()
+				+ ", getAppliesTo()=" + getAppliesTo()
+				+ ", getPlatform()=" + getPlatform()
+				+ ", getFileName()=" + getFileName() + ", getFileSize()="
+				+ getFileSize() + ", getCustomerId()=" + getCustomerId() + "]";
 	}
 
+
+	
 }

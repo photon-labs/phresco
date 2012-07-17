@@ -14,12 +14,12 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet"  class="changeme" id="theme">
+<link type="text/css" rel="stylesheet" class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
     var key = "color";
-    showWelcomeImage(key);
+	showWelcomeImage(key);
 
     <%
 		String cmdLogin = (String) request.getAttribute("cmdLogin");

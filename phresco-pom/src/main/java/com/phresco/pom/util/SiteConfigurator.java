@@ -58,6 +58,9 @@ public class SiteConfigurator {
 			if(processor.getSitePlugin(PomConstants.SITE_PLUGIN_ARTIFACT_ID) == null) {
 				processor.addSitePlugin();
 			}
+			if(processor.getModel().getUrl() == null) {
+				processor.getModel().setUrl("");
+			}
 			if(getReports(file) != null) {
 				processor.removeAllReportingPlugin();
 			}

@@ -37,7 +37,7 @@ public class Database implements Serializable {
     private List<String> versions;
     private String description;
     private List<String> technologies = new ArrayList<String>();
-
+    private String customerId;
 	public Database() {
 		super();
 	}
@@ -96,10 +96,21 @@ public class Database implements Serializable {
 		this.technologies = technologies;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
 	@Override
 	public String toString() {
-		return "Database [id=" + id + ", name=" + name + ", version=" + versions
-				+ ", description=" + description + "]";
+		return "Database [id=" + id + ", name=" + name + ", versions="
+				+ versions + ", description=" + description + ", technologies="
+				+ technologies + ", customerId=" + customerId + "]";
 	}
+
+	
 
 }

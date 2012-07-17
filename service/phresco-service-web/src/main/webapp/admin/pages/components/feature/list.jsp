@@ -22,7 +22,7 @@
 		
 <form class="form-horizontal customer_list">
 	<div class="operation">
-		<input type="button" id="featuresAdd" class="btn btn-primary" name="features_add" onclick="loadContent('featuresAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.featrs.add'/>"/>
+		<input type="button" id="featuresAdd" class="btn btn-primary" name="features_add" onclick="loadContent('featuresAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.featrs.add'/>"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success"  id="successmsg">
 				<s:actionmessage />

@@ -95,7 +95,7 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 				return;
 			}
 			for (ProjectInfo projectInfo : pilotProjects) {
-				String urls[] = projectInfo.getPilotProjectUrls();
+				List<String> urls = projectInfo.getPilotProjectUrls();
 				if (urls != null) {
 					for (String url : urls) {
 						DependencyUtils.extractFiles(url, path);

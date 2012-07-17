@@ -46,7 +46,7 @@ public class ModuleGroup implements Serializable {
 	private List<Module> versions = new ArrayList<Module>(SizeConstants.SIZE_VERSIONS_MAP);
 	private String imageURL;
 	private boolean system;
-
+	private String customerId;
 	public ModuleGroup() {
 	}
 
@@ -200,12 +200,29 @@ public class ModuleGroup implements Serializable {
         this.system = system;
     }
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	@Override
+	public String toString() {
+		return "ModuleGroup [id=" + id + ", moduleId=" + moduleId
+				+ ", groupId=" + groupId + ", artifactId=" + artifactId
+				+ ", type=" + type + ", name=" + name + ", vendor=" + vendor
+				+ ", core=" + core + ", required=" + required + ", docs="
+				+ docs + ", techId=" + techId + ", versions=" + versions
+				+ ", imageURL=" + imageURL + ", system=" + system
+				+ ", customerId=" + customerId + "]";
+	}
+    
+    
     /* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		return "ModuleGroup [id=" + id + ", name=" + name + "]";
-	}
+	
 
 }

@@ -73,6 +73,8 @@ public interface ServiceConstants {
 	String REST_QUERY_TYPE = "type";
 	String REST_QUERY_TYPE_MODULE = "module";
 	String REST_QUERY_TYPE_JS = "js";
+	String REST_QUERY_CUSTOMERID = "customerId";
+	String DEFAULT_CUSTOMER_NAME = "photon";
 	
 	 /*
      * Constants for MongoDB Collections

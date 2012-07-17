@@ -72,6 +72,6 @@ function findError(data) {
 	
 	<div class="bottom_button">
 		<input type="button" id="globalurlSave" class="btn btn-primary" onclick="clickSave('globalurlSave', $('#subcontainer'), 'Creating Global URL');" value="<s:text name='lbl.hdr.comp.save'/>"/>
-		<input type="button" id="globalurlCancel" class="btn btn-primary" onclick="loadContent('globalurlCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="globalurlCancel" class="btn btn-primary" onclick="loadContent('globalurlCancel', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 </form>

@@ -200,6 +200,8 @@
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
+	    	params = params.concat("customerId=");
+	    	params = params.concat($("#customerId").val());
 	        performAction('applicationDetails', params, $('#container'));
 	    });
 		

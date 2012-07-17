@@ -20,8 +20,15 @@
 
 package com.photon.phresco.service.rest.api;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -52,9 +59,16 @@ import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.api.Converter;
 import com.photon.phresco.service.api.DbService;
+import com.photon.phresco.service.api.PhrescoServerFactory;
+import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.converters.ConvertersFactory;
 import com.photon.phresco.service.dao.ApplicationTypeDAO;
+import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.util.ServiceConstants;
+import com.sun.jersey.multipart.BodyPart;
+import com.sun.jersey.multipart.BodyPartEntity;
+import com.sun.jersey.multipart.MultiPart;
+import com.sun.jersey.multipart.MultiPartMediaTypes;
 
 @Component
 @Path(ServiceConstants.REST_API_COMPONENT)
@@ -62,9 +76,12 @@ public class ComponentService extends DbService implements ServiceConstants {
 	
 	private static final Logger S_LOGGER= Logger.getLogger(ComponentService.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
+	RepositoryManager repositoryManager;
 	
 	public ComponentService() throws PhrescoException {
 		super();
+		PhrescoServerFactory.initialize();
+		repositoryManager = PhrescoServerFactory.getRepositoryManager();
     }
 	
 	/**
@@ -75,14 +92,16 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_APPTYPES)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findAppTypes() throws PhrescoException {
+	public Response findAppTypes(@QueryParam(REST_QUERY_CUSTOMERID) String customerId) throws PhrescoException {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findAppTypes()");
 	    }
 		
 		List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>();
 		try {
-		    List<ApplicationTypeDAO> appDAOList = mongoOperation.getCollection(APPTYPESDAO_COLLECTION_NAME, ApplicationTypeDAO.class);
+		    List<ApplicationTypeDAO> appDAOList = mongoOperation.find(APPTYPESDAO_COLLECTION_NAME, 
+		            new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(customerId)
+		                    .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ApplicationTypeDAO.class);
 	        Converter<ApplicationTypeDAO, ApplicationType> converter = 
 	            (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);   
 	        for (ApplicationTypeDAO applicationTypeDAO : appDAOList) {
@@ -138,17 +157,17 @@ public class ComponentService extends DbService implements ServiceConstants {
 	        S_LOGGER.debug("Entered into ComponentService.updateAppTypes(List<ApplicationType> appTypes)");
 	    }
 		
-		try {
-			for (ApplicationType appType : appTypes) {
-				ApplicationType applnType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME , 
-				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(appType.getId())), ApplicationType.class);
-				if (applnType != null) {
-					mongoOperation.save(APPTYPES_COLLECTION_NAME, appType);
-				}
-			}
-		} catch (Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
-		}
+	    try {
+            Converter<ApplicationTypeDAO, ApplicationType> converter = 
+                (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);          
+            List<ApplicationTypeDAO> appTypeDAOs = new ArrayList<ApplicationTypeDAO>();
+            for (ApplicationType applicationType : appTypes) {
+                appTypeDAOs.add(converter.convertObjectToDAO(applicationType));
+            }
+            mongoOperation.insertList(APPTYPESDAO_COLLECTION_NAME , appTypeDAOs);
+        } catch (Exception e) {
+            throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
+        }
 		
 		return Response.status(Response.Status.OK).entity(appTypes).build();
 	}
@@ -206,21 +225,22 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces (MediaType.APPLICATION_JSON)
 	@Path (REST_API_APPTYPES + REST_API_PATH_ID)
-	public Response updateAppType(@PathParam(REST_API_PATH_PARAM_ID) String id , ApplicationType appType) {
+	public Response updateAppType(@PathParam(REST_API_PATH_PARAM_ID) String id , ApplicationType appType) throws PhrescoException {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.updateAppType(String id , ApplicationType appType)" + id);
 	    }
 		
 		try {
-			if (id.equals(appType.getId())) {
-				mongoOperation.save(APPTYPES_COLLECTION_NAME, appType);
-				return Response.status(Response.Status.OK).entity(appType).build();
-			}
+		    Converter<ApplicationTypeDAO, ApplicationType> converter = 
+	            (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);          
+	        List<ApplicationTypeDAO> appTypeDAOs = new ArrayList<ApplicationTypeDAO>();
+	        ApplicationTypeDAO appTypeDAO = converter.convertObjectToDAO(appType);
+	        mongoOperation.save(APPTYPESDAO_COLLECTION_NAME, appTypeDAO);
 		} catch (Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00005, UPDATE);
-		}
+            throw new PhrescoWebServiceException(e, EX_PHEX00005, APPTYPES_COLLECTION_NAME);
+        }
 		
-		return Response.status(Response.Status.NO_CONTENT).entity(appType).build();
+		return Response.status(Response.Status.OK).entity(appType).build();
 	}
 	
 	/**
@@ -236,7 +256,10 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(APPTYPES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
+			mongoOperation.remove(APPTYPESDAO_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
+			mongoOperation.remove(ServiceConstants.TECHNOLOGIES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_FIELD_APPID).is(id)), Technology.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -402,7 +425,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(SETTINGS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class);
+			mongoOperation.remove(SETTINGS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -417,7 +441,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_MODULES)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findModules(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_TYPE) String type) {
+	public Response findModules(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_TYPE) String type, 
+	        @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findModules()" + techId + type);
 	    }
@@ -425,20 +450,25 @@ public class ComponentService extends DbService implements ServiceConstants {
 		List<ModuleGroup> foundModules = new ArrayList<ModuleGroup>();
 		try {
 			
-			if (techId != null && type != null && type.equals(REST_QUERY_TYPE_MODULE)) {
-				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE);
+			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_MODULE)) {
+				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
+				.and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)
+                .and(REST_QUERY_CUSTOMERID).is(customerId);
 				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
-			if (techId != null && type != null && type.equals(REST_QUERY_TYPE_JS)) {
-				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS);
+			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_JS)) {
+				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId)
+				    .and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS).and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)
+				    .and(REST_QUERY_CUSTOMERID).is(customerId);
 				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
 			if (techId != null && type != null) {
-				foundModules = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ModuleGroup.class);
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 		} catch(Exception e) {
@@ -583,7 +613,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(MODULES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
+			mongoOperation.remove(MODULES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -658,7 +689,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 		
 		try {
 			for (ProjectInfo pilot : pilots) {
-				ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(pilot.getId())), ProjectInfo.class);
+				ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(pilot.getId())), ProjectInfo.class);
 				if (projectInfo != null) {
 					mongoOperation.save(PILOTS_COLLECTION_NAME, pilot);
 				}
@@ -701,7 +733,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
+			ProjectInfo projectInfo = mongoOperation.findOne(PILOTS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
 			if (projectInfo != null) {
 				return Response.status(Response.Status.OK).entity(projectInfo).build();
 			}
@@ -752,7 +785,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
+			mongoOperation.remove(PILOTS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -767,20 +801,24 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_SERVERS)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findServers(@QueryParam(REST_QUERY_TECHID) String techId) {
+	public Response findServers(@QueryParam(REST_QUERY_TECHID) String techId, 
+	        @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
-	        S_LOGGER.debug("Entered into ComponentService.findServers()" + techId);
+	        S_LOGGER.debug("Entered into ComponentService.findServers()" + techId + customerId);
 	    }
 		
 		List<Server> serverList = new ArrayList<Server>();
 		try {
-			serverList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
 				if (techId != null && !techId.isEmpty()) {
 					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
-					serverList= mongoOperation.find(SERVERS_COLLECTION_NAME, new Query(criteria), Server.class);
+					serverList= mongoOperation.find(SERVERS_COLLECTION_NAME, 
+					        new Query(criteria.and(REST_QUERY_CUSTOMERID).is(customerId)
+					                .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), Server.class);
 					return Response.status(Response.Status.OK).entity(serverList).build();
 				}
-				
+				serverList = mongoOperation.find(SERVERS_COLLECTION_NAME, 
+				        new Query(Criteria.where(REST_QUERY_CUSTOMERID)
+				        .is(DEFAULT_CUSTOMER_NAME)), Server.class);
 			return  Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, SERVERS_COLLECTION_NAME);
@@ -921,7 +959,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(SERVERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
+			mongoOperation.remove(SERVERS_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -936,20 +975,24 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_DATABASES)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findDatabases(@QueryParam(REST_QUERY_TECHID) String techId) {
+	public Response findDatabases(@QueryParam(REST_QUERY_TECHID) String techId, 
+	        @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.deleteServer(String id)" + techId);
 	    }
 		
 		List<Database> databaseList = new ArrayList<Database>();
 		try {
-			databaseList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-				if (techId != null && !techId.isEmpty()) {
-					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
-					databaseList= mongoOperation.find(DATABASES_COLLECTION_NAME, new Query(criteria), Database.class);
-					return Response.status(Response.Status.OK).entity(databaseList).build();
-				}
-			return  Response.status(Response.Status.NO_CONTENT).build();
+			if (techId != null && !techId.isEmpty() && customerId != null) {
+				Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
+				databaseList= mongoOperation.find(DATABASES_COLLECTION_NAME, 
+				        new Query(criteria.and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)
+				                .and(REST_QUERY_CUSTOMERID).is(customerId)), Database.class);
+				return Response.status(Response.Status.OK).entity(databaseList).build();
+			}
+			databaseList = mongoOperation.find(DATABASES_COLLECTION_NAME ,
+			        new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), Database.class);
+			return  Response.status(Response.Status.OK).entity(databaseList).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, DATABASES_COLLECTION_NAME);
 		}
@@ -1105,20 +1148,23 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_WEBSERVICES)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findWebServices(@QueryParam(REST_QUERY_TECHID) String techId) {
+	public Response findWebServices(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findWebServices()" + techId);
 	    }
 		
 		List<WebService> webServiceList = new ArrayList<WebService>();
 		try {
-			webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
-				if (techId != null && !techId.isEmpty()) {
-					Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
-					webServiceList= mongoOperation.find(WEBSERVICES_COLLECTION_NAME, new Query(criteria), WebService.class);
-					return Response.status(Response.Status.OK).entity(webServiceList).build();
-				}
-			return  Response.status(Response.Status.NO_CONTENT).build();
+			if (techId != null && !techId.isEmpty()) {
+				Criteria criteria = Criteria.where(REST_API_FIELD_TECH).in(techId);
+				webServiceList= mongoOperation.find(WEBSERVICES_COLLECTION_NAME, 
+				        new Query(criteria.and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME).
+				                and(REST_QUERY_CUSTOMERID).is(customerId)), WebService.class);
+				return Response.status(Response.Status.OK).entity(webServiceList).build();
+			}
+			webServiceList = mongoOperation.find(WEBSERVICES_COLLECTION_NAME ,
+			        new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), WebService.class);
+			return  Response.status(Response.Status.OK).entity(webServiceList).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, WEBSERVICES_COLLECTION_NAME);
 		}
@@ -1163,7 +1209,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 		
 		try {
 			for (WebService webService : webServices) {
-				WebService webServiceInfo = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(webService.getId())), WebService.class);
+				WebService webServiceInfo = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(webService.getId())), WebService.class);
 				if (webServiceInfo != null) {
 					mongoOperation.save(WEBSERVICES_COLLECTION_NAME , webService);
 				}
@@ -1257,7 +1304,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
+			mongoOperation.remove(WEBSERVICES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
@@ -1292,28 +1340,91 @@ public class ComponentService extends DbService implements ServiceConstants {
 	/**
 	 * Creates the list of technologies
 	 * @param technologies
+	 * @throws IOException 
+	 * @throws PhrescoException 
 	 */
 	@POST
-	@Consumes (MediaType.APPLICATION_JSON)
+	@Consumes (MultiPartMediaTypes.MULTIPART_MIXED)
 	@Path (REST_API_TECHNOLOGIES)
-	public Response createTechnologies(@QueryParam(REST_QUERY_TECHID) String appTypeId, List<Technology> technologies) {
+	public Response createTechnologies(@QueryParam("appId") String appTypeId, 
+	        MultiPart multiPart) throws PhrescoException, IOException {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.createTechnologies(List<Technology> technologies)" + appTypeId);
 	    }
-		
-		try {
-		    for (Technology technology : technologies) {
-                technology.setAppTypeId(appTypeId);
-                mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, technology);
+	    
+	    Map<Technology, List<BodyPart>> map = new HashMap<Technology, List<BodyPart>>(); 
+	    List<BodyPart> techs = new ArrayList<BodyPart>();
+	    List<BodyPart> entities = new ArrayList<BodyPart>();
+	    
+	    List<BodyPart> bodyParts = multiPart.getBodyParts();
+	    for (BodyPart bodyPart : bodyParts) {
+	        if (bodyPart.getMediaType().equals(MediaType.APPLICATION_JSON_TYPE)) {
+	            techs.add(bodyPart);
+	        } else {
+	            entities.add(bodyPart);
+	        }
+        }
+	    
+	    List<BodyPart> foundBodyPart ;
+	     for (BodyPart tech : techs) {
+	        foundBodyPart = new ArrayList<BodyPart>();
+            for (BodyPart bodyPart : entities) {
+                if (tech.getContentDisposition().getType().equals(bodyPart.getContentDisposition().getType())) {
+                    foundBodyPart.add(bodyPart);
+                }
             }
-		} catch (Exception e) {
-			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
-		}
-		
-		return Response.status(Response.Status.OK).build();
+            map.put(tech.getEntityAs(Technology.class), foundBodyPart);
+        } 
+	   
+       Set<Technology> keySet = map.keySet();
+            for (Technology technology : keySet) {
+                technology.setId(appTypeId);
+                List<BodyPart> list = map.get(technology);
+                createBinary (technology, list);
+            }
+	        
+		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
 	}
 	
-	/**
+	private void createBinary(Technology technology, List<BodyPart> list) throws PhrescoException, IOException {
+         mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, technology);
+         
+         FileOutputStream fileOutStream = null;
+         InputStream source = null;
+         File file = null;
+         for (BodyPart bodyPart : list) {
+             BodyPartEntity bpe = (BodyPartEntity) bodyPart.getEntity();
+             try {
+                   source = bpe.getInputStream();
+                   file = new File("C:\\" + technology.getName() + ".jar");
+                   fileOutStream = new FileOutputStream(file);
+                   int i = 0;
+                   while (i != -1) {
+                       i = source.read();
+                       fileOutStream.write(i);
+                   }
+                   source.close();
+             } catch (IOException e) {
+                 throw new PhrescoException();
+             } finally {
+                 if (fileOutStream != null) {
+                     fileOutStream.close();
+                 }
+                 if (source != null) {
+                     source.close();
+                 }
+             }
+             uploadBinary(file, technology);
+             } 
+    }
+
+
+    private void uploadBinary(File file, Technology technology) throws PhrescoException {
+        ArtifactInfo info = new ArtifactInfo(technology.getName(), technology.getName(), "", "jar", "1.0");
+        repositoryManager.addArtifact(info, file);
+    }
+
+    /**
 	 * Updates the list of technologies
 	 * @param technologies
 	 * @return
@@ -1329,7 +1440,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 		
 		try {
 			for (Technology tech : technologies) {
-				Technology techInfo = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME , new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(tech.getId())), Technology.class);
+				Technology techInfo = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(tech.getId())), Technology.class);
 				if (techInfo != null) {
 					mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME , tech);
 				}
@@ -1372,7 +1484,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			Technology technology = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
+			Technology technology = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
 			if (technology != null) {
 				return Response.status(Response.Status.OK).entity(technology).build();
 			} 
@@ -1423,7 +1536,8 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    }
 		
 		try {
-			mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
+			mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}

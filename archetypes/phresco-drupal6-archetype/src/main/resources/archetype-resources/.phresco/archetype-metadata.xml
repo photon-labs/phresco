@@ -129,6 +129,8 @@
 				<include>Login_NewUsers.php</include>
 				<include>UserAll.php</include>
 				<include>phresco-env-config.xml</include>
+				<include>Drupal6Data.xml</include>
+                <include>UserInfo.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false"> 
@@ -191,8 +193,8 @@
 		<fileSet filtered="false"> 
 			<directory>test/unit/src/main/php/phresco/tests</directory> 
 			<includes> 
-				<include>basescreen.php</include>
-			</includes> 
+            <include>**/*</include>
+            </includes>
 		</fileSet>
 		<fileSet filtered="false"> 
 			<directory>test/unit/src/site/doxygen</directory> 
@@ -215,7 +217,9 @@
 		<fileSet filtered="false"> 
 			<directory>test/unit/src/test/php/phresco/tests</directory> 
 			<includes> 
-				<include>Home.php</include>
+				<include>DrupalBaseclass.php</include>
+                <include>Node.php</include>
+                <include>NodeModules.php</include>
 			</includes> 
 		</fileSet>
 	</fileSets>
