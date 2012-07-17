@@ -47,6 +47,7 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.util.TechnologyTypes;
 import com.phresco.pom.exception.PhrescoPomException;
 
 public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
@@ -61,21 +62,21 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 	
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method HTML5DependencyProcessor.process(ProjectInfo info, File path)");
-			S_LOGGER.debug("process() Path=" + path.getPath());
+		S_LOGGER.debug("Entering Method HTML5DependencyProcessor.process(ProjectInfo info, File path)");
+		S_LOGGER.debug("process() Path=" + path.getPath());
+		updatePom(path, info.getTechnology().getModules());
+		if (info.getTechnology().getId().equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
+		    updatePOMWithJsLibs(path, info.getTechnology().getJsLibraries());
+		} else {
+		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
-		super.process(info, path);
 		createSqlFolder(info, path);
 	}
 
-
-	@Override
-	protected void extractModules(File path, List<ModuleGroup> modules)	throws PhrescoException {
+	protected void updatePom(File path, List<ModuleGroup> modules)	throws PhrescoException {
 		if(CollectionUtils.isEmpty(modules)) {
 			return;
 		}
-		super.extractModules(path, modules);
 		try {
 			updatePOMWithModules(path, modules);
 		} catch (JAXBException e) {

@@ -22,18 +22,18 @@
 <archetype-descriptor name="php"> 
 	<fileSets> 
 		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
 			<directory>docs</directory> 
 			<includes> 
 				<include>README.txt</include> 
 				<include>PHTN_Reference_Guide.doc</include> 
 				<include>PHTN_Release_Notes.doc</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>.phresco</directory> 
-			<includes> 
-				<include>archetype-metadata.xml</include> 
-				<include>excludefiles.txt</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
