@@ -554,6 +554,7 @@
         
 		$('#close, #cancel').click(function() {
 			showParentPage();
+			$("#popup_div").empty();
 		});
 		
 		$("#actionBtn").click(function() {
@@ -722,5 +723,6 @@
     
     function cronValidationLoad(params) {
     	popup('cronValidation', params, $('#cronValidation'));
+    	
     }
 </script>
