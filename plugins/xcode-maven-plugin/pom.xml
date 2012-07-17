@@ -2,7 +2,7 @@
     <parent>
         <groupId>com.photon.phresco.plugins</groupId>
         <artifactId>phresco-plugins-root</artifactId>
-        <version>1.2.0.6003-SNAPSHOT</version>
+        <version>1.2.0.7001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent> 
   
