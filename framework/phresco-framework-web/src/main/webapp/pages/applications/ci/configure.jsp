@@ -406,9 +406,11 @@
 						<select id="androidVersion" name="androidVersion" class="xlarge" >
 							<%
 								for (int i=0; i<AndroidConstants.SUPPORTED_SDKS.length; i++) {
+									if (!AndroidConstants.SUPPORTED_SDKS[i].equalsIgnoreCase(FrameworkConstants.ANDROID_LOWER_VER)) {
 							%>
 								<option value="<%= AndroidConstants.SUPPORTED_SDKS[i] %>"><%= AndroidConstants.SUPPORTED_SDKS[i] %></option>
-							<% } %>
+							<%  	}
+								} %>
 						</select>
 					</div>
 				</div>
@@ -470,6 +472,10 @@
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
 						<input type="checkbox" id="proguard" name="proguard" value="false">
 						<span><s:text name="label.progurad"/></span>
+						
+						<input type="checkbox" id="signing" name="signing" value="false">
+						<span class="popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
+															
 				<% } %>
 				</div>
 			</div>

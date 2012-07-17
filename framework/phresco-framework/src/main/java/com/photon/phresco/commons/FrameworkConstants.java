@@ -154,6 +154,7 @@ public interface FrameworkConstants {
     String DEPLOY_SERVERNAME="serverName";
     String DEPLOY_ANDROID_DEVICE_MODE = "android.device";
     String DEPLOY_ANDROID_EMULATOR_AVD = "android.emulator.avd";
+    String ANDROID_LOWER_VER = "2.2";
     String DEVICE_DEPLOY = "device.deploy";
     String UNIT_TEST = "unittest";
     String TRUE = "true";
