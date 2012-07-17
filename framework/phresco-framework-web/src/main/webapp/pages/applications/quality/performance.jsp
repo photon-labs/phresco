@@ -65,7 +65,7 @@
 		%>
 	    <input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
 	    <div class="perOpenAndCopyPath">
-	    	<a href="#" id="pdfPopup" style="display: none;"><img id="pdfCreation" src="images/icons/print_icon.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
+	    	<a href="#" id="pdfPopup" style="display: none;"><img id="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
 			<a href="#" id="openFolder"><img id="folderIcon" src="images/icons/open-folder.png" title="Open folder"/></a>
 			<a href="#" id="copyPath"><img src="images/icons/copy-path.png" title="Copy path"/></a>
 		</div>&nbsp;

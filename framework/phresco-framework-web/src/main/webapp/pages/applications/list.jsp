@@ -141,7 +141,7 @@
 			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
 <!-- 			              		<td> -->
-<%-- 			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_icon.png" title="generate pdf" style="height: 20px; width: 20px;"/></a> --%>
+<%-- 			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a> --%>
 <!-- 			              		</td> -->
 			            	</tr>
 			            <%
