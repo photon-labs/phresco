@@ -1461,7 +1461,7 @@ public class Build extends FrameworkBaseAction {
 			configValues.getAny().addAll(executionConfig);
 			execution.setConfiguration(configValues);
 			List<Element> additionalConfigs = new ArrayList<Element>();
-			processor.setProfile(profileId, false, defaultGoal, plugin, androidProfile, execution, null,
+			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null,
 					additionalConfigs);
 			processor.save();
 			profileCreationStatus = true;
