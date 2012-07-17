@@ -104,6 +104,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	private String sdk = null;
 	private String mode = null;
 	private String androidVersion = null;
+	private String signing = null;
 	
 	private String target = "";
 	private String proguard = null;
@@ -302,6 +303,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				}
 				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
+				if (StringUtils.isNotEmpty(signing)) {
+					actionType.setProfileId(PROFILE_ID);
+				}
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 			} else {
@@ -1012,6 +1016,14 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setDownloadJobName(String downloadJobName) {
 		this.downloadJobName = downloadJobName;
+	}
+
+	public String getSigning() {
+		return signing;
+	}
+
+	public void setSigning(String signing) {
+		this.signing = signing;
 	}
 	
 }
