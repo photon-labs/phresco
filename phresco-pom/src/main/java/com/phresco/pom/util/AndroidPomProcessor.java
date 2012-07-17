@@ -62,7 +62,6 @@ public class AndroidPomProcessor extends PomProcessor {
 	/**
 	 * 
 	 * @param profileId
-	 * @param activationbyDefault
 	 * @param defaultGoal
 	 * @param plugin
 	 * @param androidProfile
@@ -74,7 +73,7 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @throws PhrescoPomException
 	 * @throws ParserConfigurationException
 	 */
-	public void setProfile(String profileId,Boolean activationbyDefault,String defaultGoal, Plugin plugin,
+	public void setProfile(String profileId,String defaultGoal, Plugin plugin,
 			AndroidProfile androidProfile, PluginExecution execution,
 			Element goalElement, List<Element> additionalConfig) throws JAXBException,
 			PhrescoPomException, ParserConfigurationException {
@@ -83,7 +82,6 @@ public class AndroidPomProcessor extends PomProcessor {
 		Plugins plugins = new Plugins();
 		Executions executions = new Executions();
 		Goals goals = new Goals();
-		Activation activation = new Activation();
 		
 		removeProfile(profileId);
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
@@ -109,7 +107,6 @@ public class AndroidPomProcessor extends PomProcessor {
 			base.setDefaultGoal(defaultGoal);
 			base.setFinalName(PomConstants.FINAL_NAME);
 
-			activation.setActiveByDefault(activationbyDefault);
 			plugin.setExecutions(executions);
 			plugin.setGoals(goals);
 			plugin.getGoals().getAny().add(goalElement);
@@ -123,7 +120,7 @@ public class AndroidPomProcessor extends PomProcessor {
 			plugins.getPlugin().add(plugin);
 			base.setPlugins(plugins);
 			
-			addProfile(profileId, activation, base, null);
+			addProfile(profileId, base, null);
 			save();
 			
 		} else {

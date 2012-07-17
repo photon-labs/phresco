@@ -693,7 +693,7 @@ public class PomProcessor {
 	 * @return the profile
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public Profile addProfile(String id,Activation activation,BuildBase build,com.phresco.pom.model.Profile.Modules modules) throws PhrescoPomException {
+	public Profile addProfile(String id,BuildBase build,com.phresco.pom.model.Profile.Modules modules) throws PhrescoPomException {
 		Profiles profiles = model.getProfiles();
 		if(profiles ==null) {
 			profiles = new Profiles();
@@ -709,7 +709,6 @@ public class PomProcessor {
 		}
 		
 		profile.setId(id);		
-		profile.setActivation(activation);
 		profile.setBuild(build);
 		profile.setModules(modules);
 		model.getProfiles().getProfile().add(profile);
