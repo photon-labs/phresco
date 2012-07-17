@@ -27,14 +27,17 @@
 <html>
 	<head>
 		<title>Phresco</title>
+		<link REL="SHORTCUT ICON" HREF="images/favicon.ico">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
 		<link rel="stylesheet" href="" class="changeme" title="phresco">
 		<link rel="stylesheet" href="css/media-queries.css">
 		<link rel="stylesheet" href="css/datepicker.css"> <!-- used for date picker-->
 		<link rel="stylesheet" href="css/jquery.ui.all.css"> <!-- used for date picker -->
+<!-- 		<link rel="stylesheet" href="css/fileuploader.css"> -->
 		
         <script type="text/javascript" src="js/main.js"></script>
 		<!-- basic js -->
@@ -56,6 +59,7 @@
 		
 		<!-- file upload -->
 		<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+<%--         <script type="text/javascript" src="js/fileuploader.js"></script> --%>
 		
 		<!-- date picker -->
 		<script type="text/javascript" src="js/jquery.ui.datepicker.js"></script>
@@ -63,9 +67,9 @@
 
 			
 		<script type="text/javascript">
-		     changeTheme(); 
+		    changeTheme(); 
 		
-			$(document).ready(function() {
+		    $(document).ready(function() {
 				$(".styles").click(function() {
 					localStorage.clear();
 		             var value = $(this).attr("rel");
@@ -90,7 +94,7 @@
 				});
 
 				clickMenu($("a[name='headerMenu']"), $("#container"));
-				loadContent("dashboard", $("#container"));
+				loadContent("dashboard", '', $("#container"));
 				activateMenu($("#dashboard"));
 				showWelcomeImage();
 			});

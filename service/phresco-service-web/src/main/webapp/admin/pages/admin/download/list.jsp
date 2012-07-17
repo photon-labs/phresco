@@ -28,8 +28,8 @@
 
 <form class="customer_list">
 	<div class="operation" id="operation">
-		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" onclick="loadContent('downloadAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.dwndllst.title'/>"/>
-		<input type="button" id="del" class="btn" disabled onclick="loadContent('downloadDelete', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.delete'/>"/>
+		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" onclick="loadContent('downloadAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.dwndllst.title'/>"/>
+		<input type="button" id="del" class="btn" disabled onclick="loadContent('downloadDelete', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.delete'/>"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
@@ -109,6 +109,6 @@
         params = params.concat(id);
         params = params.concat("&fromPage=");
         params = params.concat("edit");
-        loadContent("downloadEdit", $('#subcontainer'), params);
+        loadContent("downloadEdit", '', $('#subcontainer'), params);
     }
 </script>

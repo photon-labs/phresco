@@ -170,7 +170,7 @@
         <% } else { %>
 		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
 		<% } %>
-		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 	
 	<!-- Hidden Fields -->

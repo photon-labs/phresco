@@ -119,6 +119,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         userInfo = response.getEntity(genericType);
     }
     
+    
     public List<VideoInfo> getVideoInfos() throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getVideoInfos()");
@@ -141,12 +142,12 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 		return appTypeClient.get(genericType);
     }
     
-    public List<ApplicationType> getApplicationTypes() throws PhrescoException {
+    public List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getApplicationTypes()");
         }
 
-    	List<ApplicationType> appInfoValues = manager.getAppInfo(userInfo.getLoginId()); 
+    	List<ApplicationType> appInfoValues = manager.getAppInfo(customerId); 
     	try {	
     		if (CollectionUtils.isEmpty(appInfoValues)) {
     			appInfoValues = getApplicationTypesFromServer();
@@ -208,55 +209,52 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	    return clientResponse;
     }
     
-    public List<Server> getServers(String techId) throws PhrescoException {
+    public List<Server> getServers(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClientgetServers(String techId)" + techId);
         }
     	
 		RestClient<Server> serverClient = getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
-		serverClient.queryString(REST_QUERY_TECHID, techId);
+		Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_CUSTOMERID, customerId);
+        serverClient.queryStrings(headers);
 		GenericType<List<Server>> genericType = new GenericType<List<Server>>(){};
 		
 		return serverClient.get(genericType);
 	}
     
-    public List<Database> getDatabases(String techId) throws PhrescoException {
+    public List<Database> getDatabases(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getDatabases(String techId)" + techId);
         }
     	
 		RestClient<Database> dbClient = getRestClient(REST_API_COMPONENT + REST_API_DATABASES);
-		dbClient.queryString(REST_QUERY_TECHID, techId);
+		Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_CUSTOMERID, customerId);
+        dbClient.queryStrings(headers);
 		GenericType<List<Database>> genericType = new GenericType<List<Database>>(){};
 		
 		return dbClient.get(genericType);
 	}
     
-    public List<WebService> getWebServices(String techId) throws PhrescoException {
+    public List<WebService> getWebServices(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getWebServices(String techId)" + techId);
         }
     	
 		RestClient<WebService> webServiceClient = getRestClient(REST_API_COMPONENT + REST_API_WEBSERVICES);
-		webServiceClient.queryString(REST_QUERY_TECHID, techId);
+		Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_CUSTOMERID, customerId);
+		webServiceClient.queryStrings(headers);
 		GenericType<List<WebService>> genericType = new GenericType<List<WebService>>(){};
 		
 		return webServiceClient.get(genericType);
 	}
     
-    public List<ProjectInfo> getPilots(String techId) throws PhrescoException {
-        if (isDebugEnabled) {
-            S_LOGGER.debug("Entered into RestClient.getPilots(String techId)" + techId);
-        }
-    	
-    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
-    	pilotClient.queryString(REST_QUERY_TECHID, techId);
-    	GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
-    	
-    	return pilotClient.get(genericType);
-    }
-    
-    public List<ModuleGroup> getModules(String techId) throws PhrescoException {
+    public List<ModuleGroup> getModules(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getModules(String techId)" + techId);
         }
@@ -264,14 +262,14 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	RestClient<ModuleGroup> moduleGroupClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
     	Map<String, String> headers = new HashMap<String, String>();
     	headers.put(REST_QUERY_TECHID, techId);
-    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+    	headers.put(REST_QUERY_CUSTOMERID, customerId);
     	moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	
     	return moduleGroupClient.get(genericType);
     }
     
-    public List<ModuleGroup> getJSLibs(String techId) throws PhrescoException {
+    public List<ModuleGroup> getJSLibs(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getJSLibs(String techId)" + techId);
         }
@@ -279,7 +277,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	RestClient<ModuleGroup> jsLibClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
     	Map<String, String> headers = new HashMap<String, String>();
     	headers.put(REST_QUERY_TECHID, techId);
-    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_JS);
+    	headers.put(REST_QUERY_CUSTOMERID, customerId);
     	jsLibClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	
@@ -341,8 +339,6 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return customersClient.deleteById();
     }
     
-    // COMPONENTS STARTS HERE
-       //ConfigTemplates
     public List<SettingsTemplate> getSettings() throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getSettings()");
@@ -376,16 +372,19 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return settingsClient.create(settings);
     }
     
-     //Pilot Projects
-    public List<ProjectInfo> getPilotProjects() throws PhrescoException {
-    	if (isDebugEnabled) {
-    		S_LOGGER.debug("Entered into RestClient.getPilotProjects(List<ProjectInfo> proInfo)");
-    	}
-
-    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
-    	GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
-
-    	return pilotClient.get(genericType); 
+    public List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getPilots(String techId)" + techId);
+        }
+        
+        RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put(REST_QUERY_TECHID, techId);
+        headers.put(REST_QUERY_CUSTOMERID, customerId);
+        pilotClient.queryStrings(headers);
+        GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
+        
+        return pilotClient.get(genericType);
     }
     
     public ProjectInfo getPilotProject(String projectId) throws PhrescoException {
@@ -431,12 +430,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         
         return pilotproClient.deleteById();
     }
-    
-   
-    
-    
-    //ADMIN STARTS HERE
-    //Roles
+
     public List<Role> getRoles() throws PhrescoException {
     	  if (isDebugEnabled) {
               S_LOGGER.debug("Entered into RestClient.createroles(List<Roles> role)");
@@ -466,7 +460,6 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	return roleClient.create(role);
     }
     
-    //Downloads
     public List<DownloadInfo> getDownloads() throws PhrescoException {
     	if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getDownloadInfo(List<DownloadInfo> downloadInfo)");

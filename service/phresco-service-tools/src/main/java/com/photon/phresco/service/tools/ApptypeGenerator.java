@@ -158,6 +158,7 @@ public class ApptypeGenerator  implements ServiceConstants {
         web.setId(id);
         web.setName(name);
         web.setSystem(true);
+        web.setCustomerId("photon");
         return web;
     }
 
@@ -167,6 +168,7 @@ public class ApptypeGenerator  implements ServiceConstants {
         technology.setName(name);
         technology.setSystem(true);
         technology.setVersions(Arrays.asList(versions));
+        technology.setCustomerId("photon");
         return technology;
     }
 

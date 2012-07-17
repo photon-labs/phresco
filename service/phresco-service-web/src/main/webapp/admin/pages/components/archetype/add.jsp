@@ -28,6 +28,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		createUploader();
+		
 		// To focus the name textbox by default
 		$('#name').focus();
 
@@ -84,6 +86,15 @@
 		   "<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
 		$("div[id='jar']:last").after(appendTxt);
 	}
+	
+	function createUploader() {
+        var uploader = new qq.FileUploader({
+            element: document.getElementById('file-uploader'),
+            action: 'archetypeSave',
+            debug: true
+        });           
+    }
+    
 </script>
 
 <%
@@ -186,6 +197,14 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="file-uploader">       
+	        <noscript>          
+	            <p>Please enable JavaScript to use file uploader.</p>
+	            <!-- or put a simple form for upload here -->
+	        </noscript>         
+	    </div>
+    
 	</div>
 
 	<div class="bottom_button">

@@ -22,7 +22,6 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.commons.model.User" %>
 
-<%-- <script type="text/javascript" src="js/windowResizer.js"></script> --%>
 <script src="js/reader.js" ></script>
 
 <%
@@ -184,16 +183,6 @@
         })
     });
        
-    function showHeaderImage(key) {
-    	var theme = localStorage["color"]
-    	if(theme == "themes/photon/css/red.css" || theme == null || theme == undefined || theme == "undefined" || theme == "null") {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_red.png");
-        }
-    	else {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
-    	}
-    }
-    
     function disableCreateProject() {
     	disableControl($("#add"), "btn disabled");
     }

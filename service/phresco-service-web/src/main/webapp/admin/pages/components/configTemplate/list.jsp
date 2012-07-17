@@ -22,7 +22,7 @@
 
 <form class="customer_list">
 	<div class="operation">
-		<input type="button" class="btn btn-primary" name="configTemplate_add" id="configtempAdd" onclick="loadContent('configtempAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cnfigtmplte.add'/>"/>
+		<input type="button" class="btn btn-primary" name="configTemplate_add" id="configtempAdd" onclick="loadContent('configtempAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cnfigtmplte.add'/>"/>
 		<input type="button" class="btn" id="del" disabled value="<s:text name='lbl.hdr.comp.delete'/>"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success"  id="successmsg">

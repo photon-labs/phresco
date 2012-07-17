@@ -17,16 +17,35 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>
+
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+
+<%@ page import="com.photon.phresco.commons.model.User"%>
+<%@ page import="com.photon.phresco.commons.model.Customer"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		clickMenu($("a[name='compTab']"), $("#subcontainer"));
-		loadContent("featuresList", $("#subcontainer"));
+		clickMenu($("a[name='compTab']"), $("#subcontainer"), $('#formCustomerId'));
+		loadContent("featuresList", $('#formCustomerId'), $("#subcontainer"));
 		activateMenu($("#features"));
+		
+		$("select[name='customerId']").change(function() {
+			var selectedMenu = $("a[name='compTab'][class='active']").prop("id");
+			loadContent(selectedMenu, $('#formCustomerId'), $("#subcontainer"));
+		});
 	});
 </script>
-	
+
+<%
+    User userInfo = (User) session.getAttribute(ServiceUIConstants.SESSION_USER_INFO);
+    List<Customer> customers = userInfo.getCustomers();
+%>
+
 <nav>
 	<ul class="tabs">
 		<li>
@@ -44,20 +63,25 @@
 		<li>
 			<a href="#" class="inactive" name="compTab" id="pilotprojList"><s:label key="lbl.hdr.comp.pltprjt" theme="simple"/></a>
 		</li>
-			
 	</ul>
-	<div class="control-group customer_name">
-		<s:label key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
-		<div class="controls customer_select_div">
-			<select id="select01" class="customer_listbox">
-				<option>Walgreens</option>
-				<option>NBO</option>
-				<option>Cengage</option>
-				<option>Horizon Blue</option>
-				<option>Photon</option>
-			</select>
+	<form id="formCustomerId" class="form">
+		<div class="control-group customer_name">
+			<s:label key="lbl.hdr.comp.customer" cssClass="control-label custom_label labelbold" theme="simple"/>
+			<div class="controls customer_select_div">
+				<select name="customerId" class="customer_listbox">
+	                <% 
+	                    if (CollectionUtils.isNotEmpty(customers)) { 
+				            for (Customer customer : customers) { 
+				    %>
+	                            <option value="<%= customer.getId() %>"><%= customer.getName() %></option>
+					<% 
+				            }
+				        } 
+				    %>
+				</select>
+			</div>
 		</div>
-	</div>			
+	</form>			
 </nav>			
 
 <section id="subcontainer" class="navTopBorder">

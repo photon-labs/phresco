@@ -24,11 +24,12 @@
 <html>
 	<head>
 		<title>Phresco Admin</title>
+		<link REL="SHORTCUT ICON" HREF="images/favicon.ico">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="theme/photon/css/phresco.css">
-        <link type="text/css" rel="stylesheet"  class="changeme" id="theme">
+        <link type="text/css" rel="stylesheet" class="changeme" id="theme">
 		
 		<!-- basic js -->
 		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
@@ -37,7 +38,7 @@
 		<!-- right panel scroll bar -->
 		<script type="text/javascript" src="js/home.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<%-- 		<script type="text/javascript" src="js/jquery.cookie.js"></script> --%>
 		
 		<!-- commons.js -->
 		<script type="text/javascript" src="js/common.js"></script>

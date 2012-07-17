@@ -451,7 +451,7 @@
 				    onclick="validate('customerSave', $('#subcontainer'), 'Creating Customer');" />
 		<% } %>
 		<input type="button" id="customerCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="loadContent('customerList', $('#subcontainer'));" />
+            onclick="loadContent('customerList', '', $('#subcontainer'));" />
 	</div>
 	
 	<!-- Hidden Fields -->

@@ -90,7 +90,7 @@ function findError(data) {
         <% } else { %>
 		<input type="button" id="pilotprojSave" class="btn btn-primary" onclick="formSubmitFileUpload('pilotprojSave', 'projArc', $('#subcontainer'), 'Creating Pilotproject');" value="<s:text name='lbl.hdr.comp.save'/>"/>
 		<% } %>
-		<input type="button" id="pilotprojCancel" class="btn btn-primary" onclick="loadContent('pilotprojCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="pilotprojCancel" class="btn btn-primary" onclick="loadContent('pilotprojList', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 	
     <!-- Hidden Fields -->
