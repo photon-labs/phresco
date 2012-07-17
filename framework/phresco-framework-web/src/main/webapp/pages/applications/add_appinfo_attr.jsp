@@ -120,7 +120,7 @@
 	
 	<div class="modal-footer">
 		<input type="hidden" id="selectedVersions" value="<%= selectedVersions %>">
-		<input type="hidden" id="projInfoDbVersions" value="<%= projInfoDbVersions %>">
+		<input type="hidden" id="projInfoDbVersions" value="<%= StringUtils.isNotEmpty(projInfoDbVersions) ? projInfoDbVersions : "" %>">
 		
 		<div class="action popup-action">
 			<div id="errMsg"></div>
@@ -239,9 +239,9 @@ $(document).ready(function() {
 			$("#errMsg").html("Select version");
 			return false;
 		} else {
-			if(<%= from.equals("edit") && header.equals("Database") && StringUtils.isNotEmpty(fromPage) %>) {
+			var projInfoDbVersions = $("#projInfoDbVersions").val();
+			if(<%= from.equals("edit") && header.equals("Database") && StringUtils.isNotEmpty(fromPage) %> && !isBlank(projInfoDbVersions)) {
 				var available = true;
-				var projInfoDbVersions = $("#projInfoDbVersions").val();
 				var arrayProjInfoDbVersions = new Array();
 				arrayProjInfoDbVersions = projInfoDbVersions.split(",");
 				for(var i=0; i < arrayProjInfoDbVersions.length; i++) {
@@ -328,7 +328,7 @@ function makeVersionsSelected() {
 				<% 
 					for (String listSelectedVersion : listSelectedVersions) { 
 				%>
-						if ($(this).val() == '<%= listSelectedVersion %>') {
+						if (jQuery.trim($(this).val()) == '<%= listSelectedVersion.trim() %>') {
 							$(this).attr("checked", "checked");	
 						}
 				<% 
@@ -340,7 +340,7 @@ function makeVersionsSelected() {
 				<%
 					for (String listSelectedVersion : listSelectedVersions) { 
 				%>
-						if ($(this).val() == '<%= listSelectedVersion %>') {
+						if (jQuery.trim($(this).val()) == '<%= listSelectedVersion.trim() %>') {
 							$(this).attr("checked", "checked");						
 						}
 				<% 

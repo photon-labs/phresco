@@ -107,9 +107,8 @@
 		<div class="clearfix">
 		    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 		    <div class="input new-input">
-		        <textarea class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" 
-		        name="description" placeholder="<s:text name="label.description.placeholder"/>"><%= selectedInfo == null 
-		        ? "" : selectedInfo.getDescription() %></textarea>
+		        <textarea class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description"
+		        	placeholder="<s:text name="label.description.placeholder"/>"><%= selectedInfo == null ? "" : selectedInfo.getDescription() %></textarea>
 		    </div>
 		</div>
 		<!--  Description Ends -->

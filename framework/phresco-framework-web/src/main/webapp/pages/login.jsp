@@ -38,7 +38,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var key = "color";
-    showWelcomeImage(key);
+	showWelcomeImage(key);
     <%
 		String cmdLogin = (String) request.getAttribute("cmdLogin");
 		if (cmdLogin != null) {

@@ -167,4 +167,8 @@ public interface TechnologyTypes {
 
     String ALL_TECHS = "all";
 
+    /**
+     * All Mobile Technologies
+     */
+    List<String> MOBILES = Arrays.asList(ANDROID_NATIVE, ANDROID_HYBRID, ANDROID_WEB, IPHONE_NATIVE, IPHONE_HYBRID, IPHONE_WEB);
 }
