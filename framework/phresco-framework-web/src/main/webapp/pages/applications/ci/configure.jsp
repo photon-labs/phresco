@@ -58,7 +58,7 @@
 			</div>
 			
         	<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><s:text name="label.name"/></label>
+				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.name"/></label>
 				<div class="input">
 					<input type="text" id="name" name="name" value="<%= existingJob == null ? projectCode : existingJob.getName()%>" disabled autofocus>
 				</div>
@@ -480,6 +480,7 @@
 		$("#preBtn").hide();
 		
 		$("#nextBtn").click(function() {
+			var name= $("#name").val();
 			var svnurl= $("#svnurl").val();
 			var username= $("#username").val();
 			var password= $("#password").val();
@@ -487,6 +488,13 @@
 				$("#errMsg").html("Enter SVN URL");
 				$("#svnurl").focus();
 				$("#svnurl").val("");
+				return false;
+			}
+			
+			if(name == ""){
+				$("#errMsg").html("Enter the Name");
+				$("#name").focus();
+				$("#name").val("");
 				return false;
 			}
 			
