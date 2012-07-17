@@ -73,14 +73,19 @@ public class PhrescoReportService implements ServerConstants {
 		siteReport.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,allReports);
 		siteReport.put(TechnologyTypes.HTML5_WIDGET,allReports);
 				
+		List<Reports> infoandSurefireReports = new ArrayList<Reports>();
+		infoandSurefireReports.add(Reports.PROJECT_INFO);
+		infoandSurefireReports.add(Reports.SUREFIRE_REPORT);
+		siteReport.put(TechnologyTypes.PHP, infoandSurefireReports);
+		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoandSurefireReports);
+		siteReport.put(TechnologyTypes.PHP_DRUPAL6, infoandSurefireReports);
+		siteReport.put(TechnologyTypes.NODE_JS_WEBSERVICE, infoandSurefireReports);
+		siteReport.put(TechnologyTypes.SHAREPOINT, infoandSurefireReports);
+		siteReport.put(TechnologyTypes.WORDPRESS, infoandSurefireReports);
+		
+		
 		List<Reports> infoReports = new ArrayList<Reports>();
 		infoReports.add(Reports.PROJECT_INFO);
-		siteReport.put(TechnologyTypes.PHP, infoReports);
-		siteReport.put(TechnologyTypes.PHP_DRUPAL7, infoReports);
-		siteReport.put(TechnologyTypes.PHP_DRUPAL6, infoReports);
-		siteReport.put(TechnologyTypes.NODE_JS_WEBSERVICE, infoReports);
-		siteReport.put(TechnologyTypes.SHAREPOINT, infoReports);
-		siteReport.put(TechnologyTypes.WORDPRESS, infoReports);
 		siteReport.put(TechnologyTypes.IPHONE_NATIVE, infoReports);
 		siteReport.put(TechnologyTypes.IPHONE_HYBRID, infoReports);
 	}

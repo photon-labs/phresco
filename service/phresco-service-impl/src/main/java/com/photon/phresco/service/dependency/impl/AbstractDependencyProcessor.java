@@ -70,7 +70,6 @@ import com.photon.phresco.util.Constants;
 public abstract class AbstractDependencyProcessor implements DependencyProcessor {
 
 	private static final Logger S_LOGGER = Logger.getLogger(AbstractDependencyProcessor.class);
-	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 
 	private RepositoryManager repoManager = null;
@@ -93,9 +92,8 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @throws PhrescoException
 	 */
 	protected void extractModules(File path, List<ModuleGroup> modules) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
-		}
+
+		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
 		if (CollectionUtils.isEmpty(modules)) {
 			return;
 		}
@@ -112,10 +110,8 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @throws PhrescoException
 	 */
 	protected void extractModule(File path, ModuleGroup module) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
-			S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
-		}
+		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
+		S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
 		// Module module = repoManager.getModule(tupleBean.getId());
 
 		// TODO:Handle all versions
@@ -146,11 +142,9 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)");
-			S_LOGGER.debug("process() FilePath=" + path.getPath());
-			S_LOGGER.debug("process() ProjectCode=" + info.getCode());
-		}
+		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)");
+		S_LOGGER.debug("process() FilePath=" + path.getPath());
+		S_LOGGER.debug("process() ProjectCode=" + info.getCode());
 
 		File modulesPath = path;
 		String modulePathKey = getModulePathKey();
@@ -187,9 +181,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	protected void updatePOMWithModules(File path, List<com.photon.phresco.model.ModuleGroup> modules)
 	throws PhrescoException, JAXBException, PhrescoPomException {
 		try {
-			if (isDebugEnabled) {
-				S_LOGGER.debug("extractModules() path=" + path.getPath());
-			}
+			S_LOGGER.debug("extractModules() path=" + path.getPath());
 			File pomFile = new File(path, "pom.xml");
 			if (pomFile.exists()) {
 				PomProcessor processor = new PomProcessor(pomFile);
@@ -208,9 +200,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	
 	protected void updatePOMWithJsLibs(File path, List<com.photon.phresco.model.ModuleGroup> jsLibs) throws PhrescoException{
         try {
-            if (isDebugEnabled) {
-                S_LOGGER.debug("extractModules() path=" + path.getPath());
-            }
+        	S_LOGGER.debug("extractModules() path=" + path.getPath());
             File pomFile = new File(path, "pom.xml");
             if (pomFile.exists()) {
                 PomProcessor processor = new PomProcessor(pomFile);

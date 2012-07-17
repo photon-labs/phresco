@@ -96,11 +96,10 @@ public class ProjectUtils implements Constants {
 			}
 			if(projectInfojsLibraries != null && !projectInfojsLibraries.isEmpty() && selectedInfojsLibraries != null) {
 			    selectedInfojsLibraries.addAll(projectInfojsLibraries); 
-			    info.getTechnology().setModules(selectedInfojsLibraries);
+			    info.getTechnology().setJsLibraries(selectedInfojsLibraries);
             }else if (projectInfojsLibraries != null) {
-				info.getTechnology().setModules(ProjectInfomodules);
+				info.getTechnology().setJsLibraries(projectInfojsLibraries);
 			}
-			
 			String infoJSON = gson.toJson(info);
 			fstream = new FileWriter(phrescoFolder.getPath());
 			out = new BufferedWriter(fstream);
