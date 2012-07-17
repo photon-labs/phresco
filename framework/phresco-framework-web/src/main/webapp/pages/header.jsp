@@ -175,9 +175,6 @@
         $("#forum").click(function(){
         	$(".loadingIcon").show();
         	getCurrentCSS();
-        	$("iframe").attr({
-                src: $("iframe").attr("src")
-            });
         })
     });
        
