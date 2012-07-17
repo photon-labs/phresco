@@ -264,6 +264,8 @@
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
     }
+    
+    
 	
     // To remove empty space between the characters
  	function removeSpace(name) {
