@@ -101,7 +101,7 @@
                                                                                           if(reportCategory.getName().equals("index")){
                                                                                               indexCheck = "checked";
                                                                                           }
-                                                                                          if (CollectionUtils.isNotEmpty(selectedReports)) {
+                                                                                          if (CollectionUtils.isNotEmpty(selectedReportCategories)) {
                                                                                               for (ReportCategories selectedReportCategory : selectedReportCategories) {
                                                                                                   if(reportCategory.getName().equals(selectedReportCategory.getName())) {
                                                                                                       categoryChk = "checked";

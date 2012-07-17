@@ -38,6 +38,7 @@ public interface FrameworkConstants {
     String CONFIGURATION_INFO_FILE_NAME = "phresco-env-config.xml";
     String BUILD_INFO_FILE_NAME = "build.info";
     String PROJECT_INFO = "project.info";
+    String SAFARI_WARNING_MSG = "Safari browser is only supported for SeleniumRC";
     
     String DO_NOT_CHECKIN_DIR = "do_not_checkin";
     String BUILD_DIR = DO_NOT_CHECKIN_DIR + File.separator + "build";

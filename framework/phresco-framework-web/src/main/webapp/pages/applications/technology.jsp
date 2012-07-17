@@ -914,10 +914,8 @@
 	function hideServerAndDatabase(technology) {
 		if(technology == "tech-java-standalone") {
 			$("#server").hide();
-			$("#database").hide();
 		} else {
 			$("#server").show();
-			$("#database").show();
 		}
-	} 
+	}  
 </script>

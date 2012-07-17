@@ -274,7 +274,7 @@
 							<% } %>
 							<% if (from.equals("generateBuild")) { %>
 								<input type="checkbox" id="skipTest" name="skipTest" value="true">
-								<span class="textarea_span popup-span"><s:text name="label.skiptest"/></span>
+								<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 							<% } %>
 							<% if (from.equals("generateBuild") || from.equals(FrameworkConstants.DEPLOY)) { %>
 								<input type="checkbox" id="showError" name="showError" value="true">
@@ -453,6 +453,18 @@
 			var userBuildName = $(this).val();
 			userBuildName = checkForSplChr(userBuildName);
         	$(this).val(userBuildName);
+		});
+		
+		$('#mainClassName').bind('input propertychange', function (e) { 	//mainClassName validation for JavaStandAlone Projects
+			var mainClassName = $(this).val();
+			mainClassName = checkForClassName(mainClassName);
+        	$(this).val(mainClassName);
+		});
+		
+		$('#jarName').bind('input propertychange', function (e) { 	//jarName validation for JavaStandAlone Projects
+			var jarName = $(this).val();
+			jarName = checkForJarName(jarName);
+        	$(this).val(jarName);
 		});
 		
 		$('#deploy').click(function() {

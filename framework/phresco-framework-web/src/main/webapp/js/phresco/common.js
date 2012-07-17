@@ -264,6 +264,16 @@
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
     }
+    
+    function checkForClassName(mainClassName) {
+    	mainClassName = mainClassName.replace(/[^a-zA-Z 0-9\.\_]+/g, '');
+    	return mainClassName;
+    }
+    
+    function checkForJarName(jarName) {
+    	jarName = jarName.replace(/[^a-zA-Z\_]+/g, '');
+    	return jarName;
+    }
 	
     // To remove empty space between the characters
  	function removeSpace(name) {

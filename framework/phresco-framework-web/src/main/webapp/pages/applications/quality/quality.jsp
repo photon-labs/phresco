@@ -56,17 +56,17 @@
 <div id="subTabcontent">
 	<div id="navigation">
 		<ul>
-			<li><a href="#" class="unselected" name="quality" title="unit"><s:text name="label.unit"/></a></li>
-			<li><a href="#" class="unselected" name="quality" title="functional"><s:text name="label.funtional"/></a></li>
+			<li><a href="#" class="unselected" name="quality" id="unit"><s:text name="label.unit"/></a></li>
+			<li><a href="#" class="unselected" name="quality" id="functional"><s:text name="label.funtional"/></a></li>
 			<%
 				if (!TechnologyTypes.IPHONES.contains(selectedInfo.getTechnology().getId())) {
 			%>
-					<li><a href="#" class="unselected" name="quality" title="performance"><s:text name="label.performance"/></a></li>
+					<li><a href="#" class="unselected" name="quality" id="performance"><s:text name="label.performance"/></a></li>
 			<%
 				}
 				if (!(TechnologyTypes.ANDROIDS.contains(selectedInfo.getTechnology().getId()) || TechnologyTypes.IPHONES.contains(selectedInfo.getTechnology().getId()))) {
 			%>
-					<li><a href="#" class="unselected" name="quality" title="load"><s:text name="label.load"/></a></li>
+					<li><a href="#" class="unselected" name="quality" id="load"><s:text name="label.load"/></a></li>
 			<%
 				}
 			%>
@@ -86,9 +86,9 @@
 		
 		if(testType == "null"){
 			testType = "unit";
-			$("a[title='unit']").attr("class", "selected");	
+			$("a[id='unit']").attr("class", "selected");	
 		} else {
-			$("a[title='" + testType + "']").attr("class", "selected");
+			$("a[id='" + testType + "']").attr("class", "selected");
 		}		
 
 		changeTesting(testType);
@@ -96,7 +96,7 @@
 		$("a[name='quality']").click(function() {
 			$("a[name='quality']").attr("class", "unselected");
 			$(this).attr("class", "selected");
-			var testingType = $(this).attr("title");
+			var testingType = $(this).attr("id");
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
 			changeTesting(testingType);

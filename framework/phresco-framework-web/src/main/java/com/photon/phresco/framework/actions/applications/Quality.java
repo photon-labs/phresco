@@ -1085,7 +1085,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             	if ("WebService".equals(jmeterTestAgainst)) {
             		jmeterTestAgainst = "webservices";
             	}
-	            builder.append(jmeterTestAgainst);
+	            builder.append(jmeterTestAgainst.toLowerCase());
 	            QualityUtil.changeTestName(builder.toString(), testName);
 	            QualityUtil.adaptTestConfig(builder.toString(), selectedSettings);
 	            if (!Constants.SETTINGS_TEMPLATE_DB.equals(jmeterTestAgainst)) {
