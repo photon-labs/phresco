@@ -171,7 +171,7 @@ public class Code extends FrameworkBaseAction {
 	        	sb.append(COLON);
 	        	sb.append(artifactId);
 	        	
-	        	if (StringUtils.isNotEmpty(report)) {
+	        	if (StringUtils.isNotEmpty(report) && !SOURCE_DIR.equals(report)) {
 	        		sb.append(COLON);
 	        		sb.append(report);
 	        	}
