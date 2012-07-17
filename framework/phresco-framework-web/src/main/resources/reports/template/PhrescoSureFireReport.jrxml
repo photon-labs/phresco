@@ -16,69 +16,89 @@
 	<parameter name="testType" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="projectCode" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="reportsDataType" class="java.lang.String"/>
+	<parameter name="projectName" class="java.lang.String"/>
+	<parameter name="techName" class="java.lang.String"/>
 	<field name="testSuites" class="java.util.List"/>
 	<field name="allTestSuites" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="134" splitType="Stretch">
+		<band height="133" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="69" backcolor="#E81A1A"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="129" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+				<rectangle radius="10">
+					<reportElement x="2" y="6" width="553" height="123" backcolor="#E81A1A"/>
+				</rectangle>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="396" y="105" width="144" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
 				<staticText>
-					<reportElement style="Title" x="18" y="0" width="208" height="36"/>
+					<reportElement x="20" y="76" width="94" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Project Name :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="115" y="76" width="158" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Title" x="20" y="6" width="208" height="36"/>
 					<textElement>
 						<font size="30" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Photon Phresco]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="SubTitle" x="226" y="36" width="156" height="21"/>
+					<reportElement style="SubTitle" x="228" y="42" width="156" height="21"/>
 					<textElement>
 						<font size="16" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Accelerating Innovation]]></text>
 				</staticText>
-			</frame>
-			<frame>
-				<reportElement mode="Opaque" x="0" y="69" width="555" height="65" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
-				<rectangle radius="10">
-					<reportElement x="0" y="3" width="553" height="55"/>
-				</rectangle>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="398" y="6" width="144" height="20" forecolor="#000000"/>
-					<textElement textAlignment="Right">
-						<font size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement x="18" y="6" width="86" height="20" forecolor="#000000"/>
+					<reportElement x="20" y="105" width="94" height="20" forecolor="#FFFFFF"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Test Report ]]></text>
+					<text><![CDATA[Project Code  :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="314" y="105" width="81" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date            :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="314" y="76" width="81" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Technology :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="115" y="6" width="100" height="20" forecolor="#000000"/>
+					<reportElement x="115" y="105" width="158" height="20" forecolor="#FFFFFF"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{testType}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="18" y="35" width="86" height="20"/>
-					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Project Name ]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="115" y="35" width="111" height="20"/>
-					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{projectCode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="396" y="76" width="144" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{techName}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

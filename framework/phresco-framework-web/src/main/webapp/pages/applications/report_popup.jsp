@@ -12,7 +12,8 @@
 <%
    	String projectCode = (String)request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
 	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
-	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);;
+	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);
+	String reportGenerationStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_STATUS);
 %>
 
 <style>
@@ -44,6 +45,9 @@
 				                	<div class="pdfth-inner">Existing Reports</div>
 				              	</th>
 				              	<th class="second validate_tblHdr">
+				                	<div class="pdfth-inner">Type</div>
+				              	</th>
+				              	<th class="second validate_tblHdr">
 				                	<div class="pdfth-inner">Download</div>
 				              	</th>
 				            </tr>
@@ -52,21 +56,40 @@
 			          	<tbody>
 			          		<% 
 			          			for(String reportFile : reportFiles) { 
+			          				String type = "";
 			          		%>
 			            	<tr>
 			              		<td>
-			              		<div class = "validateMsg" style="color: #000000;">
-			              			<%= reportFile %>
+			              			<div class ="pdfName" style="color: #000000;">
+				              			<%	
+			              					String[] reportType = reportFile.split(FrameworkConstants.UNDERSCORE);
+			              					type = reportType[0];
+				              			%>
+				              			<%= reportType[1] %>
 			              			</div>
 			              		</td>
 			              		<td>
-			              			<div class = "validateStatus" style="color: #000000;">
-<!-- 			              				<img src="images/icons/download.png" title="Download"> -->
+			              			<div style="color: #000000;">
+				              			<%
+				              				if ("crisp".equals(type)) {
+				              					type = FrameworkConstants.MSG_REPORT_OVERALL;
+				              			%>
+				              				<%= type %>
+				              			<%
+				              				} else {
+				              					type = FrameworkConstants.MSG_REPORT_DETAIL;
+				              			%>
+				              				<%= type %>
+				              			<% } %>
+			              			</div>
+			              		</td>
+			              		<td>
+			              			<div class="pdfType" style="color: #000000;">
 				              			<a href="<s:url action='downloadReport'>
-						          		     <s:param name="reportFileName"><%= reportFile %></s:param>
-						          		     <s:param name="projectCode"><%= projectCode %></s:param>
-						          		     <s:param name="testType"><%= testType %></s:param>
-						          		     </s:url>">
+				              				<s:param name="testType"><%= testType == null ? "" : testType %></s:param>
+				              				<s:param name="projectCode"><%= projectCode %></s:param>
+						          		    <s:param name="reportFileName"><%= reportFile %></s:param>
+						          		    </s:url>">
 						          		     <img src="images/icons/download.png" title="<%= reportFile %>.pdf"/>
 			                            </a>
 					   				</div>
@@ -83,34 +106,23 @@
 				<center><label Class="errorMsgLabel"><s:text name="label.report.unavailable"/></label></center>
 			</div>
     	<% } %>
-		<!-- Report Name -->
-<!-- 		<div class="clearfix server"> -->
-<!-- 			<label for="xlInput" class="xlInput popup-label">Report Name</label> -->
-<!-- 			<div class="input"> -->
-<%-- 				<input type="text" name="reportName" id="reportName" maxlength="30" title="30 Characters only"  value="<%= projectCode%>"> --%>
-<!-- 			</div> -->
-<!-- 		</div> -->
-		
-		<!--  Report Location -->
-<!-- 		<div class="clearfix database"> -->
-<!-- 			<label for="xlInput" class="xlInput popup-label">Disk Location</label> -->
-<!-- 			<div class="input"> -->
-<!-- 				<input type="text" name="reoportLocation" id="reoportLocation" title="Report location"  value=""> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 	</div>
 	
 	<div class="modal-footer">
-		<div class="action popup-action" style="text-align: center;">
-			<div id="errMsg"></div>
-			
-            <input type="radio" name="reportDataType" value="crisp" checked>
-            <span class="textarea_span popup-span"><s:text name="label.report.overall"/></span>
-            <input type="radio" name="reportDataType" value="detail">
-            <span class="textarea_span popup-span"><s:text name="label.report.detail"/></span>
-            
-			<input type="button" class="btn primary" value="Cancel" id="cancel">
-			<input type="button" id="generateReport" class="btn primary" value="Generate">
+		<div class="action popup-action" style="">
+			<div style="float: left;">
+				<img class="popupLoadingIcon" style="position: relative;">
+				<div id="errMsg"></div>
+			</div>
+			<div style="float: right;">
+	            <input type="radio" name="reportDataType" value="crisp" checked>
+	            <span class="textarea_span popup-span"><s:text name="label.report.overall"/></span>
+	            <input type="radio" name="reportDataType" value="detail">
+	            <span class="textarea_span popup-span"><s:text name="label.report.detail"/></span>
+	            
+				<input type="button" class="btn primary" value="Close" id="cancel">
+				<input type="button" id="generateReport" class="btn primary" value="Generate">
+			</div>
 		</div>
 	</div>
 </div>
@@ -130,26 +142,36 @@
 		
 		// Node js run against source
 		$('#generateReport').click(function() {
-			showParentPage();			
+			$('.popupLoadingIcon').show();
+			getCurrentCSS();
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
 	    	<%
-				if (StringUtils.isEmpty(testType)) {
+				if (StringUtils.isEmpty(testType) && !"performance".equals(testType)) {
 			%>
 	 	    	params = params.concat("&projectCode=");
 		    	params = params.concat('<%= projectCode %>');
 			<%
-				} else {    	
-	    	%>
+				} else if(!"performance".equals(testType)) {
+				
+			%>
 	 	    	params = params.concat("&testType=");
 		    	params = params.concat('<%= testType %>');
-	    	<%
-				}
+			<%
+				}  	
 	    	%>
-            performAction('printAsPdf', params, '', '');
+            performAction('printAsPdf', params, $('#popup_div'), '');
 		});
+		
+		<%
+			if (StringUtils.isNotEmpty(reportGenerationStat)) {
+		%>
+			showHidePopupMsg($("#errMsg"), '<%= reportGenerationStat %>');
+		<%
+			}
+		%>
 	});
 	
 </script>

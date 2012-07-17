@@ -1974,15 +1974,20 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             File pdfFileDir = new File(pdfDirLoc);
             if(pdfFileDir.isDirectory()) {
                 File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
+                QualityUtil util = new QualityUtil();
+                if(children != null) {
+                	util.sortResultFile(children);
+                }
             	for (File child : children) {
-    				pdfFiles.add(child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, ""));
+            		String fileNameWithType = child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, "");
+            		String[] fileWithType = fileNameWithType.split(UNDERSCORE);
+    				pdfFiles.add(fileWithType[0] + UNDERSCORE + fileWithType[1]);
     			}
             }
             
             if(pdfFiles != null) {
                 getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
             }
-			//read all pdf files from dir
         } catch (Exception e) {
             S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
         }
@@ -1991,19 +1996,19 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         return SUCCESS;
     }
     
-    public void printAsPdf () {
+    public String printAsPdf () {
         S_LOGGER.debug("Entering Method Quality.printAsPdf()");
         try {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
             reportGeneration(project, testType);
+            getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(SUCCESS_REPORT_STATUS));
         } catch (Exception e) {
+        	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
             S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
         }
-        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
-        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
-//        return SUCCESS;
+        return printAsPdfPopup();
     }
     
     public void reportGeneration(Project project, String testType) {
@@ -2025,11 +2030,16 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         S_LOGGER.debug("Entering Method Quality.downloadReport()");
         try {
         	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
-            String pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	String pdfLOC = "";
+        	if (StringUtils.isEmpty(testType)) { 
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportFileName + DOT + PDF;
+        	} else {
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	}
             File pdfFile = new File(pdfLOC);
             if (pdfFile.isFile()) {
     			fileInputStream = new FileInputStream(pdfFile);
-    			fileName = reportFileName;
+    			fileName = reportFileName.split(UNDERSCORE)[1];
             }
         } catch (Exception e) {
             S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
