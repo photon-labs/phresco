@@ -16,26 +16,26 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   ###
-  -->
-<environment>
-			<Browser>googlechrome</Browser>
+  --><environment>
+			<Browser>firefox</Browser>
 			
 			<selenium>
 				<selenium.host>localhost</selenium.host>
 				<selenium.port>4444</selenium.port>
 				<speed>300</speed>
 			</selenium>
-			<CapturedString>
-				<stringCapturehelloworldUrl>Hello World</stringCapturehelloworldUrl>
-			</CapturedString>
-<Server appliesTo="" desc="" name="server">
-        <context>nodenone</context>
+			
+
+<Server appliesTo="tech-nodejs-webservice" desc="" name="server">
+        <context>eshophw</context>
+        <deploy_dir/>
         <admin_username/>
-        <deploy_dir>c</deploy_dir>
-        <port>8000</port>
+        <additional_context>/</additional_context>
+        <port>3030</port>
         <admin_password/>
-        <version>7.0.x</version>
-        <type>Apache Tomcat</type>
+        <version>0.6.x</version>
+        <type>NodeJS</type>
+        <remoteDeployment>false</remoteDeployment>
         <protocol>http</protocol>
         <host>localhost</host>
     </Server>

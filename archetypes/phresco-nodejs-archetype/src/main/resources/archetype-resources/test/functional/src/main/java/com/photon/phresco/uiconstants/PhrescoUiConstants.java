@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-nodejs-archetype
- * 
+ * PHR_NodeJSWebService
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -26,15 +26,16 @@ public class PhrescoUiConstants {
 	
 	private ReadXMLFile readXml;
 
-	public String PROTOCOL = "protocol";
-	public String CONTEXT = "context";
+
+	public String BROWSER = "Browser";
     public String HOST = "host";
 	public String PORT = "port";
+	public String PROTOCOL = "protocol";
+	public String CONTEXT = "context";
 	public String SELENIUM_HOST = "selenium.host";
 	public String SERVER_PORT = "selenium.port";
-	public String BROWSER = "Browser";
 	public String SPEED = "speed";
-	public String ELEMENT = "stringCapturehelloworldUrl";
+	
 
 	
 
@@ -59,7 +60,7 @@ public class PhrescoUiConstants {
 					if (localObject instanceof String)
 						localField
 								.set(this, readXml.getValue((String) localObject));
-
+					//System.out.println("*********Reading Data from UIConstants**********");
 				}
 			} catch (Exception localException) {
 				throw new RuntimeException("Loading "
