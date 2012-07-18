@@ -25,7 +25,6 @@
 	String sonarPath = "";
 	
 	if(error != null) {
-		System.out.println("error " + error);
 %>
         <div class="alert-message block-message warning" >
 			<center><label Class="errorMsgLabel"><%= error %></label></center>
