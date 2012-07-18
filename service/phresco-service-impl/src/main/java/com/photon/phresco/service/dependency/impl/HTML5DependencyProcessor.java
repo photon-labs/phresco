@@ -53,8 +53,6 @@ import com.phresco.pom.exception.PhrescoPomException;
 public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 	
 	private static final Logger S_LOGGER = Logger.getLogger(HTML5DependencyProcessor.class);
-	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
-
 
 	public HTML5DependencyProcessor(RepositoryManager repoManager) {
 		super(repoManager);
@@ -71,6 +69,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
 		createSqlFolder(info, path);
+		extractPilots(info, path, info.getTechnology());
 	}
 
 	protected void updatePom(File path, List<ModuleGroup> modules)	throws PhrescoException {
@@ -84,6 +83,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		} catch (PhrescoPomException e) {
 			throw new PhrescoException(e);
 		}
+		
 	}
 	
 	@Override

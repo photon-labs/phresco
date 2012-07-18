@@ -270,6 +270,7 @@ public class Technology extends Element implements Cloneable, Serializable {
 		if (webservices != null && !webservices.isEmpty()) {
 			tech.setWebservices((List<WebService>) ((ArrayList<WebService>) this.webservices).clone());
 		}
+		tech.setEmailSupported(emailSupported);
     	return tech;
     }
 

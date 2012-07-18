@@ -244,7 +244,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			excludeModule(delta);
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
-		updateDocument(projectInfo, path);
+		updateDocument(delta, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject(projectInfo,userInfo);
 		 if(response.getStatus() == 401){
 			 throw new PhrescoException("Session Expired ! Please Relogin.");
@@ -262,7 +262,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
