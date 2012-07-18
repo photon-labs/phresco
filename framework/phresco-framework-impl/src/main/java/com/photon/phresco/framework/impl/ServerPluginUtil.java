@@ -243,7 +243,7 @@ public class ServerPluginUtil {
 	public void deletePluginFromPom(File path) throws PhrescoException {
 		try {
 			PomProcessor pomprocessor = new PomProcessor(path);
-			pomprocessor.deletePlugin("org.codehaus.mojo", "tomcat-maven-plugin");
+		//  pomprocessor.deletePlugin("org.codehaus.mojo", "tomcat-maven-plugin");
 			pomprocessor.deletePlugin("org.codehaus.cargo", "cargo-maven2-plugin");
 			pomprocessor.deletePlugin("com.oracle.weblogic", "weblogic-maven-plugin");
 			pomprocessor.save();
