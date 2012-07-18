@@ -190,7 +190,7 @@
 		$("#home").attr("class", "inactive");
 		
 		$('#deleteButton').click(function() {
-			$("#confirmationText").html("Do you want to delete the selected project(s)");
+			$("#confirmationText").html("Do you want to delete the selected project(s)?");
 		    dialog('block');
 		    escBlockPopup();
 		});
