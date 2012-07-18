@@ -111,7 +111,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
     	var key = "color";
-    	showHeaderImage(key);
+    	showWelcomeImage(key);
 		
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
@@ -169,7 +169,7 @@
 		
 		// to show user info on mouse over
         $('#signOut li').mouseenter(function(){
-        	localStorage.clear();  
+        	
          	$("div li.usersettings div").hide(0);
          	$(this).children("div li.usersettings div").show(0);
      	}).mouseleave(function(){
