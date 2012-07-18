@@ -116,6 +116,7 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
             }
             extractJsLibraries(path, info.getTechnology().getJsLibraries());
             createSqlFolder(info, path);
+            updateTestPom(path);
         } catch (IOException e) {
             throw new PhrescoException(e);
         } finally {

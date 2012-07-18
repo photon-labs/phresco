@@ -64,6 +64,7 @@ public class NodeJsWebservicesDependencyProcessor extends DefaultDependencyProce
 			S_LOGGER.debug("process() Path=" + path.getPath());
 		}
 		createSqlFolder(info, path);
+		updateTestPom(path);
 	}
 
 }

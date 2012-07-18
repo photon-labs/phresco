@@ -78,5 +78,6 @@ public class Drupal7DependencyProcessor  extends AbstractJsLibDependencyProcesso
 		}
 		super.process(info, path);
 		createSqlFolder(info, path);
+		updateTestPom(path);
 	}
 }

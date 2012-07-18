@@ -118,6 +118,7 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 		if (technology.getId().equals(TechnologyTypes.ANDROID_HYBRID)) {
 			extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
+		updateTestPom(path);
 	}
 
 	private void updatePOMModules(File path, List<com.photon.phresco.model.ModuleGroup> modules)
