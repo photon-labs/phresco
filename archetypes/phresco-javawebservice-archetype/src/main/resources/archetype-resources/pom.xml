@@ -106,25 +106,18 @@
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-				<groupId>com.googlecode.t7mp</groupId>
-				<artifactId>maven-t7-plugin</artifactId>
-				<version>0.9.9</version>
-					<configuration>
-							<tomcatHttpPort>${server.port}</tomcatHttpPort>
-							<tomcatShutdownPort>${server.shutdown.port}</tomcatShutdownPort>
-							<tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
-							<tomcatVersion>7.0.6</tomcatVersion>
-							<tomcatSetAwait>true</tomcatSetAwait>
-							<webapps>
-								<webappArtifact>							  
-								   <groupId>${project.groupId}</groupId>
-								   <artifactId>${project.artifactId}</artifactId>
-								   <version>${project.version}</version>
-								   <contextPath>${project.build.finalName}</contextPath>
-								</webappArtifact>
-							</webapps>
-					</configuration>
-			</plugin>
+				<groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+					<port>${server.port}</port>
+                    <username xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.username}</username>
+                    <password xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.password}</password>
+                    <url xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">http://${server.host}:${server.port}/manager/html</url>
+                    <path xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">/${project.build.finalName}</path>
+                    <argLine xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">-Xmx512m</argLine>
+                </configuration>
+            </plugin>
 		</plugins>
     </build>
 	<profiles>
