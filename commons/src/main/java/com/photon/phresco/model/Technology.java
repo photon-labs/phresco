@@ -183,6 +183,8 @@ public class Technology implements Cloneable, Serializable {
         builder.append(getDatabases());
         builder.append(", getWebservices()=");
         builder.append(getWebservices());
+        builder.append(", emailSupported()=");
+        builder.append(isEmailSupported());
         builder.append("]");
         return builder.toString();
     }
@@ -213,6 +215,8 @@ public class Technology implements Cloneable, Serializable {
 		if (webservices != null && !webservices.isEmpty()) {
 			tech.setWebservices((List<WebService>) ((ArrayList<WebService>) this.webservices).clone());
 		}
+		tech.setEmailSupported(emailSupported);
+
     	return tech;
     }
 

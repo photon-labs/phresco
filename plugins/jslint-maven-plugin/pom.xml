@@ -4,7 +4,7 @@
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>jslint-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.2.0.7001-SNAPSHOT</version>
+	<version>1.2.0.7002-SNAPSHOT</version>
 	<name>JSLint Maven Plugin</name>
 	<description>Provides JSLint capabilities.</description>
 	<prerequisites>

@@ -266,8 +266,8 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         	builder.append("-DskipTests=false");
         	builder.append(Constants.SPACE);
         }
-        
-        if (!actionType.getProfileId().isEmpty()) {
+
+        if (StringUtils.isNotEmpty(actionType.getProfileId())) {
             builder.append("-P");
             builder.append(actionType.getProfileId());
         }
