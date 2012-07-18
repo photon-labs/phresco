@@ -17,13 +17,14 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.commons.FrameworkConstants"%>
+<%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
+<%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 
 <%
 	String error = (String) request.getAttribute(FrameworkConstants.REQ_ERROR);
+	String technology = (String)request.getAttribute(FrameworkConstants.REQ_TECHNOLOGY);
 	
 	String sonarPath = "";
-	
 	if(error != null) {
 %>
         <div class="alert-message block-message warning" >
@@ -32,7 +33,6 @@
         
    <% } else { 
 		sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
-		
    %>
 		 <iframe src="" frameBorder="0" class="iframe_container"></iframe>
 		
@@ -54,7 +54,16 @@
 	    if(theme == null || theme == undefined || theme == "undefined" || theme == "null" || theme == "themes/photon/css/red.css") {
 	         theme = "themes/photon/css/red.css";
 	    }
-	    var source = "<%= sonarPath %>?css=" + theme;
+	    var source = "";
+	    <% 
+	    	if (TechnologyTypes.IPHONES.contains(technology)) { 
+	    %>
+	    	source = "<%= sonarPath %>";
+	    <% } else { %>
+	    	source = "<%= sonarPath %>?css=" + theme;
+		<%	
+	    	} 
+	    %>
 	    
 	    $("iframe").attr({
 	        src: source
