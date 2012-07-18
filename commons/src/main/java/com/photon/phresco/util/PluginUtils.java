@@ -151,8 +151,16 @@ public class PluginUtils {
 				}
 			}
 		} catch (SQLException e) {
-			Utility.closeConnection(con);
-		} catch (FileNotFoundException e) {
+	
+                             try {
+				if (con != null) {
+					con.rollback();
+				}
+			} catch (SQLException e1) {
+				throw new PhrescoException(e1);
+			}
+
+	} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
 		} catch (InstantiationException e) {
 			throw new PhrescoException(e);

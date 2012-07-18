@@ -47,7 +47,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>drupal-maven-plugin</artifactId>
-				<version>1.2.0.7001-SNAPSHOT</version>
+				<version>1.2.0.7002-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
