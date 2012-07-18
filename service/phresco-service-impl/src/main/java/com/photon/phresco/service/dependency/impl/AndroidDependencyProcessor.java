@@ -117,6 +117,7 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 		if (technology.getId().equals(TechnologyTypes.ANDROID_HYBRID)) {
 			extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
+		updateTestPom(path);
 	}
 
 	@Override

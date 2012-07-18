@@ -54,9 +54,9 @@ public class SharePointDependencyProcessor extends AbstractDependencyProcessor {
 		}
 		super.extractModules(path, modules);
 		
-		System.out.println("Sharepoint point : "+path);
-		
 		constructSolutionFile(path, modules);
+		
+		updateTestPom(path);
 	}
 
 	private void constructSolutionFile(File path, List<ModuleGroup> modules) {

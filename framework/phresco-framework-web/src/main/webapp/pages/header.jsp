@@ -111,7 +111,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
     	var key = "color";
-    	showHeaderImage(key);
+    	showWelcomeImage(key);
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
 		
