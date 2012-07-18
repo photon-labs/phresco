@@ -37,6 +37,7 @@ package com.photon.phresco.service.dependency.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +71,14 @@ import com.photon.phresco.util.Constants;
 public abstract class AbstractDependencyProcessor implements DependencyProcessor {
 
 	private static final Logger S_LOGGER = Logger.getLogger(AbstractDependencyProcessor.class);
+	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
+	private static List<String> testPomFiles = new ArrayList<String>();
 
 	private RepositoryManager repoManager = null;
 
 	static {
-		initDbPathMap();
+		initDbPathAndTestPom();
 	}
 
 	/**
@@ -92,8 +95,9 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @throws PhrescoException
 	 */
 	protected void extractModules(File path, List<ModuleGroup> modules) throws PhrescoException {
-
-		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
+		}
 		if (CollectionUtils.isEmpty(modules)) {
 			return;
 		}
@@ -110,8 +114,10 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @throws PhrescoException
 	 */
 	protected void extractModule(File path, ModuleGroup module) throws PhrescoException {
-		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
-		S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
+			S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
+		}
 		// Module module = repoManager.getModule(tupleBean.getId());
 
 		// TODO:Handle all versions
@@ -127,8 +133,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		return repoManager;
 	}
 
-	private static void initDbPathMap() {
-		// TODO: This should come from database
+	private static void initDbPathAndTestPom() {
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL7, "/source/sql/");
@@ -138,13 +143,22 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		sqlFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.WORDPRESS, "/source/sql/");
+		
+		testPomFiles.add("/test/functional/pom.xml");
+		testPomFiles.add("/test/load/pom.xml");
+		testPomFiles.add("/test/performance/database/pom.xml");
+		testPomFiles.add("/test/performance/server/pom.xml");
+		testPomFiles.add("/test/unit/pom.xml");
+		testPomFiles.add("/test/performance/pom.xml");
 	}
 
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
-		S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)");
-		S_LOGGER.debug("process() FilePath=" + path.getPath());
-		S_LOGGER.debug("process() ProjectCode=" + info.getCode());
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)");
+			S_LOGGER.debug("process() FilePath=" + path.getPath());
+			S_LOGGER.debug("process() ProjectCode=" + info.getCode());
+		}
 
 		File modulesPath = path;
 		String modulePathKey = getModulePathKey();
@@ -180,13 +194,50 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 			}
 		}
 	}
-
+	
+	/*
+	 * For Update Test Folders Pom Files
+	 */
+	protected static void updateTestPom(File path) throws PhrescoException {
+		try {
+			File sourcePom = new File(path + "/pom.xml");
+			if (!sourcePom.exists()) {
+				return;
+			}
+			
+			PomProcessor processor;
+			processor = new PomProcessor(sourcePom);
+			String groupId = processor.getGroupId();
+			String artifactId = processor.getArtifactId();
+			String version = processor.getVersion();
+			String name = processor.getName();
+			for (String pomFile : testPomFiles) {
+				File testPomFile = new File(path + pomFile);
+				if (testPomFile.exists()) {
+					processor = new PomProcessor(testPomFile);
+					processor.setGroupId(groupId);
+					processor.setArtifactId(artifactId);
+					processor.setVersion(version);
+					if (name != null && !name.isEmpty()) {
+						processor.setName(name);
+					}
+					processor.save();
+				}
+			}
+			
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
+	
 	protected abstract String getModulePathKey();
 
 	protected void updatePOMWithModules(File path, List<com.photon.phresco.model.ModuleGroup> modules)
 	throws PhrescoException, JAXBException, PhrescoPomException {
 		try {
-			S_LOGGER.debug("extractModules() path=" + path.getPath());
+			if (isDebugEnabled) {
+				S_LOGGER.debug("extractModules() path=" + path.getPath());
+			}
 			File pomFile = new File(path, "pom.xml");
 			if (pomFile.exists()) {
 				PomProcessor processor = new PomProcessor(pomFile);
@@ -205,7 +256,9 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	
 	protected void updatePOMWithJsLibs(File path, List<com.photon.phresco.model.ModuleGroup> jsLibs) throws PhrescoException{
         try {
-        	S_LOGGER.debug("extractModules() path=" + path.getPath());
+            if (isDebugEnabled) {
+                S_LOGGER.debug("extractModules() path=" + path.getPath());
+            }
             File pomFile = new File(path, "pom.xml");
             if (pomFile.exists()) {
                 PomProcessor processor = new PomProcessor(pomFile);
@@ -266,4 +319,5 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		}
 		return null;
 	}
+	
 }

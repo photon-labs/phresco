@@ -70,6 +70,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		}
 		createSqlFolder(info, path);
 		extractPilots(info, path, info.getTechnology());
+		updateTestPom(path);
 	}
 
 	protected void updatePom(File path, List<ModuleGroup> modules)	throws PhrescoException {
