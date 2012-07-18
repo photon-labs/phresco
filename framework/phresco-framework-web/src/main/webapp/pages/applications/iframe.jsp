@@ -22,6 +22,8 @@
 <%
 	String error = (String) request.getAttribute(FrameworkConstants.REQ_ERROR);
 	
+	String sonarPath = "";
+	
 	if(error != null) {
 %>
         <div class="alert-message block-message warning" >
@@ -29,7 +31,7 @@
 		</div>
         
    <% } else { 
-		String sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
+		sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
 		
    %>
 		 <iframe src="" frameBorder="0" class="iframe_container"></iframe>
