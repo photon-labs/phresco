@@ -222,6 +222,7 @@ public class Code extends FrameworkBaseAction {
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
+				actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
             } else {
