@@ -36,6 +36,7 @@
 	
 	<build>
 		<directory>do_not_checkin/target</directory>
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
 		<finalName>service</finalName>
 		<plugins>
 			<plugin>
