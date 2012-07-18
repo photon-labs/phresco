@@ -111,7 +111,8 @@ public final class DependencyProcessorFactory {
         }else  if(techId.equalsIgnoreCase(TechnologyTypes.JAVA_STANDALONE)) {
             dependencyProcessor = new JWSDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }  
-        else  if(techId.equalsIgnoreCase(TechnologyTypes.HTML5_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equalsIgnoreCase(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
+        else  if(techId.equalsIgnoreCase(TechnologyTypes.HTML5_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_MOBILE_WIDGET)|| 
+        		techId.equalsIgnoreCase(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET)) {
             dependencyProcessor = new HTML5DependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         } else  if(techId.equalsIgnoreCase(TechnologyTypes.SHAREPOINT)) {
             dependencyProcessor = new SharePointDependencyProcessor(PhrescoServerFactory.getRepositoryManager());

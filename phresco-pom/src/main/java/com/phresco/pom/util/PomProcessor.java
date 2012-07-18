@@ -33,24 +33,25 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phresco.pom.exception.PhrescoPomException;
-import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.Build;
-import com.phresco.pom.model.BuildBase;
-import com.phresco.pom.model.PluginManagement;
 import com.phresco.pom.model.Build.Plugins;
+import com.phresco.pom.model.BuildBase;
 import com.phresco.pom.model.Dependency;
 import com.phresco.pom.model.Model;
 import com.phresco.pom.model.Model.Dependencies;
 import com.phresco.pom.model.Model.Modules;
 import com.phresco.pom.model.Model.Profiles;
 import com.phresco.pom.model.Model.Properties;
+import com.phresco.pom.model.Parent;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
+import com.phresco.pom.model.PluginManagement;
 import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
 import com.phresco.pom.model.ReportSet;
@@ -823,7 +824,7 @@ public class PomProcessor {
 		return null;
 	}
 	
-	public String getName(){
+	public String getName() {
 		if(model.getName() == null){
 			return "";
 		}
@@ -833,7 +834,58 @@ public class PomProcessor {
 	public void setName(String name){
 		model.setName(name);
 	}
-
+	
+	public String getGroupId() {
+		if(model.getGroupId() == null){
+			return model.getParent().getGroupId();
+		}
+		return model.getGroupId();
+	}
+	
+	public void setGroupId(String groupId){
+		model.setGroupId(groupId);
+	}
+	
+	public String getArtifactId() {
+		if(model.getArtifactId() == null){
+			return model.getParent().getArtifactId();
+		}
+		return model.getArtifactId();
+	}
+	
+	public void setArtifactId(String artifactId){
+		model.setArtifactId(artifactId);
+	}
+	
+	public String getVersion(){
+		if(model.getVersion() == null){
+			return model.getParent().getVersion();
+		}
+		return model.getVersion();
+	}
+	
+	public void setVersion(String version){
+		model.setVersion(version);
+	}
+	
+	public String getPackage() {
+		if(model.getPackaging() == null){
+			return "";
+		}
+		return model.getPackaging();
+	}
+	
+	public void setPackaging(String packaging){
+		model.setPackaging(packaging);
+	}
+	
+	public Parent getParent(){
+		if (model.getParent() != null) {
+			return model.getParent();
+		}
+		return null;
+	}
+	
 	/**
 	 * @param artifactId
 	 * @return

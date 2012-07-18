@@ -23,7 +23,7 @@ For iPhone development,
 	
            \************************************ Steps for Installing Pear Setup ***************************************/
 
-This  pear setup is used for used for php,drupal and wordpress project code validation.the setup file can be download from the following
+The  pear setup is used for php,drupal and wordpress project code validation.the setup file can be download from the following:
 
 In Windows,
 	1.go to the Download tab option

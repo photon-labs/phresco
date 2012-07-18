@@ -38,7 +38,7 @@
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
-		<sonar.phpCodesniffer.skip>WordPress</sonar.phpCodesniffer.skip> 
+		<sonar.phpCodesniffer.standardArgument>WordPress</sonar.phpCodesniffer.standardArgument>
     </properties>
   
 	<build>
