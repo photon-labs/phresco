@@ -166,7 +166,12 @@ public class XcodeBuild extends AbstractMojo {
 	 *            default-value="phresco-env-config.xml"
 	 */
 	protected String plistFile;
-
+	
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+	protected int buildNo;
 	private File srcDir;
 	private File buildDirFile;
 	private File buildInfoFile;
@@ -475,10 +480,17 @@ public class XcodeBuild extends AbstractMojo {
 
 	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus("SUCCESS");
