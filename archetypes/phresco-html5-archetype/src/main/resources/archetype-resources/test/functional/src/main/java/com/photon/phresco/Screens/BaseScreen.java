@@ -129,18 +129,18 @@ public class BaseScreen {
 			 * selenium.open(context);
 			 */
 		} 
-		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_HTMLUNIT)) {
-				log.info("-------------***LAUNCHING HTMLUNIT***--------------");
-				driver = new HtmlUnitDriver(); 
-				//windowMaximizeFirefox();
-				driver.navigate().to(url + context);	
-				// driver.get(url+context);
+		 // else if (browserName.equalsIgnoreCase(Constants.BROWSER_HTMLUNIT)) {
+				// log.info("-------------***LAUNCHING HTMLUNIT***--------------");
+				// driver = new HtmlUnitDriver(); 
+				windowMaximizeFirefox();
+				// driver.navigate().to(url + context);	
+				driver.get(url+context);
 
-				/*
-				 * selenium = new WebDriverBackedSelenium(driver, url);
-				 * selenium.open(context);
-				 */
-			} 
+				// /*
+				 // * selenium = new WebDriverBackedSelenium(driver, url);
+				 // * selenium.open(context);
+				 // */
+			// } 
 		
 		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
 				log.info("-------------***LAUNCHING OPERA***--------------");
@@ -194,9 +194,10 @@ public class BaseScreen {
 			chromeService.stop();
 			}
 		} 
-    //  else {
-//	throw new NullPointerException();
-//}
+        
+      //  else {
+		//	throw new NullPointerException();
+	//	}
 		// selenium.stop();
 		/*
 		 * driver.quit(); selenium.stop();

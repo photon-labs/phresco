@@ -142,13 +142,16 @@ name="nodejs">
 				<include>PhrescoUiConstants.java</include>
 				<include>TestProperties.java</include>
 				<include>ReadXMLFile.java</include>
+				<include>PhrescoNodejsUiConstants.java</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>test/functional/src/main/resources</directory> 
 			<includes> 
-				<include>config.ini</include>
+				<include>NodejsData.xml</include>
 				<include>phresco-env-config.xml</include>
+				<include>UIConstants.xml</include>
+				<include>UserInfo.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8"> 

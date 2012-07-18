@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-nodejs-archetype
- * 
+ * PHR_NodeJSWebService
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -39,7 +39,10 @@ public class ReadXMLFile {
 
 	private static Element eElement;
 	private Log log = LogFactory.getLog(getClass());
-	private static final String phrsc = "./src/main/resources/phresco-env-config.xml";
+	private static final String phrsc = "./src/main/resources/phresco-env-config.Xml";
+	private static final String nodejs = "./src/main/resources/NodejsData.xml";
+	private static final String nodeui = "./src/main/resources/UIConstants.xml";
+	private static final String nodeinfo = "./src/main/resources/UserInfo.xml";
 	
 	public ReadXMLFile() throws ScreenException {
 		log.info("@ReadXMLFile Constructor::loading *****PhrescoUIConstants******");
@@ -54,9 +57,6 @@ public class ReadXMLFile {
 					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
-
-			/*System.out.println("Root element :"
-					+ doc.getDocumentElement().getNodeName());*/
 			NodeList nList = doc.getElementsByTagName("environment");
 			System.out.println("-----------------------");
 
@@ -74,6 +74,17 @@ public class ReadXMLFile {
 		}
 	}
 	
+	public void NodejsData() throws ScreenException {
+    	loadPhrescoConstansts(nodejs);
+	}
+	public void loadUIConstants() throws ScreenException {
+    	loadPhrescoConstansts(nodeui);
+	}
+
+	public void loadUserInfoConstants() throws ScreenException {
+		loadPhrescoConstansts(nodeinfo);
+		
+	}
 	
 	
 	public String getValue(String elementName) {

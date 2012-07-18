@@ -22,6 +22,7 @@ package com.photon.phresco.Screens;
 import java.io.IOException;
 
 import com.photon.phresco.selenium.report.Reporter;
+import com.photon.phresco.uiconstants.PhrescoNodejsUiConstants;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 
@@ -29,13 +30,14 @@ import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 public class WelcomeScreen extends PhotonAbstractScreen {
 	PhrescoUiConstants phrsc = new PhrescoUiConstants();
+	PhrescoNodejsUiConstants nodejs = new PhrescoNodejsUiConstants();
 	public WelcomeScreen(String host, int port, String browser, String url,
 			String speed, String contextName) throws InterruptedException,
 			IOException, Exception {
 		super(host, port, browser, url, speed, contextName);
 	}
     	public void nodejsNone() throws InterruptedException, IOException, Exception {
-    		isTextPresent(phrsc.ELEMENT);
+    		isTextPresent(nodejs.ELEMENT);
 		
     	}
     	
