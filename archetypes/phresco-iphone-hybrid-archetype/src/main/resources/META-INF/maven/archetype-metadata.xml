@@ -138,12 +138,6 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/load</directory> 
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
 			<directory>test/performance</directory> 
 			<includes>
 				<include>**/*</include>
