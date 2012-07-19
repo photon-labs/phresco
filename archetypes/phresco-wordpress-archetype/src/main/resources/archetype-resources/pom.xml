@@ -43,6 +43,7 @@
   
 	<build>
 		<sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
 		<plugins>
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
@@ -78,7 +79,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<sourceDirectory>source</sourceDirectory>
 	</build>
 	<profiles>
         <profile>

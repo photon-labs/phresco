@@ -63,6 +63,7 @@
             
 		</plugins>
 		<sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
 	</build>
 	<profiles>
         <profile>
