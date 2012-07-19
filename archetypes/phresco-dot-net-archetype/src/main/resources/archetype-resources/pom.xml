@@ -32,6 +32,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <build>
+			<directory>do_not_checkin/target</directory>
 		        <plugins>
 					<plugin>
 						<artifactId>maven-clean-plugin</artifactId>

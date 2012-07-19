@@ -34,6 +34,7 @@
 
     <build>
         <sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.sonar-plugins.dotnet</groupId>
