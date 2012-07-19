@@ -1019,6 +1019,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_UNIT_TESTSUITE = "/testsuite";
     String XPATH_HTML5_WIDGET_UNIT_TESTSUITE = "/testsuite";
     String PATH_HTML5_MULTICHANNEL_JQUERY_UNIT_TEST_TESTSUITE = "/testsuite";
+    String PATH_HTML5_JQUERY_MOBILE_WIDGET_UNIT_TEST_TESTSUITE = "/testsuite";
     String XPATH_JAVA_WEBSERVICE_UNIT_TESTSUITE = "/testsuite";
     String XPATH_NODE_JS_WEBSERVICE_UNIT_TESTSUITE = "/testsuite";
     String XPATH_PHP_WEBSERVICE_UNIT_TESTSUITE = "/testsuites/testsuite";
@@ -1041,6 +1042,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_HTML5_WIDGET_FUNCTIONAL_TESTSUITE = "/testsuite";
     String PATH_HTML5_MULTICHANNEL_JQUERY_FUNCTIONAL_TEST_TESTSUITE = "/testsuite";
+    String PATH_HTML5_JQUERY_MOBILE_WIDGET_FUNCTIONAL_TEST_TESTSUITE = "/testsuite";
     String XPATH_JAVA_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_NODE_JS_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_PHP_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
@@ -1061,6 +1063,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_TESTCASE = "/testcase";
     String XPATH_HTML5_WIDGET_TESTCASE = "/testcase";
     String XPATH_HTML5_MULTICHANNEL_JQUERY_TESTCASE = "/testcase";
+    String XPATH_HTML5_JQUERY_MOBILE_WIDGET_TESTCASE = "/testcase";
     String XPATH_JAVA_WEBSERVICE_TESTCASE = "/testcase";
     String XPATH_NODE_JS_WEBSERVICE_TESTCASE = "/testcase";
     String XPATH_PHP_WEBSERVICE_TESTCASE = "/testcase";
