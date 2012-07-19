@@ -72,7 +72,7 @@
             if (max > 0.5) {
                 return [0.2,0.4,0.6,0.8, Number(1).toFixed(1)];
 
-            } else if (max >= 0.1) {
+            } else if (max >= 0) {
                 return obj.Get('chart.scale.round') ? [0.2,0.4,0.6,0.8,1] : [0.1,0.2,0.3,0.4,0.5];
 
             } else {
