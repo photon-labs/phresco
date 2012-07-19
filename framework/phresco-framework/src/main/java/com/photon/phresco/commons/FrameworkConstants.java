@@ -1122,7 +1122,7 @@ public interface FrameworkConstants {
    /* Site report */
    String REQ_SITE_REPORT = "siteReport";
    String REQ_SITE_REPORT_PATH = "siteReportPath";
-   String SITE_TARGET = "target/site";
+   String SITE_REPORT_DIR = "site";
    String REQ_SITE_REPORTS = "reports";
    String REQ_SITE_SLECTD_REPORTS = "selectedReports";
    String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";
