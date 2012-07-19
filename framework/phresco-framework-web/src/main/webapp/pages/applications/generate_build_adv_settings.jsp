@@ -156,6 +156,7 @@
 // 			}
 			$('#advancedSettingsBuildForm').hide();
 			$('#generateBuildForm').show(); 
+			$('#generateBuild_Modal').show();
 			$("#advSettingsErrMsg").html("");			
 			$("#errMsg").html('');
 		});
