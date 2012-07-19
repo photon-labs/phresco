@@ -189,13 +189,15 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	//cumulative test report generation
 	public void generateCumulativeTestReport(Map<String, Object> cumulativeReportparams) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateCumulativeTestReport()");
+		InputStream reportStream = null;
+		BufferedInputStream bufferedInputStream = null;
 		try {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String jasperFile = "PhrescoCumulativeReport.jasper";
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
+			reportStream = this.getClass().getResourceAsStream("reports/jasper/"+ jasperFile);
 			
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
+			bufferedInputStream = new BufferedInputStream(reportStream);
 			JREmptyDataSource  dataSource = new JREmptyDataSource();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, cumulativeReportparams, dataSource);
@@ -207,6 +209,21 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		} catch(Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
 			S_LOGGER.error("Report generation errorr ");
+		} finally {
+			if (reportStream != null) {
+				try {
+					reportStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
+			if (bufferedInputStream != null) {
+				try {
+					bufferedInputStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
 		}
 		
 	}
@@ -214,12 +231,14 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	// Unit and functional pdf report generation
 	public void generateUnitAndFunctionalReport(SureFireReport sureFireReports) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateUnitAndFunctionalReport()");
+		InputStream reportStream = null;
+		BufferedInputStream bufferedInputStream = null;
 		try {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String containerJasperFile = "PhrescoSureFireReport.jasper";
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ containerJasperFile);
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
+			reportStream = this.getClass().getResourceAsStream("reports/jasper/"+ containerJasperFile);
+			bufferedInputStream = new BufferedInputStream(reportStream);
 			Map<String, Object> parameters = new HashMap<String,Object>();
 			parameters.put("projectCode", projectCode);
 			parameters.put("projectName", projectName);
@@ -237,6 +256,21 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		} catch(Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateUnitAndFunctionalReport()" + FrameworkUtil.getStackTraceAsString(e));
 			S_LOGGER.error("Unit and functional  generation error");
+		} finally {
+			if (reportStream != null) {
+				try {
+					reportStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
+			if (bufferedInputStream != null) {
+				try {
+					bufferedInputStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
 		}
 	}
 	
@@ -303,10 +337,12 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	
 	public void reportGenerate(String outFileNamePDF, String jasperFile, Map<String, Object> parameters, JRBeanCollectionDataSource dataSource) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.reportGenerate()");
+		InputStream reportStream = null;
+		BufferedInputStream bufferedInputStream = null;
 		try {
 			new File(outFileNamePDF).getParentFile().mkdirs();
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
+			reportStream = this.getClass().getResourceAsStream("reports/jasper/"+ jasperFile);
+			bufferedInputStream = new BufferedInputStream(reportStream);
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
@@ -316,6 +352,21 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		} catch (Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.reportGenerate()" + FrameworkUtil.getStackTraceAsString(e));
 			S_LOGGER.error("Load report generation error");
+		} finally {
+			if (reportStream != null) {
+				try {
+					reportStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
+			if (bufferedInputStream != null) {
+				try {
+					bufferedInputStream.close();
+				} catch (IOException e) {
+					S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+				}
+			}
 		}
 	}
 	
