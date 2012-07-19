@@ -191,9 +191,13 @@ public class AndroidPomProcessor extends PomProcessor {
 		List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
 		for (Plugin plugin2 : plugin) {
 			List<PluginExecution> execution = plugin2.getExecutions().getExecution();
-			for (PluginExecution pluginExecution : execution) {
-				List<Element> any = pluginExecution.getConfiguration().getAny();
-				processProfiles(androidProfile, any);
+			if(execution != null) {
+				for (PluginExecution pluginExecution : execution) {
+					if(pluginExecution.getConfiguration() != null){
+						List<Element> any = pluginExecution.getConfiguration().getAny();
+						processProfiles(androidProfile, any);
+					}
+				}
 			}
 		}
 		return androidProfile;
@@ -227,7 +231,9 @@ public class AndroidPomProcessor extends PomProcessor {
 				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
 				for (Plugin plugin2 : plugin) {
 					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+					if(getSigningProfilePlugin(profile, execution).equals(profile.getId())) {
 					return getSigningProfilePlugin(profile, execution);
+				}
 				}
 			}
 		}
@@ -250,7 +256,7 @@ public class AndroidPomProcessor extends PomProcessor {
 						}
 					}
 				}
-			}
+			} 
 		} return "";
 	}
 }
