@@ -271,8 +271,21 @@
 							<% if (!from.equals(FrameworkConstants.DEPLOY)) { %>
 								<input type="checkbox" id="showSettings" name="showSettings" value="showsettings">
 								<span class="textarea_span popup-span"><s:text name="label.show.setting"/></span>
-							<% } %>
-							<% if (from.equals("generateBuild")) { %>
+							<% } %> <%
+ 	if (FrameworkConstants.REQ_GENERATE_BUILD.equals(from)
+ 			&& (TechnologyTypes.JAVA_STANDALONE.equals(technology)
+ 					|| TechnologyTypes.JAVA_WEBSERVICE
+ 							.equals(technology)
+ 					|| TechnologyTypes.JAVA.equals(technology)
+ 					|| TechnologyTypes.HTML5.equals(technology)
+ 					|| TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET
+ 							.equals(technology) || TechnologyTypes.HTML5_WIDGET
+ 					.equals(technology))) {
+ %>
 								<input type="checkbox" id="skipTest" name="skipTest" value="true">
 								<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 							<% } %>

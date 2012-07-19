@@ -256,7 +256,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_TEST_TYPE, UNIT);
         } catch (Exception e){
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_UNIT_TEST));
             }
             S_LOGGER.error("Entered into catch block of Quality.unit()"+ e);
             new LogErrorReport(e, "Quality Unit test");
@@ -367,7 +367,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             
         } catch (Exception e) {
         	if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.functional()"+ e);
             new LogErrorReport(e, "Quality Functional test");
@@ -499,9 +499,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         		} else {
         			setValidated(true);
         			if(UNIT.equals(testType)) {
-        				setShowError(ERROR_UNIT_TEST);
+        				setShowError(getText(ERROR_UNIT_TEST));
         			} else {
-        				setShowError(ERROR_FUNCTIONAL_TEST);
+        				setShowError(getText(ERROR_FUNCTIONAL_TEST));
         			}
         			return SUCCESS;
         		}
@@ -514,7 +514,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         	List<String> resultFileNames = new ArrayList<String>(mapTestResultName.keySet());
         	if (CollectionUtils.isEmpty(resultFileNames)) {
         		setValidated(true);
-    			setShowError(ERROR_UNIT_TEST);
+    			setShowError(getText(ERROR_UNIT_TEST));
     			return SUCCESS;
         	}
         	
@@ -544,9 +544,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    		} else {
 	    			setValidated(true);
 	    			if(UNIT.equals(testType)) {
-	    				setShowError(ERROR_UNIT_TEST);
+	    				setShowError(getText(ERROR_UNIT_TEST));
 	    			} else {
-	    				setShowError(ERROR_FUNCTIONAL_TEST);
+	    				setShowError(getText(ERROR_FUNCTIONAL_TEST));
 	    			}
 	    			return SUCCESS;
 	    		}
@@ -559,7 +559,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
 	    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
 	    		setValidated(true);
-				setShowError(ERROR_TEST_SUITE);
+	    		if(UNIT.equals(testType)){
+	    			setShowError(getText(ERROR_UNIT_TEST));
+	    		} else {
+	    			setShowError(getText(ERROR_FUNCTIONAL_TEST));
+	    		}
 				return SUCCESS;
 	    	}
 	    	
@@ -590,7 +594,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 				// continue the loop to filter the testResultFile
 			} catch (XPathExpressionException e) {
 				// continue the loop to filter the testResultFile
-				e.printStackTrace();
+			
 			}
 		}
     	String testSuitesKey = projectCode + testType + projectModule + techReport;
@@ -926,7 +930,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                     }
                     
                 } catch (Exception e) {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_FUNCTIONAL_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
                 getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -952,7 +956,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 	QualityUtil.sortResultFile(children);
                     getHttpRequest().setAttribute(REQ_JMETER_REPORT_FILES, children);
                 } else {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_LOAD_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -1108,7 +1112,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_PERFORMANCE_TEST));
     			StringReader sb = new StringReader("Test is not available for this project");
     			reader = new BufferedReader(sb);
                 getHttpSession().setAttribute(projectCode + PERFORMACE, reader);
@@ -1181,7 +1185,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.load()"+ e);
             

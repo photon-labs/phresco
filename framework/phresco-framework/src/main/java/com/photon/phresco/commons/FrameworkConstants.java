@@ -443,6 +443,7 @@ public interface FrameworkConstants {
     String REQ_WEBSERVICES = "webservices";
     String REQ_EMAIL_SUPPORTED = "emailSupported";
     String REQ_BUILD_STATUS = "buildStatus";
+    String REQ_GENERATE_BUILD = "generateBuild";
     String REQ_ENV_SERVER_SETTINGS = "serverSettings";
     String REQ_ENV_DATABASE_SETTINGS = "databaseSettings";
     String REQ_ENV_EMAIL_SETTINGS = "emailSettings";
@@ -791,10 +792,10 @@ public interface FrameworkConstants {
     String ERROR_TEST_CASE = "Test case is not available for this project";
     String ERROR_MANDATORY_FIELDS = "Some mandatory values are not filled";
     String ERROR_SETTINGS = "ERROR_SETTINGS";
-    String ERROR_UNIT_TEST = "Unit test not yet executed";
-    String ERROR_FUNCTIONAL_TEST = "Functional test not yet executed";
-    String ERROR_PERFORMANCE_TEST = "Performance test not yet executed";
-    String ERROR_LOAD_TEST = "Load test not yet executed";
+    String ERROR_UNIT_TEST = "unittest.not.executed";
+    String ERROR_FUNCTIONAL_TEST = "functionaltest.not.executed";
+    String ERROR_PERFORMANCE_TEST = "performancetest.not.executed";
+    String ERROR_LOAD_TEST = "loadtest.not.executed";
     String ERROR_ENV_CONFIG = "{0} configuration is not available for the selected environment";
     String ERROR_ANDROID_DATA = "Data is not available";
     String ERROR_PORT = "Invalid Port Number";

@@ -16,7 +16,7 @@
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.repository.url"/></label>
 				<div class="input">
-					<input type="text" class="svnUrlTxtBox" name="repourl" id="repoUrl">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
+					<input type="text" class="svnUrlTxtBox" name="repourl" id="repoUrl" value="http://">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
 				</div>
 			</div>
 			
@@ -78,15 +78,15 @@
 		
         $("#repoUrl").keyup(function(event) {
          	var repoUrl = $("input[name='repourl']").val();
-         });
+        });
         
         $("#repoUrl").blur(function(event) {
          	var repoUrl = $("input[name='repourl']").val();
-         	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
-           		$('#credentials').attr("checked", false);
+           	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
+				$('#credentials').attr("checked", false);
            		svnCredentialMark();
            	} else if(!isBlank(repoUrl)) {
-           		$('#credentials').attr("checked", true);
+				$('#credentials').attr("checked", true);
            		svnCredentialMark();
          	}
         });
@@ -124,7 +124,6 @@
 			if(isValidUrl(repoUrl)){
 				$("#errMsg").html("URL is missing");
 				$("#repoUrl").focus();
-				$("#repoUrl").val("");
 				return false;
 			}
 			if(isBlank($.trim($("input[name='username']").val()))){
