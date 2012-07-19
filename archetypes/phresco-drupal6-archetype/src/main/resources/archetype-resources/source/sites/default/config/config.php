@@ -21,12 +21,12 @@
 
 function getConfigByName($currentEnv, $type, $name) {
     
-    if(DRUPAL_ROOT) {
+   /*  if(DRUPAL_ROOT) {
 		$cwd = DRUPAL_ROOT; 
 	} else { 
 		$cwd = getcwd(); 
-	} 
-
+	}  */
+	$cwd = getcwd(); 
 	$fileContents = file_get_contents($cwd."/sites/default/config/phresco-env-config.xml");
 	$file = getOriginalString($fileContents);
 	
