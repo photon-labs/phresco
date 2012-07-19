@@ -20,6 +20,7 @@
 package com.photon.phresco.util;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -187,5 +188,14 @@ public final class Utility implements Constants {
         FileUtils.mkdir(builder.toString());
         return builder.toString();
     }
+    public static void closeStream(FileWriter writer) {
+    	try {
+    		if (writer != null) {
+    			writer.close();
+    		}
+    	} catch (IOException e) {
+    		//FIXME : log exception
+    	}
+	}
     
 }
