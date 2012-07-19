@@ -92,6 +92,7 @@ public class FrameworkUtil implements FrameworkConstants {
         unitTestMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.HTML5, PATH_HTML5_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_UNIT_TEST);
+        unitTestMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.PHP, PATH_PHP_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_UNIT_TEST);
@@ -118,6 +119,7 @@ public class FrameworkUtil implements FrameworkConstants {
         unitReportMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.HTML5, PATH_HTML5_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.PHP, PATH_PHP_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_UNIT_TEST_REPORT);
@@ -144,6 +146,7 @@ public class FrameworkUtil implements FrameworkConstants {
         funcationTestMap.put(TechnologyTypes.HTML5_WIDGET, PATH_HTML5_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.HTML5, PATH_HTML5_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_FUNCTIONAL_TEST);
+        funcationTestMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.PHP, PATH_PHP_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_FUNCTIONAL_TEST);
@@ -170,6 +173,7 @@ public class FrameworkUtil implements FrameworkConstants {
         funcationAdaptMap.put(TechnologyTypes.HTML5_WIDGET, PATH_HTML5_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.HTML5, PATH_HTML5_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_FUNCTIONAL_ADAPT);
+        funcationAdaptMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.PHP, PATH_PHP_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_FUNCTIONAL_ADAPT);
@@ -196,6 +200,7 @@ public class FrameworkUtil implements FrameworkConstants {
         funcationReportMap.put(TechnologyTypes.HTML5_WIDGET, PATH_HTML5_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.HTML5, PATH_HTML5_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_FUNCTIONAL_TEST_REPORT);
+        funcationReportMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.PHP, PATH_PHP_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_FUNCTIONAL_TEST_REPORT);
@@ -222,6 +227,7 @@ public class FrameworkUtil implements FrameworkConstants {
         performanceTestMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.HTML5, PATH_HTML5_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_PERFORMANCE_TEST);
+        performanceTestMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.PHP, PATH_PHP_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_PERFORMANCE_TEST);
@@ -248,6 +254,7 @@ public class FrameworkUtil implements FrameworkConstants {
         performanceReportMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.HTML5, PATH_HTML5_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_PERFORMANCE_TEST_REPORT);
+        performanceReportMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.PHP, PATH_PHP_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_PERFORMANCE_TEST_REPORT);
@@ -274,6 +281,7 @@ public class FrameworkUtil implements FrameworkConstants {
         loadTestMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.HTML5, PATH_HTML5_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_LOAD_TEST);
+        loadTestMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.PHP, PATH_PHP_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_LOAD_TEST);
@@ -300,6 +308,7 @@ public class FrameworkUtil implements FrameworkConstants {
         loadReportMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, PATH_HTML5_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.HTML5, PATH_HTML5_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_LOAD_TEST_REPORT);
+        loadReportMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.SHAREPOINT, PATH_SHAREPOINT_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.PHP, PATH_PHP_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.PHP_DRUPAL6, PATH_DRUPAL_LOAD_TEST_REPORT);
@@ -327,6 +336,7 @@ public class FrameworkUtil implements FrameworkConstants {
     	unitTestSuitePathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, XPATH_HTML5_WIDGET_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.HTML5, XPATH_HTML5_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_MULTICHANNEL_JQUERY_UNIT_TEST_TESTSUITE);
+    	unitTestSuitePathMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_JQUERY_MOBILE_WIDGET_UNIT_TEST_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.SHAREPOINT, XPATH_SHAREPOINT_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.PHP, XPATH_PHP_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.PHP_DRUPAL6, XPATH_PHP_DRUPAL6_UNIT_TESTSUITE);
@@ -353,6 +363,7 @@ public class FrameworkUtil implements FrameworkConstants {
     	functionalTestSuitePathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, XPATH_HTML5_WIDGET_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.HTML5, XPATH_HTML5_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, PATH_HTML5_MULTICHANNEL_JQUERY_FUNCTIONAL_TEST_TESTSUITE);
+    	functionalTestSuitePathMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, PATH_HTML5_JQUERY_MOBILE_WIDGET_FUNCTIONAL_TEST_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.SHAREPOINT, XPATH_SHAREPOINT_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.PHP, XPATH_PHP_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.PHP_DRUPAL6, XPATH_PHP_DRUPAL6_FUNCTIONAL_TESTSUITE);
@@ -379,6 +390,7 @@ public class FrameworkUtil implements FrameworkConstants {
 		testCasePathMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, XPATH_HTML5_WIDGET_TESTCASE);
         testCasePathMap.put(TechnologyTypes.HTML5, XPATH_HTML5_TESTCASE);
         testCasePathMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, XPATH_HTML5_MULTICHANNEL_JQUERY_TESTCASE);
+        testCasePathMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, XPATH_HTML5_JQUERY_MOBILE_WIDGET_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.SHAREPOINT, XPATH_SHAREPOINT_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.PHP, XPATH_PHP_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.PHP_DRUPAL6, XPATH_PHP_DRUPAL7_TESTCASE);
