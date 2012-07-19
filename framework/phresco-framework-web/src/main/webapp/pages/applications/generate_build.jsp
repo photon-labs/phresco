@@ -316,7 +316,7 @@
 			<legend class="fieldSetLegend"><s:text name="label.sql.execute"/></legend>
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label" style="width: 210px;"><s:text name="label.databases"/></label>
-				<div class="input" style="text-align: left; margin-left: 250px;">
+				<div class="input" style="text-align: left; margin-left: 231px;">
 					<select id="databases" name="database" class="xlarge" >
 			       	</select>
 				</div>
@@ -395,7 +395,7 @@
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
-			<img class="popupLoadingIcon" style="position: relative;"> 
+			<img class="popupLoadingIcon"> 
 			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
 			<div style="float: right;">
 				<input type="hidden" name="from" value="<%= from %>" id="from">
@@ -597,7 +597,7 @@
 		
 		$('#environments').change(function() {
 			if ($("#from").val() != "generateBuild") {
-				loadingIconShow();
+				
 				$('#DbWithSqlFiles').val("");
 				executeSqlShowHide();
 			}
@@ -685,6 +685,7 @@
 	
 	function executeSqlShowHide() {
 		if($('#importSql').is(":checked")) {
+			loadingIconShow();
 			$('#sqlExecutionContain').show();
 		} else {
 			$('#sqlExecutionContain').hide();
