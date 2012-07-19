@@ -750,7 +750,7 @@ public interface FrameworkConstants {
     String ERROR_LOGIN_ACCESS_DENIED = "login.error.access.denied.message";
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
-    String SESSION_EXPIRED = "Session Expired ! Please Relogin";
+    String SESSION_EXPIRED = "session.expired.message";
 
     /*
      * login keys
