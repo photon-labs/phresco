@@ -135,6 +135,7 @@
 			<includes>
 				<include>AllTests.js</include>
                 <include>HelloWorld.js</include>
+				<include>pom.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
