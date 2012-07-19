@@ -131,8 +131,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
             jenkinsAlive = DiagnoseUtil.isConnectionAlive(HTTP_PROTOCOL, LOCALHOST, Integer.parseInt(getPortNo(Utility.getJenkinsHome())));
             S_LOGGER.debug("jenkins Alive " + jenkinsAlive);
             getHttpRequest().setAttribute(CI_JENKINS_ALIVE, jenkinsAlive);
-            
+            S_LOGGER.debug("get jobs called in CI");
             List<CIJob> existingJobs = administrator.getJobs(project);
+            S_LOGGER.debug("Return jobs got in CI!!!!!!!!!");
             Map<String, List<CIBuild>> ciJobsAndBuilds = new HashMap<String, List<CIBuild>>();
 			if(existingJobs != null) {
 				for (CIJob ciJob : existingJobs) {

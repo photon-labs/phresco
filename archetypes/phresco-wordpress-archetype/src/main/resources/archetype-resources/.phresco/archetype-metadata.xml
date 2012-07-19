@@ -141,7 +141,7 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/tescases</directory> 
 			<includes> 
-				<include>WORDPRESS_TestCase_V1.0.ods</include>
+				<include>WORDPRESS_TestCase_V1.2.0.ods</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -172,6 +172,35 @@
 			<includes> 
 				<include>phresco-env-config.csv</include>
 				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+				<include>phresco-env-config.csv</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
