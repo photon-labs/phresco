@@ -23,8 +23,25 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class PhrescoFileServer
-{
+public class PhrescoFileServer {
+	
+	private static String HTML_FILE = ".html";
+	private static String HTM_FILE = ".htm";
+	private static String TEXT_FILE = ".txt";
+	private static String JAVA_FILE = ".java";
+	private static String GIF_FILE = ".gif";
+	private static String CLASS_FILE = ".class";
+	private static String JPG_FILE = ".jpg";
+	private static String JPEG_FILE = ".jpeg";
+	private static String CSS_FILE = ".css";
+	
+	private static String HTML_CONT_TYPE = "text/html";
+	private static String PLAIN_CONT_TYPE = "text/plain";
+	private static String GIF_CONT_TYPE = "image/gif";
+	private static String OCTECT_STREAM_CONT_TYPE = "application/octet-stream";
+	private static String JPEG_CONT_TYPE = "image/jpeg";
+	private static String CSS_CONT_TYPE = "text/css";
+	
 	public static void main(String[] args) {
 		// read arguments
 		if (args.length != 2) {
@@ -154,18 +171,21 @@ public class PhrescoFileServer
 	}
 
 	private static String guessContentType(String path) {
-		if (path.endsWith(".html") || path.endsWith(".htm"))
-			return "text/html";
-		else if (path.endsWith(".txt") || path.endsWith(".java"))
-			return "text/plain";
-		else if (path.endsWith(".gif"))
-			return "image/gif";
-		else if (path.endsWith(".class"))
-			return "application/octet-stream";
-		else if (path.endsWith(".jpg") || path.endsWith(".jpeg"))
-			return "image/jpeg";
-		else
-			return "text/plain";
+		if (path.endsWith(HTML_FILE) || path.endsWith(HTM_FILE)) {
+			return HTML_CONT_TYPE;
+		} else if (path.endsWith(TEXT_FILE) || path.endsWith(JAVA_FILE)) {
+			return PLAIN_CONT_TYPE;
+		} else if (path.endsWith(GIF_FILE)) {
+			return GIF_CONT_TYPE;
+		} else if (path.endsWith(CLASS_FILE)) {
+			return OCTECT_STREAM_CONT_TYPE;
+		} else if (path.endsWith(JPG_FILE) || path.endsWith(JPEG_FILE)) {
+			return JPEG_CONT_TYPE;
+		} else if (path.endsWith(CSS_FILE)) {
+			return CSS_CONT_TYPE;
+		} else {
+			return PLAIN_CONT_TYPE;
+		}
 	}
 
 	private static void sendFile(InputStream file, OutputStream out) {
