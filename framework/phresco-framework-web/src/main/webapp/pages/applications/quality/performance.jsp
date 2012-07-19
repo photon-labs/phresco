@@ -123,7 +123,7 @@
 	    
 	<div class="perErrorDis" id="noFiles">
 		<div class="alert-message block-message warning" style="margin: 5px 0px 0;">
-			<label Class="errorMsgLabel"><%= FrameworkConstants.ERROR_PERFORMANCE_TEST %></label>
+			<label Class="errorMsgLabel"><s:text name="performancetest.not.executed"/></label>
 		</div>
 	</div>
 </form>
