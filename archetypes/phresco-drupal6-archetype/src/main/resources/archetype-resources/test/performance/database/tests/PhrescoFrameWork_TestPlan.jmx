@@ -16,7 +16,7 @@
         <stringProp name="checkQuery">Select 1</stringProp>
         <stringProp name="connectionAge">5000</stringProp>
         <stringProp name="dataSource">drupal</stringProp>
-        <stringProp name="dbUrl">jdbc:mysql://localhost:3306/drupal6</stringProp>
+        <stringProp name="dbUrl">jdbc:mysql://localhost:3306/drupalshop</stringProp>
         <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
         <boolProp name="keepAlive">true</boolProp>
         <stringProp name="password"></stringProp>
@@ -29,7 +29,7 @@
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="User Registration" enabled="true">
         <stringProp name="filename">registerDetails.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="variableNames">name,pass,mail,mode,sort,threshold,theme,signature,signature_format,created,access,login,status,timezone,language,picture,init,data,</stringProp>
+        <stringProp name="variableNames">uid,name,pass,mail,theme,signature,signature_format,created,access,login,status,timezone,language,picture,init,data</stringProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">true</boolProp>
         <boolProp name="recycle">true</boolProp>
@@ -43,7 +43,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">3</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1326287189000</longProp>
         <longProp name="ThreadGroup.end_time">1326287189000</longProp>
@@ -55,7 +55,7 @@
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="Delete Selected Values From Users Table" enabled="true">
           <stringProp name="dataSource">drupal</stringProp>
           <stringProp name="queryType">Update Statement</stringProp>
-          <stringProp name="query">DELETE FROM users WHERE uid BETWEEN 1 AND 10000</stringProp>
+          <stringProp name="query">DELETE FROM users WHERE uid BETWEEN 10 AND 10000</stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="variableNames"></stringProp>
@@ -65,11 +65,11 @@
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="User Registration" enabled="true">
           <stringProp name="dataSource">drupal</stringProp>
           <stringProp name="query">
-INSERT INTO users(name,pass,mail,mode,sort,threshold,theme,signature,signature_format,created,access,login,status,timezone,language,picture,init,data) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+INSERT INTO users(uid,name,pass,mail,theme,signature,signature_format,created,access,login,status,timezone,language,picture,init,data) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 
 </stringProp>
-          <stringProp name="queryArguments">${name},${pass},${mail},${mode},${sort},${threshold},${theme},${signature},${signature_format},${created},${access},${login},${status},${timezone},${language},${picture},${init},${data}</stringProp>
-          <stringProp name="queryArgumentsTypes">varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar,varchar</stringProp>
+          <stringProp name="queryArguments">${uid},${name},${pass},${mail},${theme},${signature},${signature_format},${created},${access},${login},${status},${timezone},${language},${picture},${init},${data}</stringProp>
+          <stringProp name="queryArgumentsTypes">INTEGER,varchar,varchar,varchar,varchar,varchar,varchar,INTEGER,INTEGER,INTEGER,INTEGER,varchar,varchar,INTEGER,varchar,varchar</stringProp>
           <stringProp name="queryType">Prepared Update Statement</stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>

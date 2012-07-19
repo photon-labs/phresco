@@ -4,11 +4,11 @@
 	<groupId>com.photon.phresco.framework</groupId>
 	<artifactId>PhrescoFrameworkRuntime</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.0.7002-SNAPSHOT</version>
+	<version>1.2.0.7003-SNAPSHOT</version>
 	<name>Phresco Framework Web Application</name>
 
     <properties>
-		<phresco.framework.version>1.2.0.7002-SNAPSHOT</phresco.framework.version>		
+		<phresco.framework.version>1.2.0.7003-SNAPSHOT</phresco.framework.version>		
 	</properties>
 
 	<dependencies>
@@ -61,7 +61,28 @@
 		<version>${phresco.framework.version}</version>
 		<type>jar</type>
 	  </dependency>
-
+		
+	  <dependency>
+		<groupId>binaries</groupId>
+		<artifactId>phantomjs-win32</artifactId>
+		<version>1.5.0</version>
+		<type>zip</type>
+	  </dependency>
+		
+	  <dependency>
+		<groupId>binaries</groupId>
+		<artifactId>phantomjs-macosx</artifactId>
+		<version>1.5.0</version>
+		<type>zip</type>
+	  </dependency>
+	   
+	  <dependency>
+		<groupId>binaries</groupId>
+		<artifactId>phantomjs-linux-x86</artifactId>
+		<version>1.5.0</version>
+		<type>zip</type>
+	  </dependency>
+	  
 	</dependencies>
 	
 	<build>	
@@ -148,6 +169,36 @@
 									<groupId>org.apache.jmeter</groupId>
 									<artifactId>jmeter</artifactId>
 									<version>2.5.1</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+								<!-- extracting Phantomjs For Windows -->
+								<artifactItem>
+									<groupId>binaries</groupId>
+									<artifactId>phantomjs-win32</artifactId>
+									<version>1.5.0</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+								<!-- extracting Phantomjs For Mac  -->
+								<artifactItem>
+									<groupId>binaries</groupId>
+									<artifactId>phantomjs-macosx</artifactId>
+									<version>1.5.0</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>../workspace/tools</outputDirectory>
+								</artifactItem>
+								
+								<!-- extracting Phantomjs For Linux -->
+								<artifactItem>
+									<groupId>binaries</groupId>
+									<artifactId>phantomjs-linux-x86</artifactId>
+									<version>1.5.0</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>

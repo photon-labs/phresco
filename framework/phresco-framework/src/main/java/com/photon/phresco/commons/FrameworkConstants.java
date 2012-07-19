@@ -750,7 +750,7 @@ public interface FrameworkConstants {
     String ERROR_LOGIN_ACCESS_DENIED = "login.error.access.denied.message";
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
-    String SESSION_EXPIRED = "Session Expired ! Please Relogin";
+    String SESSION_EXPIRED = "session.expired.message";
 
     /*
      * login keys
@@ -1122,7 +1122,7 @@ public interface FrameworkConstants {
    /* Site report */
    String REQ_SITE_REPORT = "siteReport";
    String REQ_SITE_REPORT_PATH = "siteReportPath";
-   String SITE_TARGET = "target/site";
+   String SITE_REPORT_DIR = "site";
    String REQ_SITE_REPORTS = "reports";
    String REQ_SITE_SLECTD_REPORTS = "selectedReports";
    String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";

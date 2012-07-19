@@ -98,7 +98,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<plugin>
 					<groupId>com.photon.phresco.plugins</groupId>
 					<artifactId>php-maven-plugin</artifactId>
-					<version>1.2.0.7002-SNAPSHOT</version>
+					<version>1.2.0.7003-SNAPSHOT</version>
 						<executions>
 							<execution>
 							<phase>validate</phase>

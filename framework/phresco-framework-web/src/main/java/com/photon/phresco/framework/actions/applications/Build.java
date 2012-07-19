@@ -1039,6 +1039,7 @@ public class Build extends FrameworkBaseAction {
 		String serverProtocol = "";
 		int serverPort = 0;
 		BufferedReader fileReader = null;
+		String line = "";
 		try {
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
@@ -1054,19 +1055,25 @@ public class Build extends FrameworkBaseAction {
 				break;
 			}
 
-			compileProject();
-			fileReader = new BufferedReader(new FileReader(getLogFilePath()));
-			String line = fileReader.readLine();
-			while (line != null && !line.startsWith("[INFO] BUILD FAILURE")) {
+			try {
+				compileProject();
+				fileReader = new BufferedReader(new FileReader(getLogFilePath()));
 				line = fileReader.readLine();
+				while (line != null && !line.startsWith("[INFO] BUILD FAILURE")) {
+					line = fileReader.readLine();
+				}
+			} finally {
+				if (fileReader != null) {
+					fileReader.close();
+				}
 			}
+
 			if (line != null && line.startsWith("[INFO] BUILD FAILURE")) {
 				getHttpSession().setAttribute(projectCode + REQ_JAVA_START,
 						new BufferedReader(new FileReader(getLogFilePath())));
 			} else {
 				// TODO: delete the server.log and create empty server.log file
-				File dir = new File(getLogFolderPath());
-				deleteLogFile(dir);
+				deleteLogFile();
 				javaMap.put(ENVIRONMENT_NAME, environments);
 				javaMap.put(IMPORT_SQL, importSQL);
 				ActionType serverStart = ActionType.START_SERVER;
@@ -1090,18 +1097,6 @@ public class Build extends FrameworkBaseAction {
 						+ FrameworkUtil.getStackTraceAsString(e));
 			}
 			new LogErrorReport(e, "Java run against source");
-		} finally {
-			try {
-				if (fileReader != null) {
-					fileReader.close();
-				}
-			} catch (IOException e) {
-				if (debugEnabled) {
-					S_LOGGER.error("Entered into catch block of Build.javaRunAgainstSource()"
-							+ FrameworkUtil.getStackTraceAsString(e));
-				}
-				new LogErrorReport(e, "Java run against source");
-			}
 		}
 	}
 
@@ -1277,11 +1272,15 @@ public class Build extends FrameworkBaseAction {
 		return javaReadLogFile;
 	}
 
-	public void deleteLogFile(File dir) {
-		for (File child : dir.listFiles()) {
-			child.delete();
+	public void deleteLogFile() throws IOException {
+		File logFile = new File(getLogFilePath());
+		if (logFile.isFile() && logFile.exists()) {
+			boolean delete = logFile.delete();
 		}
-		dir.delete();
+		if (!logFile.exists()) {
+			logFile.createNewFile();
+		}
+
 	}
 
 	public void waitForTime(int waitSec) {
@@ -1461,8 +1460,7 @@ public class Build extends FrameworkBaseAction {
 			configValues.getAny().addAll(executionConfig);
 			execution.setConfiguration(configValues);
 			List<Element> additionalConfigs = new ArrayList<Element>();
-			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null,
-					additionalConfigs);
+			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null, additionalConfigs);
 			processor.save();
 			profileCreationStatus = true;
 			if (hasSigning) {
@@ -1582,7 +1580,6 @@ public class Build extends FrameworkBaseAction {
 			}
 		}
 	}
-
 
 	public String getShowSettings() {
 		return showSettings;

@@ -51,7 +51,7 @@
     <input id="configure" type="button" value="<s:text name="label.site.report.configure"/>" class="primary btn">
 </div>
  
-<div id="site_report" style="height: 92%;">
+<div id="site_report" style="height: 92%; background: #FFFFFF;">
 	
 </div>
 

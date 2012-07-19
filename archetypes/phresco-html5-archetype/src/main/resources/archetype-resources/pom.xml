@@ -36,12 +36,13 @@
 	
 	<build>
 		<directory>do_not_checkin/target</directory>
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
 		<finalName>service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>java-maven-plugin</artifactId>
-				<version>1.2.0.7002-SNAPSHOT</version>
+				<version>1.2.0.7003-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>

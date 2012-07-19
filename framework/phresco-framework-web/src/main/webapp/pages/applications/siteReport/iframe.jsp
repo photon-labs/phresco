@@ -30,11 +30,17 @@
 			<center><s:label cssClass="errorMsgLabel" key="site.report.not.available"/></center>
 		</div>
 <% } else { %>
-		<iframe src="<%= siteReportPath %>" frameBorder="0" class="iframe_container"></iframe>
+		<iframe src="<%= siteReportPath %>" frameBorder="0" class="iframe_container" id="siteReportIframe"></iframe>
 <% } %>
 
 <script>
 	$(document).ready(function () {
 		enableScreen();
+		
+		$(".styles").click(function() {
+			$("#siteReportIframe").attr({
+	            src: '<%= siteReportPath %>'
+	        });
+		});
 	});
 </script>

@@ -98,7 +98,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<plugin>
 					<groupId>com.photon.phresco.plugins</groupId>
 					<artifactId>wordpress-maven-plugin</artifactId>
-					<version>1.2.0.7002-SNAPSHOT</version>
+					<version>1.2.0.7003-SNAPSHOT</version>
 						<executions>
 							<execution>
 							<phase>validate</phase>
@@ -170,7 +170,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
-		<sonar.phpCodesniffer.skip>WordPress</sonar.phpCodesniffer.skip> 
+		<sonar.phpCodesniffer.standardArgument>WordPress</sonar.phpCodesniffer.standardArgument>
     </properties>
 
 	</project>
