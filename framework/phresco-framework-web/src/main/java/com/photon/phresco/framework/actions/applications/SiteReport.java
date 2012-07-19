@@ -21,6 +21,7 @@ package com.photon.phresco.framework.actions.applications;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,7 +91,8 @@ public class SiteReport extends FrameworkBaseAction {
          		StringBuilder sb = new StringBuilder();
             	sb.append(HTTP_PROTOCOL);
             	sb.append(PROTOCOL_POSTFIX);
-            	sb.append(LOCALHOST);
+            	InetAddress thisIp =InetAddress.getLocalHost();
+            	sb.append(thisIp.getHostAddress());
             	sb.append(COLON);
             	sb.append(phrescoFileServerNumber);
             	sb.append(FORWARD_SLASH);
