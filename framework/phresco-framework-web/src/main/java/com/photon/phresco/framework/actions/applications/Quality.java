@@ -22,13 +22,13 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
@@ -70,6 +70,7 @@ import org.xml.sax.SAXParseException;
 
 import com.google.gson.Gson;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.PerformanceDetails;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -95,13 +96,12 @@ import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model.Modules;
 import com.phresco.pom.util.PomProcessor;
-import com.photon.phresco.commons.PerformanceDetails;
 
 public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
@@ -2008,7 +2008,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         }
         return printAsPdfPopup();
     }
-    
+
     public void reportGeneration(Project project, String testType) {
     	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
     	try {

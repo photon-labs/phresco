@@ -117,6 +117,13 @@
             <version>1.2.16</version>
         </dependency>
         
+       	<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
+            <scope>test</scope>
+        </dependency>
+        
         <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
@@ -184,6 +191,10 @@
                  <exclusion>
                     <artifactId>plexus-container-default</artifactId>
                     <groupId>org.codehaus.plexus</groupId>
+                </exclusion>
+                <exclusion>
+					<groupId>jasperreports</groupId>
+					<artifactId>jasperreports</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -274,6 +285,17 @@
           <resource>
             <directory>src/main/resources</directory>
             <filtering>true</filtering>
+	        <includes>
+	          <include>framework.config</include>
+	        </includes>
+          </resource>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>false</filtering>
+	        <excludes>
+	          <exclude>*.jasper</exclude>
+	          <exclude>*.jrxml</exclude>
+	        </excludes>
           </resource>
         </resources>
         

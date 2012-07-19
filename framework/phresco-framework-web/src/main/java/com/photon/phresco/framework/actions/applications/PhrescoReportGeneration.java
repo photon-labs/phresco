@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,15 +27,20 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -45,6 +51,7 @@ import org.xml.sax.SAXException;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.actions.applications.Quality.XmlNameFileFilter;
 import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.commons.AllTestSuite;
 import com.photon.phresco.framework.commons.AndroidPerfReport;
@@ -84,7 +91,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
     public PhrescoReportGeneration() {
     	
     }
-    
+     
 	public void generatePdfReport(Project proj, String tstType, String reportDataType) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generatePdfReport()");
 		try {
@@ -121,7 +128,6 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generatePdfReport()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 	}
-	
 	
 	public void cumulativePdfReport(Project proj, String tstType, String reportDataType) {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.cumulativePdfReport()");
@@ -193,11 +199,12 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String jasperFile = "PhrescoCumulativeReport.jasper";
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-			
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/PhrescoCumulativeReport.jasper");
+	        
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
 			JREmptyDataSource  dataSource = new JREmptyDataSource();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
+			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, cumulativeReportparams, dataSource);
 			JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
@@ -218,7 +225,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String containerJasperFile = "PhrescoSureFireReport.jasper";
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ containerJasperFile);
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/PhrescoSureFireReport.jasper");
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
 			Map<String, Object> parameters = new HashMap<String,Object>();
 			parameters.put("projectCode", projectCode);
@@ -305,7 +312,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.reportGenerate()");
 		try {
 			new File(outFileNamePDF).getParentFile().mkdirs();
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/"+ jasperFile);
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
@@ -1088,4 +1095,15 @@ class PhrescoFileFilter implements FilenameFilter {
 		}
 		return fileOK;
 	}
+}
+
+class FileExtensionFileFilter implements FilenameFilter {
+    private String filter_;
+    public FileExtensionFileFilter(String filter) {
+        filter_ = filter;
+    }
+
+    public boolean accept(File dir, String name) {
+        return name.endsWith(filter_);
+    }
 }

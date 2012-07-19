@@ -23,7 +23,7 @@
 </style>
 
 <form action="printAsPdf" method="post" autocomplete="off" class="build_form" id="generatePdf">
-<div class="popup_Modal">
+<div class="popup_Modal topFifty">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
 			Generate Report
@@ -109,21 +109,17 @@
 	</div>
 	
 	<div class="modal-footer">
-		<div class="action popup-action" style="">
-			<div style="float: left;">
-				<img class="popupLoadingIcon" style="position: relative;">
-				<div id="errMsg"></div>
-			</div>
-			<div style="float: right;">
-	            <input type="radio" name="reportDataType" value="crisp" checked>
-	            <span class="popup-span"><s:text name="label.report.overall"/></span>
-	            <input type="radio" name="reportDataType" value="detail">
-	            <span class="popup-span"><s:text name="label.report.detail"/></span>
-	            
-				<input type="button" class="btn primary" value="Close" id="cancel">
-				<input type="button" id="generateReport" class="btn primary" value="Generate">
-			</div>
+		<div class="reportErrorMsg">
+			<div id="errMsg"></div>
+			<img class="popupLoadingIcon" style="position: relative;">
 		</div>
+           <input type="radio" name="reportDataType" value="crisp" checked>
+           <span class="popup-span"><s:text name="label.report.overall"/></span>
+           <input type="radio" name="reportDataType" value="detail">
+           <span class="popup-span"><s:text name="label.report.detail"/></span>
+           
+		<input type="button" class="btn primary" value="Close" id="cancel">
+		<input type="button" id="generateReport" class="btn primary" value="Generate">
 	</div>
 </div>
 </form>

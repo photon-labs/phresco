@@ -4794,3 +4794,11 @@ a[id='androidSigning']:hover {
 .pdfType {
 	text-align: center;
 }
+
+.reportErrorMsg {
+	width: 220px; 
+	float: left; 
+	display: inline-block; 
+	margin: 0 auto; 
+	height: 22px;
+}
