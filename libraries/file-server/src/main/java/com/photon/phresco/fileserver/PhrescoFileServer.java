@@ -19,9 +19,19 @@
  */
 package com.photon.phresco.fileserver;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
 
 public class PhrescoFileServer {
 	
@@ -195,6 +205,15 @@ public class PhrescoFileServer {
 				out.write(buffer, 0, file.read(buffer));
 		} catch (IOException e) {
 			System.err.println(e);
+		}
+		finally {
+			try {
+				if (file != null) {
+					file.close();
+				}
+			} catch (Exception e) {
+				System.err.println(e);
+			}
 		}
 	}
 }

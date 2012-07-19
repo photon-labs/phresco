@@ -22,6 +22,7 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -129,7 +130,8 @@ public class Code extends FrameworkBaseAction {
              	if (indexPath.isFile() && StringUtils.isNotEmpty(phrescoFileServerNumber)) {
                 	sb.append(HTTP_PROTOCOL);
                 	sb.append(PROTOCOL_POSTFIX);
-                	sb.append(LOCALHOST);
+                	InetAddress thisIp =InetAddress.getLocalHost();
+                	sb.append(thisIp.getHostAddress());
                 	sb.append(COLON);
                 	sb.append(phrescoFileServerNumber);
                 	sb.append(FORWARD_SLASH);

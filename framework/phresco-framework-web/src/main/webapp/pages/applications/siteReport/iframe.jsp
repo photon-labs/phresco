@@ -34,6 +34,9 @@
 <% } %>
 
 <script>
+	<% if (StringUtils.isNotEmpty(siteReportPath)) { %>
+			$("#site_report").css("background", "#FFFFFF");
+	<% } %>
 	$(document).ready(function () {
 		enableScreen();
 		
