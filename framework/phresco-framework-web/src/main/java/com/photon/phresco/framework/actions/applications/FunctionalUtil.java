@@ -50,8 +50,11 @@ public class FunctionalUtil {
         builder.append(FrameworkUtil.getInstance().getFuncitonalAdaptDir(project.getProjectInfo().getTechnology().getId()));
      
         try {
-            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-            administrator.updateTestConfiguration(project, envName, browser, builder.toString());
+		    File file = new File(builder.toString());
+        	if(file.exists()){
+               ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+               administrator.updateTestConfiguration(project, envName, browser, builder.toString());
+			}
         } catch (Exception e) {
             throw new PhrescoException(e);
         } finally {
