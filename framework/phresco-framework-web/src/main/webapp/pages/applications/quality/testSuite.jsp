@@ -182,19 +182,19 @@
 					              		<td id="tstRst_td2" class="width-twenty-five-percent"><%= testCase.getTestClass() == null ? "" : testCase.getTestClass() %></td>
 					              		<td class="width-fifteen-percent"><%= testCase.getTime() == null ? "" : testCase.getTime() %></td>
 					              		<td class="width-fifteen-percent">
-					              			<% if (testCase.getTestCaseFailure() != null) { %>
+					              			<% if (failure != null) { %>
 												<img src="images/icons/failure.png" title="Failure">
-											<% } else if (testCase.getTestCaseError() != null) { %>
+											<% } else if (error != null) { %>
 												<img src="images/icons/error.png" title="Error">
 											<% } else { %>
 												<img src="images/icons/success.png" title="Success">
 											<% } %>  
 					              		</td>
 					              		<td class="width-ten-percent">
-					              			<% if (testCase.getTestCaseFailure() != null) { %>
+					              			<% if (failure != null) { %>
 												<input type="hidden" name="<%= testCase.getName() %>" value="<%= testCase.getTestCaseFailure().getFailureType()%>,<%= testCase.getTestCaseFailure().getDescription()%>" id="<%= testCase.getName() %>">
 												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
-											<% } else if (testCase.getTestCaseError() != null) { %>
+											<% } else if (error != null) { %>
 												<input type="hidden" name="<%= testCase.getName() %>" value="<%= testCase.getTestCaseError().getErrorType()%>,<%= testCase.getTestCaseError().getDescription()%>" id="<%= testCase.getName() %>">
 												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
 											<% } else { %>
@@ -206,10 +206,9 @@
 						              	%>
 					            		<td class="width-ten-percent">
 					            			<% 
-					            				if(testCase.getTestCaseFailure() != null || testCase.getTestCaseError() != null)  { 
+					            				if((failure != null && failure.isHasFailureImg()) || (error != null && error.isHasErrorImg()))  { 
 					            			%>
 					            				<a class="testCaseScreenShot" name="<%= testCase.getName() %>" href="#"><img src="images/icons/screenshot.png" alt="logo"> </a>
-<%-- 					            				<a name="<%= testCase.getName() %>" href="<%= request.getContextPath()%>/getScreenShotImage.action?projectCode=<%= (String) request.getAttribute("projectCode")%>&testCaseName=<%= testCase.getName() %>"><img src="images/icons/log.png" alt="screenshot"> </a> --%>
 					            			<% 
 					            				}
 					            			%>

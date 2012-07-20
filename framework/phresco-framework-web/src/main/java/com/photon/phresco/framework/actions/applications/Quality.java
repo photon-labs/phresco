@@ -720,36 +720,21 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             int failureTestCases = 0;
             int errorTestCases = 0;
 
+        	StringBuilder screenShotDir = new StringBuilder();
+        	screenShotDir.append(Utility.getProjectHome());
+        	screenShotDir.append(project.getProjectInfo().getCode());
+        	screenShotDir.append(frameworkUtil.getFunctionalReportDir(project.getProjectInfo().getTechnology().getId()));
+        	screenShotDir.append(File.separator);
+        	screenShotDir.append(SCREENSHOT_DIR);
+        	screenShotDir.append(File.separator);
+        	
             for (int i = 0; i < nodelist.getLength(); i++) {
                 Node node = nodelist.item(i);
                 NodeList childNodes = node.getChildNodes();
                 NamedNodeMap nameNodeMap = node.getAttributes();
                 TestCase testCase = new TestCase();
 
-                if (childNodes != null && childNodes.getLength() > 0) {
-
-                    for (int j = 0; j < childNodes.getLength(); j++) {
-                        Node childNode = childNodes.item(j);
-
-                        if (ELEMENT_FAILURE.equals(childNode.getNodeName())) {
-                        	failureTestCases++;
-                            TestCaseFailure failure = getFailure(childNode);
-                            if (failure != null) {
-                                testCase.setTestCaseFailure(failure);
-                            } 
-                        }
-
-                        if (ELEMENT_ERROR.equals(childNode.getNodeName())) {
-                        	errorTestCases++;
-                            TestCaseError error = getError(childNode);
-                            if (error != null) {
-                                testCase.setTestCaseError(error);
-                            }
-                        }
-                    }
-                }
-
-                for (int k = 0; k < nameNodeMap.getLength(); k++){
+                for (int k = 0; k < nameNodeMap.getLength(); k++) {
                     Node attribute = nameNodeMap.item(k);
                     String attributeName = attribute.getNodeName();
                     String attributeValue = attribute.getNodeValue();
@@ -765,15 +750,48 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                         testCase.setAssertions(Float.parseFloat(attributeValue));
                     } else if (ATTR_TIME.equals(attributeName)) {
                         testCase.setTime(attributeValue);
-                    } 
+                    }
                 }
+                
+                if (childNodes != null && childNodes.getLength() > 0) {
+
+                    for (int j = 0; j < childNodes.getLength(); j++) {
+                        Node childNode = childNodes.item(j);
+
+                        if (ELEMENT_FAILURE.equals(childNode.getNodeName())) {
+                        	failureTestCases++;
+                            TestCaseFailure failure = getFailure(childNode);
+                            if (failure != null) {
+                            	File file = new File(screenShotDir.toString() + testCase.getName() + DOT + IMG_PNG_TYPE);
+                            	if (file.exists()) {
+                            		failure.setHasFailureImg(true);
+                            	}
+                                testCase.setTestCaseFailure(failure);
+                            } 
+                        }
+
+                        if (ELEMENT_ERROR.equals(childNode.getNodeName())) {
+                        	errorTestCases++;
+                            TestCaseError error = getError(childNode);
+                            if (error != null) {
+                            	File file = new File(screenShotDir.toString() + testCase.getName() + DOT + IMG_PNG_TYPE);
+                            	if (file.exists()) {
+                            		error.setHasErrorImg(true);
+                            	}
+                                testCase.setTestCaseError(error);
+                            }
+                        }
+                    }
+                }
+
                 testCases.add(testCase);
             }
 
-                getHttpRequest().setAttribute(REQ_TESTSUITE_FAILURES, failureTestCases + "");
-                getHttpRequest().setAttribute(REQ_TESTSUITE_ERRORS, errorTestCases + "");
-                getHttpRequest().setAttribute(REQ_TESTSUITE_TESTS, nodelist.getLength() + "");
-				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+            getHttpRequest().setAttribute(REQ_TESTSUITE_FAILURES, failureTestCases + "");
+            getHttpRequest().setAttribute(REQ_TESTSUITE_ERRORS, errorTestCases + "");
+            getHttpRequest().setAttribute(REQ_TESTSUITE_TESTS, nodelist.getLength() + "");
+			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+			
             return testCases;
         } catch (PhrescoException e) {
         	S_LOGGER.error("Entered into catch block of Quality.getTestCases()"+ e);
