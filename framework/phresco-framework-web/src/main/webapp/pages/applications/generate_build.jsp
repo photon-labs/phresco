@@ -395,6 +395,7 @@
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
+			<img class="popupLoadingIcon">
 			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
 			<div style="float: right;">
 				<input type="hidden" name="from" value="<%= from %>" id="from">

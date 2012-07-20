@@ -4833,3 +4833,16 @@ a[id='androidSigning']:hover {
 	margin: 0 auto; 
 	height: 22px;
 }
+
+.popupLoadingIcon {
+    position: relative;
+    display: none;
+}
+
+#clipboard {
+    height: 21px; 
+    width: 21px; 
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+}
