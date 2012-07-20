@@ -1962,6 +1962,47 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     public String printAsPdfPopup () {
         S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
         try {
+        	boolean XmlResultsAvailable = false;
+        	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+            StringBuilder sb = new StringBuilder();
+            sb.append(Utility.getProjectHome());
+            sb.append(project.getProjectInfo().getCode());
+            String technology = project.getProjectInfo().getTechnology().getId();
+          //check unit and functional are executed already or not
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getUnitReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            performanceTestResultAvail();
+	        	if(isAtleastOneFileAvail()) {
+	        		XmlResultsAvailable = true;
+	        	}
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getLoadReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+        	getHttpRequest().setAttribute(REQ_TEST_EXE, XmlResultsAvailable);
         	List<String> pdfFiles = new ArrayList<String>();
             // popup showing list of pdf's already created
         	String pdfDirLoc = "";
@@ -2047,6 +2088,27 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
         }
         return SUCCESS;
+    }
+    
+    public String deleteReport() {
+        S_LOGGER.debug("Entering Method Quality.deleteReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+        	String pdfLOC = "";
+        	if (StringUtils.isEmpty(testType)) { 
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportFileName + DOT + PDF;
+        	} else {
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	}
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+            	boolean reportDeleted = pdfFile.delete();
+            	S_LOGGER.info("Report deleted " + reportDeleted);
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return printAsPdfPopup();
     }
     
     public List<SettingsInfo> getServerSettings() {

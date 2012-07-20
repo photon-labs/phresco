@@ -382,6 +382,7 @@ public interface FrameworkConstants {
     String REQ_APPLICATION_TYPE = "applicationType";
     String REQ_OLD_CONFIG_NAME = "configName";
     String REQ_TEST_TYPE = "testType";
+    String REQ_TEST_EXE = "testExecuted";
     String REQ_REPORT_STATUS = "reportStatus";
     String REQ_SELECTEDPROJECTS = "selectedProjects";
     String REQ_BUILD_NUMBER = "build-number";

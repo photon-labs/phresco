@@ -4815,3 +4815,9 @@ a[id='androidSigning']:hover {
     float: right;
     margin-right: 10px;
 }
+
+.pdfDelete {
+	text-align: left;
+	margin-left: 16%;
+	cursor: pointer;
+}

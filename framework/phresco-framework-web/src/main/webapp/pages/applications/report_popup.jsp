@@ -50,6 +50,9 @@
 				              	<th class="second validate_tblHdr">
 				                	<div class="pdfth-inner">Download</div>
 				              	</th>
+				              	<th class="second validate_tblHdr">
+				                	<div class="pdfth-inner">Delete</div>
+				              	</th>
 				            </tr>
 			          	</thead>
 			
@@ -92,6 +95,11 @@
 						          		    </s:url>">
 						          		     <img src="images/icons/download.png" title="<%= reportFile %>.pdf"/>
 			                            </a>
+					   				</div>
+			              		</td>
+			              		<td>
+			              			<div class="pdfDelete" style="color: #000000;">
+						          		     <img src="images/icons/delete(1).png" id="reportName" class="<%= reportFile %>" title="<%= reportFile %>.pdf"/>
 					   				</div>
 			              		</td>
 			            	</tr>
@@ -161,6 +169,32 @@
             performAction('printAsPdf', params, $('#popup_div'), '');
 		});
 		
+		$('.pdfDelete').click(function() {
+			$('.popupLoadingIcon').show();
+			getCurrentCSS();
+			var params = "";
+	    	if (!isBlank($('form').serialize())) {
+	    		params = $('form').serialize() + "&";
+	    	}
+	    	params = params.concat("reportFileName=");
+	    	params = params.concat($('#reportName').attr("class"));
+	    	<%
+				if (StringUtils.isEmpty(testType) && !"performance".equals(testType)) {
+			%>
+	 	    	params = params.concat("&projectCode=");
+		    	params = params.concat('<%= projectCode %>');
+			<%
+				} else if(!"performance".equals(testType)) {
+				
+			%>
+	 	    	params = params.concat("&testType=");
+		    	params = params.concat('<%= testType %>');
+			<%
+				}  	
+	    	%>
+            performAction('deleteReport', params, $('#popup_div'), '');
+		});
+		
 		<%
 			if (StringUtils.isNotEmpty(reportGenerationStat)) {
 		%>
@@ -168,6 +202,20 @@
 		<%
 			}
 		%>
+		
+		<%
+			if(!(Boolean) request.getAttribute(FrameworkConstants.REQ_TEST_EXE)) {
+		%>
+			$("#errMsg").html("Atleast one test result is necessary");
+			disableControl($("#generateReport"), "btn disabled");
+		<%
+			} else {
+		%>
+			enableControl($("#generateReport"), "btn primary");
+		<% 
+			}
+		%>
+			
 	});
 	
 </script>
