@@ -42,15 +42,14 @@
     <build>
 		<testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
-        <finalName>HelloWorld</finalName>
 		<extensions>
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2.0.6003-SNAPSHOT</version>
+				<version>1.2.0.7004-SNAPSHOT</version>
 			</extension>
 		</extensions>
-		<sourceDirectory>src/main/js</sourceDirectory>	
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
         <plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -92,7 +91,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.2.0.6003-SNAPSHOT</version>
+                <version>1.2.0.7004-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
@@ -193,6 +192,39 @@
 		        </plugins>
             </build>
         </profile>
+		
+		<profile>   
+			<id>js</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			 </activation>
+			<properties>
+				<sonar.branch>js</sonar.branch>
+				<sonar.language>js</sonar.language>
+				<phresco.source.directory>src/main/js</phresco.source.directory>
+				<sonar.exclusions>**/lib/**</sonar.exclusions>
+			 </properties> 
+		</profile>
+		
+		<profile>   
+			<id>java</id>
+			<properties>
+				<sonar.branch>java</sonar.branch>
+				<sonar.language>java</sonar.language>
+				<phresco.source.directory>src/main/java</phresco.source.directory>
+				</properties> 
+		</profile>
+		
+		<profile>   
+			<id>web</id>
+			<properties>
+				<sonar.branch>web</sonar.branch>
+				<sonar.language>web</sonar.language>
+				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+				<phresco.source.directory>src/main/webapp</phresco.source.directory>
+				</properties> 
+		</profile>
+		
     </profiles>
 
 </project>

@@ -167,7 +167,13 @@ public class XcodeBuild extends AbstractMojo {
 	 *            default-value="phresco-env-config.xml"
 	 */
 	protected String plistFile;
-
+	
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+	
+	protected int buildNo;
 	private File srcDir;
 	private File buildDirFile;
 	private File buildInfoFile;
@@ -309,7 +315,6 @@ public class XcodeBuild extends AbstractMojo {
 				getLog().info("Build directory created..." + buildDirFile.getPath());
 			}
 			buildInfoFile = new File(buildDirFile.getPath() + "/build.info");
-			System.out.println("file created " + buildInfoFile);
 			nextBuildNo = generateNextBuildNo();
 			currentDate = Calendar.getInstance().getTime();
 		}
@@ -403,7 +408,6 @@ public class XcodeBuild extends AbstractMojo {
 		if (outputFile.exists()) {
 
 			try {
-				System.out.println("Completed " + outputFile.getAbsolutePath());
 				getLog().info("dSYM created.. Copying to Build directory.....");
 				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
 				File baseFolder = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName);
@@ -476,10 +480,17 @@ public class XcodeBuild extends AbstractMojo {
 
 	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 		try {
+			if (buildNumber != null) {
+				buildNo = Integer.parseInt(buildNumber);
+			}
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = new BuildInfo();
 			List<String> envList = pu.csvToList(environmentName);
-			buildInfo.setBuildNo(nextBuildNo);
+			if (buildNo > 0) {
+				buildInfo.setBuildNo(buildNo);
+			} else {
+				buildInfo.setBuildNo(nextBuildNo);
+			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
 				buildInfo.setBuildStatus("SUCCESS");
@@ -532,20 +543,20 @@ public class XcodeBuild extends AbstractMojo {
 		if (StringUtils.isEmpty(environmentName)) {
 			return;
 		}
-//		try {
-		getLog().info("Configuring the project....");
-		getLog().info("environment name :" + environmentName);
-		getLog().info("base dir name :" + baseDir.getName());
-		File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
-		String basedir = baseDir.getName();
-		PluginUtils pu = new PluginUtils();
-		pu.executeUtil(environmentName, basedir, srcConfigFile);
-	//	if(encrypt) {
-	//	pu.encode(srcConfigFile);
-	//	}
-//		} catch (PhrescoException e) {
-//			throw new MojoExecutionException(e.getMessage(), e);
-//		}
-
+		try {
+			getLog().info("Configuring the project....");
+			getLog().info("environment name :" + environmentName);
+			getLog().info("base dir name :" + baseDir.getName());
+			File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
+			String basedir = baseDir.getName();
+			PluginUtils pu = new PluginUtils();
+			pu.executeUtil(environmentName, basedir, srcConfigFile);
+			pu.setDefaultEnvironment(environmentName, srcConfigFile);
+			// if(encrypt) {
+			// pu.encode(srcConfigFile);
+			// }
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 }

@@ -264,7 +264,7 @@
 		});
 		
 		$('#deleteButton').click(function() {
-			$("#confirmationText").html("Do you want to delete the selected configuration(s)");
+			$("#confirmationText").html("Do you want to delete the selected configuration(s)?");
 		    dialog('block');
 		    escBlockPopup();
 		});

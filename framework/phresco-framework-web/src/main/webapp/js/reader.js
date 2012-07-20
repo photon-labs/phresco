@@ -19,8 +19,8 @@
  */
 // from auto close
 var showSuccessComplete = true;
-function readerHandler(data, projectCode, testType) {
-	
+function readerHandler(data, projectCode, testType, pageUrl) {
+
 	// from auto close
 	if($.trim(data) == 'Test is not available for this project') {
 		data = '<b>Test is not available for this project</b>';
@@ -46,12 +46,23 @@ function readerHandler(data, projectCode, testType) {
 	   }
 	   return;
    }
-   $("#build-output").append(data + '<br>');
-   $('#build-output').prop('scrollTop', $('#build-output').prop('scrollHeight'));
-   asyncHandler(projectCode, testType);
+	   
+	$("a[name='appTabs']").each(function(index, value) {
+		if ($(this).attr('class') === 'selected') {
+			if ($(this).attr('id') === 'buildView' && (testType === 'unit' || testType === 'functional' || testType === 'performance' || testType === 'load')) {
+				console.info('returning...');
+				return;
+				
+			}
+		   $("#build-output").append(data + '<br>');
+		   $('#build-output').prop('scrollTop', $('#build-output').prop('scrollHeight')); 
+			asyncHandler(projectCode, testType, pageUrl);
+		}
+	});
+   
 }
 
-function asyncHandler(projectCode, testType) {
+function asyncHandler(projectCode, testType, pageUrl) {
    $.ajax({
         url : 'pages/applications/reader.jsp',
         type : "POST",
@@ -60,7 +71,11 @@ function asyncHandler(projectCode, testType) {
             'testType' : testType
         },
         success : function(data) { 
-            readerHandler(data, projectCode, testType); 
+            if ((pageUrl == "restartServer" || pageUrl == "runAgainstSource") && 
+            		($.trim(data)).indexOf("Compilation failure") > -1) {
+            	runAgainstSrcSDown ();
+            }
+            readerHandler(data, projectCode, testType, pageUrl); 
         }
     });
 }

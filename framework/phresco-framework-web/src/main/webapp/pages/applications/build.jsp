@@ -56,7 +56,7 @@
 	    border-radius: 6px 6px 6px 6px;
 	    margin-left: 6px;
 	    margin-right: 6px;
-		height:98%
+		height:98%;
 	}
     
     /* .build_detail_div {
@@ -113,7 +113,7 @@
     </div>
 </s:if>
 
-<div class="alert-message warning"  id="warningmsg" style="">
+<div class="alert-message warning"  id="warningmsg" style="display:none;">
 	<s:label cssClass="labelWarn" key="build.warn.message" />
 </div>
 
@@ -163,13 +163,10 @@
 			<div class="build_table_div">
     			<!-- Command Display Heading starts -->
 				<div class="tblheader" style="height: 29px;">
-					<div class="clipboard" style="float: right; margin-right: -9px;">
-                    	<img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" style= "height:21px; width:21px; cursor:pointer; margin-top: 3px; margin-right: 15px;" title="Copy to clipboard"> 
-					</div>
 					<table class="zebra-striped" style="height: 29px;"> 
 						<tr class="tr_color">
 		    				<th><s:text name="label.progress"/></th>
-		    				
+		    				<th><img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" title="Copy to clipboard"/></th>
 						</tr>
 		           </table>
           		</div>

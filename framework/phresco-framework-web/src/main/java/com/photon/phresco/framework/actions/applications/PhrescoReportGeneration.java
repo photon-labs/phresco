@@ -6,9 +6,11 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,15 +26,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -43,6 +51,7 @@ import org.xml.sax.SAXException;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.actions.applications.Quality.XmlNameFileFilter;
 import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.commons.AllTestSuite;
 import com.photon.phresco.framework.commons.AndroidPerfReport;
@@ -65,27 +74,26 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 
 	private static final Logger S_LOGGER = Logger.getLogger(PhrescoReportGeneration.class);
     private static Boolean debugEnabled  =S_LOGGER.isDebugEnabled();
-	private static Project project = null;
-	private static String techId = null;
-	private static String testType = null;
-	private static String projectCode = null;
-	private static String projectName = null;
-    private static FrameworkUtil reportPaths = null;
+	private Project project = null;
+	private String techId = null;
+	private String techName = null;
+	private String testType = null;
+	private String projectCode = null;
+	private String projectName = null;
+    private FrameworkUtil reportPaths = null;
+    private String reportDatasType = null;
     
     //test suite details
 	private float noOfTstSuiteTests = 0;
     private float noOfTstSuiteFailures = 0;
     private float noOfTstSuiteErrors = 0;
     
-	public static void main(String[] args)  throws Exception {
-//		PhrescoReportGeneration rg = new PhrescoReportGeneration();
-//		// Values
-//		ArrayList<XmlReport> sureFireReports = rg.sureFireReport();
-//		//Report Generation
-//		rg.generateReport(sureFireReports);
-	}
-	
-	public static void generatePdfReport(Project proj, String tstType) {
+    public PhrescoReportGeneration() {
+    	
+    }
+     
+	public void generatePdfReport(Project proj, String tstType, String reportDataType) {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generatePdfReport()");
 		try {
 			reportPaths = FrameworkUtil.getInstance();
 			project = proj;
@@ -93,163 +101,229 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			techId = project.getProjectInfo().getTechnology().getId();
 			projectCode = project.getProjectInfo().getCode();
 			projectName = project.getProjectInfo().getName();
-			PhrescoReportGeneration rg = new PhrescoReportGeneration();
+			techName = project.getProjectInfo().getTechnology().getName();
+			reportDatasType = reportDataType;
 			// Report generation for unit and functional
 			if (UNIT.equals(testType) || FUNCTIONAL.equals(testType)) {
-				// old type report generation
-//				ArrayList<XmlReport> sureFireReports;
-//				sureFireReports = rg.sureFireReport();
-//				rg.generateUnitAndFunctionalReport(sureFireReports);
-				
 				//crisp and detail view report generation
-				SureFireReport sureFireReportsNew = rg.sureFireReportsNew();
-				//Report Generation
-				rg.generateUnitAndFunctionalReportNew(sureFireReportsNew);
-				
+				SureFireReport sureFireReports = sureFireReports();
+				generateUnitAndFunctionalReport(sureFireReports);
 			// Report generation for performance
 			} else if (PERFORMACE.equals(testType)) {
 				if(TechnologyTypes.ANDROIDS.contains(techId)) {
 					//android technology reports 
-					List<AndroidPerfReport> jmeterTestResultsForAndroid = rg.getJmeterTestResultsForAndroid();
-					rg.generateAndroidPerformanceReport(jmeterTestResultsForAndroid);
+					List<AndroidPerfReport> jmeterTestResultsForAndroid = getJmeterTestResultsForAndroid();
+					generateAndroidPerformanceReport(jmeterTestResultsForAndroid);
 				} else {
-					ArrayList<JmeterTypeReport> jmeterTestResults = rg.getJmeterTestResults();
+					ArrayList<JmeterTypeReport> jmeterTestResults = getJmeterTestResults();
 					// Performance test report generation
-					rg.generateJmeterPerformanceReport(jmeterTestResults);
+					generateJmeterPerformanceReport(jmeterTestResults);
 				}
 			}  else if (LOAD.equals(testType)) {
-				List<LoadTestReport> loadTestResults = rg.getLoadTestResults();
+				List<LoadTestReport> loadTestResults = getLoadTestResults();
 				// Load test report generation
-				rg.generateLoadTestReport(loadTestResults);
+				generateLoadTestReport(loadTestResults);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generatePdfReport()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 	}
 	
-	// Unit and functional pdf report generation
-	public void generateUnitAndFunctionalReport(ArrayList<XmlReport> sureFireReports) {
+	public void cumulativePdfReport(Project proj, String tstType, String reportDataType) {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.cumulativePdfReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			reportPaths = FrameworkUtil.getInstance();
+			project = proj;
+			testType = tstType;
+			techId = project.getProjectInfo().getTechnology().getId();
+			techName = project.getProjectInfo().getTechnology().getName();
+			projectCode = project.getProjectInfo().getCode();
+			projectName = project.getProjectInfo().getName();
+			reportDatasType = reportDataType;
+			cumalitiveTestReport();
+		} catch(Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.cumulativePdfReport()" + FrameworkUtil.getStackTraceAsString(e));
+		}
+	}
+	
+	//Consolidated report for all test
+	public void cumalitiveTestReport() throws Exception {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.cumalitiveTestReport()");
+		//unit and functional details
+		testType = "unit";
+		SureFireReport unitTestSureFireReports = sureFireReports();
+		S_LOGGER.debug("unitTestSureFireReports " + unitTestSureFireReports);
+		
+		testType = "functional";
+		SureFireReport functionalSureFireReports = sureFireReports();
+		S_LOGGER.debug("functionalSureFireReports " + functionalSureFireReports);
+		
+		//performance details
+		List<AndroidPerfReport> jmeterTestResultsForAndroid = null;
+		ArrayList<JmeterTypeReport> jmeterTestResults = null;
+		if(TechnologyTypes.ANDROIDS.contains(techId)) {
+			jmeterTestResultsForAndroid = getJmeterTestResultsForAndroid();
+			S_LOGGER.debug("jmeterTestResultsForAndroid " + jmeterTestResultsForAndroid);
+		} else {
+			jmeterTestResults = getJmeterTestResults();
+			S_LOGGER.debug("jmeterTestResults " + jmeterTestResultsForAndroid);
+		}
+		
+		//load test details
+		List<LoadTestReport> loadTestResults = getLoadTestResults();
+		S_LOGGER.debug("loadTestResults " + loadTestResults);
+		
+		Map<String, Object> cumulativeReportparams = new HashMap<String,Object>();
+		cumulativeReportparams.put("projectCode", projectCode);
+		cumulativeReportparams.put("projectName", projectName);
+		cumulativeReportparams.put("techName", techName);
+		cumulativeReportparams.put("reportsDataType", reportDatasType);
+		cumulativeReportparams.put("unitTestReports", Arrays.asList(unitTestSureFireReports));
+		cumulativeReportparams.put("functionalTestReports", Arrays.asList(functionalSureFireReports));
+		
+		if(TechnologyTypes.ANDROIDS.contains(techId)) {
+			cumulativeReportparams.put("performanceSpecialHandle", true);
+			cumulativeReportparams.put("performanceTestReports",jmeterTestResultsForAndroid);
+		} else {
+			cumulativeReportparams.put("performanceSpecialHandle", false);
+			cumulativeReportparams.put("performanceTestReports", jmeterTestResults);
+		}
+		cumulativeReportparams.put("loadTestReports", loadTestResults);
+		generateCumulativeTestReport(cumulativeReportparams);
+	}
+	
+	//cumulative test report generation
+	public void generateCumulativeTestReport(Map<String, Object> cumulativeReportparams) {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateCumulativeTestReport()");
+		try {
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
-			String jasperFile = "PhrescoXmlReport.jasper";
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-			
+			String jasperFile = "PhrescoCumulativeReport.jasper";
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/PhrescoCumulativeReport.jasper");
+	        
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
-			Map<String, Object> parameters = new HashMap<String,Object>();
-//			http://polimetla.com/category/jasperreports/
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(sureFireReports);
+			JREmptyDataSource  dataSource = new JREmptyDataSource();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+			
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, cumulativeReportparams, dataSource);
 			JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-			exporter.exportReport(); 
-			
+			exporter.exportReport();
+			S_LOGGER.debug("Cumulative Report generation completed" + outFileNamePDF);
 		} catch(Exception e) {
-			e.printStackTrace();
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateCumulativeTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Report generation errorr ");
 		}
+		
 	}
 	
-	public void generateUnitAndFunctionalReportNew(SureFireReport sureFireReports) {
+	// Unit and functional pdf report generation
+	public void generateUnitAndFunctionalReport(SureFireReport sureFireReports) {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateUnitAndFunctionalReport()");
 		try {
-			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
 			new File(outFileNamePDF).getParentFile().mkdirs();
-			String containerJasperFile = "PhrescoSureFireReport.jasper"; //Container
-//			String crispJasperFile = "PhrescoSureFireCrispReport.jasper"; //crisp report
-//			String detailJasperFile = "PhrescoSureFireDetailReport.jasper"; // Deyail report
-//			String testCaseJasperFile = "PhrescoSureFireTestCaseReport.jasper"; // testcase report with graph
-			
-			InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ containerJasperFile);
+			String containerJasperFile = "PhrescoSureFireReport.jasper";
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/PhrescoSureFireReport.jasper");
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
 			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
 			parameters.put("testType", testType);
-			parameters.put("projectCode", projectName);
+			parameters.put("reportsDataType", reportDatasType);
 			JRBeanArrayDataSource dataSource = new JRBeanArrayDataSource(new SureFireReport[]{sureFireReports});
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
 			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-			exporter.exportReport(); 
+			exporter.exportReport();
+			S_LOGGER.debug("Unit and functional Report generation completed" + outFileNamePDF);
 		} catch(Exception e) {
-			e.printStackTrace();
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateUnitAndFunctionalReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Unit and functional  generation error");
 		}
 	}
 	
 	// performance test report
 	public void generateJmeterPerformanceReport(ArrayList<JmeterTypeReport> jmeterTestResults)  throws Exception {
-		ArrayList<JmeterTypeReport> jmeterTstResults = jmeterTestResults;
-		
-		String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
-		new File(outFileNamePDF).getParentFile().mkdirs();
-//		String jasperFile = "PhrescoJmeterReport.jasper";
-		String jasperFile = "PhrescoPerfContain.jasper";
-		//conatiner file - PhrescoPerfContain.jasper
-		//xml file names - PhrescoPerfFiles.jasper
-		//xml list data - PhrescoPerfFileDatas.jasper
-		
-		InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-		
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
-		Map<String, Object> parameters = new HashMap<String,Object>();
-		parameters.put("testType", testType);
-		parameters.put("projectCode", projectName);
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jmeterTstResults);
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-		JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.exportReport(); 
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateJmeterPerformanceReport()");
+		try {
+			ArrayList<JmeterTypeReport> jmeterTstResults = jmeterTestResults;
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String jasperFile = "PhrescoPerfContain.jasper";
+			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
+			parameters.put("testType", testType);
+			parameters.put("reportsDataType", reportDatasType);
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jmeterTstResults);
+			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
+		} catch (Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateJmeterPerformanceReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Performance  generation error ");
+		}
 	}
 	
 	// performance test report
 	public void generateAndroidPerformanceReport(List<AndroidPerfReport> androidPerReports)  throws Exception {
-		String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + "android" + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
-		new File(outFileNamePDF).getParentFile().mkdirs();
-//		String jasperFile = "PhrescoJmeterReport.jasper";
-		String jasperFile = "PhrescoAndroidPerfContain.jasper";
-		//conatiner file - PhrescoAndroidPerfContain.jasper
-		//device list data - PhrescoAndroidPerfDevices.jasper
-		//data - PhrescoAndroidPerfFileDatas.jasper
-		
-		InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
-		Map<String, Object> parameters = new HashMap<String,Object>();
-		parameters.put("testType", testType);
-		parameters.put("projectCode", projectName);
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(androidPerReports);
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-		JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.exportReport(); 
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateAndroidPerformanceReport()");
+		try {
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String jasperFile = "PhrescoAndroidPerfContain.jasper";
+			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
+			parameters.put("testType", testType);
+			parameters.put("reportsDataType", reportDatasType);
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(androidPerReports);
+			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
+		} catch (Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateAndroidPerformanceReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Android Performance  generation error ");
+		}
 	}
 	
 	// load test report
 	public void generateLoadTestReport(List<LoadTestReport> loadTestResults)  throws Exception {
-		String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
-		new File(outFileNamePDF).getParentFile().mkdirs();
-//		String jasperFile = "PhrescoLoadTestReport.jasper";
-		String jasperFile = "PhrescoLoadTestContain.jasper";
-		//contain file - PhrescoLoadTestContain.jasper
-		//data 's - PhrescoLoadTestDatas.jasper
-		InputStream reportStream = this.getClass().getResourceAsStream("/reports/jasper/"+ jasperFile);
-		
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
-		Map<String, Object> parameters = new HashMap<String,Object>();
-		parameters.put("testType", testType);
-		parameters.put("projectCode", projectName);
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loadTestResults);
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-		JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.exportReport(); 
-		
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateLoadTestReport()");
+		try {
+			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + new SimpleDateFormat("MMM dd,yyyy HH:mm").format(new Date()) + DOT + PDF;
+			String jasperFile = "PhrescoLoadTestContain.jasper";
+			Map<String, Object> parameters = new HashMap<String,Object>();
+			parameters.put("projectCode", projectCode);
+			parameters.put("projectName", projectName);
+			parameters.put("techName", techName);
+			parameters.put("testType", testType);
+			parameters.put("reportsDataType", reportDatasType);
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loadTestResults);
+			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
+		} catch (Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.generateLoadTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Load report generation error");
+		}
+	}
+	
+	public void reportGenerate(String outFileNamePDF, String jasperFile, Map<String, Object> parameters, JRBeanCollectionDataSource dataSource) {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.reportGenerate()");
+		try {
+			new File(outFileNamePDF).getParentFile().mkdirs();
+			InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/"+ jasperFile);
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(reportStream);
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+			JRExporter exporter = new net.sf.jasperreports.engine.export.JRPdfExporter(); 
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outFileNamePDF);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.exportReport(); 
+		} catch (Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.reportGenerate()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Load report generation error");
+		}
 	}
 	
 	public List<LoadTestReport> getLoadTestResults()  throws Exception {
@@ -260,7 +334,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			Document doc = getDocumentOfFile(reportFilePath, resultFile);
 			List<TestResult> loadTestResults = getLoadTestResult(doc);
 			for (TestResult testResult : loadTestResults) {
-				System.out.println("testResult name ======> " + testResult.getThreadName());
+				S_LOGGER.debug("testResult name ======> " + testResult.getThreadName());
 			}
 			// Adding report data to bean object
 			LoadTestReport loadTestReport = new LoadTestReport();
@@ -355,7 +429,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
         for (AndroidPerfReport androidPerfFilesWithData : androidPerfFilesWithDatas) {
         	List<JmeterReport> deviceReports = androidPerfFilesWithData.getDeviceReport();
         	for (JmeterReport jmeterReport : deviceReports) {
-				System.out.println("getTotalAvg ======> " + jmeterReport.getTotalAvg());
+        		S_LOGGER.debug("getTotalAvg ======> " + jmeterReport.getTotalAvg());
 			}
 		}
         return androidPerfFilesWithDatas;
@@ -388,8 +462,8 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		return xmlReports;
 	}
 	
-	// unit and functional test report - kalees
-	public SureFireReport sureFireReportsNew() throws Exception {
+	// unit and functional test report
+	public SureFireReport sureFireReports() throws Exception {
 		SureFireReport sureFireReport = new SureFireReport();
 		
 		String reportFilePath = "";
@@ -452,7 +526,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	            errorTestSuites = errorTestSuites + errors;
 	            successTestSuites = successTestSuites + success;
 	            String rstValues = tests + "," + success + "," + failures + "," + errors;
-	            System.out.println("rstValues ====> " + rstValues);
+	            S_LOGGER.debug("rstValues ====> " + rstValues);
 	            AllTestSuite allTestSuiteDetail = new AllTestSuite(testSuite.getName(), tests, success, failures, errors);
 	            allTestSuiteDetails.add(allTestSuiteDetail);
 	            
@@ -462,10 +536,8 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		}
 		// detailed info
 		sureFireReport.setTestSuites(testSuiteWithTestCase);
-		
 		//crisp info
 		sureFireReport.setAllTestSuites(allTestSuiteDetails);
-		
 		return sureFireReport;
 	}
 	
@@ -646,7 +718,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
                 }
             }
         } catch (Exception e) {
-        	e.printStackTrace();
+        	S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.getFailure()" + FrameworkUtil.getStackTraceAsString(e));
         }
         return failure;
     }
@@ -670,7 +742,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
                 }
             }
         } catch (Exception e) {
-        	e.printStackTrace();
+        	S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.getError()" + FrameworkUtil.getStackTraceAsString(e));
         }
         return tcError;
     }
@@ -907,7 +979,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	             testResults.add(testResult);
 	         }
 	     } catch (Exception e) {
-	    	 e.printStackTrace();
+	    	 S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.getLoadTestResult()" + FrameworkUtil.getStackTraceAsString(e));
 	     }
 	     return testResults;
     }
@@ -922,13 +994,13 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
             builder = domFactory.newDocumentBuilder();
             doc = builder.parse(fis);
         } catch (Exception e) {
-			e.printStackTrace();
+        	S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.getDocumentOfFile()" + FrameworkUtil.getStackTraceAsString(e));
 		} finally {
             if(fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                	e.printStackTrace();
+                	S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.getDocumentOfFile()" + FrameworkUtil.getStackTraceAsString(e));
                 }
             }
         }
@@ -991,6 +1063,14 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	public void setNoOfTstSuiteErrors(float noOfTstSuiteErrors) {
 		this.noOfTstSuiteErrors = noOfTstSuiteErrors;
 	}
+
+	public String getTechName() {
+		return techName;
+	}
+
+	public void setTechName(String techName) {
+		this.techName = techName;
+	}
     
 }
 
@@ -1015,4 +1095,15 @@ class PhrescoFileFilter implements FilenameFilter {
 		}
 		return fileOK;
 	}
+}
+
+class FileExtensionFileFilter implements FilenameFilter {
+    private String filter_;
+    public FileExtensionFileFilter(String filter) {
+        filter_ = filter;
+    }
+
+    public boolean accept(File dir, String name) {
+        return name.endsWith(filter_);
+    }
 }

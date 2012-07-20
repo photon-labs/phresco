@@ -138,7 +138,7 @@
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
 		    <div class="input">
-		    	<% if (from.equals("generateBuild")) { %>
+		    	<% if (from.equals("generateBuild") && !TechnologyTypes.MOBILES.contains(technology)) { %>
 		    		<div class="generate_build">
 			        	<ul id="environments" name="environment" class="xlarge">
 				        	<li class="config_tab">
@@ -271,10 +271,23 @@
 							<% if (!from.equals(FrameworkConstants.DEPLOY)) { %>
 								<input type="checkbox" id="showSettings" name="showSettings" value="showsettings">
 								<span class="textarea_span popup-span"><s:text name="label.show.setting"/></span>
-							<% } %>
-							<% if (from.equals("generateBuild")) { %>
+							<% } %> <%
+ 	if (FrameworkConstants.REQ_GENERATE_BUILD.equals(from)
+ 			&& (TechnologyTypes.JAVA_STANDALONE.equals(technology)
+ 					|| TechnologyTypes.JAVA_WEBSERVICE
+ 							.equals(technology)
+ 					|| TechnologyTypes.JAVA.equals(technology)
+ 					|| TechnologyTypes.HTML5.equals(technology)
+ 					|| TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET
+ 							.equals(technology) || TechnologyTypes.HTML5_WIDGET
+ 					.equals(technology))) {
+ %>
 								<input type="checkbox" id="skipTest" name="skipTest" value="true">
-								<span class="textarea_span popup-span"><s:text name="label.skiptest"/></span>
+								<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 							<% } %>
 							<% if (from.equals("generateBuild") || from.equals(FrameworkConstants.DEPLOY)) { %>
 								<input type="checkbox" id="showError" name="showError" value="true">
@@ -303,7 +316,7 @@
 			<legend class="fieldSetLegend"><s:text name="label.sql.execute"/></legend>
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label" style="width: 210px;"><s:text name="label.databases"/></label>
-				<div class="input" style="text-align: left; margin-left: 250px;">
+				<div class="input" style="text-align: left; margin-left: 231px;">
 					<select id="databases" name="database" class="xlarge" >
 			       	</select>
 				</div>
@@ -382,7 +395,7 @@
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
-			<img class="popupLoadingIcon" style="position: relative;"> 
+			<img class="popupLoadingIcon"> 
 			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
 			<div style="float: right;">
 				<input type="hidden" name="from" value="<%= from %>" id="from">
@@ -400,6 +413,10 @@
 		</div>
 	</div>
 </div>
+
+<% if (TechnologyTypes.MOBILES.contains(technology)) { %>
+		<input type="hidden" id="mobile" value="mobile">
+<% } %>
 </form> 
 
 <script type="text/javascript">
@@ -455,6 +472,18 @@
 			var userBuildName = $(this).val();
 			userBuildName = checkForSplChr(userBuildName);
         	$(this).val(userBuildName);
+		});
+		
+		$('#mainClassName').bind('input propertychange', function (e) { 	//mainClassName validation for JavaStandAlone Projects
+			var mainClassName = $(this).val();
+			mainClassName = checkForClassName(mainClassName);
+        	$(this).val(mainClassName);
+		});
+		
+		$('#jarName').bind('input propertychange', function (e) { 	//jarName validation for JavaStandAlone Projects
+			var jarName = $(this).val();
+			jarName = checkForJarName(jarName);
+        	$(this).val(jarName);
 		});
 		
 		$('#deploy').click(function() {
@@ -567,9 +596,11 @@
 		});
 		
 		$('#environments').change(function() {
-			loadingIconShow();
-			$('#DbWithSqlFiles').val("");
-			executeSqlShowHide();
+			if ($("#from").val() != "generateBuild") {
+				
+				$('#DbWithSqlFiles').val("");
+				executeSqlShowHide();
+			}
 		});
 		
 		//execute Sql script
@@ -654,6 +685,7 @@
 	
 	function executeSqlShowHide() {
 		if($('#importSql').is(":checked")) {
+			loadingIconShow();
 			$('#sqlExecutionContain').show();
 		} else {
 			$('#sqlExecutionContain').hide();

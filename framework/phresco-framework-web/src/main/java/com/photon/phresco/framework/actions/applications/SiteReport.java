@@ -21,6 +21,7 @@ package com.photon.phresco.framework.actions.applications;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,24 +76,33 @@ public class SiteReport extends FrameworkBaseAction {
 			Properties sysProps = System.getProperties();
 	        S_LOGGER.debug( "Phresco FileServer Value of " + PHRESCO_FILE_SERVER_PORT_NO + " is " + sysProps.getProperty(PHRESCO_FILE_SERVER_PORT_NO) );
 	        String phrescoFileServerNumber = sysProps.getProperty(PHRESCO_FILE_SERVER_PORT_NO);
-			StringBuilder sb = new StringBuilder();
         	StringBuilder siteReportPath = new StringBuilder(Utility.getProjectHome());
         	siteReportPath.append(projectCode);
         	siteReportPath.append(File.separatorChar);
-        	siteReportPath.append(SITE_TARGET);
+        	siteReportPath.append(DO_NOT_CHECKIN_DIR);
+        	siteReportPath.append(File.separatorChar);
+        	siteReportPath.append(TARGET_DIR);
+        	siteReportPath.append(File.separatorChar);
+        	siteReportPath.append(SITE_REPORT_DIR);
         	siteReportPath.append(File.separatorChar);
         	siteReportPath.append(INDEX_HTML);
             File indexPath = new File(siteReportPath.toString());
-         	if (indexPath.isFile() && StringUtils.isNotEmpty(phrescoFileServerNumber)) {
+            if (indexPath.isFile() && StringUtils.isNotEmpty(phrescoFileServerNumber)) {
+         		StringBuilder sb = new StringBuilder();
             	sb.append(HTTP_PROTOCOL);
             	sb.append(PROTOCOL_POSTFIX);
-            	sb.append(LOCALHOST);
+            	InetAddress thisIp =InetAddress.getLocalHost();
+            	sb.append(thisIp.getHostAddress());
             	sb.append(COLON);
             	sb.append(phrescoFileServerNumber);
             	sb.append(FORWARD_SLASH);
             	sb.append(projectCode);
             	sb.append(FORWARD_SLASH);
-            	sb.append(SITE_TARGET);
+            	sb.append(DO_NOT_CHECKIN_DIR);
+            	sb.append(FORWARD_SLASH);
+            	sb.append(TARGET_DIR);
+            	sb.append(FORWARD_SLASH);
+            	sb.append(SITE_REPORT_DIR);
             	sb.append(FORWARD_SLASH);
             	sb.append(INDEX_HTML);
             	getHttpRequest().setAttribute(REQ_SITE_REPORT_PATH, sb.toString());

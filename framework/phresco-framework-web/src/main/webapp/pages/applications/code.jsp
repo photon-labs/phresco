@@ -49,11 +49,16 @@
 <form action="check" id="check">
 	<div class="operation">
 	    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
-		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.technology"/></strong>&nbsp;
-		<select class="xlarge" id="report" name="report">
+		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.sonar.report"/></strong>&nbsp;
+		<select id="report" name="report">
+		<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
 			<option value="java" ><s:text name="label.tech.java"/></option>
 			<option value="js" ><s:text name="label.tech.javascript"/></option>
 			<option value="web" ><s:text name="label.tech.jsp"/></option>
+		<% } else { %>
+			<option value="source" ><s:text name="label.validateAgainst.source"/></option>
+		<% } %>
 			<option value="functional" ><s:text name="label.funtional"/></option>
 		</select>
 	</div>

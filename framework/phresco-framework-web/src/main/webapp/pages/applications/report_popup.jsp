@@ -5,13 +5,15 @@
 <%@ page import="java.util.Set"%>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <script src="js/reader.js" ></script>
 
 <%
    	String projectCode = (String)request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
 	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
-	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);;
+	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);
+	String reportGenerationStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_STATUS);
 %>
 
 <style>
@@ -21,7 +23,7 @@
 </style>
 
 <form action="printAsPdf" method="post" autocomplete="off" class="build_form" id="generatePdf">
-<div class="popup_Modal">
+<div class="popup_Modal topFifty">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
 			Generate Report
@@ -29,21 +31,24 @@
 		<a class="close" href="#" id="close">&times;</a>
 	</div>
 
-	<div class="modal-body" style="padding-bottom: 20px;">
+	<div class="modal-body" style="padding-bottom: 20px;height: 220px;">
 		<%
 			if (CollectionUtils.isNotEmpty(reportFiles)) {
 		%>
-			<div class="fixed-table-container" style="padding-bottom: 20px;">
+			<div class="tabl-fixed-table-container" style="padding-bottom: 20px;">
 	      		<div class="header-background"></div>
-	      		<div class="fixed-table-container-inner validatePopup_tbl">
+	      		<div id="reportPopupTbl" class="tabl-fixed-table-container-inner validatePopup_tbl" style="height: 200px;overflow-x: hidden; overflow-y: auto;">
 			        <table cellspacing="0" class="zebra-striped">
 			          	<thead>
 				            <tr>
 								<th class="first validate_tblHdr">
-				                	<div class="th-inner">Existing Reports</div>
+				                	<div class="pdfth-inner">Existing Reports</div>
 				              	</th>
 				              	<th class="second validate_tblHdr">
-				                	<div class="th-inner">Download</div>
+				                	<div class="pdfth-inner">Type</div>
+				              	</th>
+				              	<th class="second validate_tblHdr">
+				                	<div class="pdfth-inner">Download</div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -51,21 +56,40 @@
 			          	<tbody>
 			          		<% 
 			          			for(String reportFile : reportFiles) { 
+			          				String type = "";
 			          		%>
 			            	<tr>
 			              		<td>
-			              		<div class = "validateMsg" style="color: #000000;">
-			              			<%= reportFile %>
+			              			<div class ="pdfName" style="color: #000000;">
+				              			<%	
+			              					String[] reportType = reportFile.split(FrameworkConstants.UNDERSCORE);
+			              					type = reportType[0];
+				              			%>
+				              			<%= reportType[1] %>
 			              			</div>
 			              		</td>
 			              		<td>
-			              			<div class = "validateStatus" style="color: #000000;">
-<!-- 			              				<img src="images/icons/download.png" title="Download"> -->
+			              			<div style="color: #000000;">
+				              			<%
+				              				if ("crisp".equals(type)) {
+				              					type = FrameworkConstants.MSG_REPORT_OVERALL;
+				              			%>
+				              				<%= type %>
+				              			<%
+				              				} else {
+				              					type = FrameworkConstants.MSG_REPORT_DETAIL;
+				              			%>
+				              				<%= type %>
+				              			<% } %>
+			              			</div>
+			              		</td>
+			              		<td>
+			              			<div class="pdfType" style="color: #000000;">
 				              			<a href="<s:url action='downloadReport'>
-						          		     <s:param name="reportFileName"><%= reportFile %></s:param>
-						          		     <s:param name="projectCode"><%= projectCode %></s:param>
-						          		     <s:param name="testType"><%= testType %></s:param>
-						          		     </s:url>">
+				              				<s:param name="testType"><%= testType == null ? "" : testType %></s:param>
+				              				<s:param name="projectCode"><%= projectCode %></s:param>
+						          		    <s:param name="reportFileName"><%= reportFile %></s:param>
+						          		    </s:url>">
 						          		     <img src="images/icons/download.png" title="<%= reportFile %>.pdf"/>
 			                            </a>
 					   				</div>
@@ -82,34 +106,29 @@
 				<center><label Class="errorMsgLabel"><s:text name="label.report.unavailable"/></label></center>
 			</div>
     	<% } %>
-		<!-- Report Name -->
-<!-- 		<div class="clearfix server"> -->
-<!-- 			<label for="xlInput" class="xlInput popup-label">Report Name</label> -->
-<!-- 			<div class="input"> -->
-<%-- 				<input type="text" name="reportName" id="reportName" maxlength="30" title="30 Characters only"  value="<%= projectCode%>"> --%>
-<!-- 			</div> -->
-<!-- 		</div> -->
-		
-		<!--  Report Location -->
-<!-- 		<div class="clearfix database"> -->
-<!-- 			<label for="xlInput" class="xlInput popup-label">Disk Location</label> -->
-<!-- 			<div class="input"> -->
-<!-- 				<input type="text" name="reoportLocation" id="reoportLocation" title="Report location"  value=""> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 	</div>
 	
 	<div class="modal-footer">
-		<div class="action popup-action">
-		<div id="errMsg"></div>
-			<input type="button" class="btn primary" value="Cancel" id="cancel">
-			<input type="button" id="generateReport" class="btn primary" value="Generate">
+		<div class="reportErrorMsg">
+			<div id="errMsg"></div>
+			<img class="popupLoadingIcon" style="position: relative;">
 		</div>
+           <input type="radio" name="reportDataType" value="crisp" checked>
+           <span class="popup-span"><s:text name="label.report.overall"/></span>
+           <input type="radio" name="reportDataType" value="detail">
+           <span class="popup-span"><s:text name="label.report.detail"/></span>
+           
+		<input type="button" class="btn primary" value="Close" id="cancel">
+		<input type="button" id="generateReport" class="btn primary" value="Generate">
 	</div>
 </div>
 </form>
 
 <script type="text/javascript">
+	if(!isiPad()){
+		/* JQuery scroll bar */
+// 		$("#reportPopupTbl").scrollbars();
+	}
 	$(document).ready(function() {
 		escPopup();
 		
@@ -119,20 +138,36 @@
 		
 		// Node js run against source
 		$('#generateReport').click(function() {
-			showParentPage();			
+			$('.popupLoadingIcon').show();
+			getCurrentCSS();
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
- 	    	params = params.concat("&testType=");
-	    	params = params.concat('<%= testType %>');
-            performAction('printAsPdf', params, '', '');
+	    	<%
+				if (StringUtils.isEmpty(testType) && !"performance".equals(testType)) {
+			%>
+	 	    	params = params.concat("&projectCode=");
+		    	params = params.concat('<%= projectCode %>');
+			<%
+				} else if(!"performance".equals(testType)) {
+				
+			%>
+	 	    	params = params.concat("&testType=");
+		    	params = params.concat('<%= testType %>');
+			<%
+				}  	
+	    	%>
+            performAction('printAsPdf', params, $('#popup_div'), '');
 		});
 		
-// 		function showParentPage() {
-// 			$(".wel_come").show().css("display","none");
-// 			$('.popup_div').show().css("display","none");
-// 		}
+		<%
+			if (StringUtils.isNotEmpty(reportGenerationStat)) {
+		%>
+			showHidePopupMsg($("#errMsg"), '<%= reportGenerationStat %>');
+		<%
+			}
+		%>
 	});
 	
 </script>

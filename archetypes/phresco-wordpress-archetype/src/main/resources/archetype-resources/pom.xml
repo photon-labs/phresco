@@ -38,16 +38,17 @@
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
-		<sonar.phpCodesniffer.skip>WordPress</sonar.phpCodesniffer.skip> 
+		<sonar.phpCodesniffer.standardArgument>WordPress</sonar.phpCodesniffer.standardArgument>
     </properties>
   
 	<build>
 		<sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
 		<plugins>
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>wordpress-maven-plugin</artifactId>
-				<version>1.2.0.6003-SNAPSHOT</version>
+				<version>1.2.0.7004-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
@@ -78,7 +79,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<sourceDirectory>source</sourceDirectory>
 	</build>
 	<profiles>
         <profile>

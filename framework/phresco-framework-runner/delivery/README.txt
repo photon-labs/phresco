@@ -19,3 +19,33 @@ For Node JS development,
 
 For iPhone development,
     Install Xcode
+
+	
+           \************************************ Steps for Installing Pear Setup ***************************************/
+
+The  pear setup is used for php,drupal and wordpress project code validation.the setup file can be download from the following:
+
+In Windows,
+	1.go to the Download tab option
+	2.click the Others dropdown List
+	3.For Wamp 
+		3.1 Download Php_Drupal_code_validation_WAMP_setup file and unzip in to local directory
+		3.2 just follow the instruction in instruction.txt file
+	4.For Xampp
+		4.1 Download php-drupal-validation-Xamp_setup file and unzip in to local directory
+		4.2 just follow the instruction in instruction.txt file
+		
+In Mac and Linux	,	
+	1.For Mac
+		1 Download php-drupal-code-validation-mac-setup file and unzip in to local directory
+		2 just follow the instruction in instruction.txt file
+	
+If already pear is installed in the system just download the using version 1.0 just download the durpalStandard and WordpressStandard from the option(applicable for both windows and Mac)
+
+InWindows,
+	1.For Wamp
+		just Unzip and follwing folder is placed in "C:\wamp\bin\php\php5.3.5\PEAR\PHP\CodeSniffer\Standards" 
+	2.for Xampp
+		just Unzip and follwing folder is placed in "C:\xampp\php\PEAR\PHP\CodeSniffer\Standards" 
+In Mac
+	just Unzip and follwing folder is placed in "/usr/local/pear/share/pear/PHP/CodeSniffer/Standards" 

@@ -34,6 +34,7 @@
 
     <build>
         <sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.sonar-plugins.dotnet</groupId>
@@ -45,7 +46,7 @@
 			<plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>sharepoint-maven-plugin</artifactId>
-                <version>1.2.0.6003-SNAPSHOT</version>
+                <version>1.2.0.7004-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             

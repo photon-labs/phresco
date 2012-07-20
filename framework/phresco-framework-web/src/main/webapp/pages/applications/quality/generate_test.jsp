@@ -93,7 +93,7 @@
             <div id="agnBuildid"  class="build">
 				<!--  Build No -->
 				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><s:text name="label.buil.id"/></label>
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.build.number"/></label>
 					<div class="input">
 						<select id="buildId" name="<%= FrameworkConstants.REQ_TEST_BUILD_ID %>" class="xlarge">
 						   <%
@@ -293,7 +293,15 @@
 		    	$("#agnJarRelease").show();
             }
 	    });
-
+		
+		$("#browser").change(function(){
+			if($("#browser").val() == "safari"){
+				$("#errMsg").html('<%= FrameworkConstants.SAFARI_WARNING_MSG %>')
+			} else {
+				$("#errMsg").html('');
+			}
+		});
+		
 		$("#buildId").change(function() {
 			showBuildEnvs();
 		});

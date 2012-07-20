@@ -72,7 +72,7 @@
 %>
 
 <s:if test="hasActionMessages()">
-    <div class="alert-message success"  id="successmsg">
+    <div class="alert-message success"  id="successmsg" style="margin-top: 2px; margin-left: 165px;">
         <s:actionmessage />
     </div>
 </s:if>
@@ -253,8 +253,8 @@ var refreshCi = false;
 $(document).ready(function() {
 	
 	accordion();
-	
 	$("#popup_div").css("display","none");
+	$("#popup_div").empty();
 	enableScreen();
 	
 	hideProgessBar();

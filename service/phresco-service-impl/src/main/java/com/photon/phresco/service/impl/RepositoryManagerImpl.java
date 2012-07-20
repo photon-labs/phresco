@@ -146,15 +146,16 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	
 	private void initMap() {
 		versionMap.put(TechnologyTypes.PHP, new String[]{"5.4.x", "5.3.x", "5.2.x", "5.1.x", "5.0.x"});
-		versionMap.put(TechnologyTypes.PHP_DRUPAL6, new String[]{"6.3", "6.25", "6.19","6.14"});
-		versionMap.put(TechnologyTypes.PHP_DRUPAL7, new String[]{"7.8","7.12","7.14"});
+		versionMap.put(TechnologyTypes.PHP_DRUPAL6, new String[]{"6.30", "6.25", "6.19","6.14"});
+		versionMap.put(TechnologyTypes.PHP_DRUPAL7, new String[]{"7.14","7.12","7.8"});
 		versionMap.put(TechnologyTypes.JAVA_WEBSERVICE, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.JAVA_STANDALONE, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_WIDGET, new String[]{"1.6", "1.5"});
-		versionMap.put(TechnologyTypes.ANDROID_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
-		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});
+		versionMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
+		versionMap.put(TechnologyTypes.ANDROID_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
+		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
 		/*versionMap.put(TechnologyTypes.IPHONE_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
 		versionMap.put(TechnologyTypes.IPHONE_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});*/
 		versionMap.put(TechnologyTypes.WORDPRESS, new String[]{"3.3.1"});

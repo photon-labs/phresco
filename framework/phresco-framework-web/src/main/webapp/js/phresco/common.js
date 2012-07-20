@@ -18,16 +18,7 @@
  * ###
  */
 	
-	function setLocalstorage(key, value){
-    	localStorage[key] = value;
-    }
-
-    function getLocalstorage(key, title){
-    	var localstore = localStorage[key];
-    	$("link[title=" +title + "]").attr("href", localstore);
-    	showWelcomeImage(key);
-    }
-    
+    // To set images based on theme in login and home page
     function showWelcomeImage(key) {
     	var theme = localStorage[key];
     	if (theme == "themes/photon/css/blue.css") {
@@ -35,14 +26,16 @@
     		$('.welcomeimg').attr("src", "images/welcome-photon_blue.png");
     		$('.phtaccinno').attr("src", "images/acceleratinginovation_blue.png");
     		$('.logoimage').attr("src", "images/photon_phresco_logo_blue.png");
+    		$('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
     	} else if(theme == null || theme == undefined || theme == "undefined" || theme == "null" || theme == "themes/photon/css/red.css") {
     		$("link[id='theme']").attr("href", "themes/photon/css/red.css");
     		$('.welcomeimg').attr("src", "images/welcome_photon_red.png");
     		$('.phtaccinno').attr("src", "images/acc_inov_red.png");
     		$('.logoimage').attr("src", "images/photon_phresco_logo_red.png");
+    		$('.headerlogoimg').attr("src", "images/phresco_header_red.png");
     	}
     }
-
+    
 	// Enables button
 	function enableControl(tagControl, css) {
 		tagControl.attr("class", css);
@@ -197,7 +190,7 @@
             type : "POST",
             success : function(data) {
             	$("#build-output").empty();
-            	readerHandler(data, projectCode, testType);
+            	readerHandler(data, projectCode, testType, pageUrl);
             	if(callSuccessEvent != undefined && !isBlank(callSuccessEvent)) {
             		successEvent(pageUrl, data);
             	}
@@ -205,6 +198,7 @@
         });
     }
     
+    // loads the loading gif icon based on theme
     function getCurrentCSS() {
         var theme =localStorage["color"];
         if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
@@ -278,6 +272,16 @@
     function checkForVersion(versionNo) {
     	newVersionNo = versionNo.replace(/[^a-zA-Z 0-9\.\-\_]+/g, '');
     	return newVersionNo;
+    }
+    
+    function checkForClassName(mainClassName) {
+    	mainClassName = mainClassName.replace(/[^a-zA-Z 0-9\.\_]+/g, '');
+    	return mainClassName;
+    }
+    
+    function checkForJarName(jarName) {
+    	jarName = jarName.replace(/[^a-zA-Z\_]+/g, '');
+    	return jarName;
     }
     
  	// To check for special character in the port name while pasting

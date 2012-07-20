@@ -81,6 +81,7 @@ import com.photon.maven.plugins.android.CommandExecutor;
 import com.photon.maven.plugins.android.ExecutionException;
 import com.photon.maven.plugins.android.common.NativeHelper;
 import com.photon.maven.plugins.android.configuration.Sign;
+import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.PluginUtils;
 
@@ -370,6 +371,7 @@ public class ApkMojo extends AbstractAndroidMojo {
 	}
 
 	private void configure() throws MojoExecutionException {
+		try {
 			if (StringUtils.isEmpty(environmentName)) {
 				return;
 			}
@@ -378,6 +380,10 @@ public class ApkMojo extends AbstractAndroidMojo {
 			String basedir = baseDir.getName();
 			PluginUtils pu = new PluginUtils();
 			pu.executeUtil(environmentName, basedir, srcConfigFile);
+			pu.setDefaultEnvironment(environmentName, srcConfigFile);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
 	}
 
 	

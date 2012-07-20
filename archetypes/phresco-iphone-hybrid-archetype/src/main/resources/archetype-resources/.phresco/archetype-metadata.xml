@@ -135,12 +135,7 @@
 			<includes>
 				<include>AllTests.js</include>
                 <include>HelloWorld.js</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/load</directory> 
-			<includes>
-				<include>**/*</include>
+				<include>pom.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

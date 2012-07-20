@@ -145,19 +145,19 @@
 					          	<thead>
 						            <tr>
 										<th class="first">
-						                	<div class="th-inner-test"><s:text name="label.name"/></div>
+						                	<div id="th-first" class="th-inner-test"><s:text name="label.name"/></div>
 						              	</th>
 						              	<th class="second">
-						                	<div class="th-inner-test"><s:text name="label.class"/></div>
+						                	<div id="th-second" class="th-inner-test"><s:text name="label.class"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner-test"><s:text name="label.time"/></div>
+						                	<div id="th-third" class="th-inner-test"><s:text name="label.time"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner-test"><s:text name="label.status"/></div>
+						                	<div id="th-fourth" class="th-inner-test"><s:text name="label.status"/></div>
 						              	</th>
 						              	<th class="third">
-						                	<div class="th-inner-test"><s:text name="label.log"/></div>
+						                	<div id="th-fivth" class="th-inner-test"><s:text name="label.log"/></div>
 						              	</th>
 						              	<% 
 						              		if(FrameworkConstants.FUNCTIONAL.equals(testType)) { 
@@ -291,6 +291,37 @@
 	}
 	
     $(document).ready(function() {
+    	
+    	if ($('#label').hasClass('techLabel')){
+            $("#th-first").removeClass("th-inner-test").addClass("th-inner-testtech");
+            $("#th-second").removeClass("th-inner-test").addClass("th-inner-testtech");
+            $("#th-third").removeClass("th-inner-test").addClass("th-inner-testtech");
+            $("#th-fourth").removeClass("th-inner-test").addClass("th-inner-testtech");
+            $("#th-fivth").removeClass("th-inner-test").addClass("th-inner-testtech");
+        }
+    	
+    	if ($.browser.safari) {
+            $(".th-inner-test").css("top","231px");  
+            $(".th-inner-testtech").css("top","266px"); 
+        }
+    	
+    	var OSName="Unknown OS";
+        if (navigator.appVersion.indexOf("Mac")!=-1) {
+	       	  OSName="MacOS";
+	    }
+        
+        if (OSName == "MacOS") { 
+        	if ($('#label').hasClass('techLabel')){
+        		$(".th-inner-test").css("top","250px");
+            } else {
+	            $(".th-inner-test").css("top","225px");  
+	            $(".th-inner-testtech").css("top","225px");
+            }
+        	if ($.browser.safari) {
+                $(".th-inner-testtech").css("top","255px"); 
+            }
+        }
+    	
     	changeView();
     	escPopup();
     	

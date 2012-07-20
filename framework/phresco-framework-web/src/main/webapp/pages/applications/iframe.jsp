@@ -17,10 +17,14 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.commons.FrameworkConstants"%>
+<%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
+<%@ page import="com.photon.phresco.util.TechnologyTypes" %>
 
 <%
 	String error = (String) request.getAttribute(FrameworkConstants.REQ_ERROR);
+	String technology = (String)request.getAttribute(FrameworkConstants.REQ_TECHNOLOGY);
+		  
+	String sonarPath = "";
 	
 	if(error != null) {
 %>
@@ -29,9 +33,44 @@
 		</div>
         
    <% } else { 
-		String sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
-		
+		sonarPath = (String) request.getAttribute(FrameworkConstants.REQ_SONAR_PATH);
    %>
-		 <iframe src="<%= sonarPath %>" frameBorder="0" class="iframe_container"></iframe>
+		 <iframe src="" frameBorder="0" class="iframe_container"></iframe>
 		
 	<% } %>
+	
+<script>
+	var localstore = $("link[title='phresco']").attr("href");
+	localStorage["color"] =localstore;
+	
+	$(document).ready(function() {
+	    reloadIframe();
+	    $(".styles").click(function() {
+	        reloadIframe();
+	    });
+	});
+	
+	function reloadIframe() {
+		var theme = localStorage["color"];
+	    if(theme == null || theme == undefined || theme == "undefined" || theme == "null" || theme == "themes/photon/css/red.css") {
+	         theme = "themes/photon/css/red.css";
+	    }
+	    
+	    var source = "";
+	    <% 
+	    	if (TechnologyTypes.IPHONES.contains(technology)) { 
+	    %>
+	    	source = "<%= sonarPath %>";
+	    <% } else { %>
+	    	source = "<%= sonarPath %>?css=" + theme;
+		<%	
+	    	} 
+	    %>
+	    $("iframe").attr({
+	        src: source
+	    });
+	    $('iframe').load(function() {
+	        $(".loadingIcon").hide();
+	    });
+	}
+</script>

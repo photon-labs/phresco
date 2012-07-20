@@ -32,7 +32,7 @@
 			<staticText>
 				<reportElement x="10" y="0" width="111" height="20"/>
 				<textElement>
-					<font fontName="Times New Roman" size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Detailed Report]]></text>
 			</staticText>

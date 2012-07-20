@@ -19,32 +19,39 @@
  */
 $(document).ready(function() {
 	$('#showSettings').click(function() {
-	    showSettings();
+		showSettings();
 	});
 });
 
 function showSettings() {
 	$.ajax({
 		url : 'showSettings',
-       	data : {
+		data : {
 			'showSettings' : $('#showSettings').prop("checked"),
-       	},
-       	type : "POST",
-       	success : function(data) {
-       		fillData('environments', data.settingsEnv);
-       	}
-   });
+		},
+		type : "POST",
+		success : function(data) {
+			if (isBlank(data.envError)) {
+				fillData('environments', data.settingsEnv);
+			} else {
+				$("#errMsg").html(data.envError);
+			}
+		}
+	});
 }
 
-/** This method is to fill select box with data in ShowSettings **/
+/** This method is to fill select box with data in ShowSettings * */
 function fillData(element, data) {
 	var from = $("#from").val();
-	if (from == "generateBuild") {
+	var mobile = $("#mobile").val();
+	if (from == "generateBuild" && mobile !== "mobile") {
 		if ((data != undefined || !isBlank(data)) && data != "") {
-			var list = '<li class="build_type" value="Settings" class="optgrplbl" id="' + element + 'Group">Settings';
+			var list = '<li class="build_type" value="Settings" class="optgrplbl" id="'
+					+ element + 'Group">Settings';
 			$('#' + element).append(list);
 			for (i in data) {
-				var value = '<li class="settings_envrnmt"><input type="checkbox" id="environments" value="' + data[i] + '">' + '&nbsp;' + data[i] +'</li>';
+				var value = '<li class="settings_envrnmt"><input type="checkbox" id="environments" value="'
+						+ data[i] + '">' + '&nbsp;' + data[i] + '</li>';
 				$('#' + element + 'Group').append(value);
 			}
 			$('#' + element).append('</li>');
@@ -53,9 +60,13 @@ function fillData(element, data) {
 		}
 	} else {
 		if ((data != undefined || !isBlank(data)) && data != "") {
-			$('#' + element).append('<optgroup label="Settings" class="optgrplbl" id="' + element + 'Group">');
+			$('#' + element).append(
+					'<optgroup label="Settings" class="optgrplbl" id="'
+							+ element + 'Group">');
 			for (i in data) {
-				$('#' + element + 'Group').append($("<option></option>").attr("onClick", "selectEnvs()").attr("value", data[i]).text(data[i]));
+				$('#' + element + 'Group').append(
+						$("<option></option>").attr("onClick", "selectEnvs()")
+								.attr("value", data[i]).text(data[i]));
 			}
 			$('#' + element).append('</optgroup>');
 		} else {
@@ -64,7 +75,7 @@ function fillData(element, data) {
 	}
 }
 
-/** To check whether the selected environment has the appropriate configurations **/
+/** To check whether the selected environment has the appropriate configurations * */
 function checkForConfig() {
 	var envs = getSelectedEnvs();
 	var params = "";
@@ -76,7 +87,10 @@ function checkForConfig() {
 	performAction('checkForConfiguration', params, '', true);
 }
 
-/** To check whether the selected environment has the appropriate configuration based on type **/
+/**
+ * To check whether the selected environment has the appropriate configuration
+ * based on type *
+ */
 function checkForConfigType(type) {
 	var envs = getSelectedEnvs();
 	var params = "";
@@ -90,11 +104,12 @@ function checkForConfigType(type) {
 	performAction('checkForConfigType', params, '', true);
 }
 
-/** To get the selected environments as comma delimited string **/
+/** To get the selected environments as comma delimited string * */
 function getSelectedEnvs() {
 	var envs = "";
+	var mobile = $("#mobile").val();
 	var from = $("#from").val();
-	if (from == "generateBuild") {
+	if (from == "generateBuild" && mobile !== "mobile") {
 		$('input[id=environments]:checkbox:checked').each(function(index) {
 			envs = envs + $(this).val() + ",";
 		});
@@ -105,7 +120,6 @@ function getSelectedEnvs() {
 	}
 	return envs = envs.substring(0, envs.length - 1);
 }
-
 
 function showError(data) {
 	$("#errMsg").html(data.envError);

@@ -69,7 +69,7 @@ public class JWSDependencyProcessor extends AbstractDependencyProcessor {
 		}
 		super.process(info, path);
 		createSqlFolder(info, path);
-		
+		updateTestPom(path);
 	}
 
 	@Override

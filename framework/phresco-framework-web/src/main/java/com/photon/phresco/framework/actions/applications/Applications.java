@@ -360,8 +360,10 @@ public class Applications extends FrameworkBaseAction {
 					Collections.singletonList(projectInfo.getName())));
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of  Applications.save()"
-						+ FrameworkUtil.getStackTraceAsString(e));
-			new LogErrorReport(e, "Save Project");
+					+ FrameworkUtil.getStackTraceAsString(e));
+			if ("Session expired".equalsIgnoreCase(e.getMessage())) {
+				getHttpSession().removeAttribute(REQ_USER_INFO);
+			}
 		}
 		getHttpSession().removeAttribute(projectCode);
 		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
@@ -437,7 +439,9 @@ public class Applications extends FrameworkBaseAction {
 				removeConfiguration();
 				addActionMessage(getText(UPDATE_PROJECT,Collections.singletonList(projectInfo.getName())));
 			} catch (Exception e) {
-				throw new PhrescoException(e);
+				if ("Session expired".equalsIgnoreCase(e.getMessage())) {
+					getHttpSession().removeAttribute(REQ_USER_INFO);
+				}
 			}
 
 		} catch (PhrescoException e) {
@@ -741,8 +745,12 @@ public class Applications extends FrameworkBaseAction {
 		
 		try {
 			if (showSettings != null && Boolean.valueOf(showSettings)) {
-				settingsEnv = getEnvironmentNames();
-			}
+				if (CollectionUtils.isNotEmpty(getEnvironmentNames())) {
+					settingsEnv = getEnvironmentNames();
+				} else {
+					envError = getText(NO_SETTINGS_ENV);
+				}
+			} 
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Applications.showSettings()"
 						+ FrameworkUtil.getStackTraceAsString(e));
@@ -775,7 +783,7 @@ public class Applications extends FrameworkBaseAction {
 			String appType = getHttpRequest().getParameter(REQ_APPLICATION_TYPE);
 			String type = getHttpRequest().getParameter(ATTR_TYPE);
 			String from = getHttpRequest().getParameter(REQ_FROM);
-			getHttpRequest().setAttribute(REQ_FROM, getHttpRequest().getParameter(REQ_FROM));
+			getHttpRequest().setAttribute(REQ_FROM, from);
 			ApplicationType applicationType = null;
 			applicationType = ApplicationsUtil.getApplicationType(getHttpRequest(), appType);
 			Technology techonology = applicationType.getTechonology(techId);
@@ -790,14 +798,18 @@ public class Applications extends FrameworkBaseAction {
 					if (StringUtils.isNotEmpty(selectedServers)) {
 						listSelectedServerNames = new ArrayList<String>();
 						listSelectedServers = new ArrayList<String>(Arrays.asList(selectedServers.split("#SEP#")));
-						for (String listSelectedServer : listSelectedServers) {
-							String[] split = listSelectedServer.split("#VSEP#");
-							listSelectedServerNames.add(split[0].trim());
+						if (CollectionUtils.isNotEmpty(listSelectedServers)) {
+							for (String listSelectedServer : listSelectedServers) {
+								String[] split = listSelectedServer.split("#VSEP#");
+								listSelectedServerNames.add(split[0].trim());
+							}
 						}
 						listSelectedServerIds = new ArrayList<Integer>(2);
-						for (Server server : servers) {
-							if(listSelectedServerNames.contains(server.getName())) {
-								listSelectedServerIds.add(server.getId());
+						if (CollectionUtils.isNotEmpty(servers)) {
+							for (Server server : servers) {
+								if(listSelectedServerNames.contains(server.getName())) {
+									listSelectedServerIds.add(server.getId());
+								}
 							}
 						}
 					}
@@ -809,11 +821,13 @@ public class Applications extends FrameworkBaseAction {
 					selectedVersions = selectedVersions.replaceAll(" ", "");
 					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
 					listSelectedServerIds = new ArrayList<Integer>(2);
-					for (Server server : servers) {
-						String serverName = server.getName().trim();
-						serverName = serverName.replaceAll("\\s+", "");
-						if(serverName.equals(attrName)) {
-							listSelectedServerIds.add(server.getId());
+					if (CollectionUtils.isNotEmpty(servers)) {
+						for (Server server : servers) {
+							String serverName = server.getName().trim();
+							serverName = serverName.replaceAll("\\s+", "");
+							if(serverName.equals(attrName)) {
+								listSelectedServerIds.add(server.getId());
+							}
 						}
 					}
 					getHttpRequest().setAttribute("listSelectedServerIds", listSelectedServerIds);
@@ -838,9 +852,11 @@ public class Applications extends FrameworkBaseAction {
 							listSelectedDbNames.add(split[0].trim());
 						}
 						listSelectedDbIds = new ArrayList<Integer>(2);
-						for (Database database : databases) {
-							if(listSelectedDbNames.contains(database.getName())) {
-								listSelectedDbIds.add(database.getId());
+						if (CollectionUtils.isNotEmpty(databases)) {
+							for (Database database : databases) {
+								if(listSelectedDbNames.contains(database.getName())) {
+									listSelectedDbIds.add(database.getId());
+								}
 							}
 						}
 					}
@@ -856,20 +872,22 @@ public class Applications extends FrameworkBaseAction {
 							List<Database> projectInfoDbs = projectInfo.getTechnology().getDatabases();
 							List<String> projectInfoDbVersions = new ArrayList<String>();
 							StringBuilder sb = new StringBuilder();
-							for (Database projectInfoDb : projectInfoDbs) {
-								if (projectInfoDb.getName().equals(attrName)) {
-									projectInfoDbVersions.addAll(projectInfoDb.getVersions());
+							if (CollectionUtils.isNotEmpty(projectInfoDbs)) {
+								for (Database projectInfoDb : projectInfoDbs) {
+									if (projectInfoDb.getName().equals(attrName)) {
+										projectInfoDbVersions.addAll(projectInfoDb.getVersions());
+									}
 								}
-							}
-							if (projectInfoDbVersions != null) {
-								for (String projectInfoDbVersion : projectInfoDbVersions) {
-									sb.append(projectInfoDbVersion);
-									sb.append(",");
+								if (CollectionUtils.isNotEmpty(projectInfoDbVersions)) {
+									for (String projectInfoDbVersion : projectInfoDbVersions) {
+										sb.append(projectInfoDbVersion);
+										sb.append(",");
+									}
+	
 								}
-
-							}
-							if (StringUtils.isNotEmpty(sb.toString())) {
-								getHttpRequest().setAttribute("projectInfoDbVersions", sb.toString().substring(0, sb.length() - 1));
+								if (StringUtils.isNotEmpty(sb.toString())) {
+									getHttpRequest().setAttribute("projectInfoDbVersions", sb.toString().substring(0, sb.length() - 1));
+								}
 							}
 						}
 					}
@@ -877,11 +895,13 @@ public class Applications extends FrameworkBaseAction {
 					selectedVersions = selectedVersions.replaceAll(" ", "");
 					List<String> listSelectedVersions = new ArrayList<String>(Arrays.asList(selectedVersions.split(",")));
 					listSelectedDatabaseIds = new ArrayList<Integer>(2);
-					for (Database database : databases) {
-						String databaseName = database.getName().trim();
-						databaseName = databaseName.replaceAll("\\s+", "");
-						if(databaseName.equals(attrName)) {
-							listSelectedDatabaseIds.add(database.getId());
+					if (CollectionUtils.isNotEmpty(databases)) {
+						for (Database database : databases) {
+							String databaseName = database.getName().trim();
+							databaseName = databaseName.replaceAll("\\s+", "");
+							if(databaseName.equals(attrName)) {
+								listSelectedDatabaseIds.add(database.getId());
+							}
 						}
 					}
 					getHttpRequest().setAttribute("listSelectedDatabaseIds", listSelectedDatabaseIds);
@@ -1368,5 +1388,4 @@ public class Applications extends FrameworkBaseAction {
 	public void setFileorfolder(String fileorfolder) {
 		this.fileorfolder = fileorfolder;
 	}
-
 }

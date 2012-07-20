@@ -101,16 +101,16 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HomeViewTest</directory> 
+			<directory>source/AllTest</directory> 
 			<includes>
-				<include>HomeViewTest.h</include>
-				<include>HomeViewTest.m</include>
-				<include>HomeViewTest-Info.plist</include>
-				<include>HomeViewTest-Prefix.pch</include>
+				<include>AllTest.h</include>
+				<include>AllTest.m</include>
+				<include>AllTest-Info.plist</include>
+				<include>AllTest-Prefix.pch</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HomeViewTest/en.lproj</directory> 
+			<directory>source/AllTest/en.lproj</directory> 
 			<includes>
 				<include>InfoPlist.strings</include>
 			</includes>
@@ -120,12 +120,6 @@
 			<includes>
 				<include>AllTests.js</include>
 				<include>HelloWorld.js</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/load</directory> 
-			<includes>
-				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

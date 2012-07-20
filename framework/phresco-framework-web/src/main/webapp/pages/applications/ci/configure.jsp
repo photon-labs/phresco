@@ -77,7 +77,7 @@
 			</div>
 			
         	<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><s:text name="label.name"/></label>
+				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.name"/></label>
 				<div class="input">
 					<input type="text" id="name" name="name" value="<%= existingJob == null ? "" : existingJob.getName()%>" <%= existingJob == null ? "" : "disabled" %> autofocus>
 				</div>
@@ -406,9 +406,11 @@
 						<select id="androidVersion" name="androidVersion" class="xlarge" >
 							<%
 								for (int i=0; i<AndroidConstants.SUPPORTED_SDKS.length; i++) {
+									if (!AndroidConstants.SUPPORTED_SDKS[i].equalsIgnoreCase(FrameworkConstants.ANDROID_LOWER_VER)) {
 							%>
 								<option value="<%= AndroidConstants.SUPPORTED_SDKS[i] %>"><%= AndroidConstants.SUPPORTED_SDKS[i] %></option>
-							<% } %>
+							<%  	}
+								} %>
 						</select>
 					</div>
 				</div>
@@ -470,6 +472,10 @@
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
 						<input type="checkbox" id="proguard" name="proguard" value="false">
 						<span><s:text name="label.progurad"/></span>
+						
+						<input type="checkbox" id="signing" name="signing" value="false">
+						<span class="popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
+															
 				<% } %>
 				</div>
 			</div>
@@ -499,9 +505,17 @@
 		$("#preBtn").hide();
 		
 		$("#nextBtn").click(function() {
+			var name= $("#name").val();
 			var svnurl= $("#svnurl").val();
 			var username= $("#username").val();
 			var password= $("#password").val();
+			if(name == ""){
+				$("#errMsg").html("Enter the Name");
+				$("#name").focus();
+				$("#name").val("");
+				return false;
+			}
+			
 			if(isValidUrl(svnurl)){
 				$("#errMsg").html("Enter SVN URL");
 				$("#svnurl").focus();
@@ -554,6 +568,7 @@
         
 		$('#close, #cancel').click(function() {
 			showParentPage();
+			$("#popup_div").empty();
 		});
 		
 		$("#actionBtn").click(function() {
@@ -722,5 +737,6 @@
     
     function cronValidationLoad(params) {
     	popup('cronValidation', params, $('#cronValidation'));
+    	
     }
 </script>

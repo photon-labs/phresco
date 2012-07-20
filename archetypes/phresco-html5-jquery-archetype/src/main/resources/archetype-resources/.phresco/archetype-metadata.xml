@@ -148,8 +148,8 @@
 			<includes>
 				<include>PhrescoUiConstants.java</include>
 				<include>ReadXMLFile.java</include>
-                <include>JQueryWidgetData.java</include>
-                <include>TestConfig.java</include>
+                <include>UIConstants.java</include>
+                <include>WidgetData.java</include>
                 <include>UserInfoConstants.java</include>
 			</includes>
 		</fileSet>
@@ -157,7 +157,7 @@
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
 				<include>phresco-env-config.xml</include>
-                <include>JQueryWidgetHWData.xml</include>
+                <include>WidgetData.xml</include>
                 <include>UIConstants.xml</include>
                 <include>UserInfo.xml</include>
 			</includes>
@@ -200,12 +200,8 @@
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>test/performance/database/tests</directory> 
-			<includes> 
-				<include>categories.csv</include> 
+			<includes>  
 				<include>PhrescoFrameWork_TestPlan.jmx</include> 
-				<include>products.csv</include> 
-				<include>reviews.csv</include> 
-				<include>users.csv</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

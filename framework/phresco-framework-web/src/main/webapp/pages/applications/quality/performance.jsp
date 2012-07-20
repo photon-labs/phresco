@@ -65,6 +65,7 @@
 		%>
 	    <input id="testbtn" type="button" value="<s:text name="label.test"/>" class="primary btn env_btn">
 	    <div class="perOpenAndCopyPath">
+	    	<a href="#" id="pdfPopup" style="display: none;"><img id="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
 			<a href="#" id="openFolder"><img id="folderIcon" src="images/icons/open-folder.png" title="Open folder"/></a>
 			<a href="#" id="copyPath"><img src="images/icons/copy-path.png" title="Copy path"/></a>
 		</div>&nbsp;
@@ -122,7 +123,7 @@
 	    
 	<div class="perErrorDis" id="noFiles">
 		<div class="alert-message block-message warning" style="margin: 5px 0px 0;">
-			<label Class="errorMsgLabel"><%= FrameworkConstants.ERROR_PERFORMANCE_TEST %></label>
+			<label Class="errorMsgLabel"><s:text name="performancetest.not.executed"/></label>
 		</div>
 	</div>
 </form>
@@ -175,6 +176,13 @@
         	copyPath('<%= projectCode %><%= path %>');
         });
         
+        $('#pdfCreation').click(function() {
+    		showPopup();
+    		$('#popup_div').empty();
+    		popup('printAsPdfPopup', '', $('#popup_div'));
+    	    escPopup();
+	    });
+        
         $('#closeGenerateTest, #closeGenTest').click(function() {
         	changeTesting('<%= testType %>');
         	$(".wel_come").show().css("display","none");
@@ -212,6 +220,8 @@
     		params = $('form').serialize() + "&";
     	}
 		performAction('performanceTestResult', params, $('#testResultDisplay'));
+		//show print as pdf icon
+		$('#pdfPopup').show();
     }
 	
     function isResultFileAvailbale() {
