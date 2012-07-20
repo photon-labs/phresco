@@ -2914,6 +2914,7 @@ table {
     width: 100%;
     height: 100%;
     text-align: center;
+    margin-top:54px;
 }
 
 .testCaseLog {
@@ -4744,7 +4745,22 @@ a[id='androidSigning']:hover {
 #reportcategy {
 	margin-left: 75px;
 	text-align: justify;
+}
 
+.report-header1 { 
+	padding:2px 0 5px 10px; 
+	width :28%;
+}
+
+.report_scroll { 
+	overflow: auto; 
+	height: 181px;
+}
+
+#availableReports { 
+	text-align: left; 
+	margin-bottom: 12px; 
+	margin-left: 5px;
 }
 
 /** All checkbox list page css**/

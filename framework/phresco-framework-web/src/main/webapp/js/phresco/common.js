@@ -295,6 +295,11 @@
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
     }
+    
+    function checkForHost(host) {
+    	newHost = host.replace(/[^a-zA-Z 0-9\.%\-\_]+/g, '');
+    	return newHost;
+    }
 	
     // To remove empty space between the characters
  	function removeSpace(name) {
@@ -379,7 +384,6 @@
 		return newName;
     }
 			 
-	
 	function accordion() {
 	    var showContent = 0;
 	    $('.siteaccordion').removeClass('openreg').addClass('closereg');

@@ -125,14 +125,12 @@
 		        <% 
 		        	if (key.equals(FrameworkConstants.ADMIN_FIELD_PASSWORD) || key.equals(FrameworkConstants.PASSWORD)) {
 		        %>
-		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="password"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
+		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="password"  value ="<%= value %>" placeholder="<%= desc %>"/>
 		       	<%  
 		        	} else if ((key.equals("Server") || key.equals("Database")) && possibleValues == null) {
 		        		masterKey = key;
 		        %>
-<%-- 	        			<select id="type" name="<%= key %>" class="selectEqualWidth" onfocus="showDesc(this);"> --%>
-                      
-                       <select id="type" name="type" class="selectEqualWidth  server_db_Width" onfocus="showDesc(this);">
+                       <select id="type" name="type" class="selectEqualWidth  server_db_Width">
 	                	
 	                	</select>
 	        			
@@ -154,9 +152,9 @@
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
-		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
+		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text" value ="<%= value %>" placeholder="<%= desc %>"/>
 		        <% 	} else { %>
-		        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth" onfocus="showDesc(this);" >
+		        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth">
 		        				<option disabled="disabled" selected="selected" value="" style="color: #BFBFBF;"><%= desc %></option>
 		        				<% 
 		        					String selectedStr = "";
@@ -270,19 +268,6 @@
 		/* JQuery scroll bar */
 		$("#multilist-scroller").scrollbars();
 	}
-
-	hideAllDesc();
-	function showDesc(obj){
-		hideAllDesc();
-	    var id = obj.id;
-		id = id.replace(/\s/g, "");
-		$("."+id).show();
-		setTimeout(function(){
-		    $("."+id).fadeOut("slow", function () {
-		    });
-		     
-		}, 2000);
-	}
 	
 	$(document).ready(function() {
 		enableScreen();
@@ -347,19 +332,18 @@
 	/** To display projectInfo databases ends **/
 	
 		// hide deploy dir if remote Deployment selected
-		 
-         $("input[name='remoteDeployment']").change(function() {
-				var isChecked = $("input[name='remoteDeployment']").is(":checked");
-				if (isChecked) {
-					hideDeployDir();
-					$("#admin_username label").html('<span class="red">* </span>Admin Username');
-					$("#admin_password label").html('<span class="red">* </span>Admin Password');  
-			    }  else {
-			    	$("#admin_username label").html('Admin Username');
-					$("#admin_password label").html('Admin Password');  
-			    	$('#deploy_dir').show();
-			     } 
-			});
+		$("input[name='remoteDeployment']").change(function() {
+			var isChecked = $("input[name='remoteDeployment']").is(":checked");
+			if (isChecked) {
+				hideDeployDir();
+				$("#admin_username label").html('<span class="red">* </span>Admin Username');
+				$("#admin_password label").html('<span class="red">* </span>Admin Password');  
+			}  else {
+				$("#admin_username label").html('Admin Username');
+				$("#admin_password label").html('Admin Password');  
+			    $('#deploy_dir').show();
+			} 
+		});
 	 
 	    $("#type").change(function() {
 	    	$('#deploy_dir').show();
@@ -372,31 +356,57 @@
 		$("input[name='name']").prop({"maxLength":"20", "title":"20 Characters only"});
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
+		$("input[name='host']").prop({"maxLength":"15", "title":"15 Characters only"});
+		$("input[name='sapSvcPort']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		
-		$('#Port').bind('input propertychange', function (e) { //Port validation
+		$("input[name='port']").live('input propertychange', function (e) { //Port validation
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
          });
         
-		$("#xlInput").bind('input propertychange',function(e) { //Name validation
+		$("#xlInput").live('input propertychange',function(e) { //Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	$(this).val(name);
         });
 		
-		$("input[name='dbname']").bind('input propertychange',function(e){ 	//DB_Name validation
+		$("input[name='dbname']").live('input propertychange',function(e){ 	//DB_Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
         });
 		
-		$("input[name='context']").bind('input propertychange',function(e){ 	//Context validation
-        	var name = $(this).val();
+        $("input[name='host']").live('input propertychange', function (e) {  //Host validation
+            var host = $(this).val();
+            host = checkForHost(host);
+            $(this).val(host);
+        });
+        
+        $("input[name='searchHosts']").live('input propertychange', function (e) {  //searchHosts validation
+            var host = $(this).val();
+            host = checkForHost(host);
+            $(this).val(host);
+        });
+        
+        $("input[name='sapSvcHost']").live('input propertychange', function (e) {  //sapSvcHost validation
+            var host = $(this).val();
+            host = checkForHost(host);
+            $(this).val(host);
+        });
+        
+        $("input[name='sapSvcPort']").live('input propertychange', function (e) { //sapSvcPort validation
+        	var portNo = $(this).val();
+        	portNo = checkForNumber(portNo);
+        	$(this).val(portNo);
+         });
+        
+		$("input[name='context']").live('input propertychange',function(e){ 	//Context validation
+			var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
-        });
+		});
 	});
 	
 	function showSetttingsInfoServer() {
