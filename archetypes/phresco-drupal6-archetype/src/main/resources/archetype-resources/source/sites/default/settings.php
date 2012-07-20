@@ -19,12 +19,12 @@
  */ ?>
 <?php
 
-    if(DRUPAL_ROOT){
+    /* if(DRUPAL_ROOT){
         $cwd = DRUPAL_ROOT; 
     }else { 
         $cwd = getcwd(); 
-    }
-
+    } */
+	$cwd = getcwd();
     include($cwd."/sites/default/config/config.php");
 
 // $Id: default.settings.php,v 1.8.2.4 2009/09/14 12:59:18 goba Exp $
