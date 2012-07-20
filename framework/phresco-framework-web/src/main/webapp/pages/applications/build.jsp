@@ -123,7 +123,7 @@
 		    <input id="generatebtn" type="button" value="<s:text name="label.generatebuild"/>" class="primary btn env_btn">
 		    <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 		</div> 
-		<div style="float: right;width: auto;">
+		<div class="runagint_source";>
 		<%
 			if(TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology)) {
 		%>
