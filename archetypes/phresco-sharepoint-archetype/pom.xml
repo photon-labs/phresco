@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
+   <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
         <version>1.2.0.7004-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-
+	
     <modelVersion>4.0.0</modelVersion>
     <groupId>archetypes</groupId>
     <artifactId>phresco-sharepoint-archetype</artifactId>
@@ -49,6 +49,34 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+								   <groupId>binaries.sharepoint</groupId>
+									<artifactId>CabLib</artifactId>
+									<version>10.2.0.0</version>
+									<classifier>${platform}</classifier>
+									<type>zip</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>source</outputDirectory>
+									<includes>**/*.dll</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			 <plugin>
 			<groupId>org.apache.geronimo.genesis.plugins</groupId>
 			<artifactId>tools-maven-plugin</artifactId>
@@ -65,5 +93,87 @@
 		</plugin>
         </plugins>
     </build>
-    
+	<profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+		        <plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+						  <execution>
+							<id>default-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+							  <goal>clean</goal>
+							</goals>
+						  </execution>
+						</executions>
+						<configuration>
+						  <filesets>
+							<fileset>
+							  <directory>do_not_checkin/build</directory>
+							  <includes>
+								<include>**/*</include>
+							  </includes>
+							  <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+						</configuration>
+					  </plugin>
+		        </plugins>
+            </build>
+        </profile>
+		<profile>
+			<id>windows-32bit</id>
+				<properties>
+					<platform>windows32</platform>
+				</properties>
+			<activation>
+				<os>
+					<family>Windows</family>
+					<arch>x86</arch>
+				  </os>
+			</activation>
+	    </profile>
+		 <profile>
+			<id>windows-x64bit</id>
+				<properties>
+					<platform>windows64</platform>
+				</properties>
+			<activation>
+			  <os>
+				<family>Windows</family>
+				<arch>amd64</arch>
+			  </os>
+			</activation>
+		  </profile>
+		  <profile>
+			<id>windows-amd64bit</id>
+				<properties>
+					<platform>windows64</platform>
+				</properties>
+			<activation>
+			  <os>
+				<family>Windows</family>
+				<arch>x64</arch>
+			  </os>
+			</activation>
+		  </profile>
+    </profiles>
+
+    <dependencies>
+		<dependency>
+		  <groupId>binaries.sharepoint</groupId>
+		  <artifactId>CabLib</artifactId>
+		  <version>10.2.0.0</version>
+		  <classifier>${platform}</classifier>
+		  <type>zip</type>
+		</dependency>
+  </dependencies>
+
 </project>

@@ -45,6 +45,7 @@ public interface PluginConstants {
      String MVN_PHASE_VALIDATE			= "validate";
      String MVN_PHASE_INITIALIZE		= "initialize";
      String MVN_PHASE_CLEAN				= "clean";
+     String MVN_PHASE_VALDATE			= "validate";
      String MVN_PHASE_PACKAGE			= "package";
 	 String MVN_PHASE_VERIFY			= "verify";
 	 String MVN_PHASE_INSTALL			= "install";
@@ -141,6 +142,7 @@ public interface PluginConstants {
 	 String SHAREPOINT_STR_BACKSLASH 	= "/";
 	 String SHAREPOINT_STR_HYPEN 		= "-";
 	 String SHAREPOINT_STR_DOUBLEQUOTES = "\"";
+	 String SHAREPOINT_CABLIB           = "\\cabLib.dll";
 	 
 	//Constants for WordPress Plugin
 	//Constants for Drupal Plugin
