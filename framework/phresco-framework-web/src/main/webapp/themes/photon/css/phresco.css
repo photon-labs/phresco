@@ -4837,3 +4837,8 @@ a[id='androidSigning']:hover {
 	margin-left: 16%;
 	cursor: pointer;
 }
+
+.runagint_source {
+	float: right;
+	width: auto;
+}
