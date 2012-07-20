@@ -685,7 +685,7 @@ public interface FrameworkConstants {
     /*
      * Code keys
      */
-    String FAILURE_CODE_REVIEW = "Code review is not available";
+    String FAILURE_CODE_REVIEW = "Code validation report is not available";
 	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
