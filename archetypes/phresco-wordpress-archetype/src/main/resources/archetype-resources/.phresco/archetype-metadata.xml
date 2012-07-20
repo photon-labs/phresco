@@ -93,6 +93,20 @@
 				<include>basescreen.php</include>
 			</includes> 
 		</fileSet>
+        <fileSet filtered="false"> 
+			<directory>test/functional/src/main/php/phresco/tests/phpwebdriver</directory> 
+			<includes> 
+				<include>Keys.php</include>
+				<include>LocatorStrategy.php</include>
+				<include>NoSuchElementException.php</include>
+				<include>RequiredFunction.php</include>
+				<include>WebDriver.php</include>
+				<include>WebDriverBase.php</include>
+				<include>WebDriverException.php</include>
+				<include>WebDriverResponseStatus.php</include>
+				<include>WebElement.php</include>
+			</includes> 
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src/site/doxygen</directory> 
 			<includes> 
@@ -109,12 +123,13 @@
 			<directory>test/functional/src/test/php/phresco/tests</directory> 
 			<includes> 
 				<include>WordPressCommonFun.php</include>
-				<include>WpSetting.xml</include>
+				<include>UserInfo.xml</include>
 				<include>CommonSuite.php</include>
 				<include>phresco-env-config.xml</include>
 				<include>Login_NewUsers.php</include>
 				<include>UserSuite.php</include>
 				<include>Welcompage.php</include>
+                <include>WordPressData.xml</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -159,6 +174,34 @@
 				<include>PhrescoFrameWork_TestPlan.jmx</include>
 			</includes> 
 		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+				<include>phresco-env-config.csv</include>
+			</includes> 
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/unit</directory> 
 			<includes> 
