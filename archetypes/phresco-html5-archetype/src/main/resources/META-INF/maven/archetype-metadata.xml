@@ -206,11 +206,7 @@
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>test/performance/database/tests</directory> 
 			<includes> 
-				<include>categories.csv</include> 
 				<include>PhrescoFrameWork_TestPlan.jmx</include> 
-				<include>products.csv</include> 
-				<include>reviews.csv</include> 
-				<include>users.csv</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
