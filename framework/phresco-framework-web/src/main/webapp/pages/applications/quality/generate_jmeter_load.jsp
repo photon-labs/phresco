@@ -193,6 +193,12 @@
                 (key >= 96 && key <= 105));
         });
 		
+		$("#noOfUsers, #rampUpPeriod, #loopCount").bind('input propertychange',function(e) { 	//testName validation
+	     	var name = $(this).val();
+	     	name = isContainSpace(name);
+	     	$(this).val(name);
+	     });
+		
 		$('#environments').change(function() {
 			getConfigNames();
 		});
