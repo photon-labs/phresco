@@ -291,12 +291,13 @@ public interface ProjectAdministrator {
     void deleteConfigurations(Map<String, List<String>> selectedConfigs, Project project) throws PhrescoException;
 
    /**
-     * Returns the technology Id for the specified project code
-     * @param projectCode
+     * Returns the project for the specified project code
+     * @param baseDir
      * @return
      * @throws PhrescoException
      */
-    String getTechId(String projectCode) throws PhrescoException;
+    Project getProjectByWorkspace(File baseDir) throws PhrescoException;
+
     /**
      * TODO: DO we need this?
      * @param path

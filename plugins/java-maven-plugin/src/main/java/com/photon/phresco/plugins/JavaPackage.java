@@ -54,6 +54,7 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.commons.BuildInfo;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
@@ -189,14 +190,15 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	private void updateFinalName() throws MojoExecutionException {
 		try {
 			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			String techId = projAdmin.getTechId(baseDir.getName());
+			Project currentProject = projAdmin.getProjectByWorkspace(baseDir);
+			String techId = currentProject.getProjectInfo().getTechnology().getId();
 			if (!techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
 				String envName = environmentName;
 				if (environmentName.indexOf(',') > -1) { // multi-value
 					envName = projAdmin.getDefaultEnvName(baseDir.getName());
 				}
 				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER,
-						baseDir.getName(), envName);
+						currentProject.getProjectInfo().getCode(), envName);
 				for (SettingsInfo settingsInfo : settingsInfos) {
 					context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
 					break;
@@ -308,7 +310,8 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 				modulePath = File.separatorChar + moduleName;
 			}
 			ProjectAdministrator projectAdministrator = PhrescoFrameworkFactory.getProjectAdministrator();
-			String techId = projectAdministrator.getTechId(basedir);
+			Project currentProject = projectAdministrator.getProjectByWorkspace(baseDir);
+			String techId = currentProject.getProjectInfo().getTechnology().getId();
 			if (techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET) 
 					|| techId.equals(TechnologyTypes.HTML5_WIDGET)) {
 				sourceConfigXML = new File(baseDir + modulePath + "/src/main/webapp/WEB-INF/resources/phresco-env-config.xml");
@@ -355,7 +358,8 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			String zipFilePath = buildDir.getPath() + File.separator + zipName;
 			String zipNameWithoutExt = zipName.substring(0, zipName.lastIndexOf('.'));
 			ProjectAdministrator projectAdministrator = PhrescoFrameworkFactory.getProjectAdministrator();
-			String techId = projectAdministrator.getTechId(baseDir.getName());
+			Project currentProject = projectAdministrator.getProjectByWorkspace(baseDir);
+			String techId = currentProject.getProjectInfo().getTechnology().getId();
 			if (techId.equals(TechnologyTypes.JAVA_STANDALONE)) {
 
 				copyJarToPackage(zipNameWithoutExt);

@@ -397,7 +397,7 @@
 			fillVersions("databases", data.databases , "");
 			//getting sql files to be executed
 			getSQLFiles();
-		} else if (pageUrl == "getSQLFiles") {
+		} else if (pageUrl == "fetchSQLFiles ") {
 			fillVersions("avaliableSourceScript", data.sqlFiles , "getSQLFiles");
 			// after sql files are loaded, already selected value should be hidden in available list
 			hideDbWithVersions();

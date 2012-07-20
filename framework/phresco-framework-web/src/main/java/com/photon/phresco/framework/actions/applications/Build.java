@@ -1561,9 +1561,13 @@ public class Build extends FrameworkBaseAction {
 			databases = new ArrayList<String>();
 			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos(Constants.SETTINGS_TEMPLATE_DB,
 					projectCode, environments);
-			for (SettingsInfo databasedetail : databaseDetails) {
-				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
-				databases.add(dbtype);
+			if (CollectionUtils.isNotEmpty(databaseDetails)) {
+				for (SettingsInfo databasedetail : databaseDetails) {
+					dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+					if (!databases.contains(dbtype)) {
+						databases.add(dbtype);
+					}
+				}
 			}
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.configSQL()" + FrameworkUtil.getStackTraceAsString(e));
@@ -1571,38 +1575,36 @@ public class Build extends FrameworkBaseAction {
 		return SUCCESS;
 	}
 
-	public String getSQLFiles() {
+	public String fetchSQLFiles() {
+		String dbtype = null;
+		String dbversion = null;
+		String path = null;
+		String sqlFileName = null;
 		try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
+			sqlFiles = new ArrayList<String>();
 			String techId = project.getProjectInfo().getTechnology().getId();
 			String selectedDb = getHttpRequest().getParameter("selectedDb");
 			String sqlPath = sqlFolderPathMap.get(techId);
-			File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb).listFiles();
-			sqlFiles = new ArrayList<String>();
-			showFiles(dbSqlFiles, selectedDb, sqlPath);
+			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos( Constants.SETTINGS_TEMPLATE_DB,
+					projectCode, environments);
+			for (SettingsInfo databasedetail : databaseDetails) {
+				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+				if (selectedDb.equals(dbtype)) { 
+					dbversion = databasedetail.getPropertyInfo(Constants.DB_VERSION).getValue();
+					File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb + File.separator + dbversion).listFiles();
+					for (int i = 0; i < dbSqlFiles.length; i++) {
+						 sqlFileName = dbSqlFiles[i].getName();
+						path = sqlPath + selectedDb + FILE_SEPARATOR +  dbversion + "#SEP#" +  sqlFileName ;
+						sqlFiles.add(path);
+					}
+				}
+			}
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.getSQLFiles()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
-	}
-
-	private void showFiles(File[] dbSqlFiles, String selectedDb, String sqlPath) {
-		String versionName = null;
-		String sqlFileName = null;
-		String path = null;
-		if (!ArrayUtils.isEmpty(dbSqlFiles)) {
-			for (File dbSqlFile : dbSqlFiles) {
-				if (dbSqlFile.isDirectory()) {
-					showFiles(dbSqlFile.listFiles(), selectedDb, sqlPath);
-				} else {
-					sqlFileName = dbSqlFile.getName();
-					versionName = dbSqlFile.getParentFile().getName();
-					path = sqlPath + selectedDb + FILE_SEPARATOR + versionName + "#SEP#" + sqlFileName;
-					sqlFiles.add(path);
-				}
-			}
-		}
 	}
 
 	private static void initDbPathMap() {
