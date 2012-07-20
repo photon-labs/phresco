@@ -81,12 +81,12 @@ public interface ProjectAdministrator {
     Project getProject(String projectCode) throws PhrescoException;
     
     /**
-     * Returns the technology Id for the specified project code
-     * @param projectCode
+     * Returns the project for the specified project code
+     * @param baseDir
      * @return
      * @throws PhrescoException
      */
-    String getTechId(String projectCode) throws PhrescoException;
+    Project getProjectByWorkspace(File baseDir) throws PhrescoException;
 
     /**
      * Returns all application types

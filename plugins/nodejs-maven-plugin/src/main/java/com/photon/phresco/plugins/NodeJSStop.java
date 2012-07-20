@@ -19,8 +19,12 @@
  */
 package com.photon.phresco.plugins;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -60,12 +64,42 @@ public class NodeJSStop extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		ByteArrayInputStream is = null;
+		BufferedReader reader = null;
+		InputStreamReader isr = null;
+		FileWriter fileWriter = null;
+		String result = "";
 		try {
 			stopNodeJS();
-			getLog().info("Server stopped successfully");
+			result = "Server Stopped Successfully...";
+			is = new ByteArrayInputStream(result.getBytes());
+			isr = new InputStreamReader(is);
+			reader = new BufferedReader(isr);
+			fileWriter = new FileWriter(baseDir.getPath() + LOG_FILE_DIRECTORY + SERVER_LOG_FILE, false);
+			LogWriter writer = new LogWriter();
+			writer.writeLog(reader, fileWriter);
 		} catch (MojoExecutionException e) {
 			getLog().error("Failed to stop server "+ e);
 			throw e;
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage());
+		} finally {
+			try {
+				if (is != null) {
+					is.close();
+				}
+				if (reader != null) {
+					reader.close();
+				}
+				if (isr != null) {
+					isr.close();
+				}
+				if (fileWriter != null) {
+					fileWriter.close();
+				}
+			} catch (Exception e) {
+				throw new MojoExecutionException(e.getMessage());
+			}
 		}
 	}
 

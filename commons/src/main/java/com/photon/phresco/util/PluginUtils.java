@@ -151,13 +151,7 @@ public class PluginUtils {
 				}
 			}
 		} catch (SQLException e) {
-			try {
-				if (con != null) {
-					con.rollback();
-				}
-			} catch (SQLException e1) {
-				throw new PhrescoException(e1);
-			}
+			throw new PhrescoException(e);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
 		} catch (InstantiationException e) {

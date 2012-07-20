@@ -45,7 +45,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -944,14 +943,29 @@ public class Build extends FrameworkBaseAction {
 			S_LOGGER.debug("Entering Method Build.stopNodeJSServer()");
 		}
 		try {
+			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+			builder.append(projectCode);
+			builder.append(File.separator);
+			builder.append(FOLDER_DOT_PHRESCO);
+			builder.append(File.separator);
+			builder.append(RUN_AGS_ENV_FILE);
+			File envFile = new File(builder.toString());
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
 			ActionType nodeStop = ActionType.STOP_SERVER;
 			BufferedReader reader = runtimeManager.performAction(project, nodeStop, null, null);
-			getHttpSession().setAttribute(projectCode + REQ_READ_LOG_FILE, reader);
-			getHttpSession().removeAttribute(project.getProjectInfo().getCode() + SESSION_NODEJS_SERVER_STATUS);
-			getHttpSession().removeAttribute(project.getProjectInfo().getCode() + SESSION_NODEJS_IMPORTSQL_VALUE);
+			String line;
+			line = reader.readLine();
+			while (!line.startsWith("[INFO] BUILD SUCCESS")) {
+				line = reader.readLine();
+			}
+			readLogFile(project, "");
+			if (envFile.exists()) {
+				envFile.delete();
+			}
+			getHttpSession().removeAttribute(project.getProjectInfo().getCode()	+ SESSION_NODEJS_SERVER_STATUS);
+			getHttpSession().removeAttribute(project.getProjectInfo().getCode()	+ SESSION_NODEJS_IMPORTSQL_VALUE);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 			getHttpRequest().setAttribute(REQ_PROJECT, project);
 		} catch (Exception e) {
@@ -1488,50 +1502,53 @@ public class Build extends FrameworkBaseAction {
 			databases = new ArrayList<String>();
 			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos(Constants.SETTINGS_TEMPLATE_DB,
 					projectCode, environments);
-			for (SettingsInfo databasedetail : databaseDetails) {
-				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
-				databases.add(dbtype);
+			if (CollectionUtils.isNotEmpty(databaseDetails)) {
+				for (SettingsInfo databasedetail : databaseDetails) {
+					dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+					if (!databases.contains(dbtype)) {
+						databases.add(dbtype);
+					}
+				}
 			}
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.configSQL()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
 	}
-
-	public String getSQLFiles() {
+	
+	public String fetchSQLFiles() {
+		String dbtype = null;
+		String dbversion = null;
+		String path = null;
+		String sqlFileName = null;
 		try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
+			sqlFiles = new ArrayList<String>();
 			String techId = project.getProjectInfo().getTechnology().getId();
 			String selectedDb = getHttpRequest().getParameter("selectedDb");
 			String sqlPath = sqlFolderPathMap.get(techId);
-			File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb).listFiles();
-			sqlFiles = new ArrayList<String>();
-			showFiles(dbSqlFiles, selectedDb, sqlPath);
+			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos( Constants.SETTINGS_TEMPLATE_DB,
+					projectCode, environments);
+			for (SettingsInfo databasedetail : databaseDetails) {
+				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+				if (selectedDb.equals(dbtype)) { 
+					dbversion = databasedetail.getPropertyInfo(Constants.DB_VERSION).getValue();
+					File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb + File.separator + dbversion).listFiles();
+					for (int i = 0; i < dbSqlFiles.length; i++) {
+						 sqlFileName = dbSqlFiles[i].getName();
+						path = sqlPath + selectedDb + FILE_SEPARATOR +  dbversion + "#SEP#" +  sqlFileName ;
+						sqlFiles.add(path);
+					}
+				}
+			}
+			
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.getSQLFiles()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
 	}
-
-	private void showFiles(File[] dbSqlFiles, String selectedDb, String sqlPath) {
-		String versionName = null;
-		String sqlFileName = null;
-		String path = null;
-		if (!ArrayUtils.isEmpty(dbSqlFiles)) {
-			for (File dbSqlFile : dbSqlFiles) {
-				if (dbSqlFile.isDirectory()) {
-					showFiles(dbSqlFile.listFiles(), selectedDb, sqlPath);
-				} else {
-					sqlFileName = dbSqlFile.getName();
-					versionName = dbSqlFile.getParentFile().getName();
-					path = sqlPath + selectedDb + FILE_SEPARATOR + versionName + "#SEP#" + sqlFileName;
-					sqlFiles.add(path);
-				}
-			}
-		}
-	}
-
+	
 	private static void initDbPathMap() {
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");

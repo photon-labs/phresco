@@ -713,9 +713,11 @@
 		if(!isBlank($("#databases").val())) {
 			var params = 'selectedDb=';
 		    params = params.concat($("#databases").val());
+		    params =  params.concat('&environments=');
+		    params = params.concat($("#environments").val());
 		    params = params.concat("&projectCode=");
 		    params = params.concat('<%= projectCode %>');
-			performAction("getSQLFiles", params, '', true);
+			performAction("fetchSQLFiles", params, '', true);
 		}
 	}
 

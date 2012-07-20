@@ -459,9 +459,30 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return null;
 	}
 	
-	public String getTechId(String projectCode) throws PhrescoException {
-		return getProject(projectCode).getProjectInfo().getTechnology().getId();
+	public Project getProjectByWorkspace(File baseDir) throws PhrescoException {
+
+		S_LOGGER.debug("Entering Method ProjectAdministratorImpl. getTechId(File baseDir)");
+
+		// Use the FileNameFilter for filtering .phresco directories
+		// Read the .project file and construct the Project object.
+
+		List<Project> projects = new ArrayList<Project>();
+
+		File[] dotPhrescoFolders = baseDir.listFiles(new PhrescoFileNameFilter(FOLDER_DOT_PHRESCO));
+		if (!ArrayUtils.isEmpty(dotPhrescoFolders)) {
+			for (File dotPhrescoFolder : dotPhrescoFolders) {
+				File[] dotProjectFiles = dotPhrescoFolder.listFiles(new PhrescoFileNameFilter(PROJECT_INFO_FILE));
+				fillProjects(dotProjectFiles, projects);
+			}
+			Project project = projects.get(0);
+			if (project != null && project.getProjectInfo() != null) {
+				return project;
+			}
+		}
+		return null;
 	}
+
+
 	
 	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, PhrescoPomException {
 		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);

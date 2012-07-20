@@ -190,6 +190,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		}
 		String serverhost = info.getPropertyInfo(Constants.SERVER_HOST).getValue();
 		String serverport = info.getPropertyInfo(Constants.SERVER_PORT).getValue();
+		String serverprotocol = info.getPropertyInfo(Constants.SERVER_PROTOCOL).getValue();
 		String serverusername = info.getPropertyInfo(Constants.SERVER_ADMIN_USERNAME).getValue();
 		String serverpassword = info.getPropertyInfo(Constants.SERVER_ADMIN_PASSWORD).getValue();
 		String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
@@ -206,11 +207,11 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		// remote deployment
 		if (servertype.contains(TYPE_TOMCAT)
 				&& ((version.equals("7.0.x")) || (version.equals("7.1.x")) || (version.equals("6.0.x")))) {
-			deployToTomcatServer(serverhost, serverport, serverusername, serverpassword);
+			deployToTomcatServer(serverprotocol, serverhost, serverport, serverusername, serverpassword);
 		} else if (servertype.contains(TYPE_JBOSS) && (version.equals("7.0.x"))) {
-			deployToJbossServer(serverhost, serverusername, serverpassword);
+			deployToJbossServer(serverport, serverprotocol, serverhost, serverusername, serverpassword);
 		} else if (servertype.contains(TYPE_WEBLOGIC) && (version.equals("12c(12.1.1)"))) {
-			deployToWeblogicServer(serverhost, serverport, serverusername, serverpassword);
+			deployToWeblogicServer(serverprotocol, serverhost, serverport, serverusername, serverpassword);
 		} else {
 			// for other servers
 			deploy();
@@ -232,10 +233,9 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 	}
 	
 	
-	private void deployToTomcatServer(String serverhost, String serverport, String serverusername,
+	private void deployToTomcatServer(String serverprotocol, String serverhost, String serverport, String serverusername,
 			String serverpassword) throws MojoExecutionException {
 		try {
-			getLog().info("project is deploying ......");
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
 			sb.append(STR_SPACE);
@@ -254,19 +254,19 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(serverpassword);
 			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
-			
 			Commandline cl = new Commandline(sb.toString());
+			getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
 			cl.setWorkingDirectory(baseDir);
 				Process process = cl.execute();
+				
 			} catch (CommandLineException e) {
 				throw new MojoExecutionException(e.getMessage(), e);
 			}
 	}
 
-	private void deployToJbossServer(String serverhost, String serverusername, String serverpassword)
+	private void deployToJbossServer(String serverport, String serverprotocol, String serverhost, String serverusername, String serverpassword)
 			throws MojoExecutionException {
 		try {
-			getLog().info("project is deploying ......");
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
 			sb.append(STR_SPACE);
@@ -284,6 +284,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(SKIP_TESTS);
 			
 			Commandline cl = new Commandline(sb.toString());
+			getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
 			cl.setWorkingDirectory(baseDir);
 				Process process = cl.execute();
 			} catch (CommandLineException e) {
@@ -291,10 +292,9 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			}
 	}
 
-	private void deployToWeblogicServer(String serverhost, String serverport, String serverusername,
+	private void deployToWeblogicServer(String serverprotocol, String serverhost, String serverport, String serverusername,
 			String serverpassword) throws MojoExecutionException {
 		try {
-			getLog().info("project is deploying ......");
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
 			sb.append(STR_SPACE);
@@ -315,6 +315,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(SKIP_TESTS);
 			
 			Commandline cl = new Commandline(sb.toString());
+			getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
 			cl.setWorkingDirectory(baseDir);
 				Process process = cl.execute();
 			} catch (CommandLineException e) {
@@ -349,8 +350,10 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 				break;
 			}		
 			File deployDir = new File(deployLocation);
-			FileUtils.mkdir(deployDir.getPath().trim());	
-			getLog().info("Project is deploying.........");
+			if (!deployDir.exists()) {
+				throw new MojoExecutionException(" Deploy Directory" + deployLocation + " Does Not Exists ");
+			}
+			getLog().info("Project is deploying into " + deployLocation);
 			FileUtils.copyDirectoryStructure(tempDir.getAbsoluteFile(), deployDir);
 			getLog().info("Project is deployed successfully");
 		} catch (Exception e) {
