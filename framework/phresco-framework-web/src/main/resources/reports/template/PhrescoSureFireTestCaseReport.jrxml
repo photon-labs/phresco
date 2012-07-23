@@ -186,7 +186,11 @@
 						</pieSeries>
 					</pieDataset>
 					<piePlot>
-						<plot/>
+						<plot>
+							<seriesColor seriesOrder="0" color="#66FF66"/>
+							<seriesColor seriesOrder="1" color="#FFA500"/>
+							<seriesColor seriesOrder="2" color="#FF0505"/>
+						</plot>
 						<itemLabel/>
 					</piePlot>
 				</pieChart>

@@ -213,7 +213,12 @@
 						</categorySeries>
 					</categoryDataset>
 					<barPlot>
-						<plot labelRotation="60.0"/>
+						<plot labelRotation="60.0">
+							<seriesColor seriesOrder="0" color="#00CCCC"/>
+							<seriesColor seriesOrder="1" color="#66FF66"/>
+							<seriesColor seriesOrder="2" color="#FFA500"/>
+							<seriesColor seriesOrder="3" color="#FF0000"/>
+						</plot>
 						<itemLabel/>
 					</barPlot>
 				</barChart>

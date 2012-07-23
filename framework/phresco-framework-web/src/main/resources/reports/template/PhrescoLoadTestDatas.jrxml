@@ -165,7 +165,9 @@
 						</categorySeries>
 					</categoryDataset>
 					<linePlot>
-						<plot/>
+						<plot>
+							<seriesColor seriesOrder="0" color="#66FF66"/>
+						</plot>
 					</linePlot>
 				</lineChart>
 			</frame>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhrescoJmeterResultSubReport" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="120"/>
 	<import value="java.util.*"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
@@ -298,7 +298,7 @@
 				</staticText>
 				<barChart>
 					<chart>
-						<reportElement x="1" y="41" width="553" height="191"/>
+						<reportElement mode="Transparent" x="1" y="41" width="553" height="191"/>
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
@@ -311,7 +311,9 @@
 						</categorySeries>
 					</categoryDataset>
 					<barPlot>
-						<plot labelRotation="60.0"/>
+						<plot labelRotation="60.0">
+							<seriesColor seriesOrder="0" color="#66FF66"/>
+						</plot>
 						<itemLabel/>
 					</barPlot>
 				</barChart>
@@ -335,7 +337,9 @@
 						</categorySeries>
 					</categoryDataset>
 					<barPlot>
-						<plot labelRotation="60.0"/>
+						<plot labelRotation="60.0">
+							<seriesColor seriesOrder="0" color="#66FF66"/>
+						</plot>
 						<itemLabel/>
 					</barPlot>
 				</barChart>
@@ -367,7 +371,9 @@
 						</categorySeries>
 					</categoryDataset>
 					<barPlot>
-						<plot labelRotation="60.0"/>
+						<plot labelRotation="60.0">
+							<seriesColor seriesOrder="0" color="#66FF66"/>
+						</plot>
 						<itemLabel/>
 					</barPlot>
 				</barChart>
