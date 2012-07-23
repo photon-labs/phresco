@@ -50,34 +50,6 @@
                 </executions>
             </plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.1</version>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-								   <groupId>binaries.sharepoint</groupId>
-									<artifactId>CabLib</artifactId>
-									<version>10.2.0.0</version>
-									<classifier>${platform}</classifier>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>source</outputDirectory>
-									<includes>**/*.dll</includes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			 <plugin>
 			<groupId>org.apache.geronimo.genesis.plugins</groupId>
 			<artifactId>tools-maven-plugin</artifactId>
 			<version>1.1</version>
@@ -128,52 +100,7 @@
 		        </plugins>
             </build>
         </profile>
-		<profile>
-			<id>windows-32bit</id>
-				<properties>
-					<platform>windows32</platform>
-				</properties>
-			<activation>
-				<os>
-					<family>Windows</family>
-					<arch>x86</arch>
-				  </os>
-			</activation>
-	    </profile>
-		 <profile>
-			<id>windows-x64bit</id>
-				<properties>
-					<platform>windows64</platform>
-				</properties>
-			<activation>
-			  <os>
-				<family>Windows</family>
-				<arch>amd64</arch>
-			  </os>
-			</activation>
-		  </profile>
-		  <profile>
-			<id>windows-amd64bit</id>
-				<properties>
-					<platform>windows64</platform>
-				</properties>
-			<activation>
-			  <os>
-				<family>Windows</family>
-				<arch>x64</arch>
-			  </os>
-			</activation>
-		  </profile>
+		
     </profiles>
 
-    <dependencies>
-		<dependency>
-		  <groupId>binaries.sharepoint</groupId>
-		  <artifactId>CabLib</artifactId>
-		  <version>10.2.0.0</version>
-		  <classifier>${platform}</classifier>
-		  <type>zip</type>
-		</dependency>
-  </dependencies>
-
-</project>
+ </project>
