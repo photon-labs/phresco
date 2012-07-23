@@ -6,7 +6,7 @@
         <artifactId>phresco-archetypes</artifactId>
         <version>2.0.0.6001-SNAPSHOT</version>
         <relativePath>../</relativePath>
-    </parent>>
+    </parent>
     
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>archetypes</groupId>
