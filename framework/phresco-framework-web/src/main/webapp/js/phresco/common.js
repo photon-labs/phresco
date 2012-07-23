@@ -64,7 +64,7 @@
     function showLoadingIcon(tagControl) {
 		var src = "themes/photon/images/loading_blue.gif";
     	var theme =localStorage["color"];
-        if (theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
+        if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	src = "themes/photon/images/loading_red.gif";
         }
      	tagControl.empty();
@@ -263,6 +263,11 @@
     function checkForRevision(revision) {
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
+    }
+
+	function checkForHost(host) {
+    	newHost = host.replace(/[^a-zA-Z 0-9\.%\-\_]+/g, '');
+    	return newHost;
     }
     
     function checkForClassName(mainClassName) {

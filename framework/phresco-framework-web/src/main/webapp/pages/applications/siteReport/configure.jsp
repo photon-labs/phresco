@@ -41,18 +41,27 @@
 			<a class="close" href="#" id="close">&times;</a>
 		</div>
 
-		<div class="modal-body" style="height: 210px;">
+		<div class="modal-body" style="height: 228px;">
 			<fieldset class="popup-fieldset" style="border: 1px solid #CCCCCC; height: 97%;">
 				<legend class="fieldSetLegend"><s:text name="header.site.report.availableRpts"/></legend>
-				<div class="report_scroll" style="overflow: auto; height: 100%; margin-top: -10px;">
-	        		<ul id="availableReports" class="xlarge" style="text-align: left;">
+				<div class="tblheader">
+                    <table class="zebra-striped">
+                        <thead>
+                           <tr id=allReport>
+                               <th class="report-header1">
+                                   <input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">&nbsp;<s:text name="label.reports"/>
+                               </th>
+                               <th class="report-header2"></th>
+                           </tr>   
+                       </thead>
+                    </table>
+                </div>
+				<div class="report_scroll" id="reports-div">
+	        		<ul id="availableReports" class="xlarge">
 						<%
 							if (CollectionUtils.isNotEmpty(reports)) {
 								for (Reports report : reports) {
 									String checkedStr = "";
-									if(report.getArtifactId().equals(FrameworkConstants.REQ_SITE_SLECTD_REPORTSCATEGORIES)){
-										checkedStr="checked";
-									}
 									List<ReportCategories> selectedReportCategories = null;
 									if (CollectionUtils.isNotEmpty(selectedReports)) {
 										for (Reports selectedReport : selectedReports) {
@@ -62,14 +71,14 @@
 											}
 										}
 									}
-						%>
+								%>
 									<div class="theme_accordion_container" style="border: none;">
 									    <section class="accordion_panel_wid" style="margin-top: -6px;">
-									        <div class="accordion_panel_inner">
-									            <section class="lft_menus_container">
+									        <div class="accordion_panel_inner" style="padding:0; border:1px solid #cccccc;">
+									            <section class="lft_menus_container" style="width:100%;">
 									                <span class="siteaccordion <%= CollectionUtils.isEmpty(report.getReportCategories()) ? "closereg_empty" : "closereg" %> reportcolor" style="border: none;">
 										                <span id="reportList">
-										                  <input type="checkbox" name="reports" value="<%= report.getArtifactId() %>" <%= checkedStr %>>&nbsp;<%= report.getDisplayName() %>
+										                  <input type="checkbox" class="check" name="reports" value="<%= report.getArtifactId() %>" <%= checkedStr %>>&nbsp;<%= report.getDisplayName() %>
 										                </span>
 									                </span>
 									                <%
@@ -79,54 +88,39 @@
 									                <div class="mfbox siteinnertooltiptxt" style="display: none;">
 									                    <div class="scrollpanel adv_setting_accordian_bottom">
 									                        <section class="scrollpanel_inner">
-							                                   <table class="download_tbl">
-									                                <thead>
-									                                    <tr class="download_tbl_header" id="categoryListAll">
-									                                        <th style="padding:2px 0 5px 10px;">
-                                                                                <input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto">&nbsp;<s:text name="label.categories"/>
-										                                    </th>
-									                                    </tr>   
-									                                </thead>
-                                                                       <tbody>
-                                                                       <tr>
-                                                                        <td style="padding: 0; border: none;">
-                                                                             <fieldset class="popup-fieldset fieldset_center_align" style="border: none;">
-			                                                                    <div class="clearfix">
-			                                                                        <div class="xlInput" id="reportcategy">
-			                                                                        
-                                                                                  <%
-                                                                                      String categoryChk = "";
-                                                                                      for (ReportCategories reportCategory : reportCategories) {
-                                                                                          String indexCheck = "";
-                                                                                          if(reportCategory.getName().equals("index")){
-                                                                                              indexCheck = "checked";
-                                                                                          }
-                                                                                          if (CollectionUtils.isNotEmpty(selectedReportCategories)) {
-                                                                                              for (ReportCategories selectedReportCategory : selectedReportCategories) {
-                                                                                                  if(reportCategory.getName().equals(selectedReportCategory.getName())) {
-                                                                                                      categoryChk = "checked";
-                                                                                                      break;
-                                                                                                  } else {
-                                                                                                      categoryChk = "";
-                                                                                                  }
-                                                                                              }
-                                                                                          }
-                                                                                  %>
-                                                                                       
-                                                                                          <li class="environment_list" id ="categoryList" style="margin: 0;">
-                                                                                              <input type="checkbox" class="check" name="<%= report.getArtifactId() %>" value="<%= reportCategory.getName() %>" <%= indexCheck %> <%= categoryChk %>>&nbsp;<%= reportCategory.getName() %>
-                                                                                          </li>
-                                                                                  <%  
-                                                                                          
-                                                                                  }       
-                                                                                  %>
-                                                                                  </div>    
-			                                                                    </div>
-			                                                                </fieldset>
-			                                                                </td>
-			                                                                </tr>
-									                                </tbody>
-									                            </table>
+	                                                               <fieldset class="popup-fieldset fieldset_center_align" style="border: none;">
+	                                                                <div class="clearfix">
+	                                                                    <div class="xlInput" id="reportcategy">
+	                                                                    
+	                                                                           <%
+	                                                                               String categoryChk = "";
+	                                                                               for (ReportCategories reportCategory : reportCategories) {
+	                                                                                   String indexCheck = "";
+	                                                                                   if(reportCategory.getName().equals("index")){
+	                                                                                       indexCheck = "checked";
+	                                                                                   }
+	                                                                                   if (CollectionUtils.isNotEmpty(selectedReportCategories)) {
+	                                                                                       for (ReportCategories selectedReportCategory : selectedReportCategories) {
+	                                                                                           if(reportCategory.getName().equals(selectedReportCategory.getName())) {
+	                                                                                               categoryChk = "checked";
+	                                                                                               break;
+	                                                                                           } else {
+	                                                                                               categoryChk = "";
+	                                                                                           }
+	                                                                                       }
+	                                                                                   }
+	                                                                           %>
+	                                                                                
+	                                                                                   <li class="environment_list" style="margin: 0;">
+	                                                                                       <input type="checkbox" class="check" id="check" name="<%= report.getArtifactId() %>" value="<%= reportCategory.getName() %>" <%= indexCheck %> <%= categoryChk %>>&nbsp;<%= reportCategory.getName() %>
+	                                                                                   </li>
+	                                                                           <%  
+	                                                                                   
+	                                                                           }       
+	                                                                           %>
+	                                                                           </div>    
+	                                                                </div>
+	                                                            </fieldset>
 									                        </section>
 									                    </div>
 									                </div>
@@ -137,7 +131,6 @@
 									        </div>
 									    </section>
 									</div>
-									
 						<%
 								}
 							}
@@ -165,30 +158,13 @@
            $('.siteaccordion').removeClass('closereg_empty').addClass('openreg');
     <% } %>
     
-    /** To Make project-info-reports and index as default checked **/
+    /** To Make index as default checked **/
     
     var index = 'index';
     var project_info = 'maven-project-info-reports-plugin';
     
-	$('#reportList').click(function(e) {
-		$('input:checkbox[value="' + project_info + '"]').prop('checked', true);
-      });
-
-	$('#categoryListAll').click(function(e) {
-        $('input:checkbox[value="' + index + '"]').prop('checked', true);
-      });
-	
-	if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
-	    $('#checkAllAuto').prop('checked', true);
-     }
-	
-	$('input:checkbox[value="' + index + '"]').click(function(e) {
-	    $('input:checkbox[value="' + index + '"]').prop('checked', true);
-		  if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
-			   $('#checkAllAuto').prop('checked', true);
-		   }
-	});
-	
+    $('input:checkbox[value="' + index + '"]').attr('disabled', true);
+    
     /* jquery scroll bar */
 	$(".report_scroll").scrollbars();
 	
@@ -220,6 +196,8 @@
 		});
 		
 		$("#actionBtn").click(function() {
+			$('input:checkbox[value="maven-project-info-reports-plugin"]').prop('checked', true);
+		    $('input:checkbox[value="' + index + '"]').removeAttr('disabled', true);
 			configureSite();
 		});
 	});
@@ -229,4 +207,23 @@
 		var params = $('form').serialize();
 		performAction('createReportConfig', params, $("#tabDiv"));
 	}
+	
+	/*To check all categories under the project_info report*/
+	$('.check').click(function() {
+		var isChecked = $(this).prop('checked');
+		var name = $(this).val();
+    	$('input:checkbox[name="' + name + '"]').each(function() {
+   			$(this).prop('checked', isChecked);
+    	});
+	});
+	
+	var project_info = 'maven-project-info-reports-plugin';
+	
+	$('#reportcategy').click(function() {
+		if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
+			$('input:checkbox[value="' + project_info + '"]').attr('checked', true);
+		} else {
+			$('input:checkbox[value="' + project_info + '"]').attr('checked', false);
+		}
+	});
 </script>

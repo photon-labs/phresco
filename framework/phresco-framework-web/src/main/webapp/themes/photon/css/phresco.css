@@ -3531,8 +3531,6 @@ table {
     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
     padding-left:5%;
     width:92%;
-    /* padding-bottom:9px;
-    padding-top:9px; */
     line-height: 25px;
 }
 
@@ -4780,7 +4778,25 @@ a[id='androidSigning']:hover {
 	margin-left: 75px;
 	text-align: justify;
 }
+
+.report-header1 { 
+	padding:2px 0 5px 10px; 
+	width :28%;
+}
+
+.report_scroll { 
+	overflow: auto; 
+	height: 181px;
+}
+
+#availableReports { 
+	text-align: left; 
+	margin-bottom: 12px; 
+	margin-left: 5px;
+}
+
 /** All list page css**/
+
 .checkbox_list {
     width:0.1%;
 }
