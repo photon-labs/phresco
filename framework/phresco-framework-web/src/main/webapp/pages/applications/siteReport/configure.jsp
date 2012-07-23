@@ -212,12 +212,32 @@
 	$('.check').click(function() {
 		var isChecked = $(this).prop('checked');
 		var name = $(this).val();
-    	$('input:checkbox[name="' + name + '"]').each(function() {
-   			$(this).prop('checked', isChecked);
+	    	$('input:checkbox[name="' + name + '"]').each(function() {
+	    		if ($(this).is(':disabled')) {
+					
+				} else {
+					$(this).prop('checked', isChecked);
+				}
+	    	});
     	});
+	
+	/*To check all report when we click on project_info report*/
+	
+	$('input:checkbox[value="' + project_info + '"]').click(function(){
+		if ($('#reports-div').find("input[type='checkbox']").length == $('#reports-div').find("input[type='checkbox']:checked").length) {
+			$('#checkAllAuto').attr('checked', true);
+		} else {
+			$('#checkAllAuto').attr('checked', false);
+		}
 	});
 	
 	var project_info = 'maven-project-info-reports-plugin';
+	
+	if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
+		$('input:checkbox[value="' + project_info + '"]').attr('checked', true);
+	} else {
+		$('input:checkbox[value="' + project_info + '"]').attr('checked', false);
+	}
 	
 	$('#reportcategy').click(function() {
 		if ($('#reportcategy').find("input[type='checkbox']").length == $('#reportcategy').find("input[type='checkbox']:checked").length) {
