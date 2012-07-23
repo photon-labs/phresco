@@ -31,6 +31,6 @@ var opts = {
     "assertion_suffix": "\u001B[39m"
 }
 
-opts.output = "target/surefire";
+opts.output = "do_not_checkin/target/surefire";
 
 reporter.run(['source/test/unit'], opts);

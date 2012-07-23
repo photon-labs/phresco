@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.framework.actions.applications;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -50,8 +51,11 @@ public class FunctionalUtil {
         builder.append(FrameworkUtil.getInstance().getFuncitonalAdaptDir(project.getProjectInfo().getTechnology().getId()));
      
         try {
-            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-            administrator.updateTestConfiguration(project, envName, browser, builder.toString());
+		    File file = new File(builder.toString());
+        	if(file.exists()){
+               ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+               administrator.updateTestConfiguration(project, envName, browser, builder.toString());
+			}
         } catch (Exception e) {
             throw new PhrescoException(e);
         } finally {

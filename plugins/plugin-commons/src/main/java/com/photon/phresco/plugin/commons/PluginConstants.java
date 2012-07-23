@@ -47,6 +47,7 @@ public interface PluginConstants {
      String MVN_PHASE_CLEAN				= "clean";
      String MVN_PHASE_PACKAGE			= "package";
 	 String MVN_PHASE_VERIFY			= "verify";
+	 String MVN_PHASE_VALDATE			= "validate";
 	 String MVN_PHASE_INSTALL			= "install";
 	 String JAVA_LIB_PATH				= "java.library.path";
     

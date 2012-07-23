@@ -134,8 +134,8 @@
 			var description = $(this).attr("descrContent");
 			if (description != "") {
 				var imgUrl = $(this).attr("descImage");
-				$("#moduleDescription").empty();
-				$("#moduleDescription").html(description);
+				$(".desc_text").empty();
+				$(".desc_text").html(description);
 				$("#featureImg").attr("src", imgUrl);
 				enableModuleDesc('block');
 			}
