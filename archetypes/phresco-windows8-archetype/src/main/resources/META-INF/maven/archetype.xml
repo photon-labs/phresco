@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ###
-  Archetype - phresco-android-hybrid-archetype
+  Archetype - phresco-windows8-archetype
   
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
   
@@ -20,7 +20,7 @@
   -->
 
 <archetype>
-	<id>phresco-window7-archetype</id>
+	<id>phresco-windows8-archetype</id>
 	<sources>
 		
 	</sources>
