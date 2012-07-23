@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.archetypes</groupId>
         <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.0.7004-SNAPSHOT</version>
+        <version>1.2.0.8001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
   
