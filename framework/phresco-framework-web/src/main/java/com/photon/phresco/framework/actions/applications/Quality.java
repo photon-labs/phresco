@@ -2122,6 +2122,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             if (pdfFile.isFile()) {
             	boolean reportDeleted = pdfFile.delete();
             	S_LOGGER.info("Report deleted " + reportDeleted);
+            	if(reportDeleted) {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(SUCCESS_REPORT_DELETE_STATUS));
+            	} else {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(ERROR_REPORT_DELETE_STATUS));
+            	}
             }
         } catch (Exception e) {
             S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);

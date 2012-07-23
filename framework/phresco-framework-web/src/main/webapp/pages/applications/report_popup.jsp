@@ -14,6 +14,7 @@
 	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
 	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);
 	String reportGenerationStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_STATUS);
+	String reportDeletionStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_DELETE_STATUS);
 %>
 
 <style>
@@ -118,7 +119,7 @@
 	
 	<div class="modal-footer">
 		<div class="reportErrorMsg">
-			<div id="errMsg"></div>
+			<div id="reportMsg"></div>
 			<img class="popupLoadingIcon" style="position: relative;">
 		</div>
            <input type="radio" name="reportDataType" value="crisp" checked>
@@ -198,15 +199,23 @@
 		<%
 			if (StringUtils.isNotEmpty(reportGenerationStat)) {
 		%>
-			showHidePopupMsg($("#errMsg"), '<%= reportGenerationStat %>');
+			showHidePopupMsg($("#reportMsg"), '<%= reportGenerationStat %>');
 		<%
 			}
 		%>
 		
 		<%
+			if (StringUtils.isNotEmpty(reportDeletionStat)) {
+		%>
+			showHidePopupMsg($("#reportMsg"), '<%= reportDeletionStat %>');
+		<%
+			}
+		%>
+	
+		<%
 			if(!(Boolean) request.getAttribute(FrameworkConstants.REQ_TEST_EXE)) {
 		%>
-			$("#errMsg").html("Atleast one test result is necessary");
+			$("#reportMsg").html('<%= FrameworkConstants.MSG_REPORT%>');
 			disableControl($("#generateReport"), "btn disabled");
 		<%
 			} else {
