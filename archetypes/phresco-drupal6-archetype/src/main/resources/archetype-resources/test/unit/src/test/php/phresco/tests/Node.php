@@ -14,7 +14,7 @@ class Node extends DrupalBaseclass {
 	function testNodeType(){
 		$this->connect();
 		$nodeType = node_load(array("nid" => 1));
-		$this->assertEquals("story", $nodeType->type);
+		$this->assertEquals("page", $nodeType->type);
 	}
 		
 	function testNodeTitle(){
