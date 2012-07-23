@@ -78,32 +78,9 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit</directory> 
+			<directory>test</directory> 
 			<includes>
-				<include>HelloWorld_UnitTest.vsmdi</include>
-				<include>Local.testsettings</include>
-				<include>TraceAndTestImpact.testsettings</include>
-   				<include>HelloWorld_UnitTest.sln</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/HelloWorld_UnitTest</directory> 
-			<includes>
-				<include>HelloWorld_UnitTest.csproj</include>
-				<include>HelloWorld_UnitTest.csproj.user</include>
-				<include>UnitTest1.cs</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/HelloWorld_UnitTest/Properties</directory> 
-			<includes>
-				<include>AssemblyInfo.cs</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/TestResults</directory> 
-			<includes>
-				<include>phresco_WIN-DIJ36VO9SF3 2012-07-18 13_01_43.trx</include>
+				<include>**/*</include>
 			</includes>
 		</fileSet>
 	</fileSets>

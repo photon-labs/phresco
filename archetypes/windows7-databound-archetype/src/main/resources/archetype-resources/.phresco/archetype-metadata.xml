@@ -82,9 +82,9 @@
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test</directory> 
-			<includes>	
-   				<include>**/*</include>
+			<includes>
+				<include>**/*</include>
 			</includes>
 		</fileSet>
-	</fileSets>
+		</fileSets>
 </archetype-descriptor>
