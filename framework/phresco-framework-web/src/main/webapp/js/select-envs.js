@@ -31,7 +31,11 @@ function showSettings() {
        	},
        	type : "POST",
        	success : function(data) {
-       		fillData('environments', data.settingsEnv);
+       		if (isBlank(data.envError)) {
+				fillData('environments', data.settingsEnv);
+			} else {
+				$("#errMsg").html(data.envError);
+			}
        	}
    });
 }

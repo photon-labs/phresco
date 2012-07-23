@@ -800,6 +800,7 @@ public interface FrameworkConstants {
     String ERROR_ANDROID_DATA = "Data is not available";
     String ERROR_PORT = "Invalid Port Number";
     String ERROR_EMAIL = "Enter Valid Email";
+    String NO_SETTINGS_ENV = "settings.error.message";
     
     /*
      * Delete Environment keys
