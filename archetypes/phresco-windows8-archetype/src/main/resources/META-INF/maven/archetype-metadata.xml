@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ###
-  Archetype - phresco-windows7-archetype
+  Archetype - phresco-windows8-archetype
   
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
   
@@ -19,7 +19,7 @@
   ###
   -->
 
-<archetype-descriptor name="android">
+<archetype-descriptor name="windows8">
 	<fileSets> 	
 		<fileSet filtered="false" packaged="false"> 
 			<directory>.phresco</directory> 
