@@ -149,14 +149,14 @@
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[No of Failure]]></text>
+					<text><![CDATA[No of Failures]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="362" y="16" width="86" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[No of Error]]></text>
+					<text><![CDATA[No of Errors]]></text>
 				</staticText>
 			</frame>
 			<frame>

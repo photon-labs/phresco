@@ -145,7 +145,7 @@
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[No of Failure :]]></text>
+					<text><![CDATA[No of Failures :]]></text>
 				</staticText>
 			</frame>
 			<frame>

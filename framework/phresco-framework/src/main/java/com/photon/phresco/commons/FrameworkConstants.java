@@ -384,6 +384,7 @@ public interface FrameworkConstants {
     String REQ_TEST_TYPE = "testType";
     String REQ_TEST_EXE = "testExecuted";
     String REQ_REPORT_STATUS = "reportStatus";
+    String REQ_REPORT_DELETE_STATUS = "reportDeleteStatus";
     String REQ_SELECTEDPROJECTS = "selectedProjects";
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
@@ -636,8 +637,11 @@ public interface FrameworkConstants {
     String MSG_FILE_PATH_EMPTY = "File path should not be empty";
     String SUCCESS_REPORT_STATUS = "label.report.success";
     String ERROR_REPORT_STATUS = "label.report.failure";
+    String SUCCESS_REPORT_DELETE_STATUS = "label.report.delete.success";
+    String ERROR_REPORT_DELETE_STATUS = "label.report.delete.failure";
     String MSG_REPORT_OVERALL = "Overall";
     String MSG_REPORT_DETAIL = "Detailed";
+    String MSG_REPORT = "Atleast one test result is necessary";
     
     /*
      * CI Message keys
