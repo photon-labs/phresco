@@ -401,6 +401,8 @@
 			fillVersions("avaliableSourceScript", data.sqlFiles , "getSQLFiles");
 			// after sql files are loaded, already selected value should be hidden in available list
 			hideDbWithVersions();
-		} 
+		} else if (pageUrl == "jsToMinify") {
+			updateHiddenField(data.jsFinalName, data.selectedJs, data.browseLocation);
+    	}
     }
 </script>

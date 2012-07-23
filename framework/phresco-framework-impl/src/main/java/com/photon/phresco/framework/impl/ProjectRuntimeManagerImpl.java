@@ -270,6 +270,7 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         if (StringUtils.isNotEmpty(actionType.getProfileId())) {
             builder.append("-P");
             builder.append(actionType.getProfileId());
+            builder.append(Constants.SPACE);
         }
         
         if (paramsMap == null || paramsMap.isEmpty()) {
