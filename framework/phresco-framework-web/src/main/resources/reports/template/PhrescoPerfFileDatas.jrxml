@@ -355,7 +355,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" mode="Opaque" x="-1" y="484" width="555" height="227" backcolor="#FFFFFF"/>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="484" width="555" height="227" backcolor="#FFFFFF"/>
 				<barChart>
 					<chart>
 						<reportElement mode="Transparent" x="0" y="36" width="554" height="191"/>
