@@ -11,9 +11,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>archetypes</groupId>
 	<artifactId>windows7-databoundapplication-archetype</artifactId>
-	<name>Archetype - phresco-windows7DataBoundApplication-archetype</name>
+	<name>Archetype - windows7-databoundapplication-archetype</name>
 	<url>http://www.phresco.org</url>
-	<description>phresco-windows7DataBoundApplication-archetype</description>
+	<description>windows7-databoundapplication-archetype</description>
  
 	<build>
         <plugins>
