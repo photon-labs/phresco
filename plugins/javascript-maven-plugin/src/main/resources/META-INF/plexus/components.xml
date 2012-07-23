@@ -91,9 +91,9 @@
 				<htmlTestResourceExcludes>**/*.html</htmlTestResourceExcludes>
 
 				<jsResourceDir>src/main/js</jsResourceDir>
-				<jsResourceExcludes>**/*.js</jsResourceExcludes>
+				<jsResourceExcludes>**/*.min.js</jsResourceExcludes>
 				<jsTestResourceDir>src/test/qunit/js</jsTestResourceDir>
-				<jsTestResourceExcludes>**/*.js</jsTestResourceExcludes>
+				<jsTestResourceExcludes>**/*.min.js</jsTestResourceExcludes>
 
 				<jettyContextPath>/</jettyContextPath>
 				<jettyResourceBases>
@@ -241,6 +241,7 @@
 
 						<phases>
 							<process-sources>
+								net.alchim31.maven:yuicompressor-maven-plugin:1.3.0:compress,
 								org.codehaus.mojo:jslint-maven-plugin:1.2.0.7004-SNAPSHOT:jslint,
 								org.codehaus.mojo:js-import-maven-plugin:1.2.0.7004-SNAPSHOT:import-js
 							</process-sources>
