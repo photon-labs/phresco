@@ -22,14 +22,13 @@ package com.photon.phresco.testcases;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+
 import org.junit.Test;
-import org.openqa.selenium.server.SeleniumServer;
 
 import com.photon.phresco.Screens.MenuScreen;
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
 import com.photon.phresco.uiconstants.UIConstants;
-import com.thoughtworks.selenium.Selenium;
 
 public class WelcomePage extends TestCase {
 
