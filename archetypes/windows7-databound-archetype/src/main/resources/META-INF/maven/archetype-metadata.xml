@@ -81,12 +81,9 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit</directory> 
+			<directory>test</directory> 
 			<includes>
-				<include>HelloWorld_UnitTest.vsmdi</include>
-				<include>Local.testsettings</include>
-				<include>TraceAndTestImpact.testsettings</include>
-   				<include>HelloWorld_UnitTest.sln</include>
+				<include>**/*</include>
 			</includes>
 		</fileSet>
 		</fileSets>
