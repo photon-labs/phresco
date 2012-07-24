@@ -27,6 +27,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
@@ -42,6 +43,7 @@ import com.photon.phresco.service.util.ServerConstants;
 @Path("/version")
 public class VersionService implements ServerConstants {
 	
+	private static final String VERSION = "version";
 	private static final String STR_DOT = ".";
 	private static final String STR_HIPHEN = "-";
 	private static final String ALPHA = "alpha";
@@ -54,14 +56,29 @@ public class VersionService implements ServerConstants {
 	@GET
 	@Path("{version}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public VersionInfo getVersionJSON(@PathParam("version") String currentVersion) throws VersionRangeResolutionException, PhrescoException {
+	public VersionInfo getVersionJSON(@PathParam(VERSION) String currentVersion) throws VersionRangeResolutionException, PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method VersionServic.getVersionJSON(@PathParam(version) String currentVersion)");
 		}
+		
+		return getVersion(currentVersion);
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public VersionInfo getVersionInfo(@QueryParam(VERSION) String currentVersion) throws VersionRangeResolutionException, PhrescoException {
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method VersionServic.getVersionJSON(@PathParam(version) String currentVersion)");
+		}
+		
+		return getVersion(currentVersion);
+	}
+
+	private VersionInfo getVersion(String currentVersion) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("getVersionJSON() Getting the current Version=" + currentVersion + "");
 		}
-		PhrescoServerFactory.initialize();
+		
 		RepositoryManager repositoryManager = PhrescoServerFactory.getRepositoryManager();
 		String latestVersion = repositoryManager.getFrameworkVersion();
 		VersionInfo versionInfo = new VersionInfo();

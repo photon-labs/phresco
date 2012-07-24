@@ -584,6 +584,7 @@ public interface FrameworkConstants {
     String REST_ENVE_PATH = "/settings/env";
     String REST_SERVERS_PATH = "/servers";
     String REST_DATABASE_PATH = "/component/databases";
+    String REST_UPDATE = "/repo/update";
 
     String ATTR_TIME 	= "time";
     String ATTR_TESTS 	= "tests";
@@ -1139,4 +1140,15 @@ public interface FrameworkConstants {
    /* Unit test report directory */
    String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
    String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
+   
+   /* Constants For Framework update */
+   String TEMP_ZIP_FILE = "temp.zip";
+   String MAVEN_SETTINGS_FILE = "../tools/maven/conf/settings.xml";
+   String OUTPUT_SETTINGS_DIR = "tools/maven/conf";
+   String BACKUP_DIRNAME = "backups";
+   String BIN_DIR = "bin";
+   String PREV_DIR = "../";
+   String UPGRADE_PROP_NAME = "upgrade.properties";
+   String ARCHIVE_EXTENSION = ".zip";
+   String VERSION_SERVICE_PATH = "version";
   }
