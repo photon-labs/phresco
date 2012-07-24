@@ -163,7 +163,16 @@ public class ServerPluginUtil {
 			cargoPwd.setTextContent("${server.password}");
 			propertyElement.appendChild(cargoPwd);
 			configurationElement.appendChild(propertyElement);
-
+			
+			Element deployables = doc.createElement("deployables");
+			
+			Element deployable = doc.createElement("deployable");
+			deployables.appendChild(deployable);
+			Element location = doc.createElement("location");
+			location.setTextContent("${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war");
+			deployable.appendChild(location);
+			configurationElement.appendChild(deployables);
+			
 			configList.add(containerElement);
 			configList.add(configurationElement);
 			pomProcessor.addConfiguration("org.codehaus.cargo", "cargo-maven2-plugin", configList);
@@ -210,7 +219,7 @@ public class ServerPluginUtil {
 			Element verbose = doc.createElement("verbose");
 			verbose.setTextContent("false");
 			Element source = doc.createElement("source");
-			source.setTextContent(".\\do_not_checkin\\target\\${project.build.finalName}.war");
+			source.setTextContent("${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war");
 			Element name = doc.createElement("name");
 			name.setTextContent("${project.build.finalName}");
 			Element argLineElem =doc.createElement("argLine");
