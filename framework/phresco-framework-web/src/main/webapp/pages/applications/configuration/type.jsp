@@ -301,8 +301,6 @@
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		$("input[name='sapSvcPort']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
-		$("input[name='host']").prop({"maxLength":"15", "title":"15 Characters only"});
-		
 		
 		$("input[name='port']").live('input propertychange', function (e) { 	//Port validation
         	var portNo = $(this).val();
@@ -321,24 +319,6 @@
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
-        });
-        
-        $("input[name='host']").live('input propertychange', function (e) {  //Host validation
-            var host = $(this).val();
-            host = checkForHost(host);
-            $(this).val(host);
-        });
-        
-        $("input[name='searchHosts']").live('input propertychange', function (e) {  //searchHosts validation
-            var host = $(this).val();
-            host = checkForHost(host);
-            $(this).val(host);
-        });
-        
-        $("input[name='sapSvcHost']").live('input propertychange', function (e) {  //sapSvcHost validation
-            var host = $(this).val();
-            host = checkForHost(host);
-            $(this).val(host);
         });
         
         $("input[name='sapSvcPort']").live('input propertychange', function (e) { //sapSvcPort validation
