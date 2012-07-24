@@ -21,14 +21,12 @@
 		C38975E315920C3000426D92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		C38975E915920C3000426D92 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C38975E715920C3000426D92 /* InfoPlist.strings */; };
 		C38975EC15920C3000426D92 /* AllTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C38975EB15920C3000426D92 /* AllTest.m */; };
-		C3899CAA15BD739500ED971A /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CA815BD739500ED971A /* GDataXMLNode.m */; };
-		C3899CAB15BD739500ED971A /* OCUnitToJUnitLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CA915BD739500ED971A /* OCUnitToJUnitLogger.m */; };
 		C3899CAD15BD73BB00ED971A /* GDataXMLNode.h in Sources */ = {isa = PBXBuildFile; fileRef = C3899CA715BD739500ED971A /* GDataXMLNode.h */; };
 		C3899CAE15BD73BB00ED971A /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CA815BD739500ED971A /* GDataXMLNode.m */; };
 		C3899CAF15BD73C300ED971A /* OCUnitToJUnitLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CA915BD739500ED971A /* OCUnitToJUnitLogger.m */; };
 		C3899CB015BD73CC00ED971A /* AllTest.h in Sources */ = {isa = PBXBuildFile; fileRef = C38975EA15920C3000426D92 /* AllTest.h */; };
 		C3899CB115BD742C00ED971A /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3C91941560DFBC00402AE8 /* libxml2.2.7.3.dylib */; };
-		C3FFD80D1589CE9600DEF961 /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFD80C1589CE9600DEF961 /* ConfigurationReader.m */; };
+		C3899CC215BD9FBE00ED971A /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CC115BD9FBE00ED971A /* ConfigurationReader.m */; };
 		E88B0DCB152EF10F00780CAA /* phresco-env-config.xml in Resources */ = {isa = PBXBuildFile; fileRef = E88B0DCA152EF10F00780CAA /* phresco-env-config.xml */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +53,8 @@
 		C3899CA715BD739500ED971A /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
 		C3899CA815BD739500ED971A /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		C3899CA915BD739500ED971A /* OCUnitToJUnitLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCUnitToJUnitLogger.m; sourceTree = "<group>"; };
-		C3FFD80B1589CE9600DEF961 /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationReader.h; path = Classes/ConfigurationReader.h; sourceTree = SOURCE_ROOT; };
-		C3FFD80C1589CE9600DEF961 /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigurationReader.m; path = Classes/ConfigurationReader.m; sourceTree = SOURCE_ROOT; };
+		C3899CC015BD9FBE00ED971A /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationReader.h; sourceTree = "<group>"; };
+		C3899CC115BD9FBE00ED971A /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationReader.m; sourceTree = "<group>"; };
 		E88B0DCA152EF10F00780CAA /* phresco-env-config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "phresco-env-config.xml"; sourceTree = "<group>"; };
 		EA3C918A1560DE8300402AE8 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EA3C91941560DFBC00402AE8 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
@@ -203,8 +201,8 @@
 		E88B0DCD152EF11E00780CAA /* ConfigurationReader */ = {
 			isa = PBXGroup;
 			children = (
-				C3FFD80B1589CE9600DEF961 /* ConfigurationReader.h */,
-				C3FFD80C1589CE9600DEF961 /* ConfigurationReader.m */,
+				C3899CC015BD9FBE00ED971A /* ConfigurationReader.h */,
+				C3899CC115BD9FBE00ED971A /* ConfigurationReader.m */,
 			);
 			path = ConfigurationReader;
 			sourceTree = "<group>";
@@ -319,9 +317,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				7097CE1C1462842A0070885D /* RootViewController.m in Sources */,
 				0B8CE4661463D90A00A6CD29 /* PhrescoAppDelegate.m in Sources */,
-				C3FFD80D1589CE9600DEF961 /* ConfigurationReader.m in Sources */,
-				C3899CAA15BD739500ED971A /* GDataXMLNode.m in Sources */,
-				C3899CAB15BD739500ED971A /* OCUnitToJUnitLogger.m in Sources */,
+				C3899CC215BD9FBE00ED971A /* ConfigurationReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
