@@ -200,6 +200,6 @@ public interface ServiceManager {
 	void reSetCacheAppTypes() throws PhrescoException;
 
 	List<Reports> getReports(String techId) throws PhrescoException;
-	
-	InputStream getLatestVersionPom() throws PhrescoException;
+
+
 }

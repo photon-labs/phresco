@@ -21,7 +21,11 @@ package org.codehaus.mojo.jsimport;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.text.CharacterIterator;
@@ -294,7 +298,7 @@ public abstract class AbstractImportMojo
 
         boolean fileDependencyGraphUpdated = false;
 
-        FileCollector fileCollector = new FileCollector( buildContext, new String[] { "**/*.js" }, new String[] {} );
+        FileCollector fileCollector = new FileCollector( buildContext, new String[] { "**/*.js" }, new String[] { "**/*.min.js" } );
         for ( String source : fileCollector.collectPaths( sourceJsFolder, includes, excludes ) )
         {
             File sourceFile = new File( sourceJsFolder, source );
@@ -308,9 +312,40 @@ public abstract class AbstractImportMojo
                 fileDependencyGraphUpdated = true;
             }
         }
-
+        try {
+			copyMinFilesToTarget(sourceJsFolder, targetJsFolder);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return fileDependencyGraphUpdated;
     }
+    
+    private void copyMinFilesToTarget(File sourceJsFolder, File targetJsFolder) throws MojoExecutionException, IOException {
+
+    	FileCollector fileCollector = new FileCollector( buildContext, new String[] { "**/*.min.js" }, new String[] {});
+    	for ( String source : fileCollector.collectPaths( sourceJsFolder, includes, excludes ) ) {
+    		InputStream in = null;
+    		OutputStream out = null;
+    		try {
+    			in =new FileInputStream(new File(sourceJsFolder.getPath() + "/" + source));
+    			out = new FileOutputStream(new File(targetJsFolder.getPath() + "/" + source));
+    			// Transfer bytes from in to out
+    			byte[] buf = new byte[1024];
+    			int len;
+    			while ((len = in.read(buf)) > 0) {
+    				out.write(buf, 0, len);
+    			}
+    		} finally {
+    			if (in  != null) {
+    				in.close();
+    			}
+    			if (out != null) {
+    				out.close();
+    			}
+    		}
+    	}
+}
 
     /**
      * Build up the dependency graph and global symbol table by parsing the project's dependencies.

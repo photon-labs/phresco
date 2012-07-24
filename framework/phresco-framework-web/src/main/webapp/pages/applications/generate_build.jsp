@@ -391,7 +391,46 @@
 		<input id="profileAvailable" name="profileAvailable" type="hidden" value=""/>
 		<% } %>
 <!-- 		advanced settings end -->
+
+<!-- minifier setting starts -->
+		<% if (from.equals("generateBuild") && (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology))) { %>
+		<div class="theme_accordion_container clearfix" style="float: none;">
+		    <section class="accordion_panel_wid">
+		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+		            <section class="lft_menus_container adv-settings-width">
+		                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.minifer"/></span></span>
+		                <div class="mfbox siteinnertooltiptxt">
+		                    <div class="scrollpanel adv_setting_accordian_bottom">
+		                        <section class="scrollpanel_inner">
+		                        	<div class="minifyDiv">
+										<fieldset class="popup-fieldset fieldset_center_align minify_popup">
+											<div class = "browseJs">
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+													<div class="input">
+														<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+														<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+														<input type="text" name="jsFileName" class="getJsFiles1" style="float:left;width:150px; margin-right:10px;" disabled/>
+													</div>
+													<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+												</div>
+												<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
+											</div>
+										</fieldset>
+									</div>
+									<input type="hidden" name="fileLocation"/>
+		                        </section>
+		                    </div>
+		                </div>
+		            </section>  
+		        </div>
+		    </section>
+		</div>
+		<% } %>
 	</div>
+	
+<!--  minifier setting  end -->
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
@@ -454,6 +493,12 @@
 				$("#errMsg").html('<%= FrameworkConstants.PROFILE_CREATE_MSG %>');
 				return false;
 			}
+			
+			/* enable text box only if any file selected for minification */
+			if($('input[name="jsFileName"]').val() !== "") {
+				$('input[name="jsFileName"]').attr("disabled", false);
+			}
+
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
 		});
 		
@@ -762,5 +807,51 @@
 	
 	function removeAdvSettings() {
 // 		alert("Remove settings configure");
+	}
+	
+	var counter = 2;
+	function addJsCompTag(){
+		var browseId = "getJsFiles"+counter;
+		
+		var newMinDiv = $(document.createElement('div')).attr("id", 'browseJS' + counter);
+		newMinDiv.html("<div class='clearfix'><label for='xlInput' class='xlInput popup-label' style='width:100px;'><s:text name='build.js.minification'/></label>" +
+		"<div class='input'><input type='button' id='"+ browseId +"' class='btn primary chooseJS' value='<s:text name='build.minify.browse'/>' onclick='browseFiles(this);' style = 'float:left; margin-left:-30px;'>" + 
+		"<label for='xlInput' class='xlInput popup-label' style='padding-right:6px;'><s:text name='build.compress.name'/></label>" + 
+		"<input type='text' class='"+browseId+"' name='jsFileName'  value ='' style='float:left;width:150px;margin-right:10px;' disabled/></div>" +
+		"<a><img title='' src='images/icons/add_icon.png' id='addJSComp' onclick='addJsCompTag();' class='minifyAddIcon'></a>" + 
+		"<a><img class = 'del imagealign minifyAddIcon' src='images/icons/minus_icon.png'  onclick='removeTag(this); '></a><input type='hidden' tempName='"+browseId+"' class='' name='"+browseId+"' value='' id='selectedJs'></div>"); 
+		newMinDiv.appendTo(".minify_popup");
+		counter++;
+	}
+	
+	function removeTag(currentTag) {
+		$(currentTag).parent().parent().parent().remove();
+	}
+	
+	var textBoxClass = "";
+	function browseFiles(obj) {
+		textBoxClass = $(obj).attr("id");
+		var jsName = $('input[class="'+ textBoxClass +'"]').val();
+		var jsFiles = $('input[name="'+ jsName +'"]').val();
+		
+		$('#browseLocation').remove();
+		$('#generateBuildForm').hide();
+		var params = "techonolgy=";
+		var Technology = '<%= technology %>';
+		params = params.concat(Technology);
+		params = params.concat("&fileType=js");
+		params = params.concat("&fileorfolder=All");
+		params = params.concat("&selectedJsName=");
+		params = params.concat(jsName);
+		params = params.concat("&selectedJsFiles=");
+		params = params.concat(jsFiles);
+		popup('jsFileBrowse', params, $('#popup_div'), '', true);
+	}
+	
+	function updateHiddenField(jsName, jsFiles, fileLocation) {
+		$("."+textBoxClass).val(jsName);
+		$('input[tempName="'+ textBoxClass +'"]').attr("name", jsName);
+		$('input[name="'+ jsName +'"]').val(jsFiles);
+		$('input[name="fileLocation"]').val(fileLocation);
 	}
 </script>

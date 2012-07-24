@@ -712,10 +712,5 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override
-	public String getFrameWorkLatestFile() throws PhrescoException {
-		return config.getFrameWorkLatestFile();
-	}
 
 }

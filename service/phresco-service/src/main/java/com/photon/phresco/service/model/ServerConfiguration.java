@@ -82,7 +82,6 @@ public class ServerConfiguration {
 	private static final String PHRESCO_DB_NAME = "db.name";
 	private static final String PHRESCO_DB_COLLECTION = "db.defaultcollection";
 	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
-	private static final String PHRESCO_FRAMEWORK_LATEST_URL = "phresco.framework.latest.version.file";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -287,9 +286,5 @@ public class ServerConfiguration {
 	
 	public String getDbCollection() {
 		return dbDefaultCollectionName;
-	}
-
-	public String getFrameWorkLatestFile() {
-		return dependencyConfig.getProperty(PHRESCO_FRAMEWORK_LATEST_URL);
 	}
 }

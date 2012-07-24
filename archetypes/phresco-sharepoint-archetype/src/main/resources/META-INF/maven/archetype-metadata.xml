@@ -48,7 +48,7 @@
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>source/Phresco.HelloWorld/</directory> 
 			<includes> 
-				<include>Phresco.HelloWorld.csproj</include> 
+				<include>Phresco.Sharepoint.csproj</include> 
 				<include>Phresco.HelloWorld.snk</include> 
 				<include>solutionid.txt</include> 
 			</includes> 

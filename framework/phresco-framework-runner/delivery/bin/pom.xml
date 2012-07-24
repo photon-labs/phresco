@@ -9,12 +9,7 @@
 
     <properties>
 		<phresco.framework.version>2.0.0.6001-SNAPSHOT</phresco.framework.version>		
-		<tomcat.version>7.0.21</tomcat.version>
-		<sonar.version>3.1.1</sonar.version>
-		<jmeter.version>2.5.1</jmeter.version>
-		<checker.version>0.1</checker.version>
-		<device.deploy.version>1.0</device.deploy.version>
-		<phantomjs.version>1.5.0</phantomjs.version>
+		<sonar.version>2.12</sonar.version>
 	</properties>
 
 	<dependencies>
@@ -29,7 +24,7 @@
 	  <dependency>
 		<groupId>binaries</groupId>
 		<artifactId>apache-tomcat-https</artifactId>
-		<version>${tomcat.version}</version>
+		<version>7.0.21</version>
 		<type>zip</type>
 	  </dependency>
 	  
@@ -43,23 +38,9 @@
 	  <dependency>
 		<groupId>org.apache.jmeter</groupId>
 		<artifactId>jmeter</artifactId>
-		<version>${jmeter.version}</version>
+		<version>2.5.1</version>
 		<type>zip</type>
 	  </dependency>
-      
-      <dependency>
-		<groupId>softwares.iphone.files</groupId>
-		<artifactId>checker-267</artifactId>
-		<version>${checker.version}</version>
-		<type>zip</type>
-	  </dependency>
-      
-     <dependency>
-          <groupId>softwares.iphone.files</groupId>
-          <artifactId>device-deploy</artifactId>
-          <version>${device.deploy.version}</version>
-          <type>zip</type>
-      </dependency>
 	  
 	  <dependency>
 		<groupId>com.photon.phresco.file.server</groupId>
@@ -71,21 +52,21 @@
 	  <dependency>
 		<groupId>binaries</groupId>
 		<artifactId>phantomjs-win32</artifactId>
-		<version>${phantomjs.version}</version>
+		<version>1.5.0</version>
 		<type>zip</type>
 	  </dependency>
 		
 	  <dependency>
 		<groupId>binaries</groupId>
 		<artifactId>phantomjs-macosx</artifactId>
-		<version>${phantomjs.version}</version>
+		<version>1.5.0</version>
 		<type>zip</type>
 	  </dependency>
 	   
 	  <dependency>
 		<groupId>binaries</groupId>
 		<artifactId>phantomjs-linux-x86</artifactId>
-		<version>${phantomjs.version}</version>
+		<version>1.5.0</version>
 		<type>zip</type>
 	  </dependency>
 
@@ -114,7 +95,7 @@
 								<artifactItem>
 									<groupId>binaries</groupId>
 									<artifactId>apache-tomcat-https</artifactId>
-									<version>${tomcat.version}</version>
+									<version>7.0.21</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -149,32 +130,12 @@
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
 								</artifactItem>
-                                
-                                <!-- extracting checkers zip file -->
-								<artifactItem>
-									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>checker-267</artifactId>
-                                    <version>${checker.version}</version>
-                                    <type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools</outputDirectory>
-								</artifactItem>
-                                
-                                <!-- extracting chief zip file -->
-								<artifactItem>
-									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>device-deploy</artifactId>
-                                    <version>${device.deploy.version}</version>
-                                    <type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools/chief</outputDirectory>
-								</artifactItem>
 								
 								<!-- extracting JMeter zip file -->
 								<artifactItem>
 									<groupId>org.apache.jmeter</groupId>
 									<artifactId>jmeter</artifactId>
-									<version>${jmeter.version}</version>
+									<version>2.5.1</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -184,7 +145,7 @@
 								<artifactItem>
 									<groupId>binaries</groupId>
 									<artifactId>phantomjs-win32</artifactId>
-									<version>${phantomjs.version}</version>
+									<version>1.5.0</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -194,7 +155,7 @@
 								<artifactItem>
 									<groupId>binaries</groupId>
 									<artifactId>phantomjs-macosx</artifactId>
-									<version>${phantomjs.version}</version>
+									<version>1.5.0</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -204,7 +165,7 @@
 								<artifactItem>
 									<groupId>binaries</groupId>
 									<artifactId>phantomjs-linux-x86</artifactId>
-									<version>${phantomjs.version}</version>
+									<version>1.5.0</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>

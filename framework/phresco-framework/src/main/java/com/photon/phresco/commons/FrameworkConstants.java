@@ -1141,6 +1141,35 @@ public interface FrameworkConstants {
    String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
    String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
    
+
+   /* Minification */
+   
+   String REQ_COMPRESS_NAME = "selectedJsName";
+   String REQ_SELECTED_FILES = "selectedJsFiles";
+   String REQ_CHECKED_FILE_LIST = "jsMinCheck";
+   String REQ_SELECTED_FILE_NAMES = "jsFileName";
+   
+   String POM_SOURCEDIR = "sourceDirectory";
+   String POM_SOURCE_DIRECTORY = "${project.basedir}/src/main/";
+   String POM_OUTPUTDIR = "outputDirectory";
+   String POM_OUTPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_FORCE = "force";
+   String POM_JS_WARN = "jswarn";
+   String POM_NO_SUFFIX = "nosuffix";
+   String POM_VALUE_TRUE = "true";
+   String POM_VALUE_FALSE = "false";
+   String POM_AGGREGATIONS = "aggregations";
+   String POM_AGGREGATION = "aggregation";
+   String POM_INPUTDIR = "inputDir";
+   String POM_INPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_INCLUDES ="includes";
+   String POM_INCLUDE ="include";
+   String POM_OUTPUT = "output";
+   String MINIFY_OUTPUT_DIRECTORY = "${project.basedir}";
+   String MINIFY_FILE_EXT = ".min.js";
+   String MINIFY_PLUGIN_GROUPID ="net.alchim31.maven";
+   String MINIFY_PLUGIN_ARTFACTID ="yuicompressor-maven-plugin";
+
    /* Constants For Framework update */
    String TEMP_ZIP_FILE = "temp.zip";
    String MAVEN_SETTINGS_FILE = "../tools/maven/conf/settings.xml";
@@ -1152,3 +1181,4 @@ public interface FrameworkConstants {
    String ARCHIVE_EXTENSION = ".zip";
    String VERSION_SERVICE_PATH = "version";
   }
+
