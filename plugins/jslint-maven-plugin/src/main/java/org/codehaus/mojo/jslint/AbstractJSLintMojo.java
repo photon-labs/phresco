@@ -434,7 +434,8 @@ public abstract class AbstractJSLintMojo
      */
     protected String[] getDefaultExcludes()
     {
-        return new String[0];
+//        return new String[0];
+        return new String[] { "*.min.js", "**/*.min.js" };
     }
 
     /**

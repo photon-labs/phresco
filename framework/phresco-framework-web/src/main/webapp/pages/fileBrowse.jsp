@@ -43,6 +43,16 @@
 	String projectLocation = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_LOCATION);
 	String fileTypes = (String) request.getAttribute(FrameworkConstants.FILE_TYPES);
 	String fileorfolder = (String) request.getAttribute(FrameworkConstants.FILE_BROWSE);
+	String techId = (String)request.getAttribute(FrameworkConstants.REQ_TECHNOLOGY);
+	String selectedJsName = (String)request.getAttribute("selectedJsName");
+	String selectedJsFiles = (String)request.getAttribute("selectedJsFiles");
+	String rootDir = null; 
+	if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+			TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { 
+		 rootDir = projectLocation + "/src";
+	 } else {
+		 rootDir = projectLocation;
+	 }
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="browseLocation">
@@ -60,7 +70,15 @@
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
-			<input type="text" class="xlarge javastd" id="browseSelectedLocation" name="browseLocation" > 
+			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { %>
+				<label for="xlInput" class="xlInput popup-label" style="padding-right:6px;"><span class="red">* </span><s:text name="build.compress.name"/></label>
+				<input type="text" class="javastd" id="jsFinalName" name="jsFinalName" value="<%= StringUtils.isNotEmpty(selectedJsName) ? selectedJsName : "" %>">
+				<input type="hidden" class="xlarge javastd" id="browseSelectedLocation" name="browseLocation" >
+				<div id="jsErrMsg"></div>
+			<% } else {%>
+				<input type="text" class="xlarge javastd" id="browseSelectedLocation" name="browseLocation" >
+			<% } %>	  
 			<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="fileBrowseCancel">
 			<input type="button" id="fileBrowseOkay" class="btn primary" value="<s:text name="label.ok"/>">
 		</div>
@@ -78,33 +96,70 @@
 	$(document).ready(function() {
 		
 		$('#fileBrowseClose, #fileBrowseCancel').click(function() {
+			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) {%>
+				showGenBuild();
+			<% } else {%>
 			showAdvBuildSettings();
 			showFunctionalTestForm();
+			<% } %>
 		});
 		
 		// android build advanced technology
 		$('#fileBrowseOkay').click(function() {
-			$("input[name=keystore]").val($('#browseSelectedLocation').val());
-			$('#advancedSettingsBuildForm').show();
-			$('#generateBuild_Modal').hide();
-			$('#browseLocation').hide();
+			
 		});
 		
 		// java standalone functional test jar browse location
 		$('#fileBrowseOkay').click(function() {
-			$("input[name=jarLocation]").val($('#browseSelectedLocation').val());
-			$('.build_form').show();
-			$('#browseLocation').hide();
+			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { %>
+				
+				var selected = false;
+				$('input[name=jsMinCheck]').each(function () {
+			           if (this.checked) {
+			        	   selected = true; 
+			              return false;
+			           }
+				});
+				
+				if(isBlank($('#jsFinalName').val())){
+					$("#jsErrMsg").html('Enter Js Comp name');
+					$('#jsFinalName').focus();
+					return false;
+				}  else if( !selected ||  $('input[name=jsMinCheck]').length <= 0 ){
+					$("#jsErrMsg").html('Please select any file');
+					return false;
+				}  else {
+					$('.build_form').show();
+					$('#browseLocation').hide();
+					var params = "";
+			    	if (!isBlank($('form').serialize())) {
+			    		params = $('form').serialize() + "&";
+			    	}
+			    	performAction("jsToMinify", params, '', true);
+			    	$('#generateBuild_Modal').show();				
+				}
+			<% } else { %>
+				$("input[name=keystore]").val($('#browseSelectedLocation').val());
+				$('#advancedSettingsBuildForm').show();
+				$('#generateBuild_Modal').hide();
+				$("input[name=jarLocation]").val($('#browseSelectedLocation').val());
+				$('.build_form').show();
+				$('#browseLocation').hide();
+			<% } %>
 		});
 
 		$('#JQueryFTD').fileTree({
-			root: '<%= projectLocation %>',
+			root: '<%= rootDir %>',
 			script: 'pages/jqueryFileTree.jsp',
 			expandSpeed: 1000,
 			collapseSpeed: 1000,
 			multiFolder: true,
 			fileTypes: '<%= fileTypes %>',
-			fileOrFolder: '<%= fileorfolder %>'
+			fileOrFolder: '<%= fileorfolder %>',
+			tech : '<%= techId %>',
+			selectedFiles: '<%= selectedJsFiles %>'
 		}, function(file) {
 			$('#browseSelectedLocation').val(file);
 		});
@@ -127,5 +182,10 @@
 	function showFunctionalTestForm() {
 		$('#browseLocation').empty();
 		$('.build_form').show();
+	}
+	
+	function showGenBuild() {
+		$('#browseLocation').hide();
+		$('#generateBuildForm').show();
 	}
 </script>
