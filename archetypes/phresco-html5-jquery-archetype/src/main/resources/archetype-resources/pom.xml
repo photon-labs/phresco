@@ -162,6 +162,19 @@
 						  </filesets>
 						</configuration>
 					  </plugin>
+					  <plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>yuicompressor-maven-plugin</artifactId>
+						<version>1.3.0</version>
+						<executions>
+						  <execution>
+							<id>yuicompressor-default</id>
+							<goals>
+							  <goal>compress</goal>
+							</goals>
+						  </execution>
+						</executions>
+					  </plugin>
 		        </plugins>
             </build>
         </profile>
