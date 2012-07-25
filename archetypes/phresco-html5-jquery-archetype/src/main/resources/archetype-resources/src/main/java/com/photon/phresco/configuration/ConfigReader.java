@@ -149,5 +149,46 @@ public class ConfigReader {
 		}
 		return props;
 	}
+	
+	public String getConfigAsJSON(String envName, String configType) {
+		if (envName == null) {
+			envName = getDefaultEnvName();
+		}
+		List<Configuration> configurations = getConfigByEnv(envName);
+		String json = "";
+		for (Configuration configuration : configurations) {
+			if (configuration.getType().equalsIgnoreCase(configType)) {
+				com.google.gson.Gson gson = new com.google.gson.Gson();
+				Properties properties = configuration.getProperties();
+				json = gson.toJson(properties, Properties.class);
+			}
+		}
+		return json;
+	}
+
+	public String getConfigAsJSON(String envName, String configType, String configName) {
+		String json = "";
+		com.google.gson.Gson gson = new com.google.gson.Gson();
+		if (envName == null) {
+			envName = getDefaultEnvName();
+		}
+		List<Configuration> configurations = getConfigurations(envName, configType);
+		if (configurations != null && configurations.size() > 0 
+				&& (configName == null || configName.isEmpty())) {
+			Properties properties = configurations.get(0).getProperties();
+			json = gson.toJson(properties, Properties.class);
+			return json;
+		}
+		for (Configuration configuration : configurations) {
+			if (configuration.getName().equalsIgnoreCase(configName)) {
+				Properties properties = configuration.getProperties();
+				json = gson.toJson(properties, Properties.class);
+				break;
+			}
+		}
+		return json;
+
+	}
+	
 
 }
