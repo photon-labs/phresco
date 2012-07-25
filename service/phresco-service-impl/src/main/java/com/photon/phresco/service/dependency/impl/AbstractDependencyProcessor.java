@@ -323,13 +323,4 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		return null;
 	}
 	
-    public static void main(String[] args) throws PhrescoException {
-        File path = new File("D://PHR_html_mob_jq_soanr");
-        updateTestPom(path);
-        Set<String> keySet = testPomFiles.keySet();
-        for (String string : keySet) {
-           System.out.println(string); 
-        }
-    }	
-
 }
