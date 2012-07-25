@@ -453,11 +453,10 @@ public class Configurations extends FrameworkBaseAction {
 	   	
 	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
 	   		String value = getHttpRequest().getParameter("emailid");
-	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
-	   		Matcher m=p.matcher(value);
-	   		boolean b=m.matches();
-	   		if(b==false)
-	   		{
+	   		Pattern p = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+	   		Matcher m = p.matcher(value);
+	   		boolean b = m.matches();
+	   		if(!b) {
 	   			setEmailError(ERROR_EMAIL);
 	   			validate = false;
 	   		}
