@@ -111,11 +111,12 @@
                 <version>1.1</version>
                 <configuration>
                     <port>${server.port}</port>
-                    <username xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.username}</username>
-                    <password xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.password}</password>
-                    <url xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">http://${server.host}:${server.port}/manager/html</url>
-                    <path xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">/${project.build.finalName}</path>
-                    <argLine xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">-Xmx512m</argLine>
+                    <username>${server.username}</username>
+                    <password>${server.password}</password>
+                    <url>http://${server.host}:${server.port}/manager/html</url>
+                    <path>/${project.build.finalName}</path>
+                    <argLine>-Xmx512m</argLine>
+					<warFile>${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war</warFile>
                 </configuration>
             </plugin>
 		</plugins>
