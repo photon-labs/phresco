@@ -272,6 +272,9 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
+				if (line.startsWith("[ERROR]")) {
+					System.out.println(line); //do not use getLog() here as this line already contains the log type.
+				}
 			}
 		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
