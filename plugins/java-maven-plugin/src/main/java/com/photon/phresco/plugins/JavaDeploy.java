@@ -49,8 +49,6 @@ import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Dependency;
-import com.phresco.pom.model.Plugin;
-import com.phresco.pom.model.Plugin.Dependencies;
 import com.phresco.pom.util.PomProcessor;
 
 /**

@@ -38,8 +38,6 @@ import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.util.Constants;
 import com.phresco.pom.exception.PhrescoPomException;
-import com.phresco.pom.model.Dependency;
-import com.phresco.pom.model.Plugin;
 import com.phresco.pom.util.PomProcessor;
 
 public class ServerPluginUtil {
