@@ -77,7 +77,7 @@
 						<li class="popup-li"> 
 							<input type="radio" name="validateAgainst" value="source" checked>
 							<span class="textarea_span popup-span"><s:text name="label.validateAgainst.source"/></span>
-							<input id="funTestRadio" type="radio" name="validateAgainst" value="functionalTest" >
+							<input id="funTestRadio" type="radio" name="validateAgainst" value="functional" >
 							<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
 						</li>
 					</ul>
