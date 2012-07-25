@@ -1,6 +1,6 @@
 /*
  * ###
- * Archetype - phresco-html5-jquery-archetype
+ * Archetype - phresco-html5-archetype
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 
@@ -26,16 +26,23 @@ public class Configuration {
 	private String name;
 	private String desc;
 	private String type;
+	private String envName;
 	private Properties properties;
-	private String appliesTo;
+	String appliesTo;
 
-	public Configuration(String name, String desc, String type, Properties properties, String configAppliesTo) {
+	
+	public Configuration(String name, String desc, String envName, String type, Properties properties, String configAppliesTo) {
 		super();
 		this.name = name;
 		this.desc = desc;
+		this.envName = envName;
 		this.type = type;
 		this.appliesTo = configAppliesTo;
 		this.properties = properties;
+	}
+	
+	public Configuration(String name, String desc, String type, Properties properties, String configAppliesTo) {
+		this (name, desc, null, type, properties, configAppliesTo);
 	}
 	
 	public Configuration(String name, String type) {
@@ -65,6 +72,14 @@ public class Configuration {
 		return type;
 	}
 
+	public String getEnvName() {
+		return envName;
+	}
+
+	public void setEnvName(String envName) {
+		this.envName = envName;
+	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -79,6 +94,10 @@ public class Configuration {
 
 	public void setAppliesTo(String configAppliesTo) {
 		this.appliesTo = configAppliesTo;
+	}
+	
+	public String getAppliesTo() {
+		return appliesTo;
 	}
 
 	@Override
