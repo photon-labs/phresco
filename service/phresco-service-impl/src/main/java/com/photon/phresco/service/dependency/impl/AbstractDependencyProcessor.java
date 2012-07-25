@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -75,7 +76,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	private static final Logger S_LOGGER = Logger.getLogger(AbstractDependencyProcessor.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
-	private static List<String> testPomFiles = new ArrayList<String>();
+	private static Map<String, String> testPomFiles = new HashMap<String, String>();
 
 	private RepositoryManager repoManager = null;
 
@@ -145,13 +146,14 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		sqlFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.WORDPRESS, "/source/sql/");
-		
-		testPomFiles.add("/test/functional/pom.xml");
-		testPomFiles.add("/test/load/pom.xml");
-		testPomFiles.add("/test/performance/database/pom.xml");
-		testPomFiles.add("/test/performance/server/pom.xml");
-		testPomFiles.add("/test/unit/pom.xml");
-		testPomFiles.add("/test/performance/pom.xml");
+	
+		testPomFiles.put("functional", "/test/functional/pom.xml");
+		testPomFiles.put("load", "/test/load/pom.xml");
+		testPomFiles.put("performance.database", "/test/performance/database/pom.xml");
+		testPomFiles.put("performance.server", "/test/performance/server/pom.xml");
+		testPomFiles.put("performance.webservice", "/test/performance/webservices/pom.xml");
+		testPomFiles.put("unit", "/test/unit/pom.xml");
+		testPomFiles.put("performance", "/test/performance/pom.xml");
 	}
 
 	@Override
@@ -212,19 +214,20 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 			String artifactId = processor.getArtifactId();
 			String version = processor.getVersion();
 			String name = processor.getName();
-			for (String pomFile : testPomFiles) {
-				File testPomFile = new File(path + pomFile);
-				if (testPomFile.exists()) {
-					processor = new PomProcessor(testPomFile);
-					processor.setGroupId(groupId);
-					processor.setArtifactId(artifactId);
-					processor.setVersion(version);
-					if (name != null && !name.isEmpty()) {
-						processor.setName(name);
-					}
-					processor.save();
-				}
-			}
+			Set<String> keySet = testPomFiles.keySet();
+			for (String string : keySet) {
+			    File testPomFile = new File(path + testPomFiles.get(string));
+			    if (testPomFile.exists()) {
+                  processor = new PomProcessor(testPomFile);
+                  processor.setGroupId(groupId + "." + string);
+                  processor.setArtifactId(artifactId);
+                  processor.setVersion(version);
+                  if (name != null && !name.isEmpty()) {
+                      processor.setName(name);
+                  }
+                  processor.save();
+              }
+            }
 			
 		} catch (Exception e) {
 			throw new PhrescoException(e);
