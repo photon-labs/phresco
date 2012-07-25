@@ -92,6 +92,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException {
 		init();
+		updateFinalName();
 		createDb();
 		extractBuild();
 		deployToServer();
@@ -121,6 +122,33 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 						+ " -DenvironmentName=\"Multivalued evnironment names\""
 						+ " -DimportSql=\"Does the deployment needs to import sql(TRUE/FALSE?)\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
+	}
+	
+	private void updateFinalName() throws MojoExecutionException {
+		try {
+				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+				String envName = environmentName;
+				if (environmentName.indexOf(',') > -1) { // multi-value
+					envName = projAdmin.getDefaultEnvName(baseDir.getName());
+				}
+				List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER,
+						baseDir.getName(), envName);
+				for (SettingsInfo settingsInfo : settingsInfos) {
+					context = settingsInfo.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+					break;
+				}
+			File pom = project.getFile();
+			PomProcessor pomprocessor = new PomProcessor(pom);
+			pomprocessor.setFinalName(context);
+			pomprocessor.save();
+
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 
 	private void createDb() throws MojoExecutionException {
