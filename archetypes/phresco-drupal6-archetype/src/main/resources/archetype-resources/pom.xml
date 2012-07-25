@@ -40,6 +40,9 @@
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
 	    <sonar.phase>validate</sonar.phase>
 		<sonar.phpCodesniffer.standardArgument>Drupal</sonar.phpCodesniffer.standardArgument>
+		<sonar.phpDepend.timeout>100</sonar.phpDepend.timeout>
+		<sonar.phpPmd.timeout>100</sonar.phpPmd.timeout>
+		<sonar.phpCodesniffer.timeout>100</sonar.phpCodesniffer.timeout>
     </properties>
 	
 	<build>
