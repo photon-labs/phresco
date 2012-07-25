@@ -313,7 +313,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			Project currentProject = projectAdministrator.getProjectByWorkspace(baseDir);
 			String techId = currentProject.getProjectInfo().getTechnology().getId();
 			if (techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET) 
-					|| techId.equals(TechnologyTypes.HTML5_WIDGET)) {
+					|| techId.equals(TechnologyTypes.HTML5_WIDGET)|| techId.equals(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET)||techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
 				sourceConfigXML = new File(baseDir + modulePath + "/src/main/webapp/WEB-INF/resources/phresco-env-config.xml");
 			} else {
 				sourceConfigXML = new File(baseDir + modulePath + JAVA_WEBAPP_CONFIG_FILE);
