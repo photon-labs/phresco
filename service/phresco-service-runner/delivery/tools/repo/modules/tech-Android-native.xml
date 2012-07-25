@@ -24,7 +24,7 @@
             </document>
         </documents>
     </module>
-    <module id="mod_googlegson_2.2.1" name="GoogleGSON" version="2.2.1" core="true" required="true" groupId="com.google.code.gson" artifactId="gson">
+    <module id="mod_googlegson_2.2.1" name="GoogleGSON" version="2.2.1" core="true" required="false" groupId="com.google.code.gson" artifactId="gson">
         <contentURL>/modules/tech-android-native/files/mod_googlegson_2.2.1/2.2.1/mod_googlegson_2.2.1-2.2.1.jar</contentURL>
 		<imageUrl>images/tech-android-native/GoogleGSON.png</imageUrl>
         <documents>
@@ -38,6 +38,22 @@
             </document>
         </documents>
     </module>
+	
+	<module id="mod_googlegson_2.2.2" name="GoogleGSON" version="2.2.2" core="true" required="false" groupId="com.google.code.gson" artifactId="gson">
+	<contentURL>/modules/tech-android-native/files/mod_googlegson_2.2.2/2.2.2/mod_googlegson_2.2.2-2.2.2.jar</contentURL>
+	<imageUrl>images/tech-android-native/GoogleGSON.png</imageUrl>
+	<documents>
+		<document documentType="HELP_TEXT">
+			<content>Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON 	string to an equivalent Java object. Gson can work with arbitrary Java objects including pre-existing objects that you do not have source-code of
+			</content>
+		</document>
+		<document documentType="DESCRIPTION">
+			<content>Google GSON is a Java library that can be used to convert Java Objects into their JSON representation and vice-versa.
+			</content>
+		</document>
+	</documents>
+	</module>
+	
     <module id="mod_ormlite_4.41" name="ORMLite" version="4.41" core="true" required="false" groupId="com.j256.ormlite" artifactId="ormlite-core">
         <contentURL>/modules/tech-android-native/files/mod_ormlite_4.41/4.41/mod_ormlite_4.41-4.41.jar</contentURL>
 		<imageUrl>images/tech-android-native/ORMLite.png</imageUrl>

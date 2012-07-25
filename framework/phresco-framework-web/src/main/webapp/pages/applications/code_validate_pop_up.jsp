@@ -92,7 +92,8 @@
 
 
 			<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
-				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
+				|| TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.JAVA_WEBSERVICE.equals(technology)) { %>	
 
 				<div class="clearfix" id="techDiv">
 					<div class="xlInput">
