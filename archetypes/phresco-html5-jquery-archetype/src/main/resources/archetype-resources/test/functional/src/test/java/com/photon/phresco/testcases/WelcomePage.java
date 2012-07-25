@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-html5-archetype
- * 
+ * PHR_widget-hw
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,14 +22,13 @@ package com.photon.phresco.testcases;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+
 import org.junit.Test;
-import org.openqa.selenium.server.SeleniumServer;
 
 import com.photon.phresco.Screens.MenuScreen;
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
 import com.photon.phresco.uiconstants.UIConstants;
-import com.thoughtworks.selenium.Selenium;
 
 public class WelcomePage extends TestCase {
 

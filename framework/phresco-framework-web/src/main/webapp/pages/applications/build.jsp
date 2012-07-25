@@ -56,7 +56,7 @@
 	    border-radius: 6px 6px 6px 6px;
 	    margin-left: 6px;
 	    margin-right: 6px;
-		height:98%
+		height:98%;
 	}
     
     /* .build_detail_div {
@@ -123,7 +123,7 @@
 		    <input id="generatebtn" type="button" value="<s:text name="label.generatebuild"/>" class="primary btn env_btn">
 		    <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 		</div> 
-		<div style="float: right;width: auto;">
+		<div class="runagint_source";>
 		<%
 			if(TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology)) {
 		%>
@@ -163,13 +163,10 @@
 			<div class="build_table_div">
     			<!-- Command Display Heading starts -->
 				<div class="tblheader" style="height: 29px;">
-					<div class="clipboard" style="float: right; margin-right: -9px;">
-                    	<img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" style= "height:21px; width:21px; cursor:pointer; margin-top: 3px; margin-right: 15px;" title="Copy to clipboard"> 
-					</div>
 					<table class="zebra-striped" style="height: 29px;"> 
 						<tr class="tr_color">
 		    				<th><s:text name="label.progress"/></th>
-		    				
+		    				<th><img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" title="Copy to clipboard"/></th>
 						</tr>
 		           </table>
           		</div>
@@ -400,10 +397,12 @@
 			fillVersions("databases", data.databases , "");
 			//getting sql files to be executed
 			getSQLFiles();
-		} else if (pageUrl == "getSQLFiles") {
+		} else if (pageUrl == "fetchSQLFiles") {
 			fillVersions("avaliableSourceScript", data.sqlFiles , "getSQLFiles");
 			// after sql files are loaded, already selected value should be hidden in available list
 			hideDbWithVersions();
-		} 
+		} else if (pageUrl == "jsToMinify") {
+			updateHiddenField(data.jsFinalName, data.selectedJs, data.browseLocation);
+    	}
     }
 </script>

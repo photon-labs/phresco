@@ -107,9 +107,13 @@ if(!isiPad()){
 }
 
 $(document).ready(function() {
-	
 	if ($.browser.safari) {
-		$(".th-inner-test").css("top","235px"); 
+		$(".th-inner-test").css("top", "235px"); 
+	}
+	
+	if ($.browser.opera) {
+		$(".graph_div").css("float", "left"); 
+		$(".columns").css("column-count", "1"); 
 	}
 	
 	var OSName="Unknown OS";

@@ -55,6 +55,7 @@
    	if (importSqlPro != null && Boolean.parseBoolean(importSqlPro)) {
    	    checkImportSql = "checked";
    	}
+   	
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
    	List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
@@ -271,8 +272,21 @@
 							<% if (!from.equals(FrameworkConstants.DEPLOY)) { %>
 								<input type="checkbox" id="showSettings" name="showSettings" value="showsettings">
 								<span class="textarea_span popup-span"><s:text name="label.show.setting"/></span>
-							<% } %>
-							<% if (from.equals("generateBuild")) { %>
+							<% } %> <%
+ 	if (FrameworkConstants.REQ_GENERATE_BUILD.equals(from)
+ 			&& (TechnologyTypes.JAVA_STANDALONE.equals(technology)
+ 					|| TechnologyTypes.JAVA_WEBSERVICE
+ 							.equals(technology)
+ 					|| TechnologyTypes.JAVA.equals(technology)
+ 					|| TechnologyTypes.HTML5.equals(technology)
+ 					|| TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MOBILE_WIDGET
+ 							.equals(technology)
+ 					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET
+ 							.equals(technology) || TechnologyTypes.HTML5_WIDGET
+ 					.equals(technology))) {
+ %>
 								<input type="checkbox" id="skipTest" name="skipTest" value="true">
 								<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 							<% } %>
@@ -303,7 +317,7 @@
 			<legend class="fieldSetLegend"><s:text name="label.sql.execute"/></legend>
 			<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label" style="width: 210px;"><s:text name="label.databases"/></label>
-				<div class="input" style="text-align: left; margin-left: 250px;">
+				<div class="input" style="text-align: left; margin-left: 231px;">
 					<select id="databases" name="database" class="xlarge" >
 			       	</select>
 				</div>
@@ -378,11 +392,50 @@
 		<input id="profileAvailable" name="profileAvailable" type="hidden" value=""/>
 		<% } %>
 <!-- 		advanced settings end -->
+
+<!-- minifier setting starts -->
+		<% if (from.equals("generateBuild") && (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology))) { %>
+		<div class="theme_accordion_container clearfix" style="float: none;">
+		    <section class="accordion_panel_wid">
+		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+		            <section class="lft_menus_container adv-settings-width">
+		                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.minifer"/></span></span>
+		                <div class="mfbox siteinnertooltiptxt">
+		                    <div class="scrollpanel adv_setting_accordian_bottom">
+		                        <section class="scrollpanel_inner">
+		                        	<div class="minifyDiv">
+										<fieldset class="popup-fieldset fieldset_center_align minify_popup">
+											<div class = "browseJs">
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+													<div class="input">
+														<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+														<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+														<input type="text" name="jsFileName" class="getJsFiles1" style="float:left;width:150px; margin-right:10px;" disabled/>
+													</div>
+													<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+												</div>
+												<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
+											</div>
+										</fieldset>
+									</div>
+									<input type="hidden" name="fileLocation"/>
+		                        </section>
+		                    </div>
+		                </div>
+		            </section>  
+		        </div>
+		    </section>
+		</div>
+		<% } %>
 	</div>
+	
+<!--  minifier setting  end -->
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
-			<img class="popupLoadingIcon" style="position: relative;"> 
+			<img class="popupLoadingIcon"> 
 			<div id="errMsg" class="generate_build_err_msg adv-settings-error-msg"></div>
 			<div style="float: right;">
 				<input type="hidden" name="from" value="<%= from %>" id="from">
@@ -446,6 +499,12 @@
 				$("#errMsg").html('<%= FrameworkConstants.PROFILE_CREATE_MSG %>');
 				return false;
 			}
+			
+			/* enable text box only if any file selected for minification */
+			if($('input[name="jsFileName"]').val() !== "") {
+				$('input[name="jsFileName"]').attr("disabled", false);
+			}
+
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
 		});
 		
@@ -584,7 +643,7 @@
 		
 		$('#environments').change(function() {
 			if ($("#from").val() != "generateBuild") {
-				loadingIconShow();
+				
 				$('#DbWithSqlFiles').val("");
 				executeSqlShowHide();
 			}
@@ -672,6 +731,7 @@
 	
 	function executeSqlShowHide() {
 		if($('#importSql').is(":checked")) {
+			loadingIconShow();
 			$('#sqlExecutionContain').show();
 		} else {
 			$('#sqlExecutionContain').hide();
@@ -699,9 +759,11 @@
 		if(!isBlank($("#databases").val())) {
 			var params = 'selectedDb=';
 		    params = params.concat($("#databases").val());
+		    params =  params.concat('&environments=');
+		    params = params.concat($("#environments").val());
 		    params = params.concat("&projectCode=");
 		    params = params.concat('<%= projectCode %>');
-			performAction("getSQLFiles", params, '', true);
+			performAction("fetchSQLFiles", params, '', true);
 		}
 	}
 
@@ -774,5 +836,51 @@
 	
 	function removeAdvSettings() {
 // 		alert("Remove settings configure");
+	}
+	
+	var counter = 2;
+	function addJsCompTag(){
+		var browseId = "getJsFiles"+counter;
+		
+		var newMinDiv = $(document.createElement('div')).attr("id", 'browseJS' + counter);
+		newMinDiv.html("<div class='clearfix'><label for='xlInput' class='xlInput popup-label' style='width:100px;'><s:text name='build.js.minification'/></label>" +
+		"<div class='input'><input type='button' id='"+ browseId +"' class='btn primary chooseJS' value='<s:text name='build.minify.browse'/>' onclick='browseFiles(this);' style = 'float:left; margin-left:-30px;'>" + 
+		"<label for='xlInput' class='xlInput popup-label' style='padding-right:6px;'><s:text name='build.compress.name'/></label>" + 
+		"<input type='text' class='"+browseId+"' name='jsFileName'  value ='' style='float:left;width:150px;margin-right:10px;' disabled/></div>" +
+		"<a><img title='' src='images/icons/add_icon.png' id='addJSComp' onclick='addJsCompTag();' style='float: left; margin-left:4px'></a>" + 
+		"<a><img class = 'del imagealign' src='images/icons/minus_icon.png' onclick='removeTag(this); ' style='float: left; margin-left:4px'></a><input type='hidden' tempName='"+browseId+"' class='' name='"+browseId+"' value='' id='selectedJs'></div>"); 
+		newMinDiv.appendTo(".minify_popup");
+		counter++;
+	}
+	
+	function removeTag(currentTag) {
+		$(currentTag).parent().parent().parent().remove();
+	}
+	
+	var textBoxClass = "";
+	function browseFiles(obj) {
+		textBoxClass = $(obj).attr("id");
+		var jsName = $('input[class="'+ textBoxClass +'"]').val();
+		var jsFiles = $('input[name="'+ jsName +'"]').val();
+		
+		$('#browseLocation').remove();
+		$('#generateBuildForm').hide();
+		var params = "techonolgy=";
+		var Technology = '<%= technology %>';
+		params = params.concat(Technology);
+		params = params.concat("&fileType=js");
+		params = params.concat("&fileorfolder=All");
+		params = params.concat("&selectedJsName=");
+		params = params.concat(jsName);
+		params = params.concat("&selectedJsFiles=");
+		params = params.concat(jsFiles);
+		popup('jsFileBrowse', params, $('#popup_div'), '', true);
+	}
+	
+	function updateHiddenField(jsName, jsFiles, fileLocation) {
+		$("."+textBoxClass).val(jsName);
+		$('input[tempName="'+ textBoxClass +'"]').attr("name", jsName);
+		$('input[name="'+ jsName +'"]').val(jsFiles);
+		$('input[name="fileLocation"]').val(fileLocation);
 	}
 </script>

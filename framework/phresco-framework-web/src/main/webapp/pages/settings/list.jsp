@@ -257,7 +257,7 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
 		%>
 		
 		$('#deleteButton').click(function() {
-			$("#confirmationText").html("Do you want to delete the selected setting(s)");
+			$("#confirmationText").html("Do you want to delete the selected setting(s)?");
 		    dialog('block');
 		    escBlockPopup();
 		});

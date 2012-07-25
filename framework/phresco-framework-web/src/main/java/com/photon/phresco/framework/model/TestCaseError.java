@@ -23,6 +23,7 @@ public class TestCaseError {
 
 	private String errorType;
 	private String description;
+	private boolean hasErrorImg;
 
 	public String getErrorType() {
 		return errorType;
@@ -40,4 +41,11 @@ public class TestCaseError {
 		this.description = description;
 	}
 
+	public boolean isHasErrorImg() {
+		return hasErrorImg;
+	}
+
+	public void setHasErrorImg(boolean hasErrorImg) {
+		this.hasErrorImg = hasErrorImg;
+	}
 }

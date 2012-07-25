@@ -1375,7 +1375,7 @@ background-color: #ffffff;
 	color:red;
 }
 
-#errMsg, #advSettingsErrMsg {
+#errMsg, #advSettingsErrMsg, #jsErrMsg {
 	color:red;
 }
 

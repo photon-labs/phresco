@@ -31,12 +31,10 @@
 		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
 		<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
 		<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
-		<sonar.phpCodesniffer.skip>true</sonar.phpCodesniffer.skip> 
 		<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
 		<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
 		<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
 		<sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
-		<!--<sonar.phpUnit.mainTestClass>/test/functional/src/test/php/phresco/AllTest.php</sonar.phpUnit.mainTestClass>-->
 		<sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
 		<sonar.phpcpd.excludes>source/sql</sonar.phpcpd.excludes>
 		<sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
@@ -49,7 +47,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>drupal-maven-plugin</artifactId>
-				<version>1.2.0.7001-SNAPSHOT</version>
+				<version>1.2.0.8001-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
@@ -81,6 +79,7 @@
 			</plugin>
 		</plugins>
 		<sourceDirectory>source</sourceDirectory>
+		<directory>do_not_checkin/target</directory>
 	</build>
 	<profiles>
         <profile>

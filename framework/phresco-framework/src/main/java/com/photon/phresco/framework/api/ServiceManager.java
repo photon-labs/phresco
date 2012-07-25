@@ -196,4 +196,6 @@ public interface ServiceManager {
     List<Database> getDatabases() throws PhrescoException;
 
 	List<Reports> getReports(String techId) throws PhrescoException;
+	
+	InputStream getLatestVersionPom() throws PhrescoException;
 }

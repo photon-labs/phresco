@@ -200,10 +200,22 @@
 		<fileSet filtered="false"> 
 			<directory>test/performance/database/tests</directory> 
 			<includes> 
-				<include>add.csv</include>
 				<include>PhrescoFrameWork_TestPlan.jmx</include>
-				<include>registerDetails.csv</include>
-				<include>topics.csv</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/webservices</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false"> 
+			<directory>test/performance/webservices/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>				
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false"> 

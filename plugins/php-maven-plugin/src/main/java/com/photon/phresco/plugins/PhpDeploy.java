@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -157,8 +156,10 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 				break;
 			}		
 			File deployDir = new File(deployLocation);
-			FileUtils.mkdir(deployDir.getPath().trim());		
-			getLog().info("Project is deploying.........");
+			if (!deployDir.exists()) {
+				throw new MojoExecutionException(" Deploy Directory" + deployLocation + " Does Not Exists ");
+			}
+			getLog().info("Project is deploying into " + deployLocation);
 			FileUtils.copyDirectoryStructure(tempDir.getParentFile(), deployDir);
 			getLog().info("Project is deployed successfully");
 		} catch (Exception e) {

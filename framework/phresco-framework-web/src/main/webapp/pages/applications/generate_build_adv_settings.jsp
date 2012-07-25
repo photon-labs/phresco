@@ -156,6 +156,7 @@
 // 			}
 			$('#advancedSettingsBuildForm').hide();
 			$('#generateBuildForm').show(); 
+			$('#generateBuild_Modal').show();
 			$("#advSettingsErrMsg").html("");			
 			$("#errMsg").html('');
 		});
@@ -167,7 +168,7 @@
 				$("input[name=keystore]").val("");
 				return false;
 			} else if(isBlank($.trim($("input[name=storepass]").val()))) {
-				$("#errMsg").html("Enter storepass");
+				$("#advSettingsErrMsg").html("Enter storepass");
 				$("input[name=storepass]").focus();
 				$("input[name=storepass]").val("");
 				return false;

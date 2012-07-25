@@ -37,8 +37,6 @@
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>source/</directory> 
 			<includes> 
-				<include>CabLib.dll</include>
-				<include>CabLib-32bit.dll</include>
 				<include>Mono.Cecil.dll</include> 
 				<include>Phresco.Sharepoint.sln</include> 
 				<include>WSPBuilder.exe</include> 
@@ -48,7 +46,7 @@
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>source/Phresco.HelloWorld/</directory> 
 			<includes> 
-				<include>Phresco.Sharepoint.csproj</include> 
+				<include>Phresco.HelloWorld.csproj</include> 
 				<include>Phresco.HelloWorld.snk</include> 
 				<include>solutionid.txt</include> 
 			</includes> 

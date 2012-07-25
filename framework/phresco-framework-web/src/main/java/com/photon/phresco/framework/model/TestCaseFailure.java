@@ -23,6 +23,7 @@ public class TestCaseFailure {
 
 	private String failureType;
 	private String description;
+	private boolean hasFailureImg;
 
 	public String getFailureType() {
 		return failureType;
@@ -39,5 +40,12 @@ public class TestCaseFailure {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public boolean isHasFailureImg() {
+		return hasFailureImg;
+	}
 
+	public void setHasFailureImg(boolean hasFailureImg) {
+		this.hasFailureImg = hasFailureImg;
+	}
 }

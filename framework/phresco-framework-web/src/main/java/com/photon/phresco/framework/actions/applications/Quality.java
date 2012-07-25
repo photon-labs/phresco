@@ -22,13 +22,13 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
@@ -70,6 +70,7 @@ import org.xml.sax.SAXParseException;
 
 import com.google.gson.Gson;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.commons.PerformanceDetails;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -95,13 +96,12 @@ import com.photon.phresco.model.PropertyInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
-import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.model.Model.Modules;
 import com.phresco.pom.util.PomProcessor;
-import com.photon.phresco.commons.PerformanceDetails;
 
 public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
@@ -255,7 +255,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_TEST_TYPE, UNIT);
         } catch (Exception e){
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_UNIT_TEST));
             }
             S_LOGGER.error("Entered into catch block of Quality.unit()"+ e);
             new LogErrorReport(e, "Quality Unit test");
@@ -366,7 +366,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             
         } catch (Exception e) {
         	if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.functional()"+ e);
             new LogErrorReport(e, "Quality Functional test");
@@ -497,9 +497,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         		} else {
         			setValidated(true);
         			if(UNIT.equals(testType)) {
-        				setShowError(ERROR_UNIT_TEST);
+        				setShowError(getText(ERROR_UNIT_TEST));
         			} else {
-        				setShowError(ERROR_FUNCTIONAL_TEST);
+        				setShowError(getText(ERROR_FUNCTIONAL_TEST));
         			}
         			return SUCCESS;
         		}
@@ -512,7 +512,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         	List<String> resultFileNames = new ArrayList<String>(mapTestResultName.keySet());
         	if (CollectionUtils.isEmpty(resultFileNames)) {
         		setValidated(true);
-    			setShowError(ERROR_UNIT_TEST);
+    			setShowError(getText(ERROR_UNIT_TEST));
     			return SUCCESS;
         	}
         	
@@ -542,9 +542,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    		} else {
 	    			setValidated(true);
 	    			if(UNIT.equals(testType)) {
-	    				setShowError(ERROR_UNIT_TEST);
+	    				setShowError(getText(ERROR_UNIT_TEST));
 	    			} else {
-	    				setShowError(ERROR_FUNCTIONAL_TEST);
+	    				setShowError(getText(ERROR_FUNCTIONAL_TEST));
 	    			}
 	    			return SUCCESS;
 	    		}
@@ -557,7 +557,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
 	    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
 	    		setValidated(true);
-				setShowError(ERROR_TEST_SUITE);
+	    		if(UNIT.equals(testType)){
+	    			setShowError(getText(ERROR_UNIT_TEST));
+	    		} else {
+	    			setShowError(getText(ERROR_FUNCTIONAL_TEST));
+	    		}
 				return SUCCESS;
 	    	}
 	    	
@@ -716,36 +720,21 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             int failureTestCases = 0;
             int errorTestCases = 0;
 
+        	StringBuilder screenShotDir = new StringBuilder();
+        	screenShotDir.append(Utility.getProjectHome());
+        	screenShotDir.append(project.getProjectInfo().getCode());
+        	screenShotDir.append(frameworkUtil.getFunctionalReportDir(project.getProjectInfo().getTechnology().getId()));
+        	screenShotDir.append(File.separator);
+        	screenShotDir.append(SCREENSHOT_DIR);
+        	screenShotDir.append(File.separator);
+        	
             for (int i = 0; i < nodelist.getLength(); i++) {
                 Node node = nodelist.item(i);
                 NodeList childNodes = node.getChildNodes();
                 NamedNodeMap nameNodeMap = node.getAttributes();
                 TestCase testCase = new TestCase();
 
-                if (childNodes != null && childNodes.getLength() > 0) {
-
-                    for (int j = 0; j < childNodes.getLength(); j++) {
-                        Node childNode = childNodes.item(j);
-
-                        if (ELEMENT_FAILURE.equals(childNode.getNodeName())) {
-                        	failureTestCases++;
-                            TestCaseFailure failure = getFailure(childNode);
-                            if (failure != null) {
-                                testCase.setTestCaseFailure(failure);
-                            } 
-                        }
-
-                        if (ELEMENT_ERROR.equals(childNode.getNodeName())) {
-                        	errorTestCases++;
-                            TestCaseError error = getError(childNode);
-                            if (error != null) {
-                                testCase.setTestCaseError(error);
-                            }
-                        }
-                    }
-                }
-
-                for (int k = 0; k < nameNodeMap.getLength(); k++){
+                for (int k = 0; k < nameNodeMap.getLength(); k++) {
                     Node attribute = nameNodeMap.item(k);
                     String attributeName = attribute.getNodeName();
                     String attributeValue = attribute.getNodeValue();
@@ -761,15 +750,48 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                         testCase.setAssertions(Float.parseFloat(attributeValue));
                     } else if (ATTR_TIME.equals(attributeName)) {
                         testCase.setTime(attributeValue);
-                    } 
+                    }
                 }
+                
+                if (childNodes != null && childNodes.getLength() > 0) {
+
+                    for (int j = 0; j < childNodes.getLength(); j++) {
+                        Node childNode = childNodes.item(j);
+
+                        if (ELEMENT_FAILURE.equals(childNode.getNodeName())) {
+                        	failureTestCases++;
+                            TestCaseFailure failure = getFailure(childNode);
+                            if (failure != null) {
+                            	File file = new File(screenShotDir.toString() + testCase.getName() + DOT + IMG_PNG_TYPE);
+                            	if (file.exists()) {
+                            		failure.setHasFailureImg(true);
+                            	}
+                                testCase.setTestCaseFailure(failure);
+                            } 
+                        }
+
+                        if (ELEMENT_ERROR.equals(childNode.getNodeName())) {
+                        	errorTestCases++;
+                            TestCaseError error = getError(childNode);
+                            if (error != null) {
+                            	File file = new File(screenShotDir.toString() + testCase.getName() + DOT + IMG_PNG_TYPE);
+                            	if (file.exists()) {
+                            		error.setHasErrorImg(true);
+                            	}
+                                testCase.setTestCaseError(error);
+                            }
+                        }
+                    }
+                }
+
                 testCases.add(testCase);
             }
 
-                getHttpRequest().setAttribute(REQ_TESTSUITE_FAILURES, failureTestCases + "");
-                getHttpRequest().setAttribute(REQ_TESTSUITE_ERRORS, errorTestCases + "");
-                getHttpRequest().setAttribute(REQ_TESTSUITE_TESTS, nodelist.getLength() + "");
-				getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+            getHttpRequest().setAttribute(REQ_TESTSUITE_FAILURES, failureTestCases + "");
+            getHttpRequest().setAttribute(REQ_TESTSUITE_ERRORS, errorTestCases + "");
+            getHttpRequest().setAttribute(REQ_TESTSUITE_TESTS, nodelist.getLength() + "");
+			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+			
             return testCases;
         } catch (PhrescoException e) {
         	S_LOGGER.error("Entered into catch block of Quality.getTestCases()"+ e);
@@ -927,7 +949,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                     }
                     
                 } catch (Exception e) {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_FUNCTIONAL_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
                 getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -953,7 +975,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 	QualityUtil.sortResultFile(children);
                     getHttpRequest().setAttribute(REQ_JMETER_REPORT_FILES, children);
                 } else {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_LOAD_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -1108,7 +1130,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_TEST_TYPE,PERFORMACE );
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_PERFORMANCE_TEST));
     			StringReader sb = new StringReader("Test is not available for this project");
     			reader = new BufferedReader(sb);
                 getHttpSession().setAttribute(projectCode + PERFORMACE, reader);
@@ -1181,7 +1203,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.load()"+ e);
             
@@ -1958,6 +1980,47 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     public String printAsPdfPopup () {
         S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
         try {
+        	boolean XmlResultsAvailable = false;
+        	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+            StringBuilder sb = new StringBuilder();
+            sb.append(Utility.getProjectHome());
+            sb.append(project.getProjectInfo().getCode());
+            String technology = project.getProjectInfo().getTechnology().getId();
+          //check unit and functional are executed already or not
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getUnitReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            performanceTestResultAvail();
+	        	if(isAtleastOneFileAvail()) {
+	        		XmlResultsAvailable = true;
+	        	}
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getLoadReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+        	getHttpRequest().setAttribute(REQ_TEST_EXE, XmlResultsAvailable);
         	List<String> pdfFiles = new ArrayList<String>();
             // popup showing list of pdf's already created
         	String pdfDirLoc = "";
@@ -2008,7 +2071,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         }
         return printAsPdfPopup();
     }
-    
+
     public void reportGeneration(Project project, String testType) {
     	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
     	try {
@@ -2043,6 +2106,32 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
         }
         return SUCCESS;
+    }
+    
+    public String deleteReport() {
+        S_LOGGER.debug("Entering Method Quality.deleteReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+        	String pdfLOC = "";
+        	if (StringUtils.isEmpty(testType)) { 
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportFileName + DOT + PDF;
+        	} else {
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	}
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+            	boolean reportDeleted = pdfFile.delete();
+            	S_LOGGER.info("Report deleted " + reportDeleted);
+            	if(reportDeleted) {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(SUCCESS_REPORT_DELETE_STATUS));
+            	} else {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(ERROR_REPORT_DELETE_STATUS));
+            	}
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return printAsPdfPopup();
     }
     
     public List<SettingsInfo> getServerSettings() {

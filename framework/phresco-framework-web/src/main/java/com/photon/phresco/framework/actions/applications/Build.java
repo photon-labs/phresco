@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -137,6 +138,15 @@ public class Build extends FrameworkBaseAction {
 	private List<String> sqlFiles = null;
 	private static Map<String, List<String>> projectModuleMap = Collections
 			.synchronizedMap(new HashMap<String, List<String>>(8));
+	
+	/* minify */
+	private String fileType = null;
+	private String fileorfolder = null;
+	private String selectedJs = null;
+	private String jsFinalName = null;
+	private String browseLocation = null;
+	private String fileLocation = null;
+	
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 
 	// DbWithSqlFiles
@@ -249,6 +259,8 @@ public class Build extends FrameworkBaseAction {
 		return APP_BUILD;
 	}
 
+	
+
 	public String generateBuild() {
 		S_LOGGER.debug("Entering Method  Build.generateBuild()");
 		String technology = null;
@@ -360,7 +372,12 @@ public class Build extends FrameworkBaseAction {
 			String technology = project.getProjectInfo().getTechnology().getId();
 
 			Map<String, String> settingsInfoMap = new HashMap<String, String>(2);
-
+			
+			if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology)){
+				minification();
+			}
+			
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
 			}
@@ -447,7 +464,7 @@ public class Build extends FrameworkBaseAction {
 
 		return APP_ENVIRONMENT_READER;
 	}
-
+	
 	private File isFileExists(Project project) throws IOException {
 		StringBuilder builder = new StringBuilder(Utility.getProjectHome());
 		builder.append(project.getProjectInfo().getCode());
@@ -944,14 +961,29 @@ public class Build extends FrameworkBaseAction {
 			S_LOGGER.debug("Entering Method Build.stopNodeJSServer()");
 		}
 		try {
+			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+			builder.append(projectCode);
+			builder.append(File.separator);
+			builder.append(FOLDER_DOT_PHRESCO);
+			builder.append(File.separator);
+			builder.append(RUN_AGS_ENV_FILE);
+			File envFile = new File(builder.toString());
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
 			ActionType nodeStop = ActionType.STOP_SERVER;
 			BufferedReader reader = runtimeManager.performAction(project, nodeStop, null, null);
-			getHttpSession().setAttribute(projectCode + REQ_READ_LOG_FILE, reader);
-			getHttpSession().removeAttribute(project.getProjectInfo().getCode() + SESSION_NODEJS_SERVER_STATUS);
-			getHttpSession().removeAttribute(project.getProjectInfo().getCode() + SESSION_NODEJS_IMPORTSQL_VALUE);
+			String line;
+			line = reader.readLine();
+			while (!line.startsWith("[INFO] BUILD SUCCESS")) {
+				line = reader.readLine();
+			}
+			readLogFile(project, "");
+			if (envFile.exists()) {
+				envFile.delete();
+			}
+			getHttpSession().removeAttribute(project.getProjectInfo().getCode()	+ SESSION_NODEJS_SERVER_STATUS);
+			getHttpSession().removeAttribute(project.getProjectInfo().getCode()	+ SESSION_NODEJS_IMPORTSQL_VALUE);
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 			getHttpRequest().setAttribute(REQ_PROJECT, project);
 		} catch (Exception e) {
@@ -1039,6 +1071,7 @@ public class Build extends FrameworkBaseAction {
 		String serverProtocol = "";
 		int serverPort = 0;
 		BufferedReader fileReader = null;
+		String line = "";
 		try {
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
@@ -1054,19 +1087,25 @@ public class Build extends FrameworkBaseAction {
 				break;
 			}
 
-			compileProject();
-			fileReader = new BufferedReader(new FileReader(getLogFilePath()));
-			String line = fileReader.readLine();
-			while (line != null && !line.startsWith("[INFO] BUILD FAILURE")) {
+			try {
+				compileProject();
+				fileReader = new BufferedReader(new FileReader(getLogFilePath()));
 				line = fileReader.readLine();
+				while (line != null && !line.startsWith("[INFO] BUILD FAILURE")) {
+					line = fileReader.readLine();
+				}
+			} finally {
+				if (fileReader != null) {
+					fileReader.close();
+				}
 			}
+
 			if (line != null && line.startsWith("[INFO] BUILD FAILURE")) {
 				getHttpSession().setAttribute(projectCode + REQ_JAVA_START,
 						new BufferedReader(new FileReader(getLogFilePath())));
 			} else {
 				// TODO: delete the server.log and create empty server.log file
-				File dir = new File(getLogFolderPath());
-				deleteLogFile(dir);
+				deleteLogFile();
 				javaMap.put(ENVIRONMENT_NAME, environments);
 				javaMap.put(IMPORT_SQL, importSQL);
 				ActionType serverStart = ActionType.START_SERVER;
@@ -1090,18 +1129,6 @@ public class Build extends FrameworkBaseAction {
 						+ FrameworkUtil.getStackTraceAsString(e));
 			}
 			new LogErrorReport(e, "Java run against source");
-		} finally {
-			try {
-				if (fileReader != null) {
-					fileReader.close();
-				}
-			} catch (IOException e) {
-				if (debugEnabled) {
-					S_LOGGER.error("Entered into catch block of Build.javaRunAgainstSource()"
-							+ FrameworkUtil.getStackTraceAsString(e));
-				}
-				new LogErrorReport(e, "Java run against source");
-			}
 		}
 	}
 
@@ -1277,11 +1304,15 @@ public class Build extends FrameworkBaseAction {
 		return javaReadLogFile;
 	}
 
-	public void deleteLogFile(File dir) {
-		for (File child : dir.listFiles()) {
-			child.delete();
+	public void deleteLogFile() throws IOException {
+		File logFile = new File(getLogFilePath());
+		if (logFile.isFile() && logFile.exists()) {
+			boolean delete = logFile.delete();
 		}
-		dir.delete();
+		if (!logFile.exists()) {
+			logFile.createNewFile();
+		}
+
 	}
 
 	public void waitForTime(int waitSec) {
@@ -1370,7 +1401,121 @@ public class Build extends FrameworkBaseAction {
 			throw new PhrescoException(e);
 		}
 	}
+	
+	/* minification  */
+	public String jsFileBrowser() {
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	        Project project = administrator.getProject(projectCode);
+	        String technology = project.getProjectInfo().getTechnology().getId();
+	        getHttpRequest().setAttribute(REQ_TECHNOLOGY, technology);
+			getHttpRequest().setAttribute(FILE_TYPES, fileType);
+			getHttpRequest().setAttribute(FILE_BROWSE, fileorfolder);
+			String projectLocation = Utility.getProjectHome() + projectCode;
+			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation.replace(File.separator, FORWARD_SLASH));
+			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+			getHttpRequest().setAttribute(REQ_BUILD_FROM, getHttpRequest().getParameter(REQ_BUILD_FROM));
+			getHttpRequest().setAttribute(REQ_COMPRESS_NAME,getHttpRequest().getParameter(REQ_COMPRESS_NAME));
+			getHttpRequest().setAttribute(REQ_SELECTED_FILES,getHttpRequest().getParameter(REQ_SELECTED_FILES));
+		} catch (Exception e){
+			S_LOGGER.error("Entered into catch block of  Build.jsFileBrowser()"	+ FrameworkUtil.getStackTraceAsString(e));
+		}
+		return SUCCESS;
+	}
+	
+	public String selectJsFilesToMinify() {
+		try {
+			String[] jsFiles = getHttpRequest().getParameterValues(REQ_CHECKED_FILE_LIST);
+			StringBuilder sb = new StringBuilder();
+			String sep = "";
+			for (String jsFile : jsFiles) {
+				sb.append(sep);
+				sb.append(jsFile);
+			    sep = ",";
+			}
 
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	        Project project = administrator.getProject(projectCode);
+	        String techId = project.getProjectInfo().getTechnology().getId();
+	        StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+	        builder.append(project.getProjectInfo().getCode());
+	        getHttpRequest().setAttribute(REQ_BUILD_FROM, getHttpRequest().getParameter(REQ_BUILD_FROM));
+	        getHttpRequest().setAttribute(REQ_TECHNOLOGY, techId);
+	        setSelectedJs(sb.toString());
+		} catch (Exception e){
+			S_LOGGER.error("Entered into catch block of  Build.selectJsFilesToMinify()"	+ FrameworkUtil.getStackTraceAsString(e));
+		}
+
+		return SUCCESS;
+	}
+	
+	private void minification(){
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project project = administrator.getProject(projectCode);
+
+			String[] jsFileNames = getHttpRequest().getParameterValues(REQ_SELECTED_FILE_NAMES);
+			if(!ArrayUtils.isEmpty(jsFileNames)) {
+				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+		        builder.append(project.getProjectInfo().getCode());
+		        File systemPath = new File(builder.toString() + File.separator + POM_FILE);
+		        
+		        PomProcessor processor = new PomProcessor(systemPath);
+		        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+				Document doc = docBuilder.newDocument();
+				List<Element> configList = new ArrayList<Element>();
+				
+				configList.add(createElement(doc, POM_SOURCEDIR, POM_SOURCE_DIRECTORY));
+				configList.add(createElement(doc, POM_OUTPUTDIR, POM_OUTPUT_DIRECTORY));
+				configList.add(createElement(doc, POM_FORCE, POM_VALUE_TRUE));
+				configList.add(createElement(doc, POM_JS_WARN, POM_VALUE_FALSE));
+				configList.add(createElement(doc, POM_NO_SUFFIX, POM_VALUE_TRUE));
+				
+				Element aggregationsElement = doc.createElement(POM_AGGREGATIONS);
+				
+				for (String jsFileName : jsFileNames) {
+					String csvJsFile = getHttpRequest().getParameter(jsFileName);
+					List<String> jsFiles = Arrays.asList(csvJsFile.split("\\s*,\\s*"));
+				
+					Element agrigationElement = appendChildElement(doc, aggregationsElement, POM_AGGREGATION, null);
+					appendChildElement(doc, agrigationElement, POM_INPUTDIR, POM_INPUT_DIRECTORY);
+					Element includesElement = doc.createElement(POM_INCLUDES);
+					for (String jsFile : jsFiles) {
+						appendChildElement(doc, includesElement, POM_INCLUDE, "**/" + jsFile);
+						agrigationElement.appendChild(includesElement);
+					}
+					String[] splitted = fileLocation.split(projectCode);
+					String minificationDir = "";
+					minificationDir = splitted[1];
+					appendChildElement(doc, agrigationElement, POM_OUTPUT, MINIFY_OUTPUT_DIRECTORY + minificationDir + jsFileName + MINIFY_FILE_EXT);
+				}
+				configList.add(aggregationsElement);
+		        processor.addConfiguration(MINIFY_PLUGIN_GROUPID, MINIFY_PLUGIN_ARTFACTID, configList);
+				processor.save();
+			}
+		} catch (Exception e) {
+				S_LOGGER.error("Entered into catch block of Build.minification()"
+						+ FrameworkUtil.getStackTraceAsString(e));
+				new LogErrorReport(e, "Building ");
+			}
+	}
+	
+	private Element createElement(Document doc, String elementName, String textContent) {
+		Element element = doc.createElement(elementName);
+		if (StringUtils.isNotEmpty(textContent)) {
+			element.setTextContent(textContent);
+		}
+		return element;
+	}
+	
+	private Element appendChildElement(Document doc, Element parent, String elementName, String textContent) {
+		Element childElement = createElement(doc, elementName, textContent);
+		parent.appendChild(childElement);
+		return childElement;
+	}
+	/* minification end */
+	
 	public String advancedBuildSettings() {
 		S_LOGGER.debug("Entering Method Build.advancedBuildSettings()");
 		AndroidProfile androidProfile = null;
@@ -1461,8 +1606,7 @@ public class Build extends FrameworkBaseAction {
 			configValues.getAny().addAll(executionConfig);
 			execution.setConfiguration(configValues);
 			List<Element> additionalConfigs = new ArrayList<Element>();
-			processor.setProfile(profileId, false, defaultGoal, plugin, androidProfile, execution, null,
-					additionalConfigs);
+			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null, additionalConfigs);
 			processor.save();
 			profileCreationStatus = true;
 			if (hasSigning) {
@@ -1490,50 +1634,53 @@ public class Build extends FrameworkBaseAction {
 			databases = new ArrayList<String>();
 			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos(Constants.SETTINGS_TEMPLATE_DB,
 					projectCode, environments);
-			for (SettingsInfo databasedetail : databaseDetails) {
-				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
-				databases.add(dbtype);
+			if (CollectionUtils.isNotEmpty(databaseDetails)) {
+				for (SettingsInfo databasedetail : databaseDetails) {
+					dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+					if (!databases.contains(dbtype)) {
+						databases.add(dbtype);
+					}
+				}
 			}
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.configSQL()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
 	}
-
-	public String getSQLFiles() {
+	
+	public String fetchSQLFiles() {
+		String dbtype = null;
+		String dbversion = null;
+		String path = null;
+		String sqlFileName = null;
 		try {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
+			sqlFiles = new ArrayList<String>();
 			String techId = project.getProjectInfo().getTechnology().getId();
 			String selectedDb = getHttpRequest().getParameter("selectedDb");
 			String sqlPath = sqlFolderPathMap.get(techId);
-			File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb).listFiles();
-			sqlFiles = new ArrayList<String>();
-			showFiles(dbSqlFiles, selectedDb, sqlPath);
+			List<SettingsInfo> databaseDetails = administrator.getSettingsInfos( Constants.SETTINGS_TEMPLATE_DB,
+					projectCode, environments);
+			for (SettingsInfo databasedetail : databaseDetails) {
+				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
+				if (selectedDb.equals(dbtype)) { 
+					dbversion = databasedetail.getPropertyInfo(Constants.DB_VERSION).getValue();
+					File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb + File.separator + dbversion).listFiles();
+					for (int i = 0; i < dbSqlFiles.length; i++) {
+						 sqlFileName = dbSqlFiles[i].getName();
+						path = sqlPath + selectedDb + FILE_SEPARATOR +  dbversion + "#SEP#" +  sqlFileName ;
+						sqlFiles.add(path);
+					}
+				}
+			}
+			
 		} catch (PhrescoException e) {
 			S_LOGGER.error("Entered into catch block of  Build.getSQLFiles()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
 	}
-
-	private void showFiles(File[] dbSqlFiles, String selectedDb, String sqlPath) {
-		String versionName = null;
-		String sqlFileName = null;
-		String path = null;
-		if (!ArrayUtils.isEmpty(dbSqlFiles)) {
-			for (File dbSqlFile : dbSqlFiles) {
-				if (dbSqlFile.isDirectory()) {
-					showFiles(dbSqlFile.listFiles(), selectedDb, sqlPath);
-				} else {
-					sqlFileName = dbSqlFile.getName();
-					versionName = dbSqlFile.getParentFile().getName();
-					path = sqlPath + selectedDb + FILE_SEPARATOR + versionName + "#SEP#" + sqlFileName;
-					sqlFiles.add(path);
-				}
-			}
-		}
-	}
-
+	
 	private static void initDbPathMap() {
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");
@@ -1582,7 +1729,6 @@ public class Build extends FrameworkBaseAction {
 			}
 		}
 	}
-
 
 	public String getShowSettings() {
 		return showSettings;
@@ -1794,7 +1940,6 @@ public class Build extends FrameworkBaseAction {
 
 	public void setJarName(String jarName) {
 		this.jarName = jarName;
-
 	}
 
 	public String getKeystore() {
@@ -1885,4 +2030,51 @@ public class Build extends FrameworkBaseAction {
 		DbWithSqlFiles = dbWithSqlFiles;
 	}
 
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileorfolder() {
+		return fileorfolder;
+	}
+
+	public void setFileorfolder(String fileorfolder) {
+		this.fileorfolder = fileorfolder;
+	}
+	
+	public String getSelectedJs() {
+		return selectedJs;
+	}
+
+	public void setSelectedJs(String selectedJs) {
+		this.selectedJs = selectedJs;
+	}
+
+	public String getJsFinalName() {
+		return jsFinalName;
+	}
+
+	public void setJsFinalName(String jsFinalName) {
+		this.jsFinalName = jsFinalName;
+	}
+
+	public void setBrowseLocation(String browseLocation) {
+		this.browseLocation = browseLocation;
+	}
+
+	public String getBrowseLocation() {
+		return browseLocation;
+	}
+
+	public void setFileLocation(String fileLocation) {
+		this.fileLocation = fileLocation;
+	}
+
+	public String getFileLocation() {
+		return fileLocation;
+	}
 }

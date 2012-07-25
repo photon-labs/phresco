@@ -227,15 +227,15 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (StringUtils.isEmpty(delta.getVersion())) {
 			delta.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
+		
 		ClientResponse response = null;
 		String techId = delta.getTechnology().getId();
 		if(techId.equals(TechnologyTypes.PHP_DRUPAL6)|| techId.equals(TechnologyTypes.PHP_DRUPAL7)) {
 			excludeModule(delta);
 		}
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
-		ProjectInfo projectInfoClone = projectInfo.clone();
 		updateDocument(delta, path);
-		response = PhrescoFrameworkFactory.getServiceManager().updateProject( projectInfo,userInfo);
+		response = PhrescoFrameworkFactory.getServiceManager().updateProject(projectInfo,userInfo);
 		if(response.getStatus() == 401){
 			throw new PhrescoException("Session expired");
 		}
@@ -247,12 +247,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		else if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
 			createSqlFolder(delta, path);
 		}
-		updatePomProject(delta,projectInfoClone);
+		updatePomProject(delta, projectInfo);
 		try {
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			ProjectUtils.updateProjectInfo(delta, path);
+			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
@@ -459,9 +459,30 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		return null;
 	}
 	
-	public String getTechId(String projectCode) throws PhrescoException {
-		return getProject(projectCode).getProjectInfo().getTechnology().getId();
+	public Project getProjectByWorkspace(File baseDir) throws PhrescoException {
+
+		S_LOGGER.debug("Entering Method ProjectAdministratorImpl. getTechId(File baseDir)");
+
+		// Use the FileNameFilter for filtering .phresco directories
+		// Read the .project file and construct the Project object.
+
+		List<Project> projects = new ArrayList<Project>();
+
+		File[] dotPhrescoFolders = baseDir.listFiles(new PhrescoFileNameFilter(FOLDER_DOT_PHRESCO));
+		if (!ArrayUtils.isEmpty(dotPhrescoFolders)) {
+			for (File dotPhrescoFolder : dotPhrescoFolders) {
+				File[] dotProjectFiles = dotPhrescoFolder.listFiles(new PhrescoFileNameFilter(PROJECT_INFO_FILE));
+				fillProjects(dotProjectFiles, projects);
+			}
+			Project project = projects.get(0);
+			if (project != null && project.getProjectInfo() != null) {
+				return project;
+			}
+		}
+		return null;
 	}
+
+
 	
 	public  static void updatePomProject(ProjectInfo projectInfo) throws PhrescoException, PhrescoPomException {
 		File path = new File(Utility.getProjectHome() + File.separator + projectInfo.getCode() + File.separator + POM_FILE);
@@ -1588,8 +1609,37 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 
+	 public boolean adaptExistingJobs(Project project) {
+		try {
+			 CIJob existJob = getJob(project);
+			 S_LOGGER.debug("Going to get existing jobs to relocate!!!!!");
+			 if(existJob != null) {
+				 S_LOGGER.debug("Existing job found " + existJob.getName());
+				 boolean deleteExistJob = deleteCI(project);
+				 System.out.println("Deleting existing jobs!!!!" + deleteExistJob);
+				 Gson gson = new Gson();
+				 List<CIJob> existingJobs = new ArrayList<CIJob>();
+				 existingJobs.addAll(Arrays.asList(existJob));
+				 FileWriter writer = null;
+				 File ciJobFile = new File(getCIJobPath(project));
+				 String jobJson = gson.toJson(existingJobs);
+				 writer = new FileWriter(ciJobFile);
+				 writer.write(jobJson);
+				 writer.flush();
+				 S_LOGGER.debug("Existing job moved to new type of project!!");
+			 }
+			 return true;
+		} catch (Exception e) {
+			S_LOGGER.debug("It is already adapted !!!!! ");
+		}
+		return false;
+	 }
+	 
 	 public List<CIJob> getJobs(Project project) throws PhrescoException {
+		 S_LOGGER.debug("GetJobs Called!");
 		 try {
+			 boolean adaptedProject = adaptExistingJobs(project);
+			 S_LOGGER.debug("Project adapted for new feature => " + adaptedProject);
 			 Gson gson = new Gson();
 			 BufferedReader br = new BufferedReader(new FileReader(getCIJobPath(project)));
 			 Type type = new TypeToken<List<CIJob>>(){}.getType();
@@ -1848,6 +1898,18 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 	 
+	// When already existing adapted project is created , need to move to new adapted project -kalees
+	public boolean deleteCI(Project project) throws PhrescoException {
+		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.deleteCI()");
+		try {
+        	File ciJobInfo = new File(getCIJobPath(project));
+        	return ciJobInfo.delete();
+		} catch (ClientHandlerException ex) {
+	    	S_LOGGER.error("Entered into catch block of ProjectAdministratorImpl.deleteCI()" + ex.getLocalizedMessage());
+			throw new PhrescoException(ex);
+		}
+	}
+		
 	 public int getProgressInBuild(Project project) throws PhrescoException {
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.isBuilding()");
 		 try {

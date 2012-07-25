@@ -14,6 +14,7 @@
 	String testType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE);
 	List<String> reportFiles = (List<String>)request.getAttribute(FrameworkConstants.REQ_PDF_REPORT_FILES);
 	String reportGenerationStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_STATUS);
+	String reportDeletionStat = (String)request.getAttribute(FrameworkConstants.REQ_REPORT_DELETE_STATUS);
 %>
 
 <style>
@@ -23,7 +24,7 @@
 </style>
 
 <form action="printAsPdf" method="post" autocomplete="off" class="build_form" id="generatePdf">
-<div class="popup_Modal">
+<div class="popup_Modal topFifty">
 	<div class="modal-header">
 		<h3 id="generateBuildTitle">
 			Generate Report
@@ -49,6 +50,9 @@
 				              	</th>
 				              	<th class="second validate_tblHdr">
 				                	<div class="pdfth-inner">Download</div>
+				              	</th>
+				              	<th class="second validate_tblHdr">
+				                	<div class="pdfth-inner">Delete</div>
 				              	</th>
 				            </tr>
 			          	</thead>
@@ -94,6 +98,11 @@
 			                            </a>
 					   				</div>
 			              		</td>
+			              		<td>
+			              			<div class="pdfDelete" style="color: #000000;">
+						          		     <img src="images/icons/delete(1).png" id="reportName" class="<%= reportFile %>" title="<%= reportFile %>.pdf"/>
+					   				</div>
+			              		</td>
 			            	</tr>
 			            	<% } %>
 			          	</tbody>
@@ -109,21 +118,17 @@
 	</div>
 	
 	<div class="modal-footer">
-		<div class="action popup-action" style="">
-			<div style="float: left;">
-				<img class="popupLoadingIcon" style="position: relative;">
-				<div id="errMsg"></div>
-			</div>
-			<div style="float: right;">
-	            <input type="radio" name="reportDataType" value="crisp" checked>
-	            <span class="textarea_span popup-span"><s:text name="label.report.overall"/></span>
-	            <input type="radio" name="reportDataType" value="detail">
-	            <span class="textarea_span popup-span"><s:text name="label.report.detail"/></span>
-	            
-				<input type="button" class="btn primary" value="Close" id="cancel">
-				<input type="button" id="generateReport" class="btn primary" value="Generate">
-			</div>
+		<div class="reportErrorMsg">
+			<div id="reportMsg"></div>
+			<img class="popupLoadingIcon" style="position: relative;">
 		</div>
+           <input type="radio" name="reportDataType" value="crisp" checked>
+           <span class="popup-span"><s:text name="label.report.overall"/></span>
+           <input type="radio" name="reportDataType" value="detail">
+           <span class="popup-span"><s:text name="label.report.detail"/></span>
+           
+		<input type="button" class="btn primary" value="Close" id="cancel">
+		<input type="button" id="generateReport" class="btn primary" value="Generate">
 	</div>
 </div>
 </form>
@@ -165,13 +170,61 @@
             performAction('printAsPdf', params, $('#popup_div'), '');
 		});
 		
+		$('.pdfDelete').click(function() {
+			$('.popupLoadingIcon').show();
+			getCurrentCSS();
+			var params = "";
+	    	if (!isBlank($('form').serialize())) {
+	    		params = $('form').serialize() + "&";
+	    	}
+	    	params = params.concat("reportFileName=");
+	    	params = params.concat($('#reportName').attr("class"));
+	    	<%
+				if (StringUtils.isEmpty(testType) && !"performance".equals(testType)) {
+			%>
+	 	    	params = params.concat("&projectCode=");
+		    	params = params.concat('<%= projectCode %>');
+			<%
+				} else if(!"performance".equals(testType)) {
+				
+			%>
+	 	    	params = params.concat("&testType=");
+		    	params = params.concat('<%= testType %>');
+			<%
+				}  	
+	    	%>
+            performAction('deleteReport', params, $('#popup_div'), '');
+		});
+		
 		<%
 			if (StringUtils.isNotEmpty(reportGenerationStat)) {
 		%>
-			showHidePopupMsg($("#errMsg"), '<%= reportGenerationStat %>');
+			showHidePopupMsg($("#reportMsg"), '<%= reportGenerationStat %>');
 		<%
 			}
 		%>
+		
+		<%
+			if (StringUtils.isNotEmpty(reportDeletionStat)) {
+		%>
+			showHidePopupMsg($("#reportMsg"), '<%= reportDeletionStat %>');
+		<%
+			}
+		%>
+	
+		<%
+			if(!(Boolean) request.getAttribute(FrameworkConstants.REQ_TEST_EXE)) {
+		%>
+			$("#reportMsg").html('<%= FrameworkConstants.MSG_REPORT%>');
+			disableControl($("#generateReport"), "btn disabled");
+		<%
+			} else {
+		%>
+			enableControl($("#generateReport"), "btn primary");
+		<% 
+			}
+		%>
+			
 	});
 	
 </script>

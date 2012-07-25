@@ -124,6 +124,7 @@
     function performAction(pageUrl, params, tagControl, callSuccessEvent) {
     	$.ajax({
             url : pageUrl,
+            cache: false,//do disable the browser cache
             data : params,
             type : "POST",
             success : function(data) {
@@ -159,6 +160,7 @@
     	}
         $.ajax({
             url : pageUrl,
+            cache: false,//do disable the browser cache
             data : $('form').serialize() + param,
             success : function(data) {
             	if(tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail == undefined && isBlank(isSecondPopupAvail)) {
@@ -213,6 +215,7 @@
     function bacgroundValidate(validateURL, projectCode) {
         $.ajax({
             url : validateURL,
+            cache: false,//do disable the browser cache
             data : {
                 'validateInBg' : "true",
                 'projectCode' : projectCode,
@@ -294,6 +297,11 @@
     function checkForRevision(revision) {
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
+    }
+    
+    function checkForHost(host) {
+    	newHost = host.replace(/[^a-zA-Z 0-9\.%\-\_]+/g, '');
+    	return newHost;
     }
 	
     // To remove empty space between the characters
@@ -379,7 +387,6 @@
 		return newName;
     }
 			 
-	
 	function accordion() {
 	    var showContent = 0;
 	    $('.siteaccordion').removeClass('openreg').addClass('closereg');

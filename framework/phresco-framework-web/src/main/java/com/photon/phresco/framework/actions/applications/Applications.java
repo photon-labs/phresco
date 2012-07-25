@@ -745,8 +745,12 @@ public class Applications extends FrameworkBaseAction {
 		
 		try {
 			if (showSettings != null && Boolean.valueOf(showSettings)) {
-				settingsEnv = getEnvironmentNames();
-			}
+				if (CollectionUtils.isNotEmpty(getEnvironmentNames())) {
+					settingsEnv = getEnvironmentNames();
+				} else {
+					envError = getText(NO_SETTINGS_ENV);
+				}
+			} 
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Applications.showSettings()"
 						+ FrameworkUtil.getStackTraceAsString(e));
@@ -1384,5 +1388,4 @@ public class Applications extends FrameworkBaseAction {
 	public void setFileorfolder(String fileorfolder) {
 		this.fileorfolder = fileorfolder;
 	}
-
 }

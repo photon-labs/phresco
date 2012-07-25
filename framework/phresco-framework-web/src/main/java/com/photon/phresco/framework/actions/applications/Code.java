@@ -22,6 +22,7 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +107,7 @@ public class Code extends FrameworkBaseAction {
     public String check() {
     	S_LOGGER.debug("Entering Method Code.check()");
     	StringBuilder sb = new StringBuilder();
+    	String technology = null;
     	try {
 	        Properties sysProps = System.getProperties();
 	        S_LOGGER.debug( "Phresco FileServer Value of " + PHRESCO_FILE_SERVER_PORT_NO + " is " + sysProps.getProperty(PHRESCO_FILE_SERVER_PORT_NO) );
@@ -114,7 +116,7 @@ public class Code extends FrameworkBaseAction {
             FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
         	Project project = administrator.getProject(projectCode);
-			String technology = project.getProjectInfo().getTechnology().getId();
+			technology = project.getProjectInfo().getTechnology().getId();
             if (TechnologyTypes.IPHONES.contains(technology)) {
             	StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
             	codeValidatePath.append(projectCode);
@@ -128,7 +130,8 @@ public class Code extends FrameworkBaseAction {
              	if (indexPath.isFile() && StringUtils.isNotEmpty(phrescoFileServerNumber)) {
                 	sb.append(HTTP_PROTOCOL);
                 	sb.append(PROTOCOL_POSTFIX);
-                	sb.append(LOCALHOST);
+                	InetAddress thisIp =InetAddress.getLocalHost();
+                	sb.append(thisIp.getHostAddress());
                 	sb.append(COLON);
                 	sb.append(phrescoFileServerNumber);
                 	sb.append(FORWARD_SLASH);
@@ -198,6 +201,7 @@ public class Code extends FrameworkBaseAction {
 			S_LOGGER.error("Entered into catch block of Code.check()"+ FrameworkUtil.getStackTraceAsString(e));
     	}
         getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+        getHttpRequest().setAttribute(REQ_TECHNOLOGY, technology);
         getHttpRequest().setAttribute(REQ_SONAR_PATH, sb.toString());
         return APP_CODE;
     }
@@ -222,6 +226,7 @@ public class Code extends FrameworkBaseAction {
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
+            	actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
             } else {

@@ -2,9 +2,15 @@
  <Browser>firefox</Browser>
 		
     
-<Server appliesTo="tech-phpdru7" desc="Server configuration" name="Server configuration">
-        <context>Drupal7NoneApplication</context>
-        <deploy_dir>C:\wamp\www</deploy_dir>
+
+
+
+
+
+
+<Server appliesTo="tech-phpdru6" desc="" name="Server">
+        <context>Drupla6666</context>
+        <deploy_dir>c:\wamp\www</deploy_dir>
         <admin_username/>
         <additional_context>/</additional_context>
         <port>80</port>

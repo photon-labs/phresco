@@ -151,7 +151,7 @@ public class PluginUtils {
 				}
 			}
 		} catch (SQLException e) {
-			Utility.closeConnection(con);
+			throw new PhrescoException(e);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
 		} catch (InstantiationException e) {
@@ -324,7 +324,7 @@ public class PluginUtils {
 						TransformerFactory transformerFactory = TransformerFactory.newInstance();
 						Transformer transformer = transformerFactory.newTransformer();
 						DOMSource source = new DOMSource(doc);
-						StreamResult result = new StreamResult(sourceConfigXML);
+						StreamResult result = new StreamResult(sourceConfigXML.toURI().getPath());
 						transformer.transform(source, result);
 					}
 				}

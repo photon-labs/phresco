@@ -2,8 +2,8 @@
 
 /*Author by Phresco_Drupal_QA_Team*/
 
-require_once 'tests/CommonAll.php';
-require_once 'tests/UserAll.php';
+require_once 'tests/CommonSuite.php';
+require_once 'tests/UserSuite.php';
 
 
 class AllTest extends PHPUnit_Framework_TestSuite
@@ -17,8 +17,8 @@ class AllTest extends PHPUnit_Framework_TestSuite
     {
 		$suite = new AllTest();
  		$suite->setName('AllTestsuite');
-		$suite->addTestSuite(CommonAll::suite());
-		$suite->addTestSuite(UserAll::suite());
+		$suite->addTestSuite(CommonSuite::suite());
+		$suite->addTestSuite(UserSuite::suite());
 		return $suite;
 		
     }

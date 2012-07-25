@@ -42,15 +42,14 @@
     <build>
 		<testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
-        <finalName>HelloWorld</finalName>
 		<extensions>
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2.0.7001-SNAPSHOT</version>
+				<version>1.2.0.8001-SNAPSHOT</version>
 			</extension>
 		</extensions>
-		<sourceDirectory>src/main/js</sourceDirectory>	
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
         <plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -92,27 +91,21 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.2.0.7001-SNAPSHOT</version>
+                <version>1.2.0.8001-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
-                <groupId>com.googlecode.t7mp</groupId>
-                <artifactId>maven-t7-plugin</artifactId>
-                <version>0.9.9</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
                 <configuration>
-                    <tomcatHttpPort>${server.port}</tomcatHttpPort>
-                    <tomcatShutdownPort>${server.shutdown.port}</tomcatShutdownPort>
-                    <tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
-                    <tomcatVersion>7.0.6</tomcatVersion>
-                    <tomcatSetAwait>true</tomcatSetAwait>
-                    <webapps>
-                        <webappArtifact>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
-                            <version>${project.version}</version>
-                            <contextPath>${project.build.finalName}</contextPath>
-								</webappArtifact>
-							</webapps>
+                    <port>${server.port}</port>
+                    <username>${server.username}</username>
+                    <password>${server.password}</password>
+                    <url>http://${server.host}:${server.port}/manager/html</url>
+                    <path>/${project.build.finalName}</path>
+                    <argLine>-Xmx512m</argLine>
+					<warFile>${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war</warFile>
                 </configuration>
             </plugin>
             <plugin>
@@ -143,6 +136,19 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.3.0</version>
+				<executions>
+				  <execution>
+					<id>yuicompressor-default</id>
+					<goals>
+					  <goal>compress</goal>
+					</goals>
+				  </execution>
+				</executions>
+		  </plugin>
         </plugins>
     </build>
     

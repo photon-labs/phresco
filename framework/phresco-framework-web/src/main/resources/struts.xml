@@ -233,7 +233,7 @@
             <result type="json" />
         </action>
         
-        <action name="getSQLFiles" method="getSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
+        <action name="fetchSQLFiles" method="fetchSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
             <result type="json" />
         </action>
         
@@ -666,7 +666,20 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+        
+        <action name="deleteReport" method="deleteReport" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="success">/pages/applications/report_popup.jsp</result>
+        </action>
 		<!-- Print pdf operations endss -->
 		
+		<!-- minification starts -->
+		<action name="jsFileBrowse" method="jsFileBrowser" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result name="success">/pages/fileBrowse.jsp</result>
+        </action>
+        
+        <action name="jsToMinify" method="selectJsFilesToMinify" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result type="json" />
+        </action>
+		<!-- minification ends -->
     </package>
 </struts>

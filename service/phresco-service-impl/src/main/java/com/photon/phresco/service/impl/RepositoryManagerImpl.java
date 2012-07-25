@@ -153,8 +153,9 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		versionMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_WIDGET, new String[]{"1.6", "1.5"});
-		versionMap.put(TechnologyTypes.ANDROID_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
-		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});
+		versionMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
+		versionMap.put(TechnologyTypes.ANDROID_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
+		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
 		/*versionMap.put(TechnologyTypes.IPHONE_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
 		versionMap.put(TechnologyTypes.IPHONE_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});*/
 		versionMap.put(TechnologyTypes.WORDPRESS, new String[]{"3.3.1"});
@@ -1083,5 +1084,10 @@ public class RepositoryManagerImpl implements RepositoryManager {
         // TODO Auto-generated method stub
         return config.getServerContextName();
     }
+
+	@Override
+	public String getFrameWorkLatestFile() throws PhrescoException {
+		return config.getFrameWorkLatestFile();
+	}
 
 }

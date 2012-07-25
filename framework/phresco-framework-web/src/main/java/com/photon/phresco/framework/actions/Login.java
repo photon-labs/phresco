@@ -128,7 +128,7 @@ public class Login extends FrameworkBaseAction {
 		String errorTxt = (String) getHttpSession().getAttribute(REQ_LOGIN_ERROR);
 		getHttpSession().removeAttribute(REQ_LOGIN_ERROR);
 		if (StringUtils.isNotEmpty(errorTxt)) {
-			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, errorTxt);
+			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(errorTxt));
 		} else {
 			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(SUCCESS_LOGOUT));
 		}
