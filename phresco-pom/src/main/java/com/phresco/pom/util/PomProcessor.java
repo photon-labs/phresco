@@ -23,6 +23,8 @@ package com.phresco.pom.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -284,7 +286,7 @@ public class PomProcessor {
 		}
 		List<Dependency> list = model.getDependencies().getDependency();
 		for(Dependency dependency : list){
-			if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)){
+			if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)) {
 				model.getDependencies().getDependency().remove(dependency);
 				isFound = true;
 				break;
@@ -296,6 +298,23 @@ public class PomProcessor {
 		return isFound;
 	}
 
+	public Boolean deletePluginDependency(String groupId, String artifactId) throws PhrescoPomException {
+		boolean isFound = false;
+		if(model.getBuild().getPlugins() == null) {
+			return isFound;
+		}
+		Plugins plugins = model.getBuild().getPlugins();
+		List<Plugin> pluginList = plugins.getPlugin();
+		for (Plugin plugin : pluginList) {
+			if (plugin.getGroupId().equals(groupId) && plugin.getArtifactId().equals(artifactId)) {
+				if (plugin.getDependencies() != null) {
+					plugin.setDependencies(null);
+					isFound = true;
+				}
+			}
+		}
+		return isFound;
+	}
 	/**
 	 * Delete all dependencies.
 	 *
@@ -487,16 +506,16 @@ public class PomProcessor {
 	 * @throws ParserConfigurationException the parser configuration exception
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws ParserConfigurationException, PhrescoPomException{
+	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
 		com.phresco.pom.model.Plugin.Dependencies dependencies = plugin.getDependencies();
 		if(dependencies == null){
 			dependencies = new Plugin.Dependencies();
 			plugin.setDependencies(dependencies);
-			plugin.getDependencies().getDependency().add(dependency);
-		} else {
-			return null;
 		}
+		
+		plugin.getDependencies().getDependency().add(dependency);
+		
 		return dependencies;
 	}
 
