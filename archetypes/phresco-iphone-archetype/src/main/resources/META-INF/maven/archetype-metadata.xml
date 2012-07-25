@@ -116,7 +116,7 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/functional</directory> 
+			<directory>test/functional/src</directory> 
 			<includes>
 				<include>AllTests.js</include>
 				<include>HelloWorld.js</include>

@@ -19,9 +19,11 @@
  */
 package com.photon.phresco.plugins;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -120,9 +122,8 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 						+ " -DimportSql=\"Does the deployment needs to import sql(TRUE/FALSE?)\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}
-
+	
 	private void updateFinalName() throws MojoExecutionException {
-
 		try {
 				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
 				String envName = environmentName;
@@ -194,11 +195,12 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		String serverpassword = info.getPropertyInfo(Constants.SERVER_ADMIN_PASSWORD).getValue();
 		String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
 		String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
-		String context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+		context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+		renameWar(context);
 
 		// no remote deployment
 		if (serverusername.isEmpty() && serverpassword.isEmpty()) {
-			renameWar(context);
+		//	renameWar(context);
 			deploy();
 			return;
 		}
@@ -232,8 +234,10 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 	}
 	
 	
-	private void deployToTomcatServer(String serverprotocol, String serverhost, String serverport, String serverusername,
-			String serverpassword) throws MojoExecutionException {
+	private void deployToTomcatServer(String serverprotocol, String serverhost, String serverport,
+			String serverusername, String serverpassword) throws MojoExecutionException {
+		BufferedReader in = null;
+		boolean errorParam = false;
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
@@ -253,18 +257,35 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(serverpassword);
 			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
-			
 			Commandline cl = new Commandline(sb.toString());
+			Process process = cl.execute();
 			cl.setWorkingDirectory(baseDir);
-				Process process = cl.execute();
-				getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
-			} catch (CommandLineException e) {
-				throw new MojoExecutionException(e.getMessage(), e);
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				if (line.startsWith("[ERROR]")) {
+					System.out.println(line); //do not use getLog() here as this line already contains the log type.
+					errorParam = true;
+				}
 			}
+			if (errorParam) {
+				throw new MojoExecutionException("Remote Deploy Failed ");
+			} else {
+				getLog().info(
+						" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/"
+								+ context);
+			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 
-	private void deployToJbossServer(String serverport, String serverprotocol, String  serverhost, String serverusername, String serverpassword)
+	private void deployToJbossServer(String serverport, String serverprotocol, String serverhost, String serverusername, String serverpassword)
 			throws MojoExecutionException {
+		BufferedReader in = null;
+		boolean errorParam = false;
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
@@ -284,15 +305,33 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir);
-				Process process = cl.execute();
-				getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				if (line.startsWith("[ERROR]")) {
+					System.out.println(line); //do not use getLog() here as this line already contains the log type.
+					errorParam = true;
+				}
+			}
+			if (errorParam) {
+				throw new MojoExecutionException("Remote Deploy Failed ");
+			} else {
+				getLog().info(
+						" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/"
+								+ context);
+			}
 			} catch (CommandLineException e) {
+				throw new MojoExecutionException(e.getMessage(), e);
+			} catch (IOException e) {
 				throw new MojoExecutionException(e.getMessage(), e);
 			}
 	}
 
 	private void deployToWeblogicServer(String serverprotocol, String serverhost, String serverport, String serverusername,
 			String serverpassword) throws MojoExecutionException {
+		BufferedReader in = null;
+		boolean errorParam = false;
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
@@ -316,8 +355,24 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir);
 				Process process = cl.execute();
-				getLog().info(" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/" + context);
+				in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				String line = null;
+				while ((line = in.readLine()) != null) {
+					if (line.startsWith("[ERROR]")) {
+						System.out.println(line); //do not use getLog() here as this line already contains the log type.
+						errorParam = true;
+					}
+				}
+				if (errorParam) {
+					throw new MojoExecutionException("Remote Deploy Failed ");
+				} else {
+					getLog().info(
+							" Project is Deploying into " + serverprotocol + "://" + serverhost + ":" + serverport + "/"
+									+ context);
+				}
 			} catch (CommandLineException e) {
+				throw new MojoExecutionException(e.getMessage(), e);
+			} catch (IOException e) {
 				throw new MojoExecutionException(e.getMessage(), e);
 			}
 	}
