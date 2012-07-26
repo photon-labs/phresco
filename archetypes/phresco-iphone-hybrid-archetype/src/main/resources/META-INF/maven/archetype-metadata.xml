@@ -132,10 +132,15 @@
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional</directory> 
+			<includes>				
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src</directory> 
 			<includes>
 				<include>AllTests.js</include>
-                <include>HelloWorld.js</include>
-				<include>pom.xml</include>
+                <include>HelloWorld.js</include>				
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

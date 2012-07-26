@@ -1,3 +1,9 @@
+<%@ page import="java.io.InputStream" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.Properties" %>			
+<%@ page import="com.photon.phresco.configuration.ConfigReader" %>
+<%@ page import="com.photon.phresco.configuration.Configuration" %>
 <!doctype html>
 <html lang="en">
     <div class="helloworld-widget"></div>
