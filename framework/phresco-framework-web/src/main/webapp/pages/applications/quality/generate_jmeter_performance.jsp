@@ -333,7 +333,8 @@
 		%>
 		
 		$('#environments').change(function() {
-			getConfigNames();
+// 			getConfigNames();
+			loadGetCaption();
 		});
 		
 		$('input:radio[name=jmeterTestAgainst]').change(function() {
