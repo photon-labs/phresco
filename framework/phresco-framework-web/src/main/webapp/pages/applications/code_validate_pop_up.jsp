@@ -141,7 +141,7 @@
 		
 		$('input[name="validateAgainst"]').click(function() {
 			var selectedVal = $(this).val();
-			if (selectedVal == "functionalTest") {
+			if (selectedVal == "functional") {
 				$('#techDiv, #skipTestUl').hide();
 			} else if (selectedVal == "source") {
 				$('#techDiv, #skipTestUl').show();
