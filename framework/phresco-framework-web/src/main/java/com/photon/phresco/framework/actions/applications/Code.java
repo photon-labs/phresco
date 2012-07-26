@@ -60,7 +60,7 @@ public class Code extends FrameworkBaseAction {
     private String report = null;
     private String validateAgainst = null;
 	private String target = null;
-	private static String FUNCTIONALTEST = "functionalTest";
+	private static String FUNCTIONALTEST = "functional";
 
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
@@ -161,7 +161,11 @@ public class Code extends FrameworkBaseAction {
 	    	    }
 	        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
 	        	builder.append(projectCode);
-	        	builder.append(File.separatorChar);
+                if (StringUtils.isNotEmpty(report) && FUNCTIONALTEST.equals(report)) {
+                    FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+                    builder.append(frameworkUtil.getFuncitonalTestDir(project.getProjectInfo().getTechnology().getId()));
+                }
+                builder.append(File.separatorChar);
 	        	builder.append(POM_XML);
 	        	File pomPath = new File(builder.toString());
 	        	PomProcessor processor = new PomProcessor(pomPath);

@@ -78,6 +78,7 @@ public class ServerConfiguration {
 	private static final String EMAIL_EXT_FILE = "phresco.ci.emailext.file";
 	private static final String PHRESCO_SERVER_CONTEXT_NAME = "phresco.server.context.name";
 	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
+	private static final String PHRESCO_FRAMEWORK_LATEST_URL = "phresco.framework.latest.version.file";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -258,5 +259,9 @@ public class ServerConfiguration {
 
 	public String getEmailExtFile() {
 		return dependencyConfig.getProperty(EMAIL_EXT_FILE);
+	}
+
+	public String getFrameWorkLatestFile() {
+		return dependencyConfig.getProperty(PHRESCO_FRAMEWORK_LATEST_URL);
 	}
 }

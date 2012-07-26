@@ -4843,3 +4843,42 @@ a[id='androidSigning']:hover {
 	float: right;
 	width: auto;
 }
+
+/*minification*/
+.jsmin-span {
+	color:#000;
+	vertical-align: top;
+	padding-left: 6px;
+}
+
+#jsErrMsg {
+	padding-left:12px;
+	padding-top:15px;	
+}
+
+.minifyDiv {
+	width:102%; 
+	max-height: 140px;
+}
+
+.minify_popup{
+	border:1px solid white;
+}
+
+.minifyLbl{
+	width:100px;
+}
+
+.chooseJS {
+	float:left;
+	margin-left:-30px;
+}
+
+.compNameLbl{
+	padding-right:6px;
+}
+
+.minifyAddIcon {
+	float: left; 
+	margin-left:4px;
+}	

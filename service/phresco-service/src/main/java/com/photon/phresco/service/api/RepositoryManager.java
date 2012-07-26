@@ -154,5 +154,7 @@ import com.photon.phresco.service.model.EntityType;
 
 	 String getServiceContextName() throws PhrescoException;
 
+	String getFrameWorkLatestFile() throws PhrescoException;
+
 
 }

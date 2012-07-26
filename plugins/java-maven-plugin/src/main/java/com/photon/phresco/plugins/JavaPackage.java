@@ -272,6 +272,9 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 					process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
+				if (line.startsWith("[ERROR]")) {
+					System.out.println(line); //do not use getLog() here as this line already contains the log type.
+				}
 			}
 		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -313,7 +316,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			Project currentProject = projectAdministrator.getProjectByWorkspace(baseDir);
 			String techId = currentProject.getProjectInfo().getTechnology().getId();
 			if (techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET) 
-					|| techId.equals(TechnologyTypes.HTML5_WIDGET)) {
+					|| techId.equals(TechnologyTypes.HTML5_WIDGET)|| techId.equals(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET)||techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
 				sourceConfigXML = new File(baseDir + modulePath + "/src/main/webapp/WEB-INF/resources/phresco-env-config.xml");
 			} else {
 				sourceConfigXML = new File(baseDir + modulePath + JAVA_WEBAPP_CONFIG_FILE);

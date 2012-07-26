@@ -1085,4 +1085,9 @@ public class RepositoryManagerImpl implements RepositoryManager {
         return config.getServerContextName();
     }
 
+	@Override
+	public String getFrameWorkLatestFile() throws PhrescoException {
+		return config.getFrameWorkLatestFile();
+	}
+
 }
