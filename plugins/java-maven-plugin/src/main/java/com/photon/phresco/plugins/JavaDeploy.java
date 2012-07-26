@@ -219,9 +219,16 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		String version = info.getPropertyInfo(Constants.SERVER_VERSION).getValue();
 		String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
 		context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
+		String remotedeploy = info.getPropertyInfo(Constants.SERVER_REMOTE_DEPLOYMENT).getValue();
 		
 		String containerId = "";
 		renameWar(context);
+		
+		// local deployment
+		if (remotedeploy.equals("false")) {
+			deployLocal();
+			return;
+		}
 
 		// remote deployment
 		if (servertype.contains(TYPE_TOMCAT)) {
@@ -416,6 +423,27 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			} catch (IOException e) {
 				throw new MojoExecutionException(e.getMessage(), e);
 			}
+	}
+	
+	private void deployLocal() throws MojoExecutionException {
+		String deployLocation = "";
+		try {
+			List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_SERVER);
+			for (SettingsInfo serverDetails : settingsInfos) {
+				deployLocation = serverDetails.getPropertyInfo(Constants.SERVER_DEPLOY_DIR).getValue();
+				break;
+			}		
+			File deployDir = new File(deployLocation);
+			if (!deployDir.exists()) {
+				throw new MojoExecutionException(" Deploy Directory" + deployLocation + " Does Not Exists ");
+			}
+			getLog().info("Project is deploying into " + deployLocation);
+			FileUtils.copyDirectoryStructure(tempDir.getAbsoluteFile(), deployDir);
+			getLog().info("Project is deployed successfully");
+		} catch (Exception e) {
+			getLog().error(e);
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 	}
 
 	private File getProjectRoot(File childDir) {
