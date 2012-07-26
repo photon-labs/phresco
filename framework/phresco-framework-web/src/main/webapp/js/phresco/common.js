@@ -154,7 +154,7 @@
     	var param = "";
     	if (!isBlank($('form').serialize())) {
     		param = "&";
-    	}
+    	}				
     	if(params != undefined && !isBlank(params)) {
     		param = param + params;
     	}
@@ -203,6 +203,7 @@
     // loads the loading gif icon based on theme
     function getCurrentCSS() {
         var theme =localStorage["color"];
+        $(".popupLoadingIcon").css("display", "block");
         if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
