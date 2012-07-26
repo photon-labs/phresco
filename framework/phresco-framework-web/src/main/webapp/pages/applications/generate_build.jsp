@@ -396,7 +396,7 @@
 <!-- minifier setting starts -->
 		<% if (from.equals("generateBuild") && (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
 				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology))) { %>
-		<div class="theme_accordion_container clearfix" style="float: none;">
+		<!--<div class="theme_accordion_container clearfix" style="float: none;">
 		    <section class="accordion_panel_wid">
 		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
 		            <section class="lft_menus_container adv-settings-width">
@@ -427,7 +427,7 @@
 		            </section>  
 		        </div>
 		    </section>
-		</div>
+		</div> -->
 		<% } %>
 	</div>
 	
