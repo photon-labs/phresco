@@ -36,7 +36,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>nodejs-maven-plugin</artifactId>
-				<version>1.2.0.8002-SNAPSHOT</version>
+				<version>1.2.0.8003-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 
