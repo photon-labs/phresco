@@ -1172,7 +1172,7 @@ public class Build extends FrameworkBaseAction {
 			String logFolderPath = getLogFolderPath();
 			File logfolder = new File(logFolderPath);
 			if (!logfolder.exists()) {
-				logfolder.mkdir();
+				logfolder.mkdirs();
 			}
 			fstream = new FileWriter(getLogFilePath());
 			out = new BufferedWriter(fstream);
