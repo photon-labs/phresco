@@ -121,6 +121,7 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
+			unPackCabLib();
 			replaceValue();
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
@@ -134,6 +135,26 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+	
+	private void unPackCabLib() throws MojoExecutionException  {
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MVN_CMD);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_CLEAN);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_VALDATE);
+			Commandline cl = new Commandline(sb.toString());
+			cl.setWorkingDirectory(baseDir);
+			Process process = cl.execute();
+			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+			}
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
 		}
 	}
 

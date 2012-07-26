@@ -53,8 +53,7 @@
 			<directory>src/main/resources</directory> 
 			<includes>
 				<include>environment.jsp</include>
-				<include>index.html</include>
-				<include>phresco-env-config.xml</include>
+				<include>index.jsp</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -73,6 +72,12 @@
 			<directory>src/main/webapp/WEB-INF</directory> 
 			<includes>
 				<include>web.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/webapp/WEB-INF/resources</directory> 
+			<includes>
+				<include>phresco-env-config.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -189,11 +194,7 @@
 		<fileSet filtered="false" encoding="UTF-8"> 
 			<directory>test/performance/database/tests</directory> 
 			<includes> 
-				<include>categories.csv</include> 
-				<include>PhrescoFrameWork_TestPlan.jmx</include> 
-				<include>products.csv</include> 
-				<include>reviews.csv</include> 
-				<include>users.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include> 				
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

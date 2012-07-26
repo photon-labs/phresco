@@ -211,10 +211,11 @@ public class WordpressDeploy extends AbstractMojo implements PluginConstants {
 				break;
 			}
 		File deployDir = new File(deployLocation);
-		FileUtils.mkdir(deployDir.getPath().trim());
-			getLog().info("Project is deploying.........");
-			FileUtils
-					.copyDirectoryStructure(tempDir.getParentFile(), deployDir);
+		if (!deployDir.exists()) {
+				throw new MojoExecutionException(" Deploy Directory" + deployLocation + " Does Not Exists ");
+			}
+			getLog().info("Project is deploying into " + deployLocation);
+			FileUtils.copyDirectoryStructure(tempDir.getParentFile(), deployDir);
 			getLog().info("Project is deployed successfully");
 		} catch (Exception e) {
 			getLog().error(e);

@@ -127,7 +127,7 @@
 		        <% 
 		        	if (key.equals(FrameworkConstants.ADMIN_FIELD_PASSWORD) || key.equals(FrameworkConstants.PASSWORD)) {
 		        %>
-						<input class="xlarge" id="<%= label %>" name="<%= key %>" type="password"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
+						<input class="xlarge" id="<%= label %>" name="<%= key %>" type="password"  value ="<%= value %>" placeholder="<%= desc %>"/>
 		        <%  
 		        	} else if ((key.equals("Server") || key.equals("Database")) && possibleValues == null) {
 		        		masterKey = key;
@@ -138,7 +138,7 @@
 		        			key = compPropertyTemplate.getKey();
 		        		}
 		        %>
-	        			<select id="type" name="type" class="selectEqualWidth  server_db_Width" onfocus="showDesc(this);">
+	        			<select id="type" name="type" class="selectEqualWidth  server_db_Width">
 	                	
 	                	</select>
 	        			    
@@ -160,9 +160,9 @@
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
-		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text"  value ="<%= value %>" onfocus="showDesc(this);" placeholder="<%= desc %>"/>
+		        		<input class="xlarge" id="<%= label %>" name="<%= key %>" type="text"  value ="<%= value %>" placeholder="<%= desc %>"/>
 		        <% 	} else { %>
-	        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth" onfocus="showDesc(this);">
+	        			<select id="<%= label %>" name="<%= key %>" class="selectEqualWidth">
 	        				<option disabled="disabled" selected="selected" value="" style="color: #BFBFBF;"><%= desc %></option>
 	        				<% 
 	        					String selectedStr = "";
@@ -197,35 +197,21 @@
 %>
 
 <script type="text/javascript">
-	hideAllDesc();
-	function showDesc(obj){
-		hideAllDesc();
-		var id = obj.id;
-		id = id.replace(/\s/g, "");
-		$("."+id).show();
-		setTimeout(function(){
-            $("."+id).fadeOut("slow", function () {
-            });
-             
-        }, 2000);
-	}
-
 	$(document).ready(function() {
 		enableScreen();
 		
 		/** To display projectInfo servers starts **/
 		<%
-		     String serverName = null; 
+			String serverName = null; 
 			if (CollectionUtils.isNotEmpty(projectInfoServers) && projectInfoServers != null) {
 		%>
 				$('#type').find('option').remove();
 				<%
 					for(Server projectInfoServer : projectInfoServers) {
 						 serverName = projectInfoServer.getName();
-						%>
+				%>
 						
 						  $('#type').append($("<option></option>").attr("value", '<%= serverName %>').text('<%= serverName %>'));
-							
 		<%
              }
 		%>
@@ -239,25 +225,24 @@
 			     }
 				
 				$("#type").change(function() {
-				 var server = $('#type').val();
-				 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
-					 $('#remoteDeployment').show();	 
-			     } else {
-			    	  hideRemoteDeply(); 
-			     }
-				 remoteDeplyChecked();
-				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
-					 $("input[name='remoteDeployment']").attr("checked",false);
-					 $("#admin_username label").html('Admin Username');
-					 $("#admin_password label").html('Admin Password'); 
-				 }  
-				// based on technology hide remote deployment
-				 technologyBasedRemoteDeploy();
-			});   
+					 var server = $('#type').val();
+					 if( server.trim() == "Apache Tomcat" || server.trim() == "JBoss" || server.trim() == "WebLogic"){
+						 $('#remoteDeployment').show();	 
+				     } else {
+				    	  hideRemoteDeply(); 
+				     }
+					 remoteDeplyChecked();
+					 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
+						 $("input[name='remoteDeployment']").attr("checked",false);
+						 $("#admin_username label").html('Admin Username');
+						 $("#admin_password label").html('Admin Password'); 
+					 }
+					 // based on technology hide remote deployment
+					 technologyBasedRemoteDeploy();
+			});
 		<%
 			}
 		%>
-		
 		/** To display projectInfo servers ends **/
 		
 		/** To display projectInfo databases starts **/
@@ -288,20 +273,18 @@
 		}
 		
 		// hide deploy dir if remote Deployment selected
-		 
-         $("input[name='remoteDeployment']").change(function() {
-				var isChecked = $("input[name='remoteDeployment']").is(":checked");
-				if (isChecked) {
-					hideDeployDir();
-					$("#admin_username label").html('<span class="red">* </span>Admin Username');
-					$("#admin_password label").html('<span class="red">* </span>Admin Password');  
-			    }  else {
-			    	$("#admin_username label").html('Admin Username');
-					$("#admin_password label").html('Admin Password');  
-			    	$('#deploy_dir').show();
-			     } 
-			});
-        
+		$("input[name='remoteDeployment']").change(function() {
+			var isChecked = $("input[name='remoteDeployment']").is(":checked");
+			if (isChecked) {
+				hideDeployDir();
+				$("#admin_username label").html('<span class="red">* </span>Admin Username');
+				$("#admin_password label").html('<span class="red">* </span>Admin Password');  
+			} else {
+			    $("#admin_username label").html('Admin Username');
+				$("#admin_password label").html('Admin Password');  
+			    $('#deploy_dir').show();
+			} 
+		});
 		 
 		/** to display corressponding versions **/
 		$("#type").change(function() {
@@ -317,27 +300,34 @@
 		$("input[name='name']").prop({"maxLength":"20", "title":"20 Characters only"});
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
 		$("input[name='port']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
+		$("input[name='sapSvcPort']").prop({"maxLength":"5", "title":"Port number must be between 1 and 65535"});
 		
-        $('#Port').bind('input propertychange', function (e) { 	//Port validation
+		$("input[name='port']").live('input propertychange', function (e) { 	//Port validation
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
-         });
+		});
         
-        $("#xlInput").bind('input propertychange',function(e){ 	//Name validation
+        $("#xlInput").live('input propertychange',function(e){ 	//Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	$(this).val(name);
         });
         
-        $("input[name='dbname']").bind('input propertychange',function(e){ 
+        $("input[name='dbname']").live('input propertychange',function(e){ //Database Name validation
         	var name = $(this).val();
         	name = checkForSplChr(name);
         	name = removeSpace(name);
         	$(this).val(name);
         });
         
-        $("input[name='context']").bind('input propertychange',function(e){	//Root Context validation
+        $("input[name='sapSvcPort']").live('input propertychange', function (e) { //sapSvcPort validation
+        	var portNo = $(this).val();
+        	portNo = checkForNumber(portNo);
+        	$(this).val(portNo);
+         });
+        
+        $("input[name='context']").live('input propertychange',function(e){	//Root Context validation
         	var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
@@ -355,9 +345,9 @@
 			}
 			if( '<%= selectedValue %>' == "Apache Tomcat" || '<%= selectedValue %>' == "JBoss" || '<%= selectedValue %>' == "WebLogic"){
 				 $('#remoteDeployment').show(); 
-		     } else {
-		    	  hideRemoteDeply(); 
-		     }
+		    } else {
+		    	 hideRemoteDeply(); 
+		    }
 			remoteDeplyChecked();
 		});
 	}
@@ -391,6 +381,7 @@
 			$('#deploy_dir').show();
 		}
 	}
+
 	function technologyBasedRemoteDeploy() {
 		<% 
 			if (TechnologyTypes.ANDROIDS.contains(techId)) {

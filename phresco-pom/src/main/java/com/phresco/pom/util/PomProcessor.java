@@ -33,15 +33,13 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phresco.pom.exception.PhrescoPomException;
-import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.Build;
-import com.phresco.pom.model.BuildBase;
-import com.phresco.pom.model.PluginManagement;
 import com.phresco.pom.model.Build.Plugins;
 import com.phresco.pom.model.BuildBase;
 import com.phresco.pom.model.Dependency;
@@ -297,6 +295,24 @@ public class PomProcessor {
 		}
 		return isFound;
 	}
+	
+	public Boolean deletePluginDependency(String groupId, String artifactId) throws PhrescoPomException {
+		boolean isFound = false;
+		if(model.getBuild().getPlugins() == null) {
+			return isFound;
+		}
+		Plugins plugins = model.getBuild().getPlugins();
+		List<Plugin> pluginList = plugins.getPlugin();
+		for (Plugin plugin : pluginList) {
+			if (plugin.getGroupId().equals(groupId) && plugin.getArtifactId().equals(artifactId)) {
+				if (plugin.getDependencies() != null) {
+					plugin.setDependencies(null);
+					isFound = true;
+				}
+			}
+		}
+		return isFound;
+	}
 
 	/**
 	 * Delete all dependencies.
@@ -489,16 +505,15 @@ public class PomProcessor {
 	 * @throws ParserConfigurationException the parser configuration exception
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws ParserConfigurationException, PhrescoPomException{
+	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws PhrescoPomException{
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
 		com.phresco.pom.model.Plugin.Dependencies dependencies = plugin.getDependencies();
 		if(dependencies == null){
 			dependencies = new Plugin.Dependencies();
 			plugin.setDependencies(dependencies);
-			plugin.getDependencies().getDependency().add(dependency);
-		} else {
-			return null;
 		}
+		plugin.getDependencies().getDependency().add(dependency);
+		
 		return dependencies;
 	}
 

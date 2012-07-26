@@ -68,6 +68,7 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
 	    pluginMap.put(TechnologyTypes.JAVA_WEBSERVICE, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
+	    pluginMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, Constants.MVN_PLUGIN_NODEJS_ID);
 	    pluginMap.put(TechnologyTypes.HTML5, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
@@ -266,10 +267,11 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         	builder.append("-DskipTests=false");
         	builder.append(Constants.SPACE);
         }
-        
-       if (StringUtils.isNotEmpty(actionType.getProfileId())) {
+
+        if (StringUtils.isNotEmpty(actionType.getProfileId())) {
             builder.append("-P");
             builder.append(actionType.getProfileId());
+            builder.append(Constants.SPACE);
         }
         
         if (paramsMap == null || paramsMap.isEmpty()) {

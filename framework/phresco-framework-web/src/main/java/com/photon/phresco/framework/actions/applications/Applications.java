@@ -806,16 +806,20 @@ public class Applications extends FrameworkBaseAction {
 
 	public String showSettings() {
 		S_LOGGER.debug("entered Applications.showSettings()");
-
+		
 		try {
 			if (showSettings != null && Boolean.valueOf(showSettings)) {
-				settingsEnv = getEnvironmentNames();
-			}
+				if (CollectionUtils.isNotEmpty(getEnvironmentNames())) {
+					settingsEnv = getEnvironmentNames();
+				} else {
+					envError = getText(NO_SETTINGS_ENV);
+				}
+			} 
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Applications.showSettings()"
-					+ FrameworkUtil.getStackTraceAsString(e));
+						+ FrameworkUtil.getStackTraceAsString(e));
 		}
-
+		
 		return SUCCESS;
 	}
 

@@ -21,23 +21,22 @@ package com.photon.phresco.Screens;
 
 import java.io.IOException;
 
-
-import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import com.photon.phresco.uiconstants.UIConstants;
 
 
 
 
 public class WelcomeScreen extends PhotonAbstractScreen {
-	private PhrescoUiConstants phrsc;
+	private UIConstants phrsc;
     public WelcomeScreen(String host, int port, String browser, String url, String speed,String context ) throws InterruptedException,IOException, Exception {
     	super(host, port, browser, url, speed, context);
     	
     	
     
     }
-public MenuScreen menuScreen() throws Exception {
+public MenuScreen menuScreen(UIConstants uiconst) throws Exception {
     
-	return new MenuScreen();
+	return new MenuScreen(uiconst);
 }
 
 }

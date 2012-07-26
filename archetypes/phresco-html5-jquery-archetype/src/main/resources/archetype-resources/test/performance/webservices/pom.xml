@@ -23,7 +23,7 @@
 	<groupId>Photon</groupId>
 	<artifactId>Phresco</artifactId>
 	<packaging>pom</packaging>
-	<name>Performance testing for HTML5-Multichannel Widget-Webservices</name>
+	<name>Performance testing for JQuery Widget-Webservices</name>
 	<version>1.0</version>
 	
 	<build>

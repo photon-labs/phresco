@@ -22,6 +22,7 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Code extends FrameworkBaseAction {
     private String report = null;
     private String validateAgainst = null;
 	private String target = null;
-	private static String FUNCTIONALTEST = "functionalTest";
+	private static String FUNCTIONALTEST = "functional";
 
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
@@ -129,7 +130,8 @@ public class Code extends FrameworkBaseAction {
              	if (indexPath.isFile() && StringUtils.isNotEmpty(phrescoFileServerNumber)) {
                 	sb.append(HTTP_PROTOCOL);
                 	sb.append(PROTOCOL_POSTFIX);
-                	sb.append(LOCALHOST);
+                	InetAddress thisIp =InetAddress.getLocalHost();
+                	sb.append(thisIp.getHostAddress());
                 	sb.append(COLON);
                 	sb.append(phrescoFileServerNumber);
                 	sb.append(FORWARD_SLASH);
@@ -159,7 +161,11 @@ public class Code extends FrameworkBaseAction {
 	    	    }
 	        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
 	        	builder.append(projectCode);
-	        	builder.append(File.separatorChar);
+                if (StringUtils.isNotEmpty(report) && FUNCTIONALTEST.equals(report)) {
+                    FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+                    builder.append(frameworkUtil.getFuncitonalTestDir(project.getProjectInfo().getTechnology().getId()));
+                }
+                builder.append(File.separatorChar);
 	        	builder.append(POM_XML);
 	        	File pomPath = new File(builder.toString());
 	        	PomProcessor processor = new PomProcessor(pomPath);
@@ -224,7 +230,7 @@ public class Code extends FrameworkBaseAction {
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
-				actionType.setProfileId(null);
+            	actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
             } else {

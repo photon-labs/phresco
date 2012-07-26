@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ###
+  Archetype - phresco-windows8-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+
+<archetype-descriptor name="windows8">
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source</directory> 
+			<includes>
+				<include>HelloWorld.sln</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld</directory> 
+			<includes>
+			    <include>App.xaml</include>
+				<include>App.xaml.cs</include>
+				<include>HelloWorld.csproj</include>
+				<include>HelloWorld.csproj.user</include>
+				<include>HelloWorld_TemporaryKey.pfx</include>
+				<include>MainPage.xaml</include>
+				<include>MainPage.xaml.cs</include>
+				<include>Package.appxmanifest</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Assets</directory> 
+			<includes>
+				<include>Logo.png</include>
+				<include>SmallLogo.png</include>
+				<include>SplashScreen.png</include>
+				<include>StoreLogo.png</include>				
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Common</directory> 
+			<includes>
+				<include>StandardStyles.xaml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>		
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit</directory> 
+			<includes>
+   				<include>HelloWorld_UnitTest.sln</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/HelloWorld_UnitTest</directory> 
+			<includes>
+				<include>HelloWorld_UnitTest.csproj</include>
+				<include>HelloWorld_UnitTest.csproj.user</include>
+				<include>UnitTest1.cs</include>
+				<include>HelloWorld_UnitTest_TemporaryKey.pfx</include>
+				<include>Package.appxmanifest</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/HelloWorld_UnitTest/Images</directory> 
+			<includes>
+				<include>UnitTestLogo.png</include>
+				<include>UnitTestSmallLogo.png</include>
+				<include>UnitTestSplashScreen.png</include>
+				<include>UnitTestStoreLogo.png</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/unit/HelloWorld_UnitTest/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>
