@@ -301,6 +301,8 @@
 	var autoCompleteFileNames = new Array();
 	var counter = 2;
 	$(document).ready(function() {
+		$("input[name='context']").die('input propertychange');
+		
 		loadGetCaption();
 		loadTestFiles();
 		
