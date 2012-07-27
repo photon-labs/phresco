@@ -280,20 +280,20 @@
         </profile>
 		
 		<profile>   
-			<id>js</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			 </activation>
+			<id>js</id>			
 			<properties>
 				<sonar.branch>js</sonar.branch>
 				<sonar.language>js</sonar.language>
-				<phresco.source.directory>src/main/java</phresco.source.directory>
+				<phresco.source.directory>src/main/js</phresco.source.directory>
 				<sonar.exclusions>**/lib/**</sonar.exclusions>
 			 </properties> 
 		</profile>
 		
 		<profile>   
 			<id>java</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			 </activation>
 			<properties>
 				<sonar.branch>java</sonar.branch>
 				<sonar.language>java</sonar.language>
