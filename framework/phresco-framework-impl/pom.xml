@@ -4,7 +4,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.0.8003-SNAPSHOT</version>
+        <version>1.2.0.8004-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
