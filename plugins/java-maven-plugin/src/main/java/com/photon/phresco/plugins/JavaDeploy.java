@@ -308,7 +308,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		String[] list = tempDir.list(new JDWarFileNameFilter());
 		if (list.length > 0) {
 			warFileName = list[0];
-			if (!warFileName.contains(contextName)) {
+			if (!warFileName.equals(contextName)) {
 				File oldWar = new File(tempDir.getPath() + "/" + warFileName);
 				File newWar = new File(tempDir.getPath() + "/" + contextName);
 				oldWar.renameTo(newWar);
