@@ -567,6 +567,18 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
 		List<Reports> reportList = builder.get(genericType);
 		return reportList;
 	}
+
+	@Override
+	public InputStream getLatestVersionPom()
+			throws PhrescoException {
+		Client client = ClientHelper.createClient();
+		FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+		WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_UPDATE);
+		resource.accept(MediaType.APPLICATION_XML);
+		ClientResponse response = resource.type(MediaType.APPLICATION_XML).get(ClientResponse.class);
+		InputStream is = response.getEntityInputStream();
+        return is;
+	}
 }
 
 class ServiceManagerCache {
