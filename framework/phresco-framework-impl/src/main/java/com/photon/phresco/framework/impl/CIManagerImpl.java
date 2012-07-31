@@ -30,9 +30,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,7 +76,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     private static final Logger S_LOGGER = Logger.getLogger(CIManagerImpl.class);
 	private static Boolean debugEnabled = S_LOGGER.isDebugEnabled();
     private static final String JENKINS_URL = "http://localhost:3579/ci";
-    
+	
     private CLI cli = null;
 
     @Override
@@ -100,8 +102,9 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             List<String> argList = new ArrayList<String>();
             argList.add(jobType);
             argList.add(job.getName());
-            String configPath = PhrescoFrameworkFactory.getServiceManager().getCiConfigPath();
+            String configPath = PhrescoFrameworkFactory.getServiceManager().getCiConfigPath(job.getRepoType());
             ConfigProcessor processor = new ConfigProcessor(new URL(configPath));
+            
             customizeNodes(processor, job);
             
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -114,7 +117,10 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             	message = new String(byteArray);
             }
             S_LOGGER.debug("message " + message);
-            setSvnCredential(job);
+            //when svn is selected credential value has to set
+            if(SVN.equals(job.getRepoType())) {
+            	setSvnCredential(job);
+            }
             
             setMailCredential(job);
             return new CIJobStatus(result, message);
@@ -212,11 +218,11 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
 		}
     }
     
-    private void streamToFile(File dest, InputStream ip) {
+    public void streamToFile(File dest, InputStream ip) {
 		OutputStream out;
 		try {
 			out = new FileOutputStream(dest);
-			byte buf[] = new byte[1024];
+			byte buf[] = new byte[5024];
 			int len;
 			while ((len = ip.read(buf)) > 0) {
 				out.write(buf, 0, len);
@@ -275,18 +281,23 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     }
     
     private JsonArray getBuildsArray(CIJob job) throws PhrescoException {
-    	String jenkinsUrl = "http://" + job.getJenkinsUrl() + ":" + job.getJenkinsPort() + "/ci/";
-    	String buildsJsonUrl = jenkinsUrl + "job/" + job.getName() + "/api/json";
-        String jsonResponse = getJsonResponse(buildsJsonUrl);
-        
-        JsonParser parser = new JsonParser();
-        JsonElement jsonElement = parser.parse(jsonResponse);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        JsonElement element = jsonObject.get(FrameworkConstants.CI_JOB_JSON_BUILDS);
-        
-        JsonArray jsonArray = element.getAsJsonArray();
-        
-        return jsonArray;
+    	try {
+        	String jenkinsUrl = "http://" + job.getJenkinsUrl() + ":" + job.getJenkinsPort() + "/ci/";
+        	String jobNameUtf8 = job.getName().replace(" ", "%20");
+        	String buildsJsonUrl = jenkinsUrl + "job/" + jobNameUtf8 + "/api/json";
+            String jsonResponse = getJsonResponse(buildsJsonUrl);
+            
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(jsonResponse);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement element = jsonObject.get(FrameworkConstants.CI_JOB_JSON_BUILDS);
+            
+            JsonArray jsonArray = element.getAsJsonArray();
+            
+            return jsonArray;
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
     }
     
     @Override
@@ -358,10 +369,10 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     private String getJsonResponse(String jsonUrl) throws PhrescoException {
 		S_LOGGER.debug("Entering Method CIManagerImpl.getJsonResponse(String jsonUrl)");
 		S_LOGGER.debug("getJsonResponse() JSonUrl = "+jsonUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet(jsonUrl);
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        try {
+		try {
+	        HttpClient httpClient = new DefaultHttpClient();
+	        HttpGet httpget = new HttpGet(jsonUrl);
+	        ResponseHandler<String> responseHandler = new BasicResponseHandler();
             return httpClient.execute(httpget, responseHandler);
         } catch (IOException e) {
             throw new PhrescoException(e);
@@ -383,9 +394,15 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         }
     }
     
-    private void customizeNodes(ConfigProcessor processor, CIJob job) throws JDOMException {
+    public void customizeNodes(ConfigProcessor processor, CIJob job) throws JDOMException {
+    	
         //SVN url customization
-        processor.changeNodeValue("scm/locations//remote", job.getSvnUrl());
+    	if (SVN.equals(job.getRepoType())) {
+    		processor.changeNodeValue("scm/locations//remote", job.getSvnUrl());
+    	} else {
+    		processor.changeNodeValue("scm/userRemoteConfigs//url", job.getSvnUrl());
+    		processor.changeNodeValue("scm/branches//name", job.getBranch());
+    	}
         
         //Schedule expression customization
         processor.changeNodeValue("triggers//spec", job.getScheduleExpression());
@@ -402,10 +419,10 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         Map<String, String> email = job.getEmail();
         
         //Failure Reception list
-        processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.FailureTrigger//email//recipientList", (String)email.get("successEmails"));
+        processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.FailureTrigger//email//recipientList", (String)email.get("failureEmails"));
         
         //Success Reception list
-        processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.SuccessTrigger//email//recipientList", (String)email.get("failureEmails"));
+        processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.SuccessTrigger//email//recipientList", (String)email.get("successEmails"));
     }
     
     private void validate() throws IOException, InterruptedException {

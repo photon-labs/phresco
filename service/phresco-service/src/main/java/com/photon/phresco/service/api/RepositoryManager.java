@@ -129,7 +129,7 @@ import com.photon.phresco.service.model.EntityType;
 
 	 String getServerVersion() throws PhrescoException;
 
-	 String getCiConfigPath() throws PhrescoException;
+	 String getCiConfigPath(String repoType) throws PhrescoException;
 
 	 String getCiSvnPath() throws PhrescoException;
 	

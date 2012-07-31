@@ -24,6 +24,7 @@ import java.io.InputStream;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -33,13 +34,15 @@ import com.photon.phresco.service.api.RepositoryManager;
 @Path("/repo")
 public class RepositoryService {
 
+	private static final String REPO_TYPE = "repoType";
+	
 	@GET
 	@Path("/ci/config")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getCiConfigPath() throws PhrescoException {
+	public String getCiConfigPath(@QueryParam(REPO_TYPE) String svnType) throws PhrescoException {
 		PhrescoServerFactory.initialize();
 		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
-		return repoMgr.getRepositoryURL() + repoMgr.getCiConfigPath();
+		return repoMgr.getRepositoryURL() + repoMgr.getCiConfigPath(svnType);
 	}
 
 	@GET
