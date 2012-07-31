@@ -1654,7 +1654,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 if(existJob != null) {
 				 S_LOGGER.debug("Existing job found " + existJob.getName());
 				 boolean deleteExistJob = deleteCI(project);
-				 System.out.println("Deleting existing jobs!!!!" + deleteExistJob);
 				 Gson gson = new Gson();
 				 List<CIJob> existingJobs = new ArrayList<CIJob>();
 				 existingJobs.addAll(Arrays.asList(existJob));
