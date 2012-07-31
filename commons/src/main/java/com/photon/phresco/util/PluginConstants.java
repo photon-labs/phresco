@@ -72,7 +72,7 @@ public interface PluginConstants {
      String SKIP_TESTS					= "-DskipTests=true";
      String JAVA_TEST_CONFIG_FILE 		= "/test/functional/src/main/resources/" + CONFIG_FILE;
 	 String JAVA_CONFIG_FILE 			= "/src/main/resources/" + CONFIG_FILE;
-	 String JAVA_WEBAPP_CONFIG_FILE 	= "/src/main/webapp/resources/" + CONFIG_FILE;
+	 String JAVA_WEBAPP_CONFIG_FILE 	= "/src/main/webapp/WEB-INF/resources/" + CONFIG_FILE;
 	 String JAVA_SERVER_CONFIG_FILE		= "/serverconfig.properties";
 	 String JAVA_CMD					= "java";
 	 String JAR_PATH					= "/lib/driver/";
