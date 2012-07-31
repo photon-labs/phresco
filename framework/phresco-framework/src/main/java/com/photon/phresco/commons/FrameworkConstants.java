@@ -81,6 +81,15 @@ public interface FrameworkConstants {
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
+    String CLASS = "class";
+    String SCM = "scm";
+    String SVN = "svn";
+    String GIT = "git";
+    String REPO_TYPE = "repoType";
+    String SVN_TYPE = "svnType";
+    String GITHUB_SCM = "hudson.plugins.git.GitSCM";
+    String SVN_SCM = "hudson.scm.SubversionSCM";
+    String GITHUB_SCM_FILE_NAME = "gitHubScm.xml";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";

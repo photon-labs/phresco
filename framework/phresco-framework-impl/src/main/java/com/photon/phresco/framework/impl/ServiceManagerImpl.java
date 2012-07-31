@@ -455,11 +455,11 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
     }
     
     @Override
-    public String getCiConfigPath() throws PhrescoException {
+    public String getCiConfigPath(String repoType) throws PhrescoException {
         Client client = ClientHelper.createClient();
         FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
         WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_CI_CONFIG_PATH);
-        return resource.accept(MediaType.TEXT_PLAIN).get(String.class);
+        return resource.queryParam(REPO_TYPE, repoType).accept(MediaType.TEXT_PLAIN).get(String.class);
     }
 
     @Override

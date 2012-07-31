@@ -141,7 +141,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    String getCiConfigPath() throws PhrescoException;
+    String getCiConfigPath(String repoType) throws PhrescoException;
     
     String getCiSvnPath() throws PhrescoException;
 
