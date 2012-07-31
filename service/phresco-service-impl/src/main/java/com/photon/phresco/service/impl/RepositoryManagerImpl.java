@@ -40,6 +40,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -711,6 +713,11 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	public List<ProjectInfo> getPilotProjects(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public String getFrameWorkLatestFile() throws PhrescoException {
+		return config.getFrameWorkLatestFile();
 	}
 
 }
