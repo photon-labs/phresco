@@ -97,6 +97,7 @@
 
     <build>
 		<directory>do_not_checkin/target</directory>
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>
 		<finalName>service</finalName>
 		<plugins>
 			<plugin>
@@ -192,7 +193,7 @@
 				<sonar.branch>web</sonar.branch>
 				<sonar.language>web</sonar.language>
 				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-				<sonar.source.directory>src/main/webapp</sonar.source.directory>
+				<phresco.source.directory>src/main/webapp</sonar.source.directory>
 				</properties> 
 		</profile>
 		

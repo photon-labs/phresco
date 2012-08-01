@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.log4j.Logger;
 
@@ -63,6 +64,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
 
@@ -475,11 +477,11 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
     }
     
     @Override
-    public String getCiConfigPath() throws PhrescoException {
+    public String getCiConfigPath(String repoType) throws PhrescoException {
         Client client = ClientHelper.createClient();
         FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
         WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_CI_CONFIG_PATH);
-        return resource.accept(MediaType.TEXT_PLAIN).get(String.class);
+        return resource.queryParam(REPO_TYPE, repoType).accept(MediaType.TEXT_PLAIN).get(String.class);
     }
 
     @Override

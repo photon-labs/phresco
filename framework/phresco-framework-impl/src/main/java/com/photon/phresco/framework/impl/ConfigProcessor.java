@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.List;
 
@@ -31,8 +32,11 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
+import org.xml.sax.InputSource;
+
 import com.photon.phresco.commons.FrameworkConstants;
 
 public class ConfigProcessor implements FrameworkConstants {
@@ -41,7 +45,7 @@ public class ConfigProcessor implements FrameworkConstants {
 	private Document document_ = null;
     private Element root_ = null;
     
-    public static final String CONFIG_PATH = "http://172.16.18.174:9090/nexus/service/local/repositories/dev-binaries/config/ci/config/0.1/config-0.1.xml";
+    public static final String CONFIG_PATH = "http://172.16.18.178:8080/nexus/content/groups/public//config/ci/config/0.2/config-0.2.xml";
     
     public ConfigProcessor(URL url) throws JDOMException, IOException {
     	if (DebugEnabled) {

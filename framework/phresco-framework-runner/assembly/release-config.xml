@@ -28,6 +28,15 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 				<include>*.xml</include>
 			</includes>
 		</fileSet>
+
+		<fileSet>
+			<directory>${project.basedir}/delivery/workspace/tools/jenkins</directory>
+			<outputDirectory>workspace/tools/jenkins</outputDirectory>
+			<fileMode>0777</fileMode>
+			<includes>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
 			
 	</fileSets>
 

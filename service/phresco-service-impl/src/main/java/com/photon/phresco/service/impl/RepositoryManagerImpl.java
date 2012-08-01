@@ -872,8 +872,8 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	}
 
 	@Override
-	public String getCiConfigPath() throws PhrescoException {
-		return config.getCiConfigFile();
+	public String getCiConfigPath(String repoType) throws PhrescoException {
+		return config.getCiConfigFile(repoType);
 	}
 
 	@Override

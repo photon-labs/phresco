@@ -1,6 +1,5 @@
 /*
  * ###
- * Phresco Framework
  * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * %%
@@ -81,6 +80,15 @@ public interface FrameworkConstants {
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
+    String CLASS = "class";
+    String SCM = "scm";
+    String SVN = "svn";
+    String GIT = "git";
+    String REPO_TYPE = "repoType";
+    String SVN_TYPE = "svnType";
+    String GITHUB_SCM = "hudson.plugins.git.GitSCM";
+    String SVN_SCM = "hudson.scm.SubversionSCM";
+    String GITHUB_SCM_FILE_NAME = "gitHubScm.xml";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";
@@ -1192,4 +1200,58 @@ public interface FrameworkConstants {
    String UPGRADE_PROP_NAME = "upgrade.properties";
    String ARCHIVE_EXTENSION = ".zip";
    String VERSION_SERVICE_PATH = "version";
+   
+   /* Constants For Profile update */
+   
+   String SONAR_LANGUAGE_PROFILE = "sonar.language";
+   String SONAR_BRANCH   = "sonar.branch";
+   String PHRESCO_SOURCE_DIRECTORY = "phresco.source.directory";
+   String SONAR_DYNAMIC_ANALYSIS_PROFILE = "sonar.dynamicAnalysis";
+   String SONAR_EXCLUSION = "sonar.exclusions";
+   String JS_PATH = "src/main/js";
+   String WEBAPP_PATH = "src/main/webapp";
+   String JAVA_PATH = "src/main/java";
+   String LIB = "**/lib/**";
+   String JAVA = "java";
+   String WEB = "web";
+   String JS = "js";
+   
+   
+   /* Constants for Sonar properties */ 
+	   String SONAR_LANGUAGE = "sonar.language";
+	   String SONAR_PHPPMD_SKIP = "sonar.phpPmd.skip";
+	   String SONAR_DYNAMIC_ANALYSIS = "sonar.dynamicAnalysis";
+	   String SONAR_PHPPMD_SHOULD_RUN = "sonar.phpPmd.shouldRun";
+	   String SONAR_PHPCODESNIFFER_SHOULD_RUN = "sonar.phpCodesniffer.shouldRun";
+	   String SONAR_PHPCODESNIFFER_SKIP = "sonar.phpCodesniffer.skip";
+	   String SONAR_PHPDEPEND_SHOULD_RUN = "sonar.phpDepend.shouldRun";
+	   String SONAR_PHPUNIT_COVERAGE_SHOULD_RUN = "sonar.phpUnit.coverage.shouldRun";
+	   String SONAR_PHPUNIT_SHOULD_RUN = "sonar.phpUnit.shouldRun";
+	   String SONAR_PHPCPD_SHOULD_RUN = "sonar.phpcpd.excludes";
+	   String SONAR_PHPCPD_EXCLUDES_SQL = "sonar.phpcpd.excludes";
+	   String SONAR_PHPCPD_EXCLUDES_HTML = "sonar.phpcpd.excludes";
+	   String SONAR_PHPDEPEND_TIMEOUT = "sonar.phpDepend.timeout";
+	   String SONAR_PHPPMD_TIMEOUT = "sonar.phpPmd.timeout";
+	   String SONAR_PHPCODESNIFFER_TIMEOUT = "sonar.phpCodesniffer.timeout";
+	   String DRUPAL_STANDARD = "sonar.phpCodesniffer.standardArgument";
+	   String WORDPRESS_STANDARD = "sonar.phpCodesniffer.standardArgument";
+	   String DRUPAL = "Drupal";
+	   String DRUPAL_STANDAD_VERSION = "7.8";
+	   String WORDPRESS = "WordPress";	    
+	   String SONAR_PHASE = "sonar.phase";
+	   String LANGUAGE = "php";
+	   String PHASE = "validate";
+	   String SQL_EXCLUDES = "source/sql";
+	   String HTML_EXCLUDES = "source/public_html";
+	   String TEST = "test";
+	  
+	   
+	   /* Constants for plugin properties */ 
+	   String SKIP = "skip";
+	   String GROUPID = "net.alchim31.maven";
+	   String ARTIFACTID = "yuicompressor-maven-plugin";
+	   String PLUGIN_VERSION = "1.3.0";
+	   String EXECUTIONID = "yuicompressor-default";	   
+	   String GOAL = "compress";	   
 }
+
