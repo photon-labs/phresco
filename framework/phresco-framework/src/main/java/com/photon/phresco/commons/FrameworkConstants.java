@@ -103,8 +103,8 @@ public interface FrameworkConstants {
     String NODEJS_SERVER_NAME = "serverName";
     String NODEJS_DB_NAME = "databaseName";
     String SERVER_PROTOCOL = "server.protocol";
-    String SERVER_HOST = "server.host";
-    String SERVER_PORT = "server.port";
+    String SERVER_HOST = "host";
+    String SERVER_PORT = "port";
     String LOG_DIR = "log";
     String RUN_AGS_ENV_FILE = "runagainstsource.info";
     String LOG_FILE = "server.log";
@@ -1252,6 +1252,11 @@ public interface FrameworkConstants {
 	   String ARTIFACTID = "yuicompressor-maven-plugin";
 	   String PLUGIN_VERSION = "1.3.0";
 	   String EXECUTIONID = "yuicompressor-default";	   
-	   String GOAL = "compress";	   
-}
+	   String GOAL = "compress";
 
+	   /* Remote Deployment Server Authentication */
+	   String REQ_RMT_DEP_IS_CERT_AVAIL = "isCertAvailable";
+	   String REQ_RMT_DEP_FILE_BROWSE_FROM = "fileBrowseFrom";
+	   String CONFIGURATION = "configuration";
+	   String FILE_TYPE_CRT = "crt";
+}

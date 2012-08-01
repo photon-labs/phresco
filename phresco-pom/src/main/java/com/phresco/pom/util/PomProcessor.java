@@ -519,19 +519,22 @@ public class PomProcessor {
 	 */
 	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList, boolean overwrite) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
-		Configuration configuration = plugin.getConfiguration();
-		
-		if (configuration == null) {
-			configuration = new Configuration();
-			plugin.setConfiguration(configuration);
+		if (plugin != null) {
+			Configuration configuration = plugin.getConfiguration();
+
+			if (configuration == null) {
+				configuration = new Configuration();
+				plugin.setConfiguration(configuration);
+			}
+			if (overwrite) {
+				configuration.getAny().addAll(configList);
+			} else {			
+				plugin.getConfiguration().getAny().clear();
+				configuration.getAny().addAll(configList);
+			}
+			return configuration;
 		}
-		if (overwrite) {
-			configuration.getAny().addAll(configList);
-		} else {			
-			plugin.getConfiguration().getAny().clear();
-			configuration.getAny().addAll(configList);
-		}
-		return configuration;
+		return null;
 	}
 
 	/**

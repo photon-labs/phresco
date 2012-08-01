@@ -407,6 +407,10 @@
             <result type="json" />
         </action>
         
+        <action name="authenticateServer" method="authenticateServer" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="success">/pages/fileBrowse.jsp</result>
+        </action>
+        
         <!--  Settings Actions -->
         <action name="settings" method="list" class="com.photon.phresco.framework.actions.settings.Settings">
             <result name="list">/pages/settings/list.jsp</result>

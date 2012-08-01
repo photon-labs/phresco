@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.framework.actions.applications;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,6 +45,7 @@ import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.impl.EnvironmentComparator;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.I18NString;
 import com.photon.phresco.model.PropertyInfo;
@@ -54,6 +56,7 @@ import com.photon.phresco.model.SettingsTemplate;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.TechnologyTypes;
+import com.photon.phresco.util.Utility;
 
 public class Configurations extends FrameworkBaseAction {
     private static final long serialVersionUID = -4883865658298200459L;
@@ -77,7 +80,6 @@ public class Configurations extends FrameworkBaseAction {
 	private String emailError = null;
 	private String remoteDeployment = null;
    
-
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
     private String envDeleteMsg = null;
@@ -173,9 +175,9 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
-            		 if(key.equals("remoteDeployment") && value == null){
-                     		value="false";
-                     }
+            		if(key.equals("remoteDeployment") && value == null){
+            			value="false";
+            		}
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -183,6 +185,20 @@ public class Configurations extends FrameworkBaseAction {
                     		value = "/" + value;
                     	}
                     }
+					if ("certificate".equals(key)) {
+						String env = getHttpRequest().getParameter(ENVIRONMENTS);
+						if (StringUtils.isNotEmpty(value)) {
+							File file = new File(value);
+							if (file.exists()) {
+								String path = Utility.getProjectHome().replace("\\", "/");
+								value = value.replace(path + projectCode + "/", "");
+							} else {
+								value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
+										FILE_SEPARATOR + env + "-" + configName + ".crt";
+								saveCertificateFile(value);
+							}
+						}
+					}
                     propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
                 if (S_LOGGER.isDebugEnabled()) {
@@ -225,6 +241,25 @@ public class Configurations extends FrameworkBaseAction {
         
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
         return list();
+    }
+    
+    private void saveCertificateFile(String path) throws PhrescoException {
+    	try {
+    		String host = (String)getHttpRequest().getParameter(SERVER_HOST);
+			int port = Integer.parseInt(getHttpRequest().getParameter(SERVER_PORT));
+			String certificateName = (String)getHttpRequest().getParameter("certificate");
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			List<CertificateInfo> certificates = administrator.getCertificate(host, port);
+			if (CollectionUtils.isNotEmpty(certificates)) {
+				for (CertificateInfo certificate : certificates) {
+					if (certificate.getDisplayName().equals(certificateName)) {
+						administrator.addCertificate(certificate, new File(Utility.getProjectHome() + projectCode + "/" + path));
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
     }
     
     public String createEnvironment() {
@@ -527,8 +562,22 @@ public class Configurations extends FrameworkBaseAction {
             	} else {
 	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
    	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
-                        		value="false";
-                        }
+   	                	value="false";
+                    }
+   	                if ("certificate".equals(key)) {
+						String env = getHttpRequest().getParameter(ENVIRONMENTS);
+						if (StringUtils.isNotEmpty(value)) {
+							File file = new File(value);
+							if (file.exists()) {
+								String path = Utility.getProjectHome().replace("\\", "/");
+								value = value.replace(path + projectCode + "/", "");
+							} else {
+								value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
+										FILE_SEPARATOR + env + "-" + configName + ".crt";
+								saveCertificateFile(value);
+							}
+						}
+					}
 	                value = value.trim();
 	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}

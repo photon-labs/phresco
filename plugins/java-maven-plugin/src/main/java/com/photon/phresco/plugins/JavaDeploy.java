@@ -220,6 +220,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		String servertype = info.getPropertyInfo(Constants.SERVER_TYPE).getValue();
 		context = info.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();
 		String remotedeploy = info.getPropertyInfo(Constants.SERVER_REMOTE_DEPLOYMENT).getValue();
+		String certificatePath = info.getPropertyInfo("certificate").getValue();
 		
 		String containerId = "";
 		renameWar(context);
@@ -234,11 +235,11 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		if (servertype.contains(TYPE_TOMCAT)) {
 			removeCargoDependency();
 			containerId = serverVersionMap.get("tomcat-" + version);
-			deployToServer(serverprotocol, serverhost, serverport, serverusername, serverpassword, containerId);
+			deployToServer(serverprotocol, serverhost, serverport, serverusername, serverpassword, containerId, certificatePath);
 		} else if (servertype.contains(TYPE_JBOSS)) {
 			addCargoDependency(version);
 			containerId = serverVersionMap.get("jboss-" + version);
-			deployToServer(serverprotocol, serverhost, serverport, serverusername, serverpassword, containerId);
+			deployToServer(serverprotocol, serverhost, serverport, serverusername, serverpassword, containerId, certificatePath);
 		} else if (servertype.contains(TYPE_WEBLOGIC) && (version.equals("12c(12.1.1)"))) {
 			deployToWeblogicServer(serverprotocol, serverhost, serverport, serverusername, serverpassword);
 		} 
@@ -316,9 +317,8 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 		}
 	}
 	
-	
 	private void deployToServer(String serverprotocol, String serverhost, String serverport,
-			String serverusername, String serverpassword, String containerId) throws MojoExecutionException {
+			String serverusername, String serverpassword, String containerId, String certificatePath) throws MojoExecutionException {
 		BufferedReader in = null;
 		boolean errorParam = false;
 		try {
@@ -349,6 +349,27 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(context);
 			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
+			
+			if(serverprotocol.equals("https") && certificatePath != null) {
+				File certificateFile = null;
+				if (new File(baseDir, certificatePath).exists()) {
+					certificateFile = new File(certificatePath);
+				} else {
+					certificateFile = new File("../" + certificatePath);
+				}
+				sb.append(STR_SPACE);
+				sb.append("-Djavax.net.ssl.trustStore=");
+				sb.append(certificateFile.getPath());
+				sb.append(STR_SPACE);
+				sb.append("-Djavax.net.ssl.trustStorePassword=");
+				sb.append("changeit");
+				sb.append(STR_SPACE);
+				sb.append("-Djavax.net.ssl.keyStore=");
+				sb.append(certificateFile.getPath());
+				sb.append(STR_SPACE);
+				sb.append("-Djavax.net.ssl.keyStorePassword=");
+				sb.append("changeit");
+			}
 			
 			Commandline cl = new Commandline(sb.toString());
 			Process process = cl.execute();

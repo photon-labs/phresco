@@ -31,6 +31,7 @@
 <%@ page import="com.photon.phresco.framework.commons.ApplicationsUtil"%>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="com.photon.phresco.model.CertificateInfo"%>
 	
 	<!--[if IE]>
 	<script src="js/html5.js"></script>
@@ -55,6 +56,13 @@
 	 } else {
 		 rootDir = projectLocation;
 	 }
+	
+	boolean isCertAvailable = false;
+	if (request.getAttribute(FrameworkConstants.REQ_RMT_DEP_IS_CERT_AVAIL) != null) {
+		isCertAvailable = (Boolean) request.getAttribute(FrameworkConstants.REQ_RMT_DEP_IS_CERT_AVAIL);
+	}
+	String fileBrowseFrom = (String)request.getAttribute(FrameworkConstants.REQ_RMT_DEP_FILE_BROWSE_FROM);
+	List<CertificateInfo> certificates = (List<CertificateInfo>)request.getAttribute("certificates");
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="browseLocation">
@@ -68,6 +76,26 @@
 
 	<div class="modal-body fileTreeBrowseOverflow">
 		<div id="JQueryFTD" class="JQueryFTD"></div>
+		
+		<div id="crtFileDiv" class="hideContent">
+			<!-- Modules -->
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><s:text name="label.certificates"/></label>
+				<div class="input">
+					<select id="certificates" name="certificates" class="xlarge">
+					<%
+						if (CollectionUtils.isNotEmpty(certificates)) {
+							for (CertificateInfo certificate : certificates) {
+					%>
+								<option value="<%= certificate.getDisplayName() %>"><%= certificate.getDisplayName() %></option>
+					<% 
+							}
+						} 
+					%>
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<div class="modal-footer">
@@ -104,9 +132,11 @@
 					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
 					TechnologyTypes.HTML5_WIDGET.equals(techId)) {%>
 				showGenBuild();
+			<% } else if (FrameworkConstants.CONFIGURATION.equals(fileBrowseFrom)) { %>
+				showParentPage();
 			<% } else {%>
-			showAdvBuildSettings();
-			showFunctionalTestForm();
+				showAdvBuildSettings();
+				showFunctionalTestForm();
 			<% } %>
 		});
 		
@@ -147,6 +177,15 @@
 			    	performAction("jsToMinify", params, '', true);
 			    	$('#generateBuild_Modal').show();				
 				}
+			<% } else if (FrameworkConstants.CONFIGURATION.equals(fileBrowseFrom)) { %>
+					if ($("#certificates").val() != undefined || !isBlank($("#certificates").val())) {
+						$("input[name=certificate]").val($("#certificates").val());
+					} else {
+						$("input[name=certificate]").val($("#browseSelectedLocation").val());
+					}
+					$("div#certificate").show();
+					$("input[name=certificate]").prop("disabled", true);
+					showParentPage();
 			<% } else { %>
 				$("input[name=keystore]").val($('#browseSelectedLocation').val());
 				$('#advancedSettingsBuildForm').show();
@@ -156,20 +195,33 @@
 				$('#browseLocation').hide();
 			<% } %>
 		});
-
-		$('#JQueryFTD').fileTree({
-			root: '<%= rootDir %>',
-			script: 'pages/jqueryFileTree.jsp',
-			expandSpeed: 1000,
-			collapseSpeed: 1000,
-			multiFolder: true,
-			fileTypes: '<%= fileTypes %>',
-			fileOrFolder: '<%= fileorfolder %>',
-			tech : '<%= techId %>',
-			selectedFiles: '<%= selectedJsFiles %>'
-		}, function(file) {
-			$('#browseSelectedLocation').val(file);
-		});
+		
+		<% 
+			if (!isCertAvailable) {
+		%>
+			$('#crtFileDiv').hide()
+			$('#JQueryFTD').fileTree({
+				root: '<%= rootDir %>',
+				script: 'pages/jqueryFileTree.jsp',
+				expandSpeed: 1000,
+				collapseSpeed: 1000,
+				multiFolder: true,
+				fileTypes: '<%= fileTypes %>',
+				fileOrFolder: '<%= fileorfolder %>',
+				tech : '<%= techId %>',
+				selectedFiles: '<%= selectedJsFiles %>'
+			}, function(file) {
+				$('#browseSelectedLocation').val(file);
+			});
+		<%
+			} else {
+		%>
+			$('#JQueryFTD').hide();
+			$('#browseSelectedLocation').hide();
+			$('#crtFileDiv').show()
+		<%
+			}
+		%>
 		
 	});
 		

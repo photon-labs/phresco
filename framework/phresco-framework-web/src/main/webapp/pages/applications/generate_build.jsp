@@ -364,105 +364,105 @@
 		
 <!-- 		advanced settingd -->
 		<% if (from.equals("generateBuild") && TechnologyTypes.ANDROIDS.contains(technology)) { %>
-		<div class="theme_accordion_container clearfix" style="float: none;">
-		    <section class="accordion_panel_wid">
-		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
-		            <section class="lft_menus_container adv-settings-width">
-		                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.advanced.settings"/></span></span>
-		                <div class="mfbox siteinnertooltiptxt">
-		                    <div class="scrollpanel adv_setting_accordian_bottom">
-		                        <section class="scrollpanel_inner">
-									<fieldset class="popup-fieldset fieldset_center_align">
-										<!-- Show Settings -->
-										<div class="clearfix">
-											<div class="xlInput">
-												<ul class="inputs-list">
-													<li class="popup-li">
+			<div class="theme_accordion_container clearfix" style="float: none;">
+			    <section class="accordion_panel_wid">
+			        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+			            <section class="lft_menus_container adv-settings-width">
+			                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.advanced.settings"/></span></span>
+			                <div class="mfbox siteinnertooltiptxt">
+			                    <div class="scrollpanel adv_setting_accordian_bottom">
+			                        <section class="scrollpanel_inner">
+										<fieldset class="popup-fieldset fieldset_center_align">
+											<!-- Show Settings -->
+											<div class="clearfix">
+												<div class="xlInput">
+													<ul class="inputs-list">
+														<li class="popup-li">
 															<input type="checkbox" id="proguard" name="proguard" value="false">
 															<span class="textarea_span popup-span"><s:text name="label.progurad"/></span>
 															
 															<input type="checkbox" id="signing" name="signing" value="false">
 															<span class="textarea_span popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
-													</li>
-												</ul>
-											</div>	
-										</div>
-									</fieldset>
-		                        </section>
-		                    </div>
-		                </div>
-		            </section>  
-		        </div>
-		    </section>
-		</div>
-		<input id="profileAvailable" name="profileAvailable" type="hidden" value=""/>
+														</li>
+													</ul>
+												</div>	
+											</div>
+										</fieldset>
+			                        </section>
+			                    </div>
+			                </div>
+			            </section>  
+			        </div>
+			    </section>
+			</div>
+			<input id="profileAvailable" name="profileAvailable" type="hidden" value=""/>
 		<% } %>
 <!-- 		advanced settings end -->
 
 <!-- minifier setting starts -->
-		<% if (from.equals("generateBuild") && TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+		<% if (from.equals("generateBuild") && (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
 				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) || 
 				TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) ||
-				TechnologyTypes.HTML5_WIDGET.equals(technology)) { %>
-		<div class="theme_accordion_container clearfix" style="float: none;">
-		    <section class="accordion_panel_wid">
-		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
-		            <section class="lft_menus_container adv-settings-width">
-		                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.minifer"/></span></span>
-		                <div class="mfbox siteinnertooltiptxt">
-		                    <div class="scrollpanel adv_setting_accordian_bottom">
-		                        <section class="scrollpanel_inner">
-		                        	<div class="minifyDiv">
-										<fieldset class="popup-fieldset fieldset_center_align minify_popup">
-											<% 
-												if (jsMap != null && !jsMap.isEmpty()) {
-													Set keys = jsMap.keySet();
-													Iterator iter = jsMap.keySet().iterator();
-												    while (iter.hasNext()) {
-													    String key = (String) iter.next();
-													    String val = (String) jsMap.get(key);
-											%>
-														<div class = "browseJs">
-															<div class="clearfix">
-																<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
-																<div class="input">
-																	<input type="button" id="<%= key %>" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
-																	<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
-																	<input type="text" name="jsFileName" class="<%= key %>" id="compNameText" disabled value="<%= key %>"/>
+				TechnologyTypes.HTML5_WIDGET.equals(technology))) { %>
+			<div class="theme_accordion_container clearfix" style="float: none;">
+			    <section class="accordion_panel_wid">
+			        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+			            <section class="lft_menus_container adv-settings-width">
+			                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="build.minifer"/></span></span>
+			                <div class="mfbox siteinnertooltiptxt">
+			                    <div class="scrollpanel adv_setting_accordian_bottom">
+			                        <section class="scrollpanel_inner">
+			                        	<div class="minifyDiv">
+											<fieldset class="popup-fieldset fieldset_center_align minify_popup">
+												<% 
+													if (jsMap != null && !jsMap.isEmpty()) {
+														Set keys = jsMap.keySet();
+														Iterator iter = jsMap.keySet().iterator();
+													    while (iter.hasNext()) {
+														    String key = (String) iter.next();
+														    String val = (String) jsMap.get(key);
+												%>
+															<div class = "browseJs">
+																<div class="clearfix">
+																	<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+																	<div class="input">
+																		<input type="button" id="<%= key %>" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+																		<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+																		<input type="text" name="jsFileName" class="<%= key %>" id="compNameText" disabled value="<%= key %>"/>
+																	</div>
+																	<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+																	<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
 																</div>
-																<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
-																<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
+																<input type="hidden" tempName="<%= key %>" name="<%= key %>" value="<%= val %>" id="selectedJs">
 															</div>
-															<input type="hidden" tempName="<%= key %>" name="<%= key %>" value="<%= val %>" id="selectedJs">
+												<%
+														}
+													} else {
+												%>
+												<div class = "browseJs">
+														<div class="clearfix">
+															<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+															<div class="input">
+																<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+																<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+																<input type="text" name="jsFileName" class="getJsFiles1" id="compNameText" disabled/>
+															</div>
+															<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+															<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
 														</div>
-											<%
-													}
-												} else {
-											%>
-											<div class = "browseJs">
-													<div class="clearfix">
-														<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
-														<div class="input">
-															<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
-															<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
-															<input type="text" name="jsFileName" class="getJsFiles1" id="compNameText" disabled/>
-														</div>
-														<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
-														<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
+														<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
 													</div>
-													<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
-												</div>
-										<% } %>		
-										</fieldset>
-									</div>
-									<input type="hidden" name="fileLocation" value="<%= StringUtils.isNotEmpty(fileLoc) ? fileLoc : "" %>"/>
-		                        </section>
-		                    </div>
-		                </div>
-		            </section>  
-		        </div>
-		    </section>
-		</div> 
+											<% } %>		
+											</fieldset>
+										</div>
+										<input type="hidden" name="fileLocation" value="<%= StringUtils.isNotEmpty(fileLoc) ? fileLoc : "" %>"/>
+			                        </section>
+			                    </div>
+			                </div>
+			            </section>  
+			        </div>
+			    </section>
+			</div> 
 		<% } %>
 	</div>
 	

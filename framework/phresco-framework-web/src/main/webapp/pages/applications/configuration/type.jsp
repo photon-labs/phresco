@@ -17,12 +17,9 @@
   limitations under the License.
   ###
   --%>
-<%@page import="com.photon.phresco.util.TechnologyTypes"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ include file="../errorReport.jsp" %>
-
-<%@ page import="freemarker.template.utility.StringUtil"%>
 
 <%@ page import="java.util.Collection"%>
 <%@ page import="java.util.Collections"%>
@@ -47,6 +44,7 @@
 <%@ page import="com.photon.phresco.model.Server" %>
 <%@ page import="com.photon.phresco.model.Database"%>
 <%@ page import="com.photon.phresco.util.Constants" %>
+<%@ page import="com.photon.phresco.util.TechnologyTypes"%>
 
 <%
     String value = "";
@@ -158,6 +156,8 @@
 		        		 }
 		        %>		
 		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">
+		        		&nbsp;&nbsp;&nbsp;&nbsp;
+		        		<input type="button" value="<s:text name="label.authenticate"/>" id="authenticate" class="primary btn hideContent"/>
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
@@ -198,6 +198,10 @@
 %>
 
 <script type="text/javascript">
+	$("div#certificate").hide();
+	
+	enableOrDisabAuthBtn();
+	
 	$(document).ready(function() {
 		enableScreen();
 		
@@ -276,6 +280,7 @@
 		// hide deploy dir if remote Deployment selected
 		$("input[name='remoteDeployment']").change(function() {
 			var isChecked = $("input[name='remoteDeployment']").is(":checked");
+			enableOrDisabAuthBtn();
 			if (isChecked) {
 				hideDeployDir();
 				$("#admin_username label").html('<span class="red">* </span>Admin Username');
@@ -307,6 +312,7 @@
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
+        	enableOrDisabAuthBtn();
 		});
         
         $("#xlInput").live('input propertychange',function(e){ 	//Name validation
@@ -326,13 +332,33 @@
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
-         });
+        });
         
         $("input[name='context']").live('input propertychange',function(e){	//Root Context validation
         	var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
         });
+        
+        $("input[name='host']").live('input propertychange',function(e) {
+			enableOrDisabAuthBtn();
+		});
+		
+		$("select[name='protocol']").change(function() {
+			enableOrDisabAuthBtn();
+		});
+		
+		$("#authenticate").click(function() {
+			showPopup();
+			$('.popup_div').empty();
+			var params = "host=";
+	    	params = params.concat($("input[name='host']").val());
+			params = params.concat("&port=");
+			params = params.concat($("input[name='port']").val());
+			params = params.concat("&projectCode=");
+			params = params.concat('<%= projectCode %>');
+			performAction('authenticateServer', params, $('#popup_div'));
+		});
 	});
 	
 	function showSetttingsInfoServer() {
@@ -392,5 +418,17 @@
 		<%
 			}
 		%>
+	}
+	
+	function enableOrDisabAuthBtn() {
+		var protocol = $("select[name='protocol']").val();
+		var host = $("input[name='host']").val();
+		var port = $("input[name='port']").val();
+		var isChecked = $("input[name='remoteDeployment']").is(":checked");
+		if (protocol == "https" && !isBlank(host) && host != undefined && !isBlank(port) && port != undefined && isChecked) {
+			$("#authenticate").removeClass("hideContent");
+		} else {
+			$("#authenticate").addClass("hideContent");
+		}
 	}
 </script>
