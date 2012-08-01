@@ -20,34 +20,9 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		//To focus the name textbox by default
-		$('#name').focus();
-		
-		// To check for the special character in name
-		$('#name').bind('input propertychange', function (e) {
-			var name = $(this).val();
-			name = checkForSplChr(name);
-	    	$(this).val(name);
-		});	
-	});
-
-	function findError(data) {
-		if (data.nameError != undefined) {
-			showError($("#nameControl"), $("#nameError"), data.nameError);
-		} else {
-			hideError($("#nameControl"), $("#nameError"));
-		}
-	}
-	
-	function constructParams(mthdName, url, tag, progText) {
-		window[mthdName](url, $('#formAppTypeAdd'), tag, progText); //This is call methods dynamically
-	}
-</script>
 
 <%
 	ApplicationType apptype = (ApplicationType)request.getAttribute(ServiceUIConstants.REQ_APP_TYPE);
@@ -87,13 +62,13 @@
 	<div class="bottom_button">
 	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				    onclick="constructParams('validate', 'applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
+				    onclick="validate('applicationUpdate', $('#formAppTypeAdd'), $('#subcontainer'), 'Updating Application Type');" />
 		<% } else { %>
                 <input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>"
-                    onclick="constructParams('validate', 'applicationSave', $('#subcontainer'), 'Creating Application Type');" />
+                    onclick="validate('applicationSave', $('#formAppTypeAdd'), $('#subcontainer'), 'Creating Application Type');" />
 		<% } %>
 		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="constructParams('loadContent', 'applntypesList', $('#subcontainer'));" />
+            onclick="loadContent('applntypesList', $('#formAppTypeAdd'), $('#subcontainer'));" />
     </div>
 	
 	<!-- Hidden Fields -->
@@ -102,3 +77,25 @@
 	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/>
     <input type="hidden" name="customerId" value="<%= customerId %>">
 </form>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//To focus the name textbox by default
+		$('#name').focus();
+		
+		// To check for the special character in name
+		$('#name').bind('input propertychange', function (e) {
+			var name = $(this).val();
+			name = checkForSplChr(name);
+	    	$(this).val(name);
+		});	
+	});
+
+	function findError(data) {
+		if (data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+	}
+</script>

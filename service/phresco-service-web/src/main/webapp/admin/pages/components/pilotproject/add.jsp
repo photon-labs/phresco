@@ -19,28 +19,16 @@
   --%>
 
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<%@page import="com.photon.phresco.model.ProjectInfo"%>
-<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
-<%@ page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="java.util.List"  %>
 
-<script type="text/javascript">
-function findError(data) {
-	if(data.nameError != undefined) {
-		showError($("#nameControl"), $("#nameError"), data.nameError);
-	} else {
-		hideError($("#nameControl"), $("#nameError"));
-	}
-	
-	if(data.fileError != undefined) {
-		showError($("#fileControl"), $("#fileError"), data.fileError);
-		} else {
-			hideError($("#fileControl"), $("#fileError"));
-		}
-}
-</script>
-<% ProjectInfo pilotProjectInfo = (ProjectInfo)request.getAttribute("pilotProjectInfo"); 
-   String fromPage = (String)request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE); 
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="java.util.List" %>
+
+<%@ page import="com.photon.phresco.model.ProjectInfo"%>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
+
+<% 
+	ProjectInfo pilotProjectInfo = (ProjectInfo)request.getAttribute("pilotProjectInfo"); 
+	String fromPage = (String)request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE); 
 %>
 
 <form class="form-horizontal customer_list">
@@ -98,3 +86,19 @@ function findError(data) {
     <input type="hidden" name="projectId" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getId() : "" %>"/>
     <input type="hidden" name="oldName" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getName() : "" %>"/>  
 </form>
+
+<script type="text/javascript">
+	function findError(data) {
+		if(data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+		
+		if(data.fileError != undefined) {
+			showError($("#fileControl"), $("#fileError"), data.fileError);
+			} else {
+				hideError($("#fileControl"), $("#fileError"));
+			}
+	}
+</script>
