@@ -25,9 +25,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.FileUtils;
@@ -36,11 +39,15 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
+import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.api.UpdateManager;
+import com.photon.phresco.framework.impl.update.ProfileUpdater;
 import com.photon.phresco.model.VersionInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.FileUtil;
+import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;
@@ -48,7 +55,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class UpdateManagerImpl implements UpdateManager {
+public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 	VersionInfo version = null;
 	String previousVersion = "";
 	private static final Logger S_LOGGER = Logger.getLogger(UpdateManagerImpl.class);
@@ -57,8 +64,6 @@ public class UpdateManagerImpl implements UpdateManager {
 	public VersionInfo checkForUpdate(String versionNo) throws PhrescoException {
 		if (DebugEnabled) {
 			S_LOGGER.debug("Entering Method UpdateManagerImpl.checkForUpdate(String versionNo)");
-		}
-		if (DebugEnabled) {
 			S_LOGGER.debug("checkForUpdate() Version Number = " + versionNo);
 		}
 		previousVersion = versionNo;
@@ -110,15 +115,48 @@ public class UpdateManagerImpl implements UpdateManager {
 				outPutFile.write(bytes, 0, read);
 			}
 			
+			extractUpdate(tempFile);
+			updateSonarProfile();
 		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} catch (ParserConfigurationException e) {
 			throw new PhrescoException(e);
 		} finally {
 			Utility.closeStream(latestVersionZip);
 			Utility.closeStream(outPutFile);
 		}
-		extractUpdate(tempFile);
 	}
 
+	private void updateSonarProfile() throws PhrescoException, ParserConfigurationException {
+		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+		List<Project> projects = administrator.discover(Collections.singletonList(new File(Utility.getProjectHome())));
+		for (Project project : projects) {
+			String code = project.getProjectInfo().getCode();
+			String techId = project.getProjectInfo().getTechnology().getId();
+			ProfileUpdater profileUpdater = new ProfileUpdater();
+			boolean sonarProfileUpdateRequired = techId.equals(TechnologyTypes.JAVA_WEBSERVICE)
+					|| techId.equals(TechnologyTypes.HTML5_WIDGET)
+					|| techId.equals(TechnologyTypes.HTML5_MOBILE_WIDGET)
+					|| techId.equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)
+					|| techId.equals(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET);
+			File sourcePom = new File(Utility.getProjectHome() + File.separator + code + File.separator + POM_XML);
+			if (sonarProfileUpdateRequired) {
+				profileUpdater.updateSonarProfile(sourcePom, techId);
+				profileUpdater.updatePlugin(sourcePom, techId);
+			}
+			boolean sonarPropertiesUpdateRequired = techId.equals(TechnologyTypes.PHP)
+					|| techId.equals(TechnologyTypes.PHP_DRUPAL6)
+					|| techId.equals(TechnologyTypes.PHP_DRUPAL7)
+					|| techId.equals(TechnologyTypes.WORDPRESS);
+			File functionalPom = new File(Utility.getProjectHome() + File.separator + code + File.separator + TEST
+					+ File.separator + FUNCTIONAL + File.separator + POM_XML);
+			if (sonarPropertiesUpdateRequired) {
+				profileUpdater.addSonarProperties(functionalPom, techId);
+			}
+		}
+	}
+
+	
 	private void extractUpdate(File tempFile) throws PhrescoException {
 		ArchiveUtil.extractArchive(tempFile.getPath(), FrameworkConstants.PREV_DIR, ArchiveType.ZIP);
 		FileUtil.delete(tempFile);
