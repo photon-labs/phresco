@@ -17,11 +17,13 @@
   limitations under the License.
   ###
   --%>
+<%@page import="java.util.HashMap"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Set"%>
+<%@ page import="java.util.Iterator"%>
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
@@ -36,6 +38,7 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="com.photon.phresco.model.BuildInfo"%>
+
 
 <script src="js/reader.js" ></script>
 <script src="js/select-envs.js"></script>
@@ -63,6 +66,9 @@
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
    	// mac sdks
    	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	
+   	Map<String, String> jsMap = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_MINIFY_MAP);
+   	String fileLoc = (String) request.getAttribute("fileLocation");
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
@@ -394,9 +400,11 @@
 <!-- 		advanced settings end -->
 
 <!-- minifier setting starts -->
-		<% if (from.equals("generateBuild") && (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
-				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology))) { %>
-		<!--<div class="theme_accordion_container clearfix" style="float: none;">
+		<% if (from.equals("generateBuild") && TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) || 
+				TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) ||
+				TechnologyTypes.HTML5_WIDGET.equals(technology)) { %>
+		<div class="theme_accordion_container clearfix" style="float: none;">
 		    <section class="accordion_panel_wid">
 		        <div class="accordion_panel_inner adv-settings-accoridan-inner">
 		            <section class="lft_menus_container adv-settings-width">
@@ -406,28 +414,55 @@
 		                        <section class="scrollpanel_inner">
 		                        	<div class="minifyDiv">
 										<fieldset class="popup-fieldset fieldset_center_align minify_popup">
+											<% 
+												if (jsMap != null && !jsMap.isEmpty()) {
+													Set keys = jsMap.keySet();
+													Iterator iter = jsMap.keySet().iterator();
+												    while (iter.hasNext()) {
+													    String key = (String) iter.next();
+													    String val = (String) jsMap.get(key);
+											%>
+														<div class = "browseJs">
+															<div class="clearfix">
+																<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+																<div class="input">
+																	<input type="button" id="<%= key %>" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+																	<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+																	<input type="text" name="jsFileName" class="<%= key %>" id="compNameText" disabled value="<%= key %>"/>
+																</div>
+																<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+																<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
+															</div>
+															<input type="hidden" tempName="<%= key %>" name="<%= key %>" value="<%= val %>" id="selectedJs">
+														</div>
+											<%
+													}
+												} else {
+											%>
 											<div class = "browseJs">
-												<div class="clearfix">
-													<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
-													<div class="input">
-														<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
-														<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
-														<input type="text" name="jsFileName" class="getJsFiles1" style="float:left;width:150px; margin-right:10px;" disabled/>
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label minifyLbl"><s:text name="build.js.minification"/></label>
+														<div class="input">
+															<input type="button" id="getJsFiles1" class="btn primary chooseJS" value="<s:text name="build.minify.browse"/>" onclick="browseFiles(this);">
+															<label for="xlInput" class="xlInput popup-label compNameLbl"><s:text name="build.compress.name"/></label>
+															<input type="text" name="jsFileName" class="getJsFiles1" id="compNameText" disabled/>
+														</div>
+														<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+														<a><img class="del imagealign hide" src="images/icons/minus_icon.png" onclick="removeTag(this);"></a>
 													</div>
-													<a><img title="" src="images/icons/add_icon.png" id="addJSComp" class="minifyAddIcon" onclick="addJsCompTag();"></a>
+													<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
 												</div>
-												<input type="hidden" tempName="getJsFiles1" name="getJsFiles1" value="" id="selectedJs">
-											</div>
+										<% } %>		
 										</fieldset>
 									</div>
-									<input type="hidden" name="fileLocation"/>
+									<input type="hidden" name="fileLocation" value="<%= StringUtils.isNotEmpty(fileLoc) ? fileLoc : "" %>"/>
 		                        </section>
 		                    </div>
 		                </div>
 		            </section>  
 		        </div>
 		    </section>
-		</div> -->
+		</div> 
 		<% } %>
 	</div>
 	
@@ -501,9 +536,11 @@
 			}
 			
 			/* enable text box only if any file selected for minification */
-			if($('input[name="jsFileName"]').val() !== "") {
-				$('input[name="jsFileName"]').attr("disabled", false);
-			}
+			$('input[name="jsFileName"]').each(function () {
+				if($(this).val() !== "") {
+					$(this).attr("disabled", false);
+				}
+			});
 
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
 		});
@@ -651,6 +688,7 @@
 		
 		//execute Sql script
 		executeSqlShowHide();
+		showHideMinusIcon();
 	});
 	
 	function addDbWithVersions() {
@@ -846,15 +884,33 @@
 		newMinDiv.html("<div class='clearfix'><label for='xlInput' class='xlInput popup-label' style='width:100px;'><s:text name='build.js.minification'/></label>" +
 		"<div class='input'><input type='button' id='"+ browseId +"' class='btn primary chooseJS' value='<s:text name='build.minify.browse'/>' onclick='browseFiles(this);' style = 'float:left; margin-left:-30px;'>" + 
 		"<label for='xlInput' class='xlInput popup-label' style='padding-right:6px;'><s:text name='build.compress.name'/></label>" + 
-		"<input type='text' class='"+browseId+"' name='jsFileName'  value ='' style='float:left;width:150px;margin-right:10px;' disabled/></div>" +
-		"<a><img title='' src='images/icons/add_icon.png' id='addJSComp' onclick='addJsCompTag();' style='float: left; margin-left:4px'></a>" + 
-		"<a><img class = 'del imagealign' src='images/icons/minus_icon.png' onclick='removeTag(this); ' style='float: left; margin-left:4px'></a><input type='hidden' tempName='"+browseId+"' class='' name='"+browseId+"' value='' id='selectedJs'></div>"); 
+		"<input type='text' class='"+browseId+"' name='jsFileName' id='compNameText' value ='' disabled/></div>" +
+		"<a><img title='' src='images/icons/add_icon.png' id='addJSComp' class='minifyAddIcon' onclick='addJsCompTag();'></a>" + 
+		"<a><img class = 'del imagealign hide' src='images/icons/minus_icon.png' onclick='removeTag(this);'></a><input type='hidden' tempName='"+browseId+"' class='' name='"+browseId+"' value='' id='selectedJs'></div>"); 
 		newMinDiv.appendTo(".minify_popup");
 		counter++;
+		removeTag();
+		showHideMinusIcon();
+	}
+	
+	function showHideMinusIcon() {
+		var noOfRows = $('input[id="selectedJs"]').size();
+		if (noOfRows > 1) {
+			$(".del").show();
+		} else if (noOfRows === 1) {
+			$(".del").hide();
+		}
 	}
 	
 	function removeTag(currentTag) {
-		$(currentTag).parent().parent().parent().remove();
+		var noOfRows = $('input[id="selectedJs"]').size();
+		if(noOfRows > 1 && currentTag !== undefined) {
+			$(currentTag).parent().parent().parent().remove();
+			noOfRows--;
+		} 
+		if (noOfRows === 1) {
+			$(".del").hide();
+		}
 	}
 	
 	var textBoxClass = "";

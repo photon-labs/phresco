@@ -1154,7 +1154,9 @@ public interface FrameworkConstants {
    String REQ_SELECTED_FILES = "selectedJsFiles";
    String REQ_CHECKED_FILE_LIST = "jsMinCheck";
    String REQ_SELECTED_FILE_NAMES = "jsFileName";
+   String REQ_MINIFY_MAP = "jsMap";
    
+   String POM_SKIP = "skip";
    String POM_SOURCEDIR = "sourceDirectory";
    String POM_SOURCE_DIRECTORY = "${project.basedir}/src/main/";
    String POM_OUTPUTDIR = "outputDirectory";
@@ -1170,6 +1172,10 @@ public interface FrameworkConstants {
    String POM_INPUT_DIRECTORY = "${project.basedir}/compressed";
    String POM_INCLUDES ="includes";
    String POM_INCLUDE ="include";
+   String POM_EXCLUDES ="excludes";
+   String POM_EXCLUDE ="exclude";
+   String POM_EXCLUDE_CSS = "**/*.css";
+   String POM_EXCLUDE_JS = "**/lib/**/*.js";
    String POM_OUTPUT = "output";
    String MINIFY_OUTPUT_DIRECTORY = "${project.basedir}";
    String MINIFY_FILE_EXT = ".min.js";

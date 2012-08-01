@@ -48,7 +48,9 @@
 	String selectedJsFiles = (String)request.getAttribute("selectedJsFiles");
 	String rootDir = null; 
 	if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
-			TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { 
+			TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+			TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+			TechnologyTypes.HTML5_WIDGET.equals(techId)) { 
 		 rootDir = projectLocation + "/src";
 	 } else {
 		 rootDir = projectLocation;
@@ -71,7 +73,9 @@
 	<div class="modal-footer">
 		<div class="action popup-action">
 			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
-					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { %>
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_WIDGET.equals(techId)) { %>
 				<label for="xlInput" class="xlInput popup-label" style="padding-right:6px;"><span class="red">* </span><s:text name="build.compress.name"/></label>
 				<input type="text" class="javastd" id="jsFinalName" name="jsFinalName" value="<%= StringUtils.isNotEmpty(selectedJsName) ? selectedJsName : "" %>">
 				<input type="hidden" class="xlarge javastd" id="browseSelectedLocation" name="browseLocation" >
@@ -96,7 +100,9 @@
 	$(document).ready(function() {
 		$('#fileBrowseClose, #fileBrowseCancel').click(function() {
 			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
-					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) {%>
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_WIDGET.equals(techId)) {%>
 				showGenBuild();
 			<% } else {%>
 			showAdvBuildSettings();
@@ -112,7 +118,9 @@
 		// java standalone functional test jar browse location
 		$('#fileBrowseOkay').click(function() {
 			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
-					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)) { %>
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+					TechnologyTypes.HTML5_WIDGET.equals(techId)) { %>
 				
 				var selected = false;
 				$('input[name=jsMinCheck]').each(function () {

@@ -83,7 +83,9 @@
 				    	}
 					}
 					if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
-							TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)){
+							TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+							TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+							TechnologyTypes.HTML5_WIDGET.equals(techId)){
 						 out.print("<li><input type=checkbox name=jsMinCheck id=\""+file+"\" value=\""+file+"\"><span  class=jsmin-span >"
 								+ file + "</li>"); 
 					}else {
