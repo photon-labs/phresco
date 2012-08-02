@@ -48,6 +48,8 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String groupId;
 	private String artifactId;
 	private String customerId;
+	private boolean system;
+	private String techId;
 	
 
 	/**
@@ -197,11 +199,27 @@ public class ProjectInfo implements Cloneable ,Serializable {
     
 	
 
-	public String getCustomerId() {
+	public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
+
+    public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
     

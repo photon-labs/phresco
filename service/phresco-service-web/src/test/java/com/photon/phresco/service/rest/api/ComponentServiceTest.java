@@ -1,13 +1,17 @@
 package com.photon.phresco.service.rest.api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
 import org.junit.Ignore;
+import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
@@ -33,29 +37,54 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		super();
 	}
 	
-	@Ignore
-	public void testFindAppTypes() {
-		List<ApplicationType> appTypeList = mongoOperation.getCollection(APPTYPES_COLLECTION_NAME , ApplicationType.class);
-		ApplicationType applicationType = appTypeList.get(0);
-		assertEquals(applicationType.getName(),"mobile");
-	}
-
-	@Ignore
+	@Test
 	public void testCreateAppTypes() {
-		List<AppType> appTypes = new ArrayList<AppType>();
-		AppType app = new AppType("Html5", "webApplications", null);
-		appTypes.add(app);
+		List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
+		List<Database> dbs=new ArrayList<Database>();
+		Database db=new Database();
+		db.setId("101");
+		db.setName("mongodb");
+		dbs.add(db);
+		List<Server> servers=new ArrayList<Server>();
+		Server sr=new Server();
+		sr.setId("201");
+		sr.setName("apache");
+		servers.add(sr);
+		List<Technology> technologies=new ArrayList<Technology>();
+		Technology tech=new Technology();
+		tech.setId("3");
+		tech.setName("Html4");
+		tech.setDatabases(dbs);
+		tech.setServers(servers);
+		technologies.add(tech);
+		ApplicationType appType=new ApplicationType();
+		appType.setId("testApptype");
+		appType.setTechnologies(technologies);
+		appType.setName("Mobile applications");
+		appTypes.add(appType);
 		mongoOperation.insertList(APPTYPES_COLLECTION_NAME , appTypes);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
+	
+	@Test
+	public void testFindAppTypes() {
+		List<ApplicationType> appTypeList = mongoOperation.getCollection(APPTYPES_COLLECTION_NAME , ApplicationType.class);
+		assertNotNull(appTypeList);
+		
+	}
 
-	@Ignore
+	@Test
 	public void testUpdateAppTypes() {
-		List<AppType> appTypes = new ArrayList<AppType>();
-		AppType appType = new AppType("Html5", "WebApplications", null);
+		List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
+		
+		ApplicationType appType = new ApplicationType();
+		appType.setId("testApptype");
+		appType.setName("web applications");
 		appTypes.add(appType);
-		appType.setId("4fe80d7e230d37b3444dfb32");
-		mongoOperation.save(APPTYPES_COLLECTION_NAME, appTypes);
+		
+		for(ApplicationType appsTypes:appTypes){
+			mongoOperation.save(APPTYPES_COLLECTION_NAME, appsTypes);
+			}
 		assertEquals(Response.status(Response.Status.OK).entity(appTypes).build().getStatus(), 200);
 	}
 
@@ -64,92 +93,91 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetApptype() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testApptype";
 		ApplicationType appType = mongoOperation.findOne(APPTYPES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
-		assertEquals(appType.getName(), "Html5");
+		assertNotNull(appType);
 	}
 	
-	@Ignore
+	@Test
 	public void testUpdateAppType() {
 		AppType appType = new AppType("Html5", "WebApplications", null);
-		appType.setId("4fe80d7e230d37b3444dfb32");
+		appType.setId("testApptype");
 		mongoOperation.save(APPTYPES_COLLECTION_NAME, appType);
 		assertEquals(Response.status(Response.Status.OK).entity(appType).build().getStatus(), 200);
 	}
 	
-	@Ignore
+	@Test
 	public void testDeleteAppType() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testApptype";
 		mongoOperation.remove(APPTYPES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ApplicationType.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
-	public void testFindSettings() {
-		List<SettingsTemplate> appTypeList = mongoOperation.getCollection(SETTINGS_COLLECTION_NAME , SettingsTemplate.class);
-		SettingsTemplate setting = appTypeList.get(0);
-		assertEquals(setting.getType(), "server");
-	}
-
-	@Ignore
+	
+	@Test
 	public void testCreateSettings() {
 		List<SettingsTemplate> settings = new ArrayList<SettingsTemplate>();
-		SettingsTemplate setting = new SettingsTemplate("server", null, null);
+		SettingsTemplate setting = new SettingsTemplate();
+		setting.setId("server");
+		setting.setType("tomcat");
 		settings.add(setting);
 		mongoOperation.insertList(SETTINGS_COLLECTION_NAME , settings);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testUpdateSettings() {
-		List<SettingsTemplate> settings = new ArrayList<SettingsTemplate>();
-		SettingsTemplate setting = new SettingsTemplate("database", null, null);
-		settings.add(setting);
-		setting.setId("4fe8165e230deb07e9aea1f3");
-		mongoOperation.save(APPTYPES_COLLECTION_NAME, settings);
-		assertEquals(Response.status(Response.Status.OK).entity(settings).build().getStatus(), 200);
+	@Test
+	public void testFindSettings() {
+		List<SettingsTemplate> appTypeList = mongoOperation.getCollection(SETTINGS_COLLECTION_NAME , SettingsTemplate.class);
+		assertNotNull(appTypeList);
 	}
 
+
+	@Test
+	public void testUpdateSettings() {
+		List<SettingsTemplate> settingsTe = new ArrayList<SettingsTemplate>();
+		SettingsTemplate setting = new SettingsTemplate();
+		setting.setId("server");
+		setting.setType("jboss");
+		settingsTe.add(setting);
+		for(SettingsTemplate settings :settingsTe){
+		mongoOperation.save(SETTINGS_COLLECTION_NAME, settings);
+		
+		assertEquals(Response.status(Response.Status.OK).entity(settings).build().getStatus(), 200);
+	}
+	}
 	@Ignore
 	public void testDeleteSettings() throws PhrescoException {
 		throw new PhrescoWebServiceException(EX_PHEX00006, "apptypes");
 	}
 
-	@Ignore
+	@Test
 	public void testGetSettingsTemplate() {
-		String id = "4fe8165e230deb07e9aea1f3";
+		String id = "server";
 		SettingsTemplate setting = mongoOperation.findOne(SETTINGS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class);
-		assertEquals(setting.getType(), "database");
+		assertNotNull(setting);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateSetting() {
 		SettingsTemplate setting = new SettingsTemplate("web-service", null, null);
-		setting.setId("4fe8165e230deb07e9aea1f3");
+		setting.setId("server");
 		mongoOperation.save(SETTINGS_COLLECTION_NAME, setting);
 		assertEquals(Response.status(Response.Status.OK).entity(setting).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteSettingsTemplate() {
-		String id = "4fe8165e230deb07e9aea1f3";
+		String id = "server";
 		mongoOperation.remove(SETTINGS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), SettingsTemplate.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
-	public void testFindModules() {
-		List<ModuleGroup> moduleList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
-		ModuleGroup module = moduleList.get(0);
-		assertEquals(module.getName(), "log4j");
-	}
-
-	@Ignore
+	
+	@Test
 	public void testCreateModules() {
 		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
 		ModuleGroup module = new ModuleGroup();
+		module.setId("testModule");
 		module.setName("log4j");
 		module.setGroupId("log4j");
 		module.setArtifactId("log4j");
@@ -158,17 +186,25 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
+	public void testFindModules() {
+		List<ModuleGroup> moduleList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
+		assertNotNull(moduleList);
+	}
+
+	@Test
 	public void testUpdateModules() {
 		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
 		ModuleGroup module = new ModuleGroup();
-		module.setName("log4j");
-		module.setGroupId("log4j");
-		module.setArtifactId("log4j");
-		module.setId("4fe81a71230df81749b2cc18");
+		module.setId("testModule");
+		module.setName("log4j4");
+		module.setGroupId("log4j4");
+		module.setArtifactId("log4j4");
 		modules.add(module);
-		mongoOperation.save(MODULES_COLLECTION_NAME, modules);
-		assertEquals(Response.status(Response.Status.OK).entity(modules).build().getStatus(), 200);
+		for(ModuleGroup modules1:modules){
+		mongoOperation.save(MODULES_COLLECTION_NAME, modules1);
+		assertEquals(Response.status(Response.Status.OK).entity(modules1).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -176,42 +212,36 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetModule() {
-		String id = "4fe81a71230df81749b2cc18";
+		String id = "testModule";
 		ModuleGroup module = mongoOperation.findOne(MODULES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
-		assertEquals(module.getName(), "log4j");
+		assertNotNull(module);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdatemodule() {
 		ModuleGroup module = new ModuleGroup();
+		module.setId("testModule");
 		module.setName("log4j");
 		module.setGroupId("log4j");
 		module.setArtifactId("log4j");
-		module.setId("4fe81a71230df81749b2cc18");
 		mongoOperation.save(MODULES_COLLECTION_NAME, module);
 		assertEquals(Response.status(Response.Status.OK).entity(module).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testDeleteModulesString() {
-		String id = "4fe81a71230df81749b2cc18";
+	@Test
+	public void testDeleteModule() {
+		String id = "testModule";
 		mongoOperation.remove(MODULES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ModuleGroup.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindPilots() {
-		List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
-		ProjectInfo pilot = pilotsList.get(0);
-		assertEquals(pilot.getName(), "eShop");
-	}
-
-	@Ignore
+	@Test
 	public void testCreatePilots() {
 		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		ProjectInfo info = new ProjectInfo();
+		info.setId("testPilot");
 		info.setName("shoppingcart");
 		info.setVersion("1.0");
 		info.setGroupId("com.photo.phresco");
@@ -221,18 +251,26 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
+	public void testFindPilots() {
+		List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
+		assertNotNull(pilotsList);
+	}
+
+	@Test
 	public void testUpdatePilots() {
 		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
 		ProjectInfo info = new ProjectInfo();
+		info.setId("testPilot");
 		info.setName("shoppingcart");
-		info.setVersion("1.0");
-		info.setGroupId("com.photo.phresco");
+		info.setVersion("2.0");
+		info.setGroupId("com.photon.phresco");
 		info.setArtifactId("phresco-projects");
-		info.setId("4fe8262e230d8aa51d425aa1");
 		infos.add(info);
-		mongoOperation.save(PILOTS_COLLECTION_NAME, infos);
-		assertEquals(Response.status(Response.Status.OK).entity(infos).build().getStatus(), 200);
+		for(ProjectInfo pinfos:infos){
+		mongoOperation.save(PILOTS_COLLECTION_NAME, pinfos);
+		assertEquals(Response.status(Response.Status.OK).entity(pinfos).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -240,44 +278,37 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetPilot() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testPilot";
 		ProjectInfo info = mongoOperation.findOne(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
-		assertEquals(info.getName(), "shoppingcart");
+		assertNotNull(info);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdatePilot() {
 		ProjectInfo info = new ProjectInfo();
+		info.setId("testPilot");
 		info.setName("shoppingcart");
 		info.setVersion("1.0");
 		info.setGroupId("com.photo.phresco");
 		info.setArtifactId("phresco-projects");
-		info.setId("4fe8262e230d8aa51d425aa1");
 		mongoOperation.save(PILOTS_COLLECTION_NAME, info);
 		assertEquals(Response.status(Response.Status.OK).entity(info).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeletePilot() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testPilot";
 		mongoOperation.remove(PILOTS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), ProjectInfo.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
-	public void testFindServers() {
-		List<Server> serversList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
-		System.out.println(serversList);
-		Server server = serversList.get(0);
-		assertEquals(server.getName(), "Tomcat");
-	}
-
-	@Ignore
+	
+	@Test
 	public void testCreateServers() {
 		List<Server> servers = new ArrayList<Server>();
 		Server server = new Server();
+		server.setId("testServer");
 		server.setName("Tomcat");
 		server.setDescription("For Deploying");
 		servers.add(server);
@@ -285,15 +316,24 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
+	public void testFindServers() {
+		List<Server> serversList = mongoOperation.getCollection(SERVERS_COLLECTION_NAME , Server.class);
+		assertNotNull(serversList);
+	}
+
+	@Test
 	public void testUpdateServers() {
 		List<Server> servers = new ArrayList<Server>();
 		Server server = new Server();
-		server.setName("Tomcat");
+		server.setId("testServer");
+		server.setName("Jboss");
 		server.setDescription("For Deploying");
 		servers.add(server);
-		mongoOperation.save(SERVERS_COLLECTION_NAME, servers);
-		assertEquals(Response.status(Response.Status.OK).entity(servers).build().getStatus(), 200);
+		for(Server servers1:servers){
+		mongoOperation.save(SERVERS_COLLECTION_NAME, servers1);
+		assertEquals(Response.status(Response.Status.OK).entity(servers1).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -301,56 +341,60 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetServer() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testServer";
 		Server server = mongoOperation.findOne(SERVERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
-		assertEquals(server.getName(), "shoppingcart");
+		assertNotNull(server);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateServer() {
 		Server server = new Server();
+		server.setId("testServer");
 		server.setName("Tomcat");
 		server.setDescription("For Deploying");
 		mongoOperation.save(SERVERS_COLLECTION_NAME, server);
 		assertEquals(Response.status(Response.Status.OK).entity(server).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteServer() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testServer";
 		mongoOperation.remove(SERVERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Server.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
-	public void testFindDatabases() {
-		List<Database> databasesList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
-		Database database = databasesList.get(0);
-		assertEquals(database.getName(), "mongo");
-	}
-
-	@Ignore
+	
+	@Test
 	public void testCreateDatabases() {
 		List<Database> databases = new ArrayList<Database>();
 		Database database = new Database();
+		database.setId("testDatabase");
 		database.setName("mongo");
 		database.setDescription("To save objects");
 		databases.add(database);
 		mongoOperation.insertList(DATABASES_COLLECTION_NAME , databases);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
+	
+	@Test
+	public void testFindDatabases() {
+		List<Database> databasesList = mongoOperation.getCollection(DATABASES_COLLECTION_NAME , Database.class);
+		assertNotNull(databasesList);
+	}
 
-	@Ignore
+	@Test
 	public void testUpdateDatabases() {
 		List<Database> databses = new ArrayList<Database>();
 		Database database = new Database();
-		database.setName("mongo");
+		database.setId("testDatabase");
+		database.setName("mongoDB");
 		database.setDescription("To save objects");
 		databses.add(database);
-		mongoOperation.save(DATABASES_COLLECTION_NAME, databses);
-		assertEquals(Response.status(Response.Status.OK).entity(databses).build().getStatus(), 200);
+		for(Database db:databses){
+		mongoOperation.save(DATABASES_COLLECTION_NAME, db);
+		assertEquals(Response.status(Response.Status.OK).entity(db).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -358,40 +402,35 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetDatabase() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testDatabase";
 		Database database = mongoOperation.findOne(DATABASES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Database.class);
-		assertEquals(database.getName(), "mongo");
+		assertNotNull(database);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateDatabase() {
 		Database database = new Database();
+		database.setId("testDatabase");
 		database.setName("mongo");
 		database.setDescription("To save objects");
 		mongoOperation.save(DATABASES_COLLECTION_NAME, database);
 		assertEquals(Response.status(Response.Status.OK).entity(database).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteDatabase() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testDatabase";
 		mongoOperation.remove(DATABASES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Database.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindWebServices() {
-		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
-		WebService service = webServiceList.get(0);
-		assertEquals(service.getName(), "jersey");
-	}
-
-	@Ignore
+	@Test
 	public void testCreateWebServices() {
 		List<WebService> webServices = new ArrayList<WebService>();
 		WebService webService = new WebService();
+		webService.setId("testWS");
 		webService.setName("jersey");
 		webService.setDescription("For rest");
 		webServices.add(webService);
@@ -399,15 +438,24 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
+	public void testFindWebServices() {
+		List<WebService> webServiceList = mongoOperation.getCollection(WEBSERVICES_COLLECTION_NAME , WebService.class);
+		assertNotNull(webServiceList);
+	}
+
+	@Test
 	public void testUpdateWebServices() {
 		List<WebService> webServices = new ArrayList<WebService>();
 		WebService webService = new WebService();
-		webService.setName("jersey");
+		webService.setId("testWS");
+		webService.setName("NodeJs");
 		webService.setDescription("For rest");
 		webServices.add(webService);
-		mongoOperation.save(WEBSERVICES_COLLECTION_NAME, webServices);
-		assertEquals(Response.status(Response.Status.OK).entity(webServices).build().getStatus(), 200);
+		for(WebService wbs:webServices){
+		mongoOperation.save(WEBSERVICES_COLLECTION_NAME, wbs);
+		assertEquals(Response.status(Response.Status.OK).entity(wbs).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -415,61 +463,59 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetWebService() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testWS";
 		WebService webService = mongoOperation.findOne(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
-		assertEquals(webService.getName(), "jersey");
+		assertNotNull(webService);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateWebService() {
 		WebService webService = new WebService();
+		webService.setId("testWS");
 		webService.setName("jersey");
 		webService.setDescription("For rest");
 		mongoOperation.save(WEBSERVICES_COLLECTION_NAME, webService);
 		assertEquals(Response.status(Response.Status.OK).entity(webService).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteWebService() throws PhrescoException {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testWS";
 		mongoOperation.remove(WEBSERVICES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), WebService.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindTechnologies() {
-		List<Technology> technologies = mongoOperation.getCollection(TECHNOLOGIES_COLLECTION_NAME , Technology.class);
-		Technology tech = technologies.get(0);
-		assertEquals(tech.getName(), "Tomcat");
-	}
-
-	@Ignore
+	@Test
 	public void testCreateTechnologies() {
 		List<Technology> techs = new ArrayList<Technology>();
 		Technology tech = new Technology();
-		tech.setName("drupal");
-		List<String> versions = new ArrayList<String>();
-		versions.add("6");
-		versions.add("7");
-		tech.setVersions(versions);
+		tech.setId("testTech");
+		tech.setName("Html5");
+		tech.setDescription("For webApp");
+		techs.add(tech);
 		mongoOperation.insertList(TECHNOLOGIES_COLLECTION_NAME , techs);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
+	
+	@Test
+	public void testFindTechnologies() {
+		List<Technology> technologies = mongoOperation.getCollection(TECHNOLOGIES_COLLECTION_NAME , Technology.class);
+		assertNotNull(technologies);
+	}
 
-	@Ignore
+	@Test
 	public void testUpdateTechnologies() {
 		List<Technology> techs = new ArrayList<Technology>();
 		Technology tech = new Technology();
+		tech.setId("testTech");
 		tech.setName("drupal");
-		tech.setId("4fe8262e230d8aa51d425aa1");
-		List<String> versions = new ArrayList<String>();
-		versions.add("6");
-		versions.add("7");
-		tech.setVersions(versions);
-		mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, techs);
-		assertEquals(Response.status(Response.Status.OK).entity(techs).build().getStatus(), 200);
+		techs.add(tech);
+		for(Technology tech1:techs){
+		mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, tech1);
+		assertEquals(Response.status(Response.Status.OK).entity(tech1).build().getStatus(), 200);
+		}
 	}
 
 	@Ignore
@@ -477,50 +523,27 @@ public class ComponentServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetTechnology() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testTech";
 		Technology tech = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
-		assertEquals(tech.getName(), "drupal");
+		assertNotNull(tech);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateTechnology() {
 		Technology tech = new Technology();
-		tech.setName("drupal");
-		tech.setId("4fe8262e230d8aa51d425aa1");
-		List<String> versions = new ArrayList<String>();
-		versions.add("6");
-		versions.add("7");
-		tech.setVersions(versions);
+		tech.setId("testTech");
+		tech.setName("PHP");
 		mongoOperation.save(TECHNOLOGIES_COLLECTION_NAME, tech);
 		assertEquals(Response.status(Response.Status.OK).entity(tech).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteTechnology() {
-		String id = "4fe8262e230d8aa51d425aa1";
+		String id = "testTech";
 		mongoOperation.remove(TECHNOLOGIES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Technology.class);
 		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 	
-	@Ignore
-	public void testGetModuleById() {
-		String techId = "tech-php";
-		List<ModuleGroup> modules = new ArrayList<ModuleGroup>();
-		try {
-			List<ModuleGroup> modulesList = mongoOperation.getCollection(MODULES_COLLECTION_NAME , ModuleGroup.class);
-			
-			for (ModuleGroup moduleGroup : modulesList) {
-//				if(moduleGroup.getTechId().equals(techId) ) {
-//					modules.add(moduleGroup);
-//				}
-			}
-			String json = new Gson().toJson(modules);
-			System.out.println(json);
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
 }
