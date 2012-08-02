@@ -141,7 +141,7 @@ public interface ServiceManager {
      * @return
      * @throws PhrescoException
      */
-    String getCiConfigPath() throws PhrescoException;
+    String getCiConfigPath(String repoType) throws PhrescoException;
     
     String getCiSvnPath() throws PhrescoException;
 
@@ -200,6 +200,6 @@ public interface ServiceManager {
 	void reSetCacheAppTypes() throws PhrescoException;
 
 	List<Reports> getReports(String techId) throws PhrescoException;
-
-
+	
+	InputStream getLatestVersionPom() throws PhrescoException;
 }

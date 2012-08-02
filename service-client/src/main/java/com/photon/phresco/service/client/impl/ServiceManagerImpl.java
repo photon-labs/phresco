@@ -131,7 +131,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	return videoInfosClient.get(genericType);
     }
     
-    private List<ApplicationType> getApplicationTypesFromServer() throws PhrescoException {
+    private List<ApplicationType> getApplicationTypesFromServer(String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getApplicationTypesFromServer()");
         }
@@ -147,11 +147,11 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
             S_LOGGER.debug("Entered into RestClient.getApplicationTypes()");
         }
 
-    	List<ApplicationType> appInfoValues = manager.getAppInfo(customerId); 
-    	try {	
+    	List<ApplicationType> appInfoValues = manager.getAppInfo(customerId);
+    	try {
     		if (CollectionUtils.isEmpty(appInfoValues)) {
-    			appInfoValues = getApplicationTypesFromServer();
-    			manager.addAppInfo(userInfo.getLoginId(), appInfoValues);
+    			appInfoValues = getApplicationTypesFromServer(customerId);
+    			manager.addAppInfo(customerId, appInfoValues);
     		}
     	} catch(Exception e){
     		throw new PhrescoException(e);
@@ -171,20 +171,20 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         
         return appTypeClient.getById(genericType);
     }
-    
-    public ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException {
+
+    public ClientResponse createApplicationTypes(List<ApplicationType> appTypes, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.createApplicationTypes(List<ApplicationType> appTypes)");
         }
     	
     	RestClient<ApplicationType> newApp = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 		ClientResponse clientResponse = newApp.create(appTypes);
-		manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
+		manager.addAppInfo(customerId, getApplicationTypesFromServer(customerId));
 		
 		return clientResponse;
     }
     
-    public void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException {
+    public void updateApplicationTypes(ApplicationType appType, String appTypeId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.updateApplicationTypes(ApplicationType appType, String appTypeId)" + appTypeId);
         }
@@ -193,10 +193,10 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	editApptype.setPath(appTypeId);
 		GenericType<ApplicationType> genericType = new GenericType<ApplicationType>() {};
 		editApptype.updateById(appType, genericType);
-		manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
+		manager.addAppInfo(customerId, getApplicationTypesFromServer(customerId));
     }
     
-    public ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException {
+    public ClientResponse deleteApplicationType(String appTypeId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.deleteApplicationType(String appTypeId)" + appTypeId);
         }
@@ -204,7 +204,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 	    RestClient<ApplicationType> deleteApptype = getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
 	    deleteApptype.setPath(appTypeId);
 	    ClientResponse clientResponse = deleteApptype.deleteById();
-	    manager.addAppInfo(userInfo.getLoginId(), getApplicationTypesFromServer());
+	    manager.addAppInfo(customerId, getApplicationTypesFromServer(customerId));
 	    
 	    return clientResponse;
     }

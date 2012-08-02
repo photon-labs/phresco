@@ -36,14 +36,14 @@
 					<reportElement x="0" y="0" width="182" height="20"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="13" y="3" width="59" height="15"/>
+					<reportElement x="13" y="3" width="61" height="15"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[File Name :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="72" y="3" width="100" height="15"/>
+					<reportElement x="74" y="3" width="100" height="15"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
@@ -51,9 +51,9 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="24" width="555" height="39" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="24" width="555" height="39" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF"/>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="0" width="555" height="39"/>
+					<reportElement x="0" y="0" width="555" height="39"/>
 					<subreportParameter name="min">
 						<subreportParameterExpression><![CDATA[$F{min}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -63,11 +63,14 @@
 					<subreportParameter name="totalAvgBytes">
 						<subreportParameterExpression><![CDATA[$F{totalAvgBytes}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="totalKbPerSec">
+						<subreportParameterExpression><![CDATA[$F{totalKbPerSec}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="totalThroughput">
 						<subreportParameterExpression><![CDATA[$F{totalThroughput}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="totalKbPerSec">
-						<subreportParameterExpression><![CDATA[$F{totalKbPerSec}]]></subreportParameterExpression>
+					<subreportParameter name="graphData">
+						<subreportParameterExpression><![CDATA[$F{jmeterTestResult}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="totalStdDev">
 						<subreportParameterExpression><![CDATA[$F{totalStdDev}]]></subreportParameterExpression>
@@ -78,14 +81,14 @@
 					<subreportParameter name="reportsDataType">
 						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="totalNoOfSample">
-						<subreportParameterExpression><![CDATA[$F{totalNoOfSample}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="totalAvg">
 						<subreportParameterExpression><![CDATA[$F{totalAvg}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="totalNoOfSample">
+						<subreportParameterExpression><![CDATA[$F{totalNoOfSample}]]></subreportParameterExpression>
+					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{jmeterTestResult})]]></dataSourceExpression>
-					<subreportExpression><![CDATA["reports/jasper/PhrescoPerfFileDatas.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["reports/jasper/PhrescoPerfFileDatasCopy.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 		</band>

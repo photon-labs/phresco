@@ -28,12 +28,16 @@
 
 <%
 	List<Technology> technologies = (List<Technology>) request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPES);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
-<form class="customer_list">
+<form id="formArchetypeList" class="customer_list" >
 	<div class="operation" id="operation">
-		<input type="button" id="archetypeAdd" class="btn btn-primary" name="archetype_add" onclick="loadContent('archetypeAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.arhtyp.add'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.comp.delete'/>" onclick="loadContent('archetypeDelete', $('#subcontainer'));"/>
+		<input type="button" id="archetypeAdd" class="btn btn-primary" name="archetype_add" 
+			onclick="loadContent('archetypeAdd', $('#formArchetypeList'), $('#subcontainer'));" 
+			value="<s:text name='lbl.hdr.comp.arhtyp.add'/>"/>
+		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.comp.delete'/>" 
+			onclick="loadContent('archetypeDelete', $('#formArchetypeList'), $('#subcontainer'));"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
@@ -46,73 +50,92 @@
 		</s:if>
 	</div>
 	<% if (CollectionUtils.isEmpty(technologies)) { %>
-            <div class="alert alert-block">
-                <s:text name='alert.msg.archetype.not.available'/>
-            </div>
+		<div class="alert alert-block">
+			<s:text name='alert.msg.archetype.not.available'/>
+		</div>
     <% } else { %>
-			<div class="table_div">
-				<div class="fixed-table-container">
-					<div class="header-background"> </div>
-					<div class="fixed-table-container-inner">
-						<table cellspacing="0" class="zebra-striped">
-							<thead>
+		<div class="table_div">
+			<div class="fixed-table-container">
+				<div class="header-background"></div>
+				<div class="fixed-table-container-inner">
+					<table cellspacing="0" class="zebra-striped">
+						<thead>
+							<tr>
+								<th class="first">
+									<div class="th-inner">
+										<input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
+									</div>
+								</th>
+								<th class="second">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.name"  theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.ver"  theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.apptype"  theme="simple"/></div>
+								</th>
+							</tr>
+						</thead>
+			
+						<tbody>
+						<%
+							if (CollectionUtils.isNotEmpty(technologies)) {
+								for ( Technology technology : technologies) {
+						%>
 								<tr>
-									<th class="first">
-										<div class="th-inner">
-											<input type="checkbox" value="" id="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
-										</div>
-									</th>
-									<th class="second">
-										<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.name"  theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label key="lbl.hdr.cmp.desc"  theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.ver"  theme="simple"/></div>
-									</th>
-									<th class="third">
-										<div class="th-inner tablehead"><s:label key="lbl.hdr.comp.apptype"  theme="simple"/></div>
-									</th>
-								</tr>
-							</thead>
-				
-							<tbody>
-										<%
-											if (CollectionUtils.isNotEmpty(technologies)) {
-												for ( Technology technology : technologies) {
-										%>
-													<tr>
-														<td class="checkboxwidth">
-															<input type="checkbox" class="check" name="techId" value="<%= technology.getId() %>" onclick="checkboxEvent();" />
-														</td>
-														<td class="namelabel-width">
-															<a href="#" onclick="editTech('<%= technology.getId() %>');">
-                                                                <%= StringUtils.isNotEmpty(technology.getName()) ? technology.getName() : "" %>
-                                                            </a>
-														</td>
-														<td class="desclabel-width"><%= StringUtils.isNotEmpty(technology.getDescription()) ? technology.getDescription() : "" %></td>	
-														<td class="namelabel-width"><%= CollectionUtils.isNotEmpty(technology.getVersions()) ? technology.getVersions() : "" %></td>
-														<td class="namelabel-width"><%= CollectionUtils.isNotEmpty(technology.getAppType()) ? technology.getAppType() : "" %></td>		
-													</tr>	
-										<%		
-												}
-											}
-										%>
-								
-							</tbody>
-						</table>
-					</div>
+									<td class="checkboxwidth">
+									<% if (technology.isSystem()) { %>
+										<input type="checkbox" name="techId" value="<%= technology.getId() %>" disabled/>
+									<% } else { %>
+										<input type="checkbox" class="check" name="techId" value="<%= technology.getId() %>" onclick="checkboxEvent();" />
+									<% } %>
+									</td>
+									
+									<td class="namelabel-width">
+									<% if (technology.isSystem()) { %>
+										<a href="#"><%= StringUtils.isNotEmpty(technology.getName()) ? technology.getName() : "" %></a>
+									<% } else { %>
+										<a href="#" onclick="editTech('<%= technology.getId() %>');">
+											<%= StringUtils.isNotEmpty(technology.getName()) ? technology.getName() : "" %>
+                                           </a>
+                                       <% } %>
+									</td>
+									
+									<td class="desclabel-width">
+										<%= StringUtils.isNotEmpty(technology.getDescription()) ? technology.getDescription() : "" %>
+									</td>	
+									<td class="namelabel-width">
+										<%= CollectionUtils.isNotEmpty(technology.getVersions()) ? technology.getVersions() : "" %>
+									</td>
+									<td class="namelabel-width">
+										<%= CollectionUtils.isNotEmpty(technology.getAppType()) ? technology.getAppType() : "" %>
+									</td>		
+								</tr>	
+						<%		
+								}
+							}
+						%>
+						</tbody>
+					</table>
 				</div>
 			</div>
+		</div>
 	<% } %>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" name="customerId" value="<%= customerId %>">
 </form>
+
 <script type="text/javascript">
     function editTech(id) {
 		var params = "techId=";
 		params = params.concat(id);
 		params = params.concat("&fromPage=");
 		params = params.concat("edit");
-		loadContent("archetypeEdit", '', $('#subcontainer'), params);
+		loadContentParam("archetypeEdit", params, $('#subcontainer'));
 	}
 </script>

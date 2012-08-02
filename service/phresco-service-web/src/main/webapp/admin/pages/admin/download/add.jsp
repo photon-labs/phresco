@@ -19,66 +19,34 @@
   --%>
 
 <%@ taglib uri="/struts-tags" prefix="s" %>
+
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+
 <%@ page import="com.photon.phresco.model.DownloadInfo" %>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
-
-<script type="text/javascript">
-	function findError(data) {
-		if(data.nameError != undefined) {
-			showError($("#nameControl"), $("#nameError"), data.nameError);
-		} else {
-			hideError($("#nameControl"), $("#nameError"));
-		}
-		
-		if(data.verError != undefined) {
-			showError($("#verControl"), $("#verError"), data.verError);
-		} else {
-			hideError($("#verControl"), $("#verError"));
-		}
-		
-		if(data.appltError != undefined) {
-			showError($("#appltControl"), $("#appltError"), data.appltError);
-		} else {
-			hideError($("#appltControl"), $("#appltError"));
-		}
-		
-		if(data.groupError != undefined) {
-			showError($("#groupControl"), $("#groupError"), data.groupError);
-		} else {
-			hideError($("#groupControl"), $("#groupError"));
-		}
-	}
-	
-	function showDiv() {
-	    $('#othersDiv').show();
-	}
-	
-	function hideDiv(){
-	    $('#othersDiv').hide();
-	}
-</script>
 
 <%
     DownloadInfo downloadInfo = (DownloadInfo)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO);
     String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
 %>
 
-<form class="form-horizontal customer_list">
+<form id="formDownloadAdd" class="form-horizontal customer_list">
 	<h4>
-	<%if(StringUtils.isNotEmpty(fromPage)) { %>
-	       <s:label key="lbl.hdr.adm.dwnlad.edit.title" theme="simple"/>
-	 <% } else { %>	
-	       <s:label key="lbl.hdr.adm.dwnlad.add.title" theme="simple"/>
-	  <%} %> 
-	 </h4>      
+	<% if (StringUtils.isNotEmpty(fromPage)) { %>
+		<s:label key="lbl.hdr.adm.dwnlad.edit.title" theme="simple"/>
+	<% } else { %>	
+		<s:label key="lbl.hdr.adm.dwnlad.add.title" theme="simple"/>
+	<% } %> 
+	</h4>
+	 
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
 			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" 
+					value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -88,7 +56,8 @@
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" value="<%= downloadInfo != null ? downloadInfo.getDescription() : "" %>" class="input-xlarge" type="text" name="description">
+				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" class="input-xlarge" type="text"
+					value="<%= downloadInfo != null ? downloadInfo.getDescription() : "" %>" name="description">
 			</div>
 		</div>
 		
@@ -165,12 +134,12 @@
 
 	<div class="bottom_button">
 	   <% if (StringUtils.isNotEmpty(fromPage)) { %>
-                <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-                    onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" />
+			<input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" />
         <% } else { %>
-		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+			<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
 		<% } %>
-		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#formDownloadAdd'), $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 	
 	<!-- Hidden Fields -->
@@ -178,3 +147,39 @@
     <input type="hidden" name="id" value="<%= downloadInfo != null ? downloadInfo.getId() : "" %>"/>
     <input type="hidden" name="oldName" value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>"/> 
 </form>
+
+<script type="text/javascript">
+	function findError(data) {
+		if(data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+		
+		if(data.verError != undefined) {
+			showError($("#verControl"), $("#verError"), data.verError);
+		} else {
+			hideError($("#verControl"), $("#verError"));
+		}
+		
+		if(data.appltError != undefined) {
+			showError($("#appltControl"), $("#appltError"), data.appltError);
+		} else {
+			hideError($("#appltControl"), $("#appltError"));
+		}
+		
+		if(data.groupError != undefined) {
+			showError($("#groupControl"), $("#groupError"), data.groupError);
+		} else {
+			hideError($("#groupControl"), $("#groupError"));
+		}
+	}
+	
+	function showDiv() {
+	    $('#othersDiv').show();
+	}
+	
+	function hideDiv(){
+	    $('#othersDiv').hide();
+	}
+</script>

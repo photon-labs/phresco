@@ -64,6 +64,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
+			<directory>src/main/webapp/WEB-INF/resources</directory>
+			<includes>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8">
 			<directory>src/main/webapp</directory>
 			<includes>
 				<include>index.jsp</include>

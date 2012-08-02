@@ -48,11 +48,11 @@ public interface ServiceManager {
 	
 	List<VideoInfo> getVideoInfos() throws PhrescoException;
 	
-	ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException;
+	ClientResponse createApplicationTypes(List<ApplicationType> appTypes, String customerId) throws PhrescoException;
 	
-	void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException;
+	void updateApplicationTypes(ApplicationType appType, String appTypeId, String customerId) throws PhrescoException;
 	
-	ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException;
+	ClientResponse deleteApplicationType(String appTypeId, String customerId) throws PhrescoException;
 	
 	List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException;
 	

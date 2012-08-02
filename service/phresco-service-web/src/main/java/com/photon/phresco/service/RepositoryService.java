@@ -105,4 +105,14 @@ public class RepositoryService {
 		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
 		return repoMgr.getArtifactAsStream(repoMgr.getEmailExtFile());
 	}
+	
+	@GET
+	@Path("/update")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public InputStream getLatestPom()throws Exception {
+		PhrescoServerFactory.initialize();
+		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
+		return repoMgr.getArtifactAsStream(repoMgr.getFrameWorkLatestFile());
+	}
+	
 }
