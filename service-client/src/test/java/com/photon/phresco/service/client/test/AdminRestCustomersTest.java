@@ -1,10 +1,12 @@
 package com.photon.phresco.service.client.test;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Test;
 
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.exception.PhrescoException;
@@ -31,7 +33,7 @@ public class AdminRestCustomersTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
     }
     
-    @Ignore
+    @Test
     public void testCreateCustomers() throws PhrescoException {
         List<Customer> customers = new ArrayList<Customer>();
         Customer customer = new Customer();
@@ -48,28 +50,29 @@ public class AdminRestCustomersTest implements ServiceConstants {
         customers.add(customer);
         RestClient<Customer> customersClient = serviceManager.getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         ClientResponse clientResponse = customersClient.create(customers);
-        System.out.println("clientResponse in testCreateCustomers() : " + clientResponse.getStatus());
+        assertNotNull(clientResponse);
     }
     
-    @Ignore
+    @Test
     public void getCustomers() throws PhrescoException {
         RestClient<Customer> customersClient = serviceManager.getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         GenericType<List<Customer>> genericType = new GenericType<List<Customer>>(){};
         List<Customer> customers = customersClient.get(genericType);
-        System.out.println("customers.size() : " + customers.size());
+        assertNotNull(customers);
     }
     
-    @Ignore
+    
+	@Test
     public void getCustomer() throws PhrescoException {
         String customerId = "test-customer";
         RestClient<Customer> customersClient = serviceManager.getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         customersClient.setPath(customerId);
         GenericType<Customer> genericType = new GenericType<Customer>(){};
         Customer customer = customersClient.getById(genericType);
-        System.out.println("customer.getName : " + customer.getName());
+        assertNotNull(customer);
     }
     
-    @Ignore
+    @Test
     public void updateCustomer() throws PhrescoException {
         String customerId = "test-customer";
         Customer customer = new Customer();
@@ -89,12 +92,12 @@ public class AdminRestCustomersTest implements ServiceConstants {
         customersClient.updateById(customer, genericType);
     }
     
-    @Ignore
+    @Test
     public void deleteCustomer() throws PhrescoException {
         String customerId = "test-customer";
         RestClient<Customer> customersClient = serviceManager.getRestClient(REST_API_ADMIN + REST_API_CUSTOMERS);
         customersClient.setPath(customerId);
         ClientResponse clientResponse = customersClient.deleteById();
-        System.out.println("clientResponse in deleteCustomer()" + clientResponse.getStatus());
+        assertNotNull(clientResponse);
     }
 }
