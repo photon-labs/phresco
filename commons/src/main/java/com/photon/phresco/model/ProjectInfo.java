@@ -49,6 +49,8 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String artifactId;
 	private String customerId;
 	private boolean system;
+	private String techId;
+	
 
 	/**
 	 * @return the pilotid
@@ -197,7 +199,15 @@ public class ProjectInfo implements Cloneable ,Serializable {
     
 	
 
-	public String getCustomerId() {
+	public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
+
+    public String getCustomerId() {
 		return customerId;
 	}
 
