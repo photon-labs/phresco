@@ -17,6 +17,27 @@
  * limitations under the License.
  * ###
  */
+ 
+ /************************************************************************************
+smaller than 650
+*************************************************************************************/
+@media screen and  (min-width: 481px) and (max-width: 767px) {
+	/* content */
+	.sonar_report {
+		height: 78%;
+	}
+}
+
+/************************************************************************************
+smaller than 480
+*************************************************************************************/
+@media screen and (max-width: 480px) {
+	/* content */
+	.sonar_report {
+		height: 75%;
+	}
+} 
+ 
 /************************************************************************************
 Width <= 1024
 *************************************************************************************/
@@ -314,7 +335,8 @@ Width <= 1024
 	.iframe_container_forum {
 		background:transparent;
 		width:100%;
-		height:94%;
+		height:93%;
+		overflow: hidden;
 	}
 	
 	.graph_div {
@@ -941,6 +963,18 @@ Width >= 1025 and < 1151
 		float: right;
 		width: 34%;
 	}
+	
+	.sonar_report {
+		height: 91%;
+   		width: 100%;		
+	}
+	
+	.iframe_container_forum {
+		background:transparent;
+		width:100%;
+		height:93%;
+		overflow: hidden;
+	}
 }
 
 /************************************************************************************
@@ -1182,14 +1216,15 @@ Width >= 1152 and < 1280
 	}
 	
 	.sonar_report {
-		height: 94%;
+		height: 91%;
    		width: 100%;		
 	}
 	
 	.iframe_container_forum {
 		background:transparent;
 		width:100%;
-		height:94.7%;
+		height:94.4%;
+		overflow: hidden;
 	}
 	
 	#tabularView {	
@@ -1617,7 +1652,7 @@ Width <= 1280 and height <= 800
 	}
 	
 	.sonar_report {
-		height: 91%;
+		height: 89.5%;
    		width: 100%;		
 	}
 	
@@ -1625,6 +1660,7 @@ Width <= 1280 and height <= 800
 		background:transparent;
 		width:100%;
 		height:93.7%;
+		overflow: hidden;
 	}
 	
 	.graph_div {
@@ -1975,6 +2011,7 @@ Width >= 1280 and height >= 800
 	    background: none repeat scroll 0 0 transparent;
 	    height: 95.5%;
 	    width: 100%;
+		overflow: hidden;
     }
     
     #tabularView {	
@@ -2412,7 +2449,7 @@ Width > 1280 and <= 1360
 	}
 	
 	.sonar_report {
-		height: 90%;
+		height: 89%;
    		width: 100%;		
 	}
 	
@@ -2420,6 +2457,7 @@ Width > 1280 and <= 1360
 		background:transparent;
 		width:100%;
 		height:94%;
+		overflow: hidden;
 	}
 	#tabularView {	
 		position: relative;
@@ -2813,6 +2851,7 @@ Width > 1360 and <= 1440
 		background:transparent;
 		width:100%;
 		height:95.5%;
+		overflow: hidden;
 	}
 	
 	#tabularView {	
@@ -3199,7 +3238,7 @@ Width > 1441 and <= 1600
 	}
 	
 	.sonar_report {
-		 height: 93.7%;
+		 height: 92%;
    		 width: 100%;		
 	}
 	
@@ -3207,6 +3246,7 @@ Width > 1441 and <= 1600
 		background:transparent;
 		width:100%;
 		height:95.5%;
+		overflow: hidden;
 	}
 	
 	#tabularView {	
