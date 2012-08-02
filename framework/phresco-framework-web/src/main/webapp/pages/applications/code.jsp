@@ -75,6 +75,8 @@
 
 <script>
     $(document).ready(function() {
+		$(window).bind("resize", resizeWindow);
+		
 		/** To enable/disable the validate button based on the sonar startup **/
     	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
     			$("#validate").removeClass("primary");	
@@ -131,5 +133,11 @@
 		} else {
 			return obj;
 		}
+	}
+	
+	/* Resize sonar iframe while resize the window */
+	function resizeWindow(e) { 
+		var SonarTabheight = $("#tabDiv").height();
+        $(".sonar_report").css("height", SonarTabheight - 40);
 	}
 </script>
