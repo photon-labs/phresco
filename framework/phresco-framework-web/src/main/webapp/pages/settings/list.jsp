@@ -26,6 +26,7 @@
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.List"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="java.util.Map"%>
 
 <%@ page import="java.util.regex.*"%>
@@ -157,23 +158,10 @@ List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConst
 			                    					if (propertyInfo.getKey().equals(Constants.SERVER_PORT)) {
 			                    						port = Integer.parseInt(propertyInfo.getValue());
 			                    					}
-			                    					if (propertyInfo.getKey().equals(Constants.DB_HOST)) {
-			                    						protocol = Constants.DB_PROTOCOL;
-			                    						host = propertyInfo.getValue();
-			                    					}
-			                    					if (propertyInfo.getKey().equals(Constants.DB_PORT)) {
-			                    						port = Integer.parseInt(propertyInfo.getValue());
-			                    					}
-			                    					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_PROTOCOL)) {
-			                       						protocol =propertyInfo.getValue();
-			                       					}
-			                       					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_HOST)) {
-			                       						host = propertyInfo.getValue();
-			                       					}
-			                       					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_PORT)) {
-			                       						port = Integer.parseInt(propertyInfo.getValue());
-			                       					}
 			                            		}
+				                           		if (StringUtils.isEmpty(protocol)) {
+				                           			protocol = Constants.DB_PROTOCOL;
+				                           		}
 			                               		String settingName = setting.getName();
 			                               		Pattern pattern = Pattern.compile("\\s+");
 			                               		Matcher matcher = pattern.matcher(settingName);

@@ -22,6 +22,7 @@
 <%@ include file="../errorReport.jsp" %>
 
 <%@ page import="java.util.List"%>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="java.util.HashMap"%>
@@ -157,22 +158,9 @@
 			                   					if (propertyInfo.getKey().equals(Constants.SERVER_PORT)) {
 			                   						port = Integer.parseInt(propertyInfo.getValue());
 			                   					}
-			                   					if (propertyInfo.getKey().equals(Constants.DB_HOST)) {
-			                   						protocol = Constants.DB_PROTOCOL;
-			                   						host = propertyInfo.getValue();
-			                   					}
-			                   					if (propertyInfo.getKey().equals(Constants.DB_PORT)) {
-			                   						port = Integer.parseInt(propertyInfo.getValue());
-			                   					}
-			                   					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_PROTOCOL)) {
-			                   						protocol =propertyInfo.getValue();
-			                   					}
-			                   					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_HOST)) {
-			                   						host = propertyInfo.getValue();
-			                   					}
-			                   					if (propertyInfo.getKey().equals(Constants.WEB_SERVICE_PORT)) {
-			                   						port = Integer.parseInt(propertyInfo.getValue());
-			                   					}
+			                           		}
+			                           		if (StringUtils.isEmpty(protocol)) {
+			                           			protocol = Constants.DB_PROTOCOL;
 			                           		}
 			                           		String configName = configuration.getName() + configuration.getEnvName();
 			                           		Pattern pattern = Pattern.compile("\\s+");

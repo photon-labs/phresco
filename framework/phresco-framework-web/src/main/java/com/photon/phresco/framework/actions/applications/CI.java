@@ -116,6 +116,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     private String downloadJobName = null;
     private String svnType = null;
     private String branch = null;
+    private String localJenkinsAlive = "";
 
     public String ci() {
     	S_LOGGER.debug("Entering Method CI.ci()");
@@ -344,7 +345,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
         		addActionMessage(getText(SUCCESS_UPDATE));
     		}
     		
-    		restartJenkins(); // TODO: reload config
+    		if (!GIT.equals(existJob.getRepoType())) {
+    			restartJenkins(); // TODO: reload config
+    		}
     		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
     	} catch (Exception e) {
         	S_LOGGER.error("Entered into catch block of CI.doUpdateSave()" + FrameworkUtil.getStackTraceAsString(e));
@@ -726,6 +729,25 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 		return SUCCESS;
     }
     
+    public String localJenkinsLocalAlive() {
+    	S_LOGGER.debug("Entering Method CI.localJenkinsLocalAlive()");
+		try {
+			URL url = new URL (HTTP_PROTOCOL + PROTOCOL_POSTFIX + LOCALHOST + COLON + Integer.parseInt(getPortNo(Utility.getJenkinsHome())) + FORWARD_SLASH + CI);
+			URLConnection connection = url.openConnection();
+			HttpURLConnection httpConnection = (HttpURLConnection) connection;
+			int code = httpConnection.getResponseCode();
+			localJenkinsAlive = code+"";
+			S_LOGGER.debug("localJenkinsAlive => " + localJenkinsAlive);
+		} catch (ConnectException e) {
+			localJenkinsAlive = "404";
+			S_LOGGER.debug("localJenkinsAlive => " + localJenkinsAlive);
+		} catch (Exception e) {
+			localJenkinsAlive = "404";
+			S_LOGGER.debug("localJenkinsAlive => " + localJenkinsAlive);
+		}
+		return SUCCESS;
+    }
+    
 	public String getName() {
 		return name;
 	}
@@ -1044,6 +1066,14 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setBranch(String branch) {
 		this.branch = branch;
+	}
+	
+	public String getLocalJenkinsAlive() {
+		return localJenkinsAlive;
+	}
+
+	public void setLocalJenkinsAlive(String localJenkinsAlive) {
+		this.localJenkinsAlive = localJenkinsAlive;
 	}
 	
 }
