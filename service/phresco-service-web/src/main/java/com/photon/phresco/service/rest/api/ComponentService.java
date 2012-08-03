@@ -639,9 +639,12 @@ public class ComponentService extends DbService implements ServiceConstants {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findPilots()" + techId);
 	    }
+	    List<ProjectInfo> pilotsList = new ArrayList<ProjectInfo>();
 		try {
-			List<ProjectInfo> pilotsList = mongoOperation.find(PILOTS_COLLECTION_NAME ,
-			        new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(customerId)), ProjectInfo.class);
+		    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+    			pilotsList = mongoOperation.find(PILOTS_COLLECTION_NAME ,
+    			        new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(customerId)), ProjectInfo.class);
+		    }
 			pilotsList.addAll(mongoOperation.find(PILOTS_COLLECTION_NAME ,
                     new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ProjectInfo.class));
 			return Response.status(Response.Status.OK).entity(pilotsList).build();
