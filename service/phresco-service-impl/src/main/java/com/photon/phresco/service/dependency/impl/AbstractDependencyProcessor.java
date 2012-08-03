@@ -116,7 +116,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @param module
 	 * @throws PhrescoException
 	 */
-	protected void extractModule(File path, ModuleGroup module) throws PhrescoException {
+	protected void extractModule(File path, ModuleGroup moduleGroup) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
 			S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
@@ -125,11 +125,18 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 
 		// TODO:Handle all versions
 
-		Module moduleVersion = module.getVersions().get(0);
-		String contentURL = moduleVersion.getUrl();
-		if (!StringUtils.isEmpty(contentURL)) {
-			DependencyUtils.extractFiles(contentURL, path);
-		}
+//		Module moduleVersion = module.getVersions().get(0);
+//		String contentURL = moduleVersion.getUrl();
+//		if (!StringUtils.isEmpty(contentURL)) {
+//			DependencyUtils.extractFiles(contentURL, path);
+//		}
+		List<Module> versions = moduleGroup.getVersions();
+		for (Module module : versions) {
+            String contentUrl = module.getContentURL();
+            if (!StringUtils.isEmpty(contentUrl)) {
+              DependencyUtils.extractFiles(contentUrl, path);
+          }
+        }
 	}
 
 	protected RepositoryManager getRepositoryManager() {

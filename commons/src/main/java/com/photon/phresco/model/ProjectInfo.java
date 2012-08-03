@@ -50,6 +50,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String customerId;
 	private boolean system;
 	private String techId;
+	private String projectURL;
 	
 
 	/**
@@ -263,5 +264,13 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setPilotProjectName(String pilotProjectName) {
 		this.pilotProjectName = pilotProjectName;
 	}
+
+    public String getProjectURL() {
+        return projectURL;
+    }
+
+    public void setProjectURL(String projectURL) {
+        this.projectURL = projectURL;
+    }
 
 }

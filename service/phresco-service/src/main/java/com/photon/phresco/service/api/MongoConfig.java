@@ -47,7 +47,7 @@ public class MongoConfig extends AbstractMongoConfiguration implements ServiceCo
 	public @Bean Mongo mongo() throws PhrescoException {
 		Mongo mongo = null;
 		try {
-			mongo = new Mongo(config.getDbHost(), config.getDbPort());
+			mongo = new Mongo("172.16.17.227", config.getDbPort());
 		} catch (UnknownHostException e) {
 			throw new PhrescoException(EX_PHEX00002);
 		} catch (MongoException e) {

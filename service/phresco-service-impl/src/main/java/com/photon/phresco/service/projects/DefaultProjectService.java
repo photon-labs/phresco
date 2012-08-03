@@ -71,19 +71,17 @@ public class DefaultProjectService implements ProjectService, Constants {
 		if (listFiles.length > 0) {
 			projectPath = listFiles[0];
 		}
-		// PhrescoServerFactory.getDependencyProcessor().process(info,
-		// projectPath);
 		DependencyProcessor dependencyProcessor = DependencyProcessorFactory.getDependencyProcessor(projectInfo);
 		if (dependencyProcessor != null) {
 			dependencyProcessor.process(projectInfo, projectPath);
 		}
-
-		PhrescoServerFactory.getNewDocumentGenerator().generate(projectInfo, projectPath);
-
-		// Configure created application
-		if (isDebugEnabled) {
-			S_LOGGER.info("Configure created application :" + projectInfo.getName());
-		}
+//
+//		PhrescoServerFactory.getNewDocumentGenerator().generate(projectInfo, projectPath);
+//
+//		// Configure created application
+//		if (isDebugEnabled) {
+//			S_LOGGER.info("Configure created application :" + projectInfo.getName());
+//		}
 		ConfiguratorFactory.getConfigurator(projectInfo).configure(projectInfo, projectPath);
 		return projectPath;
 	}

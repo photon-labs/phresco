@@ -43,6 +43,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.RepositoryManager;
@@ -78,7 +79,15 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 			String modulesPathString=DependencyProcessorMessages.getString(jsLibPathKey);
 			libPath = new File(path, modulesPathString);
 		}
-
+		
+		for (ModuleGroup moduleGroup : jsLibraries) {
+            List<Module> versions = moduleGroup.getVersions();
+            for (Module module : versions) {
+                if(module != null) {
+                    DependencyUtils.extractFiles(module.getContentURL(), libPath);
+                }
+            }
+        }
 //		for (ModuleGroup tupleBean : jsLibraries) {
 //			Library library = getRepositoryManager().getJsLibrary(tupleBean.getId());
 //

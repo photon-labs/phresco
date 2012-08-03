@@ -48,6 +48,7 @@ import org.codehaus.plexus.util.FileUtils;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.util.Utility;
 
@@ -96,25 +97,28 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
                 }
             }
             
-            //copy pilot projects
-            if(StringUtils.isNotBlank(info.getPilotProjectName())){
-	            List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
-	            if(CollectionUtils.isEmpty(pilotProjects)){
-	                return;
-	            }
-	
-	            for (ProjectInfo projectInfo : pilotProjects) {
-	//                extractModules(modulesPath, projectInfo.getTechnology().getModules());
-	//				extractLibraries(modulesPath, projectInfo.getTechnology().getLibraries());
-	                List<String> urls = projectInfo.getPilotProjectUrls();
-	                if(urls != null){
-	                    for (String url : urls) {
-	                        DependencyUtils.extractFiles(url, path);
-	                    }
-	                }
-	            }
+//            //copy pilot projects
+//            if(StringUtils.isNotBlank(info.getPilotProjectName())){
+////	            List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
+//	            if(CollectionUtils.isEmpty(pilotProjects)){
+//	                return;
+//	            }
+//	
+//	            for (ProjectInfo projectInfo : pilotProjects) {
+//	                List<String> urls = projectInfo.getPilotProjectUrls();
+//	                if(urls != null){
+//	                    for (String url : urls) {
+//	                        DependencyUtils.extractFiles(url, path);
+//	                    }
+//	                }
+//	            }
+//            }
+            ProjectInfo projectInfo = PhrescoServerFactory.getDbManager().getProjectInfo(info.getTechnology().getId(), info.getName());
+            if(projectInfo != null) {
+                System.out.println("Pilot Fuound" + projectInfo.getName());
+                DependencyUtils.extractFiles(projectInfo.getProjectURL(), path);
             }
-            extractJsLibraries(path, info.getTechnology().getJsLibraries());
+//            extractJsLibraries(path, info.getTechnology().getJsLibraries());
             createSqlFolder(info, path);
             updateTestPom(path);
         } catch (IOException e) {
