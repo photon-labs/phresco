@@ -33,8 +33,11 @@ import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
+import com.photon.phresco.service.client.impl.RestClient;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 
 public class PilotProjects extends ServiceBaseAction { 
 	
@@ -55,7 +58,7 @@ public class PilotProjects extends ServiceBaseAction {
 	private String projectId = null;
 	private String fromPage = null;
 	private String customerId = null;
-	private String techId = null;
+	
 
     public String list() throws PhrescoException {
         if (isDebugEnabled) {
@@ -63,8 +66,14 @@ public class PilotProjects extends ServiceBaseAction {
         }
 
 		try {
-			List<ProjectInfo> pilotProjects = getServiceManager().getPilots(techId, customerId);
-			getHttpRequest().setAttribute("pilotProjects", pilotProjects);
+			List<ProjectInfo> pilotProjects = getServiceManager().getPilotProject(customerId);
+			getHttpRequest().setAttribute(REQ_PILOT_PROJECTS, pilotProjects);
+			getHttpRequest().setAttribute(REQ_CUST_CUSTOMER_ID, customerId);
+			
+			RestClient<Technology> technology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+			List<Technology> technologys = technology.get(genericType);
+			getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -72,118 +81,128 @@ public class PilotProjects extends ServiceBaseAction {
 		return COMP_PILOTPROJ_LIST;
 	}
 	
-	public String add() {
-		S_LOGGER.debug("Entering Method PilotProjects.add()");
-		
-		return COMP_PILOTPROJ_ADD;
-	}
+    public String add() throws PhrescoException {
+    	if (isDebugEnabled) {	
+    		S_LOGGER.debug("Entering Method PilotProjects.add()");
+    	}
+    	
+    	try {
+    		RestClient<Technology> technology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+    		GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+    		List<Technology> technologys = technology.get(genericType);
+    		getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
+    	} catch(Exception e) {
+    		throw new PhrescoException(e);
+    	} 
+    	return COMP_PILOTPROJ_ADD;
+    }
 	
-	public String save() throws PhrescoException {
-	    if (isDebugEnabled) {
-	        S_LOGGER.debug("Entering Method PilotProjects.save()");
-	    }
+    public String save() throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entering Method PilotProjects.save()");
+    	}
 
-		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
-			InputStream inputStream = new FileInputStream(projArc);
-			FileOutputStream outputStream = new FileOutputStream(new File("c:/" + projArcFileName));
-				IOUtils.copy(inputStream, outputStream);
-			List<ProjectInfo> pilotProInfo = new ArrayList<ProjectInfo>();
-			ProjectInfo proInfo = new ProjectInfo();
-			proInfo.setName(name);
-			proInfo.setDescription(description);
-			pilotProInfo.add(proInfo);
-			ClientResponse clientResponse = getServiceManager().createPilotProject(pilotProInfo);
-			if(clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201  ){
-				addActionError(getText(PLTPROJ_NOT_ADDED, Collections.singletonList(name)));
-			} else {
-				addActionMessage(getText(PLTPROJ_ADDED, Collections.singletonList(name)));
-			}
-		} catch (Exception e) {
-          throw new PhrescoException(e);
-		}
-		
-		return list();
-	}
+    	try {
+    		InputStream inputStream = new FileInputStream(projArc);
+    		FileOutputStream outputStream = new FileOutputStream(new File("c:/" + projArcFileName));
+    		IOUtils.copy(inputStream, outputStream);
+    		List<ProjectInfo> pilotProInfo = new ArrayList<ProjectInfo>();
+    		ProjectInfo proInfo = new ProjectInfo();
+    		proInfo.setName(name);
+    		proInfo.setDescription(description);
+    		pilotProInfo.add(proInfo);
+    		ClientResponse clientResponse = getServiceManager().createPilotProject(pilotProInfo);
+    		if(clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201  ){
+    			addActionError(getText(PLTPROJ_NOT_ADDED, Collections.singletonList(name)));
+    		} else {
+    			addActionMessage(getText(PLTPROJ_ADDED, Collections.singletonList(name)));
+    		}
+    	} catch (Exception e) {
+    		throw new PhrescoException(e);
+    	}
+
+    	return list();
+    }
 	
-	public String edit() throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method pilotProject.edit()");
-		}
+    public String edit() throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entering Method PilotProjects.edit()");
+    	}
 
-		try {
-			ProjectInfo pilotProjectInfo = getServiceManager().getPilotProject(projectId);
-			getHttpRequest().setAttribute("pilotProjectInfo", pilotProjectInfo);
-			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
-		} catch (Exception e) {
-			throw new PhrescoException(e);
-		}
+    	try {
+    		ProjectInfo pilotProjectInfo = getServiceManager().getPilotPro(projectId);
+    		getHttpRequest().setAttribute(REQ_PILOT_PROINFO, pilotProjectInfo);
+    		getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
+    	} catch (Exception e) {
+    		throw new PhrescoException(e);
+    	}
 
-		return COMP_PILOTPROJ_ADD;
-	}
+    	return COMP_PILOTPROJ_ADD;
+    }
 	
-	public String update() throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  PilotProject.update()");
-		}
+    public String update() throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entering Method  PilotProjects.update()");
+    	}
 
-		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
+    	try {
     		ProjectInfo pilotProInfo = new ProjectInfo();
     		pilotProInfo.setId(projectId);
     		pilotProInfo.setName(name);
     		pilotProInfo.setDescription(description);
     		getServiceManager().updatePilotProject(pilotProInfo, projectId);
-		} catch(Exception e) {
-			throw new PhrescoException(e);
-		}
+    	} catch(Exception e) {
+    		throw new PhrescoException(e);
+    	}
 
-		return list();
-	}
+    	return list();
+    }
 	
-	public String delete() throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method pilotProject.delete()");
-		}
+    public String delete() throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entering Method PilotProjects.delete()");
+    	}
 
-		try {
-			String[] projectIds = getHttpRequest().getParameterValues("projectId");
-			if (projectIds != null) {
-				for (String projectID : projectIds) {
-					ClientResponse clientResponse =getServiceManager().deletePilotProject( projectID);
-					if (clientResponse.getStatus() != 200) {
-						addActionError(getText(PLTPROJ_NOT_DELETED));
-					}
-				}
-				addActionMessage(getText(PLTPROJ_DELETED));
-			}
-		} catch (Exception e) {
-			throw new PhrescoException(e);
-		}
+    	try {
+    		String[] projectIds = getHttpRequest().getParameterValues("projectId");
+    		if (projectIds != null) {
+    			for (String projectID : projectIds) {
+    				ClientResponse clientResponse =getServiceManager().deletePilotProject( projectID);
+    				if (clientResponse.getStatus() != 200) {
+    					addActionError(getText(PLTPROJ_NOT_DELETED));
+    				}
+    			}
+    			addActionMessage(getText(PLTPROJ_DELETED));
+    		}
+    	} catch (Exception e) {
+    		throw new PhrescoException(e);
+    	}
 
-		return list();
-	}
+    	return list();
+    }
 	
-	private boolean validateForm() {
-		boolean success = false;
-		if (StringUtils.isEmpty(name)) {
-			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
-			success = true;
+    public String validateForm() {
+    	if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method  PilotProjects.validateForm()");
 		}
-		
-		if (StringUtils.isEmpty(projArcFileName) || projArc == null) {
-			setFileError(getText(KEY_I18N_ERR_PLTPROJ_EMPTY));
-			success = true;
-		}
-		
-		return success;
-	}
+    	
+    	boolean isError = false;
+    	if (StringUtils.isEmpty(name)) {
+    		setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
+    		isError = true;
+    	}
+
+    	if (StringUtils.isEmpty(projArcFileName) || projArc == null) {
+    		setFileError(getText(KEY_I18N_ERR_PLTPROJ_EMPTY));
+    		isError = true;
+    	}
+    	
+    	if (isError) {
+    		setErrorFound(true);
+    	}
+
+    	return SUCCESS;
+    }
 
 	public String getName() {
 		return name;
@@ -271,13 +290,5 @@ public class PilotProjects extends ServiceBaseAction {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
-    }
-    
-    public String getTechId() {
-        return techId;
-    }
-
-    public void setTechId(String techId) {
-        this.techId = techId;
     }
 }

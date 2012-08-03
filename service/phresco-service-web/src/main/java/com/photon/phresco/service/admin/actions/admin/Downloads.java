@@ -20,20 +20,14 @@
 package com.photon.phresco.service.admin.actions.admin;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
@@ -69,14 +63,16 @@ public class Downloads extends ServiceBaseAction {
 	private String description=null;
 	private String id = null;
 	private String fromPage = null;
+	private String customerId = null;
 
 	public String list() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DownloadList.list()");
+			S_LOGGER.debug("Entering Method Downloads.list()");
 		}
 		try {
-			List<DownloadInfo> downloadInfo = getServiceManager().getDownloads();
+			List<DownloadInfo> downloadInfo = getServiceManager().getDownloads(customerId);
 			getHttpRequest().setAttribute(REQ_DOWNLOAD_INFO, downloadInfo);
+			getHttpRequest().setAttribute(REQ_CUST_CUSTOMER_ID, customerId);
 		} catch(Exception e){
 			throw new PhrescoException(e);
 		}
@@ -84,23 +80,28 @@ public class Downloads extends ServiceBaseAction {
 		return ADMIN_DOWNLOAD_LIST;	
 	}
 
-	public String add() {
+	public String add() throws PhrescoException {
 		if (isDebugEnabled) {	
-			S_LOGGER.debug("Entering Method DownloadList.add()");
+			S_LOGGER.debug("Entering Method Downloads.add()");
 		}
+		try {
+			RestClient<Technology> technology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+			List<Technology> technologys = technology.get(genericType);
+			getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
+		} catch(Exception e) {
+			throw new PhrescoException(e);
+		}
+		
 		return ADMIN_DOWNLOAD_ADD;
 	}
 
 	public String save() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DownloadList.save()");
+			S_LOGGER.debug("Entering Method Downloads.save()");
 		}
 
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
 			/*if(fileArc != null) {
 					InputStream inputStream = new FileInputStream(fileArc);
 					FileOutputStream outputStream = new FileOutputStream(new File("c:/" + fileArcFileName));
@@ -132,7 +133,7 @@ public class Downloads extends ServiceBaseAction {
 
 	public String edit() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method downloadInfo.edit()");
+			S_LOGGER.debug("Entering Method Downloads.edit()");
 		}
 
 		try {
@@ -149,15 +150,10 @@ public class Downloads extends ServiceBaseAction {
 
 	public String update() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  Download.update()");
+			S_LOGGER.debug("Entering Method  Downloads.update()");
 		}
 
 		try {
-			if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}
-
 			DownloadInfo download = new DownloadInfo();
 			download.setId(id);
 			download.setName(name);
@@ -173,7 +169,7 @@ public class Downloads extends ServiceBaseAction {
 
 	public String delete() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method Download.delete()");
+			S_LOGGER.debug("Entering Method Downloads.delete()");
 		}
 
 		try {
@@ -195,29 +191,37 @@ public class Downloads extends ServiceBaseAction {
 	}
 
 
-	private boolean validateForm() {
-		boolean success = false;
+	public String validateForm() {
+		if (isDebugEnabled) {
+			S_LOGGER.debug("Entering Method Downloads.validateForm()");
+		}
+		
+		boolean isError = false;
 		if (StringUtils.isEmpty(name)) {
 			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY));
-			success = true;
+			isError = true;
 		} 
 
 		if (StringUtils.isEmpty(version)) {
 			setVerError(getText(KEY_I18N_ERR_VER_EMPTY));
-			success = true;
+			isError = true;
 		} 
 
 		if (StringUtils.isEmpty(application)) {
 			setAppltError(getText(KEY_I18N_ERR_APPLNPLTF_EMPTY));
-			success = true;
+			isError = true;
 		} 
 
 		if (StringUtils.isEmpty(group)) {
 			setGroupError(getText(KEY_I18N_ERR_GROUP_EMPTY));
-			success = true;
+			isError = true;
+		}
+		
+		if (isError) {
+			setErrorFound(true);
 		}
 
-		return success;
+		return SUCCESS;
 	}
 
 	public String getName() {
@@ -371,5 +375,14 @@ public class Downloads extends ServiceBaseAction {
 	public void setFromPage(String fromPage) {
 		this.fromPage = fromPage;
 	}
+	
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
 
 }

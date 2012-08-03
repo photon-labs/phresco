@@ -80,6 +80,20 @@ public interface ServiceUIConstants {
     String REQ_DOWNLOAD_INFO = "downloadInfo";
     String REQ_DOWNLOAD_ID = "downloadId";
     
+    /*****************************
+     * PilotProject Request Constants
+     * String REQ_PILOT_XXX
+     *****************************/ 
+    String REQ_PILOT_PROJECTS = "pilotProjects";
+    String REQ_PILOT_PROINFO = "pilotProjectInfo";
+    
+    /*****************************
+     * Download Request Constants
+     * String REQ_DOWNLOAD_XXX
+     *****************************/ 
+    String REQ_MODULE_GROUP = "moduleGroup";
+    
+    
 	/*****************************
      * I18N Keys Constants
      * String KEY_I18N_XXX_YYY
