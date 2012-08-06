@@ -113,12 +113,11 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
 //	                }
 //	            }
 //            }
-            ProjectInfo projectInfo = PhrescoServerFactory.getDbManager().getProjectInfo(info.getTechnology().getId(), info.getName());
+            ProjectInfo projectInfo = PhrescoServerFactory.getDbManager().getProjectInfo(info.getTechnology().getId(), info.getPilotProjectName());
             if(projectInfo != null) {
-                System.out.println("Pilot Fuound" + projectInfo.getName());
                 DependencyUtils.extractFiles(projectInfo.getProjectURL(), path);
             }
-//            extractJsLibraries(path, info.getTechnology().getJsLibraries());
+            extractJsLibraries(path, info.getTechnology().getJsLibraries());
             createSqlFolder(info, path);
             updateTestPom(path);
         } catch (IOException e) {
