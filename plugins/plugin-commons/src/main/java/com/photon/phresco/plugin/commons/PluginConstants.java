@@ -191,6 +191,5 @@ public interface PluginConstants {
 	 String WP7_WPTOOLS_PATH			= "wptools.exe ";
 	 String WP7_TARGET					= "-target";
 	 String WP7_XAP_FILE				= "-xap";
-	 String WP7_INSTALL					= "-install";
-     
+	 String WP7_INSTALL					= "-install";     
 }
