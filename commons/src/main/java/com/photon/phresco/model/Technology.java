@@ -53,6 +53,7 @@ public class Technology extends Element implements Cloneable, Serializable {
 	private boolean system;
 	private String customerId;
 	private ArchetypeInfo archetypeInfo;
+	private List<Documentation> docs;
 	
     public Technology() {
         super();
@@ -227,7 +228,15 @@ public class Technology extends Element implements Cloneable, Serializable {
 	
 	
 
-	@Override
+	public List<Documentation> getDocs() {
+        return docs;
+    }
+
+    public void setDocs(List<Documentation> docs) {
+        this.docs = docs;
+    }
+
+    @Override
 	public String toString() {
 		return "Technology [appTypeId=" + appTypeId + ", frameworks="
 				+ frameworks + ", jsLibraries=" + jsLibraries + ", modules="

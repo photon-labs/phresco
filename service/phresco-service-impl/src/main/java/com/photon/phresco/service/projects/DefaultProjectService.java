@@ -76,7 +76,7 @@ public class DefaultProjectService implements ProjectService, Constants {
 			dependencyProcessor.process(projectInfo, projectPath);
 		}
 //
-//		PhrescoServerFactory.getNewDocumentGenerator().generate(projectInfo, projectPath);
+		PhrescoServerFactory.getNewDocumentGenerator().generate(projectInfo, projectPath);
 //
 //		// Configure created application
 //		if (isDebugEnabled) {

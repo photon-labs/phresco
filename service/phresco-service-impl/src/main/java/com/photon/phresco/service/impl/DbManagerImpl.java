@@ -29,4 +29,12 @@ public class DbManagerImpl extends DbService implements DbManager, ServiceConsta
         return projectInfo;
     }
 
+    @Override
+    public Technology getTechnologyDoc(String techId)
+            throws PhrescoException {
+        Technology technology = mongoOperation.findOne(TECHNOLOGIES_COLLECTION_NAME, 
+                new Query(Criteria.whereId().is(techId)), Technology.class);
+        return technology;
+    }
+
 }
