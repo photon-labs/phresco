@@ -114,7 +114,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     private String oldJobName = null;
     private int numberOfJobsInProgress = 0;
     private String downloadJobName = null;
-    
+    private String svnType = null;
+    private String branch = null;
+
     public String ci() {
     	S_LOGGER.debug("Entering Method CI.ci()");
     	try {
@@ -331,7 +333,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     		existJob.setScheduleExpression(cronExpression);
     		existJob.setSenderEmailId(senderEmailId);
     		existJob.setSenderEmailPassword(senderEmailPassword);
-    		
+    		existJob.setBranch(branch);
+    		existJob.setRepoType(svnType);
+
     		if(CI_CREATE_JOB_COMMAND.equals(jobType)) {
     			administrator.createJob(project, existJob);
         		addActionMessage(getText(SUCCESS_JOB));
@@ -1024,6 +1028,22 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setSigning(String signing) {
 		this.signing = signing;
+	}
+
+	public String getSvnType() {
+		return svnType;
+	}
+
+	public void setSvnType(String svnType) {
+		this.svnType = svnType;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 }

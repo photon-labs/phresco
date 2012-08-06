@@ -38,6 +38,8 @@ public class Server implements Serializable {
     private String description;
     private List<String> technologies = new ArrayList<String>();
     private String customerId;
+    private boolean system;
+    
 	public Server() {
 		super();
 	}
@@ -104,7 +106,15 @@ public class Server implements Serializable {
 		this.customerId = customerId;
 	}
 
-	@Override
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    @Override
 	public String toString() {
 		return "Server [id=" + id + ", name=" + name + ", versions=" + versions
 				+ ", description=" + description + ", technologies="

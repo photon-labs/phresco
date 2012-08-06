@@ -1,17 +1,15 @@
 package com.photon.phresco.service.rest.api;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.junit.Ignore;
+import org.junit.Test;
 import org.springframework.data.document.mongodb.query.Criteria;
 import org.springframework.data.document.mongodb.query.Query;
 
-import com.google.gson.Gson;
 import com.photon.phresco.commons.model.Customer;
 import com.photon.phresco.commons.model.Role;
 import com.photon.phresco.commons.model.User;
@@ -19,7 +17,6 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.DbService;
-import com.photon.phresco.util.Credentials;
 import com.photon.phresco.util.ServiceConstants;
 
 public class AdminServiceTest extends DbService implements ServiceConstants{
@@ -28,30 +25,30 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 		super();
 	}
 	
-	@Ignore
-	public void testFindCustomer() {
-		List<Customer> customers = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME , Customer.class);
-		Customer customer = customers.get(0);
-		assertEquals(customer.getName(),"john");
-	}
-
-	@Ignore
+	@Test
 	public void testCreateCustomer() {
 		List<Customer> customers = new ArrayList<Customer>();
-		Customer customer = new Customer("John", "From Phresco");
+		Customer customer = new Customer("phresco", "From Phresco");
+		customer.setId("testCustomer");
 		customers.add(customer);
 		mongoOperation.insertList(CUSTOMERS_COLLECTION_NAME , customers);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
+	public void testFindCustomer() {
+		List<Customer> customers = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME , Customer.class);
+		assertNotNull(customers);
+	}
+
+	@Test
 	public void testUpdateCustomerListOfCustomer() {
 		List<Customer> customers = new ArrayList<Customer>();
-		Customer customer = new Customer("John", "From Phresco");
-		customer.setId("4fe80d7e230d37b3444dfb32");
-		customers.add(customer);
-		mongoOperation.save(CUSTOMERS_COLLECTION_NAME, customers);
-		assertEquals(Response.status(Response.Status.OK).entity(customers).build().getStatus(), 200);
+		Customer customer = new Customer("photon","Phresco");
+		customer.setId("testCustomer");
+		customers.add(customer); 
+		for (Customer customerUpdate : customers) {
+			mongoOperation.save(CUSTOMERS_COLLECTION_NAME, customerUpdate);
+		}
 	}
 
 	@Ignore
@@ -59,52 +56,52 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetCustomer() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testCustomer";
 		Customer customer = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Customer.class);
-		assertEquals(customer.getName(), "John");
+		assertNotNull(customer);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateCustomerStringCustomer() {
-		Customer customer = new Customer("John", "From Phresco");
-		customer.setId("4fe80d7e230d37b3444dfb32");
+		Customer customer = new Customer("photon", "From Phresco");
+		customer.setId("testCustomer");
 		mongoOperation.save(CUSTOMERS_COLLECTION_NAME, customer);
-		assertEquals(Response.status(Response.Status.OK).entity(customer).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteCustomerString() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testCustomer";
 		mongoOperation.remove(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Customer.class);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindVideos() {
-		List<VideoInfo> videolist = mongoOperation.getCollection(VIDEOS_COLLECTION_NAME , VideoInfo.class);
-		VideoInfo video = videolist.get(0);
-		assertEquals(video.getName(), "About phresco");
-	}
-
-	@Ignore
+	
+	@Test
 	public void testCreateVideo() {
 		List<VideoInfo> videolist = new ArrayList<VideoInfo>();
 		VideoInfo info = new VideoInfo("About phresco", "intro about phresoc", null, null, null, null);
 		videolist.add(info);
+		info.setId("testvideo"); 
+		videolist.indexOf("testvideo");
 		mongoOperation.insertList(VIDEOS_COLLECTION_NAME , videolist);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
+	
 	@Ignore
+	public void testFindVideos() {
+		List<VideoInfo> videolist = mongoOperation.getCollection(VIDEOS_COLLECTION_NAME , VideoInfo.class);
+		assertNotNull(videolist);
+	}
+	
+	
+	@Test
 	public void testUpdateVideos() {
 		List<VideoInfo> videolist = new ArrayList<VideoInfo>();
-		VideoInfo info = new VideoInfo("About phresco", "intro about phresoc", null, null, null, null);
-		info.setId("4fe80d7e230d37b3444dfb32");
+		VideoInfo info = new VideoInfo("About phresco ", "intro about phresco", null, null, null, null);
+		info.setId("testvideo");
 		videolist.add(info);
 		mongoOperation.save(VIDEOS_COLLECTION_NAME, videolist);
-		assertEquals(Response.status(Response.Status.OK).entity(videolist).build().getStatus(), 200);
 	}
 
 	@Ignore
@@ -112,52 +109,51 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetVideo() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testvideo";
 		VideoInfo videoInfo = mongoOperation.findOne(VIDEOS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), VideoInfo.class);
-		assertEquals(videoInfo.getName(), "About phresco");
-	}
+		assertNotNull(videoInfo);
+		
+	} 
 
-	@Ignore
+	@Test
 	public void testUpdateVideo() {
-		VideoInfo info = new VideoInfo("About phresco", "intro about phresoc", null, null, null, null);
-		info.setId("4fe80d7e230d37b3444dfb32");
+		VideoInfo info = new VideoInfo("About phresco info", "intro about phresoc", null, null, null, null);
+		info.setId("testvideo");
 		mongoOperation.save(VIDEOS_COLLECTION_NAME, info);
-		assertEquals(Response.status(Response.Status.OK).entity(info).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteVideo() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testvideo";
 		mongoOperation.remove(VIDEOS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), VideoInfo.class);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindUsers() {
-		List<User> userist = mongoOperation.getCollection(USERS_COLLECTION_NAME , User.class);
-		User user = userist.get(0);
-		assertEquals(user.getName(), "john");
-	}
+	
 
-	@Ignore
+	@Test
 	public void testCreateUser() {
 		List<User> users = new ArrayList<User>();
-		User user = new User("john", "from phresco");
+		User user = new User("photon", "from phresco");
+		user.setId("testUser");
 		users.add(user);
 		mongoOperation.insertList(USERS_COLLECTION_NAME , users);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
+    
+	@Test
+	public void testFindUsers() {
+		List<User> userist = mongoOperation.getCollection(USERS_COLLECTION_NAME , User.class);
+		assertNotNull(userist);
+	}
+	
+	@Test
 	public void testUpdateUsers() {
 		List<User> users = new ArrayList<User>();
-		User user = new User("john", "from phresco");
-		user.setId("4fe80d7e230d37b3444dfb32");
+		User user = new User("phresco", "from phresco");
+		user.setId("testUser");
 		users.add(user);
 		mongoOperation.save(USERS_COLLECTION_NAME, users);
-		assertEquals(Response.status(Response.Status.OK).entity(users).build().getStatus(), 200);
 	}
 
 	@Ignore
@@ -165,58 +161,58 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetUser() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testUser";
 		User user = mongoOperation.findOne(USERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), User.class);
-		assertEquals(user.getName(), "john");
+		assertNotNull(user);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateUser() {
-		User user = new User("john", "from phresco");
-		user.setId("4fe80d7e230d37b3444dfb32");
+		User user = new User("photon", "from phresco");
+		user.setId("testUser");
 		mongoOperation.save(USERS_COLLECTION_NAME, user);
-		assertEquals(Response.status(Response.Status.OK).entity(user).build().getStatus(), 200);
-	}
+	} 
 
-	@Ignore
+	@Test
 	public void testDeleteUser() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testUser";
 		mongoOperation.remove(USERS_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), User.class);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 
-	@Ignore
-	public void testFindDownloadInfo() {
-		List<DownloadInfo> downloadList = mongoOperation.getCollection(DOWNLOAD_COLLECTION_NAME , DownloadInfo.class);
-		DownloadInfo download = downloadList.get(0);
-		assertEquals(download.getName(), "eclipse");
-	}
+	
 
-	@Ignore
+	@Test
 	public void testCreateDownloadInfo() {
 		List<DownloadInfo> infos = new ArrayList<DownloadInfo>();
 		DownloadInfo info = new DownloadInfo();
 		info.setName("Eclipse");
 		info.setType("Editor");
 		info.setVersion("juno");
+		info.setId("testdownload");
 		infos.add(info);
 		mongoOperation.insertList(DOWNLOAD_COLLECTION_NAME , infos);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
-
-	@Ignore
+    
+	@Test
+	public void testFindDownloadInfo() {
+		List<DownloadInfo> downloadList = mongoOperation.getCollection(DOWNLOAD_COLLECTION_NAME , DownloadInfo.class);
+		assertNotNull(downloadList);
+	}
+	
+	@Test
 	public void testUpdateDownloadInfoListOfDownloadInfo() {
 		List<DownloadInfo> infos = new ArrayList<DownloadInfo>();
 		DownloadInfo info = new DownloadInfo();
 		info.setName("Eclipse-Juno");
 		info.setType("Editor");
 		info.setVersion("juno");
-		info.setId("4fe80d7e230d37b3444dfb32");
+		info.setId("testdownload");
 		infos.add(info);
-		mongoOperation.save(DOWNLOAD_COLLECTION_NAME, infos);
-		assertEquals(Response.status(Response.Status.OK).entity(infos).build().getStatus(), 200);
+		for (DownloadInfo downloadInfo : infos) {
+			mongoOperation.save(DOWNLOAD_COLLECTION_NAME, downloadInfo );
+		}
 	}
 
 	@Ignore
@@ -224,76 +220,83 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 		throw new PhrescoException(EX_PHEX00001);
 	}
 
-	@Ignore
+	@Test
 	public void testGetDownloadInfo() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testdownload";
 		DownloadInfo downloadInfo = mongoOperation.findOne(DOWNLOAD_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);
-		assertEquals(downloadInfo.getName(), "Eclipse-Juno");
+		assertNotNull(downloadInfo);
 	}
 
-	@Ignore
+	@Test
 	public void testUpdateDownloadInfoStringDownloadInfo() {
 		DownloadInfo info = new DownloadInfo();
 		info.setName("Eclipse-Juno");
 		info.setType("Editor");
 		info.setVersion("juno");
-		info.setId("4fe80d7e230d37b3444dfb32");
+		info.setId("testdownload");
 		mongoOperation.save(DOWNLOAD_COLLECTION_NAME, info);
-		assertEquals(Response.status(Response.Status.OK).entity(info).build().getStatus(), 200);
 	}
 
-	@Ignore
+	@Test
 	public void testDeleteDownloadInfoString() {
-		String id = "4fe80d7e230d37b3444dfb32";
+		String id = "testdownload";
 		mongoOperation.remove(DOWNLOAD_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), DownloadInfo.class);
-		assertEquals(Response.status(Response.Status.OK).build().getStatus(), 200);
 	}
 	
-	@Ignore
-	public void testCreateUsers() {
-		List<User> users = new ArrayList<User>();
-		User user = new User("jeb", "from service");
-		User user1 = new User("bharath", "from framework");
-		List<Customer> customers = mongoOperation.getCollection(CUSTOMERS_COLLECTION_NAME, Customer.class);
-		System.out.println(customers);
-		user.setCustomers(customers);
-		List<Role> roles = mongoOperation.getCollection("roles", Role.class);
-		System.out.println(roles);
-		user.setRoles(roles);
-		users.add(user);
-		users.add(user1);
-		String json = new Gson().toJson(users);
-		System.out.println(json);
-		//mongoOperation.insertList(USERS_COLLECTION_NAME, users);
-	}
 	
-	@Ignore
+	
+	@Test
 	public void createRoles() {
 		List<Role> roles = new ArrayList<Role>();
 		Role role = new Role("developer", "developer");
-		Role role1 = new Role("manager", "manager");
 		roles.add(role);
-		roles.add(role1);
+		role.setId("testrole");
 		mongoOperation.insertList("roles", roles);
 	}
 	
-	@Ignore
-	public void createCustomer() {
-		List<Customer> customers = new ArrayList<Customer>();
-		Customer cus = new Customer("Kumar", "service");
-		Customer cus1 = new Customer("Ganesh", "service");
-		customers.add(cus);
-		customers.add(cus1);
-//		mongoOperation.insertList(CUSTOMERS_COLLECTION_NAME, customers);
-		
-		Customer findOne = mongoOperation.findOne(CUSTOMERS_COLLECTION_NAME, new Query(Criteria.whereId().is("4fed86b6230ddae6f2d85afd")), Customer.class);
-		System.out.println("cust " + findOne);
+	
+	@Test
+	public void testFindRoles() {
+		List<Role> rolelist = mongoOperation.getCollection(ROLES_COLLECTION_NAME , Role.class);
+		assertNotNull(rolelist);
 	}
 	
-	@Ignore
-	public void createCred() {
-		Credentials cred = new Credentials("kumar_s", "Ksparrow.28");
-		String json = new Gson().toJson(cred);
-		System.out.println(json);
+	@Test
+	public void testUpdateRoles() {
+		List<Role> roles = new ArrayList<Role>();
+		Role role = new Role("QA", "from phresco");
+		role.setId("testrole");
+		roles.add(role);
+		for (Role roleupdate : roles) {
+			mongoOperation.save(ROLES_COLLECTION_NAME, roleupdate);	
+		}
+		
 	}
+
+	@Ignore
+	public void testDeleteRoles() throws PhrescoException {
+		throw new PhrescoException(EX_PHEX00001);
+	}
+
+	@Test
+	public void testGetRole() {
+		String id = "testrole";
+		Role role = mongoOperation.findOne(ROLES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Role.class);
+		assertNotNull(role);
+	}
+
+	@Test
+	public void testUpdateRole() {
+		Role role = new Role("support", "from phresco");
+		role.setId("testrole");
+		mongoOperation.save(ROLES_COLLECTION_NAME, role);
+		
+	} 
+
+	@Test
+	public void testDeleteRole() {
+		String id = "testrole";
+		mongoOperation.remove(ROLES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Role.class);
+	}
+	
 }

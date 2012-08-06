@@ -65,6 +65,7 @@ import com.photon.phresco.service.converters.ConvertersFactory;
 import com.photon.phresco.service.dao.ApplicationTypeDAO;
 import com.photon.phresco.service.model.ArtifactInfo;
 import com.photon.phresco.util.ServiceConstants;
+import com.photon.phresco.util.Utility;
 import com.sun.jersey.multipart.BodyPart;
 import com.sun.jersey.multipart.BodyPartEntity;
 import com.sun.jersey.multipart.MultiPart;
@@ -100,8 +101,9 @@ public class ComponentService extends DbService implements ServiceConstants {
 		List<ApplicationType> applicationTypes = new ArrayList<ApplicationType>();
 		try {
 		    List<ApplicationTypeDAO> appDAOList = mongoOperation.find(APPTYPESDAO_COLLECTION_NAME, 
-		            new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(customerId)
-		                    .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ApplicationTypeDAO.class);
+	                new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(customerId)), ApplicationTypeDAO.class);
+	        appDAOList.addAll(mongoOperation.find(APPTYPESDAO_COLLECTION_NAME, 
+	                new Query(Criteria.where(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ApplicationTypeDAO.class));
 	        Converter<ApplicationTypeDAO, ApplicationType> converter = 
 	            (Converter<ApplicationTypeDAO, ApplicationType>) ConvertersFactory.getConverter(ApplicationTypeDAO.class);   
 	        for (ApplicationTypeDAO applicationTypeDAO : appDAOList) {
@@ -451,18 +453,26 @@ public class ComponentService extends DbService implements ServiceConstants {
 		try {
 			
 			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_MODULE)) {
-				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
-				.and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)
-                .and(REST_QUERY_CUSTOMERID).is(customerId);
-				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
+		        .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME);
+			    foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+    		        Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
+    		        .and(REST_QUERY_CUSTOMERID).is(customerId);
+    		        foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    }
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
 			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_JS)) {
-				Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId)
-				    .and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS).and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)
-				    .and(REST_QUERY_CUSTOMERID).is(customerId);
-				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS)
+                .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME);
+			    foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+			        Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS)
+	                .and(REST_QUERY_CUSTOMERID).is(customerId);
+			        foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    }
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
@@ -629,22 +639,18 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_PILOTS)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId) {
+	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findPilots()" + techId);
 	    }
-		 
-		List<ProjectInfo> infos = new ArrayList<ProjectInfo>();
+	    List<ProjectInfo> pilotsList = new ArrayList<ProjectInfo>();
 		try {
-			List<ProjectInfo> pilotsList = mongoOperation.getCollection(PILOTS_COLLECTION_NAME , ProjectInfo.class);
-			if(techId != null) {
-				for (ProjectInfo projectInfo : pilotsList) {
-					if (projectInfo.getTechnology().getId().equals(techId)) {
-						infos.add(projectInfo);
-					}
-				}
-				return Response.status(Response.Status.OK).entity(infos).build();
-			}
+		    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+    			pilotsList = mongoOperation.find(PILOTS_COLLECTION_NAME ,
+    			        new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(customerId)), ProjectInfo.class);
+		    }
+			pilotsList.addAll(mongoOperation.find(PILOTS_COLLECTION_NAME ,
+                    new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ProjectInfo.class));
 			return Response.status(Response.Status.OK).entity(pilotsList).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, PILOTS_COLLECTION_NAME);
@@ -1407,12 +1413,8 @@ public class ComponentService extends DbService implements ServiceConstants {
              } catch (IOException e) {
                  throw new PhrescoException();
              } finally {
-                 if (fileOutStream != null) {
-                     fileOutStream.close();
-                 }
-                 if (source != null) {
-                     source.close();
-                 }
+                 Utility.closeStream(source);
+                 Utility.closeStream(fileOutStream);
              }
              uploadBinary(file, technology);
              } 

@@ -32,6 +32,7 @@ import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.client.impl.RestClient;
@@ -48,11 +49,21 @@ public interface ServiceManager {
 	
 	List<VideoInfo> getVideoInfos() throws PhrescoException;
 	
-	ClientResponse createApplicationTypes(List<ApplicationType> appTypes) throws PhrescoException;
+	ClientResponse createApplicationTypes(List<ApplicationType> appTypes, String customerId) throws PhrescoException;
 	
-	void updateApplicationTypes(ApplicationType appType, String appTypeId) throws PhrescoException;
+	void updateApplicationTypes(ApplicationType appType, String appTypeId, String customerId) throws PhrescoException;
 	
-	ClientResponse deleteApplicationType(String appTypeId) throws PhrescoException;
+	ClientResponse deleteApplicationType(String appTypeId, String customerId) throws PhrescoException;
+   
+	List<Technology> getArcheTypes(String customerId) throws PhrescoException;
+	
+	Technology getArcheType(String archeTypeId) throws PhrescoException;
+	
+	ClientResponse createArcheTypes(List<Technology> archeTypes, String customerId) throws PhrescoException;
+	
+	void updateArcheTypes(Technology technology, String archeTypeId) throws PhrescoException;
+	
+	ClientResponse deleteArcheType(String archeTypeId) throws PhrescoException;
 	
 	List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException;
 	
@@ -66,7 +77,15 @@ public interface ServiceManager {
 	
 	List<ModuleGroup> getModules(String techId, String customerId) throws PhrescoException;
 	
+	ModuleGroup getModule(String moduleId) throws PhrescoException;
+	
 	List<ModuleGroup> getJSLibs(String techId, String customerId) throws PhrescoException;
+	
+	ClientResponse createModules(List<ModuleGroup> modules) throws PhrescoException;
+	
+	void updateModuleGroups(ModuleGroup moduleGroup, String moduleId) throws PhrescoException;
+	
+	ClientResponse deleteModule(String moduleId) throws PhrescoException;
 	
 	List<Customer> getCustomers() throws PhrescoException;
 	
@@ -84,9 +103,11 @@ public interface ServiceManager {
 	
 	ClientResponse createSettings(List<SettingsTemplate> settings) throws PhrescoException;
 	
+	List<ProjectInfo> getPilotProject(String customerId)throws PhrescoException;
+	
 	List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException;
 	
-	ProjectInfo getPilotProject(String projectId) throws PhrescoException;
+	ProjectInfo getPilotPro(String projectId) throws PhrescoException;
 	
 	ClientResponse createPilotProject(List<ProjectInfo> proInfo) throws PhrescoException;
 	
@@ -100,7 +121,7 @@ public interface ServiceManager {
 
 	ClientResponse createRoles(List<Role> role) throws PhrescoException;
 	
-	List<DownloadInfo> getDownloads() throws PhrescoException;
+	List<DownloadInfo> getDownloads(String customerId) throws PhrescoException;
 	
 	DownloadInfo getDownload(String id) throws PhrescoException;
 	
@@ -109,4 +130,6 @@ public interface ServiceManager {
 	void updateDownload(DownloadInfo downloadInfo, String id) throws PhrescoException;
 	
 	ClientResponse deleteDownloadInfo(String id) throws PhrescoException;
+	
+	ClientResponse createProject(ProjectInfo projectInfo) throws PhrescoException;
 }

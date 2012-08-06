@@ -154,7 +154,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (StringUtils.isEmpty(info.getVersion())) {
 			info.setVersion(PROJECT_VERSION); // TODO: Needs to be fixed
 		}
-		ClientResponse response = PhrescoFrameworkFactory.getServiceManager().createProject(info, userInfo);
+		
+		ClientResponse response = getServiceManager().createProject(info);
 
 		S_LOGGER.debug("createProject response code " + response.getStatus());
 
@@ -195,7 +196,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 		// Creating configuration file, after successfull creation of project
 		try {
-			createConfigurationXml(info.getCode());
+//			createConfigurationXml(info.getCode());
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into the catch block of Configuration creation failed Exception" + e.getLocalizedMessage());
 			throw new PhrescoException("Configuration creation failed");
@@ -529,12 +530,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	}
 
 	@Override
-	public ApplicationType getApplicationType(String name, String customerId) throws PhrescoException {
+	public ApplicationType getApplicationType(String appTypeId, String customerId) throws PhrescoException {
 		try {
 			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes(customerId);
 			if (CollectionUtils.isNotEmpty(applicationTypes)) {
 				for (ApplicationType applicationType : applicationTypes) {
-					if (applicationType.getName().equals(name)) {
+					if (applicationType.getId().equals(appTypeId)) {
 		                return applicationType;
 		            }
 				}
@@ -645,7 +646,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 context.put(SERVICE_PASSWORD, encodedPassword);
 			 serviceManager = ServiceClientFactory.getServiceManager(context);
 		 } catch (Exception ex) {
-			 ex.printStackTrace();
 			 S_LOGGER.error(ex.getLocalizedMessage());
 			 throw new PhrescoException(ex);
 		 }
@@ -1654,7 +1654,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 if(existJob != null) {
 				 S_LOGGER.debug("Existing job found " + existJob.getName());
 				 boolean deleteExistJob = deleteCI(project);
-				 System.out.println("Deleting existing jobs!!!!" + deleteExistJob);
 				 Gson gson = new Gson();
 				 List<CIJob> existingJobs = new ArrayList<CIJob>();
 				 existingJobs.addAll(Arrays.asList(existJob));

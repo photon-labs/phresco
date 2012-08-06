@@ -41,7 +41,11 @@ import org.codehaus.plexus.util.FileUtils;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Technology;
+
 import org.apache.commons.lang.StringUtils;
+
+import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.ProjectService;
 import com.photon.phresco.service.api.RepositoryManager;
@@ -56,12 +60,15 @@ import com.photon.phresco.util.Constants;
  * Phresco Service Class hosted at the URI path "/api"
  */
 
-@Path("/apps")
-public class PhrescoService {
+@Path("/project")
+public class PhrescoService extends DbService{
 	private static final Logger S_LOGGER = Logger.getLogger(PhrescoService.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private AuthenticationUtil authUtil = null;
-
+	    
+	public PhrescoService() {
+     super();   // TODO Auto-generated constructor stub
+    }
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<ApplicationType> getApplicationTypes() throws PhrescoException {
@@ -75,16 +82,18 @@ public class PhrescoService {
 	@POST
 	@Produces("application/zip")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public StreamingOutput createProject(ProjectInfo projectInfo,@HeaderParam(Constants.AUTH_TOKEN) String token) throws PhrescoException, IOException {
+	public StreamingOutput createProject(ProjectInfo projectInfo) throws PhrescoException, IOException {
+//	    ,@HeaderParam(Constants.AUTH_TOKEN) String token
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method PhrescoService.createProject(ProjectInfo projectInfo)");
 		}
+		String token = "";
 		System.out.println("createProject in PhrescoService::token:::" + token);
 		authUtil = AuthenticationUtil.getInstance();
-		if(StringUtils.isEmpty(token) || !authUtil.isValidToken(token)) {
-			 S_LOGGER.error("Invalid Token");
-			 throw new UnauthorizedException("Invalid Token or Token Expired");
-		}
+//		if(StringUtils.isEmpty(token) || !authUtil.isValidToken(token)) {
+//			 S_LOGGER.error("Invalid Token");
+//			 throw new UnauthorizedException("Invalid Token or Token Expired");
+//		}
 		String projectPathStr = "";
 		File projectPath = null;
 		try {
@@ -105,8 +114,6 @@ public class PhrescoService {
 		} catch (Exception pe) {
 			S_LOGGER.error("Error During createProject(projectInfo)", pe);
 			throw new PhrescoException(pe);
-			// //TODO: Need to design a proper way to throw the error response
-			// to client
 		}
 	}
 
@@ -201,5 +208,5 @@ public class PhrescoService {
 			}
 		}
 	}
-
+	
 }

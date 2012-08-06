@@ -37,6 +37,7 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
+	String REST_API_PROJECT =  "/project";
 	String REST_API_COMPONENT =  "/components";
 	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
@@ -70,11 +71,13 @@ public interface ServiceConstants {
 	String ERROR_MSG_NOT_FOUND = "Content Not Found";
 	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
 	String REST_QUERY_TECHID = "techId";
+	String REST_QUERY_PROJECTID = "projectId";
 	String REST_QUERY_TYPE = "type";
 	String REST_QUERY_TYPE_MODULE = "module";
 	String REST_QUERY_TYPE_JS = "js";
 	String REST_QUERY_CUSTOMERID = "customerId";
 	String DEFAULT_CUSTOMER_NAME = "photon";
+	String PROJECT_NAME = "name";
 	
 	 /*
      * Constants for MongoDB Collections

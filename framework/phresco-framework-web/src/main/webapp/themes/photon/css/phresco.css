@@ -4844,6 +4844,12 @@ a[id='androidSigning']:hover {
 	text-align: center;
 }
 
+.pdfDelete {	
+  text-align: left;
+  margin-left: 16%;
+  cursor: pointer;
+}
+ 
 .reportErrorMsg {
 	width: 220px; 
 	float: left; 

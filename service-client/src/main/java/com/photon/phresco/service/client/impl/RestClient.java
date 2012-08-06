@@ -219,6 +219,22 @@ public class RestClient<E> {
 	}
 	
 	/**
+     * Creates List of objects
+     * @param infos
+     * @throws PhrescoException
+     */
+    public ClientResponse create(E info, String accept, String type) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.create(List<E> infos, String accept, String type)");
+        }
+        updateBuilder();
+        builder = builder.accept(accept).type(type);
+        ClientResponse clientResponse = builder.post(ClientResponse.class, info);
+        isErrorThrow(clientResponse);
+        return clientResponse;
+    }
+    
+	/**
 	 * Updates List of objects for the given type 
 	 * @param infos
 	 * @param type

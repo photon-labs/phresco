@@ -87,7 +87,6 @@
 
 <script type="text/javascript" src="js/loading.js"></script>
 <script type="text/javascript" src="js/home-header.js"></script>
-<!-- Feature js -->
 <script type="text/javascript" src="js/feature.js"></script>
 
 <%
@@ -339,9 +338,6 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		enableScreen();
-	});
 	$('#projectCode').val('<%= projectCode %>'); //this is for changing the sub-tab.
 	$('#fromPage').val('<%= fromPage %>'); //this is for changing the sub-tab.
 </script>

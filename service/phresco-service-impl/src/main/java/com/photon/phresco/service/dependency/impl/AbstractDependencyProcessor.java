@@ -57,6 +57,7 @@ import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.DependencyProcessor;
+import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
@@ -116,7 +117,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @param module
 	 * @throws PhrescoException
 	 */
-	protected void extractModule(File path, ModuleGroup module) throws PhrescoException {
+	protected void extractModule(File path, ModuleGroup moduleGroup) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
 			S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
@@ -125,11 +126,18 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 
 		// TODO:Handle all versions
 
-		Module moduleVersion = module.getVersions().get(0);
-		String contentURL = moduleVersion.getUrl();
-		if (!StringUtils.isEmpty(contentURL)) {
-			DependencyUtils.extractFiles(contentURL, path);
-		}
+//		Module moduleVersion = module.getVersions().get(0);
+//		String contentURL = moduleVersion.getUrl();
+//		if (!StringUtils.isEmpty(contentURL)) {
+//			DependencyUtils.extractFiles(contentURL, path);
+//		}
+		List<Module> versions = moduleGroup.getVersions();
+		for (Module module : versions) {
+            String contentUrl = module.getContentURL();
+            if (!StringUtils.isEmpty(contentUrl)) {
+              DependencyUtils.extractFiles(contentUrl, path);
+          }
+        }
 	}
 
 	protected RepositoryManager getRepositoryManager() {
@@ -178,24 +186,11 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 
 	protected void extractPilots(ProjectInfo info, File path,
 			Technology technology) throws PhrescoException {
-		if (StringUtils.isNotBlank(info.getPilotProjectName())) {
-			List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
-			if (CollectionUtils.isEmpty(pilotProjects)) {
-				return;
-			}
-			for (ProjectInfo projectInfo : pilotProjects) {
-				// extractModules(modulesPath,
-				// projectInfo.getTechnology().getModules());
-				// extractLibraries(modulesPath,
-				// projectInfo.getTechnology().getLibraries());
-				List<String> urls = projectInfo.getPilotProjectUrls();
-				if (urls != null) {
-					for (String url : urls) {
-						DependencyUtils.extractFiles(url, path);
-					}
-				}
-			}
-		}
+	    
+	    ProjectInfo projectInfo = PhrescoServerFactory.getDbManager().getProjectInfo(info.getTechnology().getId(), info.getPilotProjectName());
+        if(projectInfo != null) {
+            DependencyUtils.extractFiles(projectInfo.getProjectURL(), path);
+        }
 	}
 	
 	/*

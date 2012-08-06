@@ -102,5 +102,8 @@ $(document).ready(function() {
 		var responsiveFixedTblhight = ((($('#tabularView').height() - 30) / $('#tabularView').height()) * 100);
 		$('.responsiveFixedTableContainer').css("height", responsiveFixedTblhight+'%');
 		
+		/* forum iframe */
+		var iframeheight = $(".container").height();
+		$(".iframe_container_forum").css("height", iframeheight - 30);
 	}
 });

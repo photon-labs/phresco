@@ -95,15 +95,14 @@ public class ApplicationTypes extends ServiceBaseAction {
 		try {
 		    List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 			ApplicationType appType = new ApplicationType(name, description);
-			appType.setName(name);
 			appType.setCustomerId(customerId);
 			appTypes.add(appType);
-			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes);
+			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes, customerId);
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
 				addActionError(getText(APPLNTYPES_NOT_ADDED, Collections.singletonList(name)));
 			} else {
 				addActionMessage(getText(APPLNTYPES_ADDED, Collections.singletonList(name)));
-			} 
+			}
 		}catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -119,8 +118,8 @@ public class ApplicationTypes extends ServiceBaseAction {
 		try {
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
-			appType.setDescription(description);
-			getServiceManager().updateApplicationTypes(appType, appTypeId);
+			appType.setCustomerId(customerId);
+			getServiceManager().updateApplicationTypes(appType, appTypeId, customerId);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
@@ -137,7 +136,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			String[] appTypeIds = getHttpRequest().getParameterValues(REQ_APP_TYPEID);
 			if (appTypeIds != null) {
 				for (String appTypeId : appTypeIds) {
-					ClientResponse clientResponse = getServiceManager().deleteApplicationType(appTypeId);
+					ClientResponse clientResponse = getServiceManager().deleteApplicationType(appTypeId, customerId);
 					if (clientResponse.getStatus() != 200) {
 						addActionError(getText(APPLNTYPES_NOT_DELETED));
 					}

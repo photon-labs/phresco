@@ -101,7 +101,37 @@
     }
     
     //Form submit
-    function performAction(pageUrl, params, tagControl, callSuccessEvent) {
+    function performAction(pageUrl, form, tagControl, callSuccessEvent) {
+    	var params = "";
+    	if (form != undefined && form != "" && !isBlank(form.serialize())) {
+    		params = form.serialize();
+    	}
+    	$.ajax({
+            url : pageUrl,
+            data : params,
+            type : "POST",
+            success : function(data) {
+            	if(callSuccessEvent != undefined && !isBlank(callSuccessEvent)) {
+            		successEvent(pageUrl, data);
+            	} else if(data.validated) {
+            		validationError(data);
+            	} else if(tagControl != undefined && !isBlank(tagControl)) {
+            		if (pageUrl == "applications" || pageUrl == "settings" || pageUrl == "forum") {
+            			$(".intro_container").hide();
+            	    	$(".errorOverlay").show().css("display", "none");
+            		}
+            		if((pageUrl == "save" || pageUrl == "update" || pageUrl == "delete" || pageUrl == "deleteConfigurations" || pageUrl == "deleteSettings" || pageUrl == "deleteBuild" || pageUrl == "CIBuildDelete")) {
+            			hideProgessBar();
+            		} 
+            		
+	                tagControl.empty();
+	                tagControl.html(data);
+	           	}
+            }
+        }); 
+    }
+    
+    function performActionParams(pageUrl, params, tagControl, callSuccessEvent) {
     	$.ajax({
             url : pageUrl,
             data : params,
@@ -129,17 +159,33 @@
     
     // This method is for popup form submit and Dynamic small subpage page load
     // is secondpopup avail can be used to display two popup's in a single popup div
-    function popup(pageUrl, params, tagControl, callSuccessEvent, isSecondPopupAvail) {
-    	var param = "";
-    	if (!isBlank($('form').serialize())) {
-    		param = "&";
-    	}
-    	if(params != undefined && !isBlank(params)) {
-    		param = param + params;
+    function popup(pageUrl, form, tagControl, callSuccessEvent, isSecondPopupAvail) {
+    	var params = "";
+    	if (form != undefined && !isBlank(form.serialize())) {
+    		params = form.serialize();
     	}
         $.ajax({
             url : pageUrl,
-            data : $('form').serialize() + param,
+            data : params,
+            success : function(data) {
+            	if(tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail == undefined && isBlank(isSecondPopupAvail)) {
+                	tagControl.empty();
+                	tagControl.html(data);
+                }
+            	if (tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail != undefined && !isBlank(isSecondPopupAvail)) {
+            		tagControl.append(data);
+            	}
+             	if(callSuccessEvent != undefined && !isBlank(callSuccessEvent)) {
+             		successEvent(pageUrl, data);
+            	}
+            }
+        });
+    }
+    
+    function popupParams(pageUrl, params, tagControl, callSuccessEvent, isSecondPopupAvail) {
+        $.ajax({
+            url : pageUrl,
+            data : params,
             success : function(data) {
             	if(tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail == undefined && isBlank(isSecondPopupAvail)) {
                 	tagControl.empty();
@@ -180,6 +226,7 @@
     
     function getCurrentCSS() {
         var theme =localStorage["color"];
+		$(".popupLoadingIcon").css("display", "block");
         if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }

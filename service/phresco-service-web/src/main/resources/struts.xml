@@ -57,6 +57,19 @@
             <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
             <result type="json" />
         </action>
+        
+           <action name="featuresEdit" class="com.photon.phresco.service.admin.actions.components.Features" method="edit">
+            <result name="featuresAdd">/admin/pages/components/feature/add.jsp</result>
+        </action>
+        
+        <action name="featuresUpdate" class="com.photon.phresco.service.admin.actions.components.Features" method="update">
+            <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
+            <result type="json" />
+        </action>
+        
+        <action name="featuresDelete" class="com.photon.phresco.service.admin.actions.components.Features" method="delete">
+            <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
+        </action>
 		
 		<action name="featuresCancel" class="com.photon.phresco.service.admin.actions.components.Features" method="cancel">
             <result name="featuresCancel">/admin/pages/components/feature/list.jsp</result>
@@ -88,6 +101,14 @@
         
         <action name="archetypeDelete" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="delete">
 			<result name="archetypesList">/admin/pages/components/archetype/list.jsp</result>
+        </action>
+        
+         <action name="archetypeSaveValidate" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="validateForm">
+            <result type="json" />
+        </action>
+        
+         <action name="archetypeUpdateValidate" class="com.photon.phresco.service.admin.actions.components.Archetypes" method="validateForm">
+            <result type="json" />
         </action>
 		<!-- COMPONENT ARCHETYPES ENDS-->
 			
@@ -169,6 +190,14 @@
         
         <action name="pilotprojDelete" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="delete">
             <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
+        </action>
+        
+        <action name="pilotprojSaveValidate" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="validateForm">
+            <result type="json" />
+        </action>
+        
+        <action name="pilotprojUpdateValidate" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="validateForm">
+            <result type="json" />
         </action>
 		<!-- COMPONENT PILOT PROJECTS ENDS-->
 			
@@ -300,6 +329,14 @@
 		
 		<action name="downloadCancel" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="cancel">
 			<result name="downloadCancel">/admin/pages/admin/download/list.jsp</result>
+        </action>
+        
+        <action name="downloadSaveValidate" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="validateForm">
+            <result type="json" />
+        </action>
+        
+        <action name="downloadUpdateValidate" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="validateForm">
+            <result type="json" />
         </action>
 		<!-- ADMIN DOWNLOAD ENDS-->
     </package>

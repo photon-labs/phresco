@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco.service</groupId>
         <artifactId>phresco-service-root</artifactId>
-        <version>2.0.0.6001-SNAPSHOT</version>
+        <version>2.0.0.10000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     

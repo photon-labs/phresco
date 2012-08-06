@@ -36,6 +36,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("6.0.x");
         versions.add("5.5.x");
         server = new Server("Apache Tomcat", versions, "Apache Tomcat Server");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
         versions = new ArrayList<String>(2);
@@ -48,6 +50,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("4.2.x");
         versions.add("4.0.x");
         server = new Server("JBoss", versions, "JBoss application server");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
 
@@ -58,6 +62,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("5.1");
         versions.add("5.0");
         server = new Server("IIS", versions, "IIS Server");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
 
@@ -70,6 +76,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("9.2");
         versions.add("9.1");
         server = new Server("WebLogic", versions, "Web Logic");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
         
@@ -79,6 +87,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("2.0");
         versions.add("1.3");
         server = new Server("Apache", versions, "Apache");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
         
@@ -86,6 +96,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("0.6.x");
         versions.add("0.7.x");
         server = new Server("NodeJS", versions, "NodeJS");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createNodejsTech());
         servers.add(server);
         
@@ -96,6 +108,8 @@ public class ServerInfoGenerator implements ServiceConstants {
         versions.add("5.x");
         versions.add("4.x");
         server = new Server("Jetty", versions, "Jetty");
+        server.setCustomerId("photon");
+        server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
         return servers;

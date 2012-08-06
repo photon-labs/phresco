@@ -91,6 +91,18 @@ function loadContent(pageUrl, form, tag) {
 	});
 }
 
+function loadContentParam(pageUrl, params, tag) {
+	showLoadingIcon(tag);
+	$.ajax({
+		url : pageUrl,
+		data : params,
+		type : "POST",
+		success : function(data) {
+			loadData(data, tag);
+		}
+	});
+}
+
 function clickSave(pageUrl, params, tag, progressText) {
 	showProgressBar(progressText);
 	$.ajax({
@@ -104,13 +116,16 @@ function clickSave(pageUrl, params, tag, progressText) {
 	});
 }
 
-function validate(pageUrl, params, tag, progressText) {
+function validate(pageUrl, form, tag, progressText) {
+	if (form != undefined && !isBlank(form)) {
+		var params = form.serialize();
+	}
 	$.ajax({
 		url : pageUrl + "Validate",
 		data : params,
 		type : "POST",
 		success : function(data) {
-			if (data.errorFound != undefined && data.errorFound == true) {
+			if (data.errorFound != undefined && data.errorFound) {
 				findError(data);
 			} else {
 				clickSave(pageUrl, params, tag, progressText);

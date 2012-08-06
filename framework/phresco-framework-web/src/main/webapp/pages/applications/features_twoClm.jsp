@@ -251,17 +251,10 @@
 									<div class="scrollpanel">
 										<section class="scrollpanel_inner">
 											<table class="download_tbl">
-												<!-- <thead>
-													<tr class="download_tbl_header">
-														<th>#</th>
-														<th>Name</th>
-														<th>Version</th>
-													</tr>
-												</thead> -->
 												<tbody>
 												<% 
 												String descContent = "";
-					                            if (leftModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
+					                            if (leftModule.getDoc(DocumentationType.DESCRIPTION) != null) {
 												  	descContent = leftModule.getDoc(DocumentationType.DESCRIPTION).getContent();
 												}
 					                            
@@ -276,35 +269,35 @@
 												}
 												  
 												String helpTextContent = "";
-												if (leftModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
+												if (leftModule.getDoc(DocumentationType.HELP_TEXT) != null) {
 												  	helpTextContent = leftModule.getDoc(DocumentationType.HELP_TEXT).getContent();
 												}
 												
-												List<Module> versions = leftModule.getVersions();
-												if (CollectionUtils.isNotEmpty(versions)) {
-													for (Module moduleVersion : versions) {
+												List<Module> modules = leftModule.getVersions();
+												if (CollectionUtils.isNotEmpty(modules)) {
+													for (Module module : modules) {
 														checkedStr = "";
 														if (MapUtils.isNotEmpty(selectedModules)) {
 															String selectedVersion = selectedModules.get(leftModule.getId());
-															if (StringUtils.isNotEmpty(selectedVersion) && moduleVersion.getVersion().equals(selectedVersion)) {
+															if (StringUtils.isNotEmpty(selectedVersion) && module.getVersion().equals(selectedVersion)) {
 																checkedStr = "checked";
 															} 
 														}
-														if (StringUtils.isNotEmpty(pilotVersion) && moduleVersion.getVersion().equals(pilotVersion)) {
+														if (StringUtils.isNotEmpty(pilotVersion) && module.getVersion().equals(pilotVersion)) {
 															checkedStr = "checked";
 														}	
 												%>
 													<tr>
 														<td class="editFeatures_td1">
 															<input type="radio" name="<%= leftModule.getId()%>" 
-																value="<%= moduleVersion.getVersion() %>" <%=disabledStr %> <%= checkedStr %> 
+																value="<%= module.getVersion() %>" <%=disabledStr %> <%= checkedStr %> 
 																onclick="selectCheckBox('<%= leftModule.getId()%>', '<%= moduleType %>', this);">
 														</td>
 														<td class="editFeatures_td2">
 															<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= leftModule.getName() %></a>
+															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= module.getName() %></a>
 														</td>
-														<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
+														<td class="editFeatures_td4"><%= module.getVersion() %></td>
 													</tr>
 													<%	} %>
 												<% } %>
@@ -379,13 +372,6 @@
 				                    <div class="scrollpanel">
 				                        <section class="scrollpanel_inner">
 				                        	<table class="download_tbl">
-					                        	<!-- <thead>
-					                            	<tr class="download_tbl_header">
-					                            		<th>#</th>
-				                            			<th>Name</th>
-				                            			<th>Version</th>
-				                            		</tr>
-					                            </thead> -->
 					                            <tbody>
 					                            <% 
 					                            String descContent = "";
