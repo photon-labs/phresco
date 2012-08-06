@@ -2914,6 +2914,8 @@ table {
     width: 100%;
     height: 100%;
     text-align: center;
+    margin-top:17px;
+    margin-right: 8px;
 }
 
 .testCaseLog {
@@ -4744,7 +4746,22 @@ a[id='androidSigning']:hover {
 #reportcategy {
 	margin-left: 75px;
 	text-align: justify;
+}
 
+.report-header1 { 
+	padding:2px 0 5px 10px; 
+	width :28%;
+}
+
+.report_scroll { 
+	overflow: auto; 
+	height: 181px;
+}
+
+#availableReports { 
+	text-align: left; 
+	margin-bottom: 12px; 
+	margin-left: 5px;
 }
 
 /** All checkbox list page css**/
@@ -4815,3 +4832,67 @@ a[id='androidSigning']:hover {
     float: right;
     margin-right: 10px;
 }
+
+.pdfDelete {
+	text-align: left;
+	margin-left: 16%;
+	cursor: pointer;
+}
+
+.runagint_source {
+	float: right;
+	width: auto;
+}
+
+/*minification*/
+.jsmin-span {
+	color:#000;
+	vertical-align: top;
+	padding-left: 6px;
+}
+
+#jsErrMsg {
+	padding-left:12px;
+	padding-top:15px;	
+}
+
+.minifyDiv {
+	width:102%; 
+	max-height: 140px;
+}
+
+.minify_popup{
+	border:1px solid white;
+}
+
+.minifyLbl{
+	width:100px;
+}
+
+.chooseJS {
+	float:left;
+	margin-left:-30px;
+}
+
+.compNameLbl{
+	padding-right:6px;
+}
+
+.minifyAddIcon {
+	float: left; 
+	margin-left:4px;
+	cursor : pointer;
+}
+
+.hide {
+	display: none;
+	float: left;
+	margin-left:4px;
+	cursor : pointer;
+}
+
+#compNameText {
+	float:left;
+	width:150px; 
+	margin-right:10px;
+}	

@@ -65,6 +65,10 @@ public class ServerConfiguration {
 	private static final String KEY_APPTYPE_CONFIG = "apptype.config";
 	private static final String DEFAULT_VALUE_APPTYPE_CONFIG = "apptype.xml";
 	private static final String PHRESCO_CI_JENKINS_CONFIG_FILE = "phresco.ci.jenkins.config.file";
+	private static final String GIT = "git";
+	private static final String SVN = "svn";
+	private static final String PHRESCO_CI_JENKINS_CONFIG_FILE_PREFIX = "phresco.ci.jenkins.";
+	private static final String PHRESCO_CI_JENKINS_CONFIG_FILE_SUFFIX = ".config.file";
 	private static final String PHRESCO_CI_JENKINS_SVN_FILE = "phresco.ci.jenkins.svn.credential";
 	private static final String PHRESCO_CI_CREDENTIAL_XML_FILE = "phresco.ci.credential.url";
 	private static final String PHRESCO_CI_JAVAHOMECONFIG_XML_FILE = "phresco.ci.javahomeconfig.file";
@@ -78,6 +82,7 @@ public class ServerConfiguration {
 	private static final String EMAIL_EXT_FILE = "phresco.ci.emailext.file";
 	private static final String PHRESCO_SERVER_CONTEXT_NAME = "phresco.server.context.name";
 	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
+	private static final String PHRESCO_FRAMEWORK_LATEST_URL = "phresco.framework.latest.version.file";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -206,8 +211,12 @@ public class ServerConfiguration {
         return twitterServiceURL;
 	}
 	
-	public String getCiConfigFile() {
-	    return dependencyConfig.getProperty(PHRESCO_CI_JENKINS_CONFIG_FILE);
+	public String getCiConfigFile(String repoType) {
+		if (GIT.equals(repoType)) {
+			return dependencyConfig.getProperty(PHRESCO_CI_JENKINS_CONFIG_FILE_PREFIX + GIT + PHRESCO_CI_JENKINS_CONFIG_FILE_SUFFIX);
+		} else {
+			return dependencyConfig.getProperty(PHRESCO_CI_JENKINS_CONFIG_FILE_PREFIX + SVN + PHRESCO_CI_JENKINS_CONFIG_FILE_SUFFIX);
+		}
 	}
 	
 	public String getCiSvnFile() {
@@ -258,5 +267,9 @@ public class ServerConfiguration {
 
 	public String getEmailExtFile() {
 		return dependencyConfig.getProperty(EMAIL_EXT_FILE);
+	}
+
+	public String getFrameWorkLatestFile() {
+		return dependencyConfig.getProperty(PHRESCO_FRAMEWORK_LATEST_URL);
 	}
 }

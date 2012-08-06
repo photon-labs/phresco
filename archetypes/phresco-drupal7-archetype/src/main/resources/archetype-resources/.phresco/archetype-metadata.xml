@@ -136,11 +136,11 @@
 		<fileSet filtered="false"> 
 			<directory>test/functional/src/test/php/phresco/tests</directory> 
 			<includes> 
-				<include>CommonAll.php</include>
-				<include>CreateNewAC.php</include>
+				<include>CommonSuite.php</include>
+				<include>UserCreate_NewAC.php</include>
 				<include>DrupalCommonFun.php</include>
 				<include>Login_NewUsers.php</include>
-				<include>UserAll.php</include>
+				<include>UserSuite.php</include>
 				<include>phresco-env-config.xml</include>
 				<include>UserInfo.xml</include>
                 <include>Drupal7Data.xml</include>

@@ -78,6 +78,7 @@ public interface Constants {
     String SERVER_TYPE = "type";
     String SERVER_CONTEXT = "context";
     String SERVER_VERSION = "version";
+    String SERVER_REMOTE_DEPLOYMENT = "remoteDeployment";
 
     // Constants for Database
     String DB_PROTOCOL="http";

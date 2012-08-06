@@ -1,6 +1,5 @@
 /*
  * ###
- * Phresco Framework
  * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * %%
@@ -81,6 +80,15 @@ public interface FrameworkConstants {
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
+    String CLASS = "class";
+    String SCM = "scm";
+    String SVN = "svn";
+    String GIT = "git";
+    String REPO_TYPE = "repoType";
+    String SVN_TYPE = "svnType";
+    String GITHUB_SCM = "hudson.plugins.git.GitSCM";
+    String SVN_SCM = "hudson.scm.SubversionSCM";
+    String GITHUB_SCM_FILE_NAME = "gitHubScm.xml";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";
@@ -95,8 +103,8 @@ public interface FrameworkConstants {
     String NODEJS_SERVER_NAME = "serverName";
     String NODEJS_DB_NAME = "databaseName";
     String SERVER_PROTOCOL = "server.protocol";
-    String SERVER_HOST = "server.host";
-    String SERVER_PORT = "server.port";
+    String SERVER_HOST = "host";
+    String SERVER_PORT = "port";
     String LOG_DIR = "log";
     String RUN_AGS_ENV_FILE = "runagainstsource.info";
     String LOG_FILE = "server.log";
@@ -382,7 +390,9 @@ public interface FrameworkConstants {
     String REQ_APPLICATION_TYPE = "applicationType";
     String REQ_OLD_CONFIG_NAME = "configName";
     String REQ_TEST_TYPE = "testType";
+    String REQ_TEST_EXE = "testExecuted";
     String REQ_REPORT_STATUS = "reportStatus";
+    String REQ_REPORT_DELETE_STATUS = "reportDeleteStatus";
     String REQ_SELECTEDPROJECTS = "selectedProjects";
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
@@ -587,6 +597,7 @@ public interface FrameworkConstants {
     String REST_ENVE_PATH = "/settings/env";
     String REST_SERVERS_PATH = "/component/servers";
     String REST_DATABASE_PATH = "/component/databases";
+    String REST_UPDATE = "/repo/update";
 
     String ATTR_TIME 	= "time";
     String ATTR_TESTS 	= "tests";
@@ -635,8 +646,11 @@ public interface FrameworkConstants {
     String MSG_FILE_PATH_EMPTY = "File path should not be empty";
     String SUCCESS_REPORT_STATUS = "label.report.success";
     String ERROR_REPORT_STATUS = "label.report.failure";
+    String SUCCESS_REPORT_DELETE_STATUS = "label.report.delete.success";
+    String ERROR_REPORT_DELETE_STATUS = "label.report.delete.failure";
     String MSG_REPORT_OVERALL = "Overall";
     String MSG_REPORT_DETAIL = "Detailed";
+    String MSG_REPORT = "Atleast one test result is necessary";
     
     /*
      * CI Message keys
@@ -687,7 +701,7 @@ public interface FrameworkConstants {
     /*
      * Code keys
      */
-    String FAILURE_CODE_REVIEW = "Code review is not available";
+    String FAILURE_CODE_REVIEW = "Code validation report is not available";
 	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
@@ -1141,4 +1155,108 @@ public interface FrameworkConstants {
    /* Unit test report directory */
    String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
    String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
-  }
+   
+   /* Minification */
+   
+   String REQ_COMPRESS_NAME = "selectedJsName";
+   String REQ_SELECTED_FILES = "selectedJsFiles";
+   String REQ_CHECKED_FILE_LIST = "jsMinCheck";
+   String REQ_SELECTED_FILE_NAMES = "jsFileName";
+   String REQ_MINIFY_MAP = "jsMap";
+   
+   String POM_SKIP = "skip";
+   String POM_SOURCEDIR = "sourceDirectory";
+   String POM_SOURCE_DIRECTORY = "${project.basedir}/src/main/";
+   String POM_OUTPUTDIR = "outputDirectory";
+   String POM_OUTPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_FORCE = "force";
+   String POM_JS_WARN = "jswarn";
+   String POM_NO_SUFFIX = "nosuffix";
+   String POM_VALUE_TRUE = "true";
+   String POM_VALUE_FALSE = "false";
+   String POM_AGGREGATIONS = "aggregations";
+   String POM_AGGREGATION = "aggregation";
+   String POM_INPUTDIR = "inputDir";
+   String POM_INPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_INCLUDES ="includes";
+   String POM_INCLUDE ="include";
+   String POM_EXCLUDES ="excludes";
+   String POM_EXCLUDE ="exclude";
+   String POM_EXCLUDE_CSS = "**/*.css";
+   String POM_EXCLUDE_JS = "**/lib/**/*.js";
+   String POM_OUTPUT = "output";
+   String MINIFY_OUTPUT_DIRECTORY = "${project.basedir}";
+   String MINIFY_FILE_EXT = ".min.js";
+   String MINIFY_PLUGIN_GROUPID ="net.alchim31.maven";
+   String MINIFY_PLUGIN_ARTFACTID ="yuicompressor-maven-plugin";
+	
+	 /* Constants For Framework update */
+   String TEMP_ZIP_FILE = "temp.zip";
+   String MAVEN_SETTINGS_FILE = "../tools/maven/conf/settings.xml";
+   String OUTPUT_SETTINGS_DIR = "tools/maven/conf";
+   String BACKUP_DIRNAME = "backups";
+   String BIN_DIR = "bin";
+   String PREV_DIR = "../";
+   String UPGRADE_PROP_NAME = "upgrade.properties";
+   String ARCHIVE_EXTENSION = ".zip";
+   String VERSION_SERVICE_PATH = "version";
+   
+   /* Constants For Profile update */
+   
+   String SONAR_LANGUAGE_PROFILE = "sonar.language";
+   String SONAR_BRANCH   = "sonar.branch";
+   String PHRESCO_SOURCE_DIRECTORY = "phresco.source.directory";
+   String SONAR_DYNAMIC_ANALYSIS_PROFILE = "sonar.dynamicAnalysis";
+   String SONAR_EXCLUSION = "sonar.exclusions";
+   String JS_PATH = "src/main/js";
+   String WEBAPP_PATH = "src/main/webapp";
+   String JAVA_PATH = "src/main/java";
+   String LIB = "**/lib/**";
+   String JAVA = "java";
+   String WEB = "web";
+   String JS = "js";
+   
+   
+   /* Constants for Sonar properties */ 
+	   String SONAR_LANGUAGE = "sonar.language";
+	   String SONAR_PHPPMD_SKIP = "sonar.phpPmd.skip";
+	   String SONAR_DYNAMIC_ANALYSIS = "sonar.dynamicAnalysis";
+	   String SONAR_PHPPMD_SHOULD_RUN = "sonar.phpPmd.shouldRun";
+	   String SONAR_PHPCODESNIFFER_SHOULD_RUN = "sonar.phpCodesniffer.shouldRun";
+	   String SONAR_PHPCODESNIFFER_SKIP = "sonar.phpCodesniffer.skip";
+	   String SONAR_PHPDEPEND_SHOULD_RUN = "sonar.phpDepend.shouldRun";
+	   String SONAR_PHPUNIT_COVERAGE_SHOULD_RUN = "sonar.phpUnit.coverage.shouldRun";
+	   String SONAR_PHPUNIT_SHOULD_RUN = "sonar.phpUnit.shouldRun";
+	   String SONAR_PHPCPD_SHOULD_RUN = "sonar.phpcpd.excludes";
+	   String SONAR_PHPCPD_EXCLUDES_SQL = "sonar.phpcpd.excludes";
+	   String SONAR_PHPCPD_EXCLUDES_HTML = "sonar.phpcpd.excludes";
+	   String SONAR_PHPDEPEND_TIMEOUT = "sonar.phpDepend.timeout";
+	   String SONAR_PHPPMD_TIMEOUT = "sonar.phpPmd.timeout";
+	   String SONAR_PHPCODESNIFFER_TIMEOUT = "sonar.phpCodesniffer.timeout";
+	   String DRUPAL_STANDARD = "sonar.phpCodesniffer.standardArgument";
+	   String WORDPRESS_STANDARD = "sonar.phpCodesniffer.standardArgument";
+	   String DRUPAL = "Drupal";
+	   String DRUPAL_STANDAD_VERSION = "7.8";
+	   String WORDPRESS = "WordPress";	    
+	   String SONAR_PHASE = "sonar.phase";
+	   String LANGUAGE = "php";
+	   String PHASE = "validate";
+	   String SQL_EXCLUDES = "source/sql";
+	   String HTML_EXCLUDES = "source/public_html";
+	   String TEST = "test";
+	  
+	   
+	   /* Constants for plugin properties */ 
+	   String SKIP = "skip";
+	   String GROUPID = "net.alchim31.maven";
+	   String ARTIFACTID = "yuicompressor-maven-plugin";
+	   String PLUGIN_VERSION = "1.3.0";
+	   String EXECUTIONID = "yuicompressor-default";	   
+	   String GOAL = "compress";
+
+	   /* Remote Deployment Server Authentication */
+	   String REQ_RMT_DEP_IS_CERT_AVAIL = "isCertAvailable";
+	   String REQ_RMT_DEP_FILE_BROWSE_FROM = "fileBrowseFrom";
+	   String CONFIGURATION = "configuration";
+	   String FILE_TYPE_CRT = "crt";
+}

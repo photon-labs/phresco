@@ -19,8 +19,14 @@
  */
 package com.photon.phresco.model;
 
-public class WebService {
+import java.io.Serializable;
+
+public class WebService implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int id;
 	String name;
 	String version;

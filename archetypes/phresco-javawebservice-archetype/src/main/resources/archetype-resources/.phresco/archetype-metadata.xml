@@ -64,6 +64,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
+			<directory>src/main/webapp/WEB-INF/resources</directory>
+			<includes>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8">
 			<directory>src/main/webapp</directory>
 			<includes>
 				<include>index.jsp</include>
@@ -203,12 +209,6 @@
 			<includes>
 				<include>phresco-env-config.csv</include>
 				<include>PhrescoFrameWork_TestPlan.jmx</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" encoding="UTF-8">
-			<directory>test/unit</directory>
-			<includes>
-				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

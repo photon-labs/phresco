@@ -7,17 +7,56 @@
 	<name>CI Web Application</name>
    
 	<dependencies>
-	 <dependency>
-		<groupId>org.jenkins-ci.main</groupId>
-		<artifactId>jenkins-war</artifactId>
-		<version>1.442</version>
-		<type>war</type>
-	 </dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.main</groupId>
+			<artifactId>jenkins-war</artifactId>
+			<version>1.442</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			  <groupId>git.plugin</groupId>
+			  <artifactId>git</artifactId>
+			  <version>1.0</version>
+			  <type>hpi</type>
+		</dependency>
+
+		<dependency>
+			  <groupId>git.plugin</groupId>
+			  <artifactId>github</artifactId>
+			  <version>1.0</version>
+			  <type>hpi</type>
+		</dependency>
+
+		<dependency>
+			  <groupId>git.plugin</groupId>
+			  <artifactId>github-api</artifactId>
+			  <version>1.0</version>
+			  <type>hpi</type>
+		</dependency>
 	</dependencies>
 	
 	<build>	
 		<finalName>ci</finalName>
 		<plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeScope>provided</excludeScope>
+                            <includeTypes>hpi</includeTypes>
+                            <outputDirectory>${JENKINS_HOME}/plugins</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 					<groupId>com.googlecode.t7mp</groupId>
 					<artifactId>maven-t7-plugin</artifactId>

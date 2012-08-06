@@ -151,13 +151,7 @@ public class PluginUtils {
 				}
 			}
 		} catch (SQLException e) {
-			try {
-				if (con != null) {
-					con.rollback();
-				}
-			} catch (SQLException e1) {
-				throw new PhrescoException(e1);
-			}
+			throw new PhrescoException(e);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
 		} catch (InstantiationException e) {
@@ -284,7 +278,7 @@ public class PluginUtils {
 			serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 			serializer.transform(new DOMSource(doc), new StreamResult(stw));
-			encryptString encryptstring = new encryptString();
+			EncryptString encryptstring = new EncryptString();
 			encryptstring.Crypto("D4:6E:AC:3F:F0:BE");
 			String encryptXmlString = encryptstring.encrypt(stw.toString());
 			writeXml(encryptXmlString, fileName);

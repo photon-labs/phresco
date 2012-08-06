@@ -97,12 +97,13 @@
 
     <build>
 		<directory>do_not_checkin/target</directory>
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>
 		<finalName>service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>java-maven-plugin</artifactId>
-				<version>1.2.0.7004-SNAPSHOT</version>
+				<version>1.2.0.9001-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
@@ -111,13 +112,43 @@
                 <version>1.1</version>
                 <configuration>
                     <port>${server.port}</port>
-                    <username xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.username}</username>
-                    <password xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">${server.password}</password>
-                    <url xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">http://${server.host}:${server.port}/manager/html</url>
-                    <path xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">/${project.build.finalName}</path>
-                    <argLine xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">-Xmx512m</argLine>
+                    <username>${server.username}</username>
+                    <password>${server.password}</password>
+                    <url>http://${server.host}:${server.port}/manager/html</url>
+                    <path>/${project.build.finalName}</path>
+                    <argLine>-Xmx512m</argLine>
+					<warFile>${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war</warFile>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.2.3</version>
+				<configuration>
+					<container>
+						<containerId>${container.id}</containerId>
+						<type>remote</type>
+					</container>
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.protocol>${server.protocol}</cargo.protocol>
+							<cargo.hostname>${server.host}</cargo.hostname>
+							<cargo.servlet.port>${server.port}</cargo.servlet.port>
+							<cargo.remote.username>${server.username}</cargo.remote.username>
+							<cargo.remote.password>${server.password}</cargo.remote.password>
+							<cargo.jvmargs>-Xmx512m</cargo.jvmargs>
+						</properties>
+					</configuration>
+					<deployables>
+						<deployable>
+							<location>${project.basedir}/do_not_checkin/build/temp/${server.context}.war</location>
+							<type>war</type>
+						</deployable>
+                   </deployables>
+				</configuration>
+		
+			</plugin>
 		</plugins>
     </build>
 	<profiles>
@@ -162,7 +193,7 @@
 				<sonar.branch>web</sonar.branch>
 				<sonar.language>web</sonar.language>
 				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-				<sonar.source.directory>src/main/webapp</sonar.source.directory>
+				<phresco.source.directory>src/main/webapp</sonar.source.directory>
 				</properties> 
 		</profile>
 		

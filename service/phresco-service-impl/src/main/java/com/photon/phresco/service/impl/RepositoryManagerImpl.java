@@ -872,8 +872,8 @@ public class RepositoryManagerImpl implements RepositoryManager {
 	}
 
 	@Override
-	public String getCiConfigPath() throws PhrescoException {
-		return config.getCiConfigFile();
+	public String getCiConfigPath(String repoType) throws PhrescoException {
+		return config.getCiConfigFile(repoType);
 	}
 
 	@Override
@@ -1084,5 +1084,10 @@ public class RepositoryManagerImpl implements RepositoryManager {
         // TODO Auto-generated method stub
         return config.getServerContextName();
     }
+
+	@Override
+	public String getFrameWorkLatestFile() throws PhrescoException {
+		return config.getFrameWorkLatestFile();
+	}
 
 }

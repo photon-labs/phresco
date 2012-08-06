@@ -32,6 +32,7 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.LogInfo;
@@ -81,12 +82,12 @@ public interface ProjectAdministrator {
     Project getProject(String projectCode) throws PhrescoException;
     
     /**
-     * Returns the technology Id for the specified project code
-     * @param projectCode
+     * Returns the project for the specified project code
+     * @param baseDir
      * @return
      * @throws PhrescoException
      */
-    String getTechId(String projectCode) throws PhrescoException;
+    Project getProjectByWorkspace(File baseDir) throws PhrescoException;
 
     /**
      * Returns all application types
@@ -666,4 +667,8 @@ public interface ProjectAdministrator {
 	 * @throws PhrescoException
 	 */
 	 BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
+	 
+	 List<CertificateInfo> getCertificate(String host, int port) throws PhrescoException;
+	 
+	 void addCertificate(CertificateInfo info, File file) throws PhrescoException;
 }

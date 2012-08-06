@@ -36,6 +36,8 @@ public class CIJob {
     private String jenkinsUrl;
     private String jenkinsPort;
     private List<String> triggers;
+    private String repoType;
+    private String branch;
     
     public CIJob() {
         super();
@@ -146,7 +148,19 @@ public class CIJob {
 		this.triggers = triggers;
 	}
 
-	
-    
-    
+	public String getRepoType() {
+		return repoType;
+	}
+
+	public void setRepoType(String repoType) {
+		this.repoType = repoType;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
 }

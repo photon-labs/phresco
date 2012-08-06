@@ -50,6 +50,7 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.impl.EnvironmentComparator;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.I18NString;
 import com.photon.phresco.model.PropertyInfo;
@@ -167,11 +168,11 @@ public class Settings extends FrameworkBaseAction {
             	} else {
             		key = propertyTemplate.getKey();
             		value = getHttpRequest().getParameter(key);
-            		 if(key.equals("remoteDeployment")){
-                      	if(value == null){
+            		if(key.equals("remoteDeployment")){
+            			if(value == null){
                       		value="false";
                       	}
-                      }
+                    }
                     value = value.trim();
 					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
                     	String addcontext = value;
@@ -179,6 +180,19 @@ public class Settings extends FrameworkBaseAction {
                     		value = "/" + value;
                     	}
                     }
+					if ("certificate".equals(key)) {
+						String env = getHttpRequest().getParameter(ENVIRONMENTS);
+						if (StringUtils.isNotEmpty(value)) {
+							File file = new File(value); 
+							value = "certificates" + FILE_SEPARATOR + env + "-" + settingsName + ".crt";
+							if (file.exists()) {
+								File dstFile = new File(Utility.getProjectHome() + value);
+								FrameworkUtil.copyFile(file, dstFile);
+							} else {
+								saveCertificateFile(value);
+							}
+						}
+					}
                     propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
             	}
                 if (S_LOGGER.isDebugEnabled()) {
@@ -230,6 +244,25 @@ public class Settings extends FrameworkBaseAction {
 		}
 		return list();
 	}
+	
+	private void saveCertificateFile(String path) throws PhrescoException {
+    	try {
+    		String host = (String)getHttpRequest().getParameter(SERVER_HOST);
+			int port = Integer.parseInt(getHttpRequest().getParameter(SERVER_PORT));
+			String certificateName = (String)getHttpRequest().getParameter("certificate");
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			List<CertificateInfo> certificates = administrator.getCertificate(host, port);
+			if (CollectionUtils.isNotEmpty(certificates)) {
+				for (CertificateInfo certificate : certificates) {
+					if (certificate.getDisplayName().equals(certificateName)) {
+						administrator.addCertificate(certificate, new File(Utility.getProjectHome() + path));
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+    }
 
 	private boolean validate(ProjectAdministrator administrator, String fromPage)
 			throws PhrescoException {
@@ -345,11 +378,10 @@ public class Settings extends FrameworkBaseAction {
 		
 		if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
 	   		String value = getHttpRequest().getParameter("emailid");
-	   		Pattern p=Pattern.compile("[a-zA-Z]*[0-9]*@[a-zA-Z]*.[a-zA-Z]*");
-	   		Matcher m=p.matcher(value);
-	   		boolean b=m.matches();
-	   		if(b==false)
-	   		{
+	   		Pattern p = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+	   		Matcher m = p.matcher(value);
+	   		boolean b = m.matches();
+	   		if(!b) {
 	   			setEmailError(ERROR_EMAIL);
 	   			validate = false;
 	   		}
@@ -424,7 +456,20 @@ public class Settings extends FrameworkBaseAction {
 	                     	if(value == null){
 	                     		value="false";
 	                     	}
-	                     }
+	                    }
+	            		if ("certificate".equals(key)) {
+							String env = getHttpRequest().getParameter(ENVIRONMENTS);
+							if (StringUtils.isNotEmpty(value)) {
+								File file = new File(value); 
+								value = "certificates" + FILE_SEPARATOR + env + "-" + settingsName + ".crt";
+								if (file.exists()) {
+									File dstFile = new File(Utility.getProjectHome() + value);
+									FrameworkUtil.copyFile(file, dstFile);
+								} else {
+									saveCertificateFile(value);
+								}
+							}
+						}
 	                    value = value.trim();
 	                    propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
 	            	}

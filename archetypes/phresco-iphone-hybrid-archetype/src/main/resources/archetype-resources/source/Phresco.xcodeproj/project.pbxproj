@@ -32,6 +32,7 @@
 		2596509114FB8710002DF177 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596508E14FB8710002DF177 /* icon-72.png */; };
 		2596509214FB8710002DF177 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596508F14FB8710002DF177 /* icon.png */; };
 		2596509314FB8710002DF177 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596509014FB8710002DF177 /* icon@2x.png */; };
+		C3899CBE15BD9CB100ED971A /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,8 @@
 		2596508E14FB8710002DF177 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
 		2596508F14FB8710002DF177 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		2596509014FB8710002DF177 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		C3899CBC15BD9CB100ED971A /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationReader.h; sourceTree = "<group>"; };
+		C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationReader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,7 @@
 		2596502E14FB84E0002DF177 = {
 			isa = PBXGroup;
 			children = (
+				C3899CBB15BD9CB100ED971A /* ConfigurationReader */,
 				2596505A14FB84E0002DF177 /* Phresco */,
 				2596503F14FB84E0002DF177 /* Frameworks */,
 				2596503D14FB84E0002DF177 /* Products */,
@@ -215,6 +219,16 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
+		C3899CBB15BD9CB100ED971A /* ConfigurationReader */ = {
+			isa = PBXGroup;
+			children = (
+				C3899CBC15BD9CB100ED971A /* ConfigurationReader.h */,
+				C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */,
+			);
+			name = ConfigurationReader;
+			path = ThirdParty/ConfigurationReader;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,6 +321,7 @@
 			files = (
 				2596506114FB84E1002DF177 /* main.m in Sources */,
 				2596508114FB84E1002DF177 /* AppDelegate.m in Sources */,
+				C3899CBE15BD9CB100ED971A /* ConfigurationReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +367,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -367,6 +383,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -376,6 +393,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -384,6 +402,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -411,7 +430,7 @@
 					/usr/lib/libSystem.B.dylib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -438,7 +457,7 @@
 					/usr/lib/libSystem.B.dylib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

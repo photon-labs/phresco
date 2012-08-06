@@ -63,7 +63,8 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		S_LOGGER.debug("Entering Method HTML5DependencyProcessor.process(ProjectInfo info, File path)");
 		S_LOGGER.debug("process() Path=" + path.getPath());
 		updatePom(path, info.getTechnology().getModules());
-		if (info.getTechnology().getId().equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
+		if (info.getTechnology().getId().equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) ||
+				info.getTechnology().getId().equals(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET)) {
 		    updatePOMWithJsLibs(path, info.getTechnology().getJsLibraries());
 		} else {
 		    extractJsLibraries(path, info.getTechnology().getJsLibraries());

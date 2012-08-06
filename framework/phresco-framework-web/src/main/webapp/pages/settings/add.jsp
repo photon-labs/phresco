@@ -110,7 +110,7 @@
 	                    	<div class="typeFields">
 		                        <input class="xlarge settings_text" id="xlInput" name="settingsName"
 		                            type="text" maxlength="30" title="30 Characters only" value ="<%= name%>" autofocus="true" 
-		                            onfocus="showToolTip('nameHelpTxt_Stg');" placeholder="<s:text name="label.name.config.placeholder"/>"/>
+		                            placeholder="<s:text name="label.name.config.placeholder"/>"/>
 	                        </div>
 	                        
 	                        <div>
@@ -118,11 +118,6 @@
 					                
 						        </div>
 					        </div>
-					        
-					        <!-- <div class="twipsy bootstrap-right" id="nameHelpTxt_Stg">
-								<div class="twipsy-arrow"></div>
-								<div class="twipsy-inner">Name of the settings</div>
-							</div> -->
 	                    </div>
 	                </div>
 	                <!--  Name ends -->
@@ -131,13 +126,8 @@
 	                <div class="clearfix">
 	                    <s:label key="label.description" theme="simple" cssClass="new-xlInput"/>
 	                    <div class="input new-input">
-	                        <textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Stg');" placeholder="<s:text name="label.description.config.placeholder"/>"><%=description%></textarea>
+	                        <textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" placeholder="<s:text name="label.description.config.placeholder"/>"><%=description%></textarea>
 	                    </div>
-	                    
-	                    <!-- <div class="twipsy bootstrap-right" id="descHelpTxt_Stg">
-							<div class="twipsy-arrow"></div>
-							<div class="twipsy-inner">Description of the settings</div>
-						</div> -->
 	                </div>
 	                <!--  Description ends -->
 	                
@@ -145,7 +135,7 @@
             			<label class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
             			<div class="input new-input"> 
             				<div class="typeFields">
-		                        <select id="environments" name="environments" class="selectEqualWidth"  onfocus="showToolTip('envHelpTxt_Stg');">
+		                        <select id="environments" name="environments" class="selectEqualWidth">
 	                    			<%
 	                    			    if(envs != null) {
 	                    			        for(Environment env : envs) {
@@ -163,11 +153,6 @@
 					                
 						        </div>
 					        </div>
-					        
-					        <!-- <div class="twipsy bootstrap-right" id="envHelpTxt_Stg">
-								<div class="twipsy-arrow"></div>
-								<div class="twipsy-inner">Configuration for the Environment</div>
-							</div> -->
 	                    </div>
         			</div>
 	                
@@ -180,7 +165,7 @@
                         <label class="new-xlInput"><s:text name="label.type"/></label>
                         <div class="input new-input">
                         	<div class="typeFields">
-	                            <select id="settingsType" name="settingsType" class="selectEqualWidth" onfocus="showToolTip('typeHelpTxt_Stg');">
+	                            <select id="settingsType" name="settingsType" class="selectEqualWidth">
 	                                <%
 	                                    if (settingsTemplates != null) {
 	                                        for (SettingsTemplate settingsTemplate : settingsTemplates) {
@@ -201,10 +186,6 @@
                             <div>
                                  <div class="lblDesc configSettingHelp-block" id="configTypeErrMsg"></div>
                             </div>
-                            <!-- <div class="twipsy bootstrap-right" id="typeHelpTxt_Stg">
-								<div class="twipsy-arrow"></div>
-								<div class="twipsy-inner">Type of the settings</div>
-							</div> -->
                          </div>
                     </div>
                     <!--  SettingTemplate ends -->
@@ -238,13 +219,12 @@
 <script type="text/javascript">
 
 var selectedType = "";
+var fromPage = "";
 
 /** To remove all the environments except the selected environment **/
 if(<%= StringUtils.isNotEmpty(currentEnv) %>) {
 	$('#environments').empty().append($("<option></option>").attr("value",'<%= currentEnv %>').attr("selected", "selected").text('<%= currentEnv %>'));
 }
-
-hideAllDesc();
 
 /* To check whether the divice is ipad or not */
 if(!isiPad()){
@@ -270,9 +250,10 @@ $(document).ready(function() {
     });
     
     $('#save').click(function() {
+    	$("input[name=certificate]").prop("disabled", false);
     	var params = "";
-    	 params = params.concat("&remoteDeployment=");
-		 params = params.concat($("input[name='remoteDeployment']").prop("checked")); 
+    	params = params.concat("&remoteDeployment=");
+		params = params.concat($("input[name='remoteDeployment']").prop("checked"));
     	if (!isBlank($('form').serialize())) {
     		params = $('form').serialize() + "&";
     	}
@@ -288,16 +269,13 @@ $(document).ready(function() {
 
     });
     
-   /* $('#plus').click(function() {
-        addType();
-    });*/
     window.setTimeout(function () { document.getElementById('xlInput').focus(); }, 250);
 });
  
 function settingsType() {
     selectedType = $("#settingsType").val();
     var settingsCount = $("#settingsCount").val();
-    var fromPage = "<%= fromPage %>";
+    fromPage = "<%= fromPage %>";
 	var params = "";
 	if (!isBlank($('form').serialize())) {
 		params = $('form').serialize() + "&";
@@ -377,20 +355,6 @@ function validationError(data) {
 		$("div[id='emailid']").addClass("error");
     	$("div[id='emailidErrorDiv']").html(data.emailError);
     }
-}
-
-function showToolTip(toolTipId) {
-	hideAllDesc();
-	$("#"+toolTipId).show();
-	setTimeout(function(){
-	    $("#"+toolTipId).fadeOut("slow", function () {
-	    });
-	     
-	}, 2000);
-}
-
-function hideAllDesc() {
-	$(".twipsy").hide();
 }
 
 function successEvent(pageUrl, data) {

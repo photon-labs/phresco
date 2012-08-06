@@ -77,7 +77,7 @@
 						<li class="popup-li"> 
 							<input type="radio" name="validateAgainst" value="source" checked>
 							<span class="textarea_span popup-span"><s:text name="label.validateAgainst.source"/></span>
-							<input id="funTestRadio" type="radio" name="validateAgainst" value="functionalTest" >
+							<input id="funTestRadio" type="radio" name="validateAgainst" value="functional" >
 							<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
 						</li>
 					</ul>
@@ -92,7 +92,8 @@
 
 
 			<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
-				|| TechnologyTypes.HTML5.equals(technology)|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) { %>	
+				|| TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.JAVA_WEBSERVICE.equals(technology)) { %>	
 
 				<div class="clearfix" id="techDiv">
 					<div class="xlInput">
@@ -141,7 +142,7 @@
 		
 		$('input[name="validateAgainst"]').click(function() {
 			var selectedVal = $(this).val();
-			if (selectedVal == "functionalTest") {
+			if (selectedVal == "functional") {
 				$('#techDiv, #skipTestUl').hide();
 			} else if (selectedVal == "source") {
 				$('#techDiv, #skipTestUl').show();

@@ -58,6 +58,7 @@ import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.impl.ClientHelper;
 import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -75,6 +76,7 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 import org.apache.commons.codec.binary.Base64;
+import com.photon.phresco.framework.commons.DiagnoseUtil;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -1136,7 +1138,6 @@ public class Applications extends FrameworkBaseAction {
 	public String browse() {
 		S_LOGGER.debug("Entering Method  Applications.browse()");
 		try {
-
 			getHttpRequest().setAttribute(FILE_TYPES, fileType);
 			getHttpRequest().setAttribute(FILE_BROWSE, fileorfolder);
 			String projectLocation = Utility.getProjectHome() + projectCode;
@@ -1148,7 +1149,39 @@ public class Applications extends FrameworkBaseAction {
 		}
 		return SUCCESS;
 	}
-	
+
+	public String authenticateServer() throws PhrescoException {
+		try {
+			String host = (String)getHttpRequest().getParameter(SERVER_HOST);
+			int port = Integer.parseInt(getHttpRequest().getParameter(SERVER_PORT));
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			boolean connectionAlive = DiagnoseUtil.isConnectionAlive("https", host, port);
+			boolean isCertificateAvailable = false;
+			if (connectionAlive) {
+				List<CertificateInfo> certificates = administrator.getCertificate(host, port);
+				if (CollectionUtils.isNotEmpty(certificates)) {
+					isCertificateAvailable = true;
+					getHttpRequest().setAttribute("certificates", certificates);
+				}
+			}
+			getHttpRequest().setAttribute(FILE_TYPES, FILE_TYPE_CRT);
+			getHttpRequest().setAttribute(FILE_BROWSE, FILE_BROWSE);
+			String projectLocation = "";
+			if (StringUtils.isNotEmpty(projectCode)) {
+				projectLocation = Utility.getProjectHome() + projectCode;
+			} else {
+				projectLocation = Utility.getProjectHome();
+			}
+			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation.replace(File.separator, FORWARD_SLASH));
+			getHttpRequest().setAttribute(REQ_RMT_DEP_IS_CERT_AVAIL, isCertificateAvailable);
+			getHttpRequest().setAttribute(REQ_RMT_DEP_FILE_BROWSE_FROM, CONFIGURATION);
+		} catch(Exception e) {
+			throw new PhrescoException(e);
+		}
+
+		return SUCCESS;
+	}
+
 	public String getProjectCode() {
 		return projectCode;
 	}

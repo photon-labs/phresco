@@ -124,6 +124,7 @@
     function performAction(pageUrl, params, tagControl, callSuccessEvent) {
     	$.ajax({
             url : pageUrl,
+            cache: false,//do disable the browser cache
             data : params,
             type : "POST",
             success : function(data) {
@@ -153,12 +154,13 @@
     	var param = "";
     	if (!isBlank($('form').serialize())) {
     		param = "&";
-    	}
+    	}				
     	if(params != undefined && !isBlank(params)) {
     		param = param + params;
     	}
         $.ajax({
             url : pageUrl,
+            cache: false,//do disable the browser cache
             data : $('form').serialize() + param,
             success : function(data) {
             	if(tagControl != undefined && !isBlank(tagControl) && isSecondPopupAvail == undefined && isBlank(isSecondPopupAvail)) {
@@ -201,6 +203,7 @@
     // loads the loading gif icon based on theme
     function getCurrentCSS() {
         var theme =localStorage["color"];
+        $(".popupLoadingIcon").css("display", "block");
         if(theme == undefined || theme == null || theme == "null" || theme == "" || theme == "undefined" || theme == "themes/photon/css/red.css") {
         	$('.loadingIcon, .popupLoadingIcon').attr("src", "themes/photon/images/loading_red.gif");
         }
@@ -213,6 +216,7 @@
     function bacgroundValidate(validateURL, projectCode) {
         $.ajax({
             url : validateURL,
+            cache: false,//do disable the browser cache
             data : {
                 'validateInBg' : "true",
                 'projectCode' : projectCode,
@@ -294,6 +298,11 @@
     function checkForRevision(revision) {
     	newRevision = revision.replace(/[^0-9\.]+/g, '');
     	return newRevision;
+    }
+    
+    function checkForHost(host) {
+    	newHost = host.replace(/[^a-zA-Z 0-9\.%\-\_]+/g, '');
+    	return newHost;
     }
 	
     // To remove empty space between the characters
@@ -379,7 +388,6 @@
 		return newName;
     }
 			 
-	
 	function accordion() {
 	    var showContent = 0;
 	    $('.siteaccordion').removeClass('openreg').addClass('closereg');

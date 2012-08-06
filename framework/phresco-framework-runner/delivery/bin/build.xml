@@ -1,9 +1,11 @@
 <project name="Phresco Deployment Script" basedir="." default="run-phresco">
 
 	<property name="phresco.home" value="${basedir}/.."/>
-	<property name="tomcat.home" value="${phresco.home}/workspace/tools/apache-tomcat-https-7.0.21"/>
-	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-3.1.1"/>
+	<property name="tomcat.home" value="${phresco.home}/workspace/tools/apache-tomcat-https-${tomcat.version}"/>
+	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-${sonar.version}"/>
 	<property name="jenkins.home" value="${phresco.home}/workspace/tools/jenkins"/>
+	<property name="checkers.home" value="${phresco.home}/workspace/tools/checker-267"/>
+	<property name="chief.home" value="${phresco.home}/workspace/tools/chief"/>
 	<property name="phresco.war.dir" value="${phresco.home}/workspace/tools/war/phresco.war"/>
 	<property name="sonar.war.dir" value="${phresco.home}/workspace/tools/war/sonar.war"/>
 	<property name="phresco.upgrade.file" value="${phresco.home}/workspace/temp/upgrade.properties"/>
@@ -15,8 +17,22 @@
 		<available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
 	</target>	
 	
+	<target name="set-execute-permissions">
+		<echo message="Setting execute permissions ${checkers.home}, ${chief.home}" />
+		<chmod perm="ugo+rx" type="file">
+		  <fileset dir="${checkers.home}">
+		    <include name="**/*"/>
+		  </fileset>
+		  
+		  <fileset dir="${chief.home}">
+		    <include name="**/*"/>
+		  </fileset>
+		</chmod>
+	</target>
+
 	<target name="run-phresco">
 		<echo message="starting phresco deployment from ${phresco.home}"/>
+		<antcall target="set-execute-permissions"/>
 		<antcall target="clean-sonar"/>
 		<antcall target="copy-phresco"/>
         <antcall target="copy-security"/>

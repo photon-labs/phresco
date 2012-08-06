@@ -19,33 +19,30 @@
  */
 package com.photon.phresco.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 
 @Path("/repo")
 public class RepositoryService {
 
+	private static final String REPO_TYPE = "repoType";
+	
 	@GET
 	@Path("/ci/config")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getCiConfigPath() throws PhrescoException {
+	public String getCiConfigPath(@QueryParam(REPO_TYPE) String svnType) throws PhrescoException {
 		PhrescoServerFactory.initialize();
 		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
-		return repoMgr.getRepositoryURL() + repoMgr.getCiConfigPath();
+		return repoMgr.getRepositoryURL() + repoMgr.getCiConfigPath(svnType);
 	}
 
 	@GET
@@ -105,4 +102,14 @@ public class RepositoryService {
 		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
 		return repoMgr.getArtifactAsStream(repoMgr.getEmailExtFile());
 	}
+	
+	@GET
+	@Path("/update")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public InputStream getLatestPom()throws Exception {
+		PhrescoServerFactory.initialize();
+		RepositoryManager repoMgr = PhrescoServerFactory.getRepositoryManager();
+		return repoMgr.getArtifactAsStream(repoMgr.getFrameWorkLatestFile());
+	}
+	
 }

@@ -45,6 +45,7 @@ public interface PluginConstants {
      String MVN_PHASE_VALIDATE			= "validate";
      String MVN_PHASE_INITIALIZE		= "initialize";
      String MVN_PHASE_CLEAN				= "clean";
+     String MVN_PHASE_VALDATE			= "validate";
      String MVN_PHASE_PACKAGE			= "package";
 	 String MVN_PHASE_VERIFY			= "verify";
 	 String MVN_PHASE_INSTALL			= "install";
@@ -71,7 +72,7 @@ public interface PluginConstants {
      String SKIP_TESTS					= "-DskipTests=true";
      String JAVA_TEST_CONFIG_FILE 		= "/test/functional/src/main/resources/" + CONFIG_FILE;
 	 String JAVA_CONFIG_FILE 			= "/src/main/resources/" + CONFIG_FILE;
-	 String JAVA_WEBAPP_CONFIG_FILE 	= "/src/main/webapp/resources/" + CONFIG_FILE;
+	 String JAVA_WEBAPP_CONFIG_FILE 	= "/src/main/webapp/WEB-INF/resources/" + CONFIG_FILE;
 	 String JAVA_SERVER_CONFIG_FILE		= "/serverconfig.properties";
 	 String JAVA_CMD					= "java";
 	 String JAR_PATH					= "/lib/driver/";
@@ -141,6 +142,7 @@ public interface PluginConstants {
 	 String SHAREPOINT_STR_BACKSLASH 	= "/";
 	 String SHAREPOINT_STR_HYPEN 		= "-";
 	 String SHAREPOINT_STR_DOUBLEQUOTES = "\"";
+	 String SHAREPOINT_CABLIB           = "\\cabLib.dll";
 	 
 	//Constants for WordPress Plugin
 	//Constants for Drupal Plugin

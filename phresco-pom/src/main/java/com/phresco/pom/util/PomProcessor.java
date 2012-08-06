@@ -39,6 +39,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phresco.pom.exception.PhrescoPomException;
+import com.phresco.pom.model.Activation;
 import com.phresco.pom.model.Build;
 import com.phresco.pom.model.Build.Plugins;
 import com.phresco.pom.model.BuildBase;
@@ -51,6 +52,9 @@ import com.phresco.pom.model.Model.Properties;
 import com.phresco.pom.model.Parent;
 import com.phresco.pom.model.Plugin;
 import com.phresco.pom.model.Plugin.Configuration;
+import com.phresco.pom.model.Plugin.Executions;
+import com.phresco.pom.model.PluginExecution;
+import com.phresco.pom.model.PluginExecution.Goals;
 import com.phresco.pom.model.PluginManagement;
 import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
@@ -284,7 +288,7 @@ public class PomProcessor {
 		}
 		List<Dependency> list = model.getDependencies().getDependency();
 		for(Dependency dependency : list){
-			if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)){
+			if(dependency.getGroupId().equals(groupId) && dependency.getArtifactId().equals(artifactId)) {
 				model.getDependencies().getDependency().remove(dependency);
 				isFound = true;
 				break;
@@ -296,6 +300,23 @@ public class PomProcessor {
 		return isFound;
 	}
 
+	public Boolean deletePluginDependency(String groupId, String artifactId) throws PhrescoPomException {
+		boolean isFound = false;
+		if(model.getBuild().getPlugins() == null) {
+			return isFound;
+		}
+		Plugins plugins = model.getBuild().getPlugins();
+		List<Plugin> pluginList = plugins.getPlugin();
+		for (Plugin plugin : pluginList) {
+			if (plugin.getGroupId().equals(groupId) && plugin.getArtifactId().equals(artifactId)) {
+				if (plugin.getDependencies() != null) {
+					plugin.setDependencies(null);
+					isFound = true;
+				}
+			}
+		}
+		return isFound;
+	}
 	/**
 	 * Delete all dependencies.
 	 *
@@ -396,6 +417,64 @@ public class PomProcessor {
 		plugins.getPlugin().add(plugin);
 		return plugin;
 	}
+
+	public void addPlugin(String groupId, String artifactId, String version, String executionId, String goal, List<Element> configList) throws PhrescoPomException {
+		Plugin plugin = addPlugin(groupId, artifactId, version);
+		Executions executions = plugin.getExecutions();
+		if (executions == null) {
+			executions = new Executions();
+			plugin.setExecutions(executions);
+		}
+		List<PluginExecution> executionList = executions.getExecution();
+		
+		if (executionList == null) {
+			executionList = new ArrayList<PluginExecution>(5);	
+		}
+		
+		PluginExecution execution = getExecution(executions, executionId, goal);
+		if (execution == null) {
+			execution = createExecution(executionId, goal);
+			plugin.getExecutions().getExecution().add(execution);
+		}
+		addConfiguration(groupId, artifactId, configList);
+	}
+	
+	private PluginExecution getExecution(Executions executions, String executionId, String goal) {
+		if (executions.getExecution() != null) {
+			for (PluginExecution pluginExecution : executions.getExecution()) {
+				if (pluginExecution != null && pluginExecution.getId().equals(executionId) && isGoalFound(pluginExecution, goal)) {
+					return pluginExecution;
+				}
+
+			}
+		}
+		return null;
+	}
+	
+	private boolean isGoalFound(PluginExecution pluginExecution, String name) {
+		Goals goals = pluginExecution.getGoals();
+		if (goals == null) {
+			goals = new Goals();
+			goals.getGoal().add(name);
+			pluginExecution.setGoals(goals);
+			return true;
+		}
+		for (String goal : goals.getGoal()) {
+			if (goal != null && goal.equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	} 
+	
+	private PluginExecution createExecution(String executionId, String goalId) {
+		PluginExecution execution = new PluginExecution();
+		execution.setId(executionId);
+		Goals goals = new Goals();
+		goals.getGoal().add(goalId);
+		execution.setGoals(goals);
+		return execution;
+	}
 	
 	/**
 	 * Delete plugin.
@@ -440,19 +519,22 @@ public class PomProcessor {
 	 */
 	public Configuration addConfiguration(String pluginGroupId,String pluginArtifactId, List<Element> configList, boolean overwrite) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
-		Configuration configuration = plugin.getConfiguration();
-		
-		if (configuration == null) {
-			configuration = new Configuration();
-			plugin.setConfiguration(configuration);
-		}
-		if (overwrite) {
-			configuration.getAny().addAll(configList);
-		} else {			
-			plugin.getConfiguration().getAny().clear();
-			configuration.getAny().addAll(configList);
+		if (plugin != null) {
+			Configuration configuration = plugin.getConfiguration();
+
+			if (configuration == null) {
+				configuration = new Configuration();
+				plugin.setConfiguration(configuration);
 			}
-		return configuration;
+			if (overwrite) {
+				configuration.getAny().addAll(configList);
+			} else {			
+				plugin.getConfiguration().getAny().clear();
+				configuration.getAny().addAll(configList);
+			}
+			return configuration;
+		}
+		return null;
 	}
 
 	/**
@@ -487,16 +569,16 @@ public class PomProcessor {
 	 * @throws ParserConfigurationException the parser configuration exception
 	 * @throws PhrescoPomException the phresco pom exception
 	 */
-	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws ParserConfigurationException, PhrescoPomException{
+	public com.phresco.pom.model.Plugin.Dependencies addPluginDependency(String pluginGroupId,String pluginArtifactId, Dependency dependency) throws PhrescoPomException {
 		Plugin plugin = getPlugin(pluginGroupId, pluginArtifactId);
 		com.phresco.pom.model.Plugin.Dependencies dependencies = plugin.getDependencies();
 		if(dependencies == null){
 			dependencies = new Plugin.Dependencies();
 			plugin.setDependencies(dependencies);
-			plugin.getDependencies().getDependency().add(dependency);
-		} else {
-			return null;
 		}
+		
+		plugin.getDependencies().getDependency().add(dependency);
+		
 		return dependencies;
 	}
 
@@ -547,14 +629,13 @@ public class PomProcessor {
 	 */
 	
 	public void setProperty(String name,String value) throws ParserConfigurationException {
-		
 		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
 		Element element = doc.createElement(name);
 		element.setTextContent(value);
 		
-		if(model.getProperties()==null){
+		if(model.getProperties() == null){
 			Properties properties = new Properties();
 			model.setProperties(properties);
 		}
@@ -733,7 +814,7 @@ public class PomProcessor {
 		for(Profile tmpProfile : model.getProfiles().getProfile()){
 			if(tmpProfile.getId().equals(id)){
 				profile = tmpProfile;
-				break;
+				return profile;
 			}
 		}
 		
@@ -741,6 +822,42 @@ public class PomProcessor {
 		model.getProfiles().getProfile().add(profile);
 		return profile;
 	}
+	
+	public boolean addProfile(String id,List<Element> propertyList,boolean activationValue) throws PhrescoPomException {
+		try {
+			if (getProfile(id)!= null){
+				return false;
+			}
+			Profile addProfile = addProfile(id);
+			if (addProfile.getActivation() == null) {
+				addProfile.setActivation(new Activation());
+			}
+			com.phresco.pom.model.Profile.Properties properties = new com.phresco.pom.model.Profile.Properties();
+			if (addProfile.getProperties() == null){
+				addProfile.setProperties(properties);
+			}
+			addProfile.getActivation().setActiveByDefault(activationValue);
+			addProfile.getProperties().getAny().addAll(propertyList);
+			
+			return true;
+		} catch (PhrescoPomException e) {
+			throw new PhrescoPomException(e);
+		}
+		
+	}
+	
+	public boolean addSonarProperties(List<Element> elements) throws PhrescoPomException {
+		Properties properties = model.getProperties();
+		if (model.getProperties() != null) {
+			return false;
+		}
+		model.setProperties(new Properties());
+		for (Element element : elements) {
+			properties.getAny().add(element);
+		}
+		return true;
+	}
+	
 
 	/**
 	 * Gets the profile.

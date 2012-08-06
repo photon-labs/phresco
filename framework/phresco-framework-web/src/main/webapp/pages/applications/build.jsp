@@ -123,7 +123,7 @@
 		    <input id="generatebtn" type="button" value="<s:text name="label.generatebuild"/>" class="primary btn env_btn">
 		    <input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 		</div> 
-		<div style="float: right;width: auto;">
+		<div class="runagint_source";>
 		<%
 			if(TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology)) {
 		%>
@@ -397,10 +397,12 @@
 			fillVersions("databases", data.databases , "");
 			//getting sql files to be executed
 			getSQLFiles();
-		} else if (pageUrl == "getSQLFiles") {
+		} else if (pageUrl == "fetchSQLFiles") {
 			fillVersions("avaliableSourceScript", data.sqlFiles , "getSQLFiles");
 			// after sql files are loaded, already selected value should be hidden in available list
 			hideDbWithVersions();
-		} 
+		} else if (pageUrl == "jsToMinify") {
+			updateHiddenField(data.jsFinalName, data.selectedJs, data.browseLocation);
+    	}
     }
 </script>
