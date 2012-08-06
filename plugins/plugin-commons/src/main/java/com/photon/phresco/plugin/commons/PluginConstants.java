@@ -159,5 +159,38 @@ public interface PluginConstants {
 	 String WINDOWS_PLATFORM			= "Windows";
 	 String LOG_FILE_DIRECTORY			=  DO_NOT_CHECKIN_FOLDER + "/log";
 	 String SERVER_LOG_FILE				= "/server.log";
+	 
+	 // Constants for Windows Phone Plugin
+	 // Author: Viral
+	 // Date: July 27, 2012
+	 String WP_MSBUILD_PATH				= "MSBuild ";
+	 String WP_STR_TARGET				= "/t";
+	 String WP_STR_PROPERTY				= "/p";	 
+	 String WP_STR_COLON 		 		= ":";
+	 String WP_STR_SEMICOLON 		 	= ";";
+	 String WINDOWS_STR_BACKSLASH   	= "\\";
+	 String WP_STR_DOUBLEQUOTES 		= "\"";
+	 
+	 // Variables related to Windows 8 build process
+	 String WP_STR_CONFIGURATION		= "Configuration";
+	 String WP_STR_PLATFORM				= "Platform";
+	 String WP_APP_PACKAGE				= "\\AppPackages";
+	 String WP_TEST						= "_Test";
+	 
+	 
+	 // Variables related to Windows 8 deploy process	 
+	 String WP_POWERSHELL_PATH			= "PowerShell ";
+	 String WP_STR_DOT					= ".";
+     
+	 // Variables related to Windows 7 build process
+	 String WP7_BIN_FOLDER				= "\\bin";
+	 String WP7_RELEASE_FOLDER			= "\\release";
+	 
+	 // Variables related to Windows 7 deploy process
+	 // wptools.exe -target:emulator -xap:WindowsPhoneApplication1.xap -install
+	 String WP7_WPTOOLS_PATH			= "wptools.exe ";
+	 String WP7_TARGET					= "-target";
+	 String WP7_XAP_FILE				= "-xap";
+	 String WP7_INSTALL					= "-install";
      
 }
