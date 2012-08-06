@@ -27,7 +27,7 @@
 	<groupId>com.photon.phresco.eShop</groupId>
 	<artifactId>eShopRobotiumPerfTest</artifactId>
 	<packaging>apkperf</packaging>
-	<version>2.0.0.9000-SNAPSHOT</version>
+	<version>2.0.0.10000-SNAPSHOT</version>
 	<name>eShopRobotiumPerfTest</name>
 	<properties>
     	<android.version>2.3.3</android.version>
@@ -63,7 +63,7 @@
 				<groupId>com.photon.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 				<extensions>true</extensions>
-				<version>2.0.0.9000-SNAPSHOT</version>
+				<version>2.0.0.10000-SNAPSHOT</version>
 				<configuration>
 					<run>
 						<debug>false</debug>
