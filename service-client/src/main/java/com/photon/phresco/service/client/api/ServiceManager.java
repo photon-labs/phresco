@@ -130,4 +130,6 @@ public interface ServiceManager {
 	void updateDownload(DownloadInfo downloadInfo, String id) throws PhrescoException;
 	
 	ClientResponse deleteDownloadInfo(String id) throws PhrescoException;
+	
+	ClientResponse createProject(ProjectInfo projectInfo) throws PhrescoException;
 }

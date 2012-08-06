@@ -58,6 +58,8 @@
 	}
 	
 	$(document).ready(function() {
+		enableScreen();
+		
 		/** To check the pilot project modules during next/previous actions **/
 		var fromPage = $('#fromPage').val();
 		if (fromPage == "") {
@@ -66,7 +68,6 @@
 			} else {
 				isPilotSelected = false;
 			}
-//			alert("inside document ready before calling getPilotProjectModules()..");
 			getPilotProjectModules(isPilotSelected);
 		}
 
@@ -126,7 +127,7 @@
 			params = params.concat("&customerId=");
 	    	params = params.concat($("#customerId").val());
 			showLoadingIcon($("#tabDiv")); // Loading Icon
-		    performAction('previous', params, $('#tabDiv'));
+			performActionParams('previous', params, $('#tabDiv'));
 		});
 	
 		// Description popup js codes
@@ -169,14 +170,8 @@
 		});
 		
 		$('#cancel').click(function() {
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("fromPage=");
-			params = params.concat("edit");
 			showLoadingIcon($("#container")); // Loading Icon
-			performAction('applications', params, $('#container'));
+			performAction('applications', $('#formAppInfo'), $('#container'));
 		});
 	});
 	
@@ -220,14 +215,13 @@
 		params = params.concat($("#configServerNames").val());
 		params = params.concat("&configDbNames=");
 		params = params.concat($("#configDbNames").val());
-		performAction(url, params, $('#container'));
+		performActionParams(url, params, $('#container'));
 	}
 	
 	function getPilotProjectModules(isPilotSelected) {
-		//alert("inside getPilotProjectModules...");
         var params = "technology=";
 		params = params.concat($("#technology").val());
-		performAction('getPilotProjectModules', params, '', true);
+		performActionParams('getPilotProjectModules', params, '', true);
 	}
 	
 	function chkUnchkPilotModules(pilotModules, isCheck) {
@@ -236,8 +230,6 @@
 			nameSep = pilotModules[i].split("#VSEP#");
 			var moduleId = nameSep[0];
 			var version = nameSep[1];
-			//alert("moduleId:::" + moduleId);
-			//alert("version:::" + version);
    			$("input:radio[name='" + pilotModules[i] + "']").attr('checked', isCheck);
    			$("input:radio[name='" + pilotModules[i] + "']").attr('disabled', isCheck);
 		
@@ -257,7 +249,7 @@
 	function getDefaultModules() {
 		var params = "technology=";
 		params = params.concat($("#technology").val());
-		performAction('fetchDefaultModules', params, '', true);
+		performActionParams('fetchDefaultModules', params, '', true);
 	}
 	
 	function enableModuleDesc(enableProp) {
@@ -317,7 +309,7 @@
 			params = params.concat("&preVersion=");
 			params = params.concat(preVersion);
 		}
-		performAction('checkDependency', params, '', true);
+		performActionParams('checkDependency', params, '', true);
 	}
 	
 	function successDependencyCall(data) {

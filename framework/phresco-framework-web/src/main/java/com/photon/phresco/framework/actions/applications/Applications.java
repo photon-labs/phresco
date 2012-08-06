@@ -113,13 +113,13 @@ public class Applications extends FrameworkBaseAction {
 	//svn info
 	private String credential = null;
 	private String customerId = null;
+	private String application = null;
 
-    public String list() {
+	public String list() {
 		long start = System.currentTimeMillis();
 		S_LOGGER.debug("Entering Method  Applications.list()");
 		try {
-			Map<String, Object> sessionMap = ActionContext.getContext()
-					.getSession();
+			Map<String, Object> sessionMap = ActionContext.getContext().getSession();
 			sessionMap.remove(SESSION_SELECTED_INFO);
 			sessionMap.remove(SESSION_SELECTED_MODULES);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
@@ -132,14 +132,15 @@ public class Applications extends FrameworkBaseAction {
 		String discover = discover();
 		long end = System.currentTimeMillis();
 		S_LOGGER.debug("Total Time : " + (end - start));
+		
 		return discover;
 	}
 
 	public String applicationDetails() {
 		S_LOGGER.debug("Entering Method  Applications.addApplication()");
 
-		getHttpRequest().setAttribute(REQ_FROM_PAGE,
-				getHttpRequest().getParameter(REQ_FROM_PAGE));
+		getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
+		getHttpRequest().setAttribute(REQ_CUSTOMER_ID, customerId);
 		if (projectCode != null && !StringUtils.isEmpty(projectCode)) {
 			try {
 				getHttpSession().removeAttribute(projectCode);
@@ -224,13 +225,12 @@ public class Applications extends FrameworkBaseAction {
 	}
 
 	public String applicationType() {
-
 		S_LOGGER.debug("Entering Method  Applications.applicationType()");
-		String appType = getHttpRequest().getParameter(REQ_APPLICATION_TYPE);
+		
 		try {
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
-			getHttpRequest().setAttribute(SESSION_APPLICATION_TYPE,
+					.getApplicationType(getHttpRequest(), application, customerId);
+			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE,
 					applicationType);
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
 					.getProjectAdministrator();
@@ -250,6 +250,7 @@ public class Applications extends FrameworkBaseAction {
 					+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "Getting Application Type");
 		}
+		
 		return APP_TYPE;
 	}
 
@@ -257,12 +258,8 @@ public class Applications extends FrameworkBaseAction {
 
 		S_LOGGER.debug("Entering Method  Applications.technology()");
 		try {
-			String selectedTechnology = getHttpRequest().getParameter(
-					REQ_TECHNOLOGY);
-			String appType = getHttpRequest()
-					.getParameter(REQ_APPLICATION_TYPE);
-			ProjectAdministrator administrator = PhrescoFrameworkFactory
-					.getProjectAdministrator();
+			String selectedTechnology = getHttpRequest().getParameter(REQ_TECHNOLOGY);
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = null;
 			if (StringUtils.isNotEmpty(projectCode)) {
 				project = administrator.getProject(projectCode);
@@ -273,28 +270,25 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_PROJECT_INFO, projectInfo);
 			}
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
-			Technology techonology = applicationType
-					.getTechonology(selectedTechnology);
+					.getApplicationType(getHttpRequest(), application, customerId);
+			Technology techonology = applicationType.getTechonology(selectedTechnology);
 			List<Server> servers = administrator.getServers(selectedTechnology, customerId);
-			List<Database> databases = administrator
-					.getDatabases(selectedTechnology, customerId);
+			List<Database> databases = administrator.getDatabases(selectedTechnology, customerId);
 			List<WebService> webServices = administrator
 					.getWebServices(selectedTechnology, customerId);
 			S_LOGGER.debug("Selected technology" + techonology.toString());
 			// This attribute for Pilot Project combo box
-			getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-			ApplicationsUtil.getPilotNames(techonology.getId(), customerId));
+			getHttpRequest().setAttribute(REQ_PILOTS_NAMES, 
+				ApplicationsUtil.getPilotNames(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_PILOT_PROJECT_INFO,
-			ApplicationsUtil.getPilotProjectInfo(techonology.getId(), customerId));
+				ApplicationsUtil.getPilotProjectInfo(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_SELECTED_TECHNOLOGY, techonology);
-			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, appType);
+			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, application);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 			getHttpRequest().setAttribute(REQ_SERVERS, servers);
 			getHttpRequest().setAttribute(REQ_DATABASES, databases);
 			getHttpRequest().setAttribute(REQ_WEBSERVICES, webServices);
 		} catch (Exception e) {
-			e.printStackTrace();
 			S_LOGGER.error("Entered into catch block of  Applications.technology()"
 					+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "Getting technology");
@@ -305,12 +299,10 @@ public class Applications extends FrameworkBaseAction {
 
 	public String techVersions() {
 		try {
-			String appType = getHttpRequest()
-					.getParameter(REQ_APPLICATION_TYPE);
 			String selectedTechnology = getHttpRequest().getParameter(
 					REQ_TECHNOLOGY);
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
+					.getApplicationType(getHttpRequest(), application, customerId);
 			Technology techonology = applicationType
 					.getTechonology(selectedTechnology);
 			techVersions = techonology.getVersions();
@@ -1515,4 +1507,12 @@ public class Applications extends FrameworkBaseAction {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+    
+    public String getApplication() {
+		return application;
+	}
+
+	public void setApplication(String application) {
+		this.application = application;
+	}
 }

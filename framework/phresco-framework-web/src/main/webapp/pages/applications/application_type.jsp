@@ -21,8 +21,8 @@
 
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.Technology" %>
@@ -30,7 +30,7 @@
 
 <%
     ProjectInfo selectedInfo = (ProjectInfo) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO);
-    ApplicationType selectedAppType = (ApplicationType) request.getAttribute(FrameworkConstants.SESSION_APPLICATION_TYPE);
+    ApplicationType selectedAppType = (ApplicationType) request.getAttribute(FrameworkConstants.REQ_APPLICATION_TYPE);
     String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
     String disabled = "disabled";
     if (StringUtils.isEmpty(fromPage)) {
@@ -52,7 +52,6 @@
 %>
 
 <div class="clearfix">
-
     <label for="xlInput" Class="new-xlInput"><span class="red">*</span> <s:text name="label.technology"/></label>
     
     <!--  Technologies are loaded here starts-->
@@ -65,30 +64,28 @@
 		%>
 		<div class="app_type_float_left">
 			<select id="technology" name="technology" class="xlarge" <%= disabled %> >
-				<%
-					Technology selectedTech = null;
-					if(selectedInfo != null) {
-						selectedTech = selectedInfo.getTechnology();
-					}
-					
-					String selectedStr = "";
-					if (technologies != null && technologies.size() > 0) {
-						
-						for(Technology technology : technologies) {
-							String id = technology.getId();
-							String name = technology.getName();
-							
-							if(selectedTech != null && selectedTech.getId().equals(id)) {
-								selectedStr = "selected";
-							} else {
-								selectedStr = "";
-							}
-				%>
-					<option value="<%= id %>" <%= selectedStr %> > <%= name %> </option>
-				<%
+			<%
+				Technology selectedTech = null;
+				if (selectedInfo != null) {
+					selectedTech = selectedInfo.getTechnology();
+				}
+				
+				String selectedStr = "";
+				if (technologies != null && technologies.size() > 0) {
+					for (Technology technology : technologies) {
+						String id = technology.getId();
+						String name = technology.getName();
+						if (selectedTech != null && selectedTech.getId().equals(id)) {
+							selectedStr = "selected";
+						} else {
+							selectedStr = "";
 						}
+			%>
+					<option value="<%= id %>" <%= selectedStr %> > <%= name %> </option>
+			<%
 					}
-				%>
+				}
+			%>
 			</select>
 		</div>
 		
@@ -105,7 +102,6 @@
 		</div>
     </div>
     <!--  Technologies are loaded here ends -->
-    
 </div>
 
 <!--  Technology dependency are loaded here starts-->
@@ -123,27 +119,11 @@
 	    
 	function techDependencies() {
 		$("#alreadyConstructed").val("");
-	    var technology = $("#technology").val();
-	    var params = '<%= FrameworkConstants.REQ_APPLICATION_TYPE %>';
-	    params = params.concat("=");
-	    params = params.concat('<%= selectedAppType.getName() %>');
-	    params = params.concat("&technology=");
-	    params = params.concat(technology);
-	    params = params.concat("&" + '<%= FrameworkConstants.REQ_FROM_PAGE %>' + "=");
-	    params = params.concat('<%= fromPage %>');
-	    /* jQuery.ajaxSetup({async:false}); */
-	    popup('technology', params, $('#techDependency'), true);
+		popup('technology', $("#formAppInfo"), $('#techDependency'), true);
 	}
 	
 	function techVersions() {
-		var technology = $("#technology").val();
-		var params = '<%= FrameworkConstants.REQ_APPLICATION_TYPE %>';
-	    params = params.concat("=");
-	    params = params.concat('<%= selectedAppType.getName() %>');
-		params = params.concat("&technology=");
-		params = params.concat(technology);
-		/* jQuery.ajaxSetup({async:true}); */
-		performAction("techVersions", params, '', true);
+		popup("techVersions", $("#formAppInfo"), '', true);
 	}
 	
 	function showPrjtInfoTechVersion() {
@@ -159,7 +139,7 @@
 		
 		var selectedTechnology = $("#technology").val();
 		if ('<%= TechnologyTypes.ANDROID_NATIVE %>' == selectedTechnology) {
-			if($("#pilotProjects").val() != "") {
+			if ($("#pilotProjects").val() != "") {
 				removeLowerTechVersions();
 			}
 		}

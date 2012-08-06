@@ -95,7 +95,7 @@ public interface ProjectAdministrator {
      * @return Application Type
      * @throws PhrescoException
      */
-    ApplicationType getApplicationType(String name, String customerId) throws PhrescoException;
+    ApplicationType getApplicationType(String appTypeId, String customerId) throws PhrescoException;
 
     /**
      * Returns all application types
