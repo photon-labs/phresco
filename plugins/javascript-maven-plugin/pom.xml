@@ -22,7 +22,7 @@
 	
 	<artifactId>javascript-maven-plugin</artifactId>
 	<packaging>jar</packaging>
-    <version>2.0.0.9000-SNAPSHOT</version>
+    <version>2.0.0.10000-SNAPSHOT</version>
 	<name>Javascript Maven Plugin</name>
 	<description>An extension that provides lifecycle binding, dependency, plugin and resource configuration suitable to most JS projects.</description>
 	<url>http://mojo.codehaus.org/javascript-maven-tools/javascript-maven-plugin/</url>
