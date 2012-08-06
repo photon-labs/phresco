@@ -46,13 +46,20 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ArchetypeInfo;
 import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Server;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.ArchetypeExecutor;
+import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.service.api.PhrescoServerFactory;
+//import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ProjectUtils;
+import com.photon.phresco.util.ServiceConstants;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +69,8 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
+import org.springframework.data.document.mongodb.query.Criteria;
+import org.springframework.data.document.mongodb.query.Query;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
@@ -69,6 +78,7 @@ import com.photon.phresco.service.api.ArchetypeExecutor;
 import com.photon.phresco.service.model.ServerConfiguration;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.ProjectUtils;
+import com.sun.jersey.server.impl.container.servlet.PerSessionFactory;
 
 public class ArchetypeExecutorImpl implements ArchetypeExecutor,
         ServerConstants, Constants {
@@ -166,34 +176,35 @@ public class ArchetypeExecutorImpl implements ArchetypeExecutor,
 			S_LOGGER.debug("buildCommandString() ProjectCode="+info.getCode());
 		}
     	
+    	ArchetypeInfo archetypeInfo = PhrescoServerFactory.getDbManager().getArchetypeInfo(info.getTechId());
 //    	ArchetypeInfo archInfo = PhrescoServerFactory.getRepositoryManager().getArchetype(info);
-    	Object archInfo = null;
-    	//TEMP BUG - to be cleaned up
-        if (archInfo == null) {
-            throw new PhrescoException("Archetype not defined for " + info.getTechnology().getName());
-        }
+//    	Object archInfo = null;
+//    	//TEMP BUG - to be cleaned up
+//        if (archInfo == null) {
+//            throw new PhrescoException("Archetype not defined for " + info.getTechnology().getName());
+//        }
 
         // For Thread-Safe,using StringBuffer instead of StringBuilder
         StringBuffer commandStr = new StringBuffer();
-//
-//        commandStr.append(Constants.MVN_COMMAND).append(Constants.STR_BLANK_SPACE)
-//                .append(Constants.MVN_ARCHETYPE).append(STR_COLON).append(Constants.MVN_GOAL_GENERATE)
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_ARCHETYPEGROUPID).append(Constants.STR_EQUALS).append(archInfo.getGroupId())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_ARCHETYPEARTIFACTID).append(Constants.STR_EQUALS).append(archInfo.getArtifactId())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_ARCHETYPEVERSION).append(Constants.STR_EQUALS).append(archInfo.getVersion())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_GROUPID).append(Constants.STR_EQUALS).append(archInfo.getProjectGroupId())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_ARTIFACTID).append(Constants.STR_EQUALS).append(STR_DOUBLE_QUOTES).append(info.getCode()).append(STR_DOUBLE_QUOTES) //artifactId --> project name could have space in between
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_VERSION).append(Constants.STR_EQUALS).append(info.getVersion())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_ARCHETYPEREPOSITORYURL).append(Constants.STR_EQUALS).append(serverConfig.getRepositoryURL())
-//                .append(Constants.STR_BLANK_SPACE)
-//                .append(ARCHETYPE_INTERACTIVEMODE).append(Constants.STR_EQUALS).append(INTERACTIVE_MODE);
+
+        commandStr.append(Constants.MVN_COMMAND).append(Constants.STR_BLANK_SPACE)
+                .append(Constants.MVN_ARCHETYPE).append(STR_COLON).append(Constants.MVN_GOAL_GENERATE)
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_ARCHETYPEGROUPID).append(Constants.STR_EQUALS).append(archetypeInfo.getGroupId())
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_ARCHETYPEARTIFACTID).append(Constants.STR_EQUALS).append(archetypeInfo.getArtifactId())
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_ARCHETYPEVERSION).append(Constants.STR_EQUALS).append(archetypeInfo.getVersion())
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_GROUPID).append(Constants.STR_EQUALS).append(archetypeInfo.getProjectGroupId())
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_ARTIFACTID).append(Constants.STR_EQUALS).append(STR_DOUBLE_QUOTES).append(info.getCode()).append(STR_DOUBLE_QUOTES) //artifactId --> project name could have space in between
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_VERSION).append(Constants.STR_EQUALS).append(info.getVersion())
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_ARCHETYPEREPOSITORYURL).append(Constants.STR_EQUALS).append("http://172.16.18.178:8080/nexus/content/repositories/releases/archetypes/")
+                .append(Constants.STR_BLANK_SPACE)
+                .append(ARCHETYPE_INTERACTIVEMODE).append(Constants.STR_EQUALS).append(INTERACTIVE_MODE);
 
         return commandStr.toString();
     }

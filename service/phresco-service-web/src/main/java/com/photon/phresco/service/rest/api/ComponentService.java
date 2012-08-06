@@ -455,20 +455,24 @@ public class ComponentService extends DbService implements ServiceConstants {
 			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_MODULE)) {
 			    Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
 		        .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME);
-		        Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
-		        .and(REST_QUERY_CUSTOMERID).is(customerId);
-		        foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
-		        foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+    		        Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
+    		        .and(REST_QUERY_CUSTOMERID).is(customerId);
+    		        foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    }
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
 			if (techId != null && type != null && customerId != null && type.equals(REST_QUERY_TYPE_JS)) {
-			    Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
+			    Criteria criteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS)
                 .and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME);
-                Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_MODULE)
-                .and(REST_QUERY_CUSTOMERID).is(customerId);
-				foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
-				foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    foundModules = mongoOperation.find(MODULES_COLLECTION_NAME, new Query(criteria), ModuleGroup.class);
+			    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+			        Criteria customerCriteria = Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_TYPE).is(REST_QUERY_TYPE_JS)
+	                .and(REST_QUERY_CUSTOMERID).is(customerId);
+			        foundModules.addAll(mongoOperation.find(MODULES_COLLECTION_NAME, new Query(customerCriteria), ModuleGroup.class));
+			    }
 				return Response.status(Response.Status.OK).entity(foundModules).build();
 			}
 			
@@ -635,13 +639,18 @@ public class ComponentService extends DbService implements ServiceConstants {
 	@GET
 	@Path (REST_API_PILOTS)
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId) {
+	public Response findPilots(@QueryParam(REST_QUERY_TECHID) String techId, @QueryParam(REST_QUERY_CUSTOMERID) String customerId) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.findPilots()" + techId);
 	    }
+	    List<ProjectInfo> pilotsList = new ArrayList<ProjectInfo>();
 		try {
-			List<ProjectInfo> pilotsList = mongoOperation.find(PILOTS_COLLECTION_NAME ,
-			        new Query(Criteria.where(REST_QUERY_TECHID).is(techId)), ProjectInfo.class);
+		    if(!customerId.equals(DEFAULT_CUSTOMER_NAME)) {
+    			pilotsList = mongoOperation.find(PILOTS_COLLECTION_NAME ,
+    			        new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(customerId)), ProjectInfo.class);
+		    }
+			pilotsList.addAll(mongoOperation.find(PILOTS_COLLECTION_NAME ,
+                    new Query(Criteria.where(REST_QUERY_TECHID).is(techId).and(REST_QUERY_CUSTOMERID).is(DEFAULT_CUSTOMER_NAME)), ProjectInfo.class));
 			return Response.status(Response.Status.OK).entity(pilotsList).build();
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00005, PILOTS_COLLECTION_NAME);

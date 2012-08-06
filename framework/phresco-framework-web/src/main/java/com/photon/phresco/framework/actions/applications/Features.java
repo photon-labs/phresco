@@ -31,7 +31,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.opensymphony.xwork2.Action;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -76,17 +75,18 @@ public class Features extends FrameworkBaseAction {
 	private Collection<String> preDependentVersions = null;
 	private List<String> pilotModules = null;
 	private List<String> pilotJSLibs = null;
-	private boolean isValidated = false;
 	private String configServerNames = null;
 	private String configDbNames = null;
 	private String fromTab = null;
 	private List<String> defaultModules =  null;
 	private String customerId = null;
+	private boolean validated = false;
 
-    public String features() {
+	public String features() {
 		if (debugEnabled) {
 			S_LOGGER.debug("Entering Method  Features.features()");
 		}
+		
 		String returnPage = APP_FEATURES_ONE_CLM;
 		boolean left = false;
 		boolean rightBottom = false;
@@ -97,7 +97,8 @@ public class Features extends FrameworkBaseAction {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
 					.getProjectAdministrator();
 			if (validate(administrator) && StringUtils.isEmpty(fromPage)) {
-				return Action.SUCCESS;
+				setValidated(true);
+				return SUCCESS;
 			}
 			if (StringUtils.isEmpty(fromPage)
 					&& StringUtils.isNotEmpty(projectCode)) { // previous button
@@ -224,104 +225,109 @@ public class Features extends FrameworkBaseAction {
 		projectInfo.setVersion(projectVersion);
 		projectInfo.setDescription(description);
 		projectInfo.setApplication(application);
+		projectInfo.setTechId(technology);
 		String pilotProjectName = getHttpRequest().getParameter(REQ_SELECTED_PILOT_PROJ);
 		projectInfo.setPilotProjectName(pilotProjectName);
-		
 		setTechnology(projectInfo, administrator);
 		FrameworkUtil.setAppInfoDependents(request, customerId);
 	}
 
 	private void setTechnology(ProjectInfo projectInfo, ProjectAdministrator administrator) throws PhrescoException {
-		ProjectInfo tempprojectInfo = null;
-		Technology selectedTechnology = administrator.getApplicationType(application, customerId).getTechonology(technology);
-		Technology technology = new Technology();
+		try {
+			ProjectInfo tempprojectInfo = null;
+			Technology selectedTechnology = administrator.getApplicationType(application, customerId).getTechonology(technology);
+			Technology technology = new Technology();
 
-		technology.setId(selectedTechnology.getId());
-		technology.setName(selectedTechnology.getName());
-		if (StringUtils.isEmpty(fromPage)) {
-			technology.setVersions(techVersion);
-		} else {
-			tempprojectInfo = administrator.getProject(projectCode).getProjectInfo();
-			List<String> projectInfoTechVersions = new ArrayList<String>();
-			List<String> tempPrjtInfoTechVersions = tempprojectInfo.getTechnology().getVersions();
-			if (tempPrjtInfoTechVersions != null && CollectionUtils.isNotEmpty(tempPrjtInfoTechVersions)) {
-				projectInfoTechVersions.addAll(tempprojectInfo.getTechnology().getVersions());
-				technology.setVersions(projectInfoTechVersions);
-			}
-		}
-		
-		if (StringUtils.isNotEmpty(fromPage)) {// For project edit
-			technology.setJsLibraries(projectInfo.getTechnology()
-					.getJsLibraries());
-			technology.setModules(projectInfo.getTechnology().getModules());
-		}
-
-		List<Server> servers = selectedTechnology.getServers();
-		List<Database> databases = selectedTechnology.getDatabases();
-		List<WebService> webservices = selectedTechnology.getWebservices();
-		
-		String selectedServers = getHttpRequest().getParameter("selectedServers");
-		String selectedDatabases = getHttpRequest().getParameter("selectedDatabases");
-		String[] selectedWebservices = getHttpRequest().getParameterValues(REQ_WEBSERVICES);
-		boolean isEmailSupported = false;
-		
-		if (StringUtils.isNotEmpty(fromTab)) {
-			if (selectedServers != null) {
-				List<String> listTempSelectedServers = null;
-				if (StringUtils.isNotEmpty(selectedServers)) {
-					listTempSelectedServers = new ArrayList<String>(
-							Arrays.asList(selectedServers.split("#SEP#")));
+			technology.setId(selectedTechnology.getId());
+			technology.setName(selectedTechnology.getName());
+			if (StringUtils.isEmpty(fromPage)) {
+				technology.setVersions(techVersion);
+			} else {
+				tempprojectInfo = administrator.getProject(projectCode).getProjectInfo();
+				List<String> projectInfoTechVersions = new ArrayList<String>();
+				List<String> tempPrjtInfoTechVersions = tempprojectInfo.getTechnology().getVersions();
+				if (tempPrjtInfoTechVersions != null && CollectionUtils.isNotEmpty(tempPrjtInfoTechVersions)) {
+					projectInfoTechVersions.addAll(tempprojectInfo.getTechnology().getVersions());
+					technology.setVersions(projectInfoTechVersions);
 				}
-				technology.setServers(ApplicationsUtil.getSelectedServers(servers,
-						listTempSelectedServers));
 			}
 			
-			if (selectedDatabases != null) {
-				List<String> listTempSelectedDatabases = null;
-				if (StringUtils.isNotEmpty(selectedDatabases)) {
-					listTempSelectedDatabases = new ArrayList<String>(
-							Arrays.asList(selectedDatabases.split("#SEP#")));
-				}
-				technology.setDatabases(ApplicationsUtil.getSelectedDatabases(
-						databases, listTempSelectedDatabases));
+			if (StringUtils.isNotEmpty(fromPage)) {// For project edit
+				technology.setJsLibraries(projectInfo.getTechnology()
+						.getJsLibraries());
+				technology.setModules(projectInfo.getTechnology().getModules());
 			}
-			
-			if (selectedWebservices != null) {
-				technology.setWebservices(ApplicationsUtil.getSelectedWebservices(
-						webservices, ApplicationsUtil.getArrayListFromStrArr(selectedWebservices)));
-			}
-			
-			if (getHttpRequest().getParameter(REQ_EMAIL_SUPPORTED) != null) {
-				isEmailSupported = Boolean.parseBoolean(getHttpRequest().getParameter(REQ_EMAIL_SUPPORTED));
-			}
-			technology.setEmailSupported(isEmailSupported);
 
-		} else {
-			if (tempprojectInfo != null) {
-				technology.setServers(tempprojectInfo.getTechnology().getServers());
-				technology.setDatabases(tempprojectInfo.getTechnology().getDatabases());
-				technology.setWebservices(tempprojectInfo.getTechnology().getWebservices());
-				technology.setEmailSupported(tempprojectInfo.getTechnology().isEmailSupported());
+			List<Server> servers = selectedTechnology.getServers();
+			List<Database> databases = selectedTechnology.getDatabases();
+			List<WebService> webservices = selectedTechnology.getWebservices();
+			
+			String selectedServers = getHttpRequest().getParameter("selectedServers");
+			String selectedDatabases = getHttpRequest().getParameter("selectedDatabases");
+			String[] selectedWebservices = getHttpRequest().getParameterValues(REQ_WEBSERVICES);
+			boolean isEmailSupported = false;
+			
+			if (StringUtils.isNotEmpty(fromTab)) {
+				if (selectedServers != null) {
+					List<String> listTempSelectedServers = null;
+					if (StringUtils.isNotEmpty(selectedServers)) {
+						listTempSelectedServers = new ArrayList<String>(
+								Arrays.asList(selectedServers.split("#SEP#")));
+					}
+					technology.setServers(ApplicationsUtil.getSelectedServers(servers,
+							listTempSelectedServers));
+				}
+				
+				if (selectedDatabases != null) {
+					List<String> listTempSelectedDatabases = null;
+					if (StringUtils.isNotEmpty(selectedDatabases)) {
+						listTempSelectedDatabases = new ArrayList<String>(
+								Arrays.asList(selectedDatabases.split("#SEP#")));
+					}
+					technology.setDatabases(ApplicationsUtil.getSelectedDatabases(
+							databases, listTempSelectedDatabases));
+				}
+				
+				if (selectedWebservices != null) {
+					technology.setWebservices(ApplicationsUtil.getSelectedWebservices(
+							webservices, ApplicationsUtil.getArrayListFromStrArr(selectedWebservices)));
+				}
+				
+				if (getHttpRequest().getParameter(REQ_EMAIL_SUPPORTED) != null) {
+					isEmailSupported = Boolean.parseBoolean(getHttpRequest().getParameter(REQ_EMAIL_SUPPORTED));
+				}
+				technology.setEmailSupported(isEmailSupported);
+
+			} else {
+				if (tempprojectInfo != null) {
+					technology.setServers(tempprojectInfo.getTechnology().getServers());
+					technology.setDatabases(tempprojectInfo.getTechnology().getDatabases());
+					technology.setWebservices(tempprojectInfo.getTechnology().getWebservices());
+					technology.setEmailSupported(tempprojectInfo.getTechnology().isEmailSupported());
+				}
 			}
+			
+			projectInfo.setTechnology(technology);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PhrescoException(e);
 		}
-		
-		projectInfo.setTechnology(technology);
 	}
 
     private boolean validate(ProjectAdministrator administrator) throws PhrescoException {
-    	isValidated = true;
-    	if (StringUtils.isEmpty(name)) {
-    		setNameError(ERROR_NAME);
-            return true;
-        }
-    	if (StringUtils.isEmpty(name.trim())) {
-    		setNameError(ERROR_INVALID_NAME);
-            return true;
-        }
-        if (administrator.getProject(code) != null) {
-        	setNameError(ERROR_DUPLICATE_NAME);
-            return true;
-        }
+    	try {
+        	if (StringUtils.isEmpty(name.trim())) {
+        		setNameError(ERROR_NAME);
+                return true;
+            }
+            if (administrator.getProject(code) != null) {
+            	setNameError(ERROR_DUPLICATE_NAME);
+                return true;
+            }
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+    	
         return false;
     }
     
@@ -330,77 +336,59 @@ public class Features extends FrameworkBaseAction {
 		if (debugEnabled) {
 			S_LOGGER.debug("Entering Method  Features.setFeaturesInRequest()");
 		}
-		Technology selectedTechnology = projectInfo.getTechnology();
-
-		List<ModuleGroup> coreModule = administrator.getCoreModules(selectedTechnology.getId(), customerId);
-		if (CollectionUtils.isNotEmpty(coreModule)) {
-			getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
-		}
-//		System.out.println("coreModules in setFeaturesInRequest() in Features.java:::" + coreModule.size());
 		
-		List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
-				.getCustomModules(selectedTechnology.getId(), customerId);
-		if (CollectionUtils.isNotEmpty(customModule)) {
-			getHttpRequest().setAttribute(REQ_CUSTOM_MODULES, customModule);
-		}
-//		System.out.println("customModule in setFeaturesInRequest() in Features.java:::" + customModule.size());
-		
-		List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId(), customerId);
-		if (CollectionUtils.isNotEmpty(jsLibs)) {
-			getHttpRequest().setAttribute(REQ_ALL_JS_LIBS, jsLibs);
-		}
-//		System.out.println("jsLibs in setFeaturesInRequest() in Features.java:::" + jsLibs.size());
-		
-		// This attribute for Pilot Project combo box
-		getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-				ApplicationsUtil.getPilotNames(selectedTechnology.getId(), customerId));
-		if (CollectionUtils.isNotEmpty(selectedTechnology.getModules())) {
-			// pilotModules.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getModules()));
-			getHttpRequest().setAttribute(
-					REQ_ALREADY_SELECTED_MODULES,
-					ApplicationsUtil.getMapFromModuleGroups(selectedTechnology
-							.getModules()));
-		}
-
-		if (CollectionUtils.isNotEmpty(selectedTechnology.getJsLibraries())) {
-			getHttpRequest().setAttribute(
-					REQ_ALREADY_SELECTED_JSLIBS,
-					ApplicationsUtil.getMapFromModuleGroups(selectedTechnology
-							.getJsLibraries()));
-			// pilotJsLibs.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getJsLibraries()));
-		}
-
-		getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
-		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
-	}
-
-	public String fetchPilotProjectModules() {
 		try {
-//			System.out.println("inside fetchPilotProjectModules()...");
-			String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
-			pilotModules = new ArrayList<String>();
-			
-			Map<String, String> pilotModuleIds = ApplicationsUtil.getPilotModuleIds(techId, customerId);
-			if (pilotModuleIds != null) {
-				for (Map.Entry entry: pilotModuleIds.entrySet()) {
-					String moduleId = (String) entry.getKey();
-					String moduleVersion = (String) entry.getValue();
-					pilotModules.add(moduleId + "#VSEP#" + moduleVersion);
-				}
+			Technology selectedTechnology = projectInfo.getTechnology();
+
+			List<ModuleGroup> coreModule = administrator.getCoreModules(selectedTechnology.getId(), customerId);
+			if (CollectionUtils.isNotEmpty(coreModule)) {
+				getHttpRequest().setAttribute(REQ_CORE_MODULES, coreModule);
 			}
-			
-			Map<String, String> pilotJsLibIds = ApplicationsUtil.getPilotJsLibIds(techId, customerId);
-			if (pilotJsLibIds != null) {
-				for (Map.Entry entry: pilotJsLibIds.entrySet()) {
-					String jsLibId = (String) entry.getKey();
-					String jsLibVersion = (String) entry.getValue();
-					pilotModules.add(jsLibId + "#VSEP#" + jsLibVersion);
-				}
+
+			List<ModuleGroup> customModule = (List<ModuleGroup>) administrator
+					.getCustomModules(selectedTechnology.getId(), customerId);
+			if (CollectionUtils.isNotEmpty(customModule)) {
+				getHttpRequest().setAttribute(REQ_CUSTOM_MODULES, customModule);
 			}
-//			System.out.println("final pilot modules in getPilotProjectModules():::::" + pilotModules);
+
+			List<ModuleGroup> jsLibs = administrator.getJSLibs(selectedTechnology.getId(), customerId);
+			if (CollectionUtils.isNotEmpty(jsLibs)) {
+				getHttpRequest().setAttribute(REQ_ALL_JS_LIBS, jsLibs);
+			}
+
+			// This attribute for Pilot Project combo box
+			getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
+					ApplicationsUtil.getPilotNames(selectedTechnology.getId(), customerId));
+			if (CollectionUtils.isNotEmpty(selectedTechnology.getModules())) {
+				// pilotModules.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getModules()));
+				getHttpRequest().setAttribute(REQ_ALREADY_SELECTED_MODULES,
+						ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getModules()));
+			}
+
+			if (CollectionUtils.isNotEmpty(selectedTechnology.getJsLibraries())) {
+				getHttpRequest().setAttribute(REQ_ALREADY_SELECTED_JSLIBS,
+						ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getJsLibraries()));
+				// pilotJsLibs.putAll(ApplicationsUtil.getMapFromModuleGroups(selectedTechnology.getJsLibraries()));
+			}
+
+			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
+			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new PhrescoException(e);
 		}
+	}
+
+	public String fetchPilotProjectModules() throws PhrescoException {
+		try {
+			String techId = getHttpRequest().getParameter(REQ_TECHNOLOGY);
+			pilotModules = new ArrayList<String>();
+			pilotModules.addAll(ApplicationsUtil.getPilotModuleIds(techId, customerId));
+			pilotModules.addAll(ApplicationsUtil.getPilotJsLibIds(techId, customerId));
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		
 		return SUCCESS;
 	}
 	
@@ -413,16 +401,26 @@ public class Features extends FrameworkBaseAction {
 			List<ModuleGroup> coreModules = (List<ModuleGroup>) administrator.getCoreModules(techId, customerId);
 			if (CollectionUtils.isNotEmpty(coreModules) && coreModules != null) {
 				for (ModuleGroup coreModule : coreModules) {
-					if (coreModule.isRequired()) {
-						defaultModules.add(coreModule.getId());
+					List<Module> modules = coreModule.getVersions();
+					if (CollectionUtils.isNotEmpty(modules)) {
+						for (Module module : modules) {
+							if (module.getRequired()) {
+								defaultModules.add(module.getId());
+							}
+						}
 					}
 				}
 			}
 			List<ModuleGroup> customModules = (List<ModuleGroup>) administrator.getCustomModules(techId, customerId);
 			if (CollectionUtils.isNotEmpty(customModules) && customModules != null) {
 				for (ModuleGroup customModule : customModules) {
-					if (customModule.isRequired()) {
-						defaultModules.add(customModule.getId());
+					List<Module> modules = customModule.getVersions();
+					if (CollectionUtils.isNotEmpty(modules)) {
+						for (Module module : modules) {
+							if (module.getRequired()) {
+								defaultModules.add(module.getId());
+							}
+						}
 					}
 				}
 			}
@@ -430,8 +428,13 @@ public class Features extends FrameworkBaseAction {
 			List<ModuleGroup> jsLibraries = technology.getJsLibraries();
 			if (CollectionUtils.isNotEmpty(jsLibraries) && jsLibraries != null) {
 				for (ModuleGroup jsLibrary : jsLibraries) {
-					if (jsLibrary.isRequired()) {
-						defaultModules.add(jsLibrary.getId());
+					List<Module> jsLibs = jsLibrary.getVersions();
+					if (CollectionUtils.isNotEmpty(jsLibs)) {
+						for (Module jsLib : jsLibs) {
+							if (jsLib.getRequired()) {
+								defaultModules.add(jsLib.getId());
+							}
+						}
 					}
 				}
 			}
@@ -446,10 +449,9 @@ public class Features extends FrameworkBaseAction {
 		return SUCCESS;
 	}
 
-	public String checkDependency() {
+	public String checkDependencyModules() {
 		try {
 			List<ModuleGroup> allModules = getAllModule();
-
 			for (ModuleGroup module : allModules) {
 				if (module.getId().equals(moduleId)) {
 					Module checkedVersion = module.getVersion(version);
@@ -476,25 +478,29 @@ public class Features extends FrameworkBaseAction {
 			}
 			new LogErrorReport(e, "Feature Select Dependency");
 		}
+		
 		return SUCCESS;
 	}
 
-	public List<ModuleGroup> getAllModule() throws PhrescoException {
-		ProjectAdministrator administrator = PhrescoFrameworkFactory
-				.getProjectAdministrator();
-		Technology technology = administrator.getTechnology(techId);
-		if (REQ_CORE_MODULE.equals(moduleType)) {
-			return administrator.getCoreModules(techId, customerId);
+	private List<ModuleGroup> getAllModule() throws PhrescoException {
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			Technology technology = administrator.getTechnology(techId);
+			if (REQ_CORE_MODULE.equals(moduleType)) {
+				return administrator.getCoreModules(techId, customerId);
+			}
+		
+			if (REQ_CUSTOM_MODULE.equals(moduleType)) {
+				return administrator.getCustomModules(techId, customerId);
+			}
+		
+			if (REQ_JSLIB_MODULE.equals(moduleType)) {
+				return technology.getJsLibraries();
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
 		}
-
-		if (REQ_CUSTOM_MODULE.equals(moduleType)) {
-			return administrator.getCustomModules(techId, customerId);
-		}
-
-		if (REQ_JSLIB_MODULE.equals(moduleType)) {
-			return technology.getJsLibraries();
-		}
-
+		
 		return null;
 	}
 
@@ -650,14 +656,6 @@ public class Features extends FrameworkBaseAction {
 		this.pilotJSLibs = pilotJSLibs;
 	}
 
-	public boolean isValidated() {
-		return isValidated;
-	}
-
-	public void setValidated(boolean isValidated) {
-		this.isValidated = isValidated;
-	}
-
 	public List<String> getTechVersion() {
 		return techVersion;
 	}
@@ -737,4 +735,12 @@ public class Features extends FrameworkBaseAction {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+    
+    public boolean isValidated() {
+		return validated;
+	}
+
+	public void setValidated(boolean validated) {
+		this.validated = validated;
+	}
 }

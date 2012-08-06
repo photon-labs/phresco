@@ -47,6 +47,7 @@ public class ModuleGroup implements Serializable {
 	private String imageURL;
 	private boolean system;
 	private String customerId;
+	
 	public ModuleGroup() {
 	}
 

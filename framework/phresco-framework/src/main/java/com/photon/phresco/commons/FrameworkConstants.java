@@ -443,6 +443,7 @@ public interface FrameworkConstants {
     String REQ_LOGIN_ERROR = "loginErrors";
     String REQ_CORE_MODULES = "coreModules";
     String REQ_CUSTOM_MODULES = "customModules";
+    String REQ_CUSTOMER_ID = "customerId";
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
     String REQ_PDF_REPORT_FILES = "pdfReportFiles";

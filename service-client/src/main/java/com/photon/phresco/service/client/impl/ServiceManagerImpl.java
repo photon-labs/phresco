@@ -39,6 +39,7 @@ import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Server;
 import com.photon.phresco.model.SettingsTemplate;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.model.WebService;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
@@ -130,6 +131,86 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	
     	return videoInfosClient.get(genericType);
     }
+    
+    
+    private List<Technology> getArcheTypesFromServer() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getArcheTypesFromServer()");
+        }
+    	
+    	RestClient<Technology> archeTypeClient = getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+		GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
+		
+		return archeTypeClient.get(genericType);
+    }
+    
+    public List<Technology> getArcheTypes(String customerId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getArcheTypes()");
+        }
+
+    	List<Technology> archeTypes = manager.getArcheInfo(customerId); 
+    	try {	
+    		if (CollectionUtils.isEmpty(archeTypes)) {
+    			archeTypes = getArcheTypesFromServer();
+    			manager.addAppInfo(userInfo.getLoginId(), archeTypes);
+    		}
+    	} catch(Exception e){
+    		throw new PhrescoException(e);
+    	}
+    	
+    	return archeTypes;
+	}
+    
+    public Technology getArcheType(String archeTypeId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getApplicationType(String appTypeId)");
+        }
+
+        RestClient<Technology> archeTypeClient = getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+        archeTypeClient.setPath(archeTypeId);
+        GenericType<Technology> genericType = new GenericType<Technology>(){};
+        
+        return archeTypeClient.getById(genericType);
+    }
+    
+    public ClientResponse createArcheTypes(List<Technology> archeTypes, String customerId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.createArcheTypes(List<Technology> archeTypes)");
+        }
+        
+    	RestClient<Technology> newApp = getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+		ClientResponse clientResponse = newApp.create(archeTypes);
+		manager.addAppInfo(customerId, getArcheTypesFromServer());
+		
+		return clientResponse;
+    }
+    
+    public void updateArcheTypes(Technology technology, String archeTypeId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.updateArcheTypes(Technology technology, String archeTypeId)" + archeTypeId);
+        }
+    	
+    	RestClient<Technology> editArchetype = getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+    	editArchetype.setPath(archeTypeId);
+		GenericType<Technology> genericType = new GenericType<Technology>() {};
+		editArchetype.updateById(technology, genericType);
+		manager.addAppInfo(userInfo.getLoginId(), getArcheTypesFromServer());
+    }
+    
+    public ClientResponse deleteArcheType(String archeTypeId) throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entered into RestClient.deleteArcheType(String archeTypeId)" + archeTypeId);
+    	}
+
+    	RestClient<Technology> deleteArchetype = getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
+    	deleteArchetype.setPath(archeTypeId);
+    	ClientResponse clientResponse = deleteArchetype.deleteById();
+    	manager.addAppInfo(userInfo.getLoginId(), getArcheTypesFromServer());
+
+    	return clientResponse;
+    }
+    
     
     private List<ApplicationType> getApplicationTypesFromServer(String customerId) throws PhrescoException {
         if (isDebugEnabled) {
@@ -254,20 +335,53 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
 		return webServiceClient.get(genericType);
 	}
     
-    public List<ModuleGroup> getModules(String techId, String customerId) throws PhrescoException {
-        if (isDebugEnabled) {
-            S_LOGGER.debug("Entered into RestClient.getModules(String techId)" + techId);
-        }
-    	
+    private List<ModuleGroup> getModulesFromServer(String techId, String customerId) throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entered into RestClient.getModulesFromServer()");
+    	}
+
     	RestClient<ModuleGroup> moduleGroupClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
     	Map<String, String> headers = new HashMap<String, String>();
     	headers.put(REST_QUERY_TECHID, techId);
     	headers.put(REST_QUERY_CUSTOMERID, customerId);
+    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
     	moduleGroupClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	
+
     	return moduleGroupClient.get(genericType);
     }
+    
+    public List<ModuleGroup> getModules(String techId, String customerId) throws PhrescoException {
+    	if(isDebugEnabled) {
+    		S_LOGGER.debug("Enetered into RestClient.getModules ");
+    	}
+
+//    	List<ModuleGroup> moduleGroups = manager.getModuleGroups(customerId);
+    	List<ModuleGroup> moduleGroups = null;
+    	try {	
+    		if (CollectionUtils.isEmpty(moduleGroups)) {
+    			moduleGroups = getModulesFromServer(techId, customerId);
+//    			manager.addAppInfo(customerId, moduleGroups);
+    		}
+    	} catch(Exception e) {
+    		throw new PhrescoException(e);
+    	}
+    	
+    	return moduleGroups;
+    }
+     
+    public ModuleGroup getModule(String moduleId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getModule(String moduleId)");
+        }
+
+        RestClient<ModuleGroup> moduleClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+        moduleClient.setPath(moduleId);
+        GenericType<ModuleGroup> genericType = new GenericType<ModuleGroup>(){};
+        
+        return moduleClient.getById(genericType);
+    }
+    
     
     public List<ModuleGroup> getJSLibs(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
@@ -278,10 +392,44 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	Map<String, String> headers = new HashMap<String, String>();
     	headers.put(REST_QUERY_TECHID, techId);
     	headers.put(REST_QUERY_CUSTOMERID, customerId);
+    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_JS);
     	jsLibClient.queryStrings(headers);
     	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
     	
     	return jsLibClient.get(genericType);
+    }
+    
+    public ClientResponse createModules(List<ModuleGroup> modules) throws PhrescoException {
+           if (isDebugEnabled) {
+               S_LOGGER.debug("Entered into RestClient.createModules(List<ModuleGroup> modGroup)");
+           }
+           
+           RestClient<ModuleGroup> moduleClient = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+           
+           return moduleClient.create(modules);
+       }
+    
+    public void updateModuleGroups(ModuleGroup moduleGroup, String moduleId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.updateArcheTypes(ModuleGroup moduleGroup, String moduleId)" + moduleId);
+        }
+    	
+    	RestClient<ModuleGroup> editModule = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	editModule.setPath(moduleId);
+		GenericType<ModuleGroup> genericType = new GenericType<ModuleGroup>() {};
+		editModule.updateById(moduleGroup, genericType);
+    }
+    
+    public ClientResponse deleteModule(String moduleId) throws PhrescoException {
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entered into RestClient.deleteModule(String moduleId)" + moduleId);
+    	}
+
+    	RestClient<ModuleGroup> deleteModule = getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+    	deleteModule.setPath(moduleId);
+    	ClientResponse clientResponse = deleteModule.deleteById();
+    	
+    	return clientResponse;
     }
     
     public List<Customer> getCustomers() throws PhrescoException {
@@ -372,6 +520,37 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return settingsClient.create(settings);
     }
     
+    private List<ProjectInfo> getPilotProjectFromServer() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getPilotProjectFromServer()");
+        }
+    	
+    	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
+		GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
+		
+		return pilotClient.get(genericType);
+    }
+    
+    
+    public List<ProjectInfo> getPilotProject(String customerId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getPilots(String customerId)" + customerId);
+        }
+        
+        List<ProjectInfo> pilotProjects = manager.getPilotProjects(customerId); 
+        try {	
+    		if (CollectionUtils.isEmpty(pilotProjects)) {
+    			pilotProjects = getPilotProjectFromServer();
+    			manager.addAppInfo(userInfo.getLoginId(), pilotProjects);
+    		}
+    	} catch(Exception e){
+    		throw new PhrescoException(e);
+    	}
+    	
+        return pilotProjects;
+    }
+    
+    
     public List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getPilots(String techId)" + techId);
@@ -387,7 +566,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return pilotClient.get(genericType);
     }
     
-    public ProjectInfo getPilotProject(String projectId) throws PhrescoException {
+    public ProjectInfo getPilotPro(String projectId) throws PhrescoException {
     	if (isDebugEnabled) {
     		S_LOGGER.debug("Entered into RestClient.getPilotsProjects(List<ProjectInfo> proInfo)");
     	}
@@ -432,12 +611,13 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     }
 
     public List<Role> getRoles() throws PhrescoException {
-    	  if (isDebugEnabled) {
-              S_LOGGER.debug("Entered into RestClient.createroles(List<Roles> role)");
-          }
+    	if (isDebugEnabled) {
+    		S_LOGGER.debug("Entered into RestClient.createroles(List<Roles> role)");
+    	}
     	
     	RestClient<Role> roleClient = getRestClient(REST_API_ADMIN + REST_API_ROLES);
         GenericType<List<Role>> genericType = new GenericType<List<Role>>(){};
+        
         return roleClient.get(genericType);	
     }
     
@@ -449,6 +629,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	RestClient<Role> roleClient = getRestClient(REST_API_ADMIN + REST_API_ROLES);
     	roleClient.setPath(roleId);
     	GenericType<Role> genericType = new GenericType<Role>(){};
+    	
     	return roleClient.getById(genericType);
     }
     
@@ -456,35 +637,62 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
     	if (isDebugEnabled) {
     		S_LOGGER.debug("Entered into RestClient.createroles(List<Role> role)");
     	}	
+    	
     	RestClient<Role> roleClient = getRestClient(REST_API_ADMIN + REST_API_ROLES);
+    	
     	return roleClient.create(role);
     }
     
-    public List<DownloadInfo> getDownloads() throws PhrescoException {
+    
+    private List<DownloadInfo> getDownloadInfoFromServer() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getDownloadInfoFromServer()");
+        }
+    	
+    	RestClient<DownloadInfo> downloadClient = getRestClient(REST_API_ADMIN + REST_API_DOWNLOADS);
+		GenericType<List<DownloadInfo>> genericType = new GenericType<List<DownloadInfo>>(){};
+		
+		return downloadClient.get(genericType);
+    }
+
+    
+    public List<DownloadInfo> getDownloads(String customerId) throws PhrescoException {
     	if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getDownloadInfo(List<DownloadInfo> downloadInfo)");
         }
     	
-    	RestClient<DownloadInfo> downloadClient = getRestClient(REST_API_ADMIN + REST_API_DOWNLOADS);
-    	GenericType<List<DownloadInfo>> genericType = new GenericType<List<DownloadInfo>>(){};
-    	return downloadClient.get(genericType);
+     	List<DownloadInfo> downloadInfos = manager.getDownloadInfo(customerId); 
+    	try {	
+    		if (CollectionUtils.isEmpty(downloadInfos)) {
+    			downloadInfos = getDownloadInfoFromServer();
+    			manager.addAppInfo(userInfo.getLoginId(), downloadInfos);
+    		}
+    	} catch(Exception e){
+    		throw new PhrescoException(e);
+    	}
+    	
+    	return downloadInfos;
     }
     
     public DownloadInfo getDownload(String id) throws PhrescoException {
     	if(isDebugEnabled){
     		S_LOGGER.debug("Entered into Restclient.getDownloadInfo(List<downloadInfo>) downloadInfo");
     	}
+    	
     	RestClient<DownloadInfo> downloadClient = getRestClient(REST_API_ADMIN + REST_API_DOWNLOADS);
     	downloadClient.setPath(id);
     	GenericType<DownloadInfo> genericType = new GenericType<DownloadInfo>(){};
+    	
     	return downloadClient.getById(genericType);
     }
     
-    public ClientResponse createDownload(List<DownloadInfo> downloadInfo) throws PhrescoException{
+    public ClientResponse createDownload(List<DownloadInfo> downloadInfo) throws PhrescoException {
     	if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.createDownloadInfo(List<DownloadInfo> downloadInfo)");
         }
+    	
     	RestClient<DownloadInfo> downloadClient = getRestClient(REST_API_ADMIN + REST_API_DOWNLOADS);
+    	
     	return downloadClient.create(downloadInfo);
     }
     
@@ -508,5 +716,15 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         downloadClient.setPath(id);
         
         return downloadClient.deleteById();
+    }
+    
+    public ClientResponse createProject(ProjectInfo projectInfo) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.createProject(ProjectInfo projectInfo)");
+        }
+        
+        RestClient<ProjectInfo> projectClient = getRestClient(REST_API_PROJECT);
+        
+        return projectClient.create(projectInfo, "application/zip", MediaType.APPLICATION_JSON);
     }
 }

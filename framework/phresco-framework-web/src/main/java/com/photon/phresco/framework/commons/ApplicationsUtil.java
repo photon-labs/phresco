@@ -74,8 +74,8 @@ public class ApplicationsUtil implements FrameworkConstants {
     private static Boolean debugEnabled  = S_LOGGER.isDebugEnabled();
     private static Map<String, List<ProjectInfo>> mapPilotProjectInfos = new HashMap<String, List<ProjectInfo>>(15);
 	private static Map<String, Collection<String>> mapPilotNames = new HashMap<String, Collection<String>>(15);
-	private static Map<String, Map<String, String>> mapPilotModuleIds = new HashMap<String, Map<String, String>>(15);
-	private static Map<String, Map<String, String>> mapPilotJsLibs = new HashMap<String, Map<String, String>>(15);
+	private static Map<String, List<String>> mapPilotModuleIds = new HashMap<String, List<String>>(15);
+	private static Map<String, List<String>> mapPilotJsLibs = new HashMap<String, List<String>>(15);
 	
     public static ModuleGroup getSelectedTuple(List<ModuleGroup> moduleGroups, String moduleId, String selectedVersion) {
     	if (debugEnabled) {
@@ -176,56 +176,63 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return pilotNames;
     }
     
-    public static Map<String, String> getPilotModuleIds(String technologyId, String customerId) {
-    	Map<String, String> mapPilotModules = mapPilotModuleIds.get(technologyId);
-    	if (mapPilotModules != null) {
-    		return mapPilotModules;
+    public static List<String> getPilotModuleIds(String technologyId, String customerId) {
+    	List<String> listPilotModules = mapPilotModuleIds.get(technologyId);
+    	if (CollectionUtils.isNotEmpty(listPilotModules)) {
+    		return listPilotModules;
     	}
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
-    	if (pilots == null) {
+    	if (CollectionUtils.isEmpty(pilots)) {
     		pilots = getPilots(technologyId, customerId);
     	}
-    	mapPilotModules = new HashMap<String, String>(15);
+    	
+    	listPilotModules = new ArrayList<String>();
     	if (CollectionUtils.isNotEmpty(pilots)) {
     		for (ProjectInfo projectInfo : pilots) {
     			List<ModuleGroup> pilotModules = projectInfo.getTechnology().getModules();
     			if (CollectionUtils.isNotEmpty(pilotModules)) {
     				for (ModuleGroup pilotModule : pilotModules) {
-    					if (CollectionUtils.isNotEmpty(pilotModule.getVersions())) {
-    						mapPilotModules.put(pilotModule.getModuleId(), pilotModule.getVersions().get(0).getVersion());
+    					List<Module> pilotMods = pilotModule.getVersions();
+    					if (CollectionUtils.isNotEmpty(pilotMods)) {
+    						for (Module pilotMod : pilotMods) {
+    							listPilotModules.add(pilotMod.getId());
+							}
     					}
     				}
     			}
     		}
     	}
-    	mapPilotModuleIds.put(technologyId, mapPilotModules);
-    	return mapPilotModules;
+    	mapPilotModuleIds.put(technologyId, listPilotModules);
+    	return listPilotModules;
     }
     
-    public static Map<String, String> getPilotJsLibIds(String technologyId, String customerId) {
-    	Map<String, String> mapPilotModules = mapPilotJsLibs.get(technologyId);
-    	if (mapPilotModules != null) {
-    		return mapPilotModules;
+    public static List<String> getPilotJsLibIds(String technologyId, String customerId) {
+    	List<String> listPilotJsLibs = mapPilotJsLibs.get(technologyId);
+    	if (CollectionUtils.isNotEmpty(listPilotJsLibs)) {
+    		return listPilotJsLibs;
     	}
     	List<ProjectInfo> pilots = mapPilotProjectInfos.get(technologyId);
-    	if (pilots == null) {
+    	if (CollectionUtils.isEmpty(pilots)) {
     		pilots = getPilots(technologyId, customerId);
     	}
-    	mapPilotModules = new HashMap<String, String>(15);
+    	listPilotJsLibs = new ArrayList<String>();
     	if (CollectionUtils.isNotEmpty(pilots)) {
     		for (ProjectInfo projectInfo : pilots) {
     			List<ModuleGroup> pilotModules = projectInfo.getTechnology().getJsLibraries();
     			if (CollectionUtils.isNotEmpty(pilotModules)) {
     				for (ModuleGroup pilotModule : pilotModules) {
-    					if (CollectionUtils.isNotEmpty(pilotModule.getVersions())) {
-    						mapPilotModules.put(pilotModule.getModuleId(), pilotModule.getVersions().get(0).getVersion());
+    					List<Module> pilotmods = pilotModule.getVersions();
+    					if (CollectionUtils.isNotEmpty(pilotmods)) {
+    						for (Module pilotmod : pilotmods) {
+    							listPilotJsLibs.add(pilotmod.getId());
+							}
     					}
     				}
     			}
     		}
     	}
-    	mapPilotJsLibs.put(technologyId, mapPilotModules);
-    	return mapPilotModules;
+    	mapPilotJsLibs.put(technologyId, listPilotJsLibs);
+    	return listPilotJsLibs;
     }
     
     public static ProjectInfo getPilotProjectInfo(String technologyId, String customerId) {
@@ -245,10 +252,9 @@ public class ApplicationsUtil implements FrameworkConstants {
     	return pilotProjectInfo;
     }
     
-    public static ApplicationType getApplicationType(HttpServletRequest request, String appTypeName, String customerId) throws PhrescoException {
+    public static ApplicationType getApplicationType(HttpServletRequest request, String appType, String customerId) throws PhrescoException {
     	ApplicationType applicationtype = null;
     	try{
-            String appType = request.getParameter(REQ_APPLICATION_TYPE);
         	if (debugEnabled) {
     			S_LOGGER.debug("Selected application type" + appType);
     		}
@@ -260,6 +266,7 @@ public class ApplicationsUtil implements FrameworkConstants {
             }
             new LogErrorReport(e, "Getting application types");
     	}
+    	
     	return applicationtype;
     }
     

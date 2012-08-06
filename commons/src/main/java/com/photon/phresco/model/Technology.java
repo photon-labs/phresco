@@ -37,25 +37,13 @@ public class Technology extends Element implements Cloneable, Serializable {
     private static final long serialVersionUID = 1L;
 
     private String appTypeId;
-
-    //List of applicable frameworks
     private List<ModuleGroup> frameworks;
-
-    //List of applicable JavaScript libraries.
     private List<ModuleGroup> jsLibraries;
-
-    //List of modules applicable supported for the technology
-    //[PHP -> login, wiki; Java -> Struts - login; Android -> Image Library]
     private List<ModuleGroup> modules;
-
 	private List<Server> servers;
-
 	private List<Database> databases;
-
 	private List<WebService> webservices;
-
 	private boolean emailSupported;
-
 	private String description;
 	private String versionComment;
 	private List<String> appType;
@@ -64,6 +52,8 @@ public class Technology extends Element implements Cloneable, Serializable {
 	private List<String> versions;
 	private boolean system;
 	private String customerId;
+	private ArchetypeInfo archetypeInfo;
+	private List<Documentation> docs;
 	
     public Technology() {
         super();
@@ -187,7 +177,15 @@ public class Technology extends Element implements Cloneable, Serializable {
 		this.versionComment = versionComment;
 	}
 
-	public boolean isSystem() {
+	public ArchetypeInfo getArchetypeInfo() {
+        return archetypeInfo;
+    }
+
+    public void setArchetypeInfo(ArchetypeInfo archetypeInfo) {
+        this.archetypeInfo = archetypeInfo;
+    }
+
+    public boolean isSystem() {
         return system;
     }
 
@@ -230,7 +228,15 @@ public class Technology extends Element implements Cloneable, Serializable {
 	
 	
 
-	@Override
+	public List<Documentation> getDocs() {
+        return docs;
+    }
+
+    public void setDocs(List<Documentation> docs) {
+        this.docs = docs;
+    }
+
+    @Override
 	public String toString() {
 		return "Technology [appTypeId=" + appTypeId + ", frameworks="
 				+ frameworks + ", jsLibraries=" + jsLibraries + ", modules="

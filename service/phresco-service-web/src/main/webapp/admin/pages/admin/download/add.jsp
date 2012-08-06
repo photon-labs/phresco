@@ -20,14 +20,18 @@
 
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
+<%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
+<%@ page import="com.photon.phresco.model.Technology"%>
 <%@ page import="com.photon.phresco.model.DownloadInfo" %>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
 
 <%
     DownloadInfo downloadInfo = (DownloadInfo)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO);
     String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+    List<Technology> technologys = (List<Technology>)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPES);
+    String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
 <form id="formDownloadAdd" class="form-horizontal customer_list">
@@ -60,6 +64,25 @@
 					value="<%= downloadInfo != null ? downloadInfo.getDescription() : "" %>" name="description">
 			</div>
 		</div>
+		
+		<div class="control-group" id="applyControl">
+            <label class="control-label labelbold">
+                <span class="mandatory">*</span>&nbsp;<s:text name="Technology"/>
+            </label>
+            <div class="controls">
+                <select id="multiSelect" multiple="multiple" name="technology">
+                    <% if(technologys != null) {
+                    	 for(Technology technology : technologys) { %>
+                    		<option value="<%=technology.getName() %>"><%=technology.getName() %></option> 
+                   <% 	 
+                      }
+                      }
+                   %> 
+                    
+                </select>
+                <span class="help-inline applyerror" id="techError"></span>
+            </div>
+        </div>
 		
 		<div class="control-group">
 			<label class="control-label labelbold">
@@ -134,10 +157,15 @@
 
 	<div class="bottom_button">
 	   <% if (StringUtils.isNotEmpty(fromPage)) { %>
-			<input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" />
+			<%-- <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" /> --%>
+			   <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+                onclick="validate('downloadUpdate', $('#formDownloadAdd'), $('#subcontainer'), 'Updating Download');" />	
         <% } else { %>
-			<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
+			<%-- <input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/> --%>
+		<input type="button" id="downloadSave" class="btn btn-primary"
+			onclick="validate('downloadSave', $('#formDownloadAdd'), $('#subcontainer'), 'Creating Download');"
+			value="<s:text name='lbl.hdr.comp.save'/>" />
 		<% } %>
 		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#formDownloadAdd'), $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>

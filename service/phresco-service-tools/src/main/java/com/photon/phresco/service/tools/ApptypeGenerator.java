@@ -37,10 +37,13 @@ package com.photon.phresco.service.tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.ArchetypeInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.client.api.ServiceClientConstant;
 import com.photon.phresco.service.client.api.ServiceContext;
@@ -72,6 +75,7 @@ public class ApptypeGenerator  implements ServiceConstants {
     
     public ServiceContext context = null;
     public ServiceManager serviceManager = null;
+    private Map<String, String> archetypeMap = new HashMap<String, String>();
     
     public ApptypeGenerator() throws PhrescoException {
         // TODO Auto-generated constructor stub
@@ -80,6 +84,25 @@ public class ApptypeGenerator  implements ServiceConstants {
         context.put(ServiceClientConstant.SERVICE_USERNAME, "demouser");
         context.put(ServiceClientConstant.SERVICE_PASSWORD, "phresco");
         serviceManager = ServiceClientFactory.getServiceManager(context);
+    }
+    
+    private void initMap() {
+        archetypeMap.put(TechnologyTypes.PHP, "phresco-php-archetype");
+        archetypeMap.put(TechnologyTypes.PHP_DRUPAL6, "phresco-drupal6-archetype");
+        archetypeMap.put(TechnologyTypes.PHP_DRUPAL7, "phresco-drupal7-archetype");
+        archetypeMap.put(TechnologyTypes.ANDROID_HYBRID, "phresco-android-hybrid-archetype");
+        archetypeMap.put(TechnologyTypes.ANDROID_NATIVE, "phresco-android-native-archetype");
+        archetypeMap.put(TechnologyTypes.DOT_NET, "phresco-dot-net-archetype");
+        archetypeMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, "phresco-html5-jquery-archetype");
+        archetypeMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, "phresco-html5-archetype");
+        archetypeMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "phresco-html5-jquery-archetype");
+        archetypeMap.put(TechnologyTypes.IPHONE_HYBRID, "phresco-iphone-hybrid-archetype");
+        archetypeMap.put(TechnologyTypes.IPHONE_NATIVE, "phresco-iphone-native-archetype");
+        archetypeMap.put(TechnologyTypes.JAVA_STANDALONE, "phresco-java-quickstart-archetype");
+        archetypeMap.put(TechnologyTypes.JAVA_WEBSERVICE, "phresco-javawebservice-archetype");
+        archetypeMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, "phresco-nodejs-archetype");
+        archetypeMap.put(TechnologyTypes.SHAREPOINT, "phresco-sharepoint-archetype");
+        archetypeMap.put(TechnologyTypes.WORDPRESS, "phresco-wordpress-archetype");
     }
 
     public void generateApptypes() throws PhrescoException {
@@ -169,7 +192,17 @@ public class ApptypeGenerator  implements ServiceConstants {
         technology.setSystem(true);
         technology.setVersions(Arrays.asList(versions));
         technology.setCustomerId("photon");
+        technology.setArchetypeInfo(createArchetypeInfo(id));
         return technology;
+    }
+
+    private ArchetypeInfo createArchetypeInfo(String id) {
+        ArchetypeInfo info = new ArchetypeInfo();
+        info.setGroupId("archetypes");
+        info.setArtifactId(archetypeMap.get(id));
+        info.setVersion("1.2.0.9000");
+        info.setProjectGroupId("com.photon.phresco");
+        return null;
     }
 
     public static void main(String[] args) throws PhrescoException {
