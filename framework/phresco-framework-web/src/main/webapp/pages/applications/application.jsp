@@ -19,21 +19,17 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.model.ApplicationType" %>
 
 <%@ include file="../userInfoDetails.jsp" %>
 
 <!--  Heading Starts -->
 <%
     String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
+	String customerId = (String) request.getAttribute("customerId");
     if (StringUtils.isEmpty(fromPage)) {
         fromPage = "";
     }
@@ -83,10 +79,10 @@
         </ul>
 <%  } %>
 
+<form id="formApplication"> 
 	<input type="hidden" id="fromPage" value="<%= fromPage %>" name="fromPage"/>
-	
-<form> 
 	<input type="hidden" id="projectCode" value="<%= projectCode %>" name="projectCode"/>
+	<input type="hidden" name="customerId" value="<%= customerId %>"/>
 </form>
 <!--  Heading Ends-->
 
@@ -96,9 +92,6 @@
 
 <div class="tabDiv appInfoTabDiv" id="tabDiv">
 </div>
-
-<!-- <div id="validateProject">
-</div> -->
 
 <script type="text/javascript">
 	$(".appInfoTabDiv").css("padding-top", "0px");
@@ -125,13 +118,8 @@
 		
         var selectedTab = "appinfo";
         $("#validationDiv").hide();	
-		var params = "";
-    	if (!isBlank($('form').serialize())) {
-    		params = $('form').serialize() + "&";
-    	}
-		params = params.concat("fromPage=");
-		params = params.concat('<%= fromPage %>');
-		performAction(selectedTab, params, $("#tabDiv"));
+        
+		performAction(selectedTab, $('#formApplication'), $("#tabDiv"));
 		
         $("a[name='appTabs']").click(function() {
         	var selectedTab = $(this).attr("id");
@@ -148,14 +136,11 @@
 					disableScreen();
 					showLoadingIcon($("#loadingIconDiv"));
 				}
-        		
-				var params = "";
-		    	if (!isBlank($('form').serialize())) {
-		    		params = $('form').serialize() + "&";
-		    	}
-				params = params.concat("fromPage=");
-				params = params.concat('<%= fromPage %>');
-        		performAction(selectedTab, params, $("#tabDiv"));
+        		if(selectedTab == "features"){
+        			performAction(selectedTab, $('#formAppInfo'), $("#tabDiv"));
+    			} else {
+    				performAction(selectedTab, $('#formApplication'), $("#tabDiv"));    				
+    			}
         	}
         });
     });
@@ -168,19 +153,19 @@
     function openFolder(path) {
 		var params = "path=";
 		params = params.concat(path);
-		performAction('openFolder', params, '');
+		performActionParams('openFolder', params, '');
     }
     
     function copyPath(path) {
 		var params = "path=";
 		params = params.concat(path);
-		performAction('copyPath', params, '');
+		performActionParams('copyPath', params, '');
 	}
     
     function copyToClipboard(data) {
         var params = "copyToClipboard=";
         params = params.concat(data);
-        performAction('copyToClipboard', params, '');
+        performActionParams('copyToClipboard', params, '');
 	}
     
     /* To show the validation result */
@@ -190,18 +175,4 @@
 		disableScreen();		
 		popup('showProjectValidationResult', '', $('#popup_div')); // there was xtra param here
 	}
-
-    // this method is to fill select box with data in ShowSettings
-    function fillData(element, data) {
-    	if ((data != undefined || !isBlank(data)) && data != "") {
-    		$('#' + element).append('<optgroup label="Settings" class="optgrplbl" id="' + element + 'Group">');
-			for (i in data) {
-				$('#' + element + 'Group').append($("<option></option>").attr("value",data[i]).text(data[i]));
-			}
-			$('#' + element).append('</optgroup>');
-		} else {
-			$('#' + element + 'Group').remove();
-		}
-	}
-
 </script>

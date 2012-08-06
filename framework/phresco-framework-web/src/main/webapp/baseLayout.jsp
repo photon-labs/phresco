@@ -133,13 +133,14 @@
 						class="shortcutWh" id="lf_tp2"><s:text name="label.appln"/></span>
 					</a>
 				</div>
-				<%
-				    User userInfo = (User) session.getAttribute(FrameworkConstants.REQ_USER_INFO);
-				    List<Customer> customers = userInfo.getCustomers();
-				%>
-				<div class="control-group customer_name">
-                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
-                    <select id="customerId" class="customer_listbox">
+				<form id="customersForm">
+					<%
+					    User userInfo = (User) session.getAttribute(FrameworkConstants.REQ_USER_INFO);
+					    List<Customer> customers = userInfo.getCustomers();
+					%>
+					<div class="control-group customer_name">
+	                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
+	                    <select id="customerId" class="customer_listbox" name="customerId">
                         <% 
 		                    if (CollectionUtils.isNotEmpty(customers)) {
 		                        for (Customer customer : customers) {
@@ -149,8 +150,9 @@
 		                        }
 		                    } 
 		                %>
-                    </select>				
-				</div>
+	                    </select>				
+					</div>
+				</form>
 				<div class="righttopnav">
 					<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 						class="shortcutRed" id="lf_tp1"><s:text name="label.about"/></span><span class="shortcutWh"

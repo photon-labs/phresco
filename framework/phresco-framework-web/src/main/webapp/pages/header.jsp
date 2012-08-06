@@ -123,8 +123,7 @@
             if (selectedMenu == "applications") {
             	bacgroundValidate("validateFramework");
             }
-            
-            performAction(selectedMenu, '', $("#container"));
+            performAction(selectedMenu, $('#customersForm'), $("#container"));
         });
         
       
