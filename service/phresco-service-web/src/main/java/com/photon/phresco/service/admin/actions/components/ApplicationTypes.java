@@ -44,15 +44,17 @@ public class ApplicationTypes extends ServiceBaseAction {
 	private String fromPage = null;
 	private String appTypeId = null;
 	private String oldName = null;
+	private String customerId = null;
 
-	public String list() throws PhrescoException {
+    public String list() throws PhrescoException {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entering Method ApplicationTypes.list()");
 	    }
 
 		try {
-			List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes();
-			getHttpRequest().setAttribute(REQ_APP_TYPES, applicationTypes);
+		    List<ApplicationType> applicationTypes = getServiceManager().getApplicationTypes(customerId);
+		    getHttpRequest().setAttribute(REQ_APP_TYPES, applicationTypes);
+		    getHttpRequest().setAttribute(REQ_CUST_CUSTOMER_ID, customerId);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -64,7 +66,8 @@ public class ApplicationTypes extends ServiceBaseAction {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entering Method ApplicationTypes.add()");
 	    }
-		
+	    getHttpRequest().setAttribute(REQ_CUST_CUSTOMER_ID, customerId);
+	    
 		return COMP_APPTYPE_ADD;
 	}
 
@@ -90,16 +93,16 @@ public class ApplicationTypes extends ServiceBaseAction {
 	    }
 		
 		try {
-			List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
+		    List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 			ApplicationType appType = new ApplicationType(name, description);
-			appType.setName(name);
+			appType.setCustomerId(customerId);
 			appTypes.add(appType);
-			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes);
+			ClientResponse clientResponse = getServiceManager().createApplicationTypes(appTypes, customerId);
 			if (clientResponse.getStatus() != 200 && clientResponse.getStatus() != 201) {
 				addActionError(getText(APPLNTYPES_NOT_ADDED, Collections.singletonList(name)));
 			} else {
 				addActionMessage(getText(APPLNTYPES_ADDED, Collections.singletonList(name)));
-			} 
+			}
 		}catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -115,8 +118,8 @@ public class ApplicationTypes extends ServiceBaseAction {
 		try {
 			ApplicationType appType = new ApplicationType(name, description);
 			appType.setId(appTypeId);
-			appType.setDescription(description);
-			getServiceManager().updateApplicationTypes(appType, appTypeId);
+			appType.setCustomerId(customerId);
+			getServiceManager().updateApplicationTypes(appType, appTypeId, customerId);
 		} catch(Exception e)  {
 			throw new PhrescoException(e);
 		}
@@ -133,7 +136,7 @@ public class ApplicationTypes extends ServiceBaseAction {
 			String[] appTypeIds = getHttpRequest().getParameterValues(REQ_APP_TYPEID);
 			if (appTypeIds != null) {
 				for (String appTypeId : appTypeIds) {
-					ClientResponse clientResponse = getServiceManager().deleteApplicationType(appTypeId);
+					ClientResponse clientResponse = getServiceManager().deleteApplicationType(appTypeId, customerId);
 					if (clientResponse.getStatus() != 200) {
 						addActionError(getText(APPLNTYPES_NOT_DELETED));
 					}
@@ -151,10 +154,10 @@ public class ApplicationTypes extends ServiceBaseAction {
 	    if (isDebugEnabled) {
             S_LOGGER.debug("Entering Method AppType.validateForm()");
         }
-	    
-		boolean isError = false;
-		if (StringUtils.isEmpty(name)) {
-			setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
+
+	    boolean isError = false;
+		if (StringUtils.isEmpty(name)) {			
+		    setNameError(getText(KEY_I18N_ERR_NAME_EMPTY ));
 			isError = true;
 		}
 		
@@ -220,4 +223,12 @@ public class ApplicationTypes extends ServiceBaseAction {
 	public void setOldName(String oldName) {
 		this.oldName = oldName;
 	}
+	
+	public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 }

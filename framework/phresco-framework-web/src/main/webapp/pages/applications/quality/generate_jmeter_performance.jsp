@@ -301,6 +301,8 @@
 	var autoCompleteFileNames = new Array();
 	var counter = 2;
 	$(document).ready(function() {
+		$("input[name='context']").die('input propertychange');
+		
 		loadGetCaption();
 		loadTestFiles();
 		
@@ -333,7 +335,7 @@
 		%>
 		
 		$('#environments').change(function() {
-			getConfigNames();
+			loadGetCaption();
 		});
 		
 		$('input:radio[name=jmeterTestAgainst]').change(function() {
@@ -428,6 +430,12 @@
 		});
 	    
 	    $("#testName").bind('input propertychange',function(e) { 	//testName validation
+	     	var name = $(this).val();
+	     	name = isContainSpace(name);
+	     	$(this).val(name);
+	      });
+	    
+	    $("#noOfUsers, #rampUpPeriod, #loopCount").bind('input propertychange',function(e) { 	//testName validation
 	     	var name = $(this).val();
 	     	name = isContainSpace(name);
 	     	$(this).val(name);

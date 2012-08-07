@@ -37,6 +37,7 @@ package com.photon.phresco.util;
 
 public interface ServiceConstants {
 
+	String REST_API_PROJECT =  "/project";
 	String REST_API_COMPONENT =  "/components";
 	String REST_API_ADMIN =  "/admin";
 	String REST_API_CUSTOMERS = "/customers";
@@ -49,6 +50,7 @@ public interface ServiceConstants {
 	String REST_API_WEBSERVICES = "/webservices";
 	String REST_API_TECHNOLOGIES= "/technologies";
 	String REST_API_DOWNLOADS = "/downloads";
+	String REST_API_GLOBALURL="/globalurl";
 	String REST_API_VIDEOS = "/videos";
 	String REST_API_USERS = "/users";
 	String REST_API_ROLES = "/roles";
@@ -70,9 +72,13 @@ public interface ServiceConstants {
 	String ERROR_MSG_NOT_FOUND = "Content Not Found";
 	String ERROR_MSG_ID_NOT_EQUAL = "Given Id Not Equal";
 	String REST_QUERY_TECHID = "techId";
+	String REST_QUERY_PROJECTID = "projectId";
 	String REST_QUERY_TYPE = "type";
 	String REST_QUERY_TYPE_MODULE = "module";
 	String REST_QUERY_TYPE_JS = "js";
+	String REST_QUERY_CUSTOMERID = "customerId";
+	String DEFAULT_CUSTOMER_NAME = "photon";
+	String PROJECT_NAME = "name";
 	
 	 /*
      * Constants for MongoDB Collections
@@ -81,6 +87,7 @@ public interface ServiceConstants {
 	String VIDEOS_COLLECTION_NAME = "videos";
 	String USERS_COLLECTION_NAME = "users";
 	String DOWNLOAD_COLLECTION_NAME = "downloads";
+	String GLOBALURL_COLLECTION_NAME="globalurl";
 	String MODULES_COLLECTION_NAME = "modules";
 	String APPTYPES_COLLECTION_NAME = "apptypes";
 	String PILOTS_COLLECTION_NAME = "pilots";

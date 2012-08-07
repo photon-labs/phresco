@@ -35,10 +35,7 @@ public class PhrescoUiConstants {
 	public String SERVER_HOST ="server.host";
 	public String PORT= "port";
 
-	// ***************LOGINPAGE*****************
-    public String TEXTCAPTURED="loginText";
-	// ***************LOGINPAGE*****************
-
+	
     public PhrescoUiConstants() {
 		try {
 			readXml = new ReadXMLFile();

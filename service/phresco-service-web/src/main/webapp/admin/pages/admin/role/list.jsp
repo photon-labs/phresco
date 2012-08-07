@@ -109,7 +109,7 @@ function moveAllOptions(theSelFrom, theSelTo){
 
 <form class="form-horizontal customer_list">
 	<div class="operation" id="operation">
-		<input type="button" id="roleAdd" class="btn btn-primary" name="role_action" onclick="loadContent('roleAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.rlelst.add'/>"/>
+		<input type="button" id="roleAdd" class="btn btn-primary" name="role_action" onclick="loadContent('roleAdd', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.rlelst.add'/>"/>
 		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
 		<s:if test="hasActionMessages()">
 			<div class="alert alert-success"  id="successmsg">

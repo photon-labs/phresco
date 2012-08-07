@@ -104,6 +104,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	private String sdk = null;
 	private String mode = null;
 	private String androidVersion = null;
+	private String signing = null;
 	
 	private String target = "";
 	private String proguard = null;
@@ -113,7 +114,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     private String oldJobName = null;
     private int numberOfJobsInProgress = 0;
     private String downloadJobName = null;
-    
+    private String svnType = null;
+    private String branch = null;
+
     public String ci() {
     	S_LOGGER.debug("Entering Method CI.ci()");
     	try {
@@ -302,6 +305,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				}
 				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
+				if (StringUtils.isNotEmpty(signing)) {
+					actionType.setProfileId(PROFILE_ID);
+				}
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 			} else {
@@ -327,7 +333,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     		existJob.setScheduleExpression(cronExpression);
     		existJob.setSenderEmailId(senderEmailId);
     		existJob.setSenderEmailPassword(senderEmailPassword);
-    		
+    		existJob.setBranch(branch);
+    		existJob.setRepoType(svnType);
+
     		if(CI_CREATE_JOB_COMMAND.equals(jobType)) {
     			administrator.createJob(project, existJob);
         		addActionMessage(getText(SUCCESS_JOB));
@@ -1012,6 +1020,30 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setDownloadJobName(String downloadJobName) {
 		this.downloadJobName = downloadJobName;
+	}
+
+	public String getSigning() {
+		return signing;
+	}
+
+	public void setSigning(String signing) {
+		this.signing = signing;
+	}
+
+	public String getSvnType() {
+		return svnType;
+	}
+
+	public void setSvnType(String svnType) {
+		this.svnType = svnType;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 }

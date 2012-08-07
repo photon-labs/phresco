@@ -64,6 +64,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
+			<directory>src/main/webapp/WEB-INF/resources</directory>
+			<includes>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8">
 			<directory>src/main/webapp</directory>
 			<includes>
 				<include>index.jsp</include>
@@ -187,17 +193,28 @@
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/performance/database/tests</directory>
 			<includes>
-				<include>categories.csv</include>
-				<include>PhrescoFrameWork_TestPlan.jmx</include>
-				<include>products.csv</include>
-				<include>reviews.csv</include>
-				<include>users.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>				
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/unit</directory>
 			<includes>
 				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8">
+			<directory>test/performance/webservices</directory>
+			<includes>
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8">
+			<directory>test/performance/webservices/tests</directory>
+			<includes>
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

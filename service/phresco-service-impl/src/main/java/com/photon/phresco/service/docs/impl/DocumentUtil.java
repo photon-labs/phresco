@@ -195,7 +195,7 @@ public final class DocumentUtil {
      * @throws DocumentException
      * @throws IOException
      */
-    public static InputStream getDocumentStream(RepositoryManager repoManager,List<ModuleGroup> modules, EntityType type, String moduleType) throws PhrescoException, DocumentException, IOException {
+    public static InputStream getDocumentStream(List<ModuleGroup> modules, String moduleType) throws PhrescoException, DocumentException, IOException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entering Method DocumentUtil.getDocumentStream(RepositoryManager repoManager,List<TupleBean> modules, EntityType type)");
         }
@@ -341,12 +341,12 @@ public final class DocumentUtil {
      * @throws IOException
      * @throws BadPdfFormatException
      */
-    public static InputStream addPages(RepositoryManager repoManager, List<ModuleGroup> tuples, EntityType type,  PdfCopy pdfCopy, String moduleType)
+    public static InputStream addPages(List<ModuleGroup> tuples, PdfCopy pdfCopy, String moduleType)
             throws PhrescoException, DocumentException, IOException {
     	if (isDebugEnabled) {
     		S_LOGGER.debug("Entering Method DocumentUtil.addPages(RepositoryManager repoManager,List<TupleBean> tuples, EntityType type, PdfCopy pdfCopy)");
 		}
-    	InputStream addDocumentInfo = getDocumentStream(repoManager, tuples, type, moduleType);
+    	InputStream addDocumentInfo = getDocumentStream(tuples, moduleType);
         if(addDocumentInfo !=null) {
             addPages(addDocumentInfo, pdfCopy);
         }

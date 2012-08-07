@@ -1,5 +1,7 @@
 <%@ page
-	import="java.io.File,java.io.FilenameFilter,java.util.Arrays"%>
+	import="java.io.File,java.io.FilenameFilter,java.util.Arrays,java.util.Arrays,java.util.List"%>
+<%@ page import="org.apache.commons.lang.ArrayUtils"%>
+<%@ page import="com.photon.phresco.util.TechnologyTypes"%>
 <%
 /**
   * jQuery File Tree JSP Connector
@@ -10,6 +12,12 @@
     String dir = request.getParameter("dir");
     String fileTypes = request.getParameter("restrictFileTypes");
     String filesOrFolders = request.getParameter("filesOrFolders");
+    String techId = request.getParameter("technology");
+    String selectedFiles = request.getParameter("selectedFilesList");;
+    selectedFiles = selectedFiles.replace("%2C",",");
+    List<String> jsFiles = Arrays.asList(selectedFiles.split("\\s*,\\s*"));
+    
+    
     if (dir == null) {
     	return;
     }
@@ -55,11 +63,28 @@
 				    		continue;
 				    	}
 					}
-					out.print("<li class=\"file ext_" + ext + "\"><a href=\"#\" rel=\"" + dir + file + "\">"
-						+ file + "</a></li>");
+					if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+							TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId)){
+						 out.print("<li><input type=checkbox name=jsMinCheck id=\""+file+"\" value=\""+file+"\"><span  class=jsmin-span >"
+								+ file + "</li>"); 
+					}else {
+						out.print("<li class=\"file ext_" + ext + "\"><a href=\"#\" rel=\"" + dir + file + "\">"
+								+ file + "</a></li>");
+					}
+					
 			    	}
 			}
 		}
 		out.print("</ul>");
     }
 %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		<% for (String jsFile : jsFiles) { %>
+			$('input[name=jsMinCheck]').each(function () {
+				var selJs = '<%= jsFile %>';
+				$('input[id="'+ selJs +'"]').attr("checked", true);				
+			});
+		<% } %> 
+	});
+</script>

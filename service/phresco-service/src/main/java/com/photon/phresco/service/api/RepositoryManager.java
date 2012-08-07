@@ -124,5 +124,9 @@ import com.photon.phresco.service.model.EntityType;
 
 	List<ProjectInfo> getPilotProjects(String id);
 
+    String addArtifact(ArtifactInfo info, File artifactFile)
+            throws PhrescoException;
+
+	String getFrameWorkLatestFile() throws PhrescoException;
 
 }

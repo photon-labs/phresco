@@ -53,7 +53,6 @@ import com.photon.phresco.util.TechnologyTypes;
  */
 public final class DependencyProcessorFactory {
 	private static final Logger S_LOGGER = Logger.getLogger(DependencyProcessorFactory.class);
-	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
     /**
      * Cache for dependency processors
      */
@@ -72,10 +71,8 @@ public final class DependencyProcessorFactory {
      * @return {@link DependencyProcessor}
      */
     public static synchronized DependencyProcessor getDependencyProcessor(ProjectInfo projectInfo){
-    	if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DependencyProcessorFactory.getDependencyProcessor(ProjectInfo projectInfo)");
-			S_LOGGER.debug("getDependencyProcessor() projectCode="+projectInfo.getCode());
-		}
+		S_LOGGER.debug("Entering Method DependencyProcessorFactory.getDependencyProcessor(ProjectInfo projectInfo)");
+		S_LOGGER.debug("getDependencyProcessor() projectCode="+projectInfo.getCode());
     	assert projectInfo != null;
         Technology technology = projectInfo.getTechnology();
         String techId = technology.getId();
@@ -93,10 +90,8 @@ public final class DependencyProcessorFactory {
      * @return
      */
     private static DependencyProcessor initializeProcessors(String techId) {
-    	if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method DependencyProcessorFactory.initializeProcessors(String techId)");
-			S_LOGGER.debug("getDependencyProcessor() TechnologyID="+techId);
-		}
+		S_LOGGER.debug("Entering Method DependencyProcessorFactory.initializeProcessors(String techId)");
+		S_LOGGER.debug("getDependencyProcessor() TechnologyID="+techId);
 
     	DependencyProcessor dependencyProcessor = null;
         
@@ -115,7 +110,8 @@ public final class DependencyProcessorFactory {
         }else  if(techId.equalsIgnoreCase(TechnologyTypes.JAVA_STANDALONE)) {
             dependencyProcessor = new JWSDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }  
-        else  if(techId.equalsIgnoreCase(TechnologyTypes.HTML5_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_MOBILE_WIDGET)|| techId.equalsIgnoreCase(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
+        else  if(techId.equalsIgnoreCase(TechnologyTypes.HTML5_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_MOBILE_WIDGET)|| 
+        		techId.equalsIgnoreCase(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET) || techId.equalsIgnoreCase(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET)) {
             dependencyProcessor = new HTML5DependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         } else  if(techId.equalsIgnoreCase(TechnologyTypes.SHAREPOINT)) {
             dependencyProcessor = new SharePointDependencyProcessor(PhrescoServerFactory.getRepositoryManager());

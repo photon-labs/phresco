@@ -20,9 +20,10 @@
 package com.photon.phresco.Screens;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,9 +34,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+import com.opera.core.systems.OperaDriver;
 import com.photon.phresco.selenium.util.Constants;
 import com.photon.phresco.selenium.util.ScreenActionFailedException;
 import com.photon.phresco.selenium.util.ScreenException;
@@ -126,18 +127,7 @@ public class BaseScreen {
 			 * selenium.open(context);
 			 */
 		} 
-		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_HTMLUNIT)) {
-				log.info("-------------***LAUNCHING HTMLUNIT***--------------");
-				driver = new HtmlUnitDriver(); 
-				//windowMaximizeFirefox();
-				driver.navigate().to(url + context);	
-				// driver.get(url+context);
-
-				/*
-				 * selenium = new WebDriverBackedSelenium(driver, url);
-				 * selenium.open(context);
-				 */
-			} 
+		 
 		 else if (browserName.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
 				log.info("-------------***LAUNCHING OPERA***--------------");
 				WebDriver driver = new OperaDriver();
@@ -190,9 +180,10 @@ public class BaseScreen {
 			chromeService.stop();
 			}
 		} 
-     // else {
-	//throw new NullPointerException();
-//}
+        
+        //else {
+		//	throw new NullPointerException();
+	//	}
 		// selenium.stop();
 		/*
 		 * driver.quit(); selenium.stop();

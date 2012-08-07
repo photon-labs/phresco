@@ -14,12 +14,12 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap-1.2.0.css">
 <link type="text/css" rel="stylesheet" href="themes/photon/css/phresco.css">
-<link type="text/css" rel="stylesheet"  class="changeme" id="theme">
+<link type="text/css" rel="stylesheet" class="changeme" id="theme">
 
 <script type="text/javascript">
 $(document).ready(function() {
     var key = "color";
-    showWelcomeImage(key);
+	showWelcomeImage(key);
 
     <%
 		String cmdLogin = (String) request.getAttribute("cmdLogin");
@@ -79,7 +79,7 @@ $(document).ready(function() {
 	            <!--  Password starts -->
 	            <div class="clearfix" >
 	                <label class="labellg" for="xlInput" class="lgnFieldLbl">Password:</label>
-	                <input class="xlarge settings_text lgnField" id="xlInput" id="password" name="password" type="password"  maxlength="63" title="63 Characters only" value =""/>
+	                <input class="xlarge settings_text lgnField" id="xlInput" id="password" name="password" type="password"  maxlength="63" title="63 Characters only" value ="" placeholder="Enter the password"/>
 	            </div>
 	            <!--  Password ends -->
 		              

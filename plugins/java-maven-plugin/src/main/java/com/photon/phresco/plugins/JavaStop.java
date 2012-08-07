@@ -19,7 +19,10 @@
  */
 package com.photon.phresco.plugins;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -66,35 +69,81 @@ public class JavaStop extends AbstractMojo implements PluginConstants {
 	protected String environmentName;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		stopServer();
+		try {
+			stopServer();
+			getLog().info("Server stopped successfully");
+		} catch (MojoExecutionException e) {
+			getLog().error("Failed to stop server "+ e);
+			throw e;
+		}
 	}
 
 	private void stopServer() throws MojoExecutionException {
+		String portNo = findPortNumber();
+		if (System.getProperty(OS_NAME).startsWith(WINDOWS_PLATFORM)) {
+			stopJavaServerInWindows("netstat -ao | findstr " + portNo + " | findstr LISTENING");
+		} else if (System.getProperty(OS_NAME).startsWith("Mac")) {
+			stopJavaServer("lsof -i tcp:" + portNo + " | awk '{print $2}'");
+		} else {
+			stopJavaServer("fuser " + portNo + "/tcp " + "|" + "awk '{print $1}'");
+		}
+	}
+
+	private void stopJavaServerInWindows(String command) throws MojoExecutionException {
+		try {
+			String pid = "";
+			BufferedReader in = null;
+			Commandline cl = new Commandline(command);
+			Process process = cl.execute(); 
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				pid = line.substring(line.length() - 4, line.length());
+			}
+			Runtime.getRuntime().exec("cmd /X /C taskkill /F /PID " + pid);			
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage());
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
+
+	private void stopJavaServer(String command) throws MojoExecutionException {
+		try {
+			String pid = "";
+			BufferedReader in = null;
+			Commandline cl = new Commandline(command);
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			int count = 1;
+			while ((line = in.readLine()) != null) {
+				if (count == 2) {
+					pid = line.trim();
+				}
+				count++;
+			}
+			Runtime.getRuntime().exec(JAVA_UNIX_PROCESS_KILL_CMD + pid);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage());
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
+
+	public String findPortNumber() throws MojoExecutionException {
 		String serverPort = "";
-		String ServerShutdownPort = "";
 		try {
 			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir.getName(), environmentName);
+			List<SettingsInfo> settingsInfos = projAdmin.getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, baseDir
+					.getName(), environmentName);
 			for (SettingsInfo settingsInfo : settingsInfos) {
 				serverPort = settingsInfo.getPropertyInfo(Constants.SERVER_PORT).getValue();
-				Integer stport = Integer.valueOf(serverPort) + 1;
-				ServerShutdownPort = Integer.toString(stport);
 				break;
 			}
-			StringBuilder sb = new StringBuilder();
-			sb.append(MVN_CMD);
-			sb.append(STR_SPACE);
-			sb.append(T7_STOP_GOAL);
-			sb.append(STR_SPACE);
-			sb.append(SERVER_SHUTDOWN_PORT);
-			sb.append(ServerShutdownPort);
-			Commandline cl = new Commandline(sb.toString());
-			cl.setWorkingDirectory(baseDir);
-			Process process = cl.execute();
-		}catch (CommandLineException e) {
+		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage());
-		} catch (PhrescoException e) {
-			throw new MojoExecutionException(e.getMessage());
-		} 
+		}
+		return serverPort;
 	}
 }

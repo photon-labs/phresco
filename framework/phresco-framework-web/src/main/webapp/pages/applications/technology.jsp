@@ -113,16 +113,16 @@
         	}
        	%>
            <select class="xlarge" id="pilotProjects" name="pilotProject" <%= disabled %> onchange="showPilotProjectConfigs(this);">
-			<option value="">None</option>
-			<%
-				if (CollectionUtils.isNotEmpty(pilotProjectNames)) {
-					for (String pilotProjectName : pilotProjectNames) {
-			%>
-						<option value="<%= pilotProjectName %>" <%= selectedStr %> ><%= pilotProjectName %></option>
-			<%		
-					}
-				} 
-			%>
+				<option value="">None</option>
+				<%
+					if (CollectionUtils.isNotEmpty(pilotProjectNames)) {
+						for (String pilotProjectName : pilotProjectNames) {
+				%>
+							<option value="<%= pilotProjectName %>" <%= selectedStr %> ><%= pilotProjectName %></option>
+				<%		
+						}
+					} 
+				%>
            </select>
     </div>
     <!--  Pilot projects are loaded here ends -->
@@ -215,8 +215,6 @@
 	<s:label for="email" key="label.web.email" theme="simple" cssClass="new-xlInput"/>
 		<div class="input new-input">
 				<%
-// 					boolean isEmailSupported = selectedTechnology.isEmailSupported();
-					
 					if (isEmailSupportSelected) {
 						selectedStr = "checked";
 					}
@@ -579,7 +577,9 @@
 		params = params.concat(from);
 		params = params.concat("&fromPage=");
 		params = params.concat('<%= fromPage %>');
-		popup('openAttrPopup', params, $('#popup_div'));
+		params = params.concat("&customerId=");
+		params = params.concat($("input[name=customerId]").val());
+		popupParams('openAttrPopup', params, $('#popup_div'));
 	}
 	
 	/** To get the versions onChange of the select box option **/
@@ -595,7 +595,9 @@
 		params = params.concat(type);
 		params = params.concat("&selectedId=");
 		params = params.concat(selectedId);
-		performAction('getAllVersions', params, '', true);
+		params = params.concat("&customerId=");
+		params = params.concat($("input[name=customerId]").val());
+		popupParams('getAllVersions', params, '', true);
 	}
 
 	/** To update the master hidden fields **/
@@ -676,49 +678,6 @@
 			} else {
 				$("#"+type).show();
 			}			
-		}
-	}
-	
-	function successEvent(pageUrl, data) {
-		if (pageUrl == "getAllVersions") {
-			if (fillCheckBoxVersion(versionFor, data.versions)) {
-				makeVersionsSelected();
-			}
-		} else if (pageUrl == "techVersions") {
-			if (data.techVersions != undefined) {
-				$("#technologyVersionDiv").show();
-                if (fillVersions("techVersion", data.techVersions)) {
-					showPrjtInfoTechVersion();
-                }
-	        } else {
-				$("#technologyVersionDiv").hide();
-	        }
-			var technology = $("#technology").val();
-			hideServerAndDatabase(technology);
-		} else if (pageUrl == "checkForRespectiveConfig") {
-			if (data.hasConfiguration) {
-				if (type == "Database") {
-					$("#confirmationText").html("Corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
-				} else {
-					$("#confirmationText").html("Corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
-				}
-			    dialog('block');
-			    escBlockPopup();
-			} else {
-				if (type == "Database") {
-					if (checkForProjectInfoDb()) {
-						$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
-						dialog('block');
-					    escBlockPopup();						
-					} else {
-						removeDiv();
-					}
-				} else {
-					removeDiv();					
-				}
-			}
-		} else if (pageUrl == "technology") {
-			techVersions();    	
 		}
 	}
 	
@@ -910,14 +869,4 @@
 			}
 		%>
 	}
- 	
-	function hideServerAndDatabase(technology) {
-		if(technology == "tech-java-standalone") {
-			$("#server").hide();
-			$("#database").hide();
-		} else {
-			$("#server").show();
-			$("#database").show();
-		}
-	} 
 </script>

@@ -20,36 +20,17 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		//To focus the name textbox by default
-		$('#name').focus();
-		
-		// To check for the special character in name
-		$('#name').bind('input propertychange', function (e) {
-			var name = $(this).val();
-			name = checkForSplChr(name);
-	    	$(this).val(name);
-		});	
-	});
-
-	function findError(data) {
-		if (data.nameError != undefined) {
-			showError($("#nameControl"), $("#nameError"), data.nameError);
-		} else {
-			hideError($("#nameControl"), $("#nameError"));
-		}
-	}
-</script>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <%
-	ApplicationType apptype = (ApplicationType)request.getAttribute("appType");
-	String fromPage = (String) request.getAttribute("fromPage");
+	ApplicationType apptype = (ApplicationType)request.getAttribute(ServiceUIConstants.REQ_APP_TYPE);
+	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
-<form class="form-horizontal customer_list">
+<form id="formAppTypeAdd" class="form-horizontal customer_list">
   <h4 class="hdr">
    <% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<s:label key="lbl.hdr.comp.apln.edit.title" theme="simple" />
@@ -81,17 +62,40 @@
 	<div class="bottom_button">
 	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				    onclick="validate('applicationUpdate', $('#subcontainer'), 'Updating Application Type');" />
+				    onclick="validate('applicationUpdate', $('#formAppTypeAdd'), $('#subcontainer'), 'Updating Application Type');" />
 		<% } else { %>
-				<input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
-				    onclick="validate('applicationSave', $('#subcontainer'), 'Creating Application Type');" />
+                <input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>"
+                    onclick="validate('applicationSave', $('#formAppTypeAdd'), $('#subcontainer'), 'Creating Application Type');" />
 		<% } %>
 		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="loadContent('applntypesList', $('#subcontainer'));" />
+            onclick="loadContent('applntypesList', $('#formAppTypeAdd'), $('#subcontainer'));" />
     </div>
 	
 	<!-- Hidden Fields -->
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
 	<input type="hidden" name="appTypeId" value="<%= apptype != null ? apptype.getId() : "" %>"/>
-	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/> 
+	<input type="hidden" name="oldName" value="<%= apptype != null ? apptype.getName() : "" %>"/>
+    <input type="hidden" name="customerId" value="<%= customerId %>">
 </form>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//To focus the name textbox by default
+		$('#name').focus();
+		
+		// To check for the special character in name
+		$('#name').bind('input propertychange', function (e) {
+			var name = $(this).val();
+			name = checkForSplChr(name);
+	    	$(this).val(name);
+		});	
+	});
+
+	function findError(data) {
+		if (data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+	}
+</script>

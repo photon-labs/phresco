@@ -27,11 +27,12 @@
 	<packaging>xcode</packaging>
 	<build>
 	<sourceDirectory>/source</sourceDirectory>
+	<directory>do_not_checkin/target</directory>
 	  <plugins>
 		<plugin>
 			<groupId>com.photon.phresco.plugins.xcode</groupId>
 			<artifactId>xcode-maven-plugin</artifactId>
-			<version>2.0.0.6001-SNAPSHOT</version>
+			<version>2.0.0.10000-SNAPSHOT</version>
 			<extensions>true</extensions>
 			<configuration>
 				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>

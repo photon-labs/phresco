@@ -175,6 +175,34 @@
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/database/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>test/performance/webservices/tests</directory> 
+			<includes> 
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+				<include>phresco-env-config.csv</include>
+			</includes> 
+		<fileSet filtered="false" packaged="false"> 
 			<directory>test/unit</directory> 
 			<includes> 
 				<include>pom.xml</include>

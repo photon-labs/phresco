@@ -38,13 +38,19 @@ public interface FrameworkConstants {
     String CONFIGURATION_INFO_FILE_NAME = "phresco-env-config.xml";
     String BUILD_INFO_FILE_NAME = "build.info";
     String PROJECT_INFO = "project.info";
+    String SAFARI_WARNING_MSG = "Safari browser is only supported for SeleniumRC";
     
     String DO_NOT_CHECKIN_DIR = "do_not_checkin";
     String BUILD_DIR = DO_NOT_CHECKIN_DIR + File.separator + "build";
     String CHECKIN_DIR = "do_not_checkin";
+    String ARCHIVES = "archives";
+    String CUMULATIVE = "cumulativeReports";
     String BUILD_PATH = "build";
     String WORKSPACE_DIR = "workspace";
     String SPACE = " ";
+    String UNDERSCORE = "_";
+    String PDF = "pdf";
+    String XML = "xml";
     String POM_XML = "pom.xml";
     String STATIC_ANALYSIS_REPORT = "static-analysis-report";
     String INDEX_HTML = "index.html";
@@ -75,6 +81,15 @@ public interface FrameworkConstants {
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
     String TIMER_TRIGGER = "TimerTrigger";
+    String CLASS = "class";
+    String SCM = "scm";
+    String SVN = "svn";
+    String GIT = "git";
+    String REPO_TYPE = "repoType";
+    String SVN_TYPE = "svnType";
+    String GITHUB_SCM = "hudson.plugins.git.GitSCM";
+    String SVN_SCM = "hudson.scm.SubversionSCM";
+    String GITHUB_SCM_FILE_NAME = "gitHubScm.xml";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";
@@ -88,15 +103,12 @@ public interface FrameworkConstants {
     String STOP_SERVER = "stop";
     String NODEJS_SERVER_NAME = "serverName";
     String NODEJS_DB_NAME = "databaseName";
-    String NODEJS_IMPORT_VALUE = "importSql";
     String SERVER_PROTOCOL = "server.protocol";
     String SERVER_HOST = "server.host";
     String SERVER_PORT = "server.port";
-    String NODEJS_LOG_DIR = "log";
+    String LOG_DIR = "log";
     String RUN_AGS_ENV_FILE = "runagainstsource.info";
-    String NODEJS_LOG_FILE = "nodejsLog.log";
-    String NODEJS_ERROR_LOG_FILE = "nodejserrorLog.log";
-    String JAVA_LOG_FILE = "javaLog.log";
+    String LOG_FILE = "server.log";
     String LINE_SEPERATOR = "line.separator";
     String READ_LOG_VIEW = "view";
     String READ_ERROR_LOG_VIEW = "errorLogView";
@@ -148,6 +160,7 @@ public interface FrameworkConstants {
     String DEPLOY_SERVERNAME="serverName";
     String DEPLOY_ANDROID_DEVICE_MODE = "android.device";
     String DEPLOY_ANDROID_EMULATOR_AVD = "android.emulator.avd";
+    String ANDROID_LOWER_VER = "2.2";
     String DEVICE_DEPLOY = "device.deploy";
     String UNIT_TEST = "unittest";
     String TRUE = "true";
@@ -375,6 +388,9 @@ public interface FrameworkConstants {
     String REQ_APPLICATION_TYPE = "applicationType";
     String REQ_OLD_CONFIG_NAME = "configName";
     String REQ_TEST_TYPE = "testType";
+    String REQ_TEST_EXE = "testExecuted";
+    String REQ_REPORT_STATUS = "reportStatus";
+    String REQ_REPORT_DELETE_STATUS = "reportDeleteStatus";
     String REQ_SELECTEDPROJECTS = "selectedProjects";
     String REQ_BUILD_NUMBER = "build-number";
     String REQ_BUILD_WARNING = "buildWarning";
@@ -408,8 +424,10 @@ public interface FrameworkConstants {
     String REQ_LOGIN_ERROR = "loginErrors";
     String REQ_CORE_MODULES = "coreModules";
     String REQ_CUSTOM_MODULES = "customModules";
+    String REQ_CUSTOMER_ID = "customerId";
     String REQ_APPTYPE = "appType";
     String REQ_JMETER_REPORT_FILES = "JMeterReports";
+    String REQ_PDF_REPORT_FILES = "pdfReportFiles";
     String REQ_ANDROID_DEVICE = "device";
     String REQ_IPHONE_DEVICE = "device";
     String REQ_IPHONE_SIMULATOR = "simulator";
@@ -437,6 +455,7 @@ public interface FrameworkConstants {
     String REQ_WEBSERVICES = "webservices";
     String REQ_EMAIL_SUPPORTED = "emailSupported";
     String REQ_BUILD_STATUS = "buildStatus";
+    String REQ_GENERATE_BUILD = "generateBuild";
     String REQ_ENV_SERVER_SETTINGS = "serverSettings";
     String REQ_ENV_DATABASE_SETTINGS = "databaseSettings";
     String REQ_ENV_EMAIL_SETTINGS = "emailSettings";
@@ -460,6 +479,8 @@ public interface FrameworkConstants {
     String REQ_KEY_SUCCESS_EMAILS = "successEmails";
     String REQ_KEY_FAILURE_EMAILS = "failureEmails";
     String REQ_SERVER_LOG = "serverLog";
+    String REQ_REPORT_CRISP="crisp";
+    String REQ_REPORT_DETAILED="detail";
     
     String REQ_EXISTING_JOB = "existingJob";
     String REQ_EXISTING_JOBS = "existingJobs";
@@ -575,6 +596,7 @@ public interface FrameworkConstants {
     String REST_ENVE_PATH = "/settings/env";
     String REST_SERVERS_PATH = "/servers";
     String REST_DATABASE_PATH = "/component/databases";
+    String REST_UPDATE = "/repo/update";
 
     String ATTR_TIME 	= "time";
     String ATTR_TESTS 	= "tests";
@@ -621,6 +643,13 @@ public interface FrameworkConstants {
      */
     String MSG_PROJECT_INFORMATION_EMPTY = "Project information should not be empty";
     String MSG_FILE_PATH_EMPTY = "File path should not be empty";
+    String SUCCESS_REPORT_STATUS = "label.report.success";
+    String ERROR_REPORT_STATUS = "label.report.failure";
+    String SUCCESS_REPORT_DELETE_STATUS = "label.report.delete.success";
+    String ERROR_REPORT_DELETE_STATUS = "label.report.delete.failure";
+    String MSG_REPORT_OVERALL = "Overall";
+    String MSG_REPORT_DETAIL = "Detailed";
+    String MSG_REPORT = "Atleast one test result is necessary";
     
     /*
      * CI Message keys
@@ -672,7 +701,7 @@ public interface FrameworkConstants {
     /*
      * Code keys
      */
-    String FAILURE_CODE_REVIEW = "Code review is not available";
+    String FAILURE_CODE_REVIEW = "Code validation report is not available";
 	String SONAR_NOT_STARTED = "sonar.not.started";
     
     /*
@@ -779,14 +808,15 @@ public interface FrameworkConstants {
     String ERROR_TEST_CASE = "Test case is not available for this project";
     String ERROR_MANDATORY_FIELDS = "Some mandatory values are not filled";
     String ERROR_SETTINGS = "ERROR_SETTINGS";
-    String ERROR_UNIT_TEST = "Unit test not yet executed";
-    String ERROR_FUNCTIONAL_TEST = "Functional test not yet executed";
-    String ERROR_PERFORMANCE_TEST = "Performance test not yet executed";
-    String ERROR_LOAD_TEST = "Load test not yet executed";
+    String ERROR_UNIT_TEST = "unittest.not.executed";
+    String ERROR_FUNCTIONAL_TEST = "functionaltest.not.executed";
+    String ERROR_PERFORMANCE_TEST = "performancetest.not.executed";
+    String ERROR_LOAD_TEST = "loadtest.not.executed";
     String ERROR_ENV_CONFIG = "{0} configuration is not available for the selected environment";
     String ERROR_ANDROID_DATA = "Data is not available";
     String ERROR_PORT = "Invalid Port Number";
     String ERROR_EMAIL = "Enter Valid Email";
+    String NO_SETTINGS_ENV = "settings.error.message";
     
     /*
      * Delete Environment keys
@@ -1006,6 +1036,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_UNIT_TESTSUITE = "/testsuite";
     String XPATH_HTML5_WIDGET_UNIT_TESTSUITE = "/testsuite";
     String PATH_HTML5_MULTICHANNEL_JQUERY_UNIT_TEST_TESTSUITE = "/testsuite";
+    String PATH_HTML5_JQUERY_MOBILE_WIDGET_UNIT_TEST_TESTSUITE = "/testsuite";
     String XPATH_JAVA_WEBSERVICE_UNIT_TESTSUITE = "/testsuite";
     String XPATH_NODE_JS_WEBSERVICE_UNIT_TESTSUITE = "/testsuite";
     String XPATH_PHP_WEBSERVICE_UNIT_TESTSUITE = "/testsuites/testsuite";
@@ -1028,6 +1059,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_HTML5_WIDGET_FUNCTIONAL_TESTSUITE = "/testsuite";
     String PATH_HTML5_MULTICHANNEL_JQUERY_FUNCTIONAL_TEST_TESTSUITE = "/testsuite";
+    String PATH_HTML5_JQUERY_MOBILE_WIDGET_FUNCTIONAL_TEST_TESTSUITE = "/testsuite";
     String XPATH_JAVA_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_NODE_JS_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_PHP_WEBSERVICE_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
@@ -1048,6 +1080,7 @@ public interface FrameworkConstants {
     String XPATH_HTML5_TESTCASE = "/testcase";
     String XPATH_HTML5_WIDGET_TESTCASE = "/testcase";
     String XPATH_HTML5_MULTICHANNEL_JQUERY_TESTCASE = "/testcase";
+    String XPATH_HTML5_JQUERY_MOBILE_WIDGET_TESTCASE = "/testcase";
     String XPATH_JAVA_WEBSERVICE_TESTCASE = "/testcase";
     String XPATH_NODE_JS_WEBSERVICE_TESTCASE = "/testcase";
     String XPATH_PHP_WEBSERVICE_TESTCASE = "/testcase";
@@ -1122,4 +1155,45 @@ public interface FrameworkConstants {
    /* Unit test report directory */
    String UNIT_TEST_QUNIT_REPORT_DIR = "/do_not_checkin/target/surefire-reports/qunit";
    String UNIT_TEST_JASMINE_REPORT_DIR = "/do_not_checkin/target/jasmine";
+   
+
+   /* Minification */
+   
+   String REQ_COMPRESS_NAME = "selectedJsName";
+   String REQ_SELECTED_FILES = "selectedJsFiles";
+   String REQ_CHECKED_FILE_LIST = "jsMinCheck";
+   String REQ_SELECTED_FILE_NAMES = "jsFileName";
+   
+   String POM_SOURCEDIR = "sourceDirectory";
+   String POM_SOURCE_DIRECTORY = "${project.basedir}/src/main/";
+   String POM_OUTPUTDIR = "outputDirectory";
+   String POM_OUTPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_FORCE = "force";
+   String POM_JS_WARN = "jswarn";
+   String POM_NO_SUFFIX = "nosuffix";
+   String POM_VALUE_TRUE = "true";
+   String POM_VALUE_FALSE = "false";
+   String POM_AGGREGATIONS = "aggregations";
+   String POM_AGGREGATION = "aggregation";
+   String POM_INPUTDIR = "inputDir";
+   String POM_INPUT_DIRECTORY = "${project.basedir}/compressed";
+   String POM_INCLUDES ="includes";
+   String POM_INCLUDE ="include";
+   String POM_OUTPUT = "output";
+   String MINIFY_OUTPUT_DIRECTORY = "${project.basedir}";
+   String MINIFY_FILE_EXT = ".min.js";
+   String MINIFY_PLUGIN_GROUPID ="net.alchim31.maven";
+   String MINIFY_PLUGIN_ARTFACTID ="yuicompressor-maven-plugin";
+
+   /* Constants For Framework update */
+   String TEMP_ZIP_FILE = "temp.zip";
+   String MAVEN_SETTINGS_FILE = "../tools/maven/conf/settings.xml";
+   String OUTPUT_SETTINGS_DIR = "tools/maven/conf";
+   String BACKUP_DIRNAME = "backups";
+   String BIN_DIR = "bin";
+   String PREV_DIR = "../";
+   String UPGRADE_PROP_NAME = "upgrade.properties";
+   String ARCHIVE_EXTENSION = ".zip";
+   String VERSION_SERVICE_PATH = "version";
   }
+

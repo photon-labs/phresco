@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhrescoJmeterResultSubReport" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="java.util.*"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="totalNoOfSample" class="java.lang.String"/>
+	<parameter name="totalAvg" class="java.lang.String"/>
+	<parameter name="min" class="java.lang.String"/>
+	<parameter name="max" class="java.lang.String"/>
+	<parameter name="totalStdDev" class="java.lang.String"/>
+	<parameter name="totalErr" class="java.lang.String"/>
+	<parameter name="totalThroughput" class="java.lang.String"/>
+	<parameter name="totalKbPerSec" class="java.lang.String"/>
+	<parameter name="totalAvgBytes" class="java.lang.String"/>
+	<parameter name="reportsDataType" class="java.lang.String"/>
+	<parameter name="graphData" class="java.util.Collection" isForPrompting="false"/>
+	<field name="label" class="java.lang.String"/>
+	<field name="noOfSamples" class="java.lang.Integer"/>
+	<field name="avg" class="java.lang.Double"/>
+	<field name="min" class="java.lang.Integer"/>
+	<field name="max" class="java.lang.Integer"/>
+	<field name="stdDev" class="java.lang.Double"/>
+	<field name="err" class="java.lang.Integer"/>
+	<field name="throughtPut" class="java.lang.Double"/>
+	<field name="kbPerSec" class="java.lang.Double"/>
+	<field name="avgBytes" class="java.lang.Double"/>
+	<title>
+		<band height="22">
+			<frame>
+				<reportElement x="0" y="0" width="554" height="22"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="554" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="2" width="91" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Label]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="96" y="2" width="52" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[# Sample]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="148" y="2" width="66" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Average]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="216" y="2" width="41" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Min]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="269" y="2" width="41" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Max]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="324" y="2" width="47" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Std.Dev]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="371" y="2" width="41" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Error %]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="412" y="2" width="51" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Thr.put]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="463" y="2" width="51" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kb/sec]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="514" y="2" width="40" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Avg bytes']]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textField>
+					<reportElement x="2" y="2" width="94" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{label}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="96" y="2" width="52" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{noOfSamples}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="148" y="2" width="66" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{avg}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="216" y="2" width="34" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{min}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="269" y="2" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{max}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="324" y="2" width="47" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{stdDev}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="371" y="0" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{err}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="412" y="2" width="51" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{throughtPut}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="463" y="2" width="51" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kbPerSec}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="514" y="2" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{avgBytes}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement x="1" y="24" width="553" height="1"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="554" y="0" width="1" height="26"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="0" y="0" width="1" height="26"/>
+			</line>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="25">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="25" backcolor="#FFFFFF"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="554" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="0" width="91" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="96" y="0" width="52" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{totalNoOfSample}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="148" y="0" width="66" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+Math.round((Double.valueOf($P{totalAvg})))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="216" y="0" width="34" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{min}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="269" y="0" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{max}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="324" y="0" width="43" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{totalStdDev}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="371" y="0" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{totalErr}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="514" y="0" width="41" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+Math.round((Double.valueOf($P{totalAvgBytes})))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="412" y="0" width="51" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{totalThroughput}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="463" y="0" width="51" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{totalKbPerSec}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="499" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="1" y="0" width="555" height="232" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
+				<rectangle radius="10">
+					<reportElement x="13" y="0" width="134" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="26" y="5" width="121" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Throughput1]]></text>
+				</staticText>
+				<barChart>
+					<chart>
+						<reportElement x="1" y="41" width="553" height="191"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["Throughput"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{label}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{throughtPut}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<barPlot>
+						<plot labelRotation="60.0"/>
+						<itemLabel/>
+					</barPlot>
+				</barChart>
+			</frame>
+			<frame>
+				<reportElement mode="Transparent" x="1" y="232" width="555" height="227" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$P{reportsDataType}.equals("detail")]]></printWhenExpression>
+				</reportElement>
+				<barChart>
+					<chart>
+						<reportElement mode="Transparent" x="0" y="36" width="554" height="191"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["Min Response Time"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{label}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{min}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<barPlot>
+						<plot labelRotation="60.0"/>
+						<itemLabel/>
+					</barPlot>
+				</barChart>
+				<rectangle radius="10">
+					<reportElement x="12" y="0" width="135" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="25" y="5" width="122" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Min Response Time]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" mode="Transparent" x="2" y="459" width="555" height="40" isRemoveLineWhenBlank="true"/>
+				<subreport isUsingCache="false">
+					<reportElement positionType="Float" x="0" y="0" width="553" height="40"/>
+					<subreportParameter name="Gavg">
+						<subreportParameterExpression><![CDATA[$F{avg}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="Gmin">
+						<subreportParameterExpression><![CDATA[$F{min}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GthroughtPut">
+						<subreportParameterExpression><![CDATA[$F{throughtPut}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalKbPerSec">
+						<subreportParameterExpression><![CDATA[$P{totalKbPerSec}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="Gmax">
+						<subreportParameterExpression><![CDATA[$F{max}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="Glabel">
+						<subreportParameterExpression><![CDATA[$F{label}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalThroughput">
+						<subreportParameterExpression><![CDATA[$P{totalThroughput}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalAvg">
+						<subreportParameterExpression><![CDATA[$P{totalAvg}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GreportsDataType">
+						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalErr">
+						<subreportParameterExpression><![CDATA[$P{totalErr}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalStdDev">
+						<subreportParameterExpression><![CDATA[$P{totalStdDev}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalNoOfSample">
+						<subreportParameterExpression><![CDATA[$P{totalNoOfSample}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="GtotalAvgBytes">
+						<subreportParameterExpression><![CDATA[$P{totalAvgBytes}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{graphData})]]></dataSourceExpression>
+					<subreportExpression><![CDATA["reports/jasper/PhrescoPerfFileDatasGraphs.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

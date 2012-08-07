@@ -107,10 +107,24 @@ if(!isiPad()){
 }
 
 $(document).ready(function() {
-	
 	if ($.browser.safari) {
-		$(".th-inner-test").css("top","235px"); 
+		$(".th-inner-test").css("top", "235px"); 
 	}
+	
+	if ($.browser.opera) {
+		$(".graph_div").css("float", "left"); 
+		$(".columns").css("column-count", "1"); 
+	}
+	
+	var OSName="Unknown OS";
+    if (navigator.appVersion.indexOf("Mac")!=-1) {
+          OSName="MacOS";
+    }
+    
+    if (OSName == "MacOS") { 
+        $(".th-inner-test").css("top","225px");  
+        $(".th-inner-testtech").css("top","225px");
+    }
 	
 	enableScreen();
 	

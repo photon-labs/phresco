@@ -46,22 +46,37 @@
 		disabledStr = "disabled";
 	}
 %>
-
-<div class="operation">
-    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
-</div>
-<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
-	<div class="alert-message warning sonar">
-		<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+<form action="check" id="check">
+	<div class="operation">
+	    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
+		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.sonar.report"/></strong>&nbsp;
+		<select id="report" name="report">
+		<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) 
+				|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.JAVA_WEBSERVICE.equals(technology)) { %>	
+			<option value="java" ><s:text name="label.tech.java"/></option>
+			<option value="js" ><s:text name="label.tech.javascript"/></option>
+			<option value="web" ><s:text name="label.tech.jsp"/></option>
+		<% } else { %>
+			<option value="source" ><s:text name="label.validateAgainst.source"/></option>
+		<% } %>
+			<option value="functional" ><s:text name="label.funtional"/></option>
+		</select>
 	</div>
-<% } %>
- 
+	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
+		<div class="alert-message warning sonar">
+			<s:label cssClass="sonarLabelWarn" key="sonar.not.started" />
+		</div>
+	<% } %>
+</form> 
 <div id="sonar_report" class="sonar_report">
 
 </div>
 
 <script>
     $(document).ready(function() {
+		$(window).bind("resize", resizeWindow);
+		
 		/** To enable/disable the validate button based on the sonar startup **/
     	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
     			$("#validate").removeClass("primary");	
@@ -74,14 +89,19 @@
     	changeStyle("code");
     	sonarReport();
     	enableScreen();
-		
+    	
 		$('#validate').click(function() {
 			getCodeValidatePopUp();
+  		});
+		
+		$('#report').change(function() {
+			sonarReport();
   		});
   
 		$('#closeGenTest, #closeGenerateTest').click(function() {
  			closePopup();
  			sonarReport();
+ 			$('#popup_div').empty();
   		});
     });
     
@@ -103,8 +123,8 @@
     
     function getCodeValidatePopUp() {
     	$('#popup_div').empty();
-		  showPopup();
-      popup('getCodeValidatePopUp', '', $('#popup_div'));
+		showPopup();
+      	popup('getCodeValidatePopUp', '', $('#popup_div'));
     }
     
 	function checkObj(obj) {
@@ -113,5 +133,11 @@
 		} else {
 			return obj;
 		}
+	}
+	
+	/* Resize sonar iframe while resize the window */
+	function resizeWindow(e) { 
+		var SonarTabheight = $("#tabDiv").height();
+        $(".sonar_report").css("height", SonarTabheight - 40);
 	}
 </script>

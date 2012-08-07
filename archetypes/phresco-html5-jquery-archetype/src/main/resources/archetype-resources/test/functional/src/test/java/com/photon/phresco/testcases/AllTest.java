@@ -1,6 +1,6 @@
 /*
  * ###
- * Archetype - phresco-html5-jquery-archetype
+ * Archetype - phresco-html5-archetype
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 

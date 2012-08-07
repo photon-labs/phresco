@@ -107,7 +107,7 @@ public class DependencyPropertiesGenerator {
 		 PhrescoServerFactory.initialize();
 		RepositoryManager repositoryManager = PhrescoServerFactory.getRepositoryManager();
 		ArtifactInfo info = new ArtifactInfo("config.","dependency", "", "properties", "1.0.0");
-		repositoryManager.addArtifact(info, file);
+		//repositoryManager.addArtifact(info, file);
 	}
 
 }

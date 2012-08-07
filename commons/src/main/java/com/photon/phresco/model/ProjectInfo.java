@@ -20,7 +20,7 @@
 package com.photon.phresco.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,7 +40,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String description;
 	private Technology technology;
 	private String application;
-	private String[] pilotProjectUrls;
+	private List<String> pilotProjectUrls;
 	private String techID;
 	private String contentURLId;
 	private String pilotProjectName;
@@ -48,6 +48,9 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	private String groupId;
 	private String artifactId;
 	private String customerId;
+	private boolean system;
+	private String techId;
+	private String projectURL;
 	
 
 	/**
@@ -168,20 +171,24 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	 * @see java.lang.Object#toString()
 	 */
 	
+       
 	/**
 	 * @return the pilotProjectUrls
-	 */
-	public String[] getPilotProjectUrls() {
+	 */	
+ 
+   public List<String> getPilotProjectUrls() {
 		return pilotProjectUrls;
 	}
-
-	/**
+    
+    /**
 	 * @param pilotProjectUrls the pilotProjectUrls to set
 	 */
-	public void setPilotProjectUrls(String[] pilotProjectUrls) {
-		//this.pilotProjectUrls = pilotProjectUrls;
-		this.pilotProjectUrls =Arrays.copyOf(pilotProjectUrls, pilotProjectUrls.length);
+
+	public void setPilotProjectUrls(List<String> pilotProjectUrls) {
+		this.pilotProjectUrls = pilotProjectUrls;
 	}
+    
+	
 
 	public String getId() {
 		return id;
@@ -193,11 +200,27 @@ public class ProjectInfo implements Cloneable ,Serializable {
     
 	
 
-	public String getCustomerId() {
+	public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
+
+    public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
+	public boolean isSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+
+    public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
     
@@ -208,7 +231,7 @@ public class ProjectInfo implements Cloneable ,Serializable {
 				+ name + ", code=" + code + ", version=" + version
 				+ ", description=" + description + ", technology=" + technology
 				+ ", application=" + application + ", pilotProjectUrls="
-				+ Arrays.toString(pilotProjectUrls) + ", techID=" + techID
+				+ pilotProjectUrls + ", techID=" + techID
 				+ ", contentURLId=" + contentURLId + ", pilotProjectName="
 				+ pilotProjectName + ", projectCode=" + projectCode
 				+ ", groupId=" + groupId + ", artifactId=" + artifactId
@@ -241,5 +264,13 @@ public class ProjectInfo implements Cloneable ,Serializable {
 	public void setPilotProjectName(String pilotProjectName) {
 		this.pilotProjectName = pilotProjectName;
 	}
+
+    public String getProjectURL() {
+        return projectURL;
+    }
+
+    public void setProjectURL(String projectURL) {
+        this.projectURL = projectURL;
+    }
 
 }

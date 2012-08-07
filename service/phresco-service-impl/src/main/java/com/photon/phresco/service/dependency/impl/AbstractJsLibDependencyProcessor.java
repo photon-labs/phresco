@@ -43,6 +43,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.Module;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.RepositoryManager;
@@ -50,7 +51,6 @@ import com.photon.phresco.util.TechnologyTypes;
 
 public abstract class AbstractJsLibDependencyProcessor extends AbstractDependencyProcessor {
 	private static final Logger S_LOGGER = Logger.getLogger(AbstractJsLibDependencyProcessor.class);
-	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 
 	public AbstractJsLibDependencyProcessor(RepositoryManager repoManager) {
 		super(repoManager);
@@ -58,11 +58,6 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
 		super.process(info, path);
-		if (info.getTechnology().getId().equals(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET)) {
-		    updatePOMWithJsLibs(path, info.getTechnology().getJsLibraries());
-		} else {
-		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
-		}
 	}
 
 	@Override
@@ -71,10 +66,8 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 	}
 
 	protected void extractJsLibraries(File path, List<ModuleGroup> jsLibraries) throws PhrescoException {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method AbstractJsLibDependencyProcessor.extractJsLibraries(File path, List<TupleBean> jsLibraries)");
-			S_LOGGER.debug("extractJsLibraries() Filepath="+path.getPath());
-		}
+		S_LOGGER.debug("Entering Method AbstractJsLibDependencyProcessor.extractJsLibraries(File path, List<TupleBean> jsLibraries)");
+		S_LOGGER.debug("extractJsLibraries() Filepath="+path.getPath());
 
 		// should be implemented by clients who requires js libraries.
 		if (CollectionUtils.isEmpty(jsLibraries)) {
@@ -86,7 +79,15 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 			String modulesPathString=DependencyProcessorMessages.getString(jsLibPathKey);
 			libPath = new File(path, modulesPathString);
 		}
-
+		
+		for (ModuleGroup moduleGroup : jsLibraries) {
+            List<Module> versions = moduleGroup.getVersions();
+            for (Module module : versions) {
+                if(module != null) {
+                    DependencyUtils.extractFiles(module.getContentURL(), libPath);
+                }
+            }
+        }
 //		for (ModuleGroup tupleBean : jsLibraries) {
 //			Library library = getRepositoryManager().getJsLibrary(tupleBean.getId());
 //

@@ -2696,7 +2696,7 @@ fieldset {
     margin-top: 6px;
 }
 .btn.lgnBtn {
-    margin: 24px -4px 0 0;
+    margin: 24px 0px 0 0;
 }
 div.lgnBtnLabel {
     margin-left: 0;
@@ -2914,6 +2914,8 @@ table {
     width: 100%;
     height: 100%;
     text-align: center;
+    margin-top:17px;
+    margin-right: 8px;
 }
 
 .testCaseLog {
@@ -3529,8 +3531,6 @@ table {
     background:url(../../../images/r_arrowclose.png) no-repeat 3%;
     padding-left:5%;
     width:92%;
-    /* padding-bottom:9px;
-    padding-top:9px; */
     line-height: 25px;
 }
 
@@ -4758,7 +4758,7 @@ a[id='androidSigning']:hover {
     margin-bottom: 0;
     position: absolute;
     top: 0px;
-    width: auto;
+    width: 100px;
 }
 
 .custom_label {
@@ -4778,7 +4778,140 @@ a[id='androidSigning']:hover {
 	margin-left: 75px;
 	text-align: justify;
 }
+
+.report-header1 { 
+	padding:2px 0 5px 10px; 
+	width :28%;
+}
+
+.report_scroll { 
+	overflow: auto; 
+	height: 181px;
+}
+
+#availableReports { 
+	text-align: left; 
+	margin-bottom: 12px; 
+	margin-left: 5px;
+}
+
 /** All list page css**/
+
 .checkbox_list {
     width:0.1%;
 }
+
+/** Print pdf image **/
+.printAsPdf {
+	width: 70px;
+}
+
+.pdfth-inner {
+   position: absolute;
+   top: 0;
+   line-height: 30px;
+   text-align: left;
+   padding-left: 5px;
+   margin-left: -5px;
+}
+
+.tabl-fixed-table-container {
+   width: 100%;
+   height: 91%;
+   margin: -1px auto;
+   position: relative;
+   padding-top: 30px;
+   border-radius: 6px;
+}
+
+.tabl-fixed-table-container-inner {
+  overflow-x: visible;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.printIconAlign {
+	vertical-align: middle; 
+	padding-bottom: 0px;
+}
+
+.pdfName {
+	height:auto;
+	word-wrap:break-word;
+}
+
+.pdfType {
+	text-align: center;
+}
+
+.pdfDelete {	
+  text-align: left;
+  margin-left: 16%;
+  cursor: pointer;
+}
+ 
+.reportErrorMsg {
+	width: 220px; 
+	float: left; 
+	display: inline-block; 
+	margin: 0 auto; 
+	height: 22px;
+}
+
+.popupLoadingIcon {
+    position: relative;
+    display: none;
+}
+
+#clipboard {
+    height: 21px; 
+    width: 21px; 
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+}
+	
+.runagint_source {
+	float: right;
+	width: auto;
+}
+
+/*minification*/
+.jsmin-span {
+	color:#000;
+	vertical-align: top;
+	padding-left: 6px;
+}
+
+#jsErrMsg {
+	padding-left:12px;
+	padding-top:15px;	
+}
+
+.minifyDiv {
+	width:102%; 
+	max-height: 140px;
+}
+
+.minify_popup{
+	border:1px solid white;
+}
+
+.minifyLbl{
+	width:100px;
+}
+
+.chooseJS {
+	float:left;
+	margin-left:-30px;
+}
+
+.compNameLbl{
+	padding-right:6px;
+}
+
+.minifyAddIcon {
+	float: left; 
+	margin-left:4px;
+	cursor: pointer;
+}	

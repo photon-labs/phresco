@@ -326,6 +326,6 @@
 	</div>
 	<div class="bottom_button">
 		<input type="button" id="featuresSave" class="btn btn-primary" onclick="formSubmitFileUpload('featuresSave', 'featureArc', $('#subcontainer'), 'Creating Feature');" value="<s:text name='lbl.hdr.comp.save'/>"/>
-		<input type="button" id="featuresCancel" class="btn btn-primary" onclick="loadContent('featuresCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>		
+		<input type="button" id="featuresCancel" class="btn btn-primary" onclick="loadContent('featuresCancel', '', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>		
 	</div>
 </form>

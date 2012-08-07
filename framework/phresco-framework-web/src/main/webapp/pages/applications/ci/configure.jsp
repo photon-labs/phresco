@@ -58,9 +58,22 @@
 			</div>
 			
         	<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><s:text name="label.name"/></label>
+				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.name"/></label>
 				<div class="input">
 					<input type="text" id="name" name="name" value="<%= existingJob == null ? projectCode : existingJob.getName()%>" disabled autofocus>
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
+				
+				<div class="input">
+					<div class="multipleFields quartsRadioWidth">
+						<div><input type="radio" name="svnType" value="svn"  <%= existingJob == null ? "checked" : "" %> />&nbsp; <s:text name="label.svn"/></div>
+					</div>
+					<div class="multipleFields quartsRadioWidth">
+						<div><input type="radio" name="svnType" value="git" />&nbsp; <s:text name="label.git"/></div>
+					</div>
 				</div>
 			</div>
 			
@@ -71,17 +84,24 @@
 				</div>
 			</div>
 			
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.username"/></label>
+			<div class="clearfix" id="divBranch">
+				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.branch"/></label>
 				<div class="input">
-					<input type="text" id="username" name="username" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getUserName()%>">
+					<input type="text" id="branch" name="branch" maxlength="63" title="63 Characters only" value="">
 				</div>
 			</div>
 			
-			<div class="clearfix">
+			<div class="clearfix" id="divUsername">
+				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.username"/></label>
+				<div class="input">
+					<input type="text" id="username" name="username" maxlength="63" title="63 Characters only" value="">
+				</div>
+			</div>
+			
+			<div class="clearfix" id="divPassword">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.password"/></label>
 				<div class="input">
-					<input type="password" id="password" name="password" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getPassword()%>">
+					<input type="password" id="password" name="password" maxlength="63" title="63 Characters only" value="">
 				</div>
 			</div>
 			
@@ -387,9 +407,12 @@
 						<select id="androidVersion" name="androidVersion" class="xlarge" >
 							<%
 								for (int i=0; i<AndroidConstants.SUPPORTED_SDKS.length; i++) {
+									if (!AndroidConstants.SUPPORTED_SDKS[i].equalsIgnoreCase(FrameworkConstants.ANDROID_LOWER_VER)) {
 							%>
 								<option value="<%= AndroidConstants.SUPPORTED_SDKS[i] %>"><%= AndroidConstants.SUPPORTED_SDKS[i] %></option>
-							<% } %>
+							<%  	}
+								} 
+							%>
 						</select>
 					</div>
 				</div>
@@ -451,6 +474,10 @@
 				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
 						<input type="checkbox" id="proguard" name="proguard" value="false" >
 						<span><s:text name="label.progurad"/></span>
+												
+						<input type="checkbox" id="signing" name="signing" value="false">
+						<span class="popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
+															
 				<% } %>
 				</div>
 			</div>
@@ -474,35 +501,59 @@
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
-		$("#svnurl").focus();
+		credentialsDisp();
+		$("#name").focus();
+// 		$("#svnurl").focus();
 		$("#configs").hide();
 		$("#actionBtn").hide();
 		$("#preBtn").hide();
 		
 		$("#nextBtn").click(function() {
+			var name= $("#name").val();
 			var svnurl= $("#svnurl").val();
 			var username= $("#username").val();
 			var password= $("#password").val();
 			if(isValidUrl(svnurl)){
-				$("#errMsg").html("Enter SVN URL");
+				$("#errMsg").html("Enter the URL");
 				$("#svnurl").focus();
 				$("#svnurl").val("");
 				return false;
 			}
 			
-			if(isBlank($.trim($("input[name= username]").val()))){
-				$("#errMsg").html("Enter UserName");
-				$("#username").focus();
-				$("#username").val("");
+			if(name == ""){
+				$("#errMsg").html("Enter the Name");
+				$("#name").focus();
+				$("#name").val("");
 				return false;
 			}
-			if(password == "") {
-				$("#errMsg").html("Enter Password");
-				$("#password").focus();
-				return;
-			} else{
-				$("#errMsg").empty();
+			
+			if($("input:radio[name=svnType][value='svn']").is(':checked')) {
+				if(isBlank($.trim($("input[name= username]").val()))){
+					$("#errMsg").html("Enter UserName");
+					$("#username").focus();
+					$("#username").val("");
+					return false;
+				}
+				if(password == "") {
+					$("#errMsg").html("Enter Password");
+					$("#password").focus();
+					return;
+				} else{
+					$("#errMsg").empty();
+				}
 			}
+			
+			if($("input:radio[name=svnType][value='git']").is(':checked')) {
+				if(isBlank($.trim($("input[name=branch]").val()))){
+					$("#errMsg").html("Enter Branch Name");
+					$("#branch").focus();
+					$("#branch").val("");
+					return false;
+				} else{
+					$("#errMsg").empty();
+				}
+			}
+
 			if($("input[name='name']").val().length <= 0){
 				ciConfigureError('missingData', "Name is missing");
 				return;
@@ -535,6 +586,7 @@
         
 		$('#close, #cancel').click(function() {
 			showParentPage();
+			$("#popup_div").empty();
 		});
 		
 		$("#actionBtn").click(function() {
@@ -568,20 +620,78 @@
 		    var selectedSchedule = $(this).val();
 		    loadSchedule(selectedSchedule);
 		});
+		
+		
+		$("input:radio[name=svnType][value=svn]").click(function() {
+			credentialsDisp();
+		});
+		
+		$("input:radio[name=svnType][value=git]").click(function() {
+			credentialsDisp();
+		});
+		
 		show(selectedSchedule);
 		
 		<% 
-			if(existingJob != null) {
-				for(String trigger : existingJob.getTriggers()) {
-		%>
-					$("input[value='<%= trigger%>']").prop("checked", true);
-		<%
-				}
+		if(existingJob != null) {
+			for(String trigger : existingJob.getTriggers()) {
+	%>
+				$("input[value='<%= trigger%>']").prop("checked", true);
+	<%
 			}
-		%>
+	%>
+		//based on svn type radio button have to be selected
+	<%
+			if (StringUtils.isNotEmpty(existingJob.getRepoType())) {
+	%>
+				$("input:radio[name=svnType][value=<%= existingJob.getRepoType() %>]").prop("checked", true);
+	<%
+			} else {
+	%>
+				$("input:radio[name=svnType][value=svn]").prop("checked", true);
+	<%
+			}
+	%>
+	
+	<%
+			if (StringUtils.isNotEmpty(existingJob.getBranch())) {
+	%>
+				$("input:text[name=branch]").val("<%= existingJob.getBranch() %>");
+	<%
+			}
+	%>
+
+	<%
+			if (StringUtils.isNotEmpty(existingJob.getUserName())) {
+	%>
+				$("input:text[name=username]").val("<%= existingJob.getUserName() %>");
+	<%
+			}
+	%>
+	
+	<%
+			if (StringUtils.isNotEmpty(existingJob.getPassword())) {
+	%>
+				$("input[name=password]").val("<%= existingJob.getPassword() %>");
+	<%
+			}
+	%>
+	<%
+		}
+	%>
 	    
+		credentialsDisp();
 	});
 
+	function credentialsDisp() {
+		if($("input:radio[name=svnType][value='svn']").is(':checked')) {
+			$('#divUsername, #divPassword').show();
+			$('#divBranch').hide();
+		} else {
+			$('#divUsername, #divPassword').hide();
+			$('#divBranch').show();
+		}
+	}
 	
 	function ciConfigureError(id, errMsg){
 		$("#" + id ).empty();

@@ -139,7 +139,7 @@ h1 {margin-bottom: 0;}
 			<div class="input new-input">
 				<div class="typeFields">
 					<input class="xlarge settings_text" id="xlInput" name="configName" type="text" maxlength="30" title="30 Characters only" value ="<%=name%>" 
-					autofocus onfocus="showToolTip('nameHelpTxt_Conf');" placeholder="<s:text name="label.name.config.placeholder"/>"/>
+					autofocus placeholder="<s:text name="label.name.config.placeholder"/>"/>
 				</div>
 				<div>
 					<div class="lblDesc configSettingHelp-block" id="nameErrMsg">
@@ -154,7 +154,7 @@ h1 {margin-bottom: 0;}
 		<div class="clearfix">
 			<s:label key="label.description" theme="simple" cssClass="new-xlInput"/>
 			<div class="input new-input">
-				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" onfocus="showToolTip('descHelpTxt_Conf');" placeholder="<s:text name="label.description.config.placeholder"/>"><%= description %></textarea>
+				<textarea  class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" name="description" placeholder="<s:text name="label.description.config.placeholder"/>"><%= description %></textarea>
 			</div>
 		</div>
 		<!--  Description ends -->
@@ -163,7 +163,7 @@ h1 {margin-bottom: 0;}
       		<label class="new-xlInput"><span class="red">* </span><s:text name="label.environment"/></label>
 			<div class="input new-input">
            		<div class="typeFields">
-					<select id="environments" name="environments" class="selectEqualWidth"  onfocus="showToolTip('envHelpTxt_Stg');">
+					<select id="environments" name="environments" class="selectEqualWidth">
 						<%
 							for(Environment env : envs ) {
 								envName = env.getName();
@@ -199,7 +199,7 @@ h1 {margin-bottom: 0;}
 					<label class="new-xlInput"><s:text name="label.type"/></label>
 					<div class="input new-input">
 						<div class="typeFields">
-							<select id="configType" name="configType" class="selectEqualWidth" onfocus="showToolTip('typeHelpTxt_Conf');">
+							<select id="configType" name="configType" class="selectEqualWidth">
 								<%
 									if(settingsTemplates != null) {
 										for (SettingsTemplate settingsTemplate : settingsTemplates) {
@@ -263,8 +263,6 @@ h1 {margin-bottom: 0;}
 		$('#environments').empty().append($("<option></option>").attr("value",'<%= currentEnv %>').attr("selected", "selected").text('<%= currentEnv %>'));
 	}
 
-	hideAllDesc();
-	
 	/* To check whether the divice is ipad or not */
 	if(!isiPad()){
 		/* JQuery scroll bar */
@@ -374,20 +372,6 @@ h1 {margin-bottom: 0;}
         	$("div[id='emailidErrorDiv']").html(data.emailError);
         }
     }
-	
-	function showToolTip(toolTipId) {
-		hideAllDesc();
-		$("#"+toolTipId).show();
-		setTimeout(function(){
-		    $("#"+toolTipId).fadeOut("slow", function () {
-		    });
-		     
-		}, 2000);
-	}
-
-	function hideAllDesc(){
-		$(".twipsy").hide();
-	}
 	
 	var versionFrom = "";
 	function successEvent(pageUrl, data) {

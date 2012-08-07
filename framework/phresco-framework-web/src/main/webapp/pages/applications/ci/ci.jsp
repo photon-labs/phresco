@@ -73,7 +73,7 @@
 %>
 
 <s:if test="hasActionMessages()">
-    <div class="alert-message success"  id="successmsg">
+    <div class="alert-message success"  id="successmsg" style="margin-top: 2px; margin-left: 165px;">
         <s:actionmessage />
     </div>
 </s:if>
@@ -160,7 +160,7 @@
 						                    				<input type="checkbox" value="<%= jobName %>,<%= build.getNumber() %>" class="<%= jobName %>" name="builds">
 						                    			</td>
 						                    			<td><%= build.getNumber() %></td>
-						                    			<td><a href="<%= build.getUrl() %>" target="_blank"><%= build.getUrl() %></a></td>
+						                    			<td><a href="<%= build.getUrl() %>" target="_blank"><%= build.getUrl().replace("%20", " ") %></a></td>
 						                    			<td style="padding-left: 3%;">
 						                    				<%
 								                                if(build.getStatus().equals("INPROGRESS"))  {
@@ -259,6 +259,7 @@ $(document).ready(function() {
 	accordion();
 	
 	$("#popup_div").css("display","none");
+	$("#popup_div").empty();
 	enableScreen();
 	
 	hideProgessBar();

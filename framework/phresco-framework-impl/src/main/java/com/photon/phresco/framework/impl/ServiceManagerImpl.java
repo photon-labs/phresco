@@ -455,11 +455,11 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
     }
     
     @Override
-    public String getCiConfigPath() throws PhrescoException {
+    public String getCiConfigPath(String repoType) throws PhrescoException {
         Client client = ClientHelper.createClient();
         FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
         WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_CI_CONFIG_PATH);
-        return resource.accept(MediaType.TEXT_PLAIN).get(String.class);
+        return resource.queryParam(REPO_TYPE, repoType).accept(MediaType.TEXT_PLAIN).get(String.class);
     }
 
     @Override
@@ -566,6 +566,18 @@ public class ServiceManagerImpl implements ServiceManager, FrameworkConstants {
 		GenericType<List<Reports>> genericType = new GenericType<List<Reports>>() {};
 		List<Reports> reportList = builder.get(genericType);
 		return reportList;
+	}
+
+	@Override
+	public InputStream getLatestVersionPom()
+			throws PhrescoException {
+		Client client = ClientHelper.createClient();
+		FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
+		WebResource resource = client.resource(configuration.getServerPath() + FrameworkConstants.REST_UPDATE);
+		resource.accept(MediaType.APPLICATION_XML);
+		ClientResponse response = resource.type(MediaType.APPLICATION_XML).get(ClientResponse.class);
+		InputStream is = response.getEntityInputStream();
+        return is;
 	}
 }
 

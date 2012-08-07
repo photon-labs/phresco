@@ -22,7 +22,6 @@
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.commons.model.User" %>
 
-<%-- <script type="text/javascript" src="js/windowResizer.js"></script> --%>
 <script src="js/reader.js" ></script>
 
 <%
@@ -112,7 +111,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
     	var key = "color";
-    	showHeaderImage(key);
+    	showWelcomeImage(key);
 		
     	$("a[name='headerMenu']").attr("class", "inactive");
 		$("a[id='<%= selectedMenu%>']").attr("class", "active");	
@@ -124,8 +123,7 @@
             if (selectedMenu == "applications") {
             	bacgroundValidate("validateFramework");
             }
-            
-            performAction(selectedMenu, '', $("#container"));
+            performAction(selectedMenu, $('#customersForm'), $("#container"));
         });
         
       
@@ -170,7 +168,7 @@
 		
 		// to show user info on mouse over
         $('#signOut li').mouseenter(function(){
-        	localStorage.clear();  
+        	
          	$("div li.usersettings div").hide(0);
          	$(this).children("div li.usersettings div").show(0);
      	}).mouseleave(function(){
@@ -184,16 +182,6 @@
         })
     });
        
-    function showHeaderImage(key) {
-    	var theme = localStorage["color"]
-    	if(theme == "themes/photon/css/red.css" || theme == null || theme == undefined || theme == "undefined" || theme == "null") {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_red.png");
-        }
-    	else {
-    	    $('.headerlogoimg').attr("src", "images/phresco_header_blue.png");
-    	}
-    }
-    
     function disableCreateProject() {
     	disableControl($("#add"), "btn disabled");
     }

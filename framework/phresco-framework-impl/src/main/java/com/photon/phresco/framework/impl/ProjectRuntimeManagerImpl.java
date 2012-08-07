@@ -68,6 +68,7 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
 	    pluginMap.put(TechnologyTypes.JAVA_WEBSERVICE, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
+	    pluginMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, Constants.MVN_PLUGIN_NODEJS_ID);
 	    pluginMap.put(TechnologyTypes.HTML5, Constants.MVN_PLUGIN_JAVA_ID);
 	    pluginMap.put(TechnologyTypes.HTML5_MOBILE_WIDGET, Constants.MVN_PLUGIN_JAVA_ID);
@@ -242,23 +243,8 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
     	if (DebugEnabled) {
     		S_LOGGER.debug("Entering Method ProjectRuntimeManagerImpl.buildMavenArgCommand(ActionType actionType, Map<String, String> paramsMap)");
 		}
-        StringBuilder builder = new StringBuilder();
-        if (paramsMap == null || paramsMap.isEmpty()) {
-            return builder;
-        }
-        
-        Set<String> keys = paramsMap.keySet();
-        for (String key : keys) {
-            String value = paramsMap.get(key);
-            builder.append(Constants.STR_MINUSD);
-            builder.append(key);
-            builder.append(Constants.STR_EQUAL);
-            builder.append(Constants.STR_DOUBLE_QUOTES);
-            builder.append(value);
-            builder.append(Constants.STR_DOUBLE_QUOTES);
-            builder.append(Constants.SPACE);
-        }
-        
+
+    	StringBuilder builder = new StringBuilder();
         if (actionType.canHideLog()) {
             builder.append("-q");
             builder.append(Constants.SPACE);
@@ -266,7 +252,7 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         
         if (actionType.canShowError()) {
             builder.append("-e");
-			builder.append(Constants.SPACE);
+            builder.append(Constants.SPACE);
         }
         
         if (actionType.canShowDebug()) {
@@ -281,10 +267,27 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
         	builder.append("-DskipTests=false");
         	builder.append(Constants.SPACE);
         }
-        
-        if (!actionType.getProfileId().isEmpty()) {
+
+        if (StringUtils.isNotEmpty(actionType.getProfileId())) {
             builder.append("-P");
             builder.append(actionType.getProfileId());
+            builder.append(Constants.SPACE);
+        }
+        
+        if (paramsMap == null || paramsMap.isEmpty()) {
+            return builder;
+        }
+        
+        Set<String> keys = paramsMap.keySet();
+        for (String key : keys) {
+            String value = paramsMap.get(key);
+            builder.append(Constants.STR_MINUSD);
+            builder.append(key);
+            builder.append(Constants.STR_EQUAL);
+            builder.append(Constants.STR_DOUBLE_QUOTES);
+            builder.append(value);
+            builder.append(Constants.STR_DOUBLE_QUOTES);
+            builder.append(Constants.SPACE);
         }
         
         if (DebugEnabled) {

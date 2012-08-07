@@ -66,32 +66,23 @@ public class NodeJSStop extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-
-		stopNodeJS();
-
-	}
-
-	private void stopNodeJS() throws MojoExecutionException {
 		ByteArrayInputStream is = null;
 		BufferedReader reader = null;
 		InputStreamReader isr = null;
 		FileWriter fileWriter = null;
 		String result = "";
-		if (System.getProperty(NODE_OS_NAME).startsWith(NODE_WINDOWS)) {
-			stopNodeJSInWindows();
-		} else if (System.getProperty(NODE_OS_NAME).startsWith("Mac")) {
-			stopNodeJSInMac();
-		} else {
-			stopNodeJSInUnix();
-		}
-		result = "Server Stopped Successfully...";
-		is = new ByteArrayInputStream(result.getBytes());
-		isr = new InputStreamReader(is);
-		reader = new BufferedReader(isr);
 		try {
-			fileWriter = new FileWriter(baseDir.getPath() + NODE_LOG_FILE_DIRECTORY + NODE_LOG_FILE, false);
+			stopNodeJS();
+			result = "Server Stopped Successfully...";
+			is = new ByteArrayInputStream(result.getBytes());
+			isr = new InputStreamReader(is);
+			reader = new BufferedReader(isr);
+			fileWriter = new FileWriter(baseDir.getPath() + LOG_FILE_DIRECTORY + SERVER_LOG_FILE, false);
 			LogWriter writer = new LogWriter();
 			writer.writeLog(reader, fileWriter);
+		} catch (MojoExecutionException e) {
+			getLog().error("Failed to stop server "+ e);
+			throw e;
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage());
 		} finally {
@@ -114,56 +105,17 @@ public class NodeJSStop extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void stopNodeJSInWindows() throws MojoExecutionException {
+	private void stopNodeJS() throws MojoExecutionException {
 		try {
-			Process p = Runtime.getRuntime().exec("cmd /X /C taskkill /F /IM node.exe");
-			BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String line = null;
-			while ((line = in.readLine()) != null) {
-				System.out.println(line);
+			if (System.getProperty(OS_NAME).startsWith(WINDOWS_PLATFORM)) {
+				Runtime.getRuntime().exec("cmd /X /C taskkill /F /IM node.exe");
+			} else if (System.getProperty(OS_NAME).startsWith("Mac")) {
+				Runtime.getRuntime().exec("killall node");
+			} else {
+				Runtime.getRuntime().exec("pkill node");
 			}
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage());
 		}
 	}
-	
-	private void stopNodeJSInMac() throws MojoExecutionException {
-		try {
-			Commandline cl = new Commandline("killall");
-			String[] args1 = { "node" };
-			cl.addArguments(args1);
-			cl.setWorkingDirectory(sourceDirectory);
-			Process execute;
-			execute = cl.execute();
-			BufferedReader in = new BufferedReader(new InputStreamReader(execute.getErrorStream()));
-			String line = null;
-			while ((line = in.readLine()) != null) {
-			}
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage());
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage());
-		}
-	}
-
-	private void stopNodeJSInUnix() throws MojoExecutionException {
-		try {
-			Commandline cl = new Commandline(NODE_UNIX_PROCESS_KILL_CMD);
-			String[] args1 = { "node" };
-			cl.addArguments(args1);
-			cl.setWorkingDirectory(sourceDirectory);
-			Process execute;
-			execute = cl.execute();
-			BufferedReader in = new BufferedReader(new InputStreamReader(execute.getErrorStream()));
-			String line = null;
-			while ((line = in.readLine()) != null) {
-			}
-
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage());
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage());
-		}
-	}
-	
 }

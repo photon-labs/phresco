@@ -38,9 +38,11 @@ package com.photon.phresco.service.dependency.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -55,6 +57,7 @@ import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.DependencyProcessor;
+import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.RepositoryManager;
 import com.photon.phresco.service.model.ServerConstants;
 import com.photon.phresco.util.TechnologyTypes;
@@ -74,11 +77,12 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	private static final Logger S_LOGGER = Logger.getLogger(AbstractDependencyProcessor.class);
 	private static Boolean isDebugEnabled = S_LOGGER.isDebugEnabled();
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
+	private static Map<String, String> testPomFiles = new HashMap<String, String>();
 
 	private RepositoryManager repoManager = null;
 
 	static {
-		initDbPathMap();
+		initDbPathAndTestPom();
 	}
 
 	/**
@@ -113,7 +117,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	 * @param module
 	 * @throws PhrescoException
 	 */
-	protected void extractModule(File path, ModuleGroup module) throws PhrescoException {
+	protected void extractModule(File path, ModuleGroup moduleGroup) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.extractModules(File path, List<TupleBean> modules)");
 			S_LOGGER.debug("extractModule() FilePath=" + path.getPath());
@@ -122,19 +126,25 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 
 		// TODO:Handle all versions
 
-		Module moduleVersion = module.getVersions().get(0);
-		String contentURL = moduleVersion.getUrl();
-		if (!StringUtils.isEmpty(contentURL)) {
-			DependencyUtils.extractFiles(contentURL, path);
-		}
+//		Module moduleVersion = module.getVersions().get(0);
+//		String contentURL = moduleVersion.getUrl();
+//		if (!StringUtils.isEmpty(contentURL)) {
+//			DependencyUtils.extractFiles(contentURL, path);
+//		}
+		List<Module> versions = moduleGroup.getVersions();
+		for (Module module : versions) {
+            String contentUrl = module.getContentURL();
+            if (!StringUtils.isEmpty(contentUrl)) {
+              DependencyUtils.extractFiles(contentUrl, path);
+          }
+        }
 	}
 
 	protected RepositoryManager getRepositoryManager() {
 		return repoManager;
 	}
 
-	private static void initDbPathMap() {
-		// TODO: This should come from database
+	private static void initDbPathAndTestPom() {
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL7, "/source/sql/");
@@ -144,6 +154,14 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		sqlFolderPathMap.put(TechnologyTypes.HTML5_WIDGET, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.JAVA_WEBSERVICE, "/src/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.WORDPRESS, "/source/sql/");
+	
+		testPomFiles.put("functional", "/test/functional/pom.xml");
+		testPomFiles.put("load", "/test/load/pom.xml");
+		testPomFiles.put("performance.database", "/test/performance/database/pom.xml");
+		testPomFiles.put("performance.server", "/test/performance/server/pom.xml");
+		testPomFiles.put("performance.webservice", "/test/performance/webservices/pom.xml");
+		testPomFiles.put("unit", "/test/unit/pom.xml");
+		testPomFiles.put("performance", "/test/performance/pom.xml");
 	}
 
 	@Override
@@ -163,27 +181,54 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		Technology technology = info.getTechnology();
 		extractModules(modulesPath, technology.getModules());
 		// pilot projects
-		if (StringUtils.isNotBlank(info.getPilotProjectName())) {
-			List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
-			if (CollectionUtils.isEmpty(pilotProjects)) {
-				return;
-			}
-
-			for (ProjectInfo projectInfo : pilotProjects) {
-				// extractModules(modulesPath,
-				// projectInfo.getTechnology().getModules());
-				// extractLibraries(modulesPath,
-				// projectInfo.getTechnology().getLibraries());
-				String urls[] = projectInfo.getPilotProjectUrls();
-				if (urls != null) {
-					for (String url : urls) {
-						DependencyUtils.extractFiles(url, path);
-					}
-				}
-			}
-		}
+		extractPilots(info, path, technology);
 	}
 
+	protected void extractPilots(ProjectInfo info, File path,
+			Technology technology) throws PhrescoException {
+	    
+	    ProjectInfo projectInfo = PhrescoServerFactory.getDbManager().getProjectInfo(info.getTechnology().getId(), info.getPilotProjectName());
+        if(projectInfo != null) {
+            DependencyUtils.extractFiles(projectInfo.getProjectURL(), path);
+        }
+	}
+	
+	/*
+	 * For Update Test Folders Pom Files
+	 */
+	protected static void updateTestPom(File path) throws PhrescoException {
+		try {
+			File sourcePom = new File(path + "/pom.xml");
+			if (!sourcePom.exists()) {
+				return;
+			}
+			
+			PomProcessor processor;
+			processor = new PomProcessor(sourcePom);
+			String groupId = processor.getGroupId();
+			String artifactId = processor.getArtifactId();
+			String version = processor.getVersion();
+			String name = processor.getName();
+			Set<String> keySet = testPomFiles.keySet();
+			for (String string : keySet) {
+			    File testPomFile = new File(path + testPomFiles.get(string));
+			    if (testPomFile.exists()) {
+                  processor = new PomProcessor(testPomFile);
+                  processor.setGroupId(groupId + "." + string);
+                  processor.setArtifactId(artifactId);
+                  processor.setVersion(version);
+                  if (name != null && !name.isEmpty()) {
+                      processor.setName(name);
+                  }
+                  processor.save();
+              }
+            }
+			
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
+	
 	protected abstract String getModulePathKey();
 
 	protected void updatePOMWithModules(File path, List<com.photon.phresco.model.ModuleGroup> modules)

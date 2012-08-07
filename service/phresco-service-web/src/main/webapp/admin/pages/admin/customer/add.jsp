@@ -30,7 +30,7 @@
 	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
 %>
 
-<form class="form-horizontal customer_list">
+<form id="formCustomerAdd" class="form-horizontal customer_list">
 	<h4>
 		<% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<s:label key="lbl.hdr.adm.cust.edit.tilte" theme="simple" />
@@ -445,13 +445,13 @@
 	<div class="bottom_button">
 		<% if (StringUtils.isNotEmpty(fromPage)) { %>
 				<input type="button" id="customerUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				    onclick="validate('customerUpdate', $('#subcontainer'), 'Updating Customer');" />
+				    onclick="validate('customerUpdate', $('#formCustomerAdd'), $('#subcontainer'), 'Updating Customer');" />
 		<% } else { %>
 				<input type="button" id="customerSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>" 
-				    onclick="validate('customerSave', $('#subcontainer'), 'Creating Customer');" />
+				    onclick="validate('customerSave', $('#formCustomerAdd'), $('#subcontainer'), 'Creating Customer');" />
 		<% } %>
 		<input type="button" id="customerCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="loadContent('customerList', $('#subcontainer'));" />
+            onclick="loadContent('customerList', $('#formCustomerAdd'), $('#subcontainer'));" />
 	</div>
 	
 	<!-- Hidden Fields -->

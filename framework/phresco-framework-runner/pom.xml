@@ -4,7 +4,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>2.0.0.6001-SNAPSHOT</version>
+        <version>2.0.0.10000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -27,26 +27,66 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins </groupId>
-                <artifactId>maven-assembly-plugin </artifactId>
-                <configuration>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <!-- <configuration>
                     <descriptors>
                         <descriptor>assembly/config.xml</descriptor>
                     </descriptors>
-                    <finalName>phresco-framework</finalName>
-                    <appendAssemblyId>false </appendAssemblyId>
-                    </configuration>
+                </configuration> -->
+            
                 <executions>
                     <execution>
-                        <id>make-assembly </id>
-                        <phase>package </phase>
-                    <goals>
-                        <goal>single </goal>
-                    </goals>
-                    </execution>
+						<id>phresco-release</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+							<configuration>
+								<finalName>release</finalName>
+								<descriptors>
+									<descriptor>assembly/config.xml</descriptor>
+								</descriptors>
+							</configuration>
+					</execution>
+					
+					<execution>
+						<id>phresco-update</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+							<configuration>
+								<finalName>update</finalName>
+								<descriptors>
+									<descriptor>assembly/release-config.xml</descriptor>
+								</descriptors>
+							</configuration>
+					</execution>
+					
                 </executions>
-            </plugin>
+            </plugin>   
+
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-upload-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>dependency</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<configuration>
+							<resourceSrc>${project.build.directory}/update.zip</resourceSrc>
+							<resourceDest>com/photon/phresco/framework/release/${project.version}</resourceDest>
+							<serverId>releases</serverId>
+							<url>http://localhost:8080/nexus/content/repositories/releases/</url>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
-</project>
 </project>

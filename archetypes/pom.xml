@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>2.0.0.6001-SNAPSHOT</version>
+        <version>2.0.0.10000-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -38,7 +38,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>phresco-dot-net-archetype</module>
         <module>phresco-wordpress-archetype</module>
         <module>phresco-java-quickstart-archetype</module>
-		<module>phresco-html5-jquery-archetype</module>
+		<module>windows7-helloworld-archetype</module>
+		<module>windows7-panorama-archetype</module>
+		<module>windows7-pivot-archetype</module>
+		<module>windows7-databound-archetype</module>
+		<module>phresco-windows8-archetype</module>
     </modules>
     
 </project>

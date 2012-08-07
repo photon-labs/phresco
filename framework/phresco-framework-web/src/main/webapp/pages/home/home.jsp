@@ -35,22 +35,22 @@
 %>
 
 <div class="intro_container">
-<!-- Phresco js -->
-<script type="text/javascript" src="../../js/phresco/common.js"></script>
-<script type="text/javascript">
+	<!-- Phresco js -->
+	<script type="text/javascript" src="../../js/phresco/common.js"></script>
+	
+	<script type="text/javascript">
+		if (localStorage["welcome"]) {
+			$(".errorOverlay").show().css("display","none");
+			$(".intro_container").show().css("display","none");
+		} else if (localStorage.menuSelected == 'video'){ // To hide the welcome overlay page.
+			$(".errorOverlay").show().css("display","none");
+			$(".intro_container").show().css("display","none"); 
+		} else {
+			$(".errorOverlay").show().css("display","<%= showWelcome %>");
+			$(".intro_container").show().css("display","<%= showWelcome %>");
+		}
+	</script>
 
-	if (localStorage["welcome"]) {
-		$(".errorOverlay").show().css("display","none");
-		$(".intro_container").show().css("display","none");
-	 } else if (localStorage.menuSelected == 'video'){ // To hide the welcome overlay page.
-		$(".errorOverlay").show().css("display","none");
-		$(".intro_container").show().css("display","none"); 
-	 } else {
-		$(".errorOverlay").show().css("display","<%= showWelcome %>");
-		$(".intro_container").show().css("display","<%= showWelcome %>");
-	}
-
-</script>
     <div class="intro_container_left">
         <h1>Welcome to <span class="hed_red">Phres</span>co<span class="hed_gray">.com</span></h1>
         <p class="p_align">
@@ -128,12 +128,14 @@
 
 <img class="loadingIcon">
 
+<form id="formHome">
+	<input type="hidden" name="fromPage" value="home">
+</form>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	bacgroundValidate("validateFramework", '');
-	var params = "fromPage=";
-	params = params.concat("home");
-	performAction('home', params, $("#container"));
+	performAction('home', $("#formHome"), $("#container"));
 	$(".mycube_slides").show().css("border","none");
     // for navigation to page
     $("a[id='<%= selectedNav%>']").attr("class", "active"); 
@@ -159,7 +161,7 @@ $(document).ready(function() {
         if (selectedNav == "applications") {
         	bacgroundValidate("validateFramework", "true");
         }
-		performAction(selectedNav, '', $("#container"));
+		performAction(selectedNav, $('#customersForm'), $("#container"));
     });
 	
  	// shows preloader until page loads

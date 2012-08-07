@@ -20,11 +20,17 @@
 
 package com.photon.phresco.service.client.test;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
@@ -51,54 +57,47 @@ public class ComponentRestAppTypesTest implements ServiceConstants {
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Ignore
+	@Test
 	public void testCreateApplicationTypes() throws PhrescoException {
 	    List<ApplicationType> appTypes = new ArrayList<ApplicationType>();
 	    ApplicationType appType = new ApplicationType();
 	    appType.setId("test-appType");
 	    appType.setName("Test AppType");
+	    appType.setCustomerId("photon");
 	    appType.setDescription("This is a test application type");
 	    appTypes.add(appType);
         RestClient<ApplicationType> newApp = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
         ClientResponse clientResponse = newApp.create(appTypes);
-        System.out.println("clientResponse in createApplicationTypes() :" + clientResponse.getStatus());
     }
 	
-	@Ignore
-    public void testGetAppTypes() throws PhrescoException {
+	@Test
+    public void testFindAppTypes() throws PhrescoException {
         RestClient<ApplicationType> applicationTypeClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
+        applicationTypeClient.queryString(REST_QUERY_CUSTOMERID, "photon");
         GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
         List<ApplicationType> applicationTypes = applicationTypeClient.get(genericType);
-        System.out.println("applicationTypes.size():" + applicationTypes.size());
+        assertNotNull(applicationTypes);
     }
     
-    @Ignore
-    public void testGetAppTypesByName() throws PhrescoException {
-        String appName = "Test AppType";
+    @Test
+    public void testGetAppTypesById() throws PhrescoException {
+        String appId = "test-appType";
         RestClient<ApplicationType> applicationTypeClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
+        applicationTypeClient.queryString(REST_API_PATH_PARAM_ID, appId);
         GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
         List<ApplicationType> applicationTypes = applicationTypeClient.get(genericType);
-        if (applicationTypes != null) {
+       /* if (applicationTypes != null) {
             for (ApplicationType applicationType : applicationTypes) {
-                if (applicationType.getName().equals(appName)) {
-                    System.out.println("applicationType.getName() : " + applicationType.getName());
+                if (applicationType.getId().equals(appId)) {
+                	assertNotNull(applicationTypes);
                 }
             }
-        }
-    }
-    
-    @Ignore
-    public void testGetAppTypesById() throws PhrescoException {
-        String appTypeId = "4ffc3d4e69e53abfab71a449";
-        RestClient<ApplicationType> appTypeClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
-        appTypeClient.setPath(appTypeId);
-        GenericType<ApplicationType> genericType = new GenericType<ApplicationType>(){};
-        ApplicationType applicationType = appTypeClient.getById(genericType);
-        System.out.println("applicationType.getName() : " + applicationType.getName());
+        }*/
+        assertNotNull(applicationTypes);
     }
 	
-	@Ignore
-	public void testUpdateApplicationTypes() throws PhrescoException {
+	@Test
+	public void testUpdateApplicationTypesById() throws PhrescoException {
         RestClient<ApplicationType> editApptype = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
         ApplicationType appType = new ApplicationType();
         appType.setId("test-appType");
@@ -109,30 +108,13 @@ public class ComponentRestAppTypesTest implements ServiceConstants {
         editApptype.updateById(appType, genericType);
     }
 
-	@Ignore
-	public void testDeleteApplicationType(String appTypeId) throws PhrescoException {
+	@Test
+	public void testDeleteApplicationType() throws PhrescoException {
         RestClient<ApplicationType> deleteApptype = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
         deleteApptype.setPath("test-appType");
         ClientResponse clientResponse = deleteApptype.deleteById();
         System.out.println("clientResponse in deleteApplicationType()" + clientResponse.getStatus());
     }
 	
-	@Ignore
-	public void createTech() throws PhrescoException {
-    	List<Technology> techs = new ArrayList<Technology>();
-        Technology tech = new Technology();
-        tech.setName("Drupal");
-        tech.setDescription("web applications");
-        List<String> versions = new ArrayList<String>();
-        versions.add("6.18");
-        versions.add("6.19");
-        versions.add("7.0");
-        tech.setVersions(versions);
-        techs.add(tech);
-        serviceManager = ServiceClientFactory.getServiceManager(context);
-        RestClient<Technology> techClient = serviceManager.getRestClient("/component/technologies");
-        techClient.queryString("techId", "4ffa6520230d17004cdb4828");
-        ClientResponse response = techClient.create(techs);
-        System.out.println("response " + response.getStatus());
-	}
+	
 }

@@ -23,7 +23,7 @@
 	<groupId>Photon</groupId>
 	<artifactId>Phresco</artifactId>
 	<packaging>pom</packaging>
-	<name>Performance testing for Nodejs-Webservice-Database</name>
+	<name>Performance testing for JQuery Widget-Database</name>
 	<version>1.0</version>
 	
 	<build>

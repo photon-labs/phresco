@@ -67,11 +67,12 @@ import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.service.model.Modules;
 import com.photon.phresco.service.model.ServerConstants;
+import com.photon.phresco.util.ServiceConstants;
 import com.photon.phresco.util.TechnologyTypes;
 import com.sun.jersey.api.client.ClientResponse;
 
 
-public class TechnologyDataGenerator implements ServerConstants {
+public class TechnologyDataGenerator implements ServiceConstants {
 
 	private static final Logger S_LOGGER = Logger
 			.getLogger(TechnologyDataGenerator.class);
@@ -247,7 +248,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 
 		String name = row.getCell(1).getStringCellValue();
 		
-		String identifier = ID + row.getCell(1).getStringCellValue().toLowerCase().replace(STR_BLANK_SPACE, STR_UNDER_SCORE);
+		String identifier = ID + row.getCell(1).getStringCellValue().toLowerCase().replace(ServerConstants.STR_BLANK_SPACE, ServerConstants.STR_UNDER_SCORE);
 		String no = String.valueOf(identifier);
                 
 		String version = "1.0";
@@ -371,6 +372,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 		moduleGroup.setSystem(true);
 		moduleGroup.setModuleId(identifier);
 		moduleGroup.setType("module");
+		moduleGroup.setCustomerId("photon");
 		return moduleGroup;
 	}
 
@@ -383,7 +385,7 @@ public class TechnologyDataGenerator implements ServerConstants {
             module.setVersion(versionArray[i]);
             module.setCore(convertBoolean(coreArray[i]));
             module.setRequired(convertBoolean(reqArray[i]));
-            String modId = id + STR_UNDER_SCORE + versionArray[i];
+            String modId = id + ServerConstants.STR_UNDER_SCORE + versionArray[i];
             module.setContentURL(contentContentURL(techId, versionArray[i], ext, modId));
             module.setContentType(ext);
             modules.add(module);

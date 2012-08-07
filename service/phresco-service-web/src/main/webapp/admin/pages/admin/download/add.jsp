@@ -20,51 +20,37 @@
 
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
-<script type="text/javascript">
-	function findError(data) {
-		if(data.nameError != undefined) {
-			showError($("#nameControl"), $("#nameError"), data.nameError);
-		} else {
-			hideError($("#nameControl"), $("#nameError"));
-		}
-		
-		if(data.verError != undefined) {
-			showError($("#verControl"), $("#verError"), data.verError);
-		} else {
-			hideError($("#verControl"), $("#verError"));
-		}
-		
-		if(data.appltError != undefined) {
-			showError($("#appltControl"), $("#appltError"), data.appltError);
-		} else {
-			hideError($("#appltControl"), $("#appltError"));
-		}
-		
-		if(data.groupError != undefined) {
-			showError($("#groupControl"), $("#groupError"), data.groupError);
-		} else {
-			hideError($("#groupControl"), $("#groupError"));
-		}
-	}
-	
-	function showDiv() {
-	    $('#othersDiv').show();
-	}
-	
-	function hideDiv(){
-	    $('#othersDiv').hide();
-	}
-</script>
+<%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
 
-<form class="form-horizontal customer_list">
-	<h4><s:label key="lbl.hdr.adm.dwnlad.title" theme="simple"/></h4>	
+<%@ page import="com.photon.phresco.model.Technology"%>
+<%@ page import="com.photon.phresco.model.DownloadInfo" %>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %> 
+
+<%
+    DownloadInfo downloadInfo = (DownloadInfo)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO);
+    String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
+    List<Technology> technologys = (List<Technology>)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPES);
+    String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
+%>
+
+<form id="formDownloadAdd" class="form-horizontal customer_list">
+	<h4>
+	<% if (StringUtils.isNotEmpty(fromPage)) { %>
+		<s:label key="lbl.hdr.adm.dwnlad.edit.title" theme="simple"/>
+	<% } else { %>	
+		<s:label key="lbl.hdr.adm.dwnlad.add.title" theme="simple"/>
+	<% } %> 
+	</h4>
+	 
 	<div class="content_adder">
 		<div class="control-group" id="nameControl">
 			<label class="control-label labelbold">
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.name'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" class="input-xlarge" type="text" name="name">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.name'/>" 
+					value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>" class="input-xlarge" type="text" name="name">
 				<span class="help-inline" id="nameError"></span>
 			</div>
 		</div>
@@ -74,9 +60,29 @@
 				<s:text name='lbl.hdr.adm.desc'/>
 			</label>
 			<div class="controls">
-				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" class="input-xlarge" type="text">
+				<input id="input01"  placeholder="<s:text name='place.hldr.download.add.desc'/>" class="input-xlarge" type="text"
+					value="<%= downloadInfo != null ? downloadInfo.getDescription() : "" %>" name="description">
 			</div>
 		</div>
+		
+		<div class="control-group" id="applyControl">
+            <label class="control-label labelbold">
+                <span class="mandatory">*</span>&nbsp;<s:text name="Technology"/>
+            </label>
+            <div class="controls">
+                <select id="multiSelect" multiple="multiple" name="technology">
+                    <% if(technologys != null) {
+                    	 for(Technology technology : technologys) { %>
+                    		<option value="<%=technology.getName() %>"><%=technology.getName() %></option> 
+                   <% 	 
+                      }
+                      }
+                   %> 
+                    
+                </select>
+                <span class="help-inline applyerror" id="techError"></span>
+            </div>
+        </div>
 		
 		<div class="control-group">
 			<label class="control-label labelbold">
@@ -116,7 +122,7 @@
 				<span class="mandatory">*</span>&nbsp;<s:text name='lbl.hdr.adm.dwnld.ver'/>
 			</label>
 			<div class="controls">
-				<input id="input01" placeholder="<s:text name='place.hldr.download.add.version'/>" class="input-xlarge" type="text" name="version">
+				<input id="input01" placeholder="<s:text name='place.hldr.download.add.version'/>" value="<%= downloadInfo != null ? downloadInfo.getVersion() : "" %>" class="input-xlarge" type="text" name="version">
 				<span class="help-inline" id="verError"></span>
 			</div>
 		</div>
@@ -150,8 +156,58 @@
 	</div>
 
 	<div class="bottom_button">
-		<input type="hidden" name="fromPage" value="add" />
-		<input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/>
-		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+	   <% if (StringUtils.isNotEmpty(fromPage)) { %>
+			<%-- <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+				onclick="formSubmitFileUpload('downloadUpdate', 'fileArc,iconArc', $('#subcontainer'), 'Updating Download');" /> --%>
+			   <input type="button" id="downloadUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
+                onclick="validate('downloadUpdate', $('#formDownloadAdd'), $('#subcontainer'), 'Updating Download');" />	
+        <% } else { %>
+			<%-- <input type="button" id="downloadSave" class="btn btn-primary" onclick="formSubmitFileUpload('downloadSave', 'fileArc,iconArc', $('#subcontainer'), 'Creating Download');" value="<s:text name='lbl.hdr.comp.save'/>"/> --%>
+		<input type="button" id="downloadSave" class="btn btn-primary"
+			onclick="validate('downloadSave', $('#formDownloadAdd'), $('#subcontainer'), 'Creating Download');"
+			value="<s:text name='lbl.hdr.comp.save'/>" />
+		<% } %>
+		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#formDownloadAdd'), $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
+	
+	<!-- Hidden Fields -->
+    <input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
+    <input type="hidden" name="id" value="<%= downloadInfo != null ? downloadInfo.getId() : "" %>"/>
+    <input type="hidden" name="oldName" value="<%= downloadInfo != null ? downloadInfo.getName() : "" %>"/> 
 </form>
+
+<script type="text/javascript">
+	function findError(data) {
+		if(data.nameError != undefined) {
+			showError($("#nameControl"), $("#nameError"), data.nameError);
+		} else {
+			hideError($("#nameControl"), $("#nameError"));
+		}
+		
+		if(data.verError != undefined) {
+			showError($("#verControl"), $("#verError"), data.verError);
+		} else {
+			hideError($("#verControl"), $("#verError"));
+		}
+		
+		if(data.appltError != undefined) {
+			showError($("#appltControl"), $("#appltError"), data.appltError);
+		} else {
+			hideError($("#appltControl"), $("#appltError"));
+		}
+		
+		if(data.groupError != undefined) {
+			showError($("#groupControl"), $("#groupError"), data.groupError);
+		} else {
+			hideError($("#groupControl"), $("#groupError"));
+		}
+	}
+	
+	function showDiv() {
+	    $('#othersDiv').show();
+	}
+	
+	function hideDiv(){
+	    $('#othersDiv').hide();
+	}
+</script>

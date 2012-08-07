@@ -37,34 +37,29 @@
 	
 	<build>
 		<directory>do_not_checkin/target</directory>
+		<sourceDirectory>${phresco.source.directory}</sourceDirectory>
 		<finalName>service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>java-maven-plugin</artifactId>
-				<version>2.0.0.6001-SNAPSHOT</version>
+				<version>2.0.0.10000-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
-			<plugin>
-				<groupId>com.googlecode.t7mp</groupId>
-				<artifactId>maven-t7-plugin</artifactId>
-				<version>0.9.9</version>
-					<configuration>
-							<tomcatHttpPort>${server.port}</tomcatHttpPort>
-							<tomcatShutdownPort>${server.shutdown.port}</tomcatShutdownPort>
-							<tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
-							<tomcatVersion>7.0.6</tomcatVersion>
-							<tomcatSetAwait>true</tomcatSetAwait>
-							<webapps>
-								<webappArtifact>							  
-								   <groupId>${project.groupId}</groupId>
-								   <artifactId>${project.artifactId}</artifactId>
-								   <version>${project.version}</version>
-								   <contextPath>${project.build.finalName}</contextPath>
-								</webappArtifact>
-							</webapps>
-					</configuration>
-			</plugin>
+			 <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                    <port>${server.port}</port>
+                    <username>${server.username}</username>
+                    <password>${server.password}</password>
+                    <url>http://${server.host}:${server.port}/manager/html</url>
+                    <path>/${project.build.finalName}</path>
+                    <argLine>-Xmx512m</argLine>
+					<warFile>${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war</warFile>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	
@@ -115,5 +110,38 @@
 		        </plugins>
             </build>
         </profile>
+		
+		<profile> 
+			<id>web</id> 
+			<properties>
+			<sonar.language>web</sonar.language>
+			<sonar.branch>web</sonar.branch>	 
+			<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+			<sonar.web.sourceDirectory>src/main/webapp</sonar.web.sourceDirectory>
+			</properties> 
+		</profile>
+		
+		<profile>
+			<id>js</id> 
+			<properties>
+			<sonar.language>js</sonar.language>
+			<sonar.branch>js</sonar.branch>
+			<phresco.source.directory>src/main/webapp/</phresco.source.directory>
+			<sonar.exclusions>**/lib/**</sonar.exclusions>
+			</properties>	
+		</profile>
+		
+		<profile>
+			<id>java</id> 
+				<activation>
+					<activeByDefault>true</activeByDefault>
+				</activation>
+			<properties>
+			<sonar.language>java</sonar.language>
+			<sonar.branch>java</sonar.branch>
+			<phresco.source.directory>src/main/java</phresco.source.directory>
+			</properties>
+		</profile>
+		
     </profiles>
 </project>

@@ -87,7 +87,7 @@ public interface ProjectAdministrator {
      * @return
      * @throws PhrescoException
      */
-    List<ApplicationType> getApplicationTypes() throws PhrescoException;
+    List<ApplicationType> getApplicationTypes(String customerId) throws PhrescoException;
 
     /**
      * Returns Application type object for the given name
@@ -95,7 +95,7 @@ public interface ProjectAdministrator {
      * @return Application Type
      * @throws PhrescoException
      */
-    ApplicationType getApplicationType(String name) throws PhrescoException;
+    ApplicationType getApplicationType(String appTypeId, String customerId) throws PhrescoException;
 
     /**
      * Returns all application types
@@ -291,12 +291,13 @@ public interface ProjectAdministrator {
     void deleteConfigurations(Map<String, List<String>> selectedConfigs, Project project) throws PhrescoException;
 
    /**
-     * Returns the technology Id for the specified project code
-     * @param projectCode
+     * Returns the project for the specified project code
+     * @param baseDir
      * @return
      * @throws PhrescoException
      */
-    String getTechId(String projectCode) throws PhrescoException;
+    Project getProjectByWorkspace(File baseDir) throws PhrescoException;
+
     /**
      * TODO: DO we need this?
      * @param path
@@ -339,14 +340,14 @@ public interface ProjectAdministrator {
      * @param techId
      * @return list of core modules
      */
-    List<ModuleGroup> getCoreModules(String techId) throws PhrescoException;
+    List<ModuleGroup> getCoreModules(String techId, String customerId) throws PhrescoException;
 
     /**
      * Returns the custom modules specified under the given technology
      * @param technology
      * @return list of custom modules
      */
-    List<ModuleGroup> getCustomModules(String techId) throws PhrescoException;
+    List<ModuleGroup> getCustomModules(String techId, String customerId) throws PhrescoException;
 
     /**
      * Authenticates the user credentials and returns the user information
@@ -651,7 +652,7 @@ public interface ProjectAdministrator {
 	 * @return serverList
 	 * @throws PhrescoException
 	 */
-	List<Server> getServers(String techId) throws PhrescoException;
+	List<Server> getServers(String techId, String customerId) throws PhrescoException;
 	
 	/**
 	 * get databases from service
@@ -659,7 +660,7 @@ public interface ProjectAdministrator {
 	 * @return dbList
 	 * @throws PhrescoException
 	 */
-	List<Database> getDatabases(String techId) throws PhrescoException;
+	List<Database> getDatabases(String techId, String customerId) throws PhrescoException;
 	
 	/**
 	 * get webservices from service
@@ -667,7 +668,7 @@ public interface ProjectAdministrator {
 	 * @return webServiceList
 	 * @throws PhrescoException
 	 */
-	List<WebService> getWebServices(String techId) throws PhrescoException;
+	List<WebService> getWebServices(String techId, String customerId) throws PhrescoException;
 	
 	/**
 	 * Delete the sql Folder
@@ -687,9 +688,9 @@ public interface ProjectAdministrator {
 	 
 	 List<Server> getServers() throws PhrescoException;
 	 
-	 List<ProjectInfo> getPilots(String technologyId) throws PhrescoException;
+	 List<ProjectInfo> getPilots(String technologyId, String customerId) throws PhrescoException;
 	 
-	List<ModuleGroup> getJSLibs(String technologyId) throws PhrescoException;
+	List<ModuleGroup> getJSLibs(String technologyId, String customerId) throws PhrescoException;
 
 	/**
 	 * Returns CI build object for build number

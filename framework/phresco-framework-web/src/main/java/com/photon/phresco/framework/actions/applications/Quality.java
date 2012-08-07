@@ -187,6 +187,16 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String dbUrl = null;
     private String driver = null;
 	
+    // report generation 
+    private String reportName = null;
+    private String reoportLocation = null;
+    private String reportDataType = null;
+    
+    // download report
+	private InputStream fileInputStream;
+	private String fileName = "";
+	private String reportFileName = null;
+	
 	private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
 
     
@@ -246,7 +256,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_TEST_TYPE, UNIT);
         } catch (Exception e){
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_UNIT_TEST));
             }
             S_LOGGER.error("Entered into catch block of Quality.unit()"+ e);
             new LogErrorReport(e, "Quality Unit test");
@@ -357,7 +367,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             
         } catch (Exception e) {
         	if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.functional()"+ e);
             new LogErrorReport(e, "Quality Functional test");
@@ -489,9 +499,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         		} else {
         			setValidated(true);
         			if(UNIT.equals(testType)) {
-        				setShowError(ERROR_UNIT_TEST);
+        				setShowError(getText(ERROR_UNIT_TEST));
         			} else {
-        				setShowError(ERROR_FUNCTIONAL_TEST);
+        				setShowError(getText(ERROR_FUNCTIONAL_TEST));
         			}
         			return SUCCESS;
         		}
@@ -504,7 +514,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         	List<String> resultFileNames = new ArrayList<String>(mapTestResultName.keySet());
         	if (CollectionUtils.isEmpty(resultFileNames)) {
         		setValidated(true);
-    			setShowError(ERROR_UNIT_TEST);
+    			setShowError(getText(ERROR_UNIT_TEST));
     			return SUCCESS;
         	}
         	
@@ -534,9 +544,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    		} else {
 	    			setValidated(true);
 	    			if(UNIT.equals(testType)) {
-	    				setShowError(ERROR_UNIT_TEST);
+	    				setShowError(getText(ERROR_UNIT_TEST));
 	    			} else {
-	    				setShowError(ERROR_FUNCTIONAL_TEST);
+	    				setShowError(getText(ERROR_FUNCTIONAL_TEST));
 	    			}
 	    			return SUCCESS;
 	    		}
@@ -549,7 +559,11 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	    	List<String> resultTestSuiteNames = new ArrayList<String>(mapTestResultName.keySet());
 	    	if (CollectionUtils.isEmpty(resultTestSuiteNames)) {
 	    		setValidated(true);
-				setShowError(ERROR_TEST_SUITE);
+	    		if(UNIT.equals(testType)){
+	    			setShowError(getText(ERROR_UNIT_TEST));
+	    		} else {
+	    			setShowError(getText(ERROR_FUNCTIONAL_TEST));
+	    		}
 				return SUCCESS;
 	    	}
 	    	
@@ -580,7 +594,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 				// continue the loop to filter the testResultFile
 			} catch (XPathExpressionException e) {
 				// continue the loop to filter the testResultFile
-				e.printStackTrace();
+			
 			}
 		}
     	String testSuitesKey = projectCode + testType + projectModule + techReport;
@@ -916,7 +930,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                     }
                     
                 } catch (Exception e) {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_FUNCTIONAL_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_FUNCTIONAL_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
                 getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
@@ -942,7 +956,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 	QualityUtil.sortResultFile(children);
                     getHttpRequest().setAttribute(REQ_JMETER_REPORT_FILES, children);
                 } else {
-                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_LOAD_TEST);
+                    getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
                 }
                 getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
                 getHttpRequest().setAttribute(REQ_PROJECT, project);
@@ -1075,7 +1089,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             	if ("WebService".equals(jmeterTestAgainst)) {
             		jmeterTestAgainst = "webservices";
             	}
-	            builder.append(jmeterTestAgainst);
+	            builder.append(jmeterTestAgainst.toLowerCase());
 	            QualityUtil.changeTestName(builder.toString(), testName);
 	            QualityUtil.adaptTestConfig(builder.toString(), selectedSettings);
 	            if (!Constants.SETTINGS_TEMPLATE_DB.equals(jmeterTestAgainst)) {
@@ -1098,7 +1112,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_PERFORMANCE_TEST));
     			StringReader sb = new StringReader("Test is not available for this project");
     			reader = new BufferedReader(sb);
                 getHttpSession().setAttribute(projectCode + PERFORMACE, reader);
@@ -1171,7 +1185,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
         } catch(Exception e) {
             if (e instanceof FileNotFoundException) {
-                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, ERROR_TEST_SUITE);
+                getHttpRequest().setAttribute(REQ_ERROR_TESTSUITE, getText(ERROR_LOAD_TEST));
             }
                S_LOGGER.error("Entered into catch block of Quality.load()"+ e);
             
@@ -1716,7 +1730,20 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             return name.endsWith(filter_);
         }
     }
+    
+    public class FileNameFileFilter implements FilenameFilter {
+        private String filter_;
+        private String startWith_;
+        public FileNameFileFilter(String filter, String startWith) {
+            filter_ = filter;
+            startWith_ = startWith;
+        }
 
+        public boolean accept(File dir, String name) {
+            return name.endsWith(filter_) && name.startsWith(startWith_);
+        }
+    }
+    
     public String getSettingCaption() {
            S_LOGGER.debug("Entering Method Quality.getSettingCaption()");
         try {
@@ -1924,6 +1951,163 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 			// TODO: handle exception
 		}
     	return SUCCESS;
+    }
+    
+    public String printAsPdfPopup () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
+        try {
+        	boolean XmlResultsAvailable = false;
+        	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+            StringBuilder sb = new StringBuilder();
+            sb.append(Utility.getProjectHome());
+            sb.append(project.getProjectInfo().getCode());
+            String technology = project.getProjectInfo().getTechnology().getId();
+          //check unit and functional are executed already or not
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getUnitReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            performanceTestResultAvail();
+	        	if(isAtleastOneFileAvail()) {
+	        		XmlResultsAvailable = true;
+	        	}
+            }
+            
+            if(!XmlResultsAvailable) {
+	            File file = new File(sb.toString() + frameworkUtil.getLoadReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+        	getHttpRequest().setAttribute(REQ_TEST_EXE, XmlResultsAvailable);
+        	List<String> pdfFiles = new ArrayList<String>();
+            // popup showing list of pdf's already created
+        	String pdfDirLoc = "";
+        	String fileFilterName = "";
+        	if (StringUtils.isEmpty(testType)) {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE;
+        		fileFilterName = projectCode;
+        	} else {
+        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType;
+        		fileFilterName = testType;
+        	}
+            File pdfFileDir = new File(pdfDirLoc);
+            if(pdfFileDir.isDirectory()) {
+                File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
+                QualityUtil util = new QualityUtil();
+                if(children != null) {
+                	util.sortResultFile(children);
+                }
+            	for (File child : children) {
+            		String fileNameWithType = child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, "");
+            		String[] fileWithType = fileNameWithType.split(UNDERSCORE);
+    				pdfFiles.add(fileWithType[0] + UNDERSCORE + fileWithType[1]);
+    			}
+            }
+            
+            if(pdfFiles != null) {
+                getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
+        }
+        getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
+        getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+        return SUCCESS;
+    }
+    
+    public String printAsPdf () {
+        S_LOGGER.debug("Entering Method Quality.printAsPdf()");
+        try {
+            ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+            Project project = administrator.getProject(projectCode);
+            String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            reportGeneration(project, testType);
+            getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(SUCCESS_REPORT_STATUS));
+        } catch (Exception e) {
+        	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
+            S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        }
+        return printAsPdfPopup();
+    }
+    
+    public void reportGeneration(Project project, String testType) {
+    	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
+    	try {
+    		PhrescoReportGeneration prg = new PhrescoReportGeneration();
+            if (StringUtils.isEmpty(testType)) { 
+            	prg.cumulativePdfReport(project, testType, reportDataType);
+            } else {
+            	prg.generatePdfReport(project, testType, reportDataType);
+            }
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Quality.reportGeneration()" + e);
+		}
+
+    }
+    
+    public String downloadReport() {
+        S_LOGGER.debug("Entering Method Quality.downloadReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+        	String pdfLOC = "";
+        	if (StringUtils.isEmpty(testType)) { 
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportFileName + DOT + PDF;
+        	} else {
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	}
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+    			fileInputStream = new FileInputStream(pdfFile);
+    			fileName = reportFileName.split(UNDERSCORE)[1];
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return SUCCESS;
+    }
+    
+    public String deleteReport() {
+        S_LOGGER.debug("Entering Method Quality.deleteReport()");
+        try {
+        	String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+        	String pdfLOC = "";
+        	if (StringUtils.isEmpty(testType)) { 
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportFileName + DOT + PDF;
+        	} else {
+        		pdfLOC = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportFileName + DOT + PDF;
+        	}
+            File pdfFile = new File(pdfLOC);
+            if (pdfFile.isFile()) {
+            	boolean reportDeleted = pdfFile.delete();
+            	S_LOGGER.info("Report deleted " + reportDeleted);
+            	if(reportDeleted) {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(SUCCESS_REPORT_DELETE_STATUS));
+            	} else {
+            		getHttpRequest().setAttribute(REQ_REPORT_DELETE_STATUS, getText(ERROR_REPORT_DELETE_STATUS));
+            	}
+            }
+        } catch (Exception e) {
+            S_LOGGER.error("Entered into catch block of Quality.downloadReport()" + e);
+        }
+        return printAsPdfPopup();
     }
     
     public List<SettingsInfo> getServerSettings() {
@@ -2333,6 +2517,53 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	public void setSystemPath(File systemPath) {
 		this.systemPath = systemPath;
 	}
-	
+
+	public String getReportName() {
+		return reportName;
+	}
+
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
+
+	public String getReoportLocation() {
+		return reoportLocation;
+	}
+
+	public void setReoportLocation(String reoportLocation) {
+		this.reoportLocation = reoportLocation;
+	}
+
+	public String getReportDataType() {
+		return reportDataType;
+	}
+
+	public void setReportDataType(String reportDataType) {
+		this.reportDataType = reportDataType;
+	}
+
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getReportFileName() {
+		return reportFileName;
+	}
+
+	public void setReportFileName(String reportFileName) {
+		this.reportFileName = reportFileName;
+	}
 	
 }

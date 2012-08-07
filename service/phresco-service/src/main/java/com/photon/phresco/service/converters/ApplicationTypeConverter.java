@@ -43,6 +43,7 @@ public class ApplicationTypeConverter implements Converter<ApplicationTypeDAO, A
 		appType.setDescription(appTypeDAO.getDescription());
 		appType.setName(appTypeDAO.getName());
 		appType.setSystem(appTypeDAO.isSystem());
+		appType.setCustomerId(appTypeDAO.getCustomerId());
 		List<Technology> techList = mongoOperation.find(TECHNOLOGIES_COLLECTION_NAME, 
 		        new Query(Criteria.where(REST_API_FIELD_APPID).is(appTypeDAO.getId())), Technology.class);
 		appType.setTechnologies(techList);
@@ -57,6 +58,7 @@ public class ApplicationTypeConverter implements Converter<ApplicationTypeDAO, A
 		appTypeDAO.setName(applicationType.getName());
 		appTypeDAO.setDescription(applicationType.getDescription());
 		appTypeDAO.setSystem(applicationType.isSystem());
+		appTypeDAO.setCustomerId(applicationType.getCustomerId());
 		return appTypeDAO;
 	}
 	

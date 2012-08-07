@@ -17,14 +17,28 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
-<form class="customer_list">
+<%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+
+<%@ page import="com.photon.phresco.model.DownloadInfo" %>
+<%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %>
+
+<% 
+	List<DownloadInfo> downloadInfo = (List<DownloadInfo>)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO); 
+%>
+
+<form id="formDownloadList" class="customer_list">
 	<div class="operation" id="operation">
-		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" onclick="loadContent('downloadAdd', $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.dwndllst.title'/>"/>
-		<input type="button" id="del" class="btn" disabled value="<s:text name='lbl.hdr.adm.delete'/>"/>
+		<input type="button" id="downloadAdd" class="btn btn-primary" name="download_add" 
+			onclick="loadContent('downloadAdd', $('#formDownloadList'), $('#subcontainer'));" value="<s:text name='lbl.hdr.adm.dwndllst.title'/>"/>
+		<input type="button" id="del" class="btn" disabled onclick="loadContent('downloadDelete', $('#formDownloadList'), $('#subcontainer'));" 
+			value="<s:text name='lbl.hdr.adm.delete'/>"/>
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success"  id="successmsg">
+			<div class="alert alert-success alert-message"  id="successmsg">
 				<s:actionmessage />
 			</div>
 		</s:if>
@@ -35,78 +49,77 @@
 		</s:if>
 	</div>
 	
-	<div class="table_div">
-		<div class="fixed-table-container">
-			<div class="header-background"> </div>
-			<div class="fixed-table-container-inner">
-				<table cellspacing="0" class="zebra-striped">
-					<thead>
-						<tr>
-							<th class="first">
-								<div class="th-inner">
-									<input type="checkbox" value="" id="checkAllAuto" class="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
-								</div>
-							</th>
-							<th class="second">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.name" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.desc" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.appltfrm" theme="simple"/></div>
-							</th>
-							<th class="third">
-								<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.ver"  theme="simple"/></div>
-							</th>
-						</tr>
-					</thead>
-		
-					<tbody>
-						<tr>
-							<td class="checkboxwidth">
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td class="namelabel-width">
-								<a href="#" name="edit" id="" >Notepad</a>
-							</td>
-							<td >Editor</td>
-							<td>WindowsXP/7</td>
-							<td>
-								1.0
-							</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Eclipse</a>
-							</td>
-							<td >IDE</td>
-							<td>Windows7</td>
-							<td>
-								2.1	
-							</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<input type="checkbox" class="check" name="check" onclick="checkboxEvent();">
-							</td>
-							<td>
-								<a href="#" name="edit" id="" >Apache Tomcat</a>
-							</td>
-							<td >Web Server</td>
-							<td>Solaris</td>
-							<td>
-								2.0
-							</td>
-						</tr>
-					</tbody>
-				</table>
+	<% if (CollectionUtils.isEmpty(downloadInfo)) { %>
+		<div class="alert alert-block">
+		    <s:text name='alert.msg.download.not.available'/>
+		</div>
+    <% } else { %>
+		<div class="table_div">
+			<div class="fixed-table-container">
+				<div class="header-background"> </div>
+				<div class="fixed-table-container-inner">
+					<table cellspacing="0" class="zebra-striped">
+						<thead>
+							<tr>
+								<th class="first">
+									<div class="th-inner">
+										<input type="checkbox" value="" id="checkAllAuto" class="checkAllAuto" name="checkAllAuto" onclick="checkAllEvent(this);">
+									</div>
+								</th>
+								<th class="second">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.name" theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.desc" theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.appltfrm" theme="simple"/></div>
+								</th>
+								<th class="third">
+									<div class="th-inner tablehead"><s:label key="lbl.hdr.adm.dwnldlst.ver"  theme="simple"/></div>
+								</th>
+							</tr>
+						</thead>
+			
+						<tbody>
+				       	<% 
+							if (CollectionUtils.isNotEmpty(downloadInfo)) {
+								for (DownloadInfo download : downloadInfo) {
+				       	%>
+							<tr>
+								<td class="checkboxwidth">
+									<input type="checkbox" class="check" name="downloadId" value="<%= download.getId() %>" onclick="checkboxEvent();" >
+								</td>
+								<td class="namelabel-width">
+									<a href="#" onclick="editDownload('<%= download.getId() %>');" name="edit" id="" ><%= download.getName() %></a>
+								</td>
+								<td class="namelabel-width">
+									<%= StringUtils.isNotEmpty(download.getDescription()) ? download.getDescription() : "" %>
+								</td>
+								<td>
+									<%= CollectionUtils.isNotEmpty(download.getPlatform()) ? download.getPlatform() : "" %>
+								</td>
+								<td><%= download.getVersion() %></td>
+							</tr>
+						<%
+								}
+							}
+						%>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
+	<% } %>
 </form>
+
+<script type="text/javascript">
+    /** To edit the download **/
+    function editDownload(id) {
+        var params = "id=";
+        params = params.concat(id);
+        params = params.concat("&fromPage=");
+        params = params.concat("edit");
+        loadContentParam("downloadEdit", params, $('#subcontainer'));
+    }
+</script>

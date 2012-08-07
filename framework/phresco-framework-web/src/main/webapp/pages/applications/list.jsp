@@ -72,10 +72,9 @@
 	</div>
 </div>
 
-<form name="delete" action="delete" method="post" autocomplete="off" id="deleteObjects" class="app_list_form">
+<form name="delete" action="delete" method="post" autocomplete="off" id="formAppList" class="app_list_form">
 	<div class="operation">
 		<input id="add" type="button" value="<s:text name="label.addappln"/>" class="btn primary"/>
-		<!-- <a href="#" class="btn primary" id="discover">Discover</a> -->
 		<a href="#" class="btn primary" id="import"><s:text name="label.import.from.svn"/></a>
 		<input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 	</div>
@@ -83,6 +82,7 @@
 	<div class="table_div">
 		<%
 			List<Project> projects = (List<Project>)request.getAttribute("Projects");
+			String customerId = (String) request.getAttribute("customerId");
 		%>
 		
 		<s:if test="hasActionMessages()">
@@ -120,6 +120,9 @@
 				              	<th class="third">
 				                	<div class="th-inner"><s:text name="label.technology"/></div>
 				              	</th>
+				              	<th class="third">
+				                	<div class="th-inner"><s:text name="label.print"/></div>
+				              	</th>
 				            </tr>
 			          	</thead>
 			
@@ -137,6 +140,9 @@
 			              		</td>
 			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
+			              		<td class="printIconAlign">
+			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
+			              		</td>
 			            	</tr>
 			            <%
 							}
@@ -149,11 +155,10 @@
 			}
 		%>
 	</div>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" name="customerId" value="<%= customerId %>"/>
 </form>
-
-<!--  Repo dialog Start -->
-<!-- <div class="popup_div" id="importFromSvn"></div>  -->
-<!--  Repo dialog Start -->
 
 <script type="text/javascript">
 	/* To check whether the device is ipad or not */
@@ -184,7 +189,7 @@
 		$("#home").attr("class", "inactive");
 		
 		$('#deleteButton').click(function() {
-			$("#confirmationText").html("Do you want to delete the selected project(s)");
+			$("#confirmationText").html("Do you want to delete the selected project(s)?");
 		    dialog('block');
 		    escBlockPopup();
 		});
@@ -196,20 +201,7 @@
 		$('#add').click(function() {
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-	        performAction('applicationDetails', params, $('#container'));
-	    });
-		
-		$('#discover').click(function() {
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			showLoadingIcon($("#container")); // Loading Icon
-			performAction('applicationDetails', params, $('#container'));
+	        performAction('applicationDetails', $('#formAppList'), $('#container'));
 	    });
 		
 		$('form').submit(function() {
@@ -235,6 +227,16 @@
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
 	        performAction('applicationDetails', params, $('#container'));
+	    });
+		
+        $('.pdfCreation').click(function() {
+    		showPopup();
+    		$('#popup_div').empty();
+    		var params = "";
+    		params = params.concat("projectCode=");
+			params = params.concat($(this).attr("id"));
+    		popup('printAsPdfPopup', params, $('#popup_div'));
+    	    escPopup();
 	    });
 	});
 	

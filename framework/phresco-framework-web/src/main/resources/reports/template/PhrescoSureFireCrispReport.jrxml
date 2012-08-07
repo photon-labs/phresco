@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhrescoTestSuiteReport" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="java.util.*"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<field name="testSuiteName" class="java.lang.String"/>
+	<field name="total" class="java.lang.Float"/>
+	<field name="success" class="java.lang.Float"/>
+	<field name="failure" class="java.lang.Float"/>
+	<field name="error" class="java.lang.Float"/>
+	<variable name="totalTestSuites" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="noOfSuccess" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{success}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="noOfFailure" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{failure}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="noOfError" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{error}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="51">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="51" backcolor="#FFFFFF"/>
+				<rectangle>
+					<reportElement x="0" y="23" width="555" height="28"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="21" y="28" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Testsuite Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="219" y="28" width="70" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="28" width="73" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Success]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="392" y="28" width="74" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Failure]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="482" y="28" width="58" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Error]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="10" y="0" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true" isItalic="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Overall Report]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textField>
+					<reportElement x="21" y="3" width="134" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{testSuiteName}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="219" y="3" width="70" height="20"/>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="305" y="3" width="73" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{success}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="392" y="3" width="69" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{failure}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="482" y="3" width="58" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{error}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line direction="BottomUp">
+				<reportElement x="0" y="0" width="1" height="28"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="555" y="0" width="1" height="28"/>
+			</line>
+			<line>
+				<reportElement x="0" y="28" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="212">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="28"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="21" y="5" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="219" y="5" width="70" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalTestSuites}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="305" y="5" width="73" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{noOfSuccess}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="392" y="5" width="69" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{noOfFailure}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="482" y="5" width="58" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{noOfError}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="30" width="555" height="178"/>
+				<barChart>
+					<chart>
+						<reportElement x="0" y="11" width="555" height="167"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["Total"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{testSuiteName}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{total}]]></valueExpression>
+						</categorySeries>
+						<categorySeries>
+							<seriesExpression><![CDATA["Success"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{testSuiteName}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{success}]]></valueExpression>
+						</categorySeries>
+						<categorySeries>
+							<seriesExpression><![CDATA["Failure"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{testSuiteName}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{failure}]]></valueExpression>
+						</categorySeries>
+						<categorySeries>
+							<seriesExpression><![CDATA["Error"]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{testSuiteName}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{error}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<barPlot>
+						<plot labelRotation="60.0">
+							<seriesColor seriesOrder="0" color="#00CCCC"/>
+							<seriesColor seriesOrder="1" color="#66FF66"/>
+							<seriesColor seriesOrder="2" color="#FFA500"/>
+							<seriesColor seriesOrder="3" color="#FF0000"/>
+						</plot>
+						<itemLabel/>
+					</barPlot>
+				</barChart>
+			</frame>
+		</band>
+	</lastPageFooter>
+</jasperReport>

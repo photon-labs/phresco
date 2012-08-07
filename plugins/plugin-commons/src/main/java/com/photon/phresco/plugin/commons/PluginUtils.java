@@ -41,9 +41,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -52,6 +55,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -84,7 +90,7 @@ public class PluginUtils {
 				globalWriter.saveXml(srcReaderToAppend, environmentType);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//FIXME : log the errors
 		}
 	}
 	
@@ -146,13 +152,7 @@ public class PluginUtils {
 				}
 			}
 		} catch (SQLException e) {
-			try {
-				if (con != null) {
-					con.rollback();
-				}
-			} catch (SQLException e1) {
-				throw new PhrescoException(e1);
-			}
+			throw new PhrescoException(e);
 		} catch (FileNotFoundException e) {
 			throw new PhrescoException(e);
 		} catch (InstantiationException e) {
@@ -162,13 +162,11 @@ public class PluginUtils {
 		} catch (ClassNotFoundException e) {
 			throw new PhrescoException(e);
 		} finally {
+		Utility.closeStream(fis);
 			try {
 				if (con != null) {
 					con.commit();
 					con.close();
-				}
-				if (fis != null) {
-					fis.close();
 				}
 			} catch (Exception e) {
 				throw new PhrescoException(e);
@@ -207,11 +205,9 @@ public class PluginUtils {
 	    String connectionProtocol = null;
 	    if(databaseType.equals("mysql") || databaseType.equals("hsql") || databaseType.equals("db2")) {
 	        connectionProtocol = "jdbc:" + databaseType.toLowerCase() + "://" + host + ":" + port + "/" + databaseName;
-        } 
-	    if (databaseType.equals("oracle")) {
+        } else if(databaseType.equals("oracle")) {
 	        connectionProtocol = "jdbc:" + "oracle:thin:@" + host + ":" + port + "/" + databaseName;
-	    }
-        if(databaseType.equals("mssql")) {
+	    }else if(databaseType.equals("mssql")) {
             connectionProtocol = "jdbc:" + "sqlserver" + "://" + host + ":" + port + ";" + "DatabaseName=" + databaseName;
         }
         
@@ -247,14 +243,9 @@ public class PluginUtils {
 			stmt.executeUpdate(updateQuery);
 			stmt.executeUpdate(updateHomeQuery);
 		} catch (Exception e) {
+		//FIXME log exception
 		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				throw new PhrescoException(e);
-			}
+				Utility.closeConnection(conn);
 		}
 	}
 
@@ -296,13 +287,7 @@ public class PluginUtils {
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}  finally {
-			try {
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			} catch (IOException e) {
-				throw new PhrescoException(e);
-			}
+			Utility.closeStream(inputStream);
 		}
 	}
 	
@@ -318,16 +303,43 @@ public class PluginUtils {
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
-			try {
-				if (dos != null) {
-					dos.close();
+			Utility.closeStream(dos);
+			Utility.closeStream(fos);
+		}
+	}
+	
+	public void setDefaultEnvironment(String environmentName, File sourceConfigXML) throws PhrescoException {
+		try {
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			docFactory.setNamespaceAware(false);
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(sourceConfigXML);
+			NodeList environmentList = doc.getElementsByTagName("environment");
+			for (int i = 0; i < environmentList.getLength(); i++) {
+				Element environment = (Element) environmentList.item(i);
+				String envName = environment.getAttribute("name");
+				String[] envs = environmentName.split(",");
+				for (String envsName : envs) {
+					if (envsName.equals(envName)) {
+						environment.setAttribute("default", "true");
+						// write the content into xml file
+						TransformerFactory transformerFactory = TransformerFactory.newInstance();
+						Transformer transformer = transformerFactory.newTransformer();
+						DOMSource source = new DOMSource(doc);
+						StreamResult result = new StreamResult(sourceConfigXML.toURI().getPath());
+						transformer.transform(source, result);
+					}
 				}
-				if (fos != null) {
-					fos.close();
-				}
-			} catch (IOException e) {
-				throw new PhrescoException(e);
 			}
+
+		} catch (ParserConfigurationException e) {
+			throw new PhrescoException(e);
+		} catch (TransformerException e) {
+			throw new PhrescoException(e);
+		} catch (IOException e) {
+			throw new PhrescoException(e);
+		} catch (SAXException e) {
+			throw new PhrescoException(e);
 		}
 	}
 }

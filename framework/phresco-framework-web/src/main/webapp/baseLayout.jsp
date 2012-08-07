@@ -20,6 +20,14 @@
 <!doctype html>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+<%@ page import="java.util.List"%>
+
+<%@ page import="com.photon.phresco.commons.model.User"%>
+<%@ page import="com.photon.phresco.commons.model.Customer"%>
+<%@ page import="com.photon.phresco.commons.FrameworkConstants"%>
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=0.25, maximum-scale=1.6">
@@ -77,7 +85,6 @@
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <!-- jquery file tree ends -->
 <script type="text/javascript">
-    
 	if (localStorage["color"] != null) {
         $("link[title='phresco']").attr("href", localStorage["color"]);
     } else {
@@ -88,9 +95,10 @@
         $(".styles").click(function() {
             var key = "color";
             var title = "phresco";
-            var value = $(this).attr("rel");
-            setLocalstorage(key,value);
-            getLocalstorage(key, title);
+            localStorage[key] = $(this).attr("rel");
+            $("link[title=" + title + "]").attr("href", localStorage[key]);
+            showWelcomeImage(key);
+            
             $("iframe").attr({
                 src: $("iframe").attr("src")
             });
@@ -125,16 +133,26 @@
 						class="shortcutWh" id="lf_tp2"><s:text name="label.appln"/></span>
 					</a>
 				</div>
-				<div class="control-group customer_name">
-                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
-                    <select class="customer_listbox">
-                        <option>Walgreens</option>
-                        <option>NBO</option>
-                        <option>Cengage</option>
-                        <option>Horizon Blue</option>
-                        <option>Photon</option>
-                    </select>				
-				</div>
+				<form id="customersForm">
+					<%
+					    User userInfo = (User) session.getAttribute(FrameworkConstants.REQ_USER_INFO);
+					    List<Customer> customers = userInfo.getCustomers();
+					%>
+					<div class="control-group customer_name">
+	                    <s:label key="label.customer" cssClass="control-label custom_label labelbold"/>
+	                    <select id="customerId" class="customer_listbox" name="customerId">
+                        <% 
+		                    if (CollectionUtils.isNotEmpty(customers)) {
+		                        for (Customer customer : customers) {
+		                %>
+                                    <option value="<%= customer.getId() %>"><%= customer.getName() %></option>
+		                <%
+		                        }
+		                    } 
+		                %>
+	                    </select>				
+					</div>
+				</form>
 				<div class="righttopnav">
 					<a href="JavaScript:void(0);" class="abtPopUp" class="arrow_links_top"><span
 						class="shortcutRed" id="lf_tp1"><s:text name="label.about"/></span><span class="shortcutWh"

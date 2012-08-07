@@ -28,6 +28,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		createUploader();
+		
 		// To focus the name textbox by default
 		$('#name').focus();
 
@@ -84,15 +86,25 @@
 		   "<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
 		$("div[id='jar']:last").after(appendTxt);
 	}
+	
+	function createUploader() {
+        var uploader = new qq.FileUploader({
+            element: document.getElementById('file-uploader'),
+            action: 'archetypeSave',
+            debug: true
+        });           
+    }
+    
 </script>
 
 <%
 	Technology technology = (Technology)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPE);
 	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
 	List<ApplicationType> appTypes = (List<ApplicationType>)request.getAttribute(ServiceUIConstants.REQ_APP_TYPES);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
-<form class="form-horizontal customer_list">
+<form id="formArcheTypeAdd" class="form-horizontal customer_list">
 	<h4 class="hdr">
 		<%
 			if (StringUtils.isNotEmpty(fromPage)) {
@@ -186,21 +198,38 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="file-uploader">       
+	        <noscript>          
+	            <p>Please enable JavaScript to use file uploader.</p>
+	            <!-- or put a simple form for upload here -->
+	        </noscript>         
+	    </div>
+    
 	</div>
 
 	<div class="bottom_button">
 		<%
 			if (StringUtils.isNotEmpty(fromPage)) {
 		%>
-				<input type="button" id="archetypeUpdate" class="btn btn-primary"
+				<%-- <input type="button" id="archetypeUpdate" class="btn btn-primary"
 					onclick="formSubmitFileUpload('archetypeUpdate', 'applnArc,pluginArc', $('#subcontainer'), 'Updating Archetype');"
-					value="<s:text name='lbl.hdr.comp.update'/>" />
+					value="<s:text name='lbl.hdr.comp.update'/>" /> --%>
+					
+					<input type="button" id="archetypeUpdate" class="btn btn-primary"
+                    onclick="validate('archetypeUpdate', $('#formArcheTypeAdd'), $('#subcontainer'), 'Updating Archetype');"
+                    value="<s:text name='lbl.hdr.comp.update'/>" />
+					
 		<%
 			} else {
 		%>
-			   	<input type="button" id="archetypeSave" class="btn btn-primary"
+			   	<%-- <input type="button" id="archetypeSave" class="btn btn-primary"
 					onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');"
-					value="<s:text name='lbl.hdr.comp.save'/>" />
+					value="<s:text name='lbl.hdr.comp.save'/>" /> --%>
+					
+					<input type="button" id="archetypeSave" class="btn btn-primary"
+                    onclick="validate('archetypeSave', $('#formArcheTypeAdd'), $('#subcontainer'), 'Creating Archetype');"
+                    value="<s:text name='lbl.hdr.comp.save'/>" />
 		<%
 			}
 		%>
@@ -211,5 +240,6 @@
 	<!-- Hidden Fields -->
 	<input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
 	<input type="hidden" name="techId" value="<%= technology != null ? technology.getId() : "" %>"/>
-	<input type="hidden" name="oldName" value="<%= technology != null ? technology.getName() : "" %>"/> 
+	<input type="hidden" name="oldName" value="<%= technology != null ? technology.getName() : "" %>"/>
+	<input type="hidden" name="customerId" value="<%= customerId %>"> 
 </form>

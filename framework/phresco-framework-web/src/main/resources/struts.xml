@@ -117,10 +117,10 @@
             <result name="features_oneClm">/pages/applications/features_oneClm.jsp</result>
             <result name="features_twoClm">/pages/applications/features_twoClm.jsp</result>
             <result name="features_threeClm">/pages/applications/features_threeClm.jsp</result>
-            <result type="json" />
+            <result name="success" type="json" />
         </action>
         
-        <action name="checkDependency" method="checkDependency" class="com.photon.phresco.framework.actions.applications.Features">
+        <action name="checkDependency" method="checkDependencyModules" class="com.photon.phresco.framework.actions.applications.Features">
             <result type="json" />
         </action>
         
@@ -233,7 +233,7 @@
             <result type="json" />
         </action>
         
-        <action name="getSQLFiles" method="getSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
+        <action name="fetchSQLFiles" method="fetchSQLFiles" class="com.photon.phresco.framework.actions.applications.Build">
             <result type="json" />
         </action>
         
@@ -648,5 +648,38 @@
         	<result name="success">/pages/fileBrowse.jsp</result>
         </action>
         <!-- file or folder browse option ends -->
+        
+        <!-- Print pdf operations starts -->
+       	<action name="printAsPdfPopup" method="printAsPdfPopup" class="com.photon.phresco.framework.actions.applications.Quality">
+       		<result name="success">/pages/applications/report_popup.jsp</result>
+		</action>
+		
+		<action name="printAsPdf" method="printAsPdf" class="com.photon.phresco.framework.actions.applications.Quality">
+       		<result name="success">/pages/applications/report_popup.jsp</result>
+		</action>
+		
+		<action name="downloadReport" method="downloadReport" class="com.photon.phresco.framework.actions.applications.Quality">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">fileInputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}.pdf"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        
+        <action name="deleteReport" method="deleteReport" class="com.photon.phresco.framework.actions.applications.Quality">
+        	<result name="success">/pages/applications/report_popup.jsp</result>
+        </action>
+		<!-- Print pdf operations endss -->
+		
+		<!-- minification starts -->
+		<action name="jsFileBrowse" method="jsFileBrowser" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result name="success">/pages/fileBrowse.jsp</result>
+        </action>
+        
+        <action name="jsToMinify" method="selectJsFilesToMinify" class="com.photon.phresco.framework.actions.applications.Build">
+        	<result type="json" />
+        </action>
+		<!-- minification ends -->
     </package>
 </struts>

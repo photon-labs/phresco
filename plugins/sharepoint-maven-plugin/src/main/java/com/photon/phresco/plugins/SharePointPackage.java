@@ -121,6 +121,7 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
+			unPackCabLib();
 			replaceValue();
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
@@ -136,75 +137,67 @@ public class SharePointPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
+	
+	private void unPackCabLib() throws MojoExecutionException  {
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MVN_CMD);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_CLEAN);
+			sb.append(STR_SPACE);
+			sb.append(MVN_PHASE_VALDATE);
+			Commandline cl = new Commandline(sb.toString());
+			cl.setWorkingDirectory(baseDir);
+			Process process = cl.execute();
+			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+			}
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
 
 	private void replaceValue() throws MojoExecutionException {
 		SAXBuilder builder = new SAXBuilder();
-		FileWriter writer = null;
 		try {
 			File xmlFile = new File(baseDir.getPath() + sourceDirectory + SHAREPOINT_WSP_CONFIG_FILE);
 			Document doc = (Document) builder.build(xmlFile);
 			Element rootNode = doc.getRootElement();
-			Element appSettings = getNode(xmlFile, rootNode, SHAREPOINT_APPSETTINGS);
+			Element appSettings = rootNode.getChild(SHAREPOINT_APPSETTINGS, rootNode.getNamespace());
 			if (appSettings != null) {
 				List children = appSettings.getChildren(SHAREPOINT_ADD, appSettings.getNamespace());
 				for (Object object : children) {
 					Element dependent = (Element) object;
 					String keyValue = dependent.getAttributeValue(SHAREPOINT_KEY);
+					Attribute attribute = dependent.getAttribute(SHAREPOINT_VALUE);
 					if (keyValue.equals(SHAREPOINT_SOLUTION_PATH)) {
-						Attribute attribute = dependent.getAttribute(SHAREPOINT_VALUE);
 						attribute.setValue(baseDir.getPath() + sourceDirectory);
 					}
 					if (keyValue.equals(SHAREPOINT_OUTPUT_PATH)) {
-						Attribute attribute = dependent.getAttribute(SHAREPOINT_VALUE);
 						attribute.setValue(baseDir.getPath() + sourceDirectory);
 					}
 					if (keyValue.equals(SHAREPOINT_WSPNAME)) {
-						Attribute attribute = dependent.getAttribute(SHAREPOINT_VALUE);
 						attribute.setValue(baseDir.getName() + ".wsp");
 					}
 				}
-				XMLOutputter xmlOutput = new XMLOutputter();
-				xmlOutput.setFormat(Format.getPrettyFormat());
-				writer = new FileWriter(xmlFile);
-				xmlOutput.output(doc, writer);
+				saveFile(xmlFile, doc);
 			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage());
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-				} catch (IOException e) {
-					throw new MojoExecutionException(e.getMessage());
-				}
-			}
-		}
+		} 
 	}
-
-	@SuppressWarnings("static-access")
-	private Element getNode(File pomFile, Element rootNode, String nodeName) throws JDOMException, IOException {
-		//POMProcessor pomProc = new POMProcessor(pomFile);
-		//return pomProc.getNode(rootNode, nodeName);
-		if (pomFile == null) {
-			throw new IllegalArgumentException("pom file should not be null");
+	
+	public void saveFile(File projectPath, Document doc) throws IOException {
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(projectPath);
+				XMLOutputter xmlOutput = new XMLOutputter();
+				xmlOutput.setFormat(Format.getPrettyFormat());
+				xmlOutput.output(doc, writer);
+		} finally {
+				Utility.closeStream(writer);
 		}
-		if (!pomFile.exists()) {
-			throw new FileNotFoundException("File doesn't exist");
-		}
-		SAXBuilder builder = new SAXBuilder();
-		Document document = builder.build(pomFile);
-		rootNode = document.getRootElement();
-		Element dependencies = rootNode.getChild(nodeName,rootNode.getNamespace());
-		if (dependencies == null) {
-			List children = rootNode.getChildren();
-			for (Object object : children) {
-				if ((object instanceof Element) && ((Element) object).getName().equals(nodeName)) {
-					dependencies = (Element) object;
-					break;
-				}
-			}
-		}
-		return dependencies;
 	}
 
 	private void executeExe() throws MojoExecutionException {
