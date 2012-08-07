@@ -50,6 +50,7 @@ public interface ServiceConstants {
 	String REST_API_WEBSERVICES = "/webservices";
 	String REST_API_TECHNOLOGIES= "/technologies";
 	String REST_API_DOWNLOADS = "/downloads";
+	String REST_API_GLOBALURL="/globalurl";
 	String REST_API_VIDEOS = "/videos";
 	String REST_API_USERS = "/users";
 	String REST_API_ROLES = "/roles";
@@ -86,6 +87,7 @@ public interface ServiceConstants {
 	String VIDEOS_COLLECTION_NAME = "videos";
 	String USERS_COLLECTION_NAME = "users";
 	String DOWNLOAD_COLLECTION_NAME = "downloads";
+	String GLOBALURL_COLLECTION_NAME="globalurl";
 	String MODULES_COLLECTION_NAME = "modules";
 	String APPTYPES_COLLECTION_NAME = "apptypes";
 	String PILOTS_COLLECTION_NAME = "pilots";

@@ -15,6 +15,7 @@ import com.photon.phresco.commons.model.Role;
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.DownloadInfo;
+import com.photon.phresco.model.GlobalURL;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.service.api.DbService;
 import com.photon.phresco.util.ServiceConstants;
@@ -88,7 +89,7 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 	}
 
 	
-	@Ignore
+	@Test
 	public void testFindVideos() {
 		List<VideoInfo> videolist = mongoOperation.getCollection(VIDEOS_COLLECTION_NAME , VideoInfo.class);
 		assertNotNull(videolist);
@@ -297,6 +298,63 @@ public class AdminServiceTest extends DbService implements ServiceConstants{
 	public void testDeleteRole() {
 		String id = "testrole";
 		mongoOperation.remove(ROLES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Role.class);
+	}
+
+	@Test
+	public void createGlobalURL() {
+		List<GlobalURL> gurl = new ArrayList<GlobalURL>();
+		GlobalURL url = new GlobalURL();
+		url.setId("testUrl");
+		url.setUrl("testGlobalURL");
+		gurl.add(url);
+		mongoOperation.insertList(GLOBALURL_COLLECTION_NAME, gurl);
+	}
+	
+	
+	@Test
+	public void testFindGlobalURL() {
+		List<GlobalURL> urllist = mongoOperation.getCollection(GLOBALURL_COLLECTION_NAME , GlobalURL.class);
+		assertNotNull(urllist);
+	}
+	
+	@Test
+	public void testUpdateGlobalURL() {
+		List<GlobalURL> gURL = new ArrayList<GlobalURL>();
+		GlobalURL url = new GlobalURL();
+		url.setId("testUrl");
+		url.setUrl("testGlobalURLUpdate");
+		gURL.add(url);
+		for (GlobalURL urlupdate : gURL) {
+			mongoOperation.save(GLOBALURL_COLLECTION_NAME, urlupdate);	
+		}
+		
+	}
+
+	@Ignore
+	public void testDeleteGlobalURL() throws PhrescoException {
+		throw new PhrescoException(EX_PHEX00001);
+	}
+
+	@Test
+	public void testGetGlobalURLById() {
+		String id = "testUrl";
+		GlobalURL url = mongoOperation.findOne(GLOBALURL_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), GlobalURL.class);
+		assertNotNull(url);
+	}
+
+	@Test
+	public void testUpdateGlobalURLById() {
+		GlobalURL url = new GlobalURL();
+		url.setId("testUrl");
+		url.setUrl("testURLUpdateById");
+		mongoOperation.save(GLOBALURL_COLLECTION_NAME, url);
+		
+	} 
+
+	@Test
+	public void testDeleteGlobalURLById() {
+		String id = "testUrl";
+		mongoOperation.remove(GLOBALURL_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), GlobalURL.class);
 	}
 	
 }
