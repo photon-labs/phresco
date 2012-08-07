@@ -473,10 +473,11 @@ function refreshAfterServerUp() {
 	   	$(".errorMsgLabel").text('<%= FrameworkConstants.CI_BUILD_LOADED_SHORTLY%>');
 	   	
 		console.log("I ll wait till jenkins gets ready!!!");
-		isCiRefresh = false;
 		window.setTimeout(refreshAfterServerUp, 15000); // wait for 15 sec
 	} else {
-// 		console.log("I neveer caught!");
+		isCiRefresh = false;
+		console.log("Server started successfully!");
+		reloadCI();
 	}
 }
 

@@ -481,6 +481,84 @@
 				<% } %>
 				</div>
 			</div>
+			
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><s:text name="label.enable.build.release"/></label>
+				
+				<div class="input" style="padding-top: 10px;">
+					<div class="multipleFields quartsRadioWidth">
+						<div><input type="radio" name="enableBuildRelease" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
+					</div>
+					<div class="multipleFields quartsRadioWidth">
+						<div><input type="radio" name="enableBuildRelease" value="false" />&nbsp; <s:text name="label.no"/></div>
+					</div>
+				</div>
+			</div>
+			
+		<!-- build release plugin changes starts -->
+			<fieldset class="popup-fieldset fieldsetBottom perFieldSet" style="text-align: left;" id="collabNetInfo">
+				<legend class="fieldSetLegend"><s:text name="label.build.release"/></legend>
+				
+				<div id="CollabNetConfig">
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label ciTwoLineLbl"><span class="red">* </span><s:text name="label.build.release.url"/></label>
+						<div class="input ciTwoLineTxtBox">
+							<input type="text" id="collabNetURL" class="ciSvnUrlWidth" name="collabNetURL" value="<%= existingJob == null ? "" : existingJob.getCollabNetURL() %>">
+						</div>
+					</div>
+		
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label ciTwoLineLbl"><span class="red">* </span><s:text name="label.build.release.username"/></label>
+						<div class="input ciTwoLineTxtBox">
+							<input type="text" id="collabNetusername" name="collabNetusername" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetusername() %>">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label ciTwoLineLbl"><span class="red">* </span><s:text name="label.build.release.password"/></label>
+						<div class="input ciTwoLineTxtBox">
+							<input type="password" id="collabNetpassword" name="collabNetpassword" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetpassword() %>">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.project"/></label>
+						<div class="input">
+							<input type="text" id="collabNetProject" name="collabNetProject" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetProject() %>">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.package"/></label>
+						<div class="input">
+							<input type="text" id="collabNetPackage" name="collabNetPackage" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetPackage() %>">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.release.name"/></label>
+						<div class="input">
+							<input type="text" id="collabNetRelease" name="collabNetRelease" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetRelease() %>">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><s:text name="label.build.release.overwrite"/></label>
+						
+						<div class="input" style="padding-top: 10px;">
+							<div class="multipleFields quartsRadioWidth">
+								<div><input type="radio" name="overwriteFiles" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
+							</div>
+							<div class="multipleFields quartsRadioWidth">
+								<div><input type="radio" name="overwriteFiles" value="false" />&nbsp; <s:text name="label.no"/></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</fieldset>
+    	<!-- build release plugin changes ends -->
+    	
 		</div>
     
         <div class="modal-footer">
@@ -590,12 +668,14 @@
 		});
 		
 		$("#actionBtn").click(function() {
-			isCiRefresh = true;
-			getCurrentCSS();
-			$('.popupLoadingIcon').css("display","block");
-			var url = $("#ciForm").attr("action");
-			$('#ciForm :input').attr('disabled', false);
-			popup(url, '', $('#tabDiv'));
+			// do the validation for collabNet info only if the user selects git radio button
+			if($("input:radio[name=enableBuildRelease][value='true']").is(':checked')) {
+				if(collabNetValidation()){
+					createJob();
+				}
+			} else {
+				createJob();
+			}
         });
 		
 		$("#successEmail").click(function() {
@@ -632,7 +712,7 @@
 		
 		show(selectedSchedule);
 		
-		<% 
+	<% 
 		if(existingJob != null) {
 			for(String trigger : existingJob.getTriggers()) {
 	%>
@@ -676,13 +756,76 @@
 	<%
 			}
 	%>
+			// when the job is not null, have to make selection in radio buttons of collabnet plugin
+			$('input:radio[name=enableBuildRelease]').filter("[value='"+<%= existingJob.isEnableBuildRelease() %>+"']").attr("checked", true);
+			$('input:radio[name=overwriteFiles]').filter("[value='"+<%= existingJob.isCollabNetoverWriteFiles() %>+"']").attr("checked", true);
 	<%
 		}
 	%>
 	    
 		credentialsDisp();
+		
+		$('input:radio[name=enableBuildRelease]').click(function() {
+			enableDisableCollabNet();
+			ciConfigureError('errMsg', "");
+		});
+		// while editing a job , based on value show hide it (CollabNet build release)
+		enableDisableCollabNet();
 	});
 
+	function createJob() {
+		isCiRefresh = true;
+		getCurrentCSS();
+		$('.popupLoadingIcon').css("display","block");
+		var url = $("#ciForm").attr("action");
+		$('#ciForm :input').attr('disabled', false);
+		popup(url, '', $('#tabDiv'));
+	}
+	
+	function enableDisableCollabNet() {
+		if($('input:radio[name=enableBuildRelease]:checked').val() == "true") {
+			$('#collabNetInfo').show();
+			$('input:text[name=collabNetURL]').focus();
+		} else {
+			$('#collabNetInfo').hide();
+			//when user selects no resets all the value
+			$('input:text[name=collabNetURL], input:text[name=collabNetusername], input:password[name=collabNetpassword]').val('');
+			$('input:text[name=collabNetProject], input:text[name=collabNetPackage], input:text[name=collabNetRelease]').val('');
+		}
+		
+	}
+	
+	function collabNetValidation() {
+		if(isValidUrl($('input:text[name=collabNetURL]').val())) {
+			ciConfigureError('errMsg', "URL is missing");
+			$('input:text[name=collabNetURL]').focus();
+			return false;
+		} else if (isBlank($('input:text[name=collabNetusername]').val())) {
+			ciConfigureError('errMsg', "Username is missing");
+			$('input:text[name=collabNetusername]').focus();
+			return false;
+		} else if (isBlank($('input:password[name=collabNetpassword]').val())) {
+			ciConfigureError('errMsg', "Password is missing");
+			$('input:password[name=collabNetpassword]').focus();
+			return false;
+		} else if (isBlank($('input:text[name=collabNetProject]').val())) {
+			ciConfigureError('errMsg', "Project is missing");
+			$('input:text[name=collabNetProject]').focus();
+			return false;
+		} else if (isBlank($('input:text[name=collabNetPackage]').val())) {
+			ciConfigureError('errMsg', "Package is missing");
+			$('input:text[name=collabNetPackage]').focus();
+			return false;
+		} else if (isBlank($('input:text[name=collabNetRelease]').val())) {
+			ciConfigureError('errMsg', "Release is missing");
+			$('input:text[name=collabNetRelease]').focus();
+			return false;
+		} else {
+			ciConfigureError('errMsg', "");
+			return true;
+	 	}
+	}
+	
 	function credentialsDisp() {
 		if($("input:radio[name=svnType][value='svn']").is(':checked')) {
 			$('#divUsername, #divPassword').show();

@@ -22,8 +22,11 @@ package com.photon.phresco.framework.actions.applications;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,6 +121,16 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     private String branch = null;
     private String localJenkinsAlive = "";
 
+    //collabNet implementation
+    private boolean enableBuildRelease = false;
+    private String collabNetURL = "";
+    private String collabNetusername = "";
+    private String collabNetpassword = "";
+    private String collabNetProject = "";
+    private String collabNetPackage = "";
+    private String collabNetRelease = "";
+    private boolean collabNetoverWriteFiles = false;
+    
     public String ci() {
     	S_LOGGER.debug("Entering Method CI.ci()");
     	try {
@@ -195,6 +208,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
                 getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 			CIJob existJob = administrator.getJob(project, jobName);
+			existJob.setCollabNetpassword(CIPasswordScrambler.unmask(existJob.getCollabNetpassword()));
 			getHttpRequest().setAttribute(REQ_EXISTING_JOB, existJob);
 	    	getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 	    	getHttpRequest().setAttribute(REQ_PROJECT_CODE , projectCode);
@@ -336,6 +350,15 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
     		existJob.setSenderEmailPassword(senderEmailPassword);
     		existJob.setBranch(branch);
     		existJob.setRepoType(svnType);
+    		// collabNet file release plugin imple
+    		existJob.setEnableBuildRelease(enableBuildRelease);
+    		existJob.setCollabNetURL(collabNetURL);
+    		existJob.setCollabNetusername(collabNetusername);
+    		existJob.setCollabNetpassword(CIPasswordScrambler.mask(collabNetpassword));
+    		existJob.setCollabNetProject(collabNetProject);
+    		existJob.setCollabNetPackage(collabNetPackage);
+    		existJob.setCollabNetRelease(collabNetRelease);
+    		existJob.setCollabNetoverWriteFiles(collabNetoverWriteFiles);
 
     		if(CI_CREATE_JOB_COMMAND.equals(jobType)) {
     			administrator.createJob(project, existJob);
@@ -345,10 +368,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
         		addActionMessage(getText(SUCCESS_UPDATE));
     		}
     		
-    		if (!GIT.equals(existJob.getRepoType())) {
-    			restartJenkins(); // TODO: reload config
-    		}
-    		getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
+   			restartJenkins(); // TODO: reload config
+
+   			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
     	} catch (Exception e) {
         	S_LOGGER.error("Entered into catch block of CI.doUpdateSave()" + FrameworkUtil.getStackTraceAsString(e));
         	addActionMessage(getText(CI_SAVE_UPDATE_FAILED, e.getLocalizedMessage()));
@@ -1076,4 +1098,67 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 		this.localJenkinsAlive = localJenkinsAlive;
 	}
 	
+	public boolean isEnableBuildRelease() {
+		return enableBuildRelease;
+	}
+
+	public void setEnableBuildRelease(boolean enableBuildRelease) {
+		this.enableBuildRelease = enableBuildRelease;
+	}
+
+	public String getCollabNetURL() {
+		return collabNetURL;
+	}
+
+	public void setCollabNetURL(String collabNetURL) {
+		this.collabNetURL = collabNetURL;
+	}
+
+	public String getCollabNetusername() {
+		return collabNetusername;
+	}
+
+	public void setCollabNetusername(String collabNetusername) {
+		this.collabNetusername = collabNetusername;
+	}
+
+	public String getCollabNetpassword() {
+		return collabNetpassword;
+	}
+
+	public void setCollabNetpassword(String collabNetpassword) {
+		this.collabNetpassword = collabNetpassword;
+	}
+
+	public String getCollabNetProject() {
+		return collabNetProject;
+	}
+
+	public void setCollabNetProject(String collabNetProject) {
+		this.collabNetProject = collabNetProject;
+	}
+
+	public String getCollabNetPackage() {
+		return collabNetPackage;
+	}
+
+	public void setCollabNetPackage(String collabNetPackage) {
+		this.collabNetPackage = collabNetPackage;
+	}
+
+	public String getCollabNetRelease() {
+		return collabNetRelease;
+	}
+
+	public void setCollabNetRelease(String collabNetRelease) {
+		this.collabNetRelease = collabNetRelease;
+	}
+
+	public boolean isCollabNetoverWriteFiles() {
+		return collabNetoverWriteFiles;
+	}
+
+	public void setCollabNetoverWriteFiles(boolean collabNetoverWriteFiles) {
+		this.collabNetoverWriteFiles = collabNetoverWriteFiles;
+	}
 }
