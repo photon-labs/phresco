@@ -16,6 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ###
+ * 
+ * @author kumar_s
  */
 package com.photon.phresco.commons.model;
 
@@ -23,7 +25,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 @XmlRootElement
 public class User extends Element {
 
@@ -31,114 +35,192 @@ public class User extends Element {
 	private String email;
 	private String firstName;
 	private String lastName;
-	private int status;
+	private UserStatus status;
 	private List<Role> roles;
 	private boolean phrescoEnabled;
 	private String displayName;
 	private List<Customer> customers;
 	private String token;
-
+	
+	public enum UserStatus {
+	    TYPE_GOLD, TYPE_SILVER, TYPE_BRONZE
+    }
+	
 	public User() {
 		super();
 	}
 
+	/**
+	 * @param id
+	 * @param name
+	 * @param description
+	 */
 	public User(String id, String name, String description) {
 		super(id, name, description);
 	}
 
+	/**
+	 * @param name
+	 * @param description
+	 */
 	public User(String name, String description) {
 		super(name, description);
 	}
+	
+	/**
+	 * @return
+	 */
+	public String getLoginId() {
+        return loginId;
+    }
 
-	public List<Role> getRoles() {
+    /**
+     * @param loginId
+     */
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+    
+    /**
+     * @return
+     */
+    public String getEmail() {
+        return email;
+    }
+    
+    /**
+     * @param mailId
+     */
+    public void setEmail(String mailId) {
+        this.email = mailId;
+    }
+    
+    /**
+     * @return
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * @param firstName
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    /**
+     * @return
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * @param lastName
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+	/**
+	 * @return
+	 */
+	public UserStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    /**
+     * @return
+     */
+    public List<Role> getRoles() {
 		return roles;
 	}
 
+	/**
+	 * @param roles
+	 */
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
+	/**
+	 * @return
+	 */
+	public boolean isPhrescoEnabled() {
+        return phrescoEnabled;
+    }
+	
+	/**
+	 * @param phrescoEnabled
+	 */
+	public void setPhrescoEnabled(boolean phrescoEnabled) {
+        this.phrescoEnabled = phrescoEnabled;
+    }
+	
+    /**
+     * @return
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+    
+	/**
+	 * @param displayName
+	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
 
-	public void setEmail(String mailId) {
-		this.email = mailId;
-	}
-
-	public void setPhrescoEnabled(boolean phrescoEnabled) {
-		this.phrescoEnabled = phrescoEnabled;
-	}
-
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public boolean isPhrescoEnabled() {
-		return phrescoEnabled;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
+	/**
+	 * @return
+	 */
 	public List<Customer> getCustomers() {
-		return customers;
-	}
+        return customers;
+    }
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
+    /**
+     * @param customers
+     */
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    /**
+     * @return
+     */
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	@Override
+    /**
+     * @param token
+     */
+    public void setToken(String token) {
+        this.token = token;
+    }
+	
 	public String toString() {
-		return "User [loginId=" + loginId + ", email=" + email + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", status=" + status
-				+ ", roles=" + roles + ", phrescoEnabled=" + phrescoEnabled
-				+ ", displayName=" + displayName + ", customers=" + customers
-				+ ", token=" + token + ", id=" + id + ", name=" + name
-				+ ", description=" + description + "]";
-	}
-
-
+        return new ToStringBuilder(this,
+                ToStringStyle.DEFAULT_STYLE)
+                .append(super.toString())
+                .append("loginId", loginId)
+                .append("email", email)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("status", status)
+                .append("roles", roles)
+                .append("phrescoEnabled", phrescoEnabled)
+                .append("displayName", displayName)
+                .append("customers", customers)
+                .append("token", token)
+                .toString();
+    }
 }

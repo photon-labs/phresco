@@ -46,15 +46,11 @@ public class ApplicationType extends Element implements Serializable {
 	}
 
 	public ApplicationType(String name, String description) {
-		super();
-		this.name = name;
-		this.description = description;
-
+		super(name, description);
 	}
 
 	public ApplicationType(String name, List<Technology> technologies) {
 		super();
-		this.name = name;
 		this.technologies = technologies;
 	}
 

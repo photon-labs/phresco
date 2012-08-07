@@ -16,6 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ###
+ * 
+ * @author kumar_s
  */
 package com.photon.phresco.commons.model;
 
@@ -23,47 +25,57 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 @XmlRootElement
 public class Role extends Element {
 
     private List<Permission> permissions;
 
+	/**
+	 * 
+	 */
 	public Role() {
 		super();
 	}
 
+	/**
+	 * @param id
+	 * @param name
+	 * @param description
+	 */
 	public Role(String id, String name, String description) {
 		super(id, name, description);
 	}
 
+	/**
+	 * @param name
+	 * @param description
+	 */
 	public Role(String name, String description) {
 		super(name, description);
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Permission> getPermissions() {
 		return permissions;
 	}
 
+	/**
+	 * @param roles
+	 */
 	public void setPermissions(List<Permission> roles) {
 		this.permissions = roles;
 	}
 
-	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Role [id=");
-		builder.append(id);
-		builder.append(", permissions=");
-		builder.append(permissions);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", creationDate=");
-		builder.append(creationDate);
-		builder.append("]");
-		return builder.toString();
-	}
-
+        return new ToStringBuilder(this,
+                ToStringStyle.DEFAULT_STYLE)
+                .append(super.toString())
+                .append("permissions", permissions)
+                .toString();
+    }
 }

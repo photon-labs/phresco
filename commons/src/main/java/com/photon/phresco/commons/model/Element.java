@@ -16,15 +16,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ###
+ * 
+ * @author kumar_s
  */
 package com.photon.phresco.commons.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 @XmlRootElement
 public abstract class Element {
 
@@ -32,67 +35,91 @@ public abstract class Element {
 		CUSTOMER, USER, ROLE, PERMISSION
 	}
 
-	protected String id;
-	protected String name;
-	protected String description;
-
-//	Date creationDate;
-	String creationDate = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss.SSS000").format(new Date());
+	private String id;
+	private String name;
+	private String description;
+	Date creationDate;
 
 	protected Element() {
 		super();
 	}
 
-	public Element(String id, String name, String description) {
+	protected Element(String id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 	}
 
-	public Element(String name, String description) {
+	protected Element(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public String getCreationDate() {
+	/**
+	 * @return
+	 */
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(String creationDate) {
+	/**
+	 * @param creationDate
+	 */
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 
-//	public Date getCreationDate() {
-//		return creationDate;
-//	}
-//
-//	public void setCreationDate(Date creationDate) {
-//		this.creationDate = creationDate;
-//	}
+	public String toString() {
+	    return new ToStringBuilder(this,
+                ToStringStyle.DEFAULT_STYLE)
+                .append("id", id)
+                .append("name", name)
+                .append("description", description)
+                .append("creationDate", creationDate)
+                .toString();
+	}
 }

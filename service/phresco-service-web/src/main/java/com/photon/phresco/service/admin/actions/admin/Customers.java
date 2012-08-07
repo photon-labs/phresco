@@ -19,8 +19,10 @@
  */
 package com.photon.phresco.service.admin.actions.admin;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -56,9 +58,9 @@ public class Customers extends ServiceBaseAction  {
     private String licence = null;
 	private String licenError = null;
 	private boolean errorFound = false;
-	private String validFrom = null;
-	private String validUpTo = null;
-	private String repoURL = null;
+	private Date validFrom = null;
+	private Date validUpTo = null;
+	private URL repoURL = null;
 	private String fromPage = null;
 	private String customerId = null;
 	private String oldName = null;
@@ -378,27 +380,27 @@ public class Customers extends ServiceBaseAction  {
 		this.description = description;
 	}
 	
-	public String getRepoURL() {
+	public URL getRepoURL() {
 		return repoURL;
 	}
 
-	public void setRepoURL(String repoURL) {
+	public void setRepoURL(URL repoURL) {
 		this.repoURL = repoURL;
 	}
 	
-	public String getValidFrom() {
+	public Date getValidFrom() {
 		return validFrom;
 	}
 
-	public void setValidFrom(String validFrom) {
+	public void setValidFrom(Date validFrom) {
 		this.validFrom = validFrom;
 	}
 
-	public String getValidUpTo() {
+	public Date getValidUpTo() {
 		return validUpTo;
 	}
 
-	public void setValidUpTo(String validUpTo) {
+	public void setValidUpTo(Date validUpTo) {
 		this.validUpTo = validUpTo;
 	}
 	

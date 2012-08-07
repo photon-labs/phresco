@@ -37,6 +37,9 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+import com.sun.jersey.multipart.MultiPart;
+import com.sun.jersey.multipart.MultiPartMediaTypes;
+import com.sun.jersey.server.impl.model.method.dispatch.MultipartFormDispatchProvider;
 
 public class RestClient<E> {
 	
@@ -201,7 +204,35 @@ public class RestClient<E> {
 		return create(infos, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
 	}
 	
+    /**
+     * @param multiPart
+     * @return
+     * @throws PhrescoException
+     */
+    public ClientResponse create(MultiPart multiPart) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.create(List<E> infos)");
+        }
+        return create(multiPart, MultiPartMediaTypes.MULTIPART_MIXED_TYPE, MultiPartMediaTypes.MULTIPART_MIXED_TYPE);
+    }
+    
 	/**
+	 * @param multiPart
+	 * @param accept
+	 * @param type
+	 * @return
+	 * @throws PhrescoException
+	 */
+	private ClientResponse create(MultiPart multiPart,
+            MediaType accept, MediaType type) throws PhrescoException {
+	    updateBuilder();
+	    builder = builder.accept(accept).type(type);
+	    ClientResponse clientResponse = builder.post(ClientResponse.class, multiPart);
+        isErrorThrow(clientResponse);
+        return clientResponse;
+    }
+
+    /**
 	 * Creates List of objects
 	 * @param infos
 	 * @throws PhrescoException
