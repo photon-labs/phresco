@@ -520,19 +520,24 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return settingsClient.create(settings);
     }
     
-    private List<ProjectInfo> getPilotProjectFromServer() throws PhrescoException {
+    private List<ProjectInfo> getPilotProjectFromServer(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getPilotProjectFromServer()");
         }
     	
     	RestClient<ProjectInfo> pilotClient = getRestClient(REST_API_COMPONENT + REST_API_PILOTS);
+    	Map<String, String> headers = new HashMap<String, String>();
+    	headers.put(REST_QUERY_TECHID, techId);
+    	headers.put(REST_QUERY_CUSTOMERID, customerId);
+    	headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
+    	pilotClient.queryStrings(headers);
 		GenericType<List<ProjectInfo>> genericType = new GenericType<List<ProjectInfo>>(){};
 		
 		return pilotClient.get(genericType);
     }
     
     
-    public List<ProjectInfo> getPilotProject(String customerId) throws PhrescoException {
+    public List<ProjectInfo> getPilotProject(String techId, String customerId) throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entered into RestClient.getPilots(String customerId)" + customerId);
         }
@@ -540,8 +545,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         List<ProjectInfo> pilotProjects = manager.getPilotProjects(customerId); 
         try {	
     		if (CollectionUtils.isEmpty(pilotProjects)) {
-    			pilotProjects = getPilotProjectFromServer();
-    			manager.addAppInfo(userInfo.getLoginId(), pilotProjects);
+    			pilotProjects = getPilotProjectFromServer(techId, customerId);
+    			manager.addAppInfo(customerId, pilotProjects);
     		}
     	} catch(Exception e){
     		throw new PhrescoException(e);
@@ -610,9 +615,31 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         return pilotproClient.deleteById();
     }
 
-    public List<Role> getRoles() throws PhrescoException {
-    	if (isDebugEnabled) {
-    		S_LOGGER.debug("Entered into RestClient.createroles(List<Roles> role)");
+    
+    private List<Role> getRolesFromServer() throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getRolesServer()");
+        }
+    	
+        RestClient<Role> roleClient = getRestClient(REST_API_ADMIN + REST_API_ROLES);
+        GenericType<List<Role>> genericType = new GenericType<List<Role>>(){};
+        
+        return roleClient.get(genericType);	
+    }
+    
+    public List<Role> getRoles(String customerId) throws PhrescoException {
+        if (isDebugEnabled) {
+            S_LOGGER.debug("Entered into RestClient.getroleString customerId)" + customerId);
+        }
+        
+        List<Role> roles = manager.getRoles(customerId); 
+        try {	
+    		if (CollectionUtils.isEmpty(roles)) {
+    			roles = getRolesFromServer();
+    			manager.addAppInfo(userInfo.getLoginId(), roles);
+    		}
+    	} catch(Exception e){
+    		throw new PhrescoException(e);
     	}
     	
     	RestClient<Role> roleClient = getRestClient(REST_API_ADMIN + REST_API_ROLES);
@@ -725,6 +752,6 @@ public class ServiceManagerImpl implements ServiceManager, ServiceClientConstant
         
         RestClient<ProjectInfo> projectClient = getRestClient(REST_API_PROJECT);
         
-        return projectClient.create(projectInfo, "application/zip", MediaType.APPLICATION_JSON);
+        return projectClient.create(projectInfo, MEDIATYPE_ZIP, MediaType.APPLICATION_JSON);
     }
 }

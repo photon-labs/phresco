@@ -24,11 +24,12 @@
 <%@ page import="org.apache.commons.collections.CollectionUtils"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
 
+<%@ page import="com.photon.phresco.model.Technology" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo"%>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
 <%
-	List<ProjectInfo> pilotProjectInfo = (List<ProjectInfo>) request.getAttribute("pilotProjects");
+	List<ProjectInfo> pilotProjectInfo = (List<ProjectInfo>) request.getAttribute(ServiceUIConstants.REQ_PILOT_PROJECTS);
 	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
@@ -58,7 +59,7 @@
 			<div class="fixed-table-container">
 				<div class="header-background"></div>
 				<div class="fixed-table-container-inner">
-					<table cellspacing="0" class="zebra-striped">
+					<table cellspacing="0" class="zebra-nonstriped">
 						<thead>
 							<tr>
 								<th class="first">
@@ -121,6 +122,8 @@
         params = params.concat(id);
         params = params.concat("&fromPage=");
         params = params.concat("edit");
+        params = params.concat("&customerId=");
+        params = params.concat("<%= customerId %>");
         loadContentParam("pilotprojEdit", params, $('#subcontainer'));
     }
 </script>

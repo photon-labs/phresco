@@ -26,77 +26,6 @@
 <%@ page import="com.photon.phresco.model.Technology"%>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants"%>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		createUploader();
-		
-		// To focus the name textbox by default
-		$('#name').focus();
-
-		// To check for the special character in name
-		$('#name').bind('input propertychange', function (e) {
-			var name = $(this).val();
-			name = checkForSplChr(name);
-			$(this).val(name);
-		});
-
-		// To check for the special character in version
-		$('#version').bind('input propertychange', function (e) {
-			var version = $(this).val();
-			version = checkForSplChrExceptDot(version);
-			$(this).val(version);
-		});
-
-		// To remove the plugin jar file field
-		$('.del').live('click', function() {
-			$(this).parent().parent().remove();
-		});
-	});
-
-	function findError(data) {
-		if (data.nameError != undefined) {
-			showError($("#nameControl"), $("#nameError"), data.nameError);
-		} else {
-			hideError($("#nameControl"), $("#nameError"));
-		}
-
-		if (data.verError != undefined) {
-			showError($("#verControl"), $("#verError"), data.verError);
-		} else {
-			hideError($("#verControl"), $("#verError"));
-		}
-		if (data.appError != undefined) {
-			showError($("#appControl"), $("#appError"), data.appError);
-		} else {
-			hideError($("#appControl"), $("#appError"));
-		}
-
-		if (data.fileError != undefined) {
-			showError($("#fileControl"), $("#fileError"), data.fileError);
-		} else {
-			hideError($("#fileControl"), $("#fileError"));
-		}
-	}
-	
-	function addpluginjar() {
-		var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'>" +
-		   "<label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'>" + 
-		   "<input id='input01' class='input-xlarge' type='file'>&nbsp;" + 
-		   "<img src='images/add_icon.png' class='addplugin imagealign' onclick='addpluginjar();'>&nbsp;" + 
-		   "<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
-		$("div[id='jar']:last").after(appendTxt);
-	}
-	
-	function createUploader() {
-        var uploader = new qq.FileUploader({
-            element: document.getElementById('file-uploader'),
-            action: 'archetypeSave',
-            debug: true
-        });           
-    }
-    
-</script>
-
 <%
 	Technology technology = (Technology)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPE);
 	String fromPage = (String) request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE);
@@ -210,31 +139,33 @@
 
 	<div class="bottom_button">
 		<%
+			String disabledClass = "btn-primary";
+			String disabled = "";
+			if (technology.isSystem()) {
+				disabledClass = "btn-disabled";
+				disabled = "disabled";
+			}
+
 			if (StringUtils.isNotEmpty(fromPage)) {
 		%>
-				<%-- <input type="button" id="archetypeUpdate" class="btn btn-primary"
-					onclick="formSubmitFileUpload('archetypeUpdate', 'applnArc,pluginArc', $('#subcontainer'), 'Updating Archetype');"
-					value="<s:text name='lbl.hdr.comp.update'/>" /> --%>
-					
-					<input type="button" id="archetypeUpdate" class="btn btn-primary"
-                    onclick="validate('archetypeUpdate', $('#formArcheTypeAdd'), $('#subcontainer'), 'Updating Archetype');"
-                    value="<s:text name='lbl.hdr.comp.update'/>" />
-					
-		<%
-			} else {
-		%>
-			   	<%-- <input type="button" id="archetypeSave" class="btn btn-primary"
-					onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');"
-					value="<s:text name='lbl.hdr.comp.save'/>" /> --%>
-					
-					<input type="button" id="archetypeSave" class="btn btn-primary"
-                    onclick="validate('archetypeSave', $('#formArcheTypeAdd'), $('#subcontainer'), 'Creating Archetype');"
-                    value="<s:text name='lbl.hdr.comp.save'/>" />
-		<%
-			}
-		%>
-	 	<input type="button" id="archetypeCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
-            onclick="loadContent('archetypesList', $('#subcontainer'));"/>
+			<%-- <input type="button" id="archetypeUpdate" class="btn btn-primary"
+						onclick="formSubmitFileUpload('archetypeUpdate', 'applnArc,pluginArc', $('#subcontainer'), 'Updating Archetype');"
+						value="<s:text name='lbl.hdr.comp.update'/>" /> --%>
+				<input type="button" id="archetypeUpdate" class="btn <%= disabledClass %>" <%= disabled %>
+					onclick="validate('archetypeUpdate', $('#formArcheTypeAdd'), $('#subcontainer'), '<s:text name='lbl.prog.arche.update'/>');"
+					value="<s:text name='lbl.hdr.comp.update'/>" />
+		
+		<% } else { %>
+			<%-- <input type="button" id="archetypeSave" class="btn btn-primary"
+						onclick="formSubmitFileUpload('archetypeSave', 'applnArc,pluginArc', $('#subcontainer'), 'Creating Archetype');"
+						value="<s:text name='lbl.hdr.comp.save'/>" /> --%>
+	
+			<input type="button" id="archetypeSave" class="btn btn-primary"
+				onclick="validate('archetypeSave', $('#formArcheTypeAdd'), $('#subcontainer'), '<s:text name='lbl.prog.arche.save'/>');"
+				value="<s:text name='lbl.hdr.comp.save'/>" />
+		<% } %>
+		<input type="button" id="archetypeCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
+            onclick="loadContent('archetypesList', '', $('#subcontainer'));"/>
 	</div>
 	
 	<!-- Hidden Fields -->
@@ -243,3 +174,73 @@
 	<input type="hidden" name="oldName" value="<%= technology != null ? technology.getName() : "" %>"/>
 	<input type="hidden" name="customerId" value="<%= customerId %>"> 
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        createUploader();
+        
+        // To focus the name textbox by default
+        $('#name').focus();
+
+        // To check for the special character in name
+        $('#name').bind('input propertychange', function (e) {
+            var name = $(this).val();
+            name = checkForSplChr(name);
+            $(this).val(name);
+        });
+
+        // To check for the special character in version
+        $('#version').bind('input propertychange', function (e) {
+            var version = $(this).val();
+            version = checkForSplChrExceptDot(version);
+            $(this).val(version);
+        });
+
+        // To remove the plugin jar file field
+        $('.del').live('click', function() {
+            $(this).parent().parent().remove();
+        });
+    });
+
+    function findError(data) {
+        if (data.nameError != undefined) {
+            showError($("#nameControl"), $("#nameError"), data.nameError);
+        } else {
+            hideError($("#nameControl"), $("#nameError"));
+        }
+
+        if (data.verError != undefined) {
+            showError($("#verControl"), $("#verError"), data.verError);
+        } else {
+            hideError($("#verControl"), $("#verError"));
+        }
+        if (data.appError != undefined) {
+            showError($("#appControl"), $("#appError"), data.appError);
+        } else {
+            hideError($("#appControl"), $("#appError"));
+        }
+
+        if (data.fileError != undefined) {
+            showError($("#fileControl"), $("#fileError"), data.fileError);
+        } else {
+            hideError($("#fileControl"), $("#fileError"));
+        }
+    }
+    
+    function addpluginjar() {
+        var appendTxt = "<div id='jar'><div id='input1' class='clonedInput'><div class='control-group'>" +
+           "<label class='control-label labelbold' for='input01'>Plugin jar</label><div class='controls'>" + 
+           "<input id='input01' class='input-xlarge' type='file'>&nbsp;" + 
+           "<img src='images/add_icon.png' class='addplugin imagealign' onclick='addpluginjar();'>&nbsp;" + 
+           "<img src='images/minus_icon.png' class='del imagealign'></div></div></div></div>";
+        $("div[id='jar']:last").after(appendTxt);
+    }
+    
+    function createUploader() {
+        var uploader = new qq.FileUploader({
+            element: document.getElementById('file-uploader'),
+            action: 'archetypeSave',
+            debug: true
+        });           
+    }  
+</script>

@@ -113,6 +113,10 @@ a:hover {
     background-color: #850E11;
 }
 
+.zebra-nonstriped tbody tr:hover {
+    background-color: #850E11;
+}
+
 .page-header h1 {
     color: #ffffff;
 }

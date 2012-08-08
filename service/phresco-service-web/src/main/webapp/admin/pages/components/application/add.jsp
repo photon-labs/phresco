@@ -54,19 +54,29 @@
 				<s:text name='lbl.hdr.comp.desc'/>
 			</label>
 			<div class="controls">
-				<textarea id="description" class="input-xlarge" placeholder='<s:text name="place.hldr.appType.add.desc"/>' rows="3" name="description" maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
+				<textarea id="description" class="input-xlarge" placeholder='<s:text name="place.hldr.appType.add.desc"/>' 
+				    rows="3" name="description" maxlength="150" title="150 Characters only"><%= apptype != null ? apptype.getDescription() : "" %></textarea>
 			</div>
 		</div>
 	</div>
 	
 	<div class="bottom_button">
-	   	<% if (StringUtils.isNotEmpty(fromPage)) { %>
-				<input type="button" id="applicationUpdate" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.update'/>" 
-				    onclick="validate('applicationUpdate', $('#formAppTypeAdd'), $('#subcontainer'), 'Updating Application Type');" />
-		<% } else { %>
+        <%
+            String disabledClass = "btn-primary";
+            String disabled = "";
+            if (apptype.isSystem()) {
+            	disabledClass = "btn-disabled";
+            	disabled = "disabled";
+            }
+            if (StringUtils.isNotEmpty(fromPage)) {
+        %>
+	            <input type="button" id="applicationUpdate" class="btn <%= disabledClass %>" <%= disabled %> value="<s:text name='lbl.hdr.comp.update'/>"
+	                onclick="validate('applicationUpdate', $('#formAppTypeAdd'), $('#subcontainer'), '<s:text name='lbl.prog.apptype.update'/>');" />
+        <% } else { %>
                 <input type="button" id="applicationSave" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.save'/>"
-                    onclick="validate('applicationSave', $('#formAppTypeAdd'), $('#subcontainer'), 'Creating Application Type');" />
-		<% } %>
+                    onclick="validate('applicationSave', $('#formAppTypeAdd'), $('#subcontainer'), '<s:text name='lbl.prog.apptype.save'/>');" />
+        <% } %>
+        
 		<input type="button" id="applicationCancel" class="btn btn-primary" value="<s:text name='lbl.hdr.comp.cancel'/>" 
             onclick="loadContent('applntypesList', $('#formAppTypeAdd'), $('#subcontainer'));" />
     </div>

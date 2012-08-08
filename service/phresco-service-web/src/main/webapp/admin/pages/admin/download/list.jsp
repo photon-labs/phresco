@@ -21,14 +21,15 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
-<%@ page import="org.apache.commons.lang.StringUtils" %>
 
-<%@ page import="com.photon.phresco.model.DownloadInfo" %>
 <%@ page import="com.photon.phresco.service.admin.commons.ServiceUIConstants" %>
+<%@ page import="com.photon.phresco.model.DownloadInfo" %>
 
 <% 
-	List<DownloadInfo> downloadInfo = (List<DownloadInfo>)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO); 
+  List<DownloadInfo> downloadInfo = (List<DownloadInfo>)request.getAttribute(ServiceUIConstants.REQ_DOWNLOAD_INFO); 
+  String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
 <form id="formDownloadList" class="customer_list">

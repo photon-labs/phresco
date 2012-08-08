@@ -130,4 +130,9 @@ public interface ServiceConstants {
      */
 	String REST_API_FIELD_TECH = "technologies";
 	String REST_API_FIELD_APPID = "appTypeId";
+	
+	/*
+     * Constants for Media Type
+     */
+	String MEDIATYPE_ZIP = "application/zip";
 }

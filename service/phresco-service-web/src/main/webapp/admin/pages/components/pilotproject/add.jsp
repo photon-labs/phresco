@@ -29,6 +29,7 @@
 	ProjectInfo pilotProjectInfo = (ProjectInfo)request.getAttribute(ServiceUIConstants.REQ_PILOT_PROINFO); 
 	String fromPage = (String)request.getAttribute(ServiceUIConstants.REQ_FROM_PAGE); 
 	List<Technology> technologys = (List<Technology>)request.getAttribute(ServiceUIConstants.REQ_ARCHE_TYPES);
+	String customerId = (String) request.getAttribute(ServiceUIConstants.REQ_CUST_CUSTOMER_ID);
 %>
 
 <form id="formPilotProAdd" class="form-horizontal customer_list">
@@ -111,6 +112,7 @@
     <input type="hidden" name="fromPage" value="<%= StringUtils.isNotEmpty(fromPage) ? fromPage : "" %>"/>
     <input type="hidden" name="projectId" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getId() : "" %>"/>
     <input type="hidden" name="oldName" value="<%=  pilotProjectInfo != null ?  pilotProjectInfo.getName() : "" %>"/>  
+    <input type="hidden" name="customerId" value="<%= customerId %>"> 
 </form>
 
 <script type="text/javascript">

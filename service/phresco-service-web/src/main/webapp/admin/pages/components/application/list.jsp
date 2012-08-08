@@ -58,7 +58,7 @@
 			<div class="fixed-table-container">
 			  <div class="header-background"></div>
 				<div class="fixed-table-container-inner">
-					<table cellspacing="0" class="zebra-striped">
+					<table cellspacing="0" class="zebra-nonstriped">
 						<thead>
 							<tr>
 								<th class="first nameTd">
@@ -82,7 +82,7 @@
 							%>
 									<tr>
 										<td class="checkboxwidth">
-										<%  if (appType.isSystem()) { %>
+										<% if (appType.isSystem()) { %>
                                                <input type="checkbox" name="apptypeId" value="<%= appType.getId() %>" disabled/>
                                         <% } else { %>
                                                <input type="checkbox" class="check" name="apptypeId" value="<%= appType.getId() %>" 
@@ -91,11 +91,7 @@
 										</td>
 										
 										<td class="namelabel-width">
-                                           <%  if (appType.isSystem()) { %>
-                                                   <a href="#"><%= appType.getName() %></a>
-                                           <% } else { %>
-                                                   <a href="#" onclick="editAppType('<%= appType.getId() %>');"><%= appType.getName() %></a>
-										<% } %>
+                                            <a href="#" onclick="editAppType('<%= appType.getId() %>');"><%= appType.getName() %></a>
 										</td>
 										<td class="desclabel-width">
                                             <%= StringUtils.isNotEmpty(appType.getDescription()) ? appType.getDescription() : "" %>

@@ -49,6 +49,7 @@
 			</div>
 		</s:if>
 	</div>
+	
 	<% if (CollectionUtils.isEmpty(technologies)) { %>
 		<div class="alert alert-block">
 			<s:text name='alert.msg.archetype.not.available'/>
@@ -58,7 +59,7 @@
 			<div class="fixed-table-container">
 				<div class="header-background"></div>
 				<div class="fixed-table-container-inner">
-					<table cellspacing="0" class="zebra-striped">
+					<table cellspacing="0" class="zebra-nonstriped">
 						<thead>
 							<tr>
 								<th class="first">
@@ -96,15 +97,10 @@
 									</td>
 									
 									<td class="namelabel-width">
-									<% if (technology.isSystem()) { %>
-										<a href="#"><%= StringUtils.isNotEmpty(technology.getName()) ? technology.getName() : "" %></a>
-									<% } else { %>
 										<a href="#" onclick="editTech('<%= technology.getId() %>');">
 											<%= StringUtils.isNotEmpty(technology.getName()) ? technology.getName() : "" %>
-                                           </a>
-                                       <% } %>
+                                        </a>
 									</td>
-									
 									<td class="desclabel-width">
 										<%= StringUtils.isNotEmpty(technology.getDescription()) ? technology.getDescription() : "" %>
 									</td>	
@@ -112,7 +108,7 @@
 										<%= CollectionUtils.isNotEmpty(technology.getVersions()) ? technology.getVersions() : "" %>
 									</td>
 									<td class="namelabel-width">
-										<%= CollectionUtils.isNotEmpty(technology.getAppType()) ? technology.getAppType() : "" %>
+										<%= StringUtils.isNotEmpty(technology.getAppTypeId()) ? technology.getAppTypeId() : "" %>
 									</td>		
 								</tr>	
 						<%		
@@ -136,6 +132,8 @@
 		params = params.concat(id);
 		params = params.concat("&fromPage=");
 		params = params.concat("edit");
+		params = params.concat("&customerId=");
+        params = params.concat("<%= customerId %>");
 		loadContentParam("archetypeEdit", params, $('#subcontainer'));
 	}
 </script>

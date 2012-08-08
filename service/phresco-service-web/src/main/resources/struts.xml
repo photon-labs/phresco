@@ -70,10 +70,15 @@
         <action name="featuresDelete" class="com.photon.phresco.service.admin.actions.components.Features" method="delete">
             <result name="featuresList">/admin/pages/components/feature/list.jsp</result>
         </action>
-		
-		<action name="featuresCancel" class="com.photon.phresco.service.admin.actions.components.Features" method="cancel">
-            <result name="featuresCancel">/admin/pages/components/feature/list.jsp</result>
+        
+         <action name="featuresSaveValidate" class="com.photon.phresco.service.admin.actions.components.Features" method="validateForm">
+            <result type="json" />
         </action>
+        
+         <action name="featuresUpdateValidate" class="com.photon.phresco.service.admin.actions.components.Features" method="validateForm">
+            <result type="json" />
+        </action>
+		
 		<!-- COMPONENT FEATURES ENDS-->
 			
 		<!-- COMPONENT ARCHETYPES STARTS-->
@@ -178,8 +183,8 @@
             <result name="pilotprojList">/admin/pages/components/pilotproject/list.jsp</result>
 			<result type="json" />
         </action>
-        
-          <action name="pilotprojEdit" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="edit">
+       
+        <action name="pilotprojEdit" class="com.photon.phresco.service.admin.actions.components.PilotProjects" method="edit">
             <result name="pilotprojAdd">/admin/pages/components/pilotproject/add.jsp</result>
         </action>
         
@@ -326,11 +331,7 @@
 		<action name="downloadDelete" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="delete">
             <result name="downloadList">/admin/pages/admin/download/list.jsp</result>
         </action>
-		
-		<action name="downloadCancel" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="cancel">
-			<result name="downloadCancel">/admin/pages/admin/download/list.jsp</result>
-        </action>
-        
+	    
         <action name="downloadSaveValidate" class="com.photon.phresco.service.admin.actions.admin.Downloads" method="validateForm">
             <result type="json" />
         </action>
