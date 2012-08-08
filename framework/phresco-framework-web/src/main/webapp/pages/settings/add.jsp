@@ -221,6 +221,7 @@
 <script type="text/javascript">
 
 var selectedType = "";
+var fromPage = "";
 
 /** To remove all the environments except the selected environment **/
 if(<%= StringUtils.isNotEmpty(currentEnv) %>) {
@@ -251,9 +252,10 @@ $(document).ready(function() {
     });
     
     $('#save').click(function() {
+    	$("input[name=certificate]").prop("disabled", false);
     	var params = "";
-    	 params = params.concat("&remoteDeployment=");
-		 params = params.concat($("input[name='remoteDeployment']").prop("checked")); 
+    	params = params.concat("&remoteDeployment=");
+		params = params.concat($("input[name='remoteDeployment']").prop("checked"));
     	if (!isBlank($('form').serialize())) {
     		params = $('form').serialize() + "&";
     	}
@@ -269,16 +271,13 @@ $(document).ready(function() {
 
     });
     
-   /* $('#plus').click(function() {
-        addType();
-    });*/
     window.setTimeout(function () { document.getElementById('xlInput').focus(); }, 250);
 });
  
 function settingsType() {
     selectedType = $("#settingsType").val();
     var settingsCount = $("#settingsCount").val();
-    var fromPage = "<%= fromPage %>";
+    fromPage = "<%= fromPage %>";
 	var params = "";
 	if (!isBlank($('form').serialize())) {
 		params = $('form').serialize() + "&";

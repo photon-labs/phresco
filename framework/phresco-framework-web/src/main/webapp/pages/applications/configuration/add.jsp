@@ -286,9 +286,10 @@ h1 {margin-bottom: 0;}
 	    });
 		
 		$('#save').click(function() {
+			$("input[name=certificate]").prop("disabled", false);
 			var params = "";
-		     params = params.concat("&remoteDeployment=");
-			 params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
+		    params = params.concat("&remoteDeployment=");
+			params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
 		     
 			if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
@@ -350,7 +351,6 @@ h1 {margin-bottom: 0;}
         }
 		
 		if(data.dynamicError != null) {
-			
 	    	var dynamicErrors = data.dynamicError.split(",");
 	    	for (var i=0; i<dynamicErrors.length; i++) {
 	    		var dynErr = dynamicErrors[i].split(":");
@@ -401,8 +401,6 @@ h1 {margin-bottom: 0;}
 		params = params.concat(name);
 		performAction('fetchProjectInfoVersions', params, '', true);
 	}
-	
-
 </script>
 
 <%-- <%

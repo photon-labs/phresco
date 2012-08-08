@@ -22,23 +22,18 @@
 <%@ include file="errorReport.jsp" %>
 <%@ include file="description_dialog.jsp" %>
 
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.collections.MapUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
-<%@ page import="com.photon.phresco.model.ApplicationType" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.Technology" %>
 <%@ page import="com.photon.phresco.model.ModuleGroup" %>
 <%@ page import="com.photon.phresco.model.Module" %>
-<%@page import="com.photon.phresco.model.Documentation.DocumentationType"%>
+<%@ page import="com.photon.phresco.model.Documentation.DocumentationType"%>
 
 <style>
 	.twipsy {
@@ -87,13 +82,14 @@
 
 <script type="text/javascript" src="js/loading.js"></script>
 <script type="text/javascript" src="js/home-header.js"></script>
-<!-- Feature js -->
 <script type="text/javascript" src="js/feature.js"></script>
 
 <%
 	String appType = "";
 	String disabled = "disabled";
     
+	String customerId = (String) request.getAttribute(FrameworkConstants.REQ_CUSTOMER_ID);
+	
     List<ModuleGroup> modules = (List<ModuleGroup>) request.getAttribute(FrameworkConstants.REQ_FEATURES_LEFT_MODULES);
     String moduleHdr = (String)request.getAttribute(FrameworkConstants.REQ_FEATURES_FIRST_MDL_CAT);
     String moduleType = "";
@@ -314,21 +310,21 @@
 				
 			} %>
 	</div>
+	
 	<div class="features_actions">
 		<a id="previous" href="#" class="primary btn"><s:text name="label.previous"/></a>
-		<%
-			if(StringUtils.isNotEmpty(fromPage)) {
-		%>
+		<% if(StringUtils.isNotEmpty(fromPage)) { %>
 			<input id="update" type="button" value="<s:text name="label.update"/>" class="primary btn createProject_btn">
 		<% } else { %>
 			<input id="finish" type="button" value="<s:text name="label.finish"/>" class="primary btn createProject_btn">
 		<% } %>
-			<input type="button" id="cancel" value="<s:text name="label.cancel"/>" class="primary btn">
-			<!-- tech id value for dependency check call -->
-			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
-			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
-			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
-			<input type="hidden" name="fromTab" value="features">
+		<input type="button" id="cancel" value="<s:text name="label.cancel"/>" class="primary btn">
+		<input type="hidden" id="technology" name="techId" value="<%= techId %>">
+		<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
+		<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+		<input type="hidden" name="fromTab" value="features">
+		<input type="hidden" id="customerId" name="customerId" value="<%= customerId %>">
+		<input type="hidden" name="fromPage" value="<%= fromPage %>">
 	</div>
     </form>
     
@@ -339,9 +335,6 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		enableScreen();
-	});
 	$('#projectCode').val('<%= projectCode %>'); //this is for changing the sub-tab.
 	$('#fromPage').val('<%= fromPage %>'); //this is for changing the sub-tab.
 </script>

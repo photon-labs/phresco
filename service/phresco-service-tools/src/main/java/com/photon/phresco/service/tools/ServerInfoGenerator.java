@@ -82,17 +82,6 @@ public class ServerInfoGenerator implements ServiceConstants {
         servers.add(server);
         
         versions = new ArrayList<String>(2);
-        versions.add("2.3");
-        versions.add("2.2");
-        versions.add("2.0");
-        versions.add("1.3");
-        server = new Server("Apache", versions, "Apache");
-        server.setCustomerId("photon");
-        server.setSystem(true);
-        server.setTechnologies(createTomcatTech());
-        servers.add(server);
-        
-        versions = new ArrayList<String>(2);
         versions.add("0.6.x");
         versions.add("0.7.x");
         server = new Server("NodeJS", versions, "NodeJS");
@@ -112,10 +101,27 @@ public class ServerInfoGenerator implements ServiceConstants {
         server.setSystem(true);
         server.setTechnologies(createTomcatTech());
         servers.add(server);
+        
+        versions=new ArrayList<String>(2);
+        versions.add("2.3");
+        versions.add("2.2");
+        versions.add("2.0");
+        versions.add("1.3");
+        server=new Server("Apache",versions,"Apache");
+        server.setCustomerId("photon");
+        server.setSystem(true);
+        server.setTechnologies(createApacheTech());
+        servers.add(server);
         return servers;
     }
 
-    private static List<String> createNodejsTech() {
+    private static List<String> createApacheTech() {
+		String[] techs=new String[]{TechnologyTypes.PHP,TechnologyTypes.WORDPRESS,TechnologyTypes.PHP_DRUPAL6,TechnologyTypes.PHP_DRUPAL7,TechnologyTypes.JAVA_WEBSERVICE, TechnologyTypes.HTML5_MOBILE_WIDGET,
+                TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,TechnologyTypes.HTML5_WIDGET};
+		return Arrays.asList(techs);
+	}
+
+	private static List<String> createNodejsTech() {
         String[] techs = new String[]{TechnologyTypes.NODE_JS_WEBSERVICE};
         return Arrays.asList(techs);
     }
@@ -130,7 +136,6 @@ public class ServerInfoGenerator implements ServiceConstants {
         List<Server> servers = createServer();
         RestClient<Server> restClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_SERVERS);
         ClientResponse response = restClient.create(servers);
-        System.out.println("Response Is" + response.getStatus());
     }
     
     public static void main(String[] args) throws PhrescoException {

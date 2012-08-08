@@ -39,8 +39,6 @@ public class AdminRestCustomersTest implements ServiceConstants {
         Customer customer = new Customer();
         customer.setId("test-customer");
         customer.setName("Test customer");
-        customer.setValidFrom("");
-        customer.setValidUpto("");
         customer.setDescription("");
         customer.setAddress("");
         customer.setContactNumber("");
@@ -78,8 +76,6 @@ public class AdminRestCustomersTest implements ServiceConstants {
         Customer customer = new Customer();
         customer.setId("test-customer");
         customer.setName("Test customer update");
-        customer.setValidFrom("");
-        customer.setValidUpto("");
         customer.setDescription("");
         customer.setAddress("");
         customer.setContactNumber("");

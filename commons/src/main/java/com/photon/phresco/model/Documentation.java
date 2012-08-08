@@ -32,7 +32,7 @@ public class Documentation implements Serializable {
 	private static final long serialVersionUID = -8501416224917860870L;
 
 	public enum DocumentationType {
-		DESCRIPTION, HELP_TEXT, TOOL_TIP, DOCUMENT
+		DESCRIPTION, HELP_TEXT, TOOL_TIP, DOCUMENT, ARCHITECHTURE, CODING_GUIDELINES
 	}
 
 	private String id;

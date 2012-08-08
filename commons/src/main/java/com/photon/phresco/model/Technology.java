@@ -53,31 +53,20 @@ public class Technology extends Element implements Cloneable, Serializable {
 	private boolean system;
 	private String customerId;
 	private ArchetypeInfo archetypeInfo;
+	private List<Documentation> docs;
 	
     public Technology() {
         super();
     }
 
     public Technology(String id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
+        super(id, name);
     }
 
-    public Technology(String name, String description, List<String>versions, List<String> appType) {
-        super();
-        this.name = name;
-        this.description = description;
+    public Technology(String name, String description, List<String> versions, List<String> appType) {
+        super(name, description);
         this.versions = versions;
         this.appType = appType;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getAppTypeId() {
@@ -87,14 +76,6 @@ public class Technology extends Element implements Cloneable, Serializable {
 	public void setAppTypeId(String appTypeId) {
 		this.appTypeId = appTypeId;
 	}
-
-	public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<ModuleGroup> getFrameworks() {
         return frameworks;
@@ -227,7 +208,15 @@ public class Technology extends Element implements Cloneable, Serializable {
 	
 	
 
-	@Override
+	public List<Documentation> getDocs() {
+        return docs;
+    }
+
+    public void setDocs(List<Documentation> docs) {
+        this.docs = docs;
+    }
+
+    @Override
 	public String toString() {
 		return "Technology [appTypeId=" + appTypeId + ", frameworks="
 				+ frameworks + ", jsLibraries=" + jsLibraries + ", modules="
@@ -237,8 +226,7 @@ public class Technology extends Element implements Cloneable, Serializable {
 				+ ", versionComment=" + versionComment + ", appType=" + appType
 				+ ", appJar=" + appJar + ", pluginJar=" + pluginJar
 				+ ", versions=" + versions + ", system=" + system
-				+ ", customerId=" + customerId + ", id=" + id + ", name="
-				+ name + "]";
+				+ ", customerId=" + customerId  + "]";
 	}
 
 	@SuppressWarnings("unchecked")

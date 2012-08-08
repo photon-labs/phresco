@@ -117,10 +117,10 @@
             <result name="features_oneClm">/pages/applications/features_oneClm.jsp</result>
             <result name="features_twoClm">/pages/applications/features_twoClm.jsp</result>
             <result name="features_threeClm">/pages/applications/features_threeClm.jsp</result>
-            <result type="json" />
+            <result name="success" type="json" />
         </action>
         
-        <action name="checkDependency" method="checkDependency" class="com.photon.phresco.framework.actions.applications.Features">
+        <action name="checkDependency" method="checkDependencyModules" class="com.photon.phresco.framework.actions.applications.Features">
             <result type="json" />
         </action>
         
@@ -681,5 +681,9 @@
         	<result type="json" />
         </action>
 		<!-- minification ends -->
+		<action name="localJenkinsAliveCheck" method="localJenkinsLocalAlive" class="com.photon.phresco.framework.actions.applications.CI">
+        	<result type="json"><param name="root">localJenkinsAlive</param></result>
+        </action>
+		
     </package>
 </struts>

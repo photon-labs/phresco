@@ -36,6 +36,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -56,10 +57,12 @@ import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
+import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.impl.ClientHelper;
 import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
@@ -113,13 +116,13 @@ public class Applications extends FrameworkBaseAction {
 	//svn info
 	private String credential = null;
 	private String customerId = null;
+	private String application = null;
 
-    public String list() {
+	public String list() {
 		long start = System.currentTimeMillis();
 		S_LOGGER.debug("Entering Method  Applications.list()");
 		try {
-			Map<String, Object> sessionMap = ActionContext.getContext()
-					.getSession();
+			Map<String, Object> sessionMap = ActionContext.getContext().getSession();
 			sessionMap.remove(SESSION_SELECTED_INFO);
 			sessionMap.remove(SESSION_SELECTED_MODULES);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
@@ -132,14 +135,15 @@ public class Applications extends FrameworkBaseAction {
 		String discover = discover();
 		long end = System.currentTimeMillis();
 		S_LOGGER.debug("Total Time : " + (end - start));
+		
 		return discover;
 	}
 
 	public String applicationDetails() {
 		S_LOGGER.debug("Entering Method  Applications.addApplication()");
 
-		getHttpRequest().setAttribute(REQ_FROM_PAGE,
-				getHttpRequest().getParameter(REQ_FROM_PAGE));
+		getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
+		getHttpRequest().setAttribute(REQ_CUSTOMER_ID, customerId);
 		if (projectCode != null && !StringUtils.isEmpty(projectCode)) {
 			try {
 				getHttpSession().removeAttribute(projectCode);
@@ -224,13 +228,12 @@ public class Applications extends FrameworkBaseAction {
 	}
 
 	public String applicationType() {
-
 		S_LOGGER.debug("Entering Method  Applications.applicationType()");
-		String appType = getHttpRequest().getParameter(REQ_APPLICATION_TYPE);
+		
 		try {
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
-			getHttpRequest().setAttribute(SESSION_APPLICATION_TYPE,
+					.getApplicationType(getHttpRequest(), application, customerId);
+			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE,
 					applicationType);
 			ProjectAdministrator administrator = PhrescoFrameworkFactory
 					.getProjectAdministrator();
@@ -250,6 +253,7 @@ public class Applications extends FrameworkBaseAction {
 					+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "Getting Application Type");
 		}
+		
 		return APP_TYPE;
 	}
 
@@ -257,12 +261,8 @@ public class Applications extends FrameworkBaseAction {
 
 		S_LOGGER.debug("Entering Method  Applications.technology()");
 		try {
-			String selectedTechnology = getHttpRequest().getParameter(
-					REQ_TECHNOLOGY);
-			String appType = getHttpRequest()
-					.getParameter(REQ_APPLICATION_TYPE);
-			ProjectAdministrator administrator = PhrescoFrameworkFactory
-					.getProjectAdministrator();
+			String selectedTechnology = getHttpRequest().getParameter(REQ_TECHNOLOGY);
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Project project = null;
 			if (StringUtils.isNotEmpty(projectCode)) {
 				project = administrator.getProject(projectCode);
@@ -273,28 +273,24 @@ public class Applications extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_PROJECT_INFO, projectInfo);
 			}
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
-			Technology techonology = applicationType
-					.getTechonology(selectedTechnology);
+					.getApplicationType(getHttpRequest(), application, customerId);
+			Technology techonology = applicationType.getTechonology(selectedTechnology);
 			List<Server> servers = administrator.getServers(selectedTechnology, customerId);
-			List<Database> databases = administrator
-					.getDatabases(selectedTechnology, customerId);
+			List<Database> databases = administrator.getDatabases(selectedTechnology, customerId);
 			List<WebService> webServices = administrator
 					.getWebServices(selectedTechnology, customerId);
 			S_LOGGER.debug("Selected technology" + techonology.toString());
-			// This attribute for Pilot Project combo box
-			getHttpRequest().setAttribute(REQ_PILOTS_NAMES,
-			ApplicationsUtil.getPilotNames(techonology.getId(), customerId));
+			getHttpRequest().setAttribute(REQ_PILOTS_NAMES, 
+				ApplicationsUtil.getPilotNames(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_PILOT_PROJECT_INFO,
-			ApplicationsUtil.getPilotProjectInfo(techonology.getId(), customerId));
+				ApplicationsUtil.getPilotProjectInfo(techonology.getId(), customerId));
 			getHttpRequest().setAttribute(REQ_SELECTED_TECHNOLOGY, techonology);
-			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, appType);
+			getHttpRequest().setAttribute(REQ_APPLICATION_TYPE, application);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 			getHttpRequest().setAttribute(REQ_SERVERS, servers);
 			getHttpRequest().setAttribute(REQ_DATABASES, databases);
 			getHttpRequest().setAttribute(REQ_WEBSERVICES, webServices);
 		} catch (Exception e) {
-			e.printStackTrace();
 			S_LOGGER.error("Entered into catch block of  Applications.technology()"
 					+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "Getting technology");
@@ -305,12 +301,10 @@ public class Applications extends FrameworkBaseAction {
 
 	public String techVersions() {
 		try {
-			String appType = getHttpRequest()
-					.getParameter(REQ_APPLICATION_TYPE);
 			String selectedTechnology = getHttpRequest().getParameter(
 					REQ_TECHNOLOGY);
 			ApplicationType applicationType = ApplicationsUtil
-					.getApplicationType(getHttpRequest(), appType, customerId);
+					.getApplicationType(getHttpRequest(), application, customerId);
 			Technology techonology = applicationType
 					.getTechonology(selectedTechnology);
 			techVersions = techonology.getVersions();
@@ -519,32 +513,27 @@ public class Applications extends FrameworkBaseAction {
 	private void setFeatures(ProjectAdministrator administrator,
 			ProjectInfo projectInfo) throws PhrescoException {
 		S_LOGGER.debug("Entering Method  Applications.setFeatures()");
+		
+		try {
+			String module = getHttpRequest().getParameter(REQ_SELECTEDMODULES);
+			String[] modules = module.split(",");
+			if (!ArrayUtils.isEmpty(modules)) {
+				List<ModuleGroup> allModules = administrator.getAllModules(projectInfo.getTechnology().getId(), customerId);
+				List<ModuleGroup> selectedModules = ApplicationsUtil
+						.getSelectedTuples(getHttpRequest(), allModules, modules);
+				projectInfo.getTechnology().setModules(selectedModules);
+			}
 
-		String module = getHttpRequest().getParameter(REQ_SELECTEDMODULES);
-		String[] modules = module.split(",");
-		ApplicationType applicationType = administrator
-				.getApplicationType(projectInfo.getApplication(), customerId);
-		if (S_LOGGER.isDebugEnabled()) {
-			S_LOGGER.debug("Application Type object value "
-					+ applicationType.toString());
-		}
-
-		if (modules != null) {
-			List<ModuleGroup> allModules = applicationType.getTechonology(
-					projectInfo.getTechnology().getId()).getModules();
-			List<ModuleGroup> selectedModules = ApplicationsUtil
-					.getSelectedTuples(getHttpRequest(), allModules, modules);
-			projectInfo.getTechnology().setModules(selectedModules);
-		}
-
-		String jsLib = getHttpRequest().getParameter(REQ_SELECTED_JSLIBS);
-		String[] jsLibs = jsLib.split(",");
-		if (jsLibs != null) {
-			List<ModuleGroup> allModules = applicationType.getTechonology(
-					projectInfo.getTechnology().getId()).getJsLibraries();
-			List<ModuleGroup> selectedModules = ApplicationsUtil
-					.getSelectedTuples(getHttpRequest(), allModules, jsLibs);
-			projectInfo.getTechnology().setJsLibraries(selectedModules);
+			String jsLib = getHttpRequest().getParameter(REQ_SELECTED_JSLIBS);
+			String[] jsLibs = jsLib.split(",");
+			if (jsLibs != null) {
+				List<ModuleGroup> allModules = administrator.getJSLibs(projectInfo.getTechnology().getId(), customerId);
+				List<ModuleGroup> selectedModules = ApplicationsUtil
+						.getSelectedTuples(getHttpRequest(), allModules, jsLibs);
+				projectInfo.getTechnology().setJsLibraries(selectedModules);
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
 		}
 	}
 
@@ -1250,21 +1239,51 @@ public class Applications extends FrameworkBaseAction {
 
 		return SUCCESS;
 	}
-
+	
 	public String browse() {
 		S_LOGGER.debug("Entering Method  Applications.browse()");
 		try {
 			getHttpRequest().setAttribute(FILE_TYPES, fileType);
 			getHttpRequest().setAttribute(FILE_BROWSE, fileorfolder);
 			String projectLocation = Utility.getProjectHome() + projectCode;
-			getHttpRequest()
-					.setAttribute(REQ_PROJECT_LOCATION, projectLocation);
+			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation.replace(File.separator, FORWARD_SLASH));
 			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
 		} catch (Exception e) {
-			S_LOGGER.error("Entered into catch block of  Applications.browse()"
-					+ FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Entered into catch block of  Applications.browse()"	+ FrameworkUtil.getStackTraceAsString(e));
 			new LogErrorReport(e, "File Browse");
 		}
+		return SUCCESS;
+	}
+
+	public String authenticateServer() throws PhrescoException {
+		try {
+			String host = (String)getHttpRequest().getParameter(SERVER_HOST);
+			int port = Integer.parseInt(getHttpRequest().getParameter(SERVER_PORT));
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			boolean connectionAlive = DiagnoseUtil.isConnectionAlive("https", host, port);
+			boolean isCertificateAvailable = false;
+			if (connectionAlive) {
+				List<CertificateInfo> certificates = administrator.getCertificate(host, port);
+				if (CollectionUtils.isNotEmpty(certificates)) {
+					isCertificateAvailable = true;
+					getHttpRequest().setAttribute("certificates", certificates);
+				}
+			}
+			getHttpRequest().setAttribute(FILE_TYPES, FILE_TYPE_CRT);
+			getHttpRequest().setAttribute(FILE_BROWSE, FILE_BROWSE);
+			String projectLocation = "";
+			if (StringUtils.isNotEmpty(projectCode)) {
+				projectLocation = Utility.getProjectHome() + projectCode;
+			} else {
+				projectLocation = Utility.getProjectHome();
+			}
+			getHttpRequest().setAttribute(REQ_PROJECT_LOCATION, projectLocation.replace(File.separator, FORWARD_SLASH));
+			getHttpRequest().setAttribute(REQ_RMT_DEP_IS_CERT_AVAIL, isCertificateAvailable);
+			getHttpRequest().setAttribute(REQ_RMT_DEP_FILE_BROWSE_FROM, CONFIGURATION);
+		} catch(Exception e) {
+			throw new PhrescoException(e);
+		}
+
 		return SUCCESS;
 	}
 
@@ -1339,7 +1358,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setGlobalValidationStatus(String globalValidationStatus) {
 		this.globalValidationStatus = globalValidationStatus;
 	}
-
+	
 	public List<String> getPilotModules() {
 		return pilotModules;
 	}
@@ -1347,7 +1366,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setPilotModules(List<String> pilotModules) {
 		this.pilotModules = pilotModules;
 	}
-
+	
 	public List<String> getPilotJSLibs() {
 		return pilotJSLibs;
 	}
@@ -1355,7 +1374,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setPilotJSLibs(List<String> pilotJSLibs) {
 		this.pilotJSLibs = pilotJSLibs;
 	}
-
+	
 	public List<String> getVersions() {
 		return versions;
 	}
@@ -1363,7 +1382,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setVersions(List<String> versions) {
 		this.versions = versions;
 	}
-
+	
 	public String getSelectedVersions() {
 		return selectedVersions;
 	}
@@ -1371,7 +1390,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setSelectedVersions(String selectedVersions) {
 		this.selectedVersions = selectedVersions;
 	}
-
+	
 	public String getSelectedAttrType() {
 		return selectedAttrType;
 	}
@@ -1387,7 +1406,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setSelectedParamName(String selectedParamName) {
 		this.selectedParamName = selectedParamName;
 	}
-
+	
 	public String getHiddenFieldValue() {
 		return hiddenFieldValue;
 	}
@@ -1395,7 +1414,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setHiddenFieldValue(String hiddenFieldValue) {
 		this.hiddenFieldValue = hiddenFieldValue;
 	}
-
+	
 	public String getDivTobeUpdated() {
 		return divTobeUpdated;
 	}
@@ -1403,7 +1422,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setDivTobeUpdated(String divTobeUpdated) {
 		this.divTobeUpdated = divTobeUpdated;
 	}
-
+	
 	public List<String> getSettingsEnv() {
 		return settingsEnv;
 	}
@@ -1411,7 +1430,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setSettingsEnv(List<String> settingsEnv) {
 		this.settingsEnv = settingsEnv;
 	}
-
+	
 	public boolean isHasError() {
 		return hasError;
 	}
@@ -1419,7 +1438,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setHasError(boolean hasError) {
 		this.hasError = hasError;
 	}
-
+	
 	public String getEnvError() {
 		return envError;
 	}
@@ -1427,7 +1446,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setEnvError(String envError) {
 		this.envError = envError;
 	}
-
+	
 	public List<String> getTechVersions() {
 		return techVersions;
 	}
@@ -1435,7 +1454,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setTechVersions(List<String> techVersions) {
 		this.techVersions = techVersions;
 	}
-
+	
 	public boolean isHasConfiguration() {
 		return hasConfiguration;
 	}
@@ -1443,7 +1462,7 @@ public class Applications extends FrameworkBaseAction {
 	public void setHasConfiguration(boolean hasConfiguration) {
 		this.hasConfiguration = hasConfiguration;
 	}
-
+	
 	public String getConfigServerNames() {
 		return configServerNames;
 	}
@@ -1515,4 +1534,12 @@ public class Applications extends FrameworkBaseAction {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+    
+    public String getApplication() {
+		return application;
+	}
+
+	public void setApplication(String application) {
+		this.application = application;
+	}
 }

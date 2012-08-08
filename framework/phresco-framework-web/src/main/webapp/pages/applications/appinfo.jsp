@@ -19,20 +19,17 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.collections.MapUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
 
-<!--  Heading Starts -->
 <%
     String codePrefix = (String) request.getAttribute(FrameworkConstants.REQ_CODE_PREFIX);
     String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
@@ -71,10 +68,12 @@
     		artifactId = selectedInfo.getArtifactId();
     	}
     }
+    
+    String customerId = (String) request.getAttribute(FrameworkConstants.REQ_CUSTOMER_ID);
 %>
 
 <!--  Form Starts -->
-<form action="next" method="post" autocomplete="off" class="app_add_form" autofocus="autofocus">
+<form action="next" method="post" autocomplete="off" class="app_add_form" id="formAppInfo" autofocus="autofocus">
     <div class="appInfoScrollDiv">           
 		<!--  Name Starts -->
 		<div class="clearfix <%=request.getAttribute(FrameworkConstants.REQ_NAME)!= null ? "error" : "" %>" id="nameErrDiv">
@@ -83,9 +82,7 @@
 		        <input class="xlarge" id="name" name="name" maxlength="30" title="30 Characters only"
 		            type="text"  value ="<%= selectedInfo == null ? "" : selectedInfo.getName() %>" 
 		            autofocus="autofocus" placeholder="<s:text name="label.name.placeholder"/>" <%= disabled %> />
-		        <span class="help-inline" id="nameErrMsg">
-		           
-		        </span>
+		        <span class="help-inline" id="nameErrMsg"></span>
 		    </div>
 		</div>
 		<!--  Name Ends -->
@@ -98,7 +95,8 @@
 		        <%-- <input class="xlarge" id="internalCode" name="internalCode"
 		            type="text"  value ="<%= selectedInfo == null ? codePrefix : selectedInfo.getCode() %>" disabled /> --%>
 				<input class="xlarge" id="externalCode" name="externalCode"
-		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" placeholder="<s:text name="label.code.placeholder"/>"/>
+		            type="text" maxlength="12" value ="<%= externalCode %>" title="12 Characters only" 
+		            placeholder="<s:text name="label.code.placeholder"/>"/>
 		    </div>
 		</div>
 		<!--  Code Ends -->
@@ -108,8 +106,8 @@
 		    <s:label for="description" key="label.description" theme="simple" cssClass="new-xlInput"/>
 		    <div class="input new-input">
 		        <textarea class="appinfo-desc xxlarge" maxlength="150" title="150 Characters only" class="xxlarge" id="textarea" 
-		        name="description" placeholder="<s:text name="label.description.placeholder"/>"><%= selectedInfo == null 
-		        ? "" : selectedInfo.getDescription() %></textarea>
+		        	name="description" placeholder="<s:text name="label.description.placeholder"/>"><%= selectedInfo == null 
+		        	? "" : selectedInfo.getDescription() %></textarea>
 		    </div>
 		</div>
 		<!--  Description Ends -->
@@ -147,56 +145,61 @@
 		    <div class="input new-input">
 		        <ul class="inputs-list">
 		            <li> 
-			            <%
-			                List<ApplicationType> appTypes = (List<ApplicationType>) request.getAttribute(FrameworkConstants.SESSION_APPLICATION_TYPES);
-			                String checkedStr = "";
-			                if (CollectionUtils.isNotEmpty(appTypes)) {
-				                for(ApplicationType applicationType : appTypes) {
-				                    String name = applicationType.getName();
-				                    
-				                    if(selectedInfo != null) {
-				                        checkedStr = name.equals(selectedInfo.getApplication()) ? "checked" : "";
-				                    }
-			            %>
-			                <input type="radio" name="application" id="<%= name %>" value="<%= name %>" <%= checkedStr %> <%= disabled %>/> 
-			                <span class="textarea_span"><%= name %></span>
-			            <% 
-			            		}
-			                }
-			            %>
+		            <%
+		                List<ApplicationType> appTypes = (List<ApplicationType>) request.getAttribute(FrameworkConstants.SESSION_APPLICATION_TYPES);
+		                String checkedStr = "";
+		                if (CollectionUtils.isNotEmpty(appTypes)) {
+			                for(ApplicationType applicationType : appTypes) {
+			                    String name = applicationType.getName();
+			                    String id =applicationType.getId();
+			                    if(selectedInfo != null) {
+			                        checkedStr = name.equals(selectedInfo.getApplication()) ? "checked" : "";
+			                    }
+		            %>
+				                <input type="radio" name="application" id="<%= id %>" value="<%= id %>" <%= checkedStr %> <%= disabled %>/> 
+				                <span class="textarea_span"><%= name %></span>
+		            <% 
+		            		}
+		                }
+		            %>
 		            </li>
 		        </ul>
 		    </div>
 		</div>
 		<!--  Application Type Ends-->
 	                    
-		<!--  Dependecies are loaded -->
+		<!--  Dependencies are loaded -->
 		<div class="Create_project_inner" id="AjaxContainer"></div>
 	</div>
+	
     <!--  Submit and Cancel buttons Starts -->
     <div class="actions">
-    	<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames == null ? "" : configServerNames %>">
-    	<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames == null ? "" : configDbNames %>">
-    
-    	<% if (MapUtils.isNotEmpty(selectedFeatures)) { %>
-    		<input type="hidden" id="selectedFeatures" name="selectedFeatures" value="<%= selectedFeatures %>">
-    	<% } 	
-    	   if (MapUtils.isNotEmpty(selectedJsLibs)) { %>
-    		<input type="hidden" id="selectedJsLibs" name="selectedJsLibs" value="<%= selectedJsLibs %>">
-    	<% } %>
-    	<input type="hidden" id="selectedPilotProj" name="selectedPilotProj" value="<%= selectedPilotProj %>">
-    	<input type="hidden" name="fromTab" value="appInfo">
         <input id="next" type="submit" value="<s:text name="label.next"/>" class="primary btn createProject_btn">
         <input type="button" id="cancel" value="<s:text name="label.cancel"/>" class="primary btn">
     </div>
     <!--  Submit and Cancel buttons Ends -->
+    
+    <!-- Hidden Fields -->
+    <input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames == null ? "" : configServerNames %>">
+	<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames == null ? "" : configDbNames %>">
+	<input type="hidden" id="selectedPilotProj" name="selectedPilotProj" value="<%= selectedPilotProj %>">
+    <input type="hidden" name="fromTab" value="appInfo">
+    <% if (MapUtils.isNotEmpty(selectedFeatures)) { %>
+   		<input type="hidden" id="selectedFeatures" name="selectedFeatures" value="<%= selectedFeatures %>">
+   	<% } 	
+   	   if (MapUtils.isNotEmpty(selectedJsLibs)) { %>
+   		<input type="hidden" id="selectedJsLibs" name="selectedJsLibs" value="<%= selectedJsLibs %>">
+   	<% } %>
+   	<input type="hidden" name="customerId" value="<%= customerId %>">
+   	<input type="hidden" name="fromPage" value="<%= fromPage %>">
+   	<input type="hidden" name="projectCode" value="<%= projectCode %>">
+   	
 </form> 
 <!--  Form Ends -->
     
 <script type="text/javascript">
 	/* To check whether the divice is ipad or not */
-	if(!isiPad()){
-	    /* JQuery scroll bar */
+	if (!isiPad()) {
 		$(".appInfoScrollDiv").scrollbars();
 	}
 	
@@ -205,53 +208,51 @@
     	escPopup();
         checkDefault();
         changeStyle("appinfo");
+        
         $("input[name='application']").click(function() {
             changeApplication();
         });
         
         // To restrict the user in typing the special charaters
-        
         $('#name').bind('input propertychange', function (e) {
         	var projNname = $(this).val();
         	projNname = checkForSplChr(projNname);
         	$(this).val(projNname);
         	codeGenerate(projNname);
-         });
+        });
         
 		$('form').submit(function() {
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("fromPage=");
-			params = params.concat('<%= fromPage %>');
-			performAction('features', params, $("#tabDiv"));
+			$("*").attr("disabled", false);
+			performAction('features', $('#formAppInfo'), $("#tabDiv"));
 			return false;
 		});
 		
 		$('#cancel').click(function() {
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("fromPage=");
-			params = params.concat("edit");
 	    	showLoadingIcon($("#tabDiv")); // Loading Icon
-			performAction('applications', params, $('#container'));
+			performAction('applications', $('#formAppInfo'), $('#container'));
 		});
 		
+		$("#externalCode").bind('input propertychange',function(e) {
+	    	var name = $(this).val();
+	    	name = checkForCode(name);
+	    	$(this).val(name);
+	    });
+	    
+	    $('#projectVersion').bind('input propertychange', function (e) {
+	    	var version = $(this).val();
+	    	version = checkForVersion(version);
+	    	$(this).val(version);
+	    });
+	    
 		window.setTimeout(function () { document.getElementById('name').focus(); }, 250);
 	});
 
 	//This function is to handle the change event for application radio
 	function changeApplication() {
-		var params = "applicationType=";
-		params = params.concat($("input[name='application']:checked").val());
-		params = params.concat("&" + '<%= FrameworkConstants.REQ_FROM_PAGE %>' + "=");
-		params = params.concat('<%= fromPage %>');
-		popup('applicationType', params, $('#AjaxContainer'));
+		$("input[name='application']").prop("disabled", false);
+		performAction('applicationType', $('#formAppInfo'), $('#AjaxContainer'));
 	}
 
 	function codeGenerate(projNname) {
@@ -266,7 +267,7 @@
     function checkDefault() {
         var $radios = $("input[name='application']");
         if ($radios.is(':checked') === false) {
-            $radios.filter("[value='Web Application']").attr('checked', true);
+            $radios.filter("[value='apptype-webapp']").attr('checked', true);
         }
         changeApplication();
     }
@@ -286,16 +287,54 @@
     	}
     }
     
-    $("#externalCode").bind('input propertychange',function(e){ 
-    	var name = $(this).val();
-    	name = checkForCode(name);
-    	$(this).val(name);
-     });
+    function hideServerAndDatabase(technology) {
+		if (technology == "tech-java-standalone") {
+			$("#server").hide();
+		} else {
+			$("#server").show();
+		}
+	}
     
-    $('#projectVersion').bind('input propertychange', function (e) { 	
-    	var version = $(this).val();
-    	version = checkForVersion(version);
-    	$(this).val(version);
-     });
-  
+    function successEvent(pageUrl, data) {
+		if (pageUrl == "getAllVersions") {
+			if (fillCheckBoxVersion(versionFor, data.versions)) {
+				makeVersionsSelected();
+			}
+		} else if (pageUrl == "techVersions") {
+			if (data.techVersions != undefined && data.techVersions != "") {
+				$("#technologyVersionDiv").show();
+                if (fillVersions("techVersion", data.techVersions)) {
+					showPrjtInfoTechVersion();
+                }
+	        } else {
+				$("#technologyVersionDiv").hide();
+	        }
+			var technology = $("#technology").val();
+			hideServerAndDatabase(technology);
+		} else if (pageUrl == "checkForRespectiveConfig") {
+			if (data.hasConfiguration) {
+				if (type == "Database") {
+					$("#confirmationText").html("Corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
+				} else {
+					$("#confirmationText").html("Corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
+				}
+			    dialog('block');
+			    escBlockPopup();
+			} else {
+				if (type == "Database") {
+					if (checkForProjectInfoDb()) {
+						$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
+						dialog('block');
+					    escBlockPopup();						
+					} else {
+						removeDiv();
+					}
+				} else {
+					removeDiv();					
+				}
+			}
+		} else if (pageUrl == "technology") {
+			techVersions();    	
+		}
+	}
 </script>

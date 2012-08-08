@@ -16,34 +16,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ###
+ * 
+ * @author kumar_s
  */
 package com.photon.phresco.commons.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 @XmlRootElement
 public class Tweet {
 
     private String id;
     private String message;
 
+	/**
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
+	
+	/**
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	/**
+	 * @return
+	 */
 	public String getMessage() {
 		return message;
 	}
+	
+	/**
+	 * @param message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
-	@Override
 	public String toString() {
-		return "Tweet [id=" + id + ", message=" + message + "]";
-	}
-
+        return new ToStringBuilder(this,
+                ToStringStyle.DEFAULT_STYLE)
+                .append("id", id)
+                .append("message", message)
+                .toString();
+    }
+	
 }

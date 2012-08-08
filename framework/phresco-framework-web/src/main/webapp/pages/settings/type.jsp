@@ -148,7 +148,9 @@
 		        			 checkedStr = "checked";
 		        		 }
 		        %>		
-		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">		
+		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">
+		        		&nbsp;&nbsp;&nbsp;&nbsp;
+		        		<input type="button" value="<s:text name="label.authenticate"/>" id="authenticate" class="primary btn hideContent"/>
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
@@ -264,6 +266,10 @@
     <!-- applies to ends -->
     
 <script type="text/javascript">
+	$("div#certificate").hide();
+	
+	enableOrDisabAuthBtn();
+	
 	if(!isiPad()){
 		/* JQuery scroll bar */
 		$("#multilist-scroller").scrollbars();
@@ -334,10 +340,11 @@
 		// hide deploy dir if remote Deployment selected
 		$("input[name='remoteDeployment']").change(function() {
 			var isChecked = $("input[name='remoteDeployment']").is(":checked");
+			enableOrDisabAuthBtn();
 			if (isChecked) {
 				hideDeployDir();
 				$("#admin_username label").html('<span class="red">* </span>Admin Username');
-				$("#admin_password label").html('<span class="red">* </span>Admin Password');  
+				$("#admin_password label").html('<span class="red">* </span>Admin Password');
 			}  else {
 				$("#admin_username label").html('Admin Username');
 				$("#admin_password label").html('Admin Password');  
@@ -351,7 +358,7 @@
 				hideDeployDir();
 			}
 		    getCurrentVersions('onChange');
-	      }); 
+		}); 
 		
 		$("input[name='name']").prop({"maxLength":"20", "title":"20 Characters only"});
 		$("input[name='context']").prop({"maxLength":"60", "title":"60 Characters only"});
@@ -362,7 +369,8 @@
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
-         });
+        	enableOrDisabAuthBtn();
+        });
         
 		$("#xlInput").live('input propertychange',function(e) { //Name validation
         	var name = $(this).val();
@@ -381,12 +389,30 @@
         	var portNo = $(this).val();
         	portNo = checkForNumber(portNo);
         	$(this).val(portNo);
-         });
+        });
         
 		$("input[name='context']").live('input propertychange',function(e){ 	//Context validation
 			var name = $(this).val();
         	name = checkForContext(name);
         	$(this).val(name);
+		});
+		
+		$("input[name='host']").live('input propertychange',function(e) {
+			enableOrDisabAuthBtn();
+		});
+		
+		$("select[name='protocol']").change(function() {
+			enableOrDisabAuthBtn();
+		});
+		
+		$("#authenticate").click(function() {
+			showPopup();
+			$('.popup_div').empty();
+			var params = "host=";
+	    	params = params.concat($("input[name='host']").val());
+			params = params.concat("&port=");
+			params = params.concat($("input[name='port']").val());
+			performAction('authenticateServer', params, $('#popup_div'));
 		});
 	});
 	
@@ -434,6 +460,18 @@
 			$("#admin_password label").html('<span class="red">* </span>Admin Password'); 
 		} else {
 			$('#deploy_dir').show();
+		}
+	}
+	
+	function enableOrDisabAuthBtn() {
+		var protocol = $("select[name='protocol']").val();
+		var host = $("input[name='host']").val();
+		var port = $("input[name='port']").val();
+		var isChecked = $("input[name='remoteDeployment']").is(":checked");
+		if (protocol == "https" && !isBlank(host) && host != undefined && !isBlank(port) && port != undefined && isChecked) {
+			$("#authenticate").removeClass("hideContent");
+		} else {
+			$("#authenticate").addClass("hideContent");
 		}
 	}
 </script>

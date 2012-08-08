@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.framework.commons;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -29,6 +30,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.commons.model.User;
@@ -532,5 +535,17 @@ public class FrameworkUtil implements FrameworkConstants {
     		osBit = OS_BIT86;
     	}
     	return osName.concat(osBit);
+    }
+
+	public static void copyFile(File srcFile, File dstFile) throws PhrescoException {
+    	try {
+    		if (!dstFile.exists()) {
+    			dstFile.getParentFile().mkdirs();
+    			dstFile.createNewFile();
+    		}
+			FileUtils.copyFile(srcFile, dstFile);
+		} catch (Exception e) {
+			throw new PhrescoException();
+		}
     }
 }

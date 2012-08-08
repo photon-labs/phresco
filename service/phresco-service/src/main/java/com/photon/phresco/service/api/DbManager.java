@@ -3,6 +3,7 @@ package com.photon.phresco.service.api;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ArchetypeInfo;
 import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Technology;
 
 public interface DbManager {
     
@@ -22,4 +23,13 @@ public interface DbManager {
      * @throws PhrescoException
      */
     ProjectInfo getProjectInfo(String techId, String projectName) throws PhrescoException;
+    
+    /**
+     * Returns the documents for the given technology type
+     * @param techId
+     * @return
+     * @throws PhrescoException
+     */
+    Technology getTechnologyDoc(String techId) throws PhrescoException;
+    
 }

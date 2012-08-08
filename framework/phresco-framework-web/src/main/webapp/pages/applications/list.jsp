@@ -19,13 +19,11 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.framework.api.ValidationResult" %>
 
 <%@ include file="../userInfoDetails.jsp" %>
 <%@ include file="errorReport.jsp" %>
@@ -37,6 +35,7 @@
 <script type="text/javascript" src="js/reader.js" ></script>
 	<!-- Window Resizer -->
 <script type="text/javascript" src="js/windowResizer.js"></script>
+
 <style type="text/css">
 	.btn.success, .alert-message.success {
        	margin-top: -35px;
@@ -72,10 +71,9 @@
 	</div>
 </div>
 
-<form name="delete" action="delete" method="post" autocomplete="off" id="deleteObjects" class="app_list_form">
+<form name="delete" action="delete" method="post" autocomplete="off" id="formAppList" class="app_list_form">
 	<div class="operation">
 		<input id="add" type="button" value="<s:text name="label.addappln"/>" class="btn primary"/>
-		<!-- <a href="#" class="btn primary" id="discover">Discover</a> -->
 		<a href="#" class="btn primary" id="import"><s:text name="label.import.from.svn"/></a>
 		<input id="deleteButton" type="button" value="<s:text name="label.delete"/>" class="btn disabled" disabled="disabled"/>
 	</div>
@@ -83,6 +81,7 @@
 	<div class="table_div">
 		<%
 			List<Project> projects = (List<Project>)request.getAttribute("Projects");
+			String customerId = (String) request.getAttribute("customerId");
 		%>
 		
 		<s:if test="hasActionMessages()">
@@ -141,7 +140,10 @@
 			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
 			              		<td class="printIconAlign">
-			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
+			              			<a href="#" id="pdfPopup">
+			              				<img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" 
+			              					title="generate pdf" style="height: 20px; width: 20px;"/>
+			              			</a>
 			              		</td>
 			            	</tr>
 			            <%
@@ -155,11 +157,10 @@
 			}
 		%>
 	</div>
+	
+	<!-- Hidden Fields -->
+	<input type="hidden" id="customerId" name="customerId" value="<%= customerId %>"/>
 </form>
-
-<!--  Repo dialog Start -->
-<!-- <div class="popup_div" id="importFromSvn"></div>  -->
-<!--  Repo dialog Start -->
 
 <script type="text/javascript">
 	/* To check whether the device is ipad or not */
@@ -202,22 +203,7 @@
 		$('#add').click(function() {
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-	    	params = params.concat("customerId=");
-	    	params = params.concat($("#customerId").val());
-	        performAction('applicationDetails', params, $('#container'));
-	    });
-		
-		$('#discover').click(function() {
-			var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			showLoadingIcon($("#container")); // Loading Icon
-			performAction('applicationDetails', params, $('#container'));
+	        performAction('applicationDetails', $('#formAppList'), $('#container'));
 	    });
 		
 		$('form').submit(function() {
@@ -234,15 +220,13 @@
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
 	        var projectCode = $(this).attr("id");
-	        var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("projectCode=");
+			var params = "projectCode=";
 			params = params.concat(projectCode);
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
-	        performAction('applicationDetails', params, $('#container'));
+			params = params.concat("&customerId=");
+	    	params = params.concat($("#customerId").val());
+	        performActionParams('applicationDetails', params, $('#container'));
 	    });
 		
         $('.pdfCreation').click(function() {

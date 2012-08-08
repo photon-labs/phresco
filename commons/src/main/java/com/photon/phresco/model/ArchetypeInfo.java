@@ -48,6 +48,6 @@ public class ArchetypeInfo extends Element{
     public String toString() {
         return "ArchetypeInfo [groupId=" + groupId + ", artifactId="
                 + artifactId + ", version=" + version + ", projectGroupId="
-                + projectGroupId + ", id=" + id + "]";
+                + projectGroupId  + "]";
     }
 }

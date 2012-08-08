@@ -21,17 +21,15 @@
 
 <%@ include file="errorReport.jsp" %>
 
-<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.Technology" %>
-<%@ page import="com.photon.phresco.model.ModuleGroup" %>
 <%@ page import="com.photon.phresco.model.WebService"%>
 <%@ page import="com.photon.phresco.model.Server"%>
 <%@ page import="com.photon.phresco.model.Database"%>
@@ -55,7 +53,6 @@
     if (selectedInfo == null) {
     	selectedInfo = (ProjectInfo) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO);
     }
-    
     List<Server> selectedServers = null;
     List<Database> selectedDatabases = null;
     List<WebService> selectedWebServices = null;
@@ -113,16 +110,16 @@
         	}
        	%>
            <select class="xlarge" id="pilotProjects" name="pilotProject" <%= disabled %> onchange="showPilotProjectConfigs(this);">
-			<option value="">None</option>
-			<%
-				if (CollectionUtils.isNotEmpty(pilotProjectNames)) {
-					for (String pilotProjectName : pilotProjectNames) {
-			%>
-						<option value="<%= pilotProjectName %>" <%= selectedStr %> ><%= pilotProjectName %></option>
-			<%		
-					}
-				} 
-			%>
+				<option value="">None</option>
+				<%
+					if (CollectionUtils.isNotEmpty(pilotProjectNames)) {
+						for (String pilotProjectName : pilotProjectNames) {
+				%>
+							<option value="<%= pilotProjectName %>" <%= selectedStr %> ><%= pilotProjectName %></option>
+				<%		
+						}
+					} 
+				%>
            </select>
     </div>
     <!--  Pilot projects are loaded here ends -->
@@ -140,7 +137,10 @@
 		
 		    </div>
 		    
-		    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; 
+		    	background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;">
+		    		<s:text name="label.add"/>
+		    </label>
 		    
 		    <input type="hidden" id="selectedServer" name="selectedServers" value="">
 		</div>
@@ -159,7 +159,10 @@
 		
 		    </div>
 		    
-		    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; 
+		    	background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;">
+		    		<s:text name="label.add"/>
+		    </label>
 		    
 		    <input type="hidden" id="selectedDatabase" name="selectedDatabases" value="">
 		</div>
@@ -215,8 +218,6 @@
 	<s:label for="email" key="label.web.email" theme="simple" cssClass="new-xlInput"/>
 		<div class="input new-input">
 				<%
-// 					boolean isEmailSupported = selectedTechnology.isEmailSupported();
-					
 					if (isEmailSupportSelected) {
 						selectedStr = "checked";
 					}
@@ -355,6 +356,8 @@
 		} else { // This is for adding the new server/db
 			newVersions = versions;
 		}
+		$("#Server").show();
+		
 		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 						+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 						+ name + " [ " + newVersions + " ] " + '</div></div>');
@@ -579,7 +582,9 @@
 		params = params.concat(from);
 		params = params.concat("&fromPage=");
 		params = params.concat('<%= fromPage %>');
-		popup('openAttrPopup', params, $('#popup_div'));
+		params = params.concat("&customerId=");
+		params = params.concat($("input[name=customerId]").val());
+		popupParams('openAttrPopup', params, $('#popup_div'));
 	}
 	
 	/** To get the versions onChange of the select box option **/
@@ -595,7 +600,9 @@
 		params = params.concat(type);
 		params = params.concat("&selectedId=");
 		params = params.concat(selectedId);
-		performAction('getAllVersions', params, '', true);
+		params = params.concat("&customerId=");
+		params = params.concat($("input[name=customerId]").val());
+		popupParams('getAllVersions', params, '', true);
 	}
 
 	/** To update the master hidden fields **/
@@ -676,49 +683,6 @@
 			} else {
 				$("#"+type).show();
 			}			
-		}
-	}
-	
-	function successEvent(pageUrl, data) {
-		if (pageUrl == "getAllVersions") {
-			if (fillCheckBoxVersion(versionFor, data.versions)) {
-				makeVersionsSelected();
-			}
-		} else if (pageUrl == "techVersions") {
-			if (data.techVersions != undefined) {
-				$("#technologyVersionDiv").show();
-                if (fillVersions("techVersion", data.techVersions)) {
-					showPrjtInfoTechVersion();
-                }
-	        } else {
-				$("#technologyVersionDiv").hide();
-	        }
-			var technology = $("#technology").val();
-			hideServerAndDatabase(technology);
-		} else if (pageUrl == "checkForRespectiveConfig") {
-			if (data.hasConfiguration) {
-				if (type == "Database") {
-					$("#confirmationText").html("Corresponding " + type + " configurations and SQL files will also be deleted. Do you like to continue ?");
-				} else {
-					$("#confirmationText").html("Corresponding " + type + " configurations will also be deleted. Do you like to continue ?");					
-				}
-			    dialog('block');
-			    escBlockPopup();
-			} else {
-				if (type == "Database") {
-					if (checkForProjectInfoDb()) {
-						$("#confirmationText").html("Corresponding " + type + " SQL files will also be deleted. Do you like to continue ?");
-						dialog('block');
-					    escBlockPopup();						
-					} else {
-						removeDiv();
-					}
-				} else {
-					removeDiv();					
-				}
-			}
-		} else if (pageUrl == "technology") {
-			techVersions();    	
 		}
 	}
 	
@@ -910,12 +874,4 @@
 			}
 		%>
 	}
- 	
-	function hideServerAndDatabase(technology) {
-		if(technology == "tech-java-standalone") {
-			$("#server").hide();
-		} else {
-			$("#server").show();
-		}
-	}  
 </script>

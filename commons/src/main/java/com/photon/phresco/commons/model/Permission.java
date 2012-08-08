@@ -16,40 +16,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ###
+ * 
+ * @author kumar_s
  */
 package com.photon.phresco.commons.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("restriction")
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 @XmlRootElement
 public class Permission extends Element {
 
+	/**
+	 * 
+	 */
 	public Permission() {
 		super();
 	}
 	
+	/**
+	 * @param id
+	 * @param name
+	 * @param description
+	 */
 	public Permission(String id, String name, String description) {
 		super(id, name, description);
 	}
 
+	/**
+	 * @param name
+	 * @param description
+	 */
 	public Permission(String name, String description) {
 		super(name, description);
 	}
 
-	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Permission [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", creationDate=");
-		builder.append(creationDate);
-		builder.append("]");
-		return builder.toString();
-	}
-	
+        return new ToStringBuilder(this,
+                ToStringStyle.DEFAULT_STYLE)
+                .append(super.toString())
+                .toString();
+    }
 }
