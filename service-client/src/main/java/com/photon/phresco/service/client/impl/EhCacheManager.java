@@ -28,6 +28,7 @@ import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
+import com.photon.phresco.commons.model.Role;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -97,5 +98,13 @@ public class EhCacheManager {
 			return (List<ModuleGroup>)element.getValue();
 		}
 		return new ArrayList<ModuleGroup>(1);
+	}
+	
+	public List<Role> getRoles(String id) {
+		Element element = appTypeCache.get(id);
+		if (element != null) {
+			return (List<Role>)element.getValue();
+		}
+		return new ArrayList<Role>(1);
 	}
 }
