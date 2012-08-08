@@ -320,6 +320,23 @@ public class Build extends FrameworkBaseAction {
 			if (TechnologyTypes.JAVA_STANDALONE.equals(technology)) {
 				getValueFromJavaStdAlonePom();
 			}
+			
+			if (TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) ||
+					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) ||
+					TechnologyTypes.HTML5_WIDGET.equals(technology)){
+				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+				builder.append(projectCode);
+				builder.append(File.separatorChar);
+				builder.append(POM_XML);
+				File pomPath = new File(builder.toString());
+				PomProcessor processor = new PomProcessor(pomPath);
+				com.phresco.pom.model.Plugin.Configuration pluginConfig = processor.getPlugin(MINIFY_PLUGIN_GROUPID,MINIFY_PLUGIN_ARTFACTID).getConfiguration();
+				List<Element> elements = pluginConfig.getAny();
+				for (Element element : elements) {
+					includesFiles(element);
+				}
+			}
 
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Build.generateBuild()" + FrameworkUtil.getStackTraceAsString(e));
@@ -336,6 +353,42 @@ public class Build extends FrameworkBaseAction {
 		getHttpRequest().setAttribute(REQ_TECHNOLOGY, technology);
 		getHttpRequest().setAttribute(REQ_DEPLOY_BUILD_NUMBER, buildNumber);
 		return APP_GENERATE_BUILD;
+	}
+	
+	private void includesFiles(Element element) {
+		try {
+			Map<String, String> map = new HashMap<String, String>();
+			String opFileLoc = "";
+			if (POM_AGGREGATIONS.equals(element.getNodeName())){
+				NodeList aggregationList = element.getElementsByTagName(POM_AGGREGATION);
+				for (int i = 0; i < aggregationList.getLength(); i++) {
+					Element childNode = (Element) aggregationList.item(i);
+					NodeList includeList = childNode.getElementsByTagName(POM_INCLUDES).item(0).getChildNodes();
+					StringBuilder sb = new StringBuilder(); 
+					String sep = "";
+					for (int j = 0; j < includeList.getLength()-1; j++) {
+						Element include = (Element) includeList.item(j);
+						String file = include.getTextContent().substring(include.getTextContent().lastIndexOf("/")+1);
+						sb.append(sep);
+						sb.append(file);
+					    sep = ",";
+					}
+					Element outputElement = (Element) childNode.getElementsByTagName(POM_OUTPUT).item(0);
+					String opFileName = outputElement.getTextContent().substring(
+							outputElement.getTextContent().lastIndexOf("/")+1);
+					String compressName = opFileName.substring(0, opFileName.indexOf("."));
+					map.put(compressName, sb.toString());
+					opFileLoc = outputElement.getTextContent().substring(0,
+							outputElement.getTextContent().lastIndexOf("/")+1);
+					
+					getHttpRequest().setAttribute(REQ_MINIFY_MAP, map);
+				}
+				opFileLoc = opFileLoc.replace(MINIFY_OUTPUT_DIRECTORY, projectCode);
+				getHttpRequest().setAttribute(REQ_FILE_LOC, opFileLoc);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 
 	public String builds() {
@@ -374,7 +427,9 @@ public class Build extends FrameworkBaseAction {
 			Map<String, String> settingsInfoMap = new HashMap<String, String>(2);
 			
 			if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || 
-					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology)){
+					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) ||
+					TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) ||
+					TechnologyTypes.HTML5_WIDGET.equals(technology)){
 				minification();
 			}
 			
@@ -1505,12 +1560,10 @@ public class Build extends FrameworkBaseAction {
 	}
 	
 	private void minification(){
-		try {
-			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-			Project project = administrator.getProject(projectCode);
-
-			String[] jsFileNames = getHttpRequest().getParameterValues(REQ_SELECTED_FILE_NAMES);
-			if(!ArrayUtils.isEmpty(jsFileNames)) {
+			try {
+				ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+				Project project = administrator.getProject(projectCode);
+				
 				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
 		        builder.append(project.getProjectInfo().getCode());
 		        File systemPath = new File(builder.toString() + File.separator + POM_FILE);
@@ -1521,35 +1574,47 @@ public class Build extends FrameworkBaseAction {
 				Document doc = docBuilder.newDocument();
 				List<Element> configList = new ArrayList<Element>();
 				
-				configList.add(createElement(doc, POM_SOURCEDIR, POM_SOURCE_DIRECTORY));
-				configList.add(createElement(doc, POM_OUTPUTDIR, POM_OUTPUT_DIRECTORY));
-				configList.add(createElement(doc, POM_FORCE, POM_VALUE_TRUE));
-				configList.add(createElement(doc, POM_JS_WARN, POM_VALUE_FALSE));
-				configList.add(createElement(doc, POM_NO_SUFFIX, POM_VALUE_TRUE));
-				
-				Element aggregationsElement = doc.createElement(POM_AGGREGATIONS);
-				
-				for (String jsFileName : jsFileNames) {
-					String csvJsFile = getHttpRequest().getParameter(jsFileName);
-					List<String> jsFiles = Arrays.asList(csvJsFile.split("\\s*,\\s*"));
-				
-					Element agrigationElement = appendChildElement(doc, aggregationsElement, POM_AGGREGATION, null);
-					appendChildElement(doc, agrigationElement, POM_INPUTDIR, POM_INPUT_DIRECTORY);
-					Element includesElement = doc.createElement(POM_INCLUDES);
-					for (String jsFile : jsFiles) {
-						appendChildElement(doc, includesElement, POM_INCLUDE, "**/" + jsFile);
-						agrigationElement.appendChild(includesElement);
+				String[] jsFileNames = getHttpRequest().getParameterValues(REQ_SELECTED_FILE_NAMES);
+
+				if(!ArrayUtils.isEmpty(jsFileNames)) {
+					configList.add(createElement(doc, POM_SOURCEDIR, POM_SOURCE_DIRECTORY));
+					configList.add(createElement(doc, POM_OUTPUTDIR, POM_OUTPUT_DIRECTORY));
+					configList.add(createElement(doc, POM_FORCE, POM_VALUE_TRUE));
+					configList.add(createElement(doc, POM_JS_WARN, POM_VALUE_FALSE));
+					configList.add(createElement(doc, POM_NO_SUFFIX, POM_VALUE_TRUE));
+					
+					Element excludesElement = doc.createElement(POM_EXCLUDES);
+					appendChildElement(doc, excludesElement, POM_EXCLUDE, POM_EXCLUDE_CSS);
+					appendChildElement(doc, excludesElement, POM_EXCLUDE, POM_EXCLUDE_JS);
+					configList.add(excludesElement);
+					
+					Element aggregationsElement = doc.createElement(POM_AGGREGATIONS);
+					
+					for (String jsFileName : jsFileNames) {
+						String csvJsFile = getHttpRequest().getParameter(jsFileName);
+						List<String> jsFiles = Arrays.asList(csvJsFile.split("\\s*,\\s*"));
+					
+						Element agrigationElement = appendChildElement(doc, aggregationsElement, POM_AGGREGATION, null);
+						appendChildElement(doc, agrigationElement, POM_INPUTDIR, POM_INPUT_DIRECTORY);
+						Element includesElement = doc.createElement(POM_INCLUDES);
+						for (String jsFile : jsFiles) {
+							appendChildElement(doc, includesElement, POM_INCLUDE, "**/" + jsFile);
+							agrigationElement.appendChild(includesElement);
+						}
+						String[] splitted = fileLocation.split(projectCode);
+						String minificationDir = "";
+						minificationDir = splitted[1];
+						appendChildElement(doc, agrigationElement, POM_OUTPUT, MINIFY_OUTPUT_DIRECTORY + minificationDir + jsFileName + MINIFY_FILE_EXT);
 					}
-					String[] splitted = fileLocation.split(projectCode);
-					String minificationDir = "";
-					minificationDir = splitted[1];
-					appendChildElement(doc, agrigationElement, POM_OUTPUT, MINIFY_OUTPUT_DIRECTORY + minificationDir + jsFileName + MINIFY_FILE_EXT);
+					configList.add(aggregationsElement);
+			        
+				} else {
+					configList.add(createElement(doc, POM_SKIP, POM_VALUE_TRUE));
 				}
-				configList.add(aggregationsElement);
-		        processor.addConfiguration(MINIFY_PLUGIN_GROUPID, MINIFY_PLUGIN_ARTFACTID, configList);
+				processor.addConfiguration(MINIFY_PLUGIN_GROUPID, MINIFY_PLUGIN_ARTFACTID, configList);
 				processor.save();
-			}
-		} catch (Exception e) {
+				
+			} catch (Exception e) {
 				S_LOGGER.error("Entered into catch block of Build.minification()"
 						+ FrameworkUtil.getStackTraceAsString(e));
 				new LogErrorReport(e, "Building ");

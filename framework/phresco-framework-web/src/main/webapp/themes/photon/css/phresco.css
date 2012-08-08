@@ -4913,5 +4913,18 @@ a[id='androidSigning']:hover {
 .minifyAddIcon {
 	float: left; 
 	margin-left:4px;
-	cursor: pointer;
-}	
+	cursor : pointer;
+}
+
+.hide {
+	display: none;
+	float: left;
+	margin-left:4px;
+	cursor : pointer;
+}
+
+#compNameText {
+	float:left;
+	width:150px; 
+	margin-right:10px;
+}
