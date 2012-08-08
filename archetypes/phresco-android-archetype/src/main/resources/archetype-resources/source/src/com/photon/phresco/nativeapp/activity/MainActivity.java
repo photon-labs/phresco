@@ -1,9 +1,9 @@
 /*
  * ###
- * Archetype - phresco-android-native-archetype
- * 
+ * PHR_android-native-hw
+ * %%
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
+ * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -27,13 +27,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.photon.phresco.nativeapp.R;
+import com.photon.phresco.nativeapp.config.EnvConstuctor;
 
 public class MainActivity extends Activity {
 
 	private static Button btn;
+//	public static String webserviceURL;
+//	private static final String WEBSERVICE_CONFIG_NAME = "res_service";
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+//		buildEnvData();
+		
+		
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		btn=(Button)findViewById(R.id.button);
@@ -46,4 +54,11 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	
+//Below code is used for reading web service URL from Phresco configuration menu
+//	private void buildEnvData() {
+//		EnvConstuctor envConstuctor = new EnvConstuctor(getResources());
+//		webserviceURL = envConstuctor.getWebServiceURL(WEBSERVICE_CONFIG_NAME);
+//		
+//	}
 }
