@@ -1,0 +1,25 @@
+<environments>
+    <environment default="true" name="Production">
+        <Server name="res_server">
+            <context>r2</context>
+            <deploy_dir/>
+            <admin_username/>
+            <additional_context>/</additional_context>
+            <port>8080</port>
+            <admin_password/>
+            <version>7.0.x</version>
+            <type>Apache Tomcat</type>
+            <remoteDeployment>false</remoteDeployment>
+            <protocol>http</protocol>
+            <host>localhost</host>
+        </Server>
+        <WebService name="res_service">
+            <port>2020</port>
+            <password/>
+            <context>r2</context>
+            <host>proj02049.phresco.net</host>
+            <protocol>http</protocol>
+            <username/>
+        </WebService>
+    </environment>
+</environments>
