@@ -45,6 +45,12 @@
 				<include>default.properties</include>
 			</includes>
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/assets</directory> 
+			<includes>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/assets/www</directory> 
 			<includes>
@@ -65,6 +71,13 @@
 			<includes>
 				<include>ConfigReader.java</include>
                 <include>Configuration.java</include>
+                <include>EnvConstuctor.java</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/src/com/photon/phresco/nativeapp/logger</directory> 
+			<includes>
+				<include>PhrescoLogger.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
