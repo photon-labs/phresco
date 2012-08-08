@@ -17,10 +17,12 @@
   limitations under the License.
   ###
   --%>
+
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
 <%@ page import="java.util.List" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.model.ApplicationType" %>
@@ -71,7 +73,7 @@
 				}
 				
 				String selectedStr = "";
-				if (technologies != null && technologies.size() > 0) {
+				if (CollectionUtils.isNotEmpty(technologies)) {
 					for (Technology technology : technologies) {
 						String id = technology.getId();
 						String name = technology.getName();
@@ -119,22 +121,27 @@
 	    
 	function techDependencies() {
 		$("#alreadyConstructed").val("");
+		$("select[name='technology']").prop("disabled", false);
 		popup('technology', $("#formAppInfo"), $('#techDependency'), true);
 	}
 	
 	function techVersions() {
 		popup("techVersions", $("#formAppInfo"), '', true);
+		<% if (StringUtils.isNotEmpty(fromPage)) { %>
+			$("input[name='application']").prop("disabled", true);
+			$("select[name='technology']").prop("disabled", true);
+   		<% } %>
 	}
 	
 	function showPrjtInfoTechVersion() {
 		<% if (selectedVersions != null) { %>
-				$("#techVersion option").each(function() {
-					<% for (String selectedVersion : selectedVersions) { %>
-							if ($(this).val().trim() == '<%= selectedVersion %>') {
-								$(this).prop("selected", "selected");
-							}
-					<% } %>
-				});
+			$("#techVersion option").each(function() {
+				<% for (String selectedVersion : selectedVersions) { %>
+				if ($(this).val().trim() == '<%= selectedVersion %>') {
+					$(this).prop("selected", "selected");
+				}
+			<% } %>
+			});
 		<% } %>
 		
 		var selectedTechnology = $("#technology").val();

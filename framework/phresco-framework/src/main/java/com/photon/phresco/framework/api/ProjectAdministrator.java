@@ -33,6 +33,7 @@ import com.photon.phresco.commons.model.User;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
@@ -335,6 +336,13 @@ public interface ProjectAdministrator {
      */
     List<VideoType> getVideoTypes(String name) throws PhrescoException;
 
+    /**
+     * Returns the all modules specified under the given technology
+     * @param techId
+     * @return list of modules
+     */
+    List<ModuleGroup> getAllModules(String techId, String customerId) throws PhrescoException;
+    
     /**
      * Returns the core modules specified under the given technology
      * @param techId
@@ -699,4 +707,8 @@ public interface ProjectAdministrator {
 	 * @throws PhrescoException
 	 */
 	 BuildInfo getCIBuildInfo(CIJob job, int buildNumber) throws PhrescoException;
+	 
+	 List<CertificateInfo> getCertificate(String host, int port) throws PhrescoException;
+	 
+	 void addCertificate(CertificateInfo info, File file) throws PhrescoException;
 }

@@ -69,7 +69,7 @@
     	}
     }
     
-    String customerId = (String) request.getAttribute("customerId");
+    String customerId = (String) request.getAttribute(FrameworkConstants.REQ_CUSTOMER_ID);
 %>
 
 <!--  Form Starts -->
@@ -192,6 +192,7 @@
    	<% } %>
    	<input type="hidden" name="customerId" value="<%= customerId %>">
    	<input type="hidden" name="fromPage" value="<%= fromPage %>">
+   	<input type="hidden" name="projectCode" value="<%= projectCode %>">
    	
 </form> 
 <!--  Form Ends -->
@@ -207,6 +208,7 @@
     	escPopup();
         checkDefault();
         changeStyle("appinfo");
+        
         $("input[name='application']").click(function() {
             changeApplication();
         });
@@ -222,6 +224,7 @@
 		$('form').submit(function() {
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
+			$("*").attr("disabled", false);
 			performAction('features', $('#formAppInfo'), $("#tabDiv"));
 			return false;
 		});
@@ -231,13 +234,13 @@
 			performAction('applications', $('#formAppInfo'), $('#container'));
 		});
 		
-		$("#externalCode").bind('input propertychange',function(e) { 
+		$("#externalCode").bind('input propertychange',function(e) {
 	    	var name = $(this).val();
 	    	name = checkForCode(name);
 	    	$(this).val(name);
 	    });
 	    
-	    $('#projectVersion').bind('input propertychange', function (e) { 	
+	    $('#projectVersion').bind('input propertychange', function (e) {
 	    	var version = $(this).val();
 	    	version = checkForVersion(version);
 	    	$(this).val(version);
@@ -248,6 +251,7 @@
 
 	//This function is to handle the change event for application radio
 	function changeApplication() {
+		$("input[name='application']").prop("disabled", false);
 		performAction('applicationType', $('#formAppInfo'), $('#AjaxContainer'));
 	}
 

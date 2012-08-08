@@ -21,17 +21,15 @@
 
 <%@ include file="errorReport.jsp" %>
 
-<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.Technology" %>
-<%@ page import="com.photon.phresco.model.ModuleGroup" %>
 <%@ page import="com.photon.phresco.model.WebService"%>
 <%@ page import="com.photon.phresco.model.Server"%>
 <%@ page import="com.photon.phresco.model.Database"%>
@@ -55,7 +53,6 @@
     if (selectedInfo == null) {
     	selectedInfo = (ProjectInfo) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO);
     }
-    
     List<Server> selectedServers = null;
     List<Database> selectedDatabases = null;
     List<WebService> selectedWebServices = null;
@@ -140,7 +137,10 @@
 		
 		    </div>
 		    
-		    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    <label for="xlInput" id="Server" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; 
+		    	background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;">
+		    		<s:text name="label.add"/>
+		    </label>
 		    
 		    <input type="hidden" id="selectedServer" name="selectedServers" value="">
 		</div>
@@ -159,7 +159,10 @@
 		
 		    </div>
 		    
-		    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;"><s:text name="label.add"/></label>
+		    <label for="xlInput" id="Database" style="cursor: pointer; margin: 3px 0 0 20px; text-align: center; 
+		    	background-color: #cccccc; border-radius: 6px; line-height: 25px; padding: 0px;  color: #000000; width:50px;">
+		    		<s:text name="label.add"/>
+		    </label>
 		    
 		    <input type="hidden" id="selectedDatabase" name="selectedDatabases" value="">
 		</div>
@@ -353,6 +356,8 @@
 		} else { // This is for adding the new server/db
 			newVersions = versions;
 		}
+		$("#Server").show();
+		
 		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
 						+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 						+ name + " [ " + newVersions + " ] " + '</div></div>');

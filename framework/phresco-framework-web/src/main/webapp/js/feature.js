@@ -118,16 +118,16 @@
 		    $("input[type=checkbox]:disabled").each ( function() {
 		        $(this).attr('disabled', false)
 		    });
-		   	var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("fromPage=");
-			params = params.concat($('#fromPage').val());
-			params = params.concat("&customerId=");
-	    	params = params.concat($("#customerId").val());
+//		   	var params = "";
+//	    	if (!isBlank($('form').serialize())) {
+//	    		params = $('form').serialize() + "&";
+//	    	}
+//			params = params.concat("fromPage=");
+//			params = params.concat($('#fromPage').val());
+//			params = params.concat("&customerId=");
+//	    	params = params.concat($("#customerId").val());
 			showLoadingIcon($("#tabDiv")); // Loading Icon
-			performActionParams('previous', params, $('#tabDiv'));
+			performAction('previous', $('#createProjectForm'), $('#tabDiv'));
 		});
 	
 		// Description popup js codes
@@ -215,6 +215,8 @@
 		params = params.concat($("#configServerNames").val());
 		params = params.concat("&configDbNames=");
 		params = params.concat($("#configDbNames").val());
+		params = params.concat("&customerId=");
+    	params = params.concat($("#customerId").val());
 		performActionParams(url, params, $('#container'));
 	}
 	

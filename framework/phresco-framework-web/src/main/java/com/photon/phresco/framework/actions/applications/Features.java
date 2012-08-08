@@ -196,9 +196,8 @@ public class Features extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_CONFIG_DB_NAMES, configDbNames);
 			FrameworkConfiguration configuration = PhrescoFrameworkFactory.getFrameworkConfig();
 			getHttpRequest().setAttribute(REQ_SERVER_URL, configuration.getServerPath());
-			
+			getHttpRequest().setAttribute(REQ_CUSTOMER_ID, customerId);
 		} catch (PhrescoException e) {
-			e.printStackTrace();
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Features.list()"
 						+ FrameworkUtil.getStackTraceAsString(e));
@@ -309,7 +308,6 @@ public class Features extends FrameworkBaseAction {
 			
 			projectInfo.setTechnology(technology);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		}
 	}
@@ -374,7 +372,6 @@ public class Features extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
 			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		}
 	}

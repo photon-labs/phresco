@@ -22,23 +22,18 @@
 <%@ include file="errorReport.jsp" %>
 <%@ include file="description_dialog.jsp" %>
 
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.collections.MapUtils" %>
+
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
-<%@ page import="com.photon.phresco.framework.api.Project" %>
-<%@ page import="com.photon.phresco.model.ApplicationType" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
 <%@ page import="com.photon.phresco.model.Technology" %>
 <%@ page import="com.photon.phresco.model.ModuleGroup" %>
 <%@ page import="com.photon.phresco.model.Module" %>
-<%@page import="com.photon.phresco.model.Documentation.DocumentationType"%>
+<%@ page import="com.photon.phresco.model.Documentation.DocumentationType"%>
 
 <style>
 	.twipsy {
@@ -118,6 +113,8 @@
 	String appType = "";
 	String disabled = "disabled";
 
+	String customerId = (String) request.getAttribute(FrameworkConstants.REQ_CUSTOMER_ID);
+	
 	List<ModuleGroup> leftModules = (List<ModuleGroup>) request.getAttribute(FrameworkConstants.REQ_FEATURES_LEFT_MODULES);
     List<ModuleGroup> rightModules = (List<ModuleGroup>) request.getAttribute(FrameworkConstants.REQ_FEATURES_RIGHT_MODULES);
     
@@ -295,7 +292,8 @@
 														</td>
 														<td class="editFeatures_td2">
 															<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= module.getName() %></a>
+															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" 
+																class="<%= leftModule.getId()%>" id="<%= helpTextContent %>" ><%= module.getName() %></a>
 														</td>
 														<td class="editFeatures_td4"><%= module.getVersion() %></td>
 													</tr>
@@ -319,7 +317,8 @@
 					<table class="zebra-striped">
 						<tr>
 							<th class="editFeatures_th1">
-								<input type="checkbox"	value="AllJsLibs" id="checkAllJsLibs" name="<%= secondModuleType %>" onchange="selectAllChkBoxClk('<%= secondModuleType %>', this)">
+								<input type="checkbox"	value="AllJsLibs" id="checkAllJsLibs" name="<%= secondModuleType %>" 
+									onchange="selectAllChkBoxClk('<%= secondModuleType %>', this)">
 							</th>
 							<th class="editFeatures_th2"><%= rightModuleHdr %></th>
 						</tr>
@@ -358,7 +357,8 @@
 				                <span class="siteaccordion closereg">
 				                	<span>
 					                	<% if (rightModuleHdr.equals(FrameworkConstants.REQ_JS_LIBS)) { %>
-					                		<input type="checkbox" class="<%= FrameworkConstants.REQ_JSLIB_MODULE %>" name="<%= FrameworkConstants.REQ_SELECTED_JSLIBS %>" value="<%= rightModule.getId()%>" <%=disabledStr %> 
+					                		<input type="checkbox" class="<%= FrameworkConstants.REQ_JSLIB_MODULE %>" 
+					                			name="<%= FrameworkConstants.REQ_SELECTED_JSLIBS %>" value="<%= rightModule.getId()%>" <%=disabledStr %> 
 						                		<%= checkedStr %> id="<%= rightModule.getId()%>checkBox">
 					                	<% } else { %>
 					                		<input type="checkbox" class="<%= FrameworkConstants.REQ_CUSTOM_MODULE %>" name="<%= FrameworkConstants.REQ_SELECTEDMODULES %>" 
@@ -374,67 +374,68 @@
 				                        	<table class="download_tbl">
 					                            <tbody>
 					                            <% 
-					                            String descContent = "";
-												if (rightModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
-												  	descContent = rightModule.getDoc(DocumentationType.DESCRIPTION).getContent();
-												}
-												
-												String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
-												String url = "";
-												String featureUrl = "";
-												featureUrl = rightModule.getImageURL();
-												if(StringUtils.isEmpty(featureUrl)) {
-													url = "images/right1.png";
-												} else {
-													url = serverUrl + "/" + featureUrl;
-												}
-												  
-												String helpTextContent = "";
-												if (rightModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
-												  	helpTextContent = rightModule.getDoc(DocumentationType.HELP_TEXT).getContent();
-												}
-												
-										    	List<Module> versions = rightModule.getVersions();
-										    	if (CollectionUtils.isNotEmpty(versions)) {
-													for (Module moduleVersion : versions) {
-														checkedStr = "";
-														if (rightModuleHdr.equals(FrameworkConstants.REQ_JS_LIBS)) {
-															if (MapUtils.isNotEmpty(selectedJsLibs)) {
-																String selectedVersion = selectedJsLibs.get(rightModule.getId());
-																if (StringUtils.isNotEmpty(selectedVersion) && moduleVersion.getVersion().equals(selectedVersion)) {
+						                            String descContent = "";
+													if (rightModule.getDoc(DocumentationType.DESCRIPTION) != null) { 
+													  	descContent = rightModule.getDoc(DocumentationType.DESCRIPTION).getContent();
+													}
+													
+													String serverUrl = (String) request.getAttribute(FrameworkConstants.REQ_SERVER_URL);
+													String url = "";
+													String featureUrl = "";
+													featureUrl = rightModule.getImageURL();
+													if(StringUtils.isEmpty(featureUrl)) {
+														url = "images/right1.png";
+													} else {
+														url = serverUrl + "/" + featureUrl;
+													}
+													  
+													String helpTextContent = "";
+													if (rightModule.getDoc(DocumentationType.HELP_TEXT) != null) { 
+													  	helpTextContent = rightModule.getDoc(DocumentationType.HELP_TEXT).getContent();
+													}
+													
+											    	List<Module> versions = rightModule.getVersions();
+											    	if (CollectionUtils.isNotEmpty(versions)) {
+														for (Module moduleVersion : versions) {
+															checkedStr = "";
+															if (rightModuleHdr.equals(FrameworkConstants.REQ_JS_LIBS)) {
+																if (MapUtils.isNotEmpty(selectedJsLibs)) {
+																	String selectedVersion = selectedJsLibs.get(rightModule.getId());
+																	if (StringUtils.isNotEmpty(selectedVersion) && moduleVersion.getVersion().equals(selectedVersion)) {
+																		checkedStr = "checked";
+																	}
+																}
+																if (StringUtils.isNotEmpty(pilotVersion) && moduleVersion.getVersion().equals(pilotVersion)) {
+																	checkedStr = "checked";
+																}
+															} else {
+																if (MapUtils.isNotEmpty(selectedModules)) {
+																	String selectedVersion = selectedModules.get(rightModule.getId());
+																	if (StringUtils.isNotEmpty(selectedVersion) && moduleVersion.getVersion().equals(selectedVersion)) {
+																		checkedStr = "checked";
+																	} 
+																}
+																if (StringUtils.isNotEmpty(pilotVersion) && moduleVersion.getVersion().equals(pilotVersion)) {
 																	checkedStr = "checked";
 																}
 															}
-															if (StringUtils.isNotEmpty(pilotVersion) && moduleVersion.getVersion().equals(pilotVersion)) {
-																checkedStr = "checked";
-															}
-														} else {
-															if (MapUtils.isNotEmpty(selectedModules)) {
-																String selectedVersion = selectedModules.get(rightModule.getId());
-																if (StringUtils.isNotEmpty(selectedVersion) && moduleVersion.getVersion().equals(selectedVersion)) {
-																	checkedStr = "checked";
-																} 
-															}
-															if (StringUtils.isNotEmpty(pilotVersion) && moduleVersion.getVersion().equals(pilotVersion)) {
-																checkedStr = "checked";
-															}
-														}
-															
 												%>
-													<tr>
-														<td class="editFeatures_td1">
-															<input type="radio" name="<%= rightModule.getId() %>" 
-																value="<%= moduleVersion.getVersion() %>" <%=disabledStr %> <%= checkedStr %> 
-																onclick="selectCheckBox('<%= rightModule.getId()%>', '<%= secondModuleType %>', this);">
-														</td>
-														<td class="editFeatures_td2">
-															<% descContent = descContent.replaceAll("\"","&quot;"); %>
-															<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= rightModule.getId()%>" id="<%= helpTextContent %>"><%= rightModule.getName() %></a>
-														</td>
-														<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
-													</tr>
-													<%	} %>
-										    	<% } %>
+															<tr>
+																<td class="editFeatures_td1">
+																	<input type="radio" name="<%= rightModule.getId() %>" 
+																		value="<%= moduleVersion.getVersion() %>" <%=disabledStr %> <%= checkedStr %> 
+																		onclick="selectCheckBox('<%= rightModule.getId()%>', '<%= secondModuleType %>', this);">
+																</td>
+																<td class="editFeatures_td2">
+																	<% descContent = descContent.replaceAll("\"","&quot;"); %>
+																	<a href="#" name="ModuleDesc" descImage="<%= url %>" descrContent="<%= descContent %>" class="<%= rightModule.getId()%>" id="<%= helpTextContent %>"><%= rightModule.getName() %></a>
+																</td>
+																<td class="editFeatures_td4"><%= moduleVersion.getVersion() %></td>
+															</tr>
+												<%	
+														}
+											    	} 
+										    	%>
 					                            </tbody>
 				                        	</table>
 				                        </section>
@@ -453,18 +454,18 @@
 	
 	<div class="features_actions">
 		<a id="previous" href="#" class="primary btn"><s:text name="label.previous"/></a>
-		<%
-			if(StringUtils.isNotEmpty(fromPage)) {
-		%>
+		<% if(StringUtils.isNotEmpty(fromPage)) { %>
 			<input id="update" type="button" value="<s:text name="label.update"/>" class="primary btn createProject_btn">
 		<% } else { %>
 			<input id="finish" type="button" value="<s:text name="label.finish"/>" class="primary btn createProject_btn">
 		<% } %>
-			<input type="button" id="cancel" value="<s:text name="label.cancel"/>" class="primary btn">
-			<input type="hidden" id="technology" name="techId" value="<%= techId %>">
-			<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
-			<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
-			<input type="hidden" name="fromTab" value="features">
+		<input type="button" id="cancel" value="<s:text name="label.cancel"/>" class="primary btn">
+		<input type="hidden" id="technology" name="techId" value="<%= techId %>">
+		<input type="hidden" id="configServerNames" name="configServerNames" value="<%= configServerNames %>">
+		<input type="hidden" id="configDbNames" name="configDbNames" value="<%= configDbNames %>">
+		<input type="hidden" name="fromTab" value="features">
+		<input type="hidden" id="customerId" name="customerId" value="<%= customerId %>">
+		<input type="hidden" name="fromPage" value="<%= fromPage %>">
 	</div>
     </form>
     

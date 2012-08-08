@@ -28,7 +28,11 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,6 +42,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -76,6 +87,7 @@ import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.api.Validator;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
+import com.photon.phresco.model.CertificateInfo;
 import com.photon.phresco.model.Database;
 import com.photon.phresco.model.DownloadInfo;
 import com.photon.phresco.model.DownloadPropertyInfo;
@@ -113,6 +125,7 @@ import com.sun.jersey.api.client.ClientResponse;
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants, ServiceClientConstant, ServiceConstants {
 
 	private static final Logger S_LOGGER= Logger.getLogger(ProjectAdministratorImpl.class);
+	private Map<String, List<ModuleGroup>> allModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
 	private Map<String, List<ModuleGroup>> coreModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
 	private Map<String, List<ModuleGroup>> customModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
@@ -1519,6 +1532,25 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 		 return null;
 	 }
+	 
+	 public List<ModuleGroup> getAllModules(String techId, String customerId) throws PhrescoException {
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getAllModules(Technology technology)");
+		 S_LOGGER.debug("getAllModules() TechnologyName = "+techId);
+		 
+		 try {
+			 List<ModuleGroup> allModules = allModulesMap.get(techId);
+			 if (CollectionUtils.isNotEmpty(allModules)) {
+				 return allModules;
+			 }
+	
+			 allModules = getServiceManager().getModules(techId, customerId);
+			 allModulesMap.put(techId, allModules);
+
+			 return allModules;
+		 } catch (Exception e) {
+			 throw new PhrescoException(e); 
+		 }
+	 }
 
 	 @Override
 	 public List<ModuleGroup> getCoreModules(String techId, String customerId) throws PhrescoException {
@@ -1532,7 +1564,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 coreModules = new ArrayList<ModuleGroup>();
-			 List<ModuleGroup> modules = getServiceManager().getModules(techId, customerId);
+			 List<ModuleGroup> modules = getAllModules(techId, customerId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (module.isCore()) {
@@ -1561,7 +1593,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 }
 	
 			 customModules = new ArrayList<ModuleGroup>();
-			 List<ModuleGroup> modules = getServiceManager().getModules(techId, customerId);
+			 List<ModuleGroup> modules = getAllModules(techId, customerId);
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (!module.isCore()) {
@@ -2311,4 +2343,86 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 throw new PhrescoException(e);
 		 }
 	 }
-}
+	 public List<CertificateInfo> getCertificate(String host, int port) throws PhrescoException {
+			List<CertificateInfo> certificates = new ArrayList<CertificateInfo>();
+			CertificateInfo info;
+			try {
+				KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+				SSLContext context = SSLContext.getInstance("TLS");
+				TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+				tmf.init(ks);
+				X509TrustManager defaultTrustManager = (X509TrustManager) tmf.getTrustManagers()[0];
+				SavingTrustManager tm = new SavingTrustManager(defaultTrustManager);
+				context.init(null, new TrustManager[]{tm}, null);
+				SSLSocketFactory factory = context.getSocketFactory();
+				SSLSocket socket = (SSLSocket) factory.createSocket(host, port);
+				socket.setSoTimeout(10000);
+				try {
+					socket.startHandshake();
+					socket.close();
+				} catch (SSLException e) {
+					
+				}
+				X509Certificate[] chain = tm.chain;
+				for (int i = 0; i < chain.length; i++) {
+					X509Certificate x509Certificate = chain[i];
+					String subjectDN = x509Certificate.getSubjectDN().getName();
+					String[] split = subjectDN.split(",");
+					info = new CertificateInfo();
+					info.setSubjectDN(subjectDN);
+					info.setDisplayName(split[0]);
+					info.setCertificate(x509Certificate);
+					certificates.add(info);
+				}
+			} catch (Exception e) {
+				throw new PhrescoException();
+			}
+		
+			return certificates;
+		}
+
+		public void addCertificate(CertificateInfo info, File file) throws PhrescoException {
+			char[] passphrase = "changeit".toCharArray();
+			InputStream inputKeyStore = null;
+			OutputStream outputKeyStore = null;
+			try {
+				KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+				keyStore.load(null);
+				keyStore.setCertificateEntry(info.getDisplayName(), info.getCertificate());
+				if (!file.exists()) {
+					file.getParentFile().mkdirs();
+					file.createNewFile();
+				}
+				outputKeyStore = new FileOutputStream(file);
+				keyStore.store(outputKeyStore, passphrase);
+			} catch (Exception e) {
+				throw new PhrescoException(e);
+			} finally {
+				Utility.closeStream(inputKeyStore);
+				Utility.closeStream(outputKeyStore);
+			}
+		}
+	}
+
+	class SavingTrustManager implements X509TrustManager {
+
+		private final X509TrustManager tm;
+		X509Certificate[] chain;
+
+		SavingTrustManager(X509TrustManager tm) {
+			this.tm = tm;
+		}
+
+		public X509Certificate[] getAcceptedIssuers() {
+			throw new UnsupportedOperationException();
+		}
+
+		public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+			throw new UnsupportedOperationException();
+		}
+
+		public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+			this.chain = chain;
+			tm.checkServerTrusted(chain, authType);
+		}
+	}

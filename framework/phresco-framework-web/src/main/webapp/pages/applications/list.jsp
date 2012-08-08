@@ -19,13 +19,11 @@
   --%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
 
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.model.ProjectInfo" %>
-<%@ page import="com.photon.phresco.framework.api.ValidationResult" %>
 
 <%@ include file="../userInfoDetails.jsp" %>
 <%@ include file="errorReport.jsp" %>
@@ -37,6 +35,7 @@
 <script type="text/javascript" src="js/reader.js" ></script>
 	<!-- Window Resizer -->
 <script type="text/javascript" src="js/windowResizer.js"></script>
+
 <style type="text/css">
 	.btn.success, .alert-message.success {
        	margin-top: -35px;
@@ -141,7 +140,10 @@
 			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
 			              		<td class="printIconAlign">
-			              			<a href="#" id="pdfPopup"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" title="generate pdf" style="height: 20px; width: 20px;"/></a>
+			              			<a href="#" id="pdfPopup">
+			              				<img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" 
+			              					title="generate pdf" style="height: 20px; width: 20px;"/>
+			              			</a>
 			              		</td>
 			            	</tr>
 			            <%
@@ -157,7 +159,7 @@
 	</div>
 	
 	<!-- Hidden Fields -->
-	<input type="hidden" name="customerId" value="<%= customerId %>"/>
+	<input type="hidden" id="customerId" name="customerId" value="<%= customerId %>"/>
 </form>
 
 <script type="text/javascript">
@@ -218,15 +220,13 @@
 			disableScreen();
 			showLoadingIcon($("#loadingIconDiv"));
 	        var projectCode = $(this).attr("id");
-	        var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			params = params.concat("projectCode=");
+			var params = "projectCode=";
 			params = params.concat(projectCode);
 			params = params.concat("&fromPage=");
 			params = params.concat("edit");
-	        performAction('applicationDetails', params, $('#container'));
+			params = params.concat("&customerId=");
+	    	params = params.concat($("#customerId").val());
+	        performActionParams('applicationDetails', params, $('#container'));
 	    });
 		
         $('.pdfCreation').click(function() {
