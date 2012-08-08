@@ -490,6 +490,8 @@ public interface FrameworkConstants {
     String REQ_LISTSELECTED_SERVERIDS  = "listSelectedServerIds";
     String REQ_LISTSELECTED_DATABASEIDS = "listSelectedDatabaseIds";
     String REQ_LISTSELECTED_VERSIONS = "listSelectedVersions";
+    String REQ_SELECTED_SERVERS = "selectedServers";
+    String REQ_SELECTED_DBS = "selectedDatabases";
     String REQ_HEADER = "header";
     String REQ_HEADER_TYPE = "headerType";
     String REQ_FROM	= "from";

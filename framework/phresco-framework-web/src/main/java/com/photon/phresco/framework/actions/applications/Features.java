@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -257,17 +258,17 @@ public class Features extends FrameworkBaseAction {
 				technology.setModules(projectInfo.getTechnology().getModules());
 			}
 
-			List<Server> servers = selectedTechnology.getServers();
-			List<Database> databases = selectedTechnology.getDatabases();
-			List<WebService> webservices = selectedTechnology.getWebservices();
+			List<Server> servers = administrator.getServers(getTechnology(), customerId);
+			List<Database> databases = administrator.getDatabases(getTechnology(), customerId);
+			List<WebService> webservices = administrator.getWebServices(getTechnology(), customerId);
 			
-			String selectedServers = getHttpRequest().getParameter("selectedServers");
-			String selectedDatabases = getHttpRequest().getParameter("selectedDatabases");
+			String selectedServers = getHttpRequest().getParameter(REQ_SELECTED_SERVERS);
+			String selectedDatabases = getHttpRequest().getParameter(REQ_SELECTED_DBS);
 			String[] selectedWebservices = getHttpRequest().getParameterValues(REQ_WEBSERVICES);
 			boolean isEmailSupported = false;
 			
 			if (StringUtils.isNotEmpty(fromTab)) {
-				if (selectedServers != null) {
+				if (StringUtils.isNotEmpty(selectedServers)) {
 					List<String> listTempSelectedServers = null;
 					if (StringUtils.isNotEmpty(selectedServers)) {
 						listTempSelectedServers = new ArrayList<String>(
@@ -277,7 +278,7 @@ public class Features extends FrameworkBaseAction {
 							listTempSelectedServers));
 				}
 				
-				if (selectedDatabases != null) {
+				if (StringUtils.isNotEmpty(selectedDatabases)) {
 					List<String> listTempSelectedDatabases = null;
 					if (StringUtils.isNotEmpty(selectedDatabases)) {
 						listTempSelectedDatabases = new ArrayList<String>(
@@ -287,7 +288,7 @@ public class Features extends FrameworkBaseAction {
 							databases, listTempSelectedDatabases));
 				}
 				
-				if (selectedWebservices != null) {
+				if (!ArrayUtils.isEmpty(selectedWebservices)) {
 					technology.setWebservices(ApplicationsUtil.getSelectedWebservices(
 							webservices, ApplicationsUtil.getArrayListFromStrArr(selectedWebservices)));
 				}

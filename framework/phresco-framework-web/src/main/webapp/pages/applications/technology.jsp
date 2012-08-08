@@ -125,7 +125,7 @@
     <!--  Pilot projects are loaded here ends -->
 </div>
 
-<form id="deleteObjects">
+<!-- <form id="deleteObjects"> -->
 	<%
 		if (CollectionUtils.isNotEmpty(servers)) {
 	%>
@@ -170,7 +170,7 @@
 	<%
 		}
 	%>
-</form>
+<!-- </form> -->
 
 <%
 	if(CollectionUtils.isNotEmpty(webservices)) {
@@ -358,8 +358,12 @@
 		}
 		$("#Server").show();
 		
-		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto; border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="' 
-						+ eleAttr +'" style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000; height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
+		$("#"+appendTo).append('<div id="'+eleAttr+'" style="background-color: #bbbbbb; width: 40%; margin-bottom:2px; height: auto;' +
+						'border-radius: 6px; padding: 5px 0 0 10px; position: relative"><a name="' + type + '" class="deleteThis" href="#" id="'+ eleAttr +'" ' + 
+						'style="text-decoration: none; margin-right: 10px; color: #000000; margin-left: 95%;" title="'+ name +'" ' + 
+						'onclick="deleteEle(this);">&times;</a><div id="'+newVersions+'" class="'+eleAttr+'" title="'+type+'" ' + 
+						'onclick="openAttrPopup(this);" style="cursor: pointer; color: #000000;' + 
+						'height: auto; position: relative; width: 90%; line-height: 17px; margin-top: -14px; padding: 0 0 6px 1px;">' 
 						+ name + " [ " + newVersions + " ] " + '</div></div>');
 		$("#"+type).css("margin-left", "320px");
 		updateHiddenFields(type, name, newVersions, from);			

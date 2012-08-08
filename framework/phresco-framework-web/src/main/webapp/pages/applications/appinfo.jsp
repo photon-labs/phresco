@@ -34,7 +34,7 @@
     String codePrefix = (String) request.getAttribute(FrameworkConstants.REQ_CODE_PREFIX);
     String fromPage = (String) request.getAttribute(FrameworkConstants.REQ_FROM_PAGE);
     String disabled = "disabled";
-    if (StringUtils.isEmpty(fromPage)){
+    if (StringUtils.isEmpty(fromPage)) {
         fromPage = "";
         disabled = "";
     }

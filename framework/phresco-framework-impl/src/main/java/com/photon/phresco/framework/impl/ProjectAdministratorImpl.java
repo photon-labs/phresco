@@ -125,9 +125,6 @@ import com.sun.jersey.api.client.ClientResponse;
 public class ProjectAdministratorImpl implements ProjectAdministrator, FrameworkConstants, Constants, ServiceClientConstant, ServiceConstants {
 
 	private static final Logger S_LOGGER= Logger.getLogger(ProjectAdministratorImpl.class);
-	private Map<String, List<ModuleGroup>> allModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
-	private Map<String, List<ModuleGroup>> coreModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
-	private Map<String, List<ModuleGroup>> customModulesMap = Collections.synchronizedMap(new HashMap<String, List<ModuleGroup>>(8));
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
@@ -1534,37 +1531,26 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 	 
 	 public List<ModuleGroup> getAllModules(String techId, String customerId) throws PhrescoException {
-		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getAllModules(Technology technology)");
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getAllModules(String techId, String customerId)");
 		 S_LOGGER.debug("getAllModules() TechnologyName = "+techId);
 		 
 		 try {
-			 List<ModuleGroup> allModules = allModulesMap.get(techId);
-			 if (CollectionUtils.isNotEmpty(allModules)) {
-				 return allModules;
-			 }
-	
-			 allModules = getServiceManager().getModules(techId, customerId);
-			 allModulesMap.put(techId, allModules);
+			 List<ModuleGroup> modules = getServiceManager().getModules(techId, customerId);
 
-			 return allModules;
+			 return modules;
 		 } catch (Exception e) {
-			 throw new PhrescoException(e); 
+			 throw new PhrescoException(e);
 		 }
 	 }
-
+	 
 	 @Override
 	 public List<ModuleGroup> getCoreModules(String techId, String customerId) throws PhrescoException {
-		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCoreModules(Technology technology)");
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCoreModules(String techId, String customerId)");
 		 S_LOGGER.debug("getCoreModules() TechnologyName = "+techId);
 		 
 		 try {
-			 List<ModuleGroup> coreModules = coreModulesMap.get(techId);
-			 if (CollectionUtils.isNotEmpty(coreModules)) {
-				 return coreModules;
-			 }
-	
-			 coreModules = new ArrayList<ModuleGroup>();
 			 List<ModuleGroup> modules = getAllModules(techId, customerId);
+			 List<ModuleGroup> coreModules = new ArrayList<ModuleGroup>();
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (module.isCore()) {
@@ -1573,8 +1559,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				 }
 			 }
 	
-			 Collections.sort(coreModules, new ModuleComparator());
-			 coreModulesMap.put(techId, coreModules);
 			 return coreModules;
 		 } catch (Exception e) {
 			 throw new PhrescoException(e); 
@@ -1583,17 +1567,12 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 	 @Override
 	 public List<ModuleGroup> getCustomModules(String techId, String customerId) throws PhrescoException {
-		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCustomModules(Technology technology)");
+		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getCustomModules(String techId, String customerId)");
 		 S_LOGGER.debug("getCustomModules() TechnologyId = "+techId);
 
 		 try {
-			 List<ModuleGroup> customModules = customModulesMap.get(techId);
-			 if (CollectionUtils.isNotEmpty(customModules)) {
-				 return customModules;
-			 }
-	
-			 customModules = new ArrayList<ModuleGroup>();
 			 List<ModuleGroup> modules = getAllModules(techId, customerId);
+			 List<ModuleGroup> customModules = new ArrayList<ModuleGroup>();
 			 if (CollectionUtils.isNotEmpty(modules)) {
 				 for (ModuleGroup module : modules) {
 					 if (!module.isCore()) {
@@ -1602,8 +1581,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				 }
 			 }
 	
-			 Collections.sort(customModules, new ModuleComparator());
-			 customModulesMap.put(techId, customModules);
 			 return customModules;
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
