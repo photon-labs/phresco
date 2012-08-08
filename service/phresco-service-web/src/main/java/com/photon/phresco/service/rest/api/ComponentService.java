@@ -600,7 +600,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 		
 		try {
 			if (id.equals(module.getId())) {
-				mongoOperation.save(PILOTS_COLLECTION_NAME, module);
+				mongoOperation.save(MODULES_COLLECTION_NAME, module);
 				return  Response.status(Response.Status.OK).entity(module).build();
 			}
 		} catch (Exception e) {
@@ -617,7 +617,7 @@ public class ComponentService extends DbService implements ServiceConstants {
 	 */
 	@DELETE
 	@Path (REST_API_MODULES + REST_API_PATH_ID)
-	public Response deleteModules(String id) {
+	public Response deleteModules(@PathParam(REST_API_PATH_PARAM_ID) String id) {
 	    if (isDebugEnabled) {
 	        S_LOGGER.debug("Entered into ComponentService.deleteModules(String id)" + id);
 	    }

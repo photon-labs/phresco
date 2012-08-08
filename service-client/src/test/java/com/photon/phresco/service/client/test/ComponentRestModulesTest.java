@@ -20,12 +20,13 @@
 
 package com.photon.phresco.service.client.test;
 
-import java.util.HashMap;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Test;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ModuleGroup;
@@ -35,6 +36,7 @@ import com.photon.phresco.service.client.api.ServiceManager;
 import com.photon.phresco.service.client.factory.ServiceClientFactory;
 import com.photon.phresco.service.client.impl.RestClient;
 import com.photon.phresco.util.ServiceConstants;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
 public class ComponentRestModulesTest implements ServiceConstants{
@@ -51,101 +53,78 @@ public class ComponentRestModulesTest implements ServiceConstants{
         serviceManager = ServiceClientFactory.getServiceManager(context);
 	}
 	
-	@Ignore
-	public void getModules() throws PhrescoException {
-		String techId = "tech-php";
+	@Test
+	public void testCreateModules() throws PhrescoException {
+		List<ModuleGroup> modules=new ArrayList<ModuleGroup>();
+		ModuleGroup moduleGroup = new ModuleGroup();
+		moduleGroup.setId("test-module");
+		moduleGroup.setName("TestModuleone");
+		moduleGroup.setCustomerId("photon");
+		moduleGroup.setTechId("php");
+		moduleGroup.setType("test"); 
+		modules.add(moduleGroup);
+        RestClient<ModuleGroup> newApp = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+        ClientResponse clientResponse = newApp.create(modules);
+        assertNotNull(clientResponse);    
+	}
+	
+	@Test
+    public void testGetModules() throws PhrescoException {
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
-    	Map<String, String> headers = new HashMap<String, String>();
-        headers.put(REST_QUERY_TECHID, techId);
-        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
-        moduleGroupClient.queryStrings(headers);
-    	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
-    	System.out.println("modules.size():" + modules.size());
-    	if (modules != null) {
-	    	for (ModuleGroup module : modules) {
-				System.out.println("module IDs :" + module.getModuleId());
-			}
-    	}
+    	moduleGroupClient.queryString(REST_QUERY_TYPE, "test");
+    	moduleGroupClient.queryString(REST_QUERY_TECHID, "drupal");
+    	moduleGroupClient.queryString(REST_QUERY_CUSTOMERID, "photon");
+		GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
+		List<ModuleGroup> modules = moduleGroupClient.get(genericType);
+		assertNotNull(modules);
     }
 	
-	@Ignore
-	public void getCoreModules() throws PhrescoException {
-		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
-    	Map<String, String> headers = new HashMap<String, String>();
-        headers.put(REST_QUERY_TECHID, techId);
-        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
-        moduleGroupClient.queryStrings(headers);
-    	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
-    	System.out.println("modules.size():" + modules.size());
-    	if (modules != null) {
-	    	for (ModuleGroup module : modules) {
-	    		if (module.isCore()) {
-	    			System.out.println("Core module IDs :" + module.getModuleId());
-				}
-			}
-    	}
-    }
+	@Test
+	public void testUpdateModules() throws PhrescoException{
+		RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+	    List<ModuleGroup> ModuleGroups = new ArrayList<ModuleGroup>();
+	    ModuleGroup moduleGroup = new ModuleGroup();
+	    moduleGroup.setId("test-module");
+		moduleGroup.setName("TestModuleGroupUpdate");
+		moduleGroup.setCustomerId("phresco");
+		moduleGroup.setTechId("php");
+		moduleGroup.setType("testing");
+		ModuleGroups.add(moduleGroup);
+	    GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>() {};
+	    List<ModuleGroup> modules = moduleGroupClient.update(ModuleGroups, genericType);
+	    assertNotNull(modules);
+	}
 	
-	@Ignore
-	public void getCustomModules() throws PhrescoException {
-		String techId = "tech-php";
+	@Test
+    public void testGetModuleById() throws PhrescoException {
+		String id= "test-module" ;
     	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
-    	Map<String, String> headers = new HashMap<String, String>();
-        headers.put(REST_QUERY_TECHID, techId);
-        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
-        moduleGroupClient.queryStrings(headers);
-    	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
-    	System.out.println("modules.size():" + modules.size());
-    	if (modules != null) {
-	    	for (ModuleGroup module : modules) {
-	    		if (!module.isCore()) {
-	    			System.out.println("Custom module IDs :" + module.getModuleId());
-				}
-			}
-    	}
-    }
+		GenericType<ModuleGroup> genericType = new GenericType<ModuleGroup>(){};
+		moduleGroupClient.setPath(id);
+		ModuleGroup module = moduleGroupClient.getById(genericType);
+        assertNotNull(module);
+	}
 	
-	@Ignore
-	public void getDefaultCoreModules() throws PhrescoException {
-		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
-    	Map<String, String> headers = new HashMap<String, String>();
-        headers.put(REST_QUERY_TECHID, techId);
-        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
-        moduleGroupClient.queryStrings(headers);
-    	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
-    	System.out.println("modules.size():" + modules.size());
-    	if (modules != null) {
-	    	for (ModuleGroup module : modules) {
-	    		if (module.isCore() && module.isRequired()) {
-	    			System.out.println("Default Core module IDs :" + module.getModuleId());
-				}
-			}
-    	}
-    }
+	@Test
+	public void testUpdateModuleById() throws PhrescoException {
+		String moduleId="test-module";
+        ModuleGroup module = new ModuleGroup();
+        module.setId("test-module");
+        module.setName("TestmoduleUpdateById");
+        module.setCustomerId("photonphresco2");
+        RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+        moduleGroupClient.setPath(moduleId);
+        GenericType<ModuleGroup> genericType = new GenericType<ModuleGroup>() {};
+        ModuleGroup modules = moduleGroupClient.updateById(module, genericType);
+        assertNotNull(modules);
+	}
 	
-	@Ignore
-	public void getDefaultCustomModules() throws PhrescoException {
-		String techId = "tech-php";
-    	RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
-    	Map<String, String> headers = new HashMap<String, String>();
-        headers.put(REST_QUERY_TECHID, techId);
-        headers.put(REST_QUERY_TYPE, REST_QUERY_TYPE_MODULE);
-        moduleGroupClient.queryStrings(headers);
-    	GenericType<List<ModuleGroup>> genericType = new GenericType<List<ModuleGroup>>(){};
-    	List<ModuleGroup> modules = moduleGroupClient.get(genericType);
-    	System.out.println("modules.size():" + modules.size());
-    	if (modules != null) {
-	    	for (ModuleGroup module : modules) {
-	    		if (!module.isCore() && module.isRequired()) {
-	    			System.out.println("Default Custom IDs :" + module.getModuleId());
-				}
-			}
-    	}
+	@Test
+	public void testDeleteModuleById() throws PhrescoException {
+		String id="test-module";
+        RestClient<ModuleGroup> moduleGroupClient = serviceManager.getRestClient(REST_API_COMPONENT + REST_API_MODULES);
+        moduleGroupClient.setPath(id);
+        ClientResponse clientResponse = moduleGroupClient.deleteById();
+        
     }
 }
