@@ -39,6 +39,7 @@ import org.springframework.data.document.mongodb.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.photon.phresco.commons.model.Customer;
+import com.photon.phresco.commons.model.Role;
 import com.photon.phresco.commons.model.User;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.exception.PhrescoWebServiceException;
@@ -898,6 +899,171 @@ public class AdminService extends DbService implements ServiceConstants {
 		
 		try {
 			mongoOperation.remove(GLOBALURL_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), GlobalURL.class);
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
+		}
+		
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	/**
+	 * Returns the Roles
+	 * @return
+	 */
+	@GET
+	@Path (REST_API_ROLES)
+	@Produces (MediaType.APPLICATION_JSON)
+	public Response findRoles() {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.findRoles()");
+	    }
+		
+		try {
+			List<Role> roleList = mongoOperation.getCollection(ROLES_COLLECTION_NAME , Role.class);
+			if (roleList != null) {
+				return Response.status(Response.Status.OK).entity(roleList).build();
+			} 
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, ROLES_COLLECTION_NAME);
+		}
+		
+		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
+	}
+
+	/**
+	 * Creates the list of Roles
+	 * @param roles
+	 * @return 
+	 */
+	@POST
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Path (REST_API_ROLES)
+	public Response createRoles(List<Role> roles) {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.createRoles(List<Role> roles)");
+	    }
+		
+		try {
+			mongoOperation.insertList(ROLES_COLLECTION_NAME , roles);
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, INSERT);
+		}
+		
+		return Response.status(Response.Status.OK).build();
+	}
+
+	/**
+	 * Updates the list of Roles
+	 * @param roles
+	 * @return
+	 */
+	@PUT
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_ROLES)
+	public Response updateRoles(List<Role> roles) {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateRoles(List<Role> roles)");
+	    }
+		
+		try {
+			for (Role role : roles) {
+				Role roleInfo = mongoOperation.findOne(ROLES_COLLECTION_NAME , 
+				        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(role.getId())), Role.class);
+				if (roleInfo  != null) {
+					mongoOperation.save(ROLES_COLLECTION_NAME, role);
+				}
+			}
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
+		}
+		
+		return Response.status(Response.Status.OK).entity(roles).build();
+	}
+
+	/**
+	 * Deletes the list of Roles
+	 * @param roles
+	 * @throws PhrescoException 
+	 */
+	@DELETE
+	@Path (REST_API_ROLES)
+	public void deleteRoles(List<Role> roles) throws PhrescoException {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteRoles(List<Role> roles)");
+	    }
+		
+		PhrescoException phrescoException = new PhrescoException(EX_PHEX00001);
+		S_LOGGER.error("PhrescoException Is"  + phrescoException.getErrorMessage());
+		throw phrescoException;
+	}
+
+	/**
+	 * Get the Role by id for the given parameter
+	 * @param id
+	 * @return
+	 */
+	@GET
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_ROLES + REST_API_PATH_ID)
+	public Response getRole(@PathParam(REST_API_PATH_PARAM_ID) String id) {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.Response getRole(String id)" + id);
+	    }
+		
+		try {
+			Role role = mongoOperation.findOne(ROLES_COLLECTION_NAME, 
+			        new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Role.class);
+			if (role != null) {
+				return Response.status(Response.Status.OK).entity(role).build();
+			} 
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00005, ROLES_COLLECTION_NAME);
+		}
+		
+		return Response.status(Response.Status.NO_CONTENT).entity(ERROR_MSG_NOT_FOUND).build();
+	}
+	
+	/**
+	 * Updates the list of role by id
+	 * @param role
+	 * @return
+	 */
+	@PUT
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces (MediaType.APPLICATION_JSON)
+	@Path (REST_API_ROLES + REST_API_PATH_ID)
+	public Response updateRole(@PathParam(REST_API_PATH_PARAM_ID) String id , Role role) {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.updateRole(String id , Role role)" + id);
+	    }
+		
+		try {
+			if (id.equals(role.getId())) {
+				mongoOperation.save(ROLES_COLLECTION_NAME, role);
+				return Response.status(Response.Status.OK).entity(role).build();
+			} 
+		} catch (Exception e) {
+			throw new PhrescoWebServiceException(e, EX_PHEX00006, UPDATE);
+		}
+		
+		return Response.status(Response.Status.BAD_REQUEST).entity(ERROR_MSG_ID_NOT_EQUAL).build();
+	}
+	
+	/**
+	 * Deletes the role by id for the given parameter
+	 * @param id
+	 * @return 
+	 */
+	@DELETE
+	@Path (REST_API_ROLES + REST_API_PATH_ID)
+	public Response deleteRole(@PathParam(REST_API_PATH_PARAM_ID) String id) {
+	    if (isDebugEnabled) {
+	        S_LOGGER.debug("Entered into AdminService.deleteRole(String id)" + id);
+	    }
+		
+		try {
+			mongoOperation.remove(ROLES_COLLECTION_NAME, new Query(Criteria.where(REST_API_PATH_PARAM_ID).is(id)), Role.class);
 		} catch (Exception e) {
 			throw new PhrescoWebServiceException(e, EX_PHEX00006, DELETE);
 		}
