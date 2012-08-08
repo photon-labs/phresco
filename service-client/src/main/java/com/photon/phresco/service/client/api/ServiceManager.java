@@ -103,7 +103,7 @@ public interface ServiceManager {
 	
 	ClientResponse createSettings(List<SettingsTemplate> settings) throws PhrescoException;
 	
-	List<ProjectInfo> getPilotProject(String customerId)throws PhrescoException;
+	List<ProjectInfo> getPilotProject(String techId, String customerId) throws PhrescoException;
 	
 	List<ProjectInfo> getPilots(String techId, String customerId) throws PhrescoException;
 	
@@ -115,7 +115,7 @@ public interface ServiceManager {
 	
 	ClientResponse deletePilotProject(String projectId) throws PhrescoException;
 	
-	List<Role> getRoles() throws PhrescoException;
+	List<Role> getRoles(String customerId) throws PhrescoException;
 	
 	Role getRole(String roleId) throws PhrescoException;
 

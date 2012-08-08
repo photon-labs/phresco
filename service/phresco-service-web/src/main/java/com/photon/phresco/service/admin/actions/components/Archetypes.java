@@ -20,14 +20,10 @@
 package com.photon.phresco.service.admin.actions.components;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -35,9 +31,7 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.admin.actions.ServiceBaseAction;
-import com.photon.phresco.service.client.impl.RestClient;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 
 public class Archetypes extends ServiceBaseAction { 
 
@@ -95,11 +89,8 @@ public class Archetypes extends ServiceBaseAction {
 	        S_LOGGER.debug("Entering Method Archetypes.add()");
 	    }
 
-		RestClient<ApplicationType> appType;
 		try {
-			appType = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_APPTYPES);
-			GenericType<List<ApplicationType>> genericType = new GenericType<List<ApplicationType>>(){};
-			List<ApplicationType> appTypes = appType.get(genericType);
+			List<ApplicationType> appTypes = getServiceManager().getApplicationTypes(customerId);
 			getHttpRequest().setAttribute(REQ_APP_TYPES, appTypes);
 		} catch (PhrescoException e) {
 			e.printStackTrace();
@@ -118,9 +109,6 @@ public class Archetypes extends ServiceBaseAction {
 			Technology technology = getServiceManager().getArcheType(techId);
 			getHttpRequest().setAttribute(REQ_ARCHE_TYPE,  technology);
 			getHttpRequest().setAttribute(REQ_FROM_PAGE, fromPage);
-
-			//In ArcheType show ApplcationTypes
-			RestClient<ApplicationType> appType;
 			List<ApplicationType> appTypes = getServiceManager().getApplicationTypes(customerId);
 			getHttpRequest().setAttribute(REQ_APP_TYPES, appTypes);
 		} catch (Exception e) {
@@ -163,7 +151,6 @@ public class Archetypes extends ServiceBaseAction {
 				addActionMessage(getText(ARCHETYPE_ADDED, Collections.singletonList(name)));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new PhrescoException(e);
 		} 
 
@@ -172,14 +159,10 @@ public class Archetypes extends ServiceBaseAction {
 
 	public String update() throws PhrescoException {
 	    if (isDebugEnabled) {
-	        S_LOGGER.debug("Entering Method  Architypes.update()");
+	        S_LOGGER.debug("Entering Method Archetypes.update()");
 	    }
 
 		try {
-			/*if (validateForm()) {
-				setErrorFound(true);
-				return SUCCESS;
-			}*/
 			Technology technology = new Technology(name, description, versionList, appType);
 			technology.setId(techId);
 			getServiceManager().updateArcheTypes(technology, techId);
@@ -192,7 +175,7 @@ public class Archetypes extends ServiceBaseAction {
 
 	public String delete() throws PhrescoException {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  ArcheType.delete()");
+			S_LOGGER.debug("Entering Method Archetypes.delete()");
 		}
 
 		try {
@@ -215,7 +198,7 @@ public class Archetypes extends ServiceBaseAction {
 
 	public String validateForm() {
 		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method  ArcheType.validateForm()");
+			S_LOGGER.debug("Entering Method Archetypes.validateForm()");
 		}
 		
 		boolean isError = false;

@@ -167,7 +167,7 @@
 			onclick="validate('downloadSave', $('#formDownloadAdd'), $('#subcontainer'), 'Creating Download');"
 			value="<s:text name='lbl.hdr.comp.save'/>" />
 		<% } %>
-		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadCancel', $('#formDownloadAdd'), $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
+		<input type="button" id="downloadCancel" class="btn btn-primary" onclick="loadContent('downloadList', $('#formDownloadAdd'), $('#subcontainer'));" value="<s:text name='lbl.hdr.comp.cancel'/>"/>
 	</div>
 	
 	<!-- Hidden Fields -->

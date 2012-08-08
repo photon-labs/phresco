@@ -58,22 +58,19 @@ public class PilotProjects extends ServiceBaseAction {
 	private String projectId = null;
 	private String fromPage = null;
 	private String customerId = null;
-	
+	private String techId = null;
 
-    public String list() throws PhrescoException {
+	public String list() throws PhrescoException {
         if (isDebugEnabled) {
             S_LOGGER.debug("Entering Method PilotProjects.list()");
         }
 
 		try {
-			List<ProjectInfo> pilotProjects = getServiceManager().getPilotProject(customerId);
+			List<ProjectInfo> pilotProjects = getServiceManager().getPilotProject(techId, customerId);
 			getHttpRequest().setAttribute(REQ_PILOT_PROJECTS, pilotProjects);
 			getHttpRequest().setAttribute(REQ_CUST_CUSTOMER_ID, customerId);
-			
-			RestClient<Technology> technology = getServiceManager().getRestClient(REST_API_COMPONENT + REST_API_TECHNOLOGIES);
-			GenericType<List<Technology>> genericType = new GenericType<List<Technology>>(){};
-			List<Technology> technologys = technology.get(genericType);
-			getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
+			List<Technology> technologies = getServiceManager().getArcheTypes(customerId);
+			getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologies);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
@@ -93,7 +90,8 @@ public class PilotProjects extends ServiceBaseAction {
     		getHttpRequest().setAttribute(REQ_ARCHE_TYPES, technologys);
     	} catch(Exception e) {
     		throw new PhrescoException(e);
-    	} 
+    	}
+    	
     	return COMP_PILOTPROJ_ADD;
     }
 	
@@ -291,4 +289,12 @@ public class PilotProjects extends ServiceBaseAction {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+    
+    public String getTechId() {
+		return techId;
+	}
+
+	public void setTechId(String techId) {
+		this.techId = techId;
+	}
 }

@@ -20,7 +20,7 @@
 /*** application list page css starts ***/
 
 a:hover {
-  	color: #fff;
+  	color: #000000;
   	text-decoration: underline;
 }
 
@@ -29,6 +29,10 @@ a:focus {
 }
 
 .zebra-striped tbody tr:hover td {
+    background-color: #8abbed;
+}
+
+.zebra-nonstriped tbody tr:hover {
     background-color: #8abbed;
 }
 
