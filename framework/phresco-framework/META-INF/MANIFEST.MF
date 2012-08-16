@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: phresco-framework
+Bundle-SymbolicName: phresco-framework
+Bundle-Version: 1.2.0.qualifier
+Export-Package: com.photon.phresco.commons,
+ com.photon.phresco.framework,
+ com.photon.phresco.framework.actions,
+ com.photon.phresco.framework.api,
+ com.photon.phresco.framework.validators

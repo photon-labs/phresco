@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libraries xmlns="http://www.example.org/Phresco">
+    <library id="jslib_yui3" name="YUI3" version="3.4.1">
+        <contentURL>/jslibraries/files/jslib_yui3/3.4.1/jslib_yui3-3.4.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>YUI is a free, open source JavaScript and CSS framework for building richly interactive web applications. 
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>YUI is a free, open source JavaScript and CSS framework for building richly interactive web applications.
+Fast - YUI's lightweight core and modular architecture make it scalable, fast, and robust. Built by frontend engineers at Yahoo!, YUI powers the most popular websites in the world.
+Complete - YUI's intuitive and well-documented API takes you from basic DOM handling to building performant and maintainable applications on desktop browsers, mobile devices, and servers.
+Industrial Strength - A thriving community, a carefully architected infrastructure, and a comprehensive suite of tools help you code like a pro, from simple web pages to complex web applications.
+The YUI Library is fully documented on its website; detailed API documentation accompanies the library download. It has six types of components: YUI core, utilities, UI controls, CSS components, developer tools, and build tools.</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_jquery" name="jQuery" version="1.6.2">
+        <contentURL>/jslibraries/files/jslib_jquery/1.6.2/jslib_jquery-1.6.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>jQuery is a cross-browser JavaScript library designed to simplify the client-side scripting of HTML.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>jQuery is a cross-browser JavaScript library designed to simplify the client-side scripting of HTML.
+jQuery is free, open source software, dual-licensed under the MIT License[Massachusetts Institute of Technology] or the GNU General Public License, jQuery's syntax is designed to make it easier to navigate a document, select DOM elements, create animations, handle events, CSS manipulation and develop Ajax applications. jQuery also provides capabilities for developers to create plug-ins on top of the JavaScript library. This enables developers to create abstractions for low-level interaction and animation, advanced effects and high-level, theme-able widgets. The modular approach to the jQuery library allows the creation of powerful and dynamic web pages and web applications.
+
+jQuery contains the following features:
+1)DOM element selections using the cross-browser open source selector engine Sizzle, a spin-off out of the jQuery project.
+2)DOM traversal and modification (including support for CSS 1-3)
+3)Events
+4)CSS manipulation
+5)Effects and animations
+6)Ajax
+7)Extensibility through plug-ins
+8)Utilities - such as user agent information, feature detection
+9)Compatibility methods that are natively available in modern browsers but need fallbacks for older ones - For example the inArray() and each()         functions.
+10)Cross-browser support
+</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_jquery_ui" name="jQuery_UI" version="1.8.16">
+        <contentURL>/jslibraries/files/jslib_jquery_ui/1.8.16/jslib_jquery_ui-1.8.16.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>jQuery UI is a JavaScript library that provides abstractions for low-level interaction and animation, advanced effects and high-level, themeable widgets.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>jQuery UI provides abstractions for low-level interaction and animation, advanced effects and high-level, themeable widgets, built on top of the jQuery JavaScript Library, that you can use to build highly interactive web applications.jQuery UI is free, open source software, dual-licensed under the MIT License[Massachusetts Institute of Technology] and the GNU General Public License.
+
+Interactions
+1)Draggable - Make elements draggable
+2)Droppable - Control where dragged elements may be dropped
+3)Resizable - Make elements resizeable [5]:
+4)Selectable - Advanced selection features for lists of elements
+5)Sortable - Make a list of elements easily sortable
+
+Widgets
+All of jQuery UI's widgets are fully themeable using a consolidated, coordinated theme mechanism demonstrated by their ThemeRoller.
+1)Accordion - Accordion containers
+2)Autocomplete - Auto-complete boxes based on what the user types
+3)Button - Enhanced button appearance, turn radio buttons and checkboxes into pushbuttons
+4)Datepicker - Advanced date-picker
+5)Dialog - Show dialog boxes on top of other content, easily and robustly
+6)Progressbar - Progress bars, both animated and not
+7)Slider - Fully customizable sliders with various features [6]:
+8)Tabs - Tabbed user interface handling, with both inline and demand-loaded content
+
+Effects
+1)Color Animation - Animate the transition from one color to another
+2)Toggle Class, Add Class, Remove Class, Switch Class - Animate the transition from one set of styles to another
+3)Effect - A variety of effects (appear, slide-down, explode, fade-in, etc.)
+4)Toggle - Toggle an effect on and off
+5)Hide, Show - Using the effects above
+
+Utilities
+Position - Set an element's position relative to another element's position (alignment)
+</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_phonegap" name="Phonegap" version="1.2.0">
+        <contentURL>/jslibraries/files/jslib_phonegap/1.2.0/jslib_phonegap-1.2.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores.Even though user works on web based application[hybrid apps] while using phone gap user feel as if they are working on native applications.
+
+</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_dojo" name="Dojo" version="1.7">
+        <contentURL>/jslibraries/files/jslib_dojo/1.7/jslib_dojo-1.7.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dojo is the Open Source JavaScript Toolkit tool for constructing dynamic web user interfaces</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Dojo saves you time, delivers powerful performance, and scales with your development process. It’s the toolkit experienced developers turn to for building superior desktop and mobile web experiences.Dojo Toolkit is an open source modular JavaScript library (or more specifically JavaScript toolkit) designed to ease the rapid development of cross-platform, JavaScript/Ajax-based applications and web sites.</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_plist_parser" name="Plist_parser" version="1.0">
+        <contentURL>/jslibraries/files/jslib_plist_parser/1.0/jslib_plist_parser-1.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A simple parser to parse the XML plist file and converts them to JSON objects
+
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>PlistParser accepts a Property List expressed as an XML string and transforms it into a JavaScript data structure. Structure signifiers (ARRAY, DICT, KEY) in the XML are discarded - their data are returned as JavaScript arrays and associative arrays. Currently the only output option is JSON.PlistParser does not rely on any external libraries like jQuery or JSON. It was written for use within the Appcelerator Titanium environment, but also works with modern browsers. Tested in Titanium, Firefox, IE, Safari, Chrome, and Opera.
+
+</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_iscroll" name="iscroll" version="3.7.1">
+        <contentURL>/jslibraries/files/jslib_iscroll/3.7.1/jslib_iscroll-3.7.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>IScroll is the first Text Synchronized Audio (TSA) application developed for smart phones. It's a combination of both an e-book and audiobook that provides smart phone users a way to listen, read and learn on the go. 
+</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>iScroll is the first Text Synchronized Audio (TSA) application developed for smart phones. It's a combination of both an e-book and audiobook that provides smart phone users a way to listen, read and learn on the go.iScroll combines features from e-books and audiobooks for use on Smart Phones, iPhone and iPod Touch.  As part of the patent-pending technology, iScroll has features such as fast-forward, rewind and word/phrase search that customize a user's reading experiences. Other key tools include the ability to turn audio on/off, adjust font size, color, type, line spacing, and background color, as well as the ability to have a backlight and bookmarking capability.The terms iScroller often refers to a person that is using the iScroll application. Similarly the term iScrolling refers to the act of using the iScroll application.iScroll is similar to other electronic book devices such as Amazon Kindle, Sony Reader, and iRex iLiad. However, one does not need to purchase an additional, often bulky device; iScrollers, or people who use the iScroll application, can use their existing smart phones for further convenience and cost savings.</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_jsonpath" name="jsonpath" version="0.8.0">
+        <contentURL>/jslibraries/files/jslib_jsonpath/0.8.0/jslib_jsonpath-0.8.0.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>JSONPath provides XPath way of accessing data from JSON</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>JSONPath provides XPath way of accessing data from JSON. JSONPath expressions always refer to a JSON structure in the same way as XPath expression are used in combination with an XML document. Since a JSON structure is usually anonymous and doesn't necessarily have a &quot;root member object&quot; JSONPath assumes the abstract name $ assigned to the outer level object. JSONPath expressions can use the dot–notation.</content>
+            </document>
+        </documents>
+    </library>
+    <library id="jslib_xml2json" name="xml2json" version="1.1">
+        <contentURL>/jslibraries/files/jslib_xml2json/1.1/jslib_xml2json-1.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>xml2json converts xml to json and viceverza, using node-expat.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>xml2json converts xml to json and viceverza, using node-expat.
+
+It does not parse the following elements:
+
+1)CDATA sections
+2)Processing instructions
+3)XML declarations
+4)Entity declarations
+5)Comments
+</content>
+            </document>
+        </documents>
+    </library>
+</libraries>

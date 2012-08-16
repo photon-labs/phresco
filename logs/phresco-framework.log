@@ -1,0 +1,4 @@
+20-07-2012 13:46:59.0108 ERROR http-2468-2 com.photon.phresco.framework.impl.ProjectAdministratorImpl : readBuildInfo() > File path is incorrectC:\Documents and Settings\mahesh_p\workspace\projects\PHR_Test10\do_not_checkin\build\build.info
+20-07-2012 13:46:59.0843 ERROR http-2468-3 com.photon.phresco.framework.impl.ProjectAdministratorImpl : readBuildInfo() > File path is incorrectC:\Documents and Settings\mahesh_p\workspace\projects\PHR_Test10\do_not_checkin\build\build.info
+20-07-2012 14:01:35.0608 ERROR http-2468-2 com.photon.phresco.framework.impl.ProjectAdministratorImpl : readBuildInfo() > File path is incorrectC:\Documents and Settings\mahesh_p\workspace\projects\PHR_multi1\do_not_checkin\build\build.info
+20-07-2012 14:01:36.0311 ERROR http-2468-4 com.photon.phresco.framework.impl.ProjectAdministratorImpl : readBuildInfo() > File path is incorrectC:\Documents and Settings\mahesh_p\workspace\projects\PHR_multi1\do_not_checkin\build\build.info

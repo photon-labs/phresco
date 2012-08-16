@@ -1,0 +1,776 @@
+12-07-2012 17:52:59.0170 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.RepositoryManagerImpl(ServerConfiguration config)
+12-07-2012 17:53:11.0718 ERROR main com.photon.phresco.service.impl.TweetCacheManagerImpl : Error : GET http://twitter.com/statuses/user_timeline/photoninfotech.json returned a response status of 400 Bad Request
+12-07-2012 17:53:11.0749 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getApplicationTypes()
+12-07-2012 17:53:11.0749 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0749 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/config/apptype/1.2.0.6001/apptype-1.2.0.6001.xml
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-php
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-php
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0765 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-php/0.2/tech-php-0.2.xml
+12-07-2012 17:53:11.0780 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0780 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-php
+12-07-2012 17:53:11.0780 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0780 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru6
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru6
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0796 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru6/0.2/tech-phpdru6-0.2.xml
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru6
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru7
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru7
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0812 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru7/0.2/tech-phpdru7-0.2.xml
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru7
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-sharepoint
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-sharepoint
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-sharepoint/0.2/tech-sharepoint-0.2.xml
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-sharepoint
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-widget
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-widget
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0858 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-widget
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_yui_widget_jslibraries/0.1/html5_yui_widget_jslibraries-0.1.xml
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0890 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_jquery_widget_jslibraries/0.1/html5_jquery_widget_jslibraries-0.1.xml
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0921 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:53:11.0937 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0937 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:53:11.0937 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0937 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_mobile_widget_jslibraries/0.1/html5_mobile_widget_jslibraries-0.1.xml
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-dotnet
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-dotnet
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-dotnet
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-wordpress
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-wordpress
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0952 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-wordpress/0.2/tech-wordpress-0.2.xml
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-wordpress
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-standalone
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-standalone
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0968 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-standalone
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-native
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-native
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-native/0.2/tech-iphone-native-0.2.xml
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-native
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0983 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-hybrid/0.2/tech-iphone-hybrid-0.2.xml
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-hybrid
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:11.0999 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-native
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-native
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-native/0.2/tech-android-native-0.2.xml
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-native
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-hybrid
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-hybrid
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:12.0015 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-hybrid/0.2/tech-android-hybrid-0.2.xml
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-hybrid
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:12.0030 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-nodejs-webservice/0.2/tech-nodejs-webservice-0.2.xml
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-nodejs-webservice
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-webservice
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-webservice
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:53:12.0046 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:53:12.0062 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:53:12.0062 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-webservice
+12-07-2012 17:53:12.0062 DEBUG Thread-1 com.photon.phresco.servlets.VideoDownloader : Entering Method  VideoDownloader.run()
+12-07-2012 17:53:12.0062 DEBUG Thread-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsString(String filePath)
+12-07-2012 17:53:12.0062 DEBUG Thread-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsString() FilePath=/videos/homepage/videoinfo/1.0/videoinfo-1.0.json
+12-07-2012 17:53:12.0062 DEBUG Thread-2 com.photon.phresco.servlets.ImageDownloader : Entering Method ImageDownloader.run()
+12-07-2012 17:57:51.0328 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/apps
+12-07-2012 17:57:51.0328 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getApplicationTypes()
+12-07-2012 17:57:51.0328 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0328 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/config/apptype/1.2.0.6001/apptype-1.2.0.6001.xml
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-php
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-php
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0343 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-php/0.2/tech-php-0.2.xml
+12-07-2012 17:57:51.0359 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0359 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-php
+12-07-2012 17:57:51.0359 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0359 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru6
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru6
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0375 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru6/0.2/tech-phpdru6-0.2.xml
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru6
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru7
+12-07-2012 17:57:51.0390 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0406 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru7
+12-07-2012 17:57:51.0406 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0406 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru7/0.2/tech-phpdru7-0.2.xml
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru7
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-sharepoint
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-sharepoint
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0437 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-sharepoint/0.2/tech-sharepoint-0.2.xml
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-sharepoint
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-widget
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-widget
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0453 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:57:51.0468 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0468 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-widget
+12-07-2012 17:57:51.0468 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0468 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_yui_widget_jslibraries/0.1/html5_yui_widget_jslibraries-0.1.xml
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0484 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_jquery_widget_jslibraries/0.1/html5_jquery_widget_jslibraries-0.1.xml
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0500 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:57:51.0515 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0515 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:57:51.0515 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0515 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_mobile_widget_jslibraries/0.1/html5_mobile_widget_jslibraries-0.1.xml
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-dotnet
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-dotnet
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-dotnet
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-wordpress
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-wordpress
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-wordpress/0.2/tech-wordpress-0.2.xml
+12-07-2012 17:57:51.0531 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-wordpress
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-standalone
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-standalone
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0546 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-standalone
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-native
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-native
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-native/0.2/tech-iphone-native-0.2.xml
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-native
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:57:51.0562 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-hybrid/0.2/tech-iphone-hybrid-0.2.xml
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-hybrid
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-native
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-native
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0578 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-native/0.2/tech-android-native-0.2.xml
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-native
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-hybrid
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-hybrid
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-hybrid/0.2/tech-android-hybrid-0.2.xml
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-hybrid
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0593 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0609 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-nodejs-webservice/0.2/tech-nodejs-webservice-0.2.xml
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-nodejs-webservice
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-webservice
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-webservice
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:57:51.0625 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:57:51.0640 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:57:51.0640 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-webservice
+12-07-2012 17:59:06.0457 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/apps
+12-07-2012 17:59:06.0457 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getApplicationTypes()
+12-07-2012 17:59:06.0457 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0457 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/config/apptype/1.2.0.6001/apptype-1.2.0.6001.xml
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-php
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-php
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-php/0.2/tech-php-0.2.xml
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-php
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0473 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru6
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru6
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0488 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru6/0.2/tech-phpdru6-0.2.xml
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru6
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru7
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru7
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0504 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru7/0.2/tech-phpdru7-0.2.xml
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru7
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-sharepoint
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-sharepoint
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0535 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-sharepoint/0.2/tech-sharepoint-0.2.xml
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-sharepoint
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-widget
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-widget
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0551 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:59:06.0566 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0566 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-widget
+12-07-2012 17:59:06.0566 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0566 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_yui_widget_jslibraries/0.1/html5_yui_widget_jslibraries-0.1.xml
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0582 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_jquery_widget_jslibraries/0.1/html5_jquery_widget_jslibraries-0.1.xml
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0598 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:59:06.0613 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0613 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-mobile-widget
+12-07-2012 17:59:06.0613 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0613 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_mobile_widget_jslibraries/0.1/html5_mobile_widget_jslibraries-0.1.xml
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-dotnet
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-dotnet
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-dotnet
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-wordpress
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-wordpress
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-wordpress/0.2/tech-wordpress-0.2.xml
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-wordpress
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-standalone
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-standalone
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0629 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-standalone
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-native
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-native
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-native/0.2/tech-iphone-native-0.2.xml
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-native
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-hybrid
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0660 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-hybrid/0.2/tech-iphone-hybrid-0.2.xml
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-hybrid
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-native
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-native
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0676 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-native/0.2/tech-android-native-0.2.xml
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-native
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-hybrid
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-hybrid
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-hybrid/0.2/tech-android-hybrid-0.2.xml
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-hybrid
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0691 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-nodejs-webservice
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-nodejs-webservice/0.2/tech-nodejs-webservice-0.2.xml
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-nodejs-webservice
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-webservice
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-webservice
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 17:59:06.0707 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 17:59:06.0723 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 17:59:06.0723 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-webservice
+12-07-2012 17:59:10.0832 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/homepagevideos
+12-07-2012 17:59:10.0832 DEBUG http-3030-1 com.photon.phresco.service.HomePageService : Entering Method HomePageService.getHomePageVideo()
+12-07-2012 17:59:10.0832 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsString(String filePath)
+12-07-2012 17:59:10.0832 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsString() FilePath=/videos/homepage/videoinfo/1.0/videoinfo-1.0.json
+12-07-2012 17:59:11.0082 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/settings
+12-07-2012 17:59:11.0082 DEBUG http-3030-1 com.photon.phresco.service.ConfigurationService : Entering Method ConfigurationService.getSettingsTemplates()
+12-07-2012 17:59:11.0082 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsString(String filePath)
+12-07-2012 17:59:11.0082 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsString() FilePath=/config/settings/0.4/settings-0.4.json
+12-07-2012 17:59:11.0426 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/settings/env
+12-07-2012 17:59:51.0381 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/login
+12-07-2012 17:59:55.0757 DEBUG http-3030-2 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/tweets
+12-07-2012 17:59:56.0616 ERROR Timer-0 com.photon.phresco.service.impl.TweetCacheManagerImpl : Error : GET http://twitter.com/statuses/user_timeline/photoninfotech.json returned a response status of 400 Bad Request
+12-07-2012 18:00:05.0070 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/pilots
+12-07-2012 18:00:05.0070 INFO http-3030-1 com.photon.phresco.service.PilotProjectsService : Retrieving pilot projects for technology tech-php
+12-07-2012 18:00:05.0070 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getPilotProjects(String techId)
+12-07-2012 18:00:05.0070 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getPilotProjects() Technology ID=tech-php
+12-07-2012 18:00:05.0070 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:00:05.0070 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/pilots/tech-php/1.2.0.6001/tech-php-1.2.0.6001.pilots
+12-07-2012 18:00:21.0868 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/pilots
+12-07-2012 18:00:21.0868 INFO http-3030-1 com.photon.phresco.service.PilotProjectsService : Retrieving pilot projects for technology tech-nodejs-webservice
+12-07-2012 18:00:21.0868 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getPilotProjects(String techId)
+12-07-2012 18:00:21.0868 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getPilotProjects() Technology ID=tech-nodejs-webservice
+12-07-2012 18:00:21.0868 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:00:21.0868 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/pilots/tech-nodejs-webservice/1.2.0.6001/tech-nodejs-webservice-1.2.0.6001.pilots
+12-07-2012 18:00:23.0946 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/pilots
+12-07-2012 18:00:23.0946 INFO http-3030-1 com.photon.phresco.service.PilotProjectsService : Retrieving pilot projects for technology tech-java-webservice
+12-07-2012 18:00:23.0946 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getPilotProjects(String techId)
+12-07-2012 18:00:23.0946 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getPilotProjects() Technology ID=tech-java-webservice
+12-07-2012 18:00:23.0946 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:00:23.0946 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/pilots/tech-java-webservice/1.2.0.6001/tech-java-webservice-1.2.0.6001.pilots
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/apps
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.PhrescoService : Entering Method PhrescoService.createProject(ProjectInfo projectInfo)
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.PhrescoService : createProject() ProjectInfo=PHR_JWSProject
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.projects.DefaultProjectService : Entering Method DefaultProjectService.createProject(ProjectInfo projectInfo)
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.projects.DefaultProjectService : createProject() ProjectInfo =PHR_JWSProject
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : Entering Method ArchetypeExecutorImpl.execute(ProjectInfo info)
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : execute() ProjectCode=PHR_JWSProject
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : Entering Method ArchetypeExecutorImpl.buildCommandString(ProjectInfo info)
+12-07-2012 18:00:36.0931 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : buildCommandString() ProjectCode=PHR_JWSProject
+12-07-2012 18:00:36.0947 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : Entering Method ArchetypeExecutorImpl.getTempFolderPath()
+12-07-2012 18:00:36.0962 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : getTempFolderPath() Temp Folder path= C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48
+12-07-2012 18:00:36.0962 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : command String mvn archetype:generate -DarchetypeGroupId=archetypes -DarchetypeArtifactId=phresco-javawebservice-archetype -DarchetypeVersion=1.2.0.6001 -DgroupId=com.photon.phresco -DartifactId="PHR_JWSProject" -Dversion=1.0.0 -DarchetypeRepository=http://172.16.18.178:8080/nexus/content/groups/public/ -DinteractiveMode=false
+12-07-2012 18:00:42.0478 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : Entering Method ArchetypeExecutorImpl.createProjectFolders(ProjectInfo info, File file)
+12-07-2012 18:00:42.0478 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : createProjectFolders()  path=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48
+12-07-2012 18:00:42.0478 DEBUG http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : createProjectFolders()  ProjectCode=PHR_JWSProject
+12-07-2012 18:00:42.0478 INFO http-3030-1 com.photon.phresco.service.impl.ArchetypeExecutorImpl : create .phresco folder inside the project
+12-07-2012 18:00:42.0509 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.DependencyProcessorFactory : Entering Method DependencyProcessorFactory.getDependencyProcessor(ProjectInfo projectInfo)
+12-07-2012 18:00:42.0509 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.DependencyProcessorFactory : getDependencyProcessor() projectCode=PHR_JWSProject
+12-07-2012 18:00:42.0509 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.DependencyProcessorFactory : Entering Method DependencyProcessorFactory.initializeProcessors(String techId)
+12-07-2012 18:00:42.0509 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.DependencyProcessorFactory : getDependencyProcessor() TechnologyID=tech-java-webservice
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.JWSDependencyProcessor : Entering Method JWSDependencyProcessor.process(ProjectInfo info, File path)
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.JWSDependencyProcessor : process() Path=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.AbstractDependencyProcessor : Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.AbstractDependencyProcessor : process() FilePath=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.AbstractDependencyProcessor : process() ProjectCode=PHR_JWSProject
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.JWSDependencyProcessor : Entering Method JWSDependencyProcessor.extractModules(File path, List<TupleBean> modules)
+12-07-2012 18:00:42.0525 DEBUG http-3030-1 com.photon.phresco.service.dependency.impl.AbstractDependencyProcessor : extractModules() path=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:43.0822 DEBUG http-3030-1 com.photon.phresco.service.impl.DocumentGeneratorImpl : Entering Method DocumentGeneratorImpl.generate(ProjectInfo info, File filePath)
+12-07-2012 18:00:43.0822 DEBUG http-3030-1 com.photon.phresco.service.impl.DocumentGeneratorImpl : generate() Filepath=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:43.0822 DEBUG http-3030-1 com.photon.phresco.service.impl.DocumentGeneratorImpl : generate() ProjectCode=PHR_JWSProject
+12-07-2012 18:00:44.0119 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil :  Entering Method DocumentUtil.getTitleSection(ProjectInfo info)
+12-07-2012 18:00:44.0119 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : getTitleSection() projectCode=PHR_JWSProject
+12-07-2012 18:00:44.0119 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0119 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=10
+12-07-2012 18:00:44.0134 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0134 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=4
+12-07-2012 18:00:44.0244 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0244 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=10
+12-07-2012 18:00:44.0275 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0275 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=10
+12-07-2012 18:00:44.0291 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.getVersion(ProjectInfo info)
+12-07-2012 18:00:44.0291 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : getVersion() ProjectCode=PHR_JWSProject
+12-07-2012 18:00:44.0291 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0291 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=7
+12-07-2012 18:00:44.0338 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addPages(InputStream titleSection, PdfCopy pdfCopy)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getDocument(String id, EntityType type)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addPages(RepositoryManager repoManager,List<TupleBean> tuples, EntityType type, PdfCopy pdfCopy)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.getDocumentStream(RepositoryManager repoManager,List<TupleBean> modules, EntityType type)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=2
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addBlankLines(Paragraph p, int noOfLines)
+12-07-2012 18:00:44.0369 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : addBlankLines() No of Lines=2
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addPages(InputStream titleSection, PdfCopy pdfCopy)
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.addPages(RepositoryManager repoManager,List<TupleBean> tuples, EntityType type, PdfCopy pdfCopy)
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.getDocumentStream(RepositoryManager repoManager,List<TupleBean> modules, EntityType type)
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.getIndexHtml(File folder)
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : getIndexHtml() folder=C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject\docs
+12-07-2012 18:00:44.0400 DEBUG http-3030-1 com.photon.phresco.service.docs.impl.DocumentUtil : Entering Method DocumentUtil.listFiles(File file,StringBuffer sb)
+12-07-2012 18:00:44.0400 INFO http-3030-1 com.photon.phresco.service.projects.DefaultProjectService : Configure created application :JWS Project
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.config.impl.ConfiguratorFactory : Entering Method ConfiguratorFactory.getConfigurator(ProjectInfo projectInfo)
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.config.impl.ConfiguratorFactory : getConfigurator() ProjectCodePHR_JWSProject
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.config.impl.ConfiguratorFactory : getConfigurator() TechnologyID=tech-java-webservice
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.config.impl.ConfiguratorFactory : Entering Method  ConfiguratorFactory.initializeConfigurators(String techId)
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.config.impl.ConfiguratorFactory : initializeConfigurators() TechnologyId=tech-java-webservice
+12-07-2012 18:00:44.0416 DEBUG http-3030-1 com.photon.phresco.service.PhrescoService : Project Path = C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:45.0025 DEBUG http-3030-1 com.photon.phresco.service.PhrescoService : Entering Method PhrescoService.write(OutputStream output)
+12-07-2012 18:00:45.0025 DEBUG http-3030-1 com.photon.phresco.service.PhrescoService : PhrescoService.write() FILe PATH = C:\DOCUME~1\mahesh_p\LOCALS~1\Temp\phresco\a4c93db2-bd6c-4585-8aef-244517674d48\PHR_JWSProject
+12-07-2012 18:00:47.0760 DEBUG http-3030-1 com.photon.phresco.service.interceptors.SecurityInterceptor : http://localhost:3030/service/settings/env
+12-07-2012 18:00:56.0526 ERROR Timer-0 com.photon.phresco.service.impl.TweetCacheManagerImpl : Error : GET http://twitter.com/statuses/user_timeline/photoninfotech.json returned a response status of 400 Bad Request
+12-07-2012 18:12:59.0333 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.RepositoryManagerImpl(ServerConfiguration config)
+12-07-2012 18:13:13.0224 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getApplicationTypes()
+12-07-2012 18:13:13.0224 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0224 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/config/apptype/1.2.0.6001/apptype-1.2.0.6001.xml
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-php
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-php
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0256 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-php/0.2/tech-php-0.2.xml
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-php
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru6
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru6
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0271 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru6/0.2/tech-phpdru6-0.2.xml
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru6
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-phpdru7
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-phpdru7
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0303 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-phpdru7/0.2/tech-phpdru7-0.2.xml
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-phpdru7
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-sharepoint
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-sharepoint
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0334 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-sharepoint/0.2/tech-sharepoint-0.2.xml
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-sharepoint
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-widget
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-widget
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0349 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 18:13:13.0365 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0365 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-widget
+12-07-2012 18:13:13.0365 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0365 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_yui_widget_jslibraries/0.1/html5_yui_widget_jslibraries-0.1.xml
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-widget
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0381 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_jquery_widget_jslibraries/0.1/html5_jquery_widget_jslibraries-0.1.xml
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-jquery-mobile-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-html5-mobile-widget
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0412 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 18:13:13.0428 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0428 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-html5-mobile-widget
+12-07-2012 18:13:13.0428 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0428 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/html5_mobile_widget_jslibraries/0.1/html5_mobile_widget_jslibraries-0.1.xml
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-dotnet
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-dotnet
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-dotnet
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-wordpress
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-wordpress
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-wordpress/0.2/tech-wordpress-0.2.xml
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-wordpress
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-standalone
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-standalone
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0443 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-standalone
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-native
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-native
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-native/0.2/tech-iphone-native-0.2.xml
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-native
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-iphone-hybrid
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-iphone-hybrid
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0475 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-iphone-hybrid/0.2/tech-iphone-hybrid-0.2.xml
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-iphone-hybrid
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-native
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-native
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0490 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-native/0.2/tech-android-native-0.2.xml
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-native
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-android-hybrid
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-android-hybrid
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0506 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-android-hybrid/0.2/tech-android-hybrid-0.2.xml
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-android-hybrid
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/jslibraries/jslibraries/0.1/jslibraries-0.1.xml
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-nodejs-webservice
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-nodejs-webservice
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0521 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-nodejs-webservice/0.2/tech-nodejs-webservice-0.2.xml
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-nodejs-webservice
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.generateTechnology(Technology technology)
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getModules(String techId)
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getModules() Technology ID=tech-java-webservice
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJAXBModules(String techId)
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl :  getJAXBModules() Technology ID=tech-java-webservice
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsStream(String filePath)
+12-07-2012 18:13:13.0537 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsStream() FilePath=/modules/tech-java-webservice/0.2/tech-java-webservice-0.2.xml
+12-07-2012 18:13:13.0553 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getJSLibraries(String techId)
+12-07-2012 18:13:13.0553 DEBUG main com.photon.phresco.service.impl.RepositoryManagerImpl : getJSLibraries() Technology ID=tech-java-webservice
+12-07-2012 18:13:13.0553 DEBUG Thread-1 com.photon.phresco.servlets.VideoDownloader : Entering Method  VideoDownloader.run()
+12-07-2012 18:13:13.0553 DEBUG Thread-1 com.photon.phresco.service.impl.RepositoryManagerImpl : Entering Method RepositoryManagerImpl.getArtifactAsString(String filePath)
+12-07-2012 18:13:13.0553 DEBUG Thread-1 com.photon.phresco.service.impl.RepositoryManagerImpl : getArtifactAsString() FilePath=/videos/homepage/videoinfo/1.0/videoinfo-1.0.json
+12-07-2012 18:13:13.0553 DEBUG Thread-2 com.photon.phresco.servlets.ImageDownloader : Entering Method ImageDownloader.run()
