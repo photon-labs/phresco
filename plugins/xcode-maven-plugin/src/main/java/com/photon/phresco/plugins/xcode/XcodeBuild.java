@@ -193,6 +193,8 @@ public class XcodeBuild extends AbstractMojo {
 			throw new MojoExecutionException("Invalid path, invalid xcodebuild file: "
 					+ xcodeCommandLine.getAbsolutePath());
 		}
+		getLog().info("basedir " + basedir);
+		getLog().info("baseDir Name" + baseDir.getName());
 		/*
 		 * // Compute archive name String archiveName =
 		 * project.getBuild().getFinalName() + ".cust"; File finalDir = new
@@ -367,7 +369,8 @@ public class XcodeBuild extends AbstractMojo {
 
 			try {
 				System.out.println("Completed " + outputFile.getAbsolutePath());
-				getLog().info("APP created.. Copying to Build directory.....");
+				getLog().info("Folder name ....." + baseDir.getName());
+				getLog().info("APP created.. Copying to Build directory....." + project.getBuild().getFinalName());
 				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
 				File baseFolder = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName);
 				if (!baseFolder.exists()) {
@@ -548,6 +551,7 @@ public class XcodeBuild extends AbstractMojo {
 			getLog().info("environment name :" + environmentName);
 			getLog().info("base dir name :" + baseDir.getName());
 			File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
+			getLog().info("Config file :" + srcConfigFile.getAbsolutePath() );
 			String basedir = baseDir.getName();
 			PluginUtils pu = new PluginUtils();
 			pu.executeUtil(environmentName, basedir, srcConfigFile);
@@ -555,7 +559,7 @@ public class XcodeBuild extends AbstractMojo {
 			// if(encrypt) {
 			// pu.encode(srcConfigFile);
 			// }
-		} catch (PhrescoException e) {
+		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}

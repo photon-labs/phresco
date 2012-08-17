@@ -39,21 +39,28 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
+import com.photon.phresco.util.PluginConstants;
 /**
  * APP deploy
  * @goal deploy
  * @phase deploy
  */
-public class AppDeploy extends AbstractMojo {
+public class AppDeploy extends AbstractMojo implements PluginConstants {
 
 
 	/**
@@ -81,11 +88,6 @@ public class AppDeploy extends AbstractMojo {
 	private String simVersion;
 	
 	/**
-	 * @parameter expression="${application.path}"
-	 */
-	private String appPath;
-	
-	/**
 	 * @parameter expression="${device.deploy}"
 	 */
 	private boolean deviceDeploy;
@@ -103,11 +105,32 @@ public class AppDeploy extends AbstractMojo {
 	 * @readonly
 	 */
 	protected MavenProject project;
-
+	/**
+	 * @parameter expression="${project.basedir}" required="true"
+	 * @readonly
+	 */
+	protected File baseDir;
+	
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+	
+	/**
+	 * @parameter expression ="${triggerSimulator}" default-value="true"
+	 */
+	private boolean triggerSimulator;
+	
+	private String appPath;
+	
 	private File simHomeAppLocation;
+	
+	private File buildInfoFile;
+
 	
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		getLog().info("iphone trigger value " + triggerSimulator);
 		try {
 			if(!deviceDeploy && !SdkVerifier.isAvailable(simVersion)) {
 				throw new MojoExecutionException("Selected version " +simVersion +" is not available!");
@@ -129,6 +152,18 @@ public class AppDeploy extends AbstractMojo {
 		if(!deviceDeploy) {
 			//copy the files into simulation directory
 			String home = System.getProperty("user.home");
+			// Have to get app path from build id
+			if (StringUtils.isEmpty(buildNumber)) {
+				throw new MojoExecutionException("Selected build is not available!");
+			}
+			getLog().info("Build id is " + buildNumber);
+			getLog().info("Project Code " + baseDir.getName());
+			
+			BuildInfo buildInfo = getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
+			appPath = buildInfo.getBuildName();
+
 			getLog().info("Application.path = " + appPath);
 			appName = getAppFileName(appPath);
 			getLog().info("Application name = "+ appName);
@@ -189,12 +224,15 @@ public class AppDeploy extends AbstractMojo {
 			}
 		};
 
-		Thread t = new Thread(runnable, "iPhoneSimulator");
-		t.start();
-		try {
-			t.join(5000);
-		} catch (InterruptedException e1) {
-			//Intentionally left blank.
+		if (triggerSimulator) {
+			getLog().info("Triggering simulator started ");
+			Thread t = new Thread(runnable, "iPhoneSimulator");
+			t.start();
+			try {
+				t.join(5000);
+			} catch (InterruptedException e1) {
+				getLog().error("Triggering simulator failed.");
+			}
 		}
 
 	}
@@ -229,5 +267,35 @@ public class AppDeploy extends AbstractMojo {
 			}
 		}
 		return appPath2;
+	}
+	
+	private BuildInfo getBuildInfo(int buildNumber) throws MojoExecutionException {
+		ProjectAdministrator administrator;
+		try {
+			administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException("Project administrator object creation error!");
+		}
+		buildInfoFile = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY + BUILD_INFO_FILE);
+		if (!buildInfoFile.exists()) {
+			throw new MojoExecutionException("Build info is not available!");
+		}
+		try {
+			List<BuildInfo> buildInfos = administrator.readBuildInfo(buildInfoFile);
+			
+			 if (CollectionUtils.isEmpty(buildInfos)) {
+				 throw new MojoExecutionException("Build info is empty!");
+			 }
+
+			 for (BuildInfo buildInfo : buildInfos) {
+				 if (buildInfo.getBuildNo() == buildNumber) {
+					 return buildInfo;
+				 }
+			 }
+
+			 throw new MojoExecutionException("Build info is empty!");
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getLocalizedMessage());
+		}
 	}
 }

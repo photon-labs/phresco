@@ -20,51 +20,50 @@ package com.photon.phresco.plugins.xcode;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
 import java.io.Writer;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.List;
 
-import org.apache.commons.configuration.ConfigurationException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.configuration.plist.XMLPropertyListConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
-import org.w3c.dom.*;
-
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
+import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
-import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
 import com.photon.phresco.plugins.xcode.utils.XMLConstants;
-
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-import javax.xml.transform.dom.*;
-
-
-
+import com.photon.phresco.util.PluginConstants;
 
 /**
  * APP instrumentation
  * @goal instruments
  */
-public class Instrumentation extends AbstractXcodeMojo {
+public class Instrumentation extends AbstractXcodeMojo implements PluginConstants {
 	/**
 	 * @parameter experssion="${command}" default-value="instruments"
 	 */
@@ -100,9 +99,6 @@ public class Instrumentation extends AbstractXcodeMojo {
 	 */
 	private boolean verbose;
 	
-	/**
-	 * @parameter expression="${application.path}"
-	 */
 	private String appPath;
 	
 	/**
@@ -121,6 +117,17 @@ public class Instrumentation extends AbstractXcodeMojo {
 	public String xmlResult;
 	
 	/**
+	 * @parameter expression="${project.basedir}" required="true"
+	 * @readonly
+	 */
+	protected File baseDir;
+	
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
+	
+	/**
 	 * @parameter 
 	 */
 	private String outputFolder;
@@ -129,32 +136,43 @@ public class Instrumentation extends AbstractXcodeMojo {
 	 * @parameter 
 	 */
 	private static XMLPropertyListConfiguration config;
+	private File buildInfoFile;
 	
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-			getLog().info("Instrumentation command" + command);
+		getLog().info("Instrumentation command" + command);
 		try {	
 			if(SdkVerifier.isAvailable("iphonesimulator5.1")) {
-                template = "/Applications/Xcode.app/Contents" + template;
-              }
-          } catch (IOException e2) {
-              throw new MojoExecutionException("Template not found");
-          } catch (InterruptedException e2) {
-               throw new MojoExecutionException("Template interrupted!");
-           }
-			
-		    try {
-				outputFolder = project.getBasedir().getAbsolutePath();
-				File f = new File(outputFolder);
-				File files[] = f.listFiles();
-				for(File file : files) {
-					if(file.getName().startsWith("Run 1" ) || file.getName().endsWith(".trace")) {
-						FileUtils.deleteDirectory(file);		
-					}
-				}
-			} catch (IOException e) {
-				getLog().error(e);
+				template = "/Applications/Xcode.app/Contents" + template;
 			}
+		} catch (IOException e2) {
+            throw new MojoExecutionException("Template not found");
+        } catch (InterruptedException e2) {
+        	throw new MojoExecutionException("Template interrupted!");
+        }
+		
+		if (StringUtils.isEmpty(buildNumber)) {
+			throw new MojoExecutionException("Selected build is not available!");
+		}
+		getLog().info("Build id is " + buildNumber);
+		getLog().info("Project Code " + baseDir.getName());
+		
+		BuildInfo buildInfo = getBuildInfo(Integer.parseInt(buildNumber));
+		appPath = buildInfo.getBuildName();
+		getLog().info("Application.path = " + appPath);
+		
+		try {
+			outputFolder = project.getBasedir().getAbsolutePath();
+			File f = new File(outputFolder);
+			File files[] = f.listFiles();
+			for(File file : files) {
+				if(file.getName().startsWith("Run 1" ) || file.getName().endsWith(".trace")) {
+					FileUtils.deleteDirectory(file);		
+				}
+			}
+		} catch (IOException e) {
+			getLog().error(e);
+		}
 			
 			Runnable runnable = new Runnable() {
 				public void run() {
@@ -214,10 +232,8 @@ public class Instrumentation extends AbstractXcodeMojo {
 			try {
 				//Thread.sleep(5000);
 				t.join();
-				t.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				getLog().error(e);
 			}
 
 			preparePlistResult();
@@ -232,25 +248,21 @@ public class Instrumentation extends AbstractXcodeMojo {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			Document xmldoc = dbf.newDocumentBuilder().parse(
 					new File(project.getBasedir().getAbsolutePath()+File.separator+plistResult));
-			Element root = xmldoc.getDocumentElement();
-
-			Node pi = xmldoc.createProcessingInstruction
-					("DOCTYPE plist SYSTEM \\", "file://localhost/System/Library/DTDs/PropertyList.dtd>");
-			xmldoc.insertBefore(pi, root);
 
 			StreamResult out = new StreamResult(project.getBasedir().getAbsolutePath()+File.separator+plistResult);
 			
 			DOMSource domSource = new DOMSource(xmldoc);
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer transformer = tf.newTransformer();
+			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "file://localhost/System/Library/DTDs/PropertyList.dtd");
 			transformer.transform(domSource , out);
 		} catch (Exception e) { 
-			e.printStackTrace(); 
+			getLog().error(e);
 		}
 	}
 
 	private void generateXMLReport(String location) {
-
+		getLog().info("xml generation started");
 		try {
 			String startTime = "";
 			int total,pass,fail;
@@ -321,6 +333,10 @@ public class Instrumentation extends AbstractXcodeMojo {
 			testSuite.setAttribute(XMLConstants.SUCCESS, String.valueOf(pass));
 			testSuite.setAttribute(XMLConstants.FAILURES, String.valueOf(fail));
 
+			getLog().info("Total " + total);
+			getLog().info("Success " + pass);
+			getLog().info("Failure " + fail);
+
 			TransformerFactory transfac = TransformerFactory.newInstance();
 			Transformer trans = transfac.newTransformer();
 			trans.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -334,7 +350,7 @@ public class Instrumentation extends AbstractXcodeMojo {
 
 		}
 		catch (Exception e) {
-			getLog().error("Interrupted while generating XML file");
+			getLog().error(e);
 		}
 	}
 
@@ -352,6 +368,36 @@ public class Instrumentation extends AbstractXcodeMojo {
 
 		long diff = d2.getTime() - d1.getTime();
 		return diff;
+	}
+	
+	private BuildInfo getBuildInfo(int buildNumber) throws MojoExecutionException {
+		ProjectAdministrator administrator;
+		try {
+			administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException("Project administrator object creation error!");
+		}
+		buildInfoFile = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY + BUILD_INFO_FILE);
+		if (!buildInfoFile.exists()) {
+			throw new MojoExecutionException("Build info is not available!");
+		}
+		try {
+			List<BuildInfo> buildInfos = administrator.readBuildInfo(buildInfoFile);
+			
+			 if (CollectionUtils.isEmpty(buildInfos)) {
+				 throw new MojoExecutionException("Build info is empty!");
+			 }
+
+			 for (BuildInfo buildInfo : buildInfos) {
+				 if (buildInfo.getBuildNo() == buildNumber) {
+					 return buildInfo;
+				 }
+			 }
+
+			 throw new MojoExecutionException("Build info is empty!");
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getLocalizedMessage());
+		}
 	}
 }
 
