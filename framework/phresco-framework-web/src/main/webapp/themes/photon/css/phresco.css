@@ -4895,4 +4895,15 @@ a[id='androidSigning']:hover {
 	float:left;
 	width:150px; 
 	margin-right:10px;
-}	
+}
+
+.ciTwoLineLbl {
+	padding-top: 0 !important;
+}
+
+.ciTwoLineTxtBox {
+	float: left !important;
+    margin-left: 20px !important;
+    padding-top: 6px !important;
+    vertical-align: middle !important;
+}

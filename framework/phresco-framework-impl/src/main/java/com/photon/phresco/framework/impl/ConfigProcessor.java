@@ -23,21 +23,30 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
-import org.xml.sax.InputSource;
 
+import com.photon.phresco.commons.CIJob;
+import com.photon.phresco.commons.CIPasswordScrambler;
 import com.photon.phresco.commons.FrameworkConstants;
+import com.photon.phresco.exception.PhrescoException;
+import com.trilead.ssh2.crypto.Base64;
 
 public class ConfigProcessor implements FrameworkConstants {
 	private static final Logger S_LOGGER = Logger.getLogger(ConfigProcessor.class);
@@ -90,6 +99,94 @@ public class ConfigProcessor implements FrameworkConstants {
 		}
     }
     
+    public void enableCollabNetBuildReleasePlugin(CIJob job) throws PhrescoException {
+    	try {
+			org.jdom.Element element = new Element(CI_FILE_RELEASE_NODE);
+			element.addContent(createElement(CI_FILE_RELEASE_OVERRIDE_AUTH_NODE, TRUE));
+			element.addContent(createElement(CI_FILE_RELEASE_URL, job.getCollabNetURL()));
+			element.addContent(createElement(CI_FILE_RELEASE_USERNAME, job.getCollabNetusername()));
+			element.addContent(createElement(CI_FILE_RELEASE_PASSWORD, encyPassword(CIPasswordScrambler.unmask(job.getCollabNetpassword()))));
+			element.addContent(createElement(CI_FILE_RELEASE_PROJECT, job.getCollabNetProject()));
+			element.addContent(createElement(CI_FILE_RELEASE_PACKAGE, job.getCollabNetPackage()));
+			element.addContent(createElement(CI_FILE_RELEASE_RELEASE, job.getCollabNetRelease()));
+			element.addContent(createElement(CI_FILE_RELEASE_OVERWRITE, job.isCollabNetoverWriteFiles()+""));
+			element.addContent(createElement(CI_FILE_RELEASE_FILE_PATTERN, null).addContent(createElement(CI_FILE_RELEASE_FILE_PATTERN_NODE, CI_BUILD_EXT)));
+			
+	    	XPath xpath = XPath.newInstance(CI_FILE_RELEASE_PUBLISHER_NODE);
+	        xpath.addNamespace(root_.getNamespace());
+	        Element pullisherNode = (Element) xpath.selectSingleNode(root_);
+	        pullisherNode.getContent().add(3, element);
+    	} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+    }
+    
+    public void useClonedScm(String parentJobName, String criteria) throws PhrescoException {
+    	try {
+            if(StringUtils.isEmpty(criteria)) {
+            	criteria = "Any";
+            }
+        	XPath xpath = XPath.newInstance("scm");
+            xpath.addNamespace(root_.getNamespace());
+            Element scmNode = (Element) xpath.selectSingleNode(root_);
+            scmNode.removeContent();
+            scmNode.setAttribute("class", "hudson.plugins.cloneworkspace.CloneWorkspaceSCM");
+            scmNode.addContent(createElement("parentJobName", parentJobName));
+            scmNode.addContent(createElement("criteria", criteria));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void cloneWorkspace(String clonePattern, String criteria, String archiveMethod) throws PhrescoException {
+    	try {
+        	XPath xpath = XPath.newInstance("publishers");
+            xpath.addNamespace(root_.getNamespace());
+            Element publisherNode = (Element) xpath.selectSingleNode(root_);
+            org.jdom.Element element = new Element("hudson.plugins.cloneworkspace.CloneWorkspacePublisher");
+            if(StringUtils.isEmpty(clonePattern)) {
+            	clonePattern = "**/*";
+            }
+            if(StringUtils.isEmpty(criteria)) {
+            	criteria = "Any";
+            }
+            if(StringUtils.isEmpty(archiveMethod)) {
+            	archiveMethod = "TAR";
+            }
+            element.addContent(createElement("workspaceGlob", clonePattern));
+            element.addContent(createElement("criteria", criteria));
+            element.addContent(createElement("archiveMethod", archiveMethod));
+            publisherNode.addContent(element);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void buildOtherProjects(String childProjects)  throws PhrescoException {
+    	try {
+        	XPath xpath = XPath.newInstance("publishers");
+            xpath.addNamespace(root_.getNamespace());
+            Element publisherNode = (Element) xpath.selectSingleNode(root_);
+            org.jdom.Element element = new Element("hudson.tasks.BuildTrigger");
+            element.addContent(createElement("childProjects", childProjects));
+            element.addContent(createElement("hudson.triggers.TimerTrigger", null).addContent(createElement("name", "SUCCESS")).addContent(createElement("ordinal", "0")).addContent(createElement("color", "BLUE")));
+            publisherNode.addContent(element);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void deleteElement(String xpathRootNode, String xpathDeleteNode) throws PhrescoException {
+    	try {
+        	XPath xpath = XPath.newInstance("xpathRootNode");
+            xpath.addNamespace(root_.getNamespace());
+            Element triggerNode = (Element) xpath.selectSingleNode(root_); // if it is null then element is not present
+            triggerNode.removeChild(xpathDeleteNode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
     public static Element createElement(String nodeName, String NodeValue) {
     	org.jdom.Element element = new Element(nodeName);
     	if (NodeValue != null) {
@@ -106,6 +203,30 @@ public class ConfigProcessor implements FrameworkConstants {
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
     
+	public String encyPassword(String password) throws PhrescoException {
+		String encString = "";
+		try {
+			Cipher cipher = Cipher.getInstance(AES_ALGO);
+			cipher.init(Cipher.ENCRYPT_MODE, getAes128Key(CI_SECRET_KEY));
+			encString = new String(Base64.encode(cipher.doFinal((password+CI_ENCRYPT_MAGIC).getBytes(CI_UTF8))));
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		return encString;
+	}
+	
+	private static SecretKey getAes128Key(String s) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance(SHA_ALGO);
+            digest.reset();
+            digest.update(s.getBytes(CI_UTF8));
+            return new SecretKeySpec(digest.digest(),0,128/8, AES_ALGO);
+        } catch (NoSuchAlgorithmException e) {
+            throw new Error(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new Error(e);
+        }
+    }
     public static void main(String[] args) {
         try {
             ConfigProcessor processor = new ConfigProcessor(new URL(CONFIG_PATH));

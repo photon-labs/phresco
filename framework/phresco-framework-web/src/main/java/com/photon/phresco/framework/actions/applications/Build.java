@@ -668,7 +668,7 @@ public class Build extends FrameworkBaseAction {
 			Map<String, String> valuesMap = new HashMap<String, String>(2);
 			String techId = project.getProjectInfo().getTechnology().getId();
 			if (TechnologyTypes.IPHONES.contains(techId)) {
-				valuesMap.put(IPHONE_BUILD_NAME, buildInfo.getBuildName());
+				valuesMap.put(BUILD_NUMBER, buildNumber);
 				// if deploy to device is selected we have to pass device deploy
 				// param as additional param
 				if (StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_SIMULATOR)) {

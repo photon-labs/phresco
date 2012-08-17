@@ -89,6 +89,19 @@ public interface FrameworkConstants {
     String GITHUB_SCM = "hudson.plugins.git.GitSCM";
     String SVN_SCM = "hudson.scm.SubversionSCM";
     String GITHUB_SCM_FILE_NAME = "gitHubScm.xml";
+    String CI_FILE_RELEASE_NODE="hudson.plugins.collabnet.filerelease.CNFileRelease";
+    String CI_FILE_RELEASE_OVERRIDE_AUTH_NODE="override__auth";
+    String CI_FILE_RELEASE_URL="url";
+    String CI_FILE_RELEASE_USERNAME="username";
+    String CI_FILE_RELEASE_PASSWORD="password";
+    String CI_FILE_RELEASE_PROJECT="project";
+    String CI_FILE_RELEASE_PACKAGE="rpackage";
+    String CI_FILE_RELEASE_RELEASE="release";
+    String CI_FILE_RELEASE_OVERWRITE="overwrite";
+    String CI_FILE_RELEASE_FILE_PATTERN="file__patterns";
+    String CI_FILE_RELEASE_FILE_PATTERN_NODE ="hudson.plugins.collabnet.documentuploader.FilePattern";
+    String CI_BUILD_EXT = "do_not_checkin/build/*.zip";
+    String CI_FILE_RELEASE_PUBLISHER_NODE="publishers";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";
@@ -177,6 +190,11 @@ public interface FrameworkConstants {
     String WEBSERVICES_DIR = "WebServices";
     String ANDROID_PERFORMACE = "androidPerformance";
     String CI_SETUP = "CISetup";
+    String CI_ENCRYPT_MAGIC = "::::MAGIC::::";
+    String AES_ALGO = "AES";
+    String SHA_ALGO = "SHA-256";
+    String CI_SECRET_KEY = "73895ea77c9ddf8652324091a736cbe4c5d3f9fc338ae04fd8423afbd8308d38";
+    String CI_UTF8 = "UTF-8";
     String CI_START = "CIStart";
     String CI_STOP = "CIStop";
     String TEST_DIRECTORY = "dir_type";
@@ -251,6 +269,7 @@ public interface FrameworkConstants {
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
 	String BUILD_NAME = "buildName";
 	String BUILD_NUMBER = "buildNumber";
+	String TRIGGER_SIMULATOR = "triggerSimulator";
     
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
     String JFORUM_USERNAME = "&username=";

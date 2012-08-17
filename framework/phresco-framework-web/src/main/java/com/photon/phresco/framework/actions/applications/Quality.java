@@ -287,8 +287,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 actionType = ActionType.MOBILE_COMMON_COMMAND;
             } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) {
             	String buildNumber = getHttpRequest().getParameter(REQ_TEST_BUILD_ID);
-            	String applicationPath = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();
-            	settingsInfoMap.put(IPHONE_BUILD_NAME, applicationPath);
+            	settingsInfoMap.put(BUILD_NUMBER, buildNumber);
                 actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
                
 	        } else if (TechnologyTypes.IPHONE_HYBRID.equals(techId)) {

@@ -15,25 +15,40 @@
 		</dependency>
 
 		<dependency>
-			  <groupId>git.plugin</groupId>
-			  <artifactId>git</artifactId>
-			  <version>1.0</version>
-			  <type>hpi</type>
+			<groupId>git.plugin</groupId>
+			<artifactId>git</artifactId>
+			<version>1.0</version>
+			<type>hpi</type>
 		</dependency>
-
+	
 		<dependency>
-			  <groupId>git.plugin</groupId>
-			  <artifactId>github</artifactId>
-			  <version>1.0</version>
-			  <type>hpi</type>
+			<groupId>git.plugin</groupId>
+			<artifactId>github</artifactId>
+			<version>1.0</version>
+			<type>hpi</type>
 		</dependency>
-
+	
 		<dependency>
-			  <groupId>git.plugin</groupId>
-			  <artifactId>github-api</artifactId>
-			  <version>1.0</version>
-			  <type>hpi</type>
+			<groupId>git.plugin</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.0</version>
+			<type>hpi</type>
 		</dependency>
+	
+		<dependency>
+			<groupId>collabnet.plugin</groupId>
+			<artifactId>collabnet</artifactId>
+			<version>1.1.6</version>
+			<type>hpi</type>
+		</dependency>
+	
+		<dependency>
+			<groupId>jenkins.promoted.builds.plugin</groupId>
+			<artifactId>promoted</artifactId>
+			<version>2.6.1</version>
+			<type>hpi</type>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>	

@@ -38,6 +38,15 @@ public class CIJob {
     private List<String> triggers;
     private String repoType;
     private String branch;
+  //collabNet implementation
+    private boolean enableBuildRelease = false;
+    private String collabNetURL = "";
+    private String collabNetusername = "";
+    private String collabNetpassword = "";
+    private String collabNetProject = "";
+    private String collabNetPackage = "";
+    private String collabNetRelease = "";
+    private boolean collabNetoverWriteFiles = false;
     
     public CIJob() {
         super();
@@ -162,5 +171,69 @@ public class CIJob {
 
 	public void setBranch(String branch) {
 		this.branch = branch;
+	}
+
+	public boolean isEnableBuildRelease() {
+		return enableBuildRelease;
+	}
+
+	public void setEnableBuildRelease(boolean enableBuildRelease) {
+		this.enableBuildRelease = enableBuildRelease;
+	}
+
+	public String getCollabNetURL() {
+		return collabNetURL;
+	}
+
+	public void setCollabNetURL(String collabNetURL) {
+		this.collabNetURL = collabNetURL;
+	}
+
+	public String getCollabNetusername() {
+		return collabNetusername;
+	}
+
+	public void setCollabNetusername(String collabNetusername) {
+		this.collabNetusername = collabNetusername;
+	}
+
+	public String getCollabNetpassword() {
+		return collabNetpassword;
+	}
+
+	public void setCollabNetpassword(String collabNetpassword) {
+		this.collabNetpassword = collabNetpassword;
+	}
+
+	public String getCollabNetProject() {
+		return collabNetProject;
+	}
+
+	public void setCollabNetProject(String collabNetProject) {
+		this.collabNetProject = collabNetProject;
+	}
+
+	public String getCollabNetPackage() {
+		return collabNetPackage;
+	}
+
+	public void setCollabNetPackage(String collabNetPackage) {
+		this.collabNetPackage = collabNetPackage;
+	}
+
+	public String getCollabNetRelease() {
+		return collabNetRelease;
+	}
+
+	public void setCollabNetRelease(String collabNetRelease) {
+		this.collabNetRelease = collabNetRelease;
+	}
+
+	public boolean isCollabNetoverWriteFiles() {
+		return collabNetoverWriteFiles;
+	}
+
+	public void setCollabNetoverWriteFiles(boolean collabNetoverWriteFiles) {
+		this.collabNetoverWriteFiles = collabNetoverWriteFiles;
 	}
 }

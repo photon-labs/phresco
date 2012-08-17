@@ -394,7 +394,7 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         }
     }
     
-    public void customizeNodes(ConfigProcessor processor, CIJob job) throws JDOMException {
+    public void customizeNodes(ConfigProcessor processor, CIJob job) throws JDOMException,PhrescoException {
     	
         //SVN url customization
     	if (SVN.equals(job.getRepoType())) {
@@ -423,6 +423,11 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         
         //Success Reception list
         processor.changeNodeValue("publishers//hudson.plugins.emailext.ExtendedEmailPublisher//configuredTriggers//hudson.plugins.emailext.plugins.trigger.SuccessTrigger//email//recipientList", (String)email.get("successEmails"));
+        
+        //enable collabnet file release plugin integration
+        if (job.isEnableBuildRelease()) {
+        	processor.enableCollabNetBuildReleasePlugin(job);
+        }
     }
     
     private void validate() throws IOException, InterruptedException {

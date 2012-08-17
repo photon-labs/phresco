@@ -249,6 +249,8 @@ if(!isiPad()){
 
 // buildSize to refresh ci after build completed
 var refreshCi = false;
+var isJenkinsAlive = false;
+var isJenkinsReady = false;
 
 $(document).ready(function() {
 	
@@ -315,10 +317,12 @@ $(document).ready(function() {
     });
     
     if(<%= jenkinsAlive %>) {
+    	console.log("jenkins alive , enable configure button ");
     	enableStart();
     	enableControl($("#configure"), "primary btn");
     	disableControl($("#setup"), "btn disabled"); // when CI running setup should not work
     } else {
+    	console.log("Jenkins down , disabled configure button ");
     	enableStop();
     	disableControl($("#configure"), "btn disabled");
     }
@@ -347,6 +351,7 @@ $(document).ready(function() {
 	
 	// if build is in progress disable configure button
     if (<%= isAtleastOneJobIsInProgress %> || <%= isBuildTriggeredFromUI %>) {
+    	console.log("build is in progress, disable configure button ");
     	disableControl($("#configure"), "btn disabled"); // when building , user should not configure which leads to restart of jenkins
     	disableControl($("#build"), "btn disabled");
     	refreshCi = true;
@@ -442,31 +447,73 @@ function successRefreshBuild(data) {
 
 //after configured , it ll take some time to start server , so we ll get no builds available , in that case have to refresh ci
 function refreshAfterServerUp() {
-	console.log("Server startup Refresh...." + isCiRefresh);
+	console.log("Server startup Refreshed...." + isCiRefresh);
 	// after configured job , jenkins will take some time to load. In that case after jenkins started(fully up and running), we have to enable this
 // 	$("#warningmsg").show();
 	
-   	disableControl($("#configure"), "btn disabled");
-   	disableControl($("#build"), "btn disabled");
-   	disableControl($("#deleteJob"), "btn disabled");
-   	$(".errorMsgLabel").text('<%= FrameworkConstants.CI_BUILD_LOADED_SHORTLY%>');
-	if (!isCiRefresh) {
-		if ($("a[name='appTabs'][class='selected']").attr("id") == "ci" && $(".wel_come").css("display") == "none"){
-	    	var params = "";
-	    	if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-	    	showLoadingIcon($("#tabDiv")); // Loading Icon
-	    	console.log("Server startup completed ..." + isCiRefresh);
-			performAction('ci', params, $("#tabDiv"));
-		} else {
-			$(".errorMsgLabel").text('<%= FrameworkConstants.CI_NO_JOBS_AVAILABLE%>');
-		}
+   	localJenkinsAliveCheck ();
+	
+	console.log("Local jenkins alive called ===> jenkins alive ===> " + isJenkinsAlive);
+	console.log("Local jenkins alive called ===> jenkins ready ===> " + isJenkinsReady);
+	
+   	//default : isCiRefresh = true
+	if (!isCiRefresh) { //when stop is clicked it will comme here
+		console.log("Refreshing it!!!!!!");
+		reloadCI();
+	} else if(isCiRefresh && (!isJenkinsAlive || !isJenkinsReady)) { // when start is clicked it will come here
+		//till page is reloaded disable these buttons.
+	   	disableControl($("#configure"), "btn disabled");
+	   	disableControl($("#build"), "btn disabled");
+	   	disableControl($("#deleteJob"), "btn disabled");
+	   	$(".errorMsgLabel").text('<%= FrameworkConstants.CI_BUILD_LOADED_SHORTLY%>');
+	   	
+		console.log("I ll wait till jenkins gets ready!!!");
+		window.setTimeout(refreshAfterServerUp, 15000); // wait for 15 sec
 	} else {
 		isCiRefresh = false;
-		console.log("Server startup refresh waiting!!!");
-		window.setTimeout(refreshAfterServerUp, 30000); // wait for 30 sec
+		console.log("Server started successfully!");
+		reloadCI();
 	}
+}
+
+function reloadCI() {
+	if ($("a[name='appTabs'][class='selected']").attr("id") == "ci" && $(".wel_come").css("display") == "none"){
+    	var params = "";
+    	if (!isBlank($('form').serialize())) {
+    		params = $('form').serialize() + "&";
+    	}
+    	showLoadingIcon($("#tabDiv")); // Loading Icon
+    	console.log("Server startup completed ..." + isCiRefresh);
+		performAction('ci', params, $("#tabDiv"));
+	} else {
+		$(".errorMsgLabel").text('<%= FrameworkConstants.CI_NO_JOBS_AVAILABLE%>');
+	}
+}
+
+function localJenkinsAliveCheck () {
+    $.ajax({
+        url : "localJenkinsAliveCheck",
+        data: { },
+        type: "POST",
+        success : function(data) {
+        	if($.trim(data) == '200') {
+        		console.log("200");
+        		isJenkinsAlive = true;
+        		isJenkinsReady = true;
+        	}
+        	if($.trim(data) == '503') {
+        		console.log("503");
+        		isJenkinsAlive = true;
+        		isJenkinsReady = false;
+        	}
+        	if($.trim(data) == '404') {
+        		console.log("404");
+        		isJenkinsAlive = false;
+        		isJenkinsReady = false;
+        	}
+        },
+        async:false
+    });
 }
 
 function successEvent(pageUrl, data) {
