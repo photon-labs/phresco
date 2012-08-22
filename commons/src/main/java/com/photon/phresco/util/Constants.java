@@ -124,4 +124,11 @@ public interface Constants {
     String SITE_SQL = "site.sql";
 	String DB_MYSQL   = "mysql";
 	String JSON_PATH = "/.phresco/sqlfile.json";
+	
+	//constants for server version
+	
+	String WEBLOGIC_12c = "12c(12.1.1)";
+	String WEBLOGIC_11gR1 = "11gR1(10.3.6)";
+	String WEBLOGIC_12c_PLUGIN_VERSION = "12.1.1.0";
+	String WEBLOGIC_11gr1c_PLUGIN_VERSION = "10.3.6.0";
 }
