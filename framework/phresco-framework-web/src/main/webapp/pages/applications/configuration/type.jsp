@@ -88,10 +88,10 @@
 	        if (key.equals("Server") || key.equals("Database")) {
         		List<PropertyTemplate> comPropertyTemplates = propertyTemplate.getpropertyTemplates();
         		for (PropertyTemplate comPropertyTemplate : comPropertyTemplates) {
-        			if (comPropertyTemplate.getKey().equals("type") && settingsInfo != null) {
+        			if (comPropertyTemplate.getKey().equals("type") && settingsInfo != null &&  settingsInfo.getPropertyInfo(comPropertyTemplate.getKey()) != null) {
         				selectedValue = settingsInfo.getPropertyInfo(comPropertyTemplate.getKey()).getValue();
         			}
-        			if (comPropertyTemplate.getKey().equals("version") && settingsInfo != null) {
+        			if (comPropertyTemplate.getKey().equals("version") && settingsInfo != null &&  settingsInfo.getPropertyInfo(comPropertyTemplate.getKey()) != null) {
         				selectedVersion = settingsInfo.getPropertyInfo(comPropertyTemplate.getKey()).getValue();
         			}
         		}
