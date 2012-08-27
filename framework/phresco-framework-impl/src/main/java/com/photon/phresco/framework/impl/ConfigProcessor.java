@@ -172,7 +172,7 @@ public class ConfigProcessor implements FrameworkConstants {
         	XPath xpath = XPath.newInstance(PUBLISHERS_NODE);
             xpath.addNamespace(root_.getNamespace());
             Element publisherNode = (Element) xpath.selectSingleNode(root_);
-            org.jdom.Element element = new Element("hudson.tasks.BuildTrigger");
+            org.jdom.Element element = new Element(HUDSON_TASKS_BUILD_TRIGGER_NODE);
             element.addContent(createElement(CHILD_PROJECTS, childProjects));
             element.addContent(createElement(THRESHOLD, null).addContent(createElement(NAME, CI_SUCCESS_FLAG)).addContent(createElement(ORDINAL, ZERO)).addContent(createElement(COLOR, BLUE)));
             publisherNode.addContent(element);
@@ -185,6 +185,31 @@ public class ConfigProcessor implements FrameworkConstants {
     	S_LOGGER.debug("Entering Method ConfigProcessor.updatePOMLocation()");
     	try {
             root_.addContent(createElement(ROOT_POM, pomLocation));
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+    }
+    
+    public void enablePostBuildStep(String pomLocation, String mvnCommand)  throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.enablePostBuildStep()");
+    	try {
+	    	XPath xpath = XPath.newInstance(POST_BUILDERS_NODE);
+	        xpath.addNamespace(root_.getNamespace());
+	        Element postBuildNode = (Element) xpath.selectSingleNode(root_);
+	        
+			String[] ciAdapted = mvnCommand.split(CI_FUNCTIONAL_ADAPT);
+			for (String ciCommand : ciAdapted) {
+				S_LOGGER.debug("ciCommand...." + ciCommand);
+			}
+			S_LOGGER.debug("CI adapted value " + ciAdapted[1]);
+			S_LOGGER.debug("CI pomLocation " + pomLocation);
+    		org.jdom.Element element = new Element(HUDSON_TASKS_MAVEN_NODE);
+			element.addContent(createElement(TARGETS_NODE, ciAdapted[1]));
+			element.addContent(createElement(MAVEN_NAME_NODE, MAVEN_HOME_ENV));
+			element.addContent(createElement(POM_NODE, pomLocation));
+			element.addContent(createElement(USE_PRIVATE_REPOSITORY_NODE, "false"));
+			S_LOGGER.debug("pullisherNode " + postBuildNode);
+	        postBuildNode.addContent(element);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}

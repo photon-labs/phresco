@@ -125,6 +125,14 @@ public interface FrameworkConstants {
     String CI_FILE_RELEASE_FILE_PATTERN="file__patterns";
     String CI_FILE_RELEASE_FILE_PATTERN_NODE ="hudson.plugins.collabnet.documentuploader.FilePattern";
     String CI_BUILD_EXT = "do_not_checkin/build/*.zip";
+	String HUDSON_TASKS_BUILD_TRIGGER_NODE = "hudson.tasks.BuildTrigger";
+	String MAVEN_HOME_ENV = "MAVEN_HOME";
+	String USE_PRIVATE_REPOSITORY_NODE = "usePrivateRepository";
+	String POM_NODE = "pom";
+	String MAVEN_NAME_NODE = "mavenName";
+	String TARGETS_NODE = "targets";
+	String HUDSON_TASKS_MAVEN_NODE = "hudson.tasks.Maven";
+	String POST_BUILDERS_NODE = "postbuilders";
     String CI_FILE_RELEASE_PUBLISHER_NODE="publishers";
     String COLON = ":";
     String HTTP_PROTOCOL = "http";
@@ -310,6 +318,7 @@ public interface FrameworkConstants {
     String ADMIN_CONFIG_JFORUM_PATH = "phresco.forum.url";
 
     String CI_JDK_HOME_XML = "config.xml";
+    String CI_SECRET_KEY_FILE = "secret.key";
     String CI_MAVEN_HOME_XML = "hudson.tasks.Maven.xml";
     String CI_CREDENTIAL_XML = "hudson.scm.SubversionSCM.xml";
     String CI_MAILER_XML = "hudson.tasks.Mailer.xml";

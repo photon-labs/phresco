@@ -63,9 +63,7 @@ import com.photon.phresco.framework.commons.DiagnoseUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.LogErrorReport;
 import com.photon.phresco.framework.commons.PBXNativeTarget;
-import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
-import com.photon.phresco.model.Technology;
 import com.photon.phresco.util.AndroidConstants;
 import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.IosSdkUtil.MacSdkType;
@@ -292,8 +290,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			}
 			if (existJob != null
 					&& StringUtils.isNotEmpty(existJob.getCollabNetpassword())) {
-				existJob.setCollabNetpassword(CIPasswordScrambler
-						.unmask(existJob.getCollabNetpassword()));
+				existJob.setCollabNetpassword(CIPasswordScrambler.unmask(existJob.getCollabNetpassword()));
+				existJob.setPassword(CIPasswordScrambler.unmask(existJob.getPassword()));
 			}
 			getHttpRequest().setAttribute(REQ_EXISTING_JOB, existJob);
 			getHttpRequest().setAttribute(REQ_EXISTING_JOBS_NAMES,
@@ -420,8 +418,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			existJob.setEnableBuildRelease(enableBuildRelease);
 			existJob.setCollabNetURL(collabNetURL);
 			existJob.setCollabNetusername(collabNetusername);
-			existJob.setCollabNetpassword(CIPasswordScrambler
-					.mask(collabNetpassword));
+			existJob.setCollabNetpassword(CIPasswordScrambler.mask(collabNetpassword));
 			existJob.setCollabNetProject(collabNetProject);
 			existJob.setCollabNetPackage(collabNetPackage);
 			existJob.setCollabNetRelease(collabNetRelease);
@@ -472,6 +469,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			} else if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
 				existJob.setJarName(jarName);
 				existJob.setMainClassName(mainClassName);
+				existJob.setEnablePostBuildStep(true);
 			}
 
 			existJob.setPomLocation(funcitonalTestDir + POM_XML);
