@@ -14,6 +14,11 @@ require_once 'PHPUnit/Framework.php';
 	if ( !isset( $GLOBALS['language'] ) ) {
 	  $GLOBALS['language']= 'en';
 	}
+	
+	if ( !isset($_SERVER['HTTP_HOST'] ) ) {
+	  $_SERVER['HTTP_HOST'] = 'localhost';
+	}
+
 	$cwd = explode("test",getcwd());
 	$fileContents = file_get_contents($cwd[0]."source/sites/default/config/phresco-env-config.xml");
 	$file = getDecryptedString($fileContents);

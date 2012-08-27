@@ -154,56 +154,67 @@ public class Configurations extends FrameworkBaseAction {
                 isValidated = true;
                 return Action.SUCCESS;
             }
-            SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
+            
             List<PropertyInfo> propertyInfoList = new ArrayList<PropertyInfo>();
-            List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
             String key = null;
             String value = null;
-            for (PropertyTemplate propertyTemplate : propertyTemplates) {
-            	if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_SERVER) || propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB)) {
-            		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
-            		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
-            			key = compPropertyTemplate.getKey();
-            			value = getHttpRequest().getParameter(key);
-            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
-            				value = value.trim().toLowerCase();
-            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
-            			} else {
-            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
-            			}
+            if (REQ_CONFIG_TYPE_OTHER.equals(configType)) {
+            	String[] keys = getHttpRequest().getParameterValues(REQ_CONFIG_PROP_KEY);
+            	if (!ArrayUtils.isEmpty(keys)) {
+            		for (String propertyKey : keys) {
+						value = getHttpRequest().getParameter(propertyKey);
+						propertyInfoList.add(new PropertyInfo(propertyKey, value));
 					}
-            	} else {
-            		key = propertyTemplate.getKey();
-            		value = getHttpRequest().getParameter(key);
-            		if(key.equals("remoteDeployment") && value == null){
-            			value="false";
-            		}
-                    value = value.trim();
-					if(key.equals(ADDITIONAL_CONTEXT_PATH)){
-                    	String addcontext = value;
-                    	if(!addcontext.startsWith("/")) {
-                    		value = "/" + value;
-                    	}
-                    }
-					if ("certificate".equals(key)) {
-						String env = getHttpRequest().getParameter(ENVIRONMENTS);
-						if (StringUtils.isNotEmpty(value)) {
-							File file = new File(value);
-							if (file.exists()) {
-								String path = Utility.getProjectHome().replace("\\", "/");
-								value = value.replace(path + projectCode + "/", "");
-							} else {
-								value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
-										FILE_SEPARATOR + env + "-" + configName + ".crt";
-								saveCertificateFile(value);
+            	}
+            } else {
+	            SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
+	            List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
+	            for (PropertyTemplate propertyTemplate : propertyTemplates) {
+	            	if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_SERVER) || propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB)) {
+	            		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
+	            		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
+	            			key = compPropertyTemplate.getKey();
+	            			value = getHttpRequest().getParameter(key);
+	            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
+	            				value = value.trim().toLowerCase();
+	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            			} else {
+	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            			}
+						}
+	            	} else {
+	            		key = propertyTemplate.getKey();
+	            		value = getHttpRequest().getParameter(key);
+	            		if(key.equals("remoteDeployment") && value == null){
+	            			value="false";
+	            		}
+	                    value = value.trim();
+						if(key.equals(ADDITIONAL_CONTEXT_PATH)){
+	                    	String addcontext = value;
+	                    	if(!addcontext.startsWith("/")) {
+	                    		value = "/" + value;
+	                    	}
+	                    }
+						if ("certificate".equals(key)) {
+							String env = getHttpRequest().getParameter(ENVIRONMENTS);
+							if (StringUtils.isNotEmpty(value)) {
+								File file = new File(value);
+								if (file.exists()) {
+									String path = Utility.getProjectHome().replace("\\", "/");
+									value = value.replace(path + projectCode + "/", "");
+								} else {
+									value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
+											FILE_SEPARATOR + env + "-" + configName + ".crt";
+									saveCertificateFile(value);
+								}
 							}
 						}
-					}
-                    propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
-            	}
-                if (S_LOGGER.isDebugEnabled()) {
-                	S_LOGGER.debug("Configuration.save() key " + propertyTemplate.getKey() + "and Value is " + value);
-                }
+	                    propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
+	            	}
+	                if (S_LOGGER.isDebugEnabled()) {
+	                	S_LOGGER.debug("Configuration.save() key " + propertyTemplate.getKey() + "and Value is " + value);
+	                }
+	            }
             }
             SettingsInfo settingsInfo = new SettingsInfo(configName, description, configType);
             settingsInfo.setAppliesTo(Arrays.asList(project.getProjectInfo().getTechnology().getId()));
@@ -428,74 +439,76 @@ public class Configurations extends FrameworkBaseAction {
 	    	}
     	}
 	
-    	SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
-    	
-    	boolean serverTypeValidation = false;
-    	for (PropertyTemplate propertyTemplate : selectedSettingTemplate.getProperties()) {
-    		String key = null;
-    		String value = null;
-    		if (propertyTemplate.getKey().equals("Server") || propertyTemplate.getKey().equals("Database")) {
-        		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
-        		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
-        			key = compPropertyTemplate.getKey();
-        			value = getHttpRequest().getParameter(key);
-        			 //If nodeJs server selected , there should not be valition for deploy dir.
-                    if ("type".equals(key) && "NodeJS".equals(value)) {
-                    	
-                    	serverTypeValidation = true;
+    	if (!REQ_CONFIG_TYPE_OTHER.equals(configType)) {
+    		SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
+        	
+        	boolean serverTypeValidation = false;
+        	for (PropertyTemplate propertyTemplate : selectedSettingTemplate.getProperties()) {
+        		String key = null;
+        		String value = null;
+        		if (propertyTemplate.getKey().equals("Server") || propertyTemplate.getKey().equals("Database")) {
+            		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
+            		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
+            			key = compPropertyTemplate.getKey();
+            			value = getHttpRequest().getParameter(key);
+            			 //If nodeJs server selected , there should not be valition for deploy dir.
+                        if ("type".equals(key) && "NodeJS".equals(value)) {
+                        	
+                        	serverTypeValidation = true;
+                        }
+    				}
+            	} else {
+            		key = propertyTemplate.getKey();
+            	}
+        	    value = getHttpRequest().getParameter(key);
+                boolean isRequired = propertyTemplate.isRequired();
+                String techId = project.getProjectInfo().getTechnology().getId();
+                if ((serverTypeValidation && "deploy_dir".equals(key)) || TechnologyTypes.ANDROIDS.contains(techId)) {
+               		isRequired = false;
+                }
+                // validation for UserName & Password for RemoteDeployment
+                boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
+                if(remoteDeply){
+                    if ("admin_username".equals(key) || "admin_password".equals(key)) {
+                    	isRequired = true;
                     }
-				}
-        	} else {
-        		key = propertyTemplate.getKey();
-        	}
-    	    value = getHttpRequest().getParameter(key);
-            boolean isRequired = propertyTemplate.isRequired();
-            String techId = project.getProjectInfo().getTechnology().getId();
-            if ((serverTypeValidation && "deploy_dir".equals(key)) || TechnologyTypes.ANDROIDS.contains(techId)) {
-           		isRequired = false;
-            }
-            // validation for UserName & Password for RemoteDeployment
-            boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
-            if(remoteDeply){
-                if ("admin_username".equals(key) || "admin_password".equals(key)) {
-                	isRequired = true;
+                    if("deploy_dir".equals(key)){
+                    	isRequired = false;
+                    }
                 }
-                if("deploy_dir".equals(key)){
-                	isRequired = false;
+                
+                if(isRequired == true && StringUtils.isEmpty(value.trim())){
+                	I18NString i18NString = propertyTemplate.getName();
+                    String field = i18NString.get("en-US").getValue();
+                    dynamicError += propertyTemplate.getKey() + ":" + field + " is empty" + ",";
                 }
             }
-            
-            if(isRequired == true && StringUtils.isEmpty(value.trim())){
-            	I18NString i18NString = propertyTemplate.getName();
-                String field = i18NString.get("en-US").getValue();
-                dynamicError += propertyTemplate.getKey() + ":" + field + " is empty" + ",";
-            }
-        }
-    	
-	   	if (StringUtils.isNotEmpty(dynamicError)) {
-	        dynamicError = dynamicError.substring(0, dynamicError.length() - 1);
-	        setDynamicError(dynamicError);
-	        validate = false;
-	   	}
-	   	
-	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("port"))) {
-		   	int value = Integer.parseInt(getHttpRequest().getParameter("port"));
-		   	if (validate && (value < 1 || value > 65535)) {
-			   	setPortError(ERROR_PORT);
-			   	validate = false;
-		   	}
-	   	}
-	   	
-	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
-	   		String value = getHttpRequest().getParameter("emailid");
-	   		Pattern p = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-	   		Matcher m = p.matcher(value);
-	   		boolean b = m.matches();
-	   		if(!b) {
-	   			setEmailError(ERROR_EMAIL);
-	   			validate = false;
-	   		}
-	   	}
+        	
+    	   	if (StringUtils.isNotEmpty(dynamicError)) {
+    	        dynamicError = dynamicError.substring(0, dynamicError.length() - 1);
+    	        setDynamicError(dynamicError);
+    	        validate = false;
+    	   	}
+    	   	
+    	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("port"))) {
+    		   	int value = Integer.parseInt(getHttpRequest().getParameter("port"));
+    		   	if (validate && (value < 1 || value > 65535)) {
+    			   	setPortError(ERROR_PORT);
+    			   	validate = false;
+    		   	}
+    	   	}
+    	   	
+    	   	if (StringUtils.isNotEmpty(getHttpRequest().getParameter("emailid"))) {
+    	   		String value = getHttpRequest().getParameter("emailid");
+    	   		Pattern p = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    	   		Matcher m = p.matcher(value);
+    	   		boolean b = m.matches();
+    	   		if(!b) {
+    	   			setEmailError(ERROR_EMAIL);
+    	   			validate = false;
+    	   		}
+    	   	}
+    	}
 
 	   	return validate;
     }
@@ -541,46 +554,56 @@ public class Configurations extends FrameworkBaseAction {
         try {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
-            SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
             List<PropertyInfo> propertyInfoList = new ArrayList<PropertyInfo>();
-            List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
             String key = null;
             String value = null;
-            for (PropertyTemplate propertyTemplate : propertyTemplates) {
-            	if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_SERVER) || propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB)) {
-            		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
-            		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
-            			key = compPropertyTemplate.getKey();
-            			value = getHttpRequest().getParameter(key);
-            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
-            				value = value.trim().toLowerCase();
-            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
-            			} else {
-            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
-            			}
+            if (REQ_CONFIG_TYPE_OTHER.equals(configType)) {
+            	String[] keys = getHttpRequest().getParameterValues(REQ_CONFIG_PROP_KEY);
+            	if (!ArrayUtils.isEmpty(keys)) {
+            		for (String propertyKey : keys) {
+						value = getHttpRequest().getParameter(propertyKey);
+						propertyInfoList.add(new PropertyInfo(propertyKey, value));
 					}
-            	} else {
-	                value = getHttpRequest().getParameter(propertyTemplate.getKey());
-   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
-   	                	value="false";
-                    }
-   	                if ("certificate".equals(key)) {
-						String env = getHttpRequest().getParameter(ENVIRONMENTS);
-						if (StringUtils.isNotEmpty(value)) {
-							File file = new File(value);
-							if (file.exists()) {
-								String path = Utility.getProjectHome().replace("\\", "/");
-								value = value.replace(path + projectCode + "/", "");
-							} else {
-								value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
-										FILE_SEPARATOR + env + "-" + configName + ".crt";
-								saveCertificateFile(value);
+            	}
+            } else {
+            	SettingsTemplate selectedSettingTemplate = administrator.getSettingsTemplate(configType);
+                List<PropertyTemplate> propertyTemplates = selectedSettingTemplate.getProperties();
+	            for (PropertyTemplate propertyTemplate : propertyTemplates) {
+	            	if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_SERVER) || propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB)) {
+	            		List<PropertyTemplate> compPropertyTemplates = propertyTemplate.getpropertyTemplates();
+	            		for (PropertyTemplate compPropertyTemplate : compPropertyTemplates) {
+	            			key = compPropertyTemplate.getKey();
+	            			value = getHttpRequest().getParameter(key);
+	            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
+	            				value = value.trim().toLowerCase();
+	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            			} else {
+	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            			}
+						}
+	            	} else {
+		                value = getHttpRequest().getParameter(propertyTemplate.getKey());
+	   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
+	   	                	value="false";
+	                    }
+	   	                if ("certificate".equals(key)) {
+							String env = getHttpRequest().getParameter(ENVIRONMENTS);
+							if (StringUtils.isNotEmpty(value)) {
+								File file = new File(value);
+								if (file.exists()) {
+									String path = Utility.getProjectHome().replace("\\", "/");
+									value = value.replace(path + projectCode + "/", "");
+								} else {
+									value = FOLDER_DOT_PHRESCO + FILE_SEPARATOR + "certificates" +
+											FILE_SEPARATOR + env + "-" + configName + ".crt";
+									saveCertificateFile(value);
+								}
 							}
 						}
-					}
-	                value = value.trim();
-	                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
-            	}
+		                value = value.trim();
+		                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
+	            	}
+	            }
             }
             SettingsInfo settingsInfo = new SettingsInfo(configName, description, configType);
             settingsInfo.setPropertyInfos(propertyInfoList);

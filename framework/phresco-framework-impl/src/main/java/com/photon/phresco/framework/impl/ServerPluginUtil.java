@@ -51,18 +51,23 @@ public class ServerPluginUtil {
 		for (Server server : servers) {
 			List<String> versions = server.getVersions();
 			for (String version : versions) {
-				 if (server.getName().contains(Constants.TYPE_WEBLOGIC) && (version.equals("12c(12.1.1)"))) {
-					addWebLogicPlugin(path);
+				if (server.getName().contains(Constants.TYPE_WEBLOGIC)) {
+					String pluginVersion = "";
+					if (version.equals(Constants.WEBLOGIC_12c)) {
+						pluginVersion = Constants.WEBLOGIC_12c_PLUGIN_VERSION;
+					} else if (version.equals(Constants.WEBLOGIC_11gR1)) {
+						pluginVersion = Constants.WEBLOGIC_11gr1c_PLUGIN_VERSION;
+					} 
+					addWebLogicPlugin(path, pluginVersion);
 				}
-		
 			}
-			}
+		}
 	}
 
-	private void addWebLogicPlugin(File pomFile) throws PhrescoException {
+	private void addWebLogicPlugin(File pomFile, String pluginVersion) throws PhrescoException {
 		try {
 			PomProcessor pomProcessor = new PomProcessor(pomFile);
-			pomProcessor.addPlugin("com.oracle.weblogic", "weblogic-maven-plugin", "12.1.1.0");
+			pomProcessor.addPlugin("com.oracle.weblogic", "weblogic-maven-plugin", pluginVersion);
 			List<Element> configList = new ArrayList<Element>();
 			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
@@ -85,7 +90,7 @@ public class ServerPluginUtil {
 			source.setTextContent("${project.basedir}/do_not_checkin/build/temp/${project.build.finalName}.war");
 			Element name = doc.createElement("name");
 			name.setTextContent("${project.build.finalName}");
-			Element argLineElem =doc.createElement("argLine");
+			Element argLineElem = doc.createElement("argLine");
 			argLineElem.setTextContent("-Xmx512m");
 
 			configList.add(adminUrl);
@@ -112,7 +117,7 @@ public class ServerPluginUtil {
 			throw new PhrescoException(e);
 		}
 	}
-	
+
 	public void deletePluginFromPom(File path) throws PhrescoException {
 		try {
 			PomProcessor pomprocessor = new PomProcessor(path);

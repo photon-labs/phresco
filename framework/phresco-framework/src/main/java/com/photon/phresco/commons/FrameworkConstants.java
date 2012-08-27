@@ -213,6 +213,7 @@ public interface FrameworkConstants {
     String LOAD = "load";
     String PERFORMACE = "performance";
     String WEBSERVICE = "WebService";
+    String EMAIL = "Email";
     String WEBSERVICES_DIR = "WebServices";
     String ANDROID_PERFORMACE = "androidPerformance";
     String CI_SETUP = "CISetup";
@@ -401,6 +402,8 @@ public interface FrameworkConstants {
     String REQ_TEST_RESULT = "testResult";
     String REQ_CONFIGURATION = "configuration";
     String REQ_SETTINGS_TEMPLATES = "SettingsTemplates";
+    String REQ_CONFIG_TYPE_OTHER = "Other";
+    String REQ_CONFIG_PROP_KEY = "propertyKey";
     String REQ_SERVER_SETTINGS = "serverSettings";
     String REQ_DATABASE_SETTINGS = "databaseSettings";
     String REQ_EMAIL_SETTINGS = "emailSettings";
@@ -827,7 +830,9 @@ public interface FrameworkConstants {
      * Delete Setting keys
      */
     String SUCCESS_SETTING_DELETE = "Settings deleted successfully";
+    String SUCCESS_SETTING_CREATE = "setting.create.success";
     String FAILURE_SETTING_DELETE = "Settings deletion failed";
+    String SUCCESS_SETTING_UPDATE = "setting.update.success";
 
     String SERVER_UPDATE_SUCCESS = "server.update.success";
     String DATABASE_UPDATE_SUCCESS = "database.update.success";

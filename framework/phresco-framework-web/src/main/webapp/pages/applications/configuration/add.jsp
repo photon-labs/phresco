@@ -36,6 +36,7 @@
 <%@ page import="com.photon.phresco.util.Constants"%>
 <%@ page import="com.photon.phresco.configuration.Environment" %>
 <%@ page import="com.photon.phresco.model.Server" %>
+<%@ page import="com.photon.phresco.model.PropertyInfo"%>
 
 <%@ include file="../../userInfoDetails.jsp" %>
 
@@ -194,44 +195,106 @@ h1 {margin-bottom: 0;}
 		%>
 		
 		<!--  SettingTemplate starts -->
-				<div class="clearfix" id="configTypeDiv">
-					<label class="new-xlInput"><s:text name="label.type"/></label>
-					<div class="input new-input">
-						<div class="typeFields">
-							<select id="configType" name="configType" class="selectEqualWidth">
-								<%
-									if(settingsTemplates != null) {
-										for (SettingsTemplate settingsTemplate : settingsTemplates) {
-											String type = settingsTemplate.getType();
-											if(selectedType !=null  && type.equals(selectedType)){
-												selectedStr = "selected";
-											} else {
-												selectedStr = "";
-											}
-								%>
-								<%			
-											if((Constants.SETTINGS_TEMPLATE_SERVER.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getServers())) || 
-													(Constants.SETTINGS_TEMPLATE_DB.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getDatabases())) || 
-													(Constants.SETTINGS_TEMPLATE_WEBSERVICE.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getWebservices())) || 
-													(Constants.SETTINGS_TEMPLATE_EMAIL.equals(type) && !project.getProjectInfo().getTechnology().isEmailSupported())) {
-											} else {
-								%>
-												<option value="<%= type %>" <%= selectedStr %>><%= type %></option>
-								<%
-											}
-										}
+		<div class="clearfix" id="configTypeDiv">
+			<label class="new-xlInput"><s:text name="label.type"/></label>
+			<div class="input new-input">
+				<div class="typeFields">
+					<select id="configType" name="configType" class="selectEqualWidth">
+						<%
+							if(settingsTemplates != null) {
+								for (SettingsTemplate settingsTemplate : settingsTemplates) {
+									String type = settingsTemplate.getType();
+									if(selectedType != null  && (type.equals(selectedType) || FrameworkConstants.REQ_CONFIG_TYPE_OTHER.equals(selectedType))){
+										selectedStr = "selected";
+									} else {
+										selectedStr = "";
 									}
-								%>
-							</select>
-						</div>
-						<div style="float: left; width: 58%;">
-							<div class="lblDesc configSettingHelp-block" id="configTypeErrMsg"></div>
-						</div>
-					</div>
+						%>
+						<%			
+									if((Constants.SETTINGS_TEMPLATE_SERVER.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getServers())) || 
+											(Constants.SETTINGS_TEMPLATE_DB.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getDatabases())) || 
+											(Constants.SETTINGS_TEMPLATE_WEBSERVICE.equals(type) && CollectionUtils.isEmpty(project.getProjectInfo().getTechnology().getWebservices())) || 
+											(Constants.SETTINGS_TEMPLATE_EMAIL.equals(type) && !project.getProjectInfo().getTechnology().isEmailSupported())) {
+									} else {
+						%>
+										<option value="<%= type %>" <%= selectedStr %>><%= type %></option>
+						<%
+									}
+								}
+							}
+						%>
+						<option value="Other" <%= selectedStr %>>Other</option>
+					</select>
 				</div>
-				<!--  SettingTemplate ends -->
+				<div style="float: left; width: 58%;">
+					<div class="lblDesc configSettingHelp-block" id="configTypeErrMsg"></div>
+				</div>
+			</div>
+		</div>
+		<!--  SettingTemplate ends -->
 
 		<div id="type-child-container" class="settings_type_div"></div>
+		
+		<!-- Dynamic configuration starts -->
+		<div id="configTypeDivOthers" class="hideContent">
+			<% if (configInfo == null) { %>
+				<div class="clearfix parent_key1" id="propTemplateDiv1">
+					<input type="text" id="key1" name="propertyKey" placeholder="<s:text name="placeholder.config.prop.key"/>" 
+						style="float: left; margin-left: 80px;">
+					<div class="input new-input">
+						<div class="typeFields">
+							<input id="value1" type="text" name="value" class="xlarge key1" placeholder="<s:text name="placeholder.config.prop.value"/>">
+						</div>
+						<div style="float: left;">
+							<div class="lblDesc configSettingHelp-block" id="errorMsg_key1"></div>
+						</div>
+						
+						<a id="addFields" href="#" style="vertical-align: top;">
+							<img class="headerlogoimg perImg" src="images/icons/add_icon.png" alt="add">
+						</a> &nbsp;&nbsp; 
+						<a id="removeFields" href="#">
+							<img class="headerlogoimg perImg" src="images/icons/minus_icon.png" alt="remove">
+						</a>
+					</div>			
+				</div>
+			<% 
+				} else {
+					List<PropertyInfo> propertyInfos = configInfo.getPropertyInfos();
+					if (CollectionUtils.isNotEmpty(propertyInfos)) {
+						int i = 1;
+						for (PropertyInfo propertyInfo : propertyInfos) {
+							String key = propertyInfo.getKey();
+							String value = propertyInfo.getValue();
+			%>
+							<div class="clearfix parent_key<%= i %>" id="propTemplateDiv<%= i %>">
+								<input type="text" id="key<%= i %>" name="propertyKey" value="<%= key %>"
+									placeholder="<s:text name="placeholder.config.prop.key"/>" style="float: left; margin-left: 80px;">
+								<div class="input new-input">
+									<div class="typeFields">
+										<input type="text" name="<%= key %>" class="xlarge key<%= i %>" value="<%= value %>"
+											placeholder="<s:text name="placeholder.config.prop.value"/>">
+									</div>
+									<div style="float: left;">
+										<div class="lblDesc configSettingHelp-block" id="errorMsg_key<%= i %>"></div>
+									</div>
+								<% if (i == 1) { %>	
+									<a id="addFields" href="#" style="vertical-align: top;">
+										<img class="headerlogoimg perImg" src="images/icons/add_icon.png" alt="add">
+									</a> &nbsp;&nbsp; 
+									<a id="removeFields" href="#">
+										<img class="headerlogoimg perImg" src="images/icons/minus_icon.png" alt="remove">
+									</a>
+								<% } %>
+								</div>			
+							</div>
+			<%
+							i++;
+						}
+					}
+				}
+			%>
+		</div>
+		<!-- Dynamic configuration ends -->
 
 		<% if(StringUtils.isNotEmpty(fromPage)) { %>
 			<input type="hidden" id="oldName" name="oldName" value="<%= name %>" />
@@ -268,7 +331,7 @@ h1 {margin-bottom: 0;}
 		$(".config_div").scrollbars();
 	}
 	
-	$(document).ready(function() {		
+	$(document).ready(function() {
 	    configurationsType();
 	    changeStyle("configuration");
 	    $('#configType').change(function() {
@@ -285,41 +348,98 @@ h1 {margin-bottom: 0;}
 	    });
 		
 		$('#save').click(function() {
-			$("input[name=certificate]").prop("disabled", false);
-			var params = "";
-		    params = params.concat("&remoteDeployment=");
-			params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
-		     
-			if (!isBlank($('form').serialize())) {
-	    		params = $('form').serialize() + "&";
-	    	}
-			<%
-			   if (StringUtils.isEmpty(fromPage)) {
-			%>
-					performAction("saveConfiguration", params, $('#tabDiv'));
-			<%
-			   } else {
-			%>
-			       performAction("updateConfiguration", params, $('#tabDiv'));
-			<% } %>
-			
+			if (validateKeyFields()) {
+				$("input[name=certificate]").prop("disabled", false);
+				var params = "";
+			    params = params.concat("&remoteDeployment=");
+				params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
+			     
+				if (!isBlank($('form').serialize())) {
+		    		params = $('form').serialize() + "&";
+		    	}
+				<%
+				   if (StringUtils.isEmpty(fromPage)) {
+				%>
+						performAction("saveConfiguration", params, $('#tabDiv'));
+				<%
+				   } else {
+				%>
+				       performAction("updateConfiguration", params, $('#tabDiv'));
+				<% } %>
+			}
 	    });
+		
 		window.setTimeout(function () { document.getElementById('xlInput').focus(); }, 250);
+		
+		var counter = 0;
+		//To update the counter value during edit
+		<%
+			if (configInfo != null) {
+				List<PropertyInfo> propertyInfos = configInfo.getPropertyInfos();
+		%>
+				counter = <%= propertyInfos.size() + 1 %>;
+		<%
+			} else {
+		%>
+				counter = 2;
+		<% } %>
+		
+		$("#addFields").click(function () {
+			if (counter > 25) {
+				return false;
+			}
+			
+			var key = "key" + counter;
+			var value = "value" + counter;
+			
+			var keyElement = '<input type="text" id="' + key + '" name="propertyKey" placeholder="<s:text name="placeholder.config.prop.key"/>"' + 
+								' style="float: left; margin-left: 80px;">';
+			var valueElement = '<input type="text" id="' + value + '" name="value" class="xlarge ' + key + '" ' + 
+								'placeholder="<s:text name="placeholder.config.prop.value"/>">';
+			
+		 	var newFieldsDiv = $(document.createElement('div')).attr("id", 'propTemplateDiv' + counter).attr("class", 'clearfix parent_' + key);
+		 	
+		 	newFieldsDiv.html(keyElement + '<div class="input new-input"><div class="typeFields">' + valueElement + '</div>' + 
+		 						'<div style="float: left;"><div class="lblDesc configSettingHelp-block" id="errorMsg_'+ key + '"></div></div></div>');
+			newFieldsDiv.appendTo("#configTypeDivOthers");
+			counter++;
+		});
+		
+		$("#removeFields").click(function () {
+			if (counter == 2) {
+				return false;
+		    }
+			counter--;
+	        $("#propTemplateDiv" + counter).remove();
+		});
+		
+		//To change the name of the property value textbox based on the property key textbox value
+		$("input[name=propertyKey]").live("blur", function() {
+			var valueClass = $(this).attr("id");
+			$("." + valueClass).attr("name", $(this).val());
+		});
 	});
 	
 	function configurationsType(from) {
 	    var selectedType = $("#configType").val();
-	    var settingsCount = $("#settingsCount").val();
-	    fromPage = "<%= fromPage %>";
-	    var params = "";
-		if (!isBlank($('form').serialize())) {
-			params = $('form').serialize() + "&";
-		}
-		params = params.concat("envName=");
-		params = params.concat('<%= currentEnv %>');
-		params = params.concat("&" + '<%= FrameworkConstants.REQ_FROM_PAGE %>' + "=");
-		params = params.concat(fromPage);
-		performAction('configurationsType', params, '', true);
+	    if (selectedType == "Other") {
+	    	$("#type-child-container").empty();
+	    	$("#configTypeDivOthers").show();
+	    	enableScreen();
+	    } else {
+	    	$("#configTypeDivOthers").hide();
+	    	var settingsCount = $("#settingsCount").val();
+		    fromPage = "<%= fromPage %>";
+		    var params = "";
+			if (!isBlank($('form').serialize())) {
+				params = $('form').serialize() + "&";
+			}
+			params = params.concat("envName=");
+			params = params.concat('<%= currentEnv %>');
+			params = params.concat("&" + '<%= FrameworkConstants.REQ_FROM_PAGE %>' + "=");
+			params = params.concat(fromPage);
+			performAction('configurationsType', params, '', true);	    	
+	    }
 	}
 	
 	function successConfigurationsType(data) {
@@ -330,6 +450,7 @@ h1 {margin-bottom: 0;}
             $("#Protocol").focus();     	
         }
 	}
+	
 	function validationError(data) {
 		$(".clearfix").removeClass("error");
 		$(".lblDesc").text("");
@@ -399,6 +520,59 @@ h1 {margin-bottom: 0;}
 		params = params.concat("&name=");
 		params = params.concat(name);
 		performAction('fetchProjectInfoVersions', params, '', true);
+	}
+	
+	//To empty validate the dynamic configurations property template keys and value
+	function validateKeyFields() {
+		var returnValue = true;
+		var selectedType = $("#configType").val();
+		var name = $("input[name=configName]").val();
+	    if (selectedType != "Other" || isBlank(name)) {
+			return true;
+		}
+	    $("input[name=propertyKey]").each(function() {
+	    	var keyElementId = $(this).attr("id");
+	    	var key = $(this).val();
+	    	var value = $("input[name='" + key + "']").val();
+	    	var focusObj;
+	    	var errorMsgObj = $("#errorMsg_" + $(this).attr("id"));
+	    	var parentDivClass = "parent_" + $(this).attr("id");
+	    	var errorMsg = "";
+	    	if (isBlank(key)) {
+	    		errorMsg = "Property key is Missing";
+	    		focusObj = $(this);
+	    		returnValue = false;
+	    	} else if (isBlank(value)) {
+	    		errorMsg = "Property value is Missing";
+	    		focusObj = $("input[name='" + key + "']");
+	    		returnValue = false;
+	    	} else {
+	    		$("input[name=propertyKey]").each(function() {
+	        		if (keyElementId != $(this).attr("id") && key == $(this).val()) {
+	        			errorMsg = "Property key already exists";
+	        			focusObj = $(this);
+	        			returnValue = false;
+	        			parentDivClass = "parent_" + $(this).attr("id");
+	        			errorMsgObj = $("#errorMsg_" + $(this).attr("id"));
+	        			return false;
+	        		}
+	        	});
+	    	}
+	    	
+	    	if (!returnValue) { //To show the error msg if exists
+	    		$(".clearfix").removeClass("error");
+	    		$(".lblDesc").text("");
+	    		focusObj.focus();
+	    		$("." + parentDivClass).addClass("error");
+	    		errorMsgObj.html(errorMsg);
+	    		return false;
+	    	} else {
+	    		$(".clearfix").removeClass("error");
+	    		$("#errorMsg_" + $(this).attr("id")).html("");
+	    	}
+	    });
+
+	    return returnValue;
 	}
 </script>
 
