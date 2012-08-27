@@ -174,7 +174,7 @@ public class ConfigProcessor implements FrameworkConstants {
             Element publisherNode = (Element) xpath.selectSingleNode(root_);
             org.jdom.Element element = new Element("hudson.tasks.BuildTrigger");
             element.addContent(createElement(CHILD_PROJECTS, childProjects));
-            element.addContent(createElement(THRESHOLD, null).addContent(createElement(NAME, SUCCESS)).addContent(createElement(ORDINAL, ZERO)).addContent(createElement(COLOR, BLUE)));
+            element.addContent(createElement(THRESHOLD, null).addContent(createElement(NAME, CI_SUCCESS_FLAG)).addContent(createElement(ORDINAL, ZERO)).addContent(createElement(COLOR, BLUE)));
             publisherNode.addContent(element);
 		} catch (Exception e) {
 			throw new PhrescoException(e);
