@@ -100,7 +100,7 @@ public interface FrameworkConstants {
 	String BLUE = "BLUE";
 	String COLOR = "color";
 	String ORDINAL = "ordinal";
-	String SUCCESS = "SUCCESS";
+	String CI_SUCCESS_FLAG = "SUCCESS";
 	String NAME = "name";
 	String CHILD_PROJECTS = "childProjects";
 	String THRESHOLD = "threshold";
