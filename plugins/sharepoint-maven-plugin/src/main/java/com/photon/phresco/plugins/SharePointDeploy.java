@@ -36,11 +36,13 @@ import org.codehaus.plexus.util.cli.Commandline;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.util.PluginUtils;
 
 /**
  * Goal which deploys the Java WebApp to a server
@@ -66,11 +68,9 @@ public class SharePointDeploy extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	/**
-	 * Build file name to deploy
-	 * 
-	 * @parameter expression="${buildName}" required="true"
+	 * @parameter expression="${buildNumber}" required="true"
 	 */
-	protected String buildName;
+	protected String buildNumber;
 
 	/**
 	 * @parameter expression="${environmentName}" required="true"
@@ -92,12 +92,17 @@ public class SharePointDeploy extends AbstractMojo implements PluginConstants {
 	private void init() throws MojoExecutionException {
 		try {
 
-			if (StringUtils.isEmpty(buildName) || StringUtils.isEmpty(environmentName)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName)) {
 				callUsage();
 			}
+			
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			build = new File(baseDir.getPath() + "\\source" + "\\");
-			buildFile = new File(buildDir.getPath() + File.separator + buildName);
+			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
 			tempDir = new File(buildDir.getPath() + TEMP_DIR);
 			tempDir.mkdirs();
 			temp = new File(tempDir.getPath() + "\\" + baseDir.getName() + ".wsp");
@@ -111,7 +116,7 @@ public class SharePointDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn sharepoint:deploy -DbuildName=\"Name of the build\""
+				"mvn sharepoint:deploy -DbuildNumber=\"Number of the build\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}

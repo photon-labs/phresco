@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
@@ -398,10 +399,16 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     	
         //SVN url customization
     	if (SVN.equals(job.getRepoType())) {
+    		S_LOGGER.debug("This is svn type project!!!!!");
     		processor.changeNodeValue("scm/locations//remote", job.getSvnUrl());
-    	} else {
+    	} else if (GIT.equals(job.getRepoType())) {
+    		S_LOGGER.debug("This is git type project!!!!!");
     		processor.changeNodeValue("scm/userRemoteConfigs//url", job.getSvnUrl());
     		processor.changeNodeValue("scm/branches//name", job.getBranch());
+    		// cloned workspace
+    	} else if (CLONED_WORKSPACE.equals(job.getRepoType())) {
+    		S_LOGGER.debug("Clonned workspace selected!!!!!!!!!!");
+    		processor.useClonedScm(job.getUsedClonnedWorkspace(), "Successful");
     	}
         
         //Schedule expression customization
@@ -426,7 +433,32 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         
         //enable collabnet file release plugin integration
         if (job.isEnableBuildRelease()) {
+        	S_LOGGER.debug("Enablebling collabnet file release plugin!!!!!");
         	processor.enableCollabNetBuildReleasePlugin(job);
+        }
+
+        // use clonned scm
+        if(CLONED_WORKSPACE.equals(job.getRepoType())) {
+        	S_LOGGER.debug("using cloned workspace!!!!!");
+        	processor.useClonedScm(job.getUsedClonnedWorkspace(), "Successful");
+        }
+        
+        // clone workspace for future use
+        if (job.isCloneWorkspace()) { 
+        	S_LOGGER.debug("Clonning the workspace!!!!!!");
+            processor.cloneWorkspace("**/*", "Successful", "TAR");
+        }
+        
+        // Build Other projects
+        if (StringUtils.isNotEmpty(job.getDownStreamProject())) {
+        	S_LOGGER.debug("Enabling downstream project!!!!!!");
+            processor.buildOtherProjects(job.getDownStreamProject());
+        }
+        
+        // pom location specifier 
+        if (StringUtils.isNotEmpty(job.getPomLocation())) {
+        	S_LOGGER.debug("POM location changing " + job.getPomLocation());
+        	processor.updatePOMLocation(job.getPomLocation());
         }
     }
     

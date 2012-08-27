@@ -79,10 +79,34 @@ public interface FrameworkConstants {
     String CI_NO_OF_JOBS_IN_PROGRESS = "noOfJobsIsInProgress";
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
+    String CI_FUNCTIONAL_ADAPT = "-Pci ci:adapt ";
     String TIMER_TRIGGER = "TimerTrigger";
     String CLASS = "class";
     String SCM = "scm";
     String SVN = "svn";
+    String CLONED_WORKSPACE = "clonedWorkspace";
+	String CI_SCM = "scm";
+	String CLONE_WORKSPACE_SCM = "hudson.plugins.cloneworkspace.CloneWorkspaceSCM";
+	String CI_CLASS = "class";
+	String PARENT_JOB_NAME = "parentJobName";
+	String CI_CRITERIA = "criteria";
+	String ZERO = "0";
+	String PUBLISHERS_NODE = "publishers";
+	String ALL_FILES = "**/*";
+	String SUCCESSFUL = "Successful";
+	String TAR = "TAR";
+	String WORKSPACE_GLOB = "workspaceGlob";
+	String ARCHIVE_METHOD = "archiveMethod";
+	String BLUE = "BLUE";
+	String COLOR = "color";
+	String ORDINAL = "ordinal";
+	String SUCCESS = "SUCCESS";
+	String NAME = "name";
+	String CHILD_PROJECTS = "childProjects";
+	String THRESHOLD = "threshold";
+	String ROOT_POM = "rootPOM";
+	String XPATH_ROOT_NODE = "xpathRootNode";
+	String ANY = "Any";
     String GIT = "git";
     String REPO_TYPE = "repoType";
     String SVN_TYPE = "svnType";
@@ -151,6 +175,8 @@ public interface FrameworkConstants {
     String HIDE_LOG = "hidelog";
     String SHOW_DEBUG = "showdebug";
     String SKIP_TEST = "skiptest";
+	String FUNCTIONAL_TEST = "functionalTest";
+	String BUILD = "build";
     String DEPLOY = "deploy";
     String BUILD_INFO_ENVS = "buildInfoEnvs";
     String DEPLOY_IMPORT_SQL = "importSql";
@@ -230,6 +256,8 @@ public interface FrameworkConstants {
     String IPHONE_CONFIGURATION = "configuration";
     String IPHONE_TARGET_NAME = "targetName";
     String IPHONE_PLISTFILE = "plistfile";
+    String JAR_NAME = "jarName";
+    String MAIN_CLASS_NAME = "mainClassName";
     String ENCRYPT = "encrypt";
     String IPHONE_XCODEPROJ = "/source/Phresco.xcodeproj";
     String SOURCE_DIR = "source";
@@ -269,6 +297,7 @@ public interface FrameworkConstants {
 	String DEPLOY_TO_DEVICE = "deviceDeploy";
 	String BUILD_NAME = "buildName";
 	String BUILD_NUMBER = "buildNumber";
+	String BROWSER = "browser";
 	String TRIGGER_SIMULATOR = "triggerSimulator";
     
     String JFORUM_PARAMETER_URL = "/jforum.page?action=validateLogin&module=user";
@@ -503,7 +532,9 @@ public interface FrameworkConstants {
     String REQ_REPORT_DETAILED="detail";
     
     String REQ_EXISTING_JOB = "existingJob";
+    String REQ_EXISTING_CLONNED_JOBS = "existingClonedJobs";
     String REQ_EXISTING_JOBS = "existingJobs";
+    String REQ_EXISTING_JOBS_NAMES = "existingJobsNames";
     String REQ_CRON_BY = "cronBy";
     String REQ_HOURS = "hours";
     String REQ_MINUTES = "minutes";

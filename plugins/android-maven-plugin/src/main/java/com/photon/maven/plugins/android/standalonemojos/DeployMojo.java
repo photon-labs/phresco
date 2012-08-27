@@ -35,6 +35,8 @@
 package com.photon.maven.plugins.android.standalonemojos;
 
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
+import com.photon.phresco.model.BuildInfo;
+import com.photon.phresco.util.PluginUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -62,17 +64,22 @@ public class DeployMojo extends AbstractAndroidMojo {
      */
     private File file;
     
-    /**
-     * @parameter expression="${buildName}
-     */
-    private String buildName;
+	/**
+	 * @parameter expression="${buildNumber}" required="true"
+	 */
+	protected String buildNumber;
     
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (StringUtils.isEmpty(buildName)) {
+        if (StringUtils.isEmpty(buildNumber)) {
             deployBuiltApk();
         } else {
-        	file = new File(baseDir,"/do_not_checkin/build/"+buildName);
+        	
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
+        	file = new File(baseDir,"/do_not_checkin/build/"+ buildInfo.getBuildName());
             deployApk(file);
         }
     }

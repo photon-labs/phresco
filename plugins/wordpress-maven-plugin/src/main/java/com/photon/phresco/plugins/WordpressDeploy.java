@@ -35,6 +35,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
@@ -72,11 +73,9 @@ public class WordpressDeploy extends AbstractMojo implements PluginConstants {
 	protected File dotPhrescoDir;
 	
 	/**
-	 * Build file name to deploy
-	 * 
-	 * @parameter expression="${buildName}" required="true"
+	 * @parameter expression="${buildNumber}" required="true"
 	 */
-	protected String buildName;
+	protected String buildNumber;
 	
 
 	/**
@@ -108,12 +107,17 @@ public class WordpressDeploy extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
-			if (StringUtils.isEmpty(buildName) || StringUtils.isEmpty(environmentName)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName)) {
 				callUsage();
 			}
+			
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			binariesDir = new File(baseDir.getPath() + BINARIES_DIR);
-			buildFile = new File(buildDir.getPath() + File.separator + buildName);
+			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
 			List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_SERVER);
 			for (SettingsInfo serverDetails : settingsInfos) {
 				context = serverDetails.getPropertyInfo(Constants.SERVER_CONTEXT).getValue();

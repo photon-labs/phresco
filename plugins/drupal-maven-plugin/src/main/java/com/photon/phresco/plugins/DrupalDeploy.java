@@ -35,6 +35,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
@@ -66,11 +67,9 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	/**
-	 * Build file name to deploy
-	 * 
-	 * @parameter expression="${buildName}" required="true"
+	 * @parameter expression="${buildNumber}" required="true"
 	 */
-	protected String buildName;
+	protected String buildNumber;
 
 	/**
 	 * @parameter expression="${environmentName}" required="true"
@@ -98,11 +97,17 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException  {
 		try {
-			if (StringUtils.isEmpty(buildName) || StringUtils.isEmpty(environmentName)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName)) {
 				callUsage();
 			}
+			
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
-			buildFile = new File(buildDir.getPath() + File.separator + buildName);
+			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
+			getLog().info("buildFile path " + buildFile.getPath());
 			binariesDir = new File(baseDir.getPath() + BINARIES_DIR);
 			
 			String context = "";
@@ -124,7 +129,7 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn drupal:deploy -DbuildName=\"Name of the build\""
+				"mvn drupal:deploy -DbuildNumber=\"Number of the build\""
 				+ " -DenvironmentName=\"Multivalued evnironment names\""
 				+ " -DimportSql=\"Does the deployment needs to import sql(TRUE/FALSE?)\"");
 		throw new MojoExecutionException(

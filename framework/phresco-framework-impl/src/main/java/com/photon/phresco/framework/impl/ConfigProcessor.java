@@ -86,6 +86,7 @@ public class ConfigProcessor implements FrameworkConstants {
     }
     
     public void createTriggers(String nodePath, List<String> triggers, String cronExpression) throws JDOMException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.createTriggers()");
     	XPath xpath = XPath.newInstance(nodePath);
         xpath.addNamespace(root_.getNamespace());
         Element triggerNode = (Element) xpath.selectSingleNode(root_);
@@ -100,6 +101,7 @@ public class ConfigProcessor implements FrameworkConstants {
     }
     
     public void enableCollabNetBuildReleasePlugin(CIJob job) throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.enableCollabNetBuildReleasePlugin()");
     	try {
 			org.jdom.Element element = new Element(CI_FILE_RELEASE_NODE);
 			element.addContent(createElement(CI_FILE_RELEASE_OVERRIDE_AUTH_NODE, TRUE));
@@ -122,68 +124,81 @@ public class ConfigProcessor implements FrameworkConstants {
     }
     
     public void useClonedScm(String parentJobName, String criteria) throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.useClonedScm()");
     	try {
             if(StringUtils.isEmpty(criteria)) {
-            	criteria = "Any";
+            	criteria = ANY;
             }
-        	XPath xpath = XPath.newInstance("scm");
+        	XPath xpath = XPath.newInstance(CI_SCM);
             xpath.addNamespace(root_.getNamespace());
             Element scmNode = (Element) xpath.selectSingleNode(root_);
             scmNode.removeContent();
-            scmNode.setAttribute("class", "hudson.plugins.cloneworkspace.CloneWorkspaceSCM");
-            scmNode.addContent(createElement("parentJobName", parentJobName));
-            scmNode.addContent(createElement("criteria", criteria));
+            scmNode.setAttribute(CI_CLASS, CLONE_WORKSPACE_SCM);
+            scmNode.addContent(createElement(PARENT_JOB_NAME, parentJobName));
+            scmNode.addContent(createElement(CI_CRITERIA, criteria));
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new PhrescoException(e);
 		}
     }
     
     public void cloneWorkspace(String clonePattern, String criteria, String archiveMethod) throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.cloneWorkspace()");
     	try {
-        	XPath xpath = XPath.newInstance("publishers");
+        	XPath xpath = XPath.newInstance(PUBLISHERS_NODE);
             xpath.addNamespace(root_.getNamespace());
             Element publisherNode = (Element) xpath.selectSingleNode(root_);
             org.jdom.Element element = new Element("hudson.plugins.cloneworkspace.CloneWorkspacePublisher");
             if(StringUtils.isEmpty(clonePattern)) {
-            	clonePattern = "**/*";
+            	clonePattern = ALL_FILES;
             }
             if(StringUtils.isEmpty(criteria)) {
-            	criteria = "Any";
+            	criteria = SUCCESSFUL;
             }
             if(StringUtils.isEmpty(archiveMethod)) {
-            	archiveMethod = "TAR";
+            	archiveMethod = TAR;
             }
-            element.addContent(createElement("workspaceGlob", clonePattern));
-            element.addContent(createElement("criteria", criteria));
-            element.addContent(createElement("archiveMethod", archiveMethod));
+            element.addContent(createElement(WORKSPACE_GLOB, clonePattern));
+            element.addContent(createElement(CI_CRITERIA, criteria));
+            element.addContent(createElement(ARCHIVE_METHOD, archiveMethod));
             publisherNode.addContent(element);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new PhrescoException(e);
 		}
     }
     
     public void buildOtherProjects(String childProjects)  throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.buildOtherProjects()");
     	try {
-        	XPath xpath = XPath.newInstance("publishers");
+        	XPath xpath = XPath.newInstance(PUBLISHERS_NODE);
             xpath.addNamespace(root_.getNamespace());
             Element publisherNode = (Element) xpath.selectSingleNode(root_);
             org.jdom.Element element = new Element("hudson.tasks.BuildTrigger");
-            element.addContent(createElement("childProjects", childProjects));
-            element.addContent(createElement("hudson.triggers.TimerTrigger", null).addContent(createElement("name", "SUCCESS")).addContent(createElement("ordinal", "0")).addContent(createElement("color", "BLUE")));
+            element.addContent(createElement(CHILD_PROJECTS, childProjects));
+            element.addContent(createElement(THRESHOLD, null).addContent(createElement(NAME, SUCCESS)).addContent(createElement(ORDINAL, ZERO)).addContent(createElement(COLOR, BLUE)));
             publisherNode.addContent(element);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new PhrescoException(e);
+		}
+    }
+    
+    public void updatePOMLocation(String pomLocation)  throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.updatePOMLocation()");
+    	try {
+            root_.addContent(createElement(ROOT_POM, pomLocation));
+		} catch (Exception e) {
+			throw new PhrescoException(e);
 		}
     }
     
     public void deleteElement(String xpathRootNode, String xpathDeleteNode) throws PhrescoException {
+    	S_LOGGER.debug("Entering Method ConfigProcessor.deleteElement()");
     	try {
-        	XPath xpath = XPath.newInstance("xpathRootNode");
+        	XPath xpath = XPath.newInstance(XPATH_ROOT_NODE);
             xpath.addNamespace(root_.getNamespace());
             Element triggerNode = (Element) xpath.selectSingleNode(root_); // if it is null then element is not present
             triggerNode.removeChild(xpathDeleteNode);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new PhrescoException(e);
 		}
     }
     

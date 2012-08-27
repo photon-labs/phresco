@@ -677,7 +677,8 @@ public class Build extends FrameworkBaseAction {
 					valuesMap.put(DEVICE_DEPLOY, TRUE);
 				}
 			} else {
-				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
+				valuesMap.put(BUILD_NUMBER, buildNumber);
+//				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
 			}
 
 			if (!(TechnologyTypes.IPHONES.contains(techId) || TechnologyTypes.ANDROIDS.contains(techId) || TechnologyTypes.SHAREPOINT
@@ -691,6 +692,7 @@ public class Build extends FrameworkBaseAction {
 			}
 
 			if (TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
+				S_LOGGER.debug("Share point is passing server name!!!!!!!!");
 				valuesMap.put(DEPLOY_SERVERNAME, buildInfo.getServerName());
 			}
 
@@ -715,9 +717,13 @@ public class Build extends FrameworkBaseAction {
 				// valuesMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM,
 				// androidVersion);
 			}
+			
+			S_LOGGER.debug("technology ====> " + technology);
 			if (TechnologyTypes.IPHONES.contains(technology) || TechnologyTypes.ANDROIDS.contains(technology)) {
+				S_LOGGER.debug("Mobile command !!!!!");
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
 			} else {
+				S_LOGGER.debug("Deploy Command!!!!!");
 				actionType = ActionType.DEPLOY;
 			}
 

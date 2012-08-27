@@ -58,6 +58,7 @@ import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XMLConstants;
 import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.util.PluginUtils;
 
 /**
  * APP instrumentation
@@ -156,8 +157,8 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 		}
 		getLog().info("Build id is " + buildNumber);
 		getLog().info("Project Code " + baseDir.getName());
-		
-		BuildInfo buildInfo = getBuildInfo(Integer.parseInt(buildNumber));
+		PluginUtils pu = new PluginUtils();
+		BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
 		appPath = buildInfo.getBuildName();
 		getLog().info("Application.path = " + appPath);
 		
@@ -370,35 +371,4 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 		return diff;
 	}
 	
-	private BuildInfo getBuildInfo(int buildNumber) throws MojoExecutionException {
-		ProjectAdministrator administrator;
-		try {
-			administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-		} catch (PhrescoException e) {
-			throw new MojoExecutionException("Project administrator object creation error!");
-		}
-		buildInfoFile = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY + BUILD_INFO_FILE);
-		if (!buildInfoFile.exists()) {
-			throw new MojoExecutionException("Build info is not available!");
-		}
-		try {
-			List<BuildInfo> buildInfos = administrator.readBuildInfo(buildInfoFile);
-			
-			 if (CollectionUtils.isEmpty(buildInfos)) {
-				 throw new MojoExecutionException("Build info is empty!");
-			 }
-
-			 for (BuildInfo buildInfo : buildInfos) {
-				 if (buildInfo.getBuildNo() == buildNumber) {
-					 return buildInfo;
-				 }
-			 }
-
-			 throw new MojoExecutionException("Build info is empty!");
-		} catch (Exception e) {
-			throw new MojoExecutionException(e.getLocalizedMessage());
-		}
-	}
 }
-
-

@@ -52,7 +52,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -66,9 +68,12 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 
-public class PluginUtils {
+public class PluginUtils implements PluginConstants {
 	
 	private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
 
@@ -339,6 +344,38 @@ public class PluginUtils {
 			throw new PhrescoException(e);
 		} catch (SAXException e) {
 			throw new PhrescoException(e);
+		}
+	}
+	
+	public BuildInfo getBuildInfo(int buildNumber) throws MojoExecutionException {
+		ProjectAdministrator administrator;
+		try {
+			administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException("Project administrator object creation error!");
+		}
+		File currentDirectory = new File(".");
+		System.out.println("currentDirectory.getPath() in pluginUils is " + currentDirectory.getPath());
+		File buildInfoFile = new File(currentDirectory.getPath() + PluginConstants.BUILD_DIRECTORY + BUILD_INFO_FILE);
+		if (!buildInfoFile.exists()) {
+			throw new MojoExecutionException("Build info is not available!");
+		}
+		try {
+			List<BuildInfo> buildInfos = administrator.readBuildInfo(buildInfoFile);
+			
+			 if (CollectionUtils.isEmpty(buildInfos)) {
+				 throw new MojoExecutionException("Build info is empty!");
+			 }
+
+			 for (BuildInfo buildInfo : buildInfos) {
+				 if (buildInfo.getBuildNo() == buildNumber) {
+					 return buildInfo;
+				 }
+			 }
+
+			 throw new MojoExecutionException("Build info is empty!");
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getLocalizedMessage());
 		}
 	}
 }

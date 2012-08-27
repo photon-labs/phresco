@@ -48,6 +48,42 @@ public class CIJob {
     private String collabNetRelease = "";
     private boolean collabNetoverWriteFiles = false;
     
+    //  CI  automation
+    // whether to clone the current jobs workspace for further reference
+    private boolean cloneWorkspace = false;
+    //when to call is optional - can be added
+    // Down stream projects
+    private String downStreamProject = "";
+    // Whether this job is used cloned workspace or normal svn
+    private String usedClonnedWorkspace = "";
+    private String operation = "";// Operation like(Build, deploy, test)
+    
+    //Extra information for deploy and test
+    private String browser = "";
+    private String environment = "";
+    private String importSql = "";
+    
+    //iphone specific data
+    private String deployTo = "";
+    private String simulatorVersion = "";
+    private String iphoneSerialNumber = "";
+    private String target = "";
+    private String iphoneSdk = "";
+    private String mode = "";
+    
+    // android specific data
+    private String androidVersion = "";
+    private String device = "";
+    private String androidSerialNumber = "";
+    private String proguard = "";
+    private String signing = "";
+    
+    private String pomLocation = "";
+    
+    //java Stanalone tech info
+    private String jarName = "";
+    private String mainClassName = "";
+    
     public CIJob() {
         super();
     }
@@ -235,5 +271,173 @@ public class CIJob {
 
 	public void setCollabNetoverWriteFiles(boolean collabNetoverWriteFiles) {
 		this.collabNetoverWriteFiles = collabNetoverWriteFiles;
+	}
+
+	public boolean isCloneWorkspace() {
+		return cloneWorkspace;
+	}
+
+	public void setCloneWorkspace(boolean cloneWorkspace) {
+		this.cloneWorkspace = cloneWorkspace;
+	}
+
+	public String getDownStreamProject() {
+		return downStreamProject;
+	}
+
+	public void setDownStreamProject(String downStreamProject) {
+		this.downStreamProject = downStreamProject;
+	}
+
+	public String getUsedClonnedWorkspace() {
+		return usedClonnedWorkspace;
+	}
+
+	public void setUsedClonnedWorkspace(String usedClonnedWorkspace) {
+		this.usedClonnedWorkspace = usedClonnedWorkspace;
+	}
+
+	public String getOperation() {
+		return operation;
+	}
+
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+
+	public String getImportSql() {
+		return importSql;
+	}
+
+	public void setImportSql(String importSql) {
+		this.importSql = importSql;
+	}
+
+	public String getDeployTo() {
+		return deployTo;
+	}
+
+	public void setDeployTo(String deployTo) {
+		this.deployTo = deployTo;
+	}
+
+	public String getSimulatorVersion() {
+		return simulatorVersion;
+	}
+
+	public void setSimulatorVersion(String simulatorVersion) {
+		this.simulatorVersion = simulatorVersion;
+	}
+	
+	public String getIphoneSerialNumber() {
+		return iphoneSerialNumber;
+	}
+
+	public void setIphoneSerialNumber(String iphoneSerialNumber) {
+		this.iphoneSerialNumber = iphoneSerialNumber;
+	}
+
+	public String getAndroidVersion() {
+		return androidVersion;
+	}
+
+	public void setAndroidVersion(String androidVersion) {
+		this.androidVersion = androidVersion;
+	}
+
+	public String getDevice() {
+		return device;
+	}
+
+	public void setDevice(String device) {
+		this.device = device;
+	}
+
+	public String getAndroidSerialNumber() {
+		return androidSerialNumber;
+	}
+
+	public void setAndroidSerialNumber(String androidSerialNumber) {
+		this.androidSerialNumber = androidSerialNumber;
+	}
+
+	public String getProguard() {
+		return proguard;
+	}
+
+	public void setProguard(String proguard) {
+		this.proguard = proguard;
+	}
+
+	public String getSigning() {
+		return signing;
+	}
+
+	public void setSigning(String signing) {
+		this.signing = signing;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+	
+	public String getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getIphoneSdk() {
+		return iphoneSdk;
+	}
+
+	public void setIphoneSdk(String iphoneSdk) {
+		this.iphoneSdk = iphoneSdk;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public String getPomLocation() {
+		return pomLocation;
+	}
+
+	public void setPomLocation(String pomLocation) {
+		this.pomLocation = pomLocation;
+	}
+
+	public String getJarName() {
+		return jarName;
+	}
+
+	public void setJarName(String jarName) {
+		this.jarName = jarName;
+	}
+
+	public String getMainClassName() {
+		return mainClassName;
+	}
+
+	public void setMainClassName(String mainClassName) {
+		this.mainClassName = mainClassName;
 	}
 }
