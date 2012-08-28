@@ -159,7 +159,12 @@ public interface TechnologyTypes {
      * Technology Java Standalone
      */
     String JAVA_STANDALONE = "tech-java-standalone";
-
+    
+    /**
+     * Technology Java Standalone
+     */
+    String WIN_METRO = "tech-win-metro";
+    
     /**
      * All Technologies
      */

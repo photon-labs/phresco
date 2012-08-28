@@ -61,6 +61,8 @@ import com.photon.phresco.util.Utility;
 public class Configurations extends FrameworkBaseAction {
     private static final long serialVersionUID = -4883865658298200459L;
     
+    private Map<String, String> dbDriverMap = new HashMap<String, String>(8);
+    
     private static final Logger S_LOGGER = Logger.getLogger(Configurations.class);
     private static Boolean debugEnabled  = S_LOGGER.isDebugEnabled();
     private String configName = null;
@@ -148,6 +150,7 @@ public class Configurations extends FrameworkBaseAction {
     		S_LOGGER.debug("Entering Method  Configurations.save()");
 		}  
         try {
+        	initDriverMap();
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             if(!validate(administrator, null)) {
@@ -178,6 +181,8 @@ public class Configurations extends FrameworkBaseAction {
 	            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
 	            				value = value.trim().toLowerCase();
 	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            				String dbDriver = getDbDriver(value);
+	            				propertyInfoList.add(new PropertyInfo(Constants.DB_DRIVER, dbDriver.trim()));
 	            			} else {
 	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
 	            			}
@@ -253,6 +258,19 @@ public class Configurations extends FrameworkBaseAction {
         getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
         return list();
     }
+    
+    private String getDbDriver(String dbtype) {
+		return dbDriverMap.get(dbtype);
+	}
+    
+    private void initDriverMap() {
+		dbDriverMap.put("mysql", "com.mysql.jdbc.Driver");
+		dbDriverMap.put("oracle", "oracle.jdbc.OracleDriver");
+		dbDriverMap.put("hsql", "org.hsql.jdbcDriver");
+		dbDriverMap.put("mssql", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		dbDriverMap.put("db2", "com.ibm.db2.jcc.DB2Driver");
+		dbDriverMap.put("mongodb", "com.mongodb.jdbc.MongoDriver");
+	}
     
     private void saveCertificateFile(String path) throws PhrescoException {
     	try {
@@ -552,6 +570,7 @@ public class Configurations extends FrameworkBaseAction {
     		S_LOGGER.debug("Entering Method  Configurations.update()");
 		}  
         try {
+        	initDriverMap();
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             List<PropertyInfo> propertyInfoList = new ArrayList<PropertyInfo>();
@@ -577,6 +596,8 @@ public class Configurations extends FrameworkBaseAction {
 	            			if (propertyTemplate.getKey().equals(Constants.SETTINGS_TEMPLATE_DB) && key.equals("type")) {
 	            				value = value.trim().toLowerCase();
 	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
+	            				String dbDriver = getDbDriver(value);
+	            				propertyInfoList.add(new PropertyInfo(Constants.DB_DRIVER, dbDriver.trim()));
 	            			} else {
 	            				propertyInfoList.add(new PropertyInfo(key, value.trim()));
 	            			}

@@ -118,7 +118,9 @@ public final class DependencyProcessorFactory {
             dependencyProcessor = new SharePointDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         } else if(techId.equals(TechnologyTypes.WORDPRESS)){
         	dependencyProcessor = new WordPressDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
-        } else {
+        } else  if(techId.equalsIgnoreCase(TechnologyTypes.WIN_METRO)) {
+            dependencyProcessor = new WinMetroDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
+        }else {
         	dependencyProcessor = new DefaultDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }
 

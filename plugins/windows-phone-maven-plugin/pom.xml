@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <parent>
+        <groupId>com.photon.phresco.plugins</groupId>
+        <artifactId>phresco-plugins-root</artifactId>
+        <version>1.2.1.1000-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent> 
+    
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.photon.phresco.plugins</groupId>
+  <artifactId>windows-phone-maven-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <name>windows-phone-maven-plugin Maven Mojo</name>
+  <url>http://www.phresco.org</url>
+  <description>windows-phone-maven-plugin</description>
+   <distributionManagement>
+        <site>
+            <id>phresco.plugins.windows-phone</id>
+            <name>Phresco Plugins - Windows Phone</name>
+            <url>${siteBaseUrl}/plugins/windows-phone-maven-plugin/</url>
+        </site>
+    </distributionManagement>
+
+  <dependencies>
+      <dependency>
+        <groupId>com.photon.phresco.commons</groupId>
+        <artifactId>phresco-commons</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.photon.phresco.framework</groupId>
+        <artifactId>phresco-framework</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>com.photon.phresco.framework</groupId>
+        <artifactId>phresco-framework-impl</artifactId>
+        <version>${phresco-commons-version}</version>
+    </dependency>
+	 
+	<dependency>
+        <groupId>org.apache.maven</groupId>
+          <artifactId>maven-plugin-api</artifactId>
+          <version>2.0</version>
+    </dependency>
+    
+    <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>3.8.1</version>
+          <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-utils</artifactId>
+        <version>3.0</version>            
+    </dependency>
+    
+    <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>2.2.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>	
+	<plugins>
+		<plugin>
+			<groupId>org.apache.geronimo.genesis.plugins</groupId>
+			<artifactId>tools-maven-plugin</artifactId>
+			<version>1.1</version>
+			<executions>
+				<execution>
+					<id>install-legal-files</id>
+					<phase>generate-resources</phase>
+					<goals>
+						<goal>copy-legal-files</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+</build>	 
+</project>

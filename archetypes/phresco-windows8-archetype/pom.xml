@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"> 
+
+	<parent>
+        <groupId>com.photon.phresco.archetypes</groupId>
+        <artifactId>phresco-archetypes</artifactId>
+        <version>1.2.1.1000-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>archetypes</groupId>
+	<artifactId>phresco-windows8-archetype</artifactId>
+	<name>Archetype - phresco-windows8-archetype</name>
+	<url>http://www.phresco.org</url>
+	<description>phresco-windows8-archetype</description>
+ 
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources/archetype-resources/.phresco</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/resources/META-INF/maven</directory>
+                                    <includes>
+                                        <include>archetype-metadata.xml</include>
+                                    </includes> 
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+				
+		   <plugin>
+			<groupId>org.apache.geronimo.genesis.plugins</groupId>
+			<artifactId>tools-maven-plugin</artifactId>
+			<version>1.1</version>
+			<executions>
+				<execution>
+					<id>install-legal-files</id>
+					<phase>generate-resources</phase>
+					<goals>
+						<goal>copy-legal-files</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+        </plugins>
+    </build>
+</project>
+       
+
