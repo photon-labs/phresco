@@ -62,6 +62,7 @@ public interface Constants {
     String MVN_GOAL_DEPLOY = "deploy";
     String MVN_PLUGIN_IPHONE_ID = "xcode:";
     String MVN_PLUGIN_WORDPRESS_ID = "wordpress:";
+    String MVN_PLUGIN_WINDOWS_PHONE_ID = "windows-phone:";
     
     //Constants for Authentication Token
 	String AUTH_TOKEN = "auth_token";

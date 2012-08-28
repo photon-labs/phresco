@@ -35,6 +35,7 @@
  ******************************************************************************/
 package com.photon.phresco.service.dependency.impl;
 
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -67,6 +68,21 @@ public class DependencyProcessorMessages {
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
+		} catch (MissingResourceException e) {
+			return '!' + key + '!';
+		}
+	}
+	
+	
+	/**
+	 * Returns the externalized string using value
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public static String getString(String key, String value) {
+		try {
+			return MessageFormat.format(RESOURCE_BUNDLE.getString(key), value );
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
 		}
