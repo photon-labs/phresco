@@ -22,31 +22,29 @@ package com.photon.phresco.framework.impl;
 import hudson.cli.CLI;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -65,7 +63,6 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.CIManager;
-import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.CIBuild;
@@ -213,8 +210,28 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
             
 			File f = new File(builder.toString() + CI_JDK_HOME_XML);
 			streamToFile(f, JDKHomeXmlStream);
+			
+			//place secret key in jenkins home
+			getCISecretKey();
 		} catch (Exception e) {
        		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getJdkHomeXml" + e.getLocalizedMessage());
+		}
+    }
+    
+    public void getCISecretKey() throws PhrescoException {
+       	S_LOGGER.debug("Entering Method CIManagerImpl.getCISecretKey");
+        try {
+        	S_LOGGER.debug("get secret key started...");
+			String jenkinsJobHome = System.getenv(JENKINS_HOME);
+            StringBuilder builder = new StringBuilder(jenkinsJobHome);
+            builder.append(File.separator);
+			FileWriter fstream = new FileWriter(builder.toString() + CI_SECRET_KEY_FILE);
+			BufferedWriter out = new BufferedWriter(fstream);
+			out.write(CI_SECRET_KEY);
+			out.close();
+			S_LOGGER.debug("get secret key ended...");
+		} catch (Exception e) {
+       		S_LOGGER.error("Entered into the catch block of CIManagerImpl.getCISecretKey" + e.getLocalizedMessage());
 		}
     }
     
@@ -398,10 +415,16 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
     	
         //SVN url customization
     	if (SVN.equals(job.getRepoType())) {
+    		S_LOGGER.debug("This is svn type project!!!!!");
     		processor.changeNodeValue("scm/locations//remote", job.getSvnUrl());
-    	} else {
+    	} else if (GIT.equals(job.getRepoType())) {
+    		S_LOGGER.debug("This is git type project!!!!!");
     		processor.changeNodeValue("scm/userRemoteConfigs//url", job.getSvnUrl());
     		processor.changeNodeValue("scm/branches//name", job.getBranch());
+    		// cloned workspace
+    	} else if (CLONED_WORKSPACE.equals(job.getRepoType())) {
+    		S_LOGGER.debug("Clonned workspace selected!!!!!!!!!!");
+    		processor.useClonedScm(job.getUsedClonnedWorkspace(), SUCCESSFUL);
     	}
         
         //Schedule expression customization
@@ -412,8 +435,14 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         
         processor.createTriggers("triggers", triggers, job.getScheduleExpression());
         
-        //Maven command customization
-        processor.changeNodeValue("goals", job.getMvnCommand());
+        //if the technology is java stanalone and functional test , goal have to specified in post build step only
+        if(job.isEnablePostBuildStep() && FUNCTIONAL_TEST.equals(job.getOperation())) {
+            //Maven command customization
+            processor.changeNodeValue("goals", CI_FUNCTIONAL_ADAPT.trim());
+        } else {
+            //Maven command customization
+            processor.changeNodeValue("goals", job.getMvnCommand());
+        }
         
         //Recipients customization
         Map<String, String> email = job.getEmail();
@@ -426,7 +455,37 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         
         //enable collabnet file release plugin integration
         if (job.isEnableBuildRelease()) {
+        	S_LOGGER.debug("Enablebling collabnet file release plugin!!!!!");
         	processor.enableCollabNetBuildReleasePlugin(job);
+        }
+
+        // use clonned scm
+        if(CLONED_WORKSPACE.equals(job.getRepoType())) {
+        	S_LOGGER.debug("using cloned workspace!!!!!");
+        	processor.useClonedScm(job.getUsedClonnedWorkspace(), SUCCESSFUL);
+        }
+        
+        // clone workspace for future use
+        if (job.isCloneWorkspace()) { 
+        	S_LOGGER.debug("Clonning the workspace!!!!!!");
+            processor.cloneWorkspace(ALL_FILES, SUCCESSFUL, TAR);
+        }
+        
+        // Build Other projects
+        if (StringUtils.isNotEmpty(job.getDownStreamProject())) {
+        	S_LOGGER.debug("Enabling downstream project!!!!!!");
+            processor.buildOtherProjects(job.getDownStreamProject());
+        }
+        
+        // pom location specifier 
+        if (StringUtils.isNotEmpty(job.getPomLocation())) {
+        	S_LOGGER.debug("POM location changing " + job.getPomLocation());
+        	processor.updatePOMLocation(job.getPomLocation());
+        }
+        
+        if(job.isEnablePostBuildStep() && FUNCTIONAL_TEST.equals(job.getOperation())) {
+        	System.out.println("java stanalone technology with functional test enabled!!!!!!!");
+        	processor.enablePostBuildStep(job.getPomLocation(), job.getMvnCommand());
         }
     }
     

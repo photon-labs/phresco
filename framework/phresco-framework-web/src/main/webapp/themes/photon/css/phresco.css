@@ -3120,6 +3120,14 @@ table {
     width:33%;
 }
 
+.ciTypeWidth {
+    width:25%;
+}
+
+.ciTypeCloneWidth {
+    width:35%;
+}
+
 .schedulerSelectWidth {
 	width: 60px;
 }
@@ -4906,4 +4914,8 @@ a[id='androidSigning']:hover {
     margin-left: 20px !important;
     padding-top: 6px !important;
     vertical-align: middle !important;
+}
+
+.ciBuildReleaseURL {
+	width: 324px !important;
 }

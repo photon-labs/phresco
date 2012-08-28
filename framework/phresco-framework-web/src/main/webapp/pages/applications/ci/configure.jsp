@@ -21,6 +21,9 @@
 
 <%@	page import="org.apache.commons.lang.StringUtils"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="com.photon.phresco.commons.CIJob" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="com.photon.phresco.model.SettingsInfo"%>
@@ -30,6 +33,7 @@
 <%@ page import="com.photon.phresco.framework.api.Project" %>
 <%@ page import="com.photon.phresco.framework.commons.PBXNativeTarget"%>
 <%@ page import="com.photon.phresco.configuration.Environment"%>
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
 
 <script src="js/select-envs.js"></script>
 
@@ -53,13 +57,17 @@
 	Project project = (Project)request.getAttribute(FrameworkConstants.REQ_PROJECT);
 	String technology = (String)project.getProjectInfo().getTechnology().getId();
     String actionStr = "saveJob";
-    actionStr = (existingJob == null || StringUtils.isEmpty(existingJob.getSvnUrl())) ? "saveJob" : "updateJob";
-    existingJob = (existingJob == null || StringUtils.isEmpty(existingJob.getSvnUrl())) ? null : existingJob; // when we setup it ll have only jenkins url and port in that case we have to check svnUrl and make null
+    actionStr = (existingJob == null || StringUtils.isEmpty(existingJob.getRepoType())) ? "saveJob" : "updateJob";
+    existingJob = (existingJob == null || StringUtils.isEmpty(existingJob.getRepoType())) ? null : existingJob; // when we setup it ll have only jenkins url and port in that case we have to check svnUrl and make null
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
    	// mac sdks
    	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	List<String> macSimulatorSdkVersions = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
+    Map<String, String> browserMap = (Map<String, String>)request.getAttribute(FrameworkConstants.REQ_TEST_BROWSERS);
+    List<String> existingClonedWorkspaces = (List<String>) request.getAttribute(FrameworkConstants.REQ_EXISTING_CLONNED_JOBS);
+    List<String> existingJobsNames = (List<String>) request.getAttribute(FrameworkConstants.REQ_EXISTING_JOBS_NAMES);
 %>
 <div class="popup_Modal configurePopUp" id="ciDetails">
     <form name="ciDetails" action="<%= actionStr %>" method="post" autocomplete="off" class="ci_form" id="ciForm">
@@ -87,15 +95,19 @@
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
 				
 				<div class="input">
-					<div class="multipleFields quartsRadioWidth">
+					<div class="multipleFields ciTypeWidth">
 						<div><input type="radio" name="svnType" value="svn"  <%= existingJob == null ? "checked" : "" %> />&nbsp; <s:text name="label.svn"/></div>
 					</div>
-					<div class="multipleFields quartsRadioWidth">
+					<div class="multipleFields ciTypeWidth">
 						<div><input type="radio" name="svnType" value="git" />&nbsp; <s:text name="label.git"/></div>
+					</div>
+					<!-- clonned workspace radio button -->
+					<div class="multipleFields ciTypeCloneWidth">
+						<div><input type="radio" name="svnType" value="clonedWorkspace" />&nbsp; <s:text name="label.cloned"/></div>
 					</div>
 				</div>
 			</div>
-			<div class="clearfix">
+			<div class="clearfix" id="svnUrlField">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.svn.url"/></label>
 				<div class="input">
 					<input type="text" id="svnurl" class="ciSvnUrlWidth" name="svnurl" value="<%= existingJob == null ? "" : existingJob.getSvnUrl()%>">
@@ -108,6 +120,28 @@
 					<input type="text" id="branch" name="branch" maxlength="63" title="63 Characters only" value="">
 				</div>
 			</div>
+			
+			<!-- Use clonned workspaces -->
+			<div class="clearfix" id="usedClonnedWorkspace">
+				<label for="xlInput" class="xlInput popup-label"><s:text name="label.parent.project"/></label>
+				<div class="input">
+					<select name="usedClonnedWorkspace" class="xlarge" >
+						<% 
+							if (existingClonedWorkspaces != null) {
+								for(String clonedWrkSpace : existingClonedWorkspaces) {
+									if(existingJob != null && existingJob.getName().equals(clonedWrkSpace)) {
+										continue;
+									}
+									
+						%>
+							<option value="<%= clonedWrkSpace %>"><%= clonedWrkSpace %></option>
+						<% 
+								}
+							}
+						%>
+					</select>
+				</div>
+            </div>
 						
 			<div class="clearfix" id="divUsername">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.username"/></label>
@@ -391,190 +425,394 @@
         </div>
 		
 		<div class="modal-body" id="configs">
-			
-			<div class="clearfix">
-			    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
-			    <div class="input">
-			        <select id="environments" name="environment" class="xlarge">
-				        <optgroup label="Configurations" class="optgrplbl">
-							<%
-								String defaultEnv = "";
-								String selectedStr = "";
-								if(environments != null) {
-									for (Environment environment : environments) {
-										if(environment.isDefaultEnv()) {
-											defaultEnv = environment.getName();
-											selectedStr = "selected";
-										} else {
-											selectedStr = "";
-										}
-							%>
-									<option value="<%= environment.getName() %>" <%= selectedStr %> onClick="selectEnvs()"><%= environment.getName() %></option>
-							<% 		} 
-								}
-							%>
-						</optgroup>
-					</select>
-				</div>
-			</div>
-			
-			<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
-				<!-- Android Version -->
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><s:text name="label.sdk"/></label>
-					<div class="input">
-						<select id="androidVersion" name="androidVersion" class="xlarge" >
-							<%
-								for (int i=0; i<AndroidConstants.SUPPORTED_SDKS.length; i++) {
-									if (!AndroidConstants.SUPPORTED_SDKS[i].equalsIgnoreCase(FrameworkConstants.ANDROID_LOWER_VER)) {
-							%>
-								<option value="<%= AndroidConstants.SUPPORTED_SDKS[i] %>"><%= AndroidConstants.SUPPORTED_SDKS[i] %></option>
-							<%  	}
-								} %>
-						</select>
-					</div>
-				</div>
-			<% } %>	
-		
-			<% if (TechnologyTypes.IPHONES.contains(technology)) { %>
-			
-				<!-- TARGET -->
-                <div class="clearfix">
-                    <label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
-                    <div class="input">
-						<select id="target" name="target" class="xlarge" >
-						<% if (xcodeConfigs != null) { 
-								for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
-							%>
-								<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
-							<% } 
-						} %>	
-				       </select>
-                    </div>
-                </div>
-	                
-				<!-- SDK -->
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><s:text name="label.sdk"/></label>
-					<div class="input">
-						<select id="sdk" name="sdk" class="xlarge" >
-							<%
-								if (macSdks != null) {
-									for (String sdk : macSdks) {
-							%>
-								<option value="<%= sdk %>"><%= sdk %></option>
-							<% 
-									} 
-								}
-							%>
-						</select>
-					</div>
-				</div>
-				
-				<!-- Mode -->
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><s:text name="label.mode"/></label>
-					<div class="input">
-						<select id="mode" name="mode" class="xlarge" >
-							<option value="<%= XCodeConstants.CONFIGURATION_DEBUG %>"><%= XCodeConstants.CONFIGURATION_DEBUG %></option>
-							<option value="<%= XCodeConstants.CONFIGURATION_RELEASE %>"><%= XCodeConstants.CONFIGURATION_RELEASE %></option>
-						</select>
-					</div>
-				</div>
-			<% } %>	
 
-			<!-- Show Settings -->
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"></label>
-				<div class="input">
-					<input type="checkbox" id="showSettings" name="showSettings" value="showsettings" <%= showSettings %>> <s:text name="label.show.setting"/>
-						&nbsp;
-				<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
-						<input type="checkbox" id="proguard" name="proguard" value="false">
-						<span><s:text name="label.progurad"/></span>
-						
-						<input type="checkbox" id="signing" name="signing" value="false">
-						<span class="popup-span"><a href="#" class="popup-span" id="androidSigning" ><s:text name="label.signing"/></a></span>
-															
-				<% } %>
-				</div>
+			<!-- CI basic settings starts -->
+			<div class="theme_accordion_container clearfix" style="float: none;">
+			    <section class="accordion_panel_wid">
+			        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+			            <section class="lft_menus_container adv-settings-width">
+			                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="label.build.config"/></span></span>
+			                <div class="mfbox siteinnertooltiptxt" id="build_adv_sett">
+			                    <div class="scrollpanel adv_setting_accordian_bottom">
+			                        <section class="scrollpanel_inner">
+			                        <!--  Ci job configuration starts -->
+										<!-- Ci operation -->
+										<div class="clearfix">
+										    <label for="xlInput" class="xlInput popup-label"><s:text name="label.ci.operation"/></label>
+										    <div class="input">
+										        <select id="operation" name="operation" class="xlarge">
+											        <option value="build">Build</option>
+											        <% if (!TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+											        	<option value="deploy">Deploy</option>
+											        <% } %>
+											        <option value="functionalTest">Functional Test</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="clearfix" id="environmentConfig">
+										    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
+										    <div class="input">
+										        <select id="environments" name="environment" class="xlarge">
+											        <optgroup label="Configurations" class="optgrplbl">
+														<%
+															String defaultEnv = "";
+															String selectedStr = "";
+															if(environments != null) {
+																for (Environment environment : environments) {
+																	if(environment.isDefaultEnv()) {
+																		defaultEnv = environment.getName();
+																		selectedStr = "selected";
+																	} else {
+																		selectedStr = "";
+																	}
+														%>
+																<option value="<%= environment.getName() %>" <%= selectedStr %> onClick="selectEnvs()"><%= environment.getName() %></option>
+														<% 		} 
+															}
+														%>
+													</optgroup>
+												</select>
+											</div>
+										</div>
+										
+										<div id="jobBuildConfigs">
+											<% if (!TechnologyTypes.ANDROIDS.contains(technology) && !TechnologyTypes.IPHONES.contains(technology) && !TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+												
+												<!-- Browser -->
+												<div class="clearfix" id="browserConfig">
+													<label for="xlInput" class="xlInput popup-label"><s:text name="label.browser"/></label>
+													<div class="input">
+														<select id="browser" name="browser" class="xlarge" >
+														<%
+															Iterator browsers = browserMap.entrySet().iterator();
+															while (browsers.hasNext()) {
+															    Map.Entry entry = (Map.Entry) browsers.next();
+															    String key = (String)entry.getKey();
+															    String value = (String)entry.getValue();
+														%>
+																<option value="<%=key%>"><%=value%></option>
+														<%	    
+															}
+														%>
+														</select>
+													</div>
+												</div>
+											<% } %>
+											<% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+												<div id="javaStandaloneConfig" style="display: none;">
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.jar.name"/></label>
+														<div class="input">
+															<input type="text" id="jarName" name="jarName" class="xlarge deploy_xlarge">	
+														</div>
+													</div>
+													
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.main.class.name"/></label>
+														<div class="input">
+															<input type="text" id="mainClassName" name="mainClassName" class="xlarge deploy_xlarge">	
+														</div>
+													</div>
+												</div>
+											<% } %>
+											
+											<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
+												<!-- Android Version -->
+												<div class="clearfix" id="androidSdkConfig">
+													<label for="xlInput" class="xlInput popup-label"><s:text name="label.sdk"/></label>
+													<div class="input">
+														<select id="androidVersion" name="androidVersion" class="xlarge" >
+															<%
+																for (int i=0; i<AndroidConstants.SUPPORTED_SDKS.length; i++) {
+																	if (!AndroidConstants.SUPPORTED_SDKS[i].equalsIgnoreCase(FrameworkConstants.ANDROID_LOWER_VER)) {
+															%>
+																<option value="<%= AndroidConstants.SUPPORTED_SDKS[i] %>"><%= AndroidConstants.SUPPORTED_SDKS[i] %></option>
+															<%  	}
+																} %>
+														</select>
+													</div>
+												</div>
+												
+												<div id="androidDevicesConfig">
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.android.devices"/></label>
+														<div class="input">
+															<select id="androidDevice" name="device" class="xlarge">
+																<option value="usb">USB</option>
+																<option value="emulator">Emulator</option>
+																<option value="serialNumber">Serial Number</option>
+															</select>
+														</div>
+													</div>
+													
+													<div class="clearfix" id="serialNo_div">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.sreialno"/></label>
+														<div class="input">
+															<input type="text" id="serialNum" name="serialNumber" class="xlarge deploy_xlarge">	
+														</div>
+													</div>
+												</div>
+											<% } %>	
+										
+											<% if (TechnologyTypes.IPHONES.contains(technology)) { %>
+											
+												<div id="iphoneBuildConfig">
+													<!-- TARGET -->
+									                <div class="clearfix">
+									                    <label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
+									                    <div class="input">
+															<select id="target" name="target" class="xlarge" >
+															<% if (xcodeConfigs != null) { 
+																	for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
+																%>
+																	<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
+																<% } 
+															} %>	
+													       </select>
+									                    </div>
+									                </div>
+										                
+													<!-- SDK -->
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.sdk"/></label>
+														<div class="input">
+															<select id="sdk" name="sdk" class="xlarge" >
+																<%
+																	if (macSdks != null) {
+																		for (String sdk : macSdks) {
+																%>
+																	<option value="<%= sdk %>"><%= sdk %></option>
+																<% 
+																		} 
+																	}
+																%>
+															</select>
+														</div>
+													</div>
+													
+													<!-- Mode -->
+													<div class="clearfix">
+														<label for="xlInput" class="xlInput popup-label"><s:text name="label.mode"/></label>
+														<div class="input">
+															<select id="mode" name="mode" class="xlarge" >
+																<option value="<%= XCodeConstants.CONFIGURATION_DEBUG %>"><%= XCodeConstants.CONFIGURATION_DEBUG %></option>
+																<option value="<%= XCodeConstants.CONFIGURATION_RELEASE %>"><%= XCodeConstants.CONFIGURATION_RELEASE %></option>
+															</select>
+														</div>
+													</div>
+												</div>
+												
+												<!-- deploy to device or simulator option -->
+												<div id="iphoneDeployConfig">
+															<div class="clearfix">
+																	<label for="xlInput" class="xlInput popup-label"><s:text name="label.deploy.to"/></label>
+																	
+																	<div class="input">
+																		<div class="multipleFields emaillsFieldsWidth">
+																			<div><input type="radio" name="deployTo" value="simulator" checked>&nbsp; <s:text name="label.simulator"/></div>
+																		</div>
+																		<div class="multipleFields">
+																			<div>
+																				<select id="simulatorVersion" name="simulatorVersion" class="medium">
+																					<%
+																					    if (macSimulatorSdkVersions != null) {
+																					    	for (String simulatorVersion : macSimulatorSdkVersions) {
+																					%>
+																					     <option value="<%= simulatorVersion %>"><%= simulatorVersion %></option>
+																					<%
+																					    	}
+																					    }
+																					%>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="input">
+																		<div class="multipleFields emaillsFieldsWidth">
+																			<div><input type="radio" name="deployTo" value="device"> &nbsp;<s:text name="label.deplot.to.device"/></div>
+																		</div>
+																		<div class="multipleFields">
+																			<div></div>
+																		</div>
+																	</div>
+															</div>
+											<% } %>	
+										</div>
+										<!-- Down stream projects specification -->
+										<div class="clearfix">
+											<label for="xlInput" class="xlInput popup-label"><s:text name="label.downstream.projects"/></label>
+											<div class="input">
+												<select id="downstreamProject" name="downstreamProject" class="xlarge" >
+														<option value="">-</option>
+														<% 
+															if (existingJobsNames != null) {
+																for(String existJobName : existingJobsNames) {
+																	if(existingJob != null && existingJob.getName().equals(existJobName)) {
+																		continue;
+																	}
+														%>
+															<option value="<%= existJobName %>"><%= existJobName %></option>
+														<% 
+																}
+															}
+														%>
+												</select>
+											</div>
+										</div>
+										
+										<!-- clone this workspace -->
+										<div class="clearfix">
+											<label for="xlInput" class="xlInput popup-label"><s:text name="label.clone.workspace"/></label>
+											
+											<div class="input">
+												<div class="multipleFields quartsRadioWidth">
+													<div><input type="radio" name="cloneWorkspace" value="true" />&nbsp; <s:text name="label.yes"/></div>
+												</div>
+												<div class="multipleFields quartsRadioWidth">
+													<div><input type="radio" name="cloneWorkspace" value="false" checked/>&nbsp; <s:text name="label.no"/></div>
+												</div>
+											</div>
+										</div>
+										
+										<!-- Show Settings -->
+										<div class="clearfix">
+											<label for="xlInput" class="xlInput popup-label"></label>
+											<div class="input">
+												<input type="checkbox" id="showSettings" name="showSettings" value="showsettings" <%= showSettings %>> <s:text name="label.show.setting"/>
+													&nbsp;
+											<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
+													<input type="checkbox" id="proguard" name="proguard" value="false">
+													<span><s:text name="label.progurad"/></span>
+													
+													<input type="checkbox" id="signing" name="signing" value="false">
+													<span class="popup-span"><s:text name="label.signing"/></span>
+																						
+											<% } %>
+											
+<%-- 											<% if (CollectionUtils.isNotEmpty(project.getProjectInfo().getTechnology().getDatabases())) {%> --%>
+											<% if (false) {%>
+												<input type="checkbox" id="importSql" name="importSql" value="true">
+												<span class="textarea_span popup-span"><s:text name="label.import.sql"/></span>
+											<% } %>
+											
+											<% 
+												if ((TechnologyTypes.JAVA_STANDALONE.equals(technology)
+											 					|| TechnologyTypes.JAVA_WEBSERVICE.equals(technology)
+											 					|| TechnologyTypes.JAVA.equals(technology)
+											 					|| TechnologyTypes.HTML5.equals(technology)
+											 					|| TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology)
+											 					|| TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology)
+											 					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.HTML5_WIDGET.equals(technology))) {
+											 %>
+													<input type="checkbox" id="skipTest" name="skipTest" value="true">
+													<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
+											<% } %>
+											</div>
+										</div>
+									
+									<!--  Ci job configuration ends -->
+			                        </section>
+			                    </div>
+			                </div>
+			            </section>  
+			        </div>
+			    </section>
 			</div>
+		<!-- CI basic settings ends -->
 		
-		    <div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><s:text name="label.enable.build.release"/></label>
-				
-				<div class="input">
-					<div class="multipleFields quartsRadioWidth">
-						<div><input type="radio" name="enableBuildRelease" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
-					</div>
-					<div class="multipleFields quartsRadioWidth">
-						<div><input type="radio" name="enableBuildRelease" value="false" />&nbsp; <s:text name="label.no"/></div>
-					</div>
-				</div>
-			</div>
-			
 		<!-- build release plugin changes starts -->
-			<fieldset class="popup-fieldset fieldsetBottom perFieldSet" style="text-align: left;" id="collabNetInfo">
-				<legend class="fieldSetLegend"><s:text name="label.build.release"/></legend>
-				
-				<div id="CollabNetConfig">
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.url"/></label>
-						<div class="input">
-							<input type="text" id="collabNetURL" class="ciSvnUrlWidth" name="collabNetURL" value="<%= existingJob == null ? "" : existingJob.getCollabNetURL() %>">
-						</div>
-					</div>
-		
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.username"/></label>
-						<div class="input">
-							<input type="text" id="collabNetusername" name="collabNetusername" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetusername() %>">
-						</div>
-					</div>
-					
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.password"/></label>
-						<div class="input">
-							<input type="password" id="collabNetpassword" name="collabNetpassword" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetpassword() %>">
-						</div>
-					</div>
-					
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.project"/></label>
-						<div class="input">
-							<input type="text" id="collabNetProject" name="collabNetProject" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetProject() %>">
-						</div>
-					</div>
-					
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.package"/></label>
-						<div class="input">
-							<input type="text" id="collabNetPackage" name="collabNetPackage" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetPackage() %>">
-						</div>
-					</div>
-					
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.release.name"/></label>
-						<div class="input">
-							<input type="text" id="collabNetRelease" name="collabNetRelease" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetRelease() %>">
-						</div>
-					</div>
-					
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><s:text name="label.build.release.overwrite"/></label>
-						
-						<div class="input">
-							<div class="multipleFields quartsRadioWidth">
-								<div><input type="radio" name="overwriteFiles" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
-							</div>
-							<div class="multipleFields quartsRadioWidth">
-								<div><input type="radio" name="overwriteFiles" value="false" />&nbsp; <s:text name="label.no"/></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-			</fieldset>
+			<div class="theme_accordion_container clearfix" style="float: none;">
+			    <section class="accordion_panel_wid">
+			        <div class="accordion_panel_inner adv-settings-accoridan-inner">
+			            <section class="lft_menus_container adv-settings-width">
+			                <span class="siteaccordion" id="siteaccordion_active"><span><s:text name="label.build.uploader.config"/></span></span>
+			                <div class="mfbox siteinnertooltiptxt" id="build_adv_sett">
+			                    <div class="scrollpanel adv_setting_accordian_bottom">
+			                        <section class="scrollpanel_inner">
+			
+										<div class="clearfix">
+											<label for="xlInput" class="xlInput popup-label"><s:text name="label.enable.build.release"/></label>
+											
+											<div class="input">
+												<div class="multipleFields quartsRadioWidth">
+													<div><input type="radio" name="enableBuildRelease" value="true" />&nbsp; <s:text name="label.yes"/></div>
+												</div>
+												<div class="multipleFields quartsRadioWidth">
+													<div><input type="radio" name="enableBuildRelease" value="false" checked />&nbsp; <s:text name="label.no"/></div>
+												</div>
+											</div>
+										</div>
+										
+										<fieldset class="popup-fieldset fieldsetBottom perFieldSet" style="text-align: left;" id="collabNetInfo">
+											<legend class="fieldSetLegend"><s:text name="label.build.release"/></legend>
+											
+											<div id="CollabNetConfig">
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.url"/></label>
+													<div class="input">
+														<input type="text" id="collabNetURL" class="ciBuildReleaseURL" name="collabNetURL" value="<%= existingJob == null ? "" : existingJob.getCollabNetURL() %>">
+													</div>
+												</div>
+									
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.username"/></label>
+													<div class="input">
+														<input type="text" id="collabNetusername" name="collabNetusername" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetusername() %>">
+													</div>
+												</div>
+												
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.password"/></label>
+													<div class="input">
+														<input type="password" id="collabNetpassword" name="collabNetpassword" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetpassword() %>">
+													</div>
+												</div>
+												
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.project"/></label>
+													<div class="input">
+														<input type="text" id="collabNetProject" name="collabNetProject" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetProject() %>">
+													</div>
+												</div>
+												
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.package"/></label>
+													<div class="input">
+														<input type="text" id="collabNetPackage" name="collabNetPackage" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetPackage() %>">
+													</div>
+												</div>
+												
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><span class="red">* </span><s:text name="label.build.release.release.name"/></label>
+													<div class="input">
+														<input type="text" id="collabNetRelease" name="collabNetRelease" maxlength="63" title="63 Characters only" value="<%= existingJob == null ? "" : existingJob.getCollabNetRelease() %>">
+													</div>
+												</div>
+												
+												<div class="clearfix">
+													<label for="xlInput" class="xlInput popup-label"><s:text name="label.build.release.overwrite"/></label>
+													
+													<div class="input">
+														<div class="multipleFields quartsRadioWidth">
+															<div><input type="radio" name="overwriteFiles" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
+														</div>
+														<div class="multipleFields quartsRadioWidth">
+															<div><input type="radio" name="overwriteFiles" value="false" />&nbsp; <s:text name="label.no"/></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+										</fieldset>
+			                        </section>
+			                    </div>
+			                </div>
+			            </section>  
+			        </div>
+			    </section>
+			</div>
     	<!-- build release plugin changes ends -->
     	
 		</div>
@@ -597,6 +835,9 @@
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
+		//accordian
+		accordion();
+		
 		credentialsDisp();
 		$("#name").focus();
 		$("#configs").hide();
@@ -615,14 +856,14 @@
 				return false;
 			}
 			
-			if(isValidUrl(svnurl)){
-				$("#errMsg").html("Enter the URL");
-				$("#svnurl").focus();
-				$("#svnurl").val("");
-				return false;
-			}
-			
 			if($("input:radio[name=svnType][value='svn']").is(':checked')) {
+				if(isValidUrl(svnurl)){
+					$("#errMsg").html("Enter the URL");
+					$("#svnurl").focus();
+					$("#svnurl").val("");
+					return false;
+				}
+				
 				if(isBlank($.trim($("input[name= username]").val()))){
 					$("#errMsg").html("Enter UserName");
 					$("#username").focus();
@@ -639,12 +880,28 @@
 			}
 			
 			if($("input:radio[name=svnType][value='git']").is(':checked')) {
+				if(isValidUrl(svnurl)){
+					$("#errMsg").html("Enter the URL");
+					$("#svnurl").focus();
+					$("#svnurl").val("");
+					return false;
+				}
+				
 				if(isBlank($.trim($("input[name=branch]").val()))){
 					$("#errMsg").html("Enter Branch Name");
 					$("#branch").focus();
 					$("#branch").val("");
 					return false;
 				} else{
+					$("#errMsg").empty();
+				}
+			}
+			
+			if($("input:radio[name=svnType][value='clonedWorkspace']").is(':checked')) {
+				if(!$("#usedClonnedWorkspace option:selected").length){
+					$("#errMsg").html("There is no parent project to configure");
+					return false;
+				} else {
 					$("#errMsg").empty();
 				}
 			}
@@ -682,11 +939,15 @@
 		$('#close, #cancel').click(function() {
 			showParentPage();
 			$("#popup_div").empty();
+			$('.siteaccordion').unbind('click');
+			accordion();
 		});
 		
 		$("#actionBtn").click(function() {
 			// do the validation for collabNet info only if the user selects git radio button
 			if($("input:radio[name=enableBuildRelease][value='true']").is(':checked')) {
+// 				if(validateJavaStandAloneTech()) {
+// 				}
 				if(collabNetValidation()){
 					createJob();
 				}
@@ -718,17 +979,11 @@
 		    loadSchedule(selectedSchedule);
 		});
 		
-		$("input:radio[name=svnType][value=svn]").click(function() {
+		$("input:radio[name=svnType]").click(function() {
 			credentialsDisp();
 		});
-		
-		$("input:radio[name=svnType][value=git]").click(function() {
-			credentialsDisp();
-		});
-		
 		
 		show(selectedSchedule);
-		
 		<% 
 			if(existingJob != null) {
 				for(String trigger : existingJob.getTriggers()) {
@@ -773,9 +1028,48 @@
 		<%
 				}
 		%>
-			// when the job is not null, have to make selection in radio buttons of collabnet plugin
-			$('input:radio[name=enableBuildRelease]').filter("[value='"+<%= existingJob.isEnableBuildRelease() %>+"']").attr("checked", true);
-			$('input:radio[name=overwriteFiles]').filter("[value='"+<%= existingJob.isCollabNetoverWriteFiles() %>+"']").attr("checked", true);
+				// when the job is not null, have to make selection in radio buttons of collabnet plugin
+				$('input:radio[name=enableBuildRelease]').filter("[value='"+<%= existingJob.isEnableBuildRelease() %>+"']").attr("checked", true);
+				$('input:radio[name=overwriteFiles]').filter("[value='"+<%= existingJob.isCollabNetoverWriteFiles() %>+"']").attr("checked", true);
+				
+				$("#usedClonnedWorkspace option[value='<%= existingJob.getUsedClonnedWorkspace() %>']").attr('selected', 'selected');
+				$("#downstreamProject option[value='<%= existingJob.getDownStreamProject() %>']").attr('selected', 'selected');
+				$("#operation option[value='<%= existingJob.getOperation() %>']").attr('selected', 'selected');
+				$("#environments option[value='<%= existingJob.getEnvironment() %>']").attr('selected', 'selected');
+				//clone the workspace
+				$("input:radio[name=cloneWorkspace][value=<%= existingJob.isCloneWorkspace() %>]").prop("checked", true);
+				
+				//Iphone
+				$("#target option[value='<%= existingJob.getTarget() %>']").attr('selected', 'selected');
+				$("#sdk option[value='<%= existingJob.getIphoneSdk() %>']").attr('selected', 'selected');
+				$("#mode option[value='<%= existingJob.getMode() %>']").attr('selected', 'selected');
+				
+				$("input:radio[name=deployTo][value=<%= existingJob.getDeployTo() %>]").prop("checked", true);
+			<%
+				if(StringUtils.isNotEmpty(existingJob.getSimulatorVersion())) {
+			%>
+				$("input:text[name=simulatorVersion]").val("<%= existingJob.getSimulatorVersion() %>");
+			<%
+				}
+			%>
+				//android
+				$("#androidVersion option[value='<%= existingJob.getAndroidVersion() %>']").attr('selected', 'selected');
+				$("#androidDevice option[value='<%= existingJob.getDevice() %>']").attr('selected', 'selected');
+				
+			<%
+				if(StringUtils.isNotEmpty(existingJob.getAndroidSerialNumber())) {
+			%>
+				$("input:text[name=serialNumber]").val("<%= existingJob.getAndroidSerialNumber() %>");
+			<%
+				}
+			%>
+			
+				$("input:checkbox[name=proguard][value=<%= existingJob.getProguard() %>]").prop("checked", true);
+				$("input:checkbox[name=signing][value=<%= existingJob.getSigning() %>]").prop("checked", true);
+				
+				//java standalone technology
+				$("input:text[name=jarName]").val("<%= existingJob.getJarName() %>");
+				$("input:text[name=mainClassName]").val("<%= existingJob.getMainClassName() %>");
 		<%
 			}
 		%>
@@ -788,8 +1082,95 @@
 		});
 		// while editing a job , based on value show hide it (CollabNet build release)
 		enableDisableCollabNet();
+		
+		// Automation implementation - ci config - based on technology show hide information
+		$('#operation').change(function() {
+			showConfigBasedOnTech();
+		});
+		
+		showConfigBasedOnTech();
+		
+		//android when user selects device , it needs serial number of the device
+		$('#androidDevice').change(function() {
+			showHideAndroidSimulatorNo();
+		});
+		showHideAndroidSimulatorNo();		
 	});
 
+	function showHideAndroidSimulatorNo() {
+		if($('#androidDevice').val() == "serialNumber") {
+			$('#serialNo_div').show();
+		} else {
+			$('#serialNo_div').hide();
+		}	
+	}
+	
+	function showConfigBasedOnTech() {
+		// android , iphone and other technology
+		//hide java stanalone info by default
+		$('#javaStandaloneConfig').hide();
+		if($('#operation').val() == "functionalTest") {
+			<% 
+				if (TechnologyTypes.IPHONES.contains(technology)) { 
+			%>
+					$('#iphoneDeployConfig, #environmentConfig, #iphoneBuildConfig').hide();
+			<% 
+				} else if (TechnologyTypes.ANDROIDS.contains(technology)) { 
+			%>
+				$('#environmentConfig, #androidSdkConfig').hide();
+				$('#androidDevicesConfig').show();
+			<% 
+				} else if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
+			%>
+				$('#environmentConfig, #browserConfig').hide();
+			<%	
+				} else {
+			%>
+					$('#browserConfig').show();
+			<% } %>
+		} else if($('#operation').val() == "deploy") {
+			<% 
+				if (TechnologyTypes.IPHONES.contains(technology)) { 
+			%>
+					$('#iphoneDeployConfig').show();
+					$('#iphoneBuildConfig, #environmentConfig').hide();
+			<% 
+				} else if (TechnologyTypes.ANDROIDS.contains(technology)) { 
+			%>
+					$('#environmentConfig, #androidSdkConfig').hide();
+					$('#androidDevicesConfig').show();
+			<% 
+				} else {
+			%>
+					$('#browserConfig').hide();
+			<% } %>
+		} else if($('#operation').val() == "build") {
+			<% 
+				if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { 
+			%>
+				$('#javaStandaloneConfig').show();//hide java stanalone two fields
+			<% 
+				}
+			%>
+			
+			<% 
+				if (TechnologyTypes.IPHONES.contains(technology)) { 
+			%>
+				$('#iphoneDeployConfig').hide();
+				$('#iphoneBuildConfig').show();
+			<% 
+				} else if (TechnologyTypes.ANDROIDS.contains(technology)) { 
+			%>
+				$('#androidDevicesConfig').hide();
+				$('#environmentConfig, #androidSdkConfig').show();
+			<% 
+				} else {
+			%>
+				$('#browserConfig').hide();
+			<% } %>
+		}	
+	}
+	
 	function createJob() {
 		isCiRefresh = true;
 		getCurrentCSS();
@@ -843,13 +1224,31 @@
 	 	}
 	}
 	
+	function validateJavaStandAloneTech() {
+		if(isBlank($('input:text[name=jarName]').val())) {
+			ciConfigureError('errMsg', "Jarname is missing");
+			$('input:text[name=jarName]').focus();
+			return false;
+		} else if (isBlank($('input:text[name=mainClassName]').val())) {
+			ciConfigureError('errMsg', "MainClassName is missing");
+			$('input:text[name=mainClassName]').focus();
+			return false;
+		} else {
+			ciConfigureError('errMsg', "");
+			return true;
+	 	}
+	}
+	
 	function credentialsDisp() {
 		if($("input:radio[name=svnType][value='svn']").is(':checked')) {
-			$('#divUsername, #divPassword').show();
-			$('#divBranch').hide();
-		} else {
-			$('#divUsername, #divPassword').hide();
-			$('#divBranch').show();
+			$('#divUsername, #divPassword, #svnUrlField').show();
+			$('#divBranch, #usedClonnedWorkspace').hide();
+		} else if($("input:radio[name=svnType][value='git']").is(':checked')) {
+			$('#divUsername, #divPassword, #usedClonnedWorkspace').hide();
+			$('#divBranch, #svnUrlField').show();
+		}  else if($("input:radio[name=svnType][value='clonedWorkspace']").is(':checked')) {
+			$('#divUsername, #divPassword, #divBranch, #svnUrlField').hide();
+			$('#usedClonnedWorkspace').show();
 		}
 	}
 	

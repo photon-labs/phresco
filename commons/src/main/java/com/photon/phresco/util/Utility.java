@@ -179,6 +179,15 @@ public final class Utility implements Constants {
         return builder.toString();
     }
     
+    public static String getJenkinsWorkspace() {
+    	String jenkinsDataHome = System.getenv(JENKINS_HOME);
+        StringBuilder builder = new StringBuilder(jenkinsDataHome);
+        builder.append(File.separator);
+        builder.append(Constants.PROJECTS_WORKSPACE);
+        builder.append(File.separator);
+        return builder.toString();
+    }
+    
     public static String getJenkinsHomePluginDir() {
     	String jenkinsDataHome = System.getenv(JENKINS_HOME);
         StringBuilder builder = new StringBuilder(jenkinsDataHome);

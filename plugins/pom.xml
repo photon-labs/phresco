@@ -26,7 +26,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>nodejs-maven-plugin</module>    
         <module>wordpress-maven-plugin</module>        
         <module>js-import-maven-plugin</module>        
-        <module>jslint-maven-plugin</module>        
+        <module>jslint-maven-plugin</module>   
+        <module>ci-maven-plugin</module>     
     </modules>
     
     <distributionManagement>

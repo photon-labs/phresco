@@ -102,6 +102,7 @@ import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.Credentials;
 import com.photon.phresco.util.DownloadTypes;
+import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.ProjectUtils;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
@@ -128,7 +129,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private List<AdminConfigInfo> adminConfigInfos = Collections.synchronizedList(new ArrayList<AdminConfigInfo>(5));
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
-
+	private boolean adaptFunctionalConfig = false;
+	
 	private static void initializeSqlMap() {
 		// TODO: This should come from database
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
@@ -449,11 +451,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	public Project getProject(String projectCode) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getProject(String projectCode)");
-
 		if (StringUtils.isEmpty(projectCode)) {
-
 			S_LOGGER.debug("getProject() ProjectCode = "+projectCode);
-
 			throw new PhrescoException(FrameworkImplConstants.ERROR_PROJECT_CODE_EMPTY);
 		}
 
@@ -836,16 +835,36 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 
 	 public List<SettingsInfo> getSettingsInfos(String type, String projectCode, String envName) throws PhrescoException {
-
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getSettingsInfos(String type, String projectCode, String envName)");
+		 S_LOGGER.debug("Get settings projectCode ....." + projectCode);
+		 S_LOGGER.debug("Get envName....." + envName);
+		 S_LOGGER.debug("Get  type....." + type);
 
 		 if (StringUtils.isEmpty(envName) || StringUtils.isEmpty(type)) {
 			 throw new PhrescoException("Enviroment name or type is empty");
 		 }
 
-		 Project project = getProject(projectCode);
+		 File directory = new File(".");
+		 S_LOGGER.debug("adaptFunctionalConfig " + adaptFunctionalConfig);
+		 try {
+			 if(adaptFunctionalConfig) {
+		  		  File currentDirPath = new File(directory.getCanonicalPath());
+		  		  String parentpath = new File(currentDirPath.getParent()).getParent();
+		  		  directory = new File(parentpath);
+			 }
+			 S_LOGGER.debug("Current directory to get the path of the project canonical path " + directory.getCanonicalPath());
+		} catch (Exception e) {
+			throw new PhrescoException("Can not find the path specified to get project...");
+		}
+		 
+		 Project project = getProjectByWorkspace(directory);
+		
+		 if(project == null) {
+			 project = getProject(projectCode);
+		 }
+		 
 		 if (project == null) {
-			 throw new PhrescoException("Project code should not be valid");
+			 throw new PhrescoException("Project code should be valid");
 		 }
 		 String techId = project.getProjectInfo().getTechnology().getId();
 		 List<SettingsInfo> settingsInfos = filterSettingsInfo(getSettingsInfos(envName), type, techId);
@@ -855,7 +874,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 settingsInfos = configurationsByEnvName(envName, project);
 		 return filterConfigurations(settingsInfos, type);
 	 }
-
+	 
 	 public List<SettingsInfo> getSettingsInfos(String envName, String type, List<String> appliesTo, String settingsName) throws PhrescoException {
 
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getSettingsInfos(String type, String projectCode, String envName)");
@@ -1039,7 +1058,24 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 S_LOGGER.debug("Entering Method ProjectAdministratorImpl.configurations(String type, Project project)");
 
 		 try {
-			 String configPath = getConfigurationPath(project.getProjectInfo().getCode()).toString();
+			 File directory = new File(".");
+			 S_LOGGER.debug("adaptFunctionalConfig in configurationsByEnvName " + adaptFunctionalConfig);
+			 try {
+				 if(adaptFunctionalConfig) {
+			  		  File currentDirPath = new File(directory.getCanonicalPath());
+			  		  String parentpath = new File(currentDirPath.getParent()).getParent();
+			  		  directory = new File(parentpath);
+				 }
+				 S_LOGGER.debug("configurationsByEnvName project canonical path " + directory.getCanonicalPath());
+			} catch (Exception e) {
+				throw new PhrescoException("Can not find the path specified to get configurationsByEnvName...");
+			}
+			 String configPath = new File(directory + File.separator + PluginConstants.DOT_PHRESCO_FOLDER + File.separator + PluginConstants.CONFIG_FILE).getPath();
+			 S_LOGGER.debug("configurationsByEnvName config path " + configPath);
+			 if(!new File(configPath).exists()) {
+				 S_LOGGER.debug("configurationsByEnvName Doesnot exists going for next job" + configPath);
+				 configPath = getConfigurationPath(project.getProjectInfo().getCode()).toString();
+			 }
 			 ConfigurationReader configReader = new ConfigurationReader(new File (configPath));
 			 return getAsSettingsInfo(configReader.getConfigByEnv(envName));
 		 } catch (Exception e) {
@@ -1617,7 +1653,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 } catch (FileNotFoundException e) {
 			 return null;
 		 } catch (IOException e) {
-			 throw new PhrescoException(e);
+			 return null;
 		 }
 	 }
 
@@ -1658,27 +1694,36 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 br.close();
 			 return jobs;
 		 } catch (FileNotFoundException e) {
+			 S_LOGGER.debug("FileNotFoundException");
 			 return null;
 		 } catch (IOException e) {
+			 S_LOGGER.debug("IOException");
 			 throw new PhrescoException(e);
 		 }
 	 }
 	 
 	 public CIJob getJob(Project project, String jobName) throws PhrescoException {
 		 try {
+			 S_LOGGER.debug("Search for jobName => " + jobName);
 			 if (StringUtils.isEmpty(jobName)) {
 				 return null;
 			 }
 			 List<CIJob> jobs = getJobs(project);
+			 if(CollectionUtils.isEmpty(jobs)) {
+				 S_LOGGER.debug("job list is empty!!!!!!!!");
+				 return null;
+			 }
+			 S_LOGGER.debug("Job list found!!!!!");
 			 for (CIJob job : jobs) {
+				 S_LOGGER.debug("job list job Names => " + job.getName());
 				 if (job.getName().equals(jobName)) {
 					 return job;
 				 }
 			 }
-			 return null;
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
 		 }
+		 return null;
 	 }
 	 
 	 public void writeJsonJobs(Project project, List<CIJob> jobs, String status) throws PhrescoException {
@@ -2018,6 +2063,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 
 	 public void updateTestConfiguration(Project project, String selectedEnvs, String browser, String resultConfigXml) throws PhrescoException {
 		 try {
+			 S_LOGGER.debug("Enabling update test configuration !!!");
+			 adaptFunctionalConfig = true;
 			 String projectCode = project.getProjectInfo().getCode();
 			 List<SettingsInfo> settingsInfos = new ArrayList<SettingsInfo>(2);
 			 settingsInfos.addAll(getSettingsInfos(Constants.SETTINGS_TEMPLATE_SERVER, projectCode, selectedEnvs));
@@ -2027,7 +2074,8 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				 configWriter.updateTestConfiguration(settingsInfo, browser, resultConfigXml);
 			 }
 			 configWriter.saveXml(new File(resultConfigXml));
-
+			 adaptFunctionalConfig = false;
+			 S_LOGGER.debug("Update test configuration end ");
 		 } catch (Exception e) {
 			 throw new PhrescoException(e);
 		 }

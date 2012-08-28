@@ -31,13 +31,16 @@ import org.codehaus.plexus.util.StringUtils;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.util.Utility;
 
 /**
  * Goal which deploys the PHP project
@@ -63,11 +66,9 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	/**
-	 * Build file name to deploy
-	 * 
-	 * @parameter expression="${buildName}" required="true"
+	 * @parameter expression="${buildNumber}" required="true"
 	 */
-	protected String buildName;
+	protected String buildNumber;
 
 	/**
 	 * @parameter expression="${environmentName}" required="true"
@@ -93,11 +94,19 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
-			if (StringUtils.isEmpty(buildName) || StringUtils.isEmpty(environmentName)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName)) {
 				callUsage();
 			}
+			
+			getLog().info("Build id is " + buildNumber);
+			getLog().info("Project Code " + baseDir.getName());
+			
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
 			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
-			buildFile = new File(buildDir.getPath() + File.separator + buildName);
+			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -108,7 +117,7 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn php:deploy -DbuildName=\"Name of the build\""
+				"mvn php:deploy -DbuildNumber=\"Number of the build\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\""
 						+ " -DimportSql=\"Does the deployment needs to import sql(TRUE/FALSE?)\"");
 		throw new MojoExecutionException(
@@ -169,8 +178,13 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 	}
 	
 	private List<SettingsInfo> getSettingsInfo(String configType) throws PhrescoException {
+		getLog().info("getSettingsInfo() config type value " + configType);
+		getLog().info("getSettingsInfo() environmentName " + environmentName);
+		getLog().info("getSettingsInfo() baseDir.getName() " + baseDir.getName());
+		getLog().info("getSettingsInfo() workspace location " + Utility.getJenkinsHome());
 		ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-		return projAdmin.getSettingsInfos(configType, baseDir.getName(), environmentName);
+		Project currentProject = projAdmin.getProjectByWorkspace(baseDir);
+		return projAdmin.getSettingsInfos(configType, currentProject.getProjectInfo().getProjectCode(), environmentName);
 	}
 
 	private void cleanUp() throws MojoExecutionException {
