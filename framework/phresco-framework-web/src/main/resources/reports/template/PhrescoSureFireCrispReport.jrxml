@@ -88,12 +88,15 @@
 		</band>
 	</title>
 	<detail>
-		<band height="29" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textField>
-					<reportElement x="21" y="3" width="134" height="20"/>
-					<textElement>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="25" forecolor="#000000" backcolor="#FFFFFF"/>
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="25"/>
+				</rectangle>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="21" y="3" width="188" height="20"/>
+					<textElement verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{testSuiteName}]]></textFieldExpression>
@@ -127,15 +130,6 @@
 					<textFieldExpression><![CDATA[$F{error}]]></textFieldExpression>
 				</textField>
 			</frame>
-			<line direction="BottomUp">
-				<reportElement x="0" y="0" width="1" height="28"/>
-			</line>
-			<line direction="BottomUp">
-				<reportElement x="555" y="0" width="1" height="28"/>
-			</line>
-			<line>
-				<reportElement x="0" y="28" width="555" height="1"/>
-			</line>
 		</band>
 	</detail>
 	<lastPageFooter>

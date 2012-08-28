@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -77,11 +78,10 @@ public class PhrescoReportGenerationTest implements FrameworkConstants  {
 	
 	//@Test
 	public void testPhrescoReportGeneration()  throws Exception  {
-		Project project = administrator.getProject("PHR_phpnone");
+		Project project = administrator.getProject("PHR_VSR_Mobile_Services");
 		System.out.println("project ===> " + project.getProjectInfo().getTechnology().getName());
-//		reportGen.compileReports();
-//		reportGen.cumulativePdfReport(project, "", "detail");
-		
+		compileReports();
+		reportGen.cumulativePdfReport(project, "", "detail");
 	}
 	
 	//@Test
@@ -141,13 +141,13 @@ public class PhrescoReportGenerationTest implements FrameworkConstants  {
 
 	public void compileReports() throws Exception {
 		//jrxml path!!!!!
-		File pdfFileDir = new File("/Users/kaleeswaran/work/boston-new/framework/phresco-framework-web/src/main/resources/reports/template");
+		File pdfFileDir = new File("/Users/kaleeswaran/work/cairo/framework/phresco-framework-web/src/main/resources/reports/template");
 		File[] listFiles = pdfFileDir.listFiles(new FileExtensionFileFilter(".jrxml"));
 		for (File jrxmlFile : listFiles) {
 //			System.out.println("jrxmlFile ===> " + jrxmlFile.getName());
 			System.out.println("jrxmlFile ===> " + jrxmlFile.getAbsolutePath());
 			JasperDesign jasperDesign = JRXmlLoader.load(jrxmlFile.getAbsolutePath());
-			String desinationPath = "/Users/kaleeswaran/work/boston-new/framework/phresco-framework-web/src/main/resources/reports/jasper/" + FilenameUtils.removeExtension(jrxmlFile.getName()) + ".jasper";
+			String desinationPath = "/Users/kaleeswaran/work/cairo/framework/phresco-framework-web/src/main/resources/reports/jasper/" + FilenameUtils.removeExtension(jrxmlFile.getName()) + ".jasper";
 			System.out.println("desinationPath ====> " + desinationPath);
 			JasperCompileManager.compileReportToFile(jasperDesign, desinationPath);
 		}

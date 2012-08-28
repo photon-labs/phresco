@@ -536,12 +536,18 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		} else {
 			reportFilePath = Utility.getProjectHome() + projectCode + reportPaths.getFunctionalReportDir(techId);
 		}
+		S_LOGGER.debug("reportFilePath " + reportFilePath);
 		List<String> testResultFiles = getTestResultFiles(reportFilePath);
 		ArrayList<TestSuite> testSuiteWithTestCase  = null;
 		ArrayList<AllTestSuite> allTestSuiteDetails = null;
+		// detailed information object
+		testSuiteWithTestCase = new ArrayList<TestSuite>();
+		// crisp information of the test
+		allTestSuiteDetails =  new ArrayList<AllTestSuite>();
+		
+		// Iterate over each file
 		for (String resultFile : testResultFiles) {
-			testSuiteWithTestCase = new ArrayList<TestSuite>();
-			allTestSuiteDetails =  new ArrayList<AllTestSuite>();
+
 			Document doc = getDocumentOfFile(reportFilePath, resultFile);
 			List<TestSuite> testSuites = getTestSuite(doc);
 			
@@ -600,9 +606,18 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		}
 		// detailed info
 		sureFireReport.setTestSuites(testSuiteWithTestCase);
+//		printDetailedObj(testSuiteWithTestCase);
 		//crisp info
 		sureFireReport.setAllTestSuites(allTestSuiteDetails);
 		return sureFireReport;
+	}
+	
+	//detailed object info
+	private void printDetailedObj(ArrayList<TestSuite> testSuiteWithTestCase) {
+		S_LOGGER.debug("printing required values!!!!!");
+		for (TestSuite testSuite : testSuiteWithTestCase) {
+			S_LOGGER.debug("getName " + testSuite.getName() + " tests " + testSuite.getTests() + " Failure " + testSuite.getFailures() + " Error" + testSuite.getErrors() + " testcases size " + testSuite.getTestCases().size());
+		}
 	}
 	
     private List<TestSuite> getTestSuite(Document doc) throws TransformerException, PhrescoException {
@@ -613,6 +628,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
     		} else {
     			testSuitePath = reportPaths.getFunctionalTestSuitePath(techId);
     		}
+    		S_LOGGER.debug("testSuitePath " + testSuitePath);
             NodeList nodelist = org.apache.xpath.XPathAPI.selectNodeList(doc, XPATH_MULTIPLE_TESTSUITE);
             if (nodelist.getLength() == 0) {
                 nodelist = org.apache.xpath.XPathAPI.selectNodeList(doc, testSuitePath);
@@ -665,6 +681,8 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
                 testSuitePath = reportPaths.getFunctionalTestSuitePath(techId);
     		}
     		testCasePath = reportPaths.getTestCasePath(techId);
+    		S_LOGGER.debug("testSuitePath " + testSuitePath);
+    		S_LOGGER.debug("testCasePath " + testCasePath);
             StringBuilder sb = new StringBuilder(); //testsuites/testsuite[@name='yyy']/testcase
             //sb.append(XPATH_SINGLE_TESTSUITE);
             sb.append(testSuitePath);
