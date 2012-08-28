@@ -98,7 +98,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<plugin>
 					<groupId>com.photon.phresco.plugins</groupId>
 					<artifactId>drupal-maven-plugin</artifactId>
-					<version>1.2.1.1000</version>
+					<version>1.2.1.1001-SNAPSHOT</version>
 						<executions>
 							<execution>
 							<phase>validate</phase>
@@ -167,7 +167,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     <plugin>
                         <groupId>com.photon.phresco.plugins</groupId>
                         <artifactId>ci-maven-plugin</artifactId>
-                        <version>1.2.1.1000</version>
+                        <version>1.2.1.1001-SNAPSHOT</version>
                     </plugin>
                 </plugins>
             </build>
