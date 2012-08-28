@@ -19,6 +19,7 @@
  */
 package com.photon.phresco.util;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -68,8 +70,6 @@ import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.configuration.ConfigReader;
 import com.photon.phresco.configuration.ConfigWriter;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.PhrescoFrameworkFactory;
-import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.model.SettingsInfo;
 
@@ -348,12 +348,6 @@ public class PluginUtils implements PluginConstants {
 	}
 	
 	public BuildInfo getBuildInfo(int buildNumber) throws MojoExecutionException {
-		ProjectAdministrator administrator;
-		try {
-			administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-		} catch (PhrescoException e) {
-			throw new MojoExecutionException("Project administrator object creation error!");
-		}
 		File currentDirectory = new File(".");
 		System.out.println("currentDirectory.getPath() in pluginUils is " + currentDirectory.getPath());
 		File buildInfoFile = new File(currentDirectory.getPath() + PluginConstants.BUILD_DIRECTORY + BUILD_INFO_FILE);
@@ -361,7 +355,7 @@ public class PluginUtils implements PluginConstants {
 			throw new MojoExecutionException("Build info is not available!");
 		}
 		try {
-			List<BuildInfo> buildInfos = administrator.readBuildInfo(buildInfoFile);
+			List<BuildInfo> buildInfos = getBuildInfo(buildInfoFile);
 			
 			 if (CollectionUtils.isEmpty(buildInfos)) {
 				 throw new MojoExecutionException("Build info is empty!");
@@ -378,4 +372,21 @@ public class PluginUtils implements PluginConstants {
 			throw new MojoExecutionException(e.getLocalizedMessage());
 		}
 	}
+	
+	 public List<BuildInfo> getBuildInfo(File path) throws IOException {
+		 if (!path.exists()) {
+			 System.out.println("build info file doesnot exist!!!");
+			 return new ArrayList<BuildInfo>(1);
+		 }
+
+		 BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+		 Gson gson = new Gson();
+		 Type type = new TypeToken<List<BuildInfo>>(){}.getType();
+
+		 List<BuildInfo> buildInfos = gson.fromJson(bufferedReader, type);
+		 Collections.sort(buildInfos, new BuildInfoComparator());
+		 bufferedReader.close();
+
+		 return buildInfos;
+	 }
 }
