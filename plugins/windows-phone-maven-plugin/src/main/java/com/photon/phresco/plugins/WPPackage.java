@@ -101,19 +101,20 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 	
 	/**
 	 * @parameter expression="${type}" required="true"
+	 * default-value="wp8"
 	 * @readonly
 	 */
 	protected String type;
 	
 	/**
 	 * @parameter expression="${configuration}" required="true"
-	 * Release / Debug
+	 * default-value="Release|Debug"
 	 */
 	protected String configuration;
 	
 	/**
 	 * @parameter expression="${platform}" required="true"
-	 * AnyCPU / ARM / x86 / x64
+	 * default-value="Any CPU|ARM|x86|x64"
 	 */
 	protected String platform;
 
