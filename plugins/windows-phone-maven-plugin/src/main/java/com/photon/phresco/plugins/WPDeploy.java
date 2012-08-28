@@ -37,6 +37,8 @@ import com.photon.phresco.plugins.model.WP8PackageInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
+import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.model.BuildInfo;
 
 /**
  * Goal which deploys the Java WebApp to a server
@@ -62,11 +64,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 	protected File baseDir;
 
 	/**
-	 * Build file name to deploy
-	 * 
-	 * @parameter expression="${buildName}" required="true"
+	 * @parameter expression="${buildNumber}" required="true"
 	 */
-	protected String buildName;
+	protected String buildNumber;
 
 	/**
 	 * @parameter expression="${environmentName}" required="true"
@@ -109,7 +109,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 	private void init() throws MojoExecutionException {
 		try {
 
-			if (StringUtils.isEmpty(buildName) || StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type)) {
 				callUsage();
 			}
 			if(type.equalsIgnoreCase("wp8")) {
@@ -117,8 +117,12 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				packageInfo = new WP8PackageInfo(rootDir);
 			}
 			
+			PluginUtils pu = new PluginUtils();
+			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+			getLog().info("Build Name " + buildInfo);
+			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
-			buildFile = new File(buildDir.getPath() + File.separator + buildName);
+			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
 			tempDir = new File(buildDir.getPath() + File.separator + buildFile.getName().substring(0, buildFile.getName().length() - 4));
 			tempDir.mkdirs();
 			temp = new File(tempDir.getPath());	
@@ -132,7 +136,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn windows-phone:deploy -DbuildName=\"Name of the build\""
+				"mvn windows-phone:deploy -DbuildNumber=\"Build Number\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\"" 
 						+ " -Dtype=\"Windows Phone platform\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
