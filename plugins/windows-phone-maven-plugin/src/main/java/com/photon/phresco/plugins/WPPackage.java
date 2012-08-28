@@ -108,13 +108,13 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 	
 	/**
 	 * @parameter expression="${configuration}" required="true"
-	 * default-value="Release|Debug"
+	 * default-value="Release"
 	 */
 	protected String configuration;
 	
 	/**
 	 * @parameter expression="${platform}" required="true"
-	 * default-value="Any CPU|ARM|x86|x64"
+	 * default-value="Any CPU"
 	 */
 	protected String platform;
 
