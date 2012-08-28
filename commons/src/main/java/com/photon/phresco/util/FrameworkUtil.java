@@ -31,10 +31,9 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 
-import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 
-public class FrameworkUtil implements FrameworkConstants {
+public class FrameworkUtil implements Constants{
 
     private static FrameworkUtil frameworkUtil = null;
     private Map<String, String> unitTestMap = new HashMap<String, String>(8);
