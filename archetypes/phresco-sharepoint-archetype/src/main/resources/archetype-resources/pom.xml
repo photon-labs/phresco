@@ -46,7 +46,7 @@
 			<plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>sharepoint-maven-plugin</artifactId>
-                <version>1.2.1.1000-SNAPSHOT</version>
+                <version>1.2.1.1000</version>
                 <extensions>true</extensions>
             </plugin>
 			
