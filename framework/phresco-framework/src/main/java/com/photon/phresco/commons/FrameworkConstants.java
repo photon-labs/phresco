@@ -472,6 +472,15 @@ public interface FrameworkConstants {
     String REQ_PROJECT_MODULES = "projectModules";
     String REQ_TEST_FUNCTIONAL = "functional";
     String REQ_TEST_PERFORMANCE = "performance";
+    String PERFORMANCE_TEST_REPORTS = "performanceTestReports";
+	String PERFORMANCE_SPECIAL_HANDLE = "performanceSpecialHandle";
+	String LOAD_TEST_RESULTS = "loadTestResults";
+	String LOAD_TEST_REPORTS = "loadTestReports";
+	String FUNCTIONAL_TEST_REPORTS = "functionalTestReports";
+	String UNIT_TEST_REPORTS = "unitTestReports";
+	String FUNCTIONAL_SURE_FIRE_REPORTS = "functionalSureFireReports";
+	String JMETER_TEST_RESULTS_FOR_ANDROID = "jmeterTestResultsForAndroid";
+	String JMETER_TEST_RESULTS = "jmeterTestResults";
     String REQ_TEST_LOAD = "load";
     String REQ_SHOW_SETTINGS = "showSettings";
     String REQ_TEST_BUILD_INFOS = "buildInfos";
@@ -542,6 +551,9 @@ public interface FrameworkConstants {
     String REQ_SERVER_LOG = "serverLog";
     String REQ_REPORT_CRISP="crisp";
     String REQ_REPORT_DETAILED="detail";
+    String REQ_REPORTS_DATA_TYPE = "reportsDataType";
+	String REQ_TECH_NAME = "techName";
+	String REQ_PROJECT_NAME = "projectName";
     
     String REQ_EXISTING_JOB = "existingJob";
     String REQ_EXISTING_CLONNED_JOBS = "existingClonedJobs";
@@ -1209,6 +1221,8 @@ public interface FrameworkConstants {
    String REQ_SITE_REPORTS = "reports";
    String REQ_SITE_SLECTD_REPORTS = "selectedReports";
    String REQ_SITE_SLECTD_REPORTSCATEGORIES = "maven-project-info-reports-plugin";
+   String REQ_SONAR_REPORT = "sonarReport";
+   
    
    /* Site report success message */
    String SUCCESS_SITE_CONFIGURE = "configured.site.success";
@@ -1269,6 +1283,10 @@ public interface FrameworkConstants {
    
    String SONAR_LANGUAGE_PROFILE = "sonar.language";
    String SONAR_BRANCH   = "sonar.branch";
+   String SONAR_SOURCE = "source"; 
+   String REPORT_ELEMENT_JS_WEB = "reportElementJsWeb";
+   String REPORT_ELEMENT_SRC_FUNC = "reportElementSrcFunc";
+   String REPORT_ELEMENT_JAVA_FUNC = "reportElementJavaFunc";
    String PHRESCO_SOURCE_DIRECTORY = "phresco.source.directory";
    String SONAR_DYNAMIC_ANALYSIS_PROFILE = "sonar.dynamicAnalysis";
    String SONAR_EXCLUSION = "sonar.exclusions";
