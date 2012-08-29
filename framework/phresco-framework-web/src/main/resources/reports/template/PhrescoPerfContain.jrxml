@@ -120,11 +120,11 @@
 					<subreportExpression><![CDATA["reports/jasper/PhrescoPerfFiles.jasper"]]></subreportExpression>
 				</subreport>
 				<rectangle radius="10">
-					<reportElement x="2" y="5" width="191" height="20"/>
+					<reportElement x="2" y="5" width="540" height="20"/>
 				</rectangle>
 			</frame>
 			<textField>
-				<reportElement x="93" y="5" width="100" height="20"/>
+				<reportElement x="93" y="5" width="420" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>

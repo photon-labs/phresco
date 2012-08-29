@@ -50,28 +50,28 @@
 					<text><![CDATA[Testsuite Name]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="219" y="28" width="70" height="20"/>
+					<reportElement x="318" y="28" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="305" y="28" width="73" height="20"/>
+					<reportElement x="378" y="28" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Success]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="392" y="28" width="74" height="20"/>
+					<reportElement x="438" y="28" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Failure]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="482" y="28" width="58" height="20"/>
+					<reportElement x="495" y="28" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
@@ -92,35 +92,35 @@
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textField>
-					<reportElement x="21" y="3" width="134" height="20"/>
+					<reportElement x="21" y="3" width="285" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{testSuiteName}]]></textFieldExpression>
 				</textField>
 				<textField pattern="###0">
-					<reportElement x="219" y="3" width="70" height="20"/>
+					<reportElement x="318" y="3" width="50" height="20"/>
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 				</textField>
 				<textField pattern="###0">
-					<reportElement x="305" y="3" width="73" height="20"/>
+					<reportElement x="378" y="3" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{success}]]></textFieldExpression>
 				</textField>
 				<textField pattern="###0">
-					<reportElement x="392" y="3" width="69" height="20"/>
+					<reportElement x="438" y="3" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{failure}]]></textFieldExpression>
 				</textField>
 				<textField pattern="###0">
-					<reportElement x="482" y="3" width="58" height="20"/>
+					<reportElement x="495" y="3" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
@@ -139,7 +139,7 @@
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="212">
+		<band height="227">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
 				<rectangle>
@@ -153,28 +153,28 @@
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="219" y="5" width="70" height="20"/>
+					<reportElement x="318" y="5" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalTestSuites}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="305" y="5" width="73" height="20"/>
+					<reportElement x="378" y="5" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{noOfSuccess}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="392" y="5" width="69" height="20"/>
+					<reportElement x="438" y="5" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{noOfFailure}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="482" y="5" width="58" height="20"/>
+					<reportElement x="495" y="5" width="50" height="20"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
