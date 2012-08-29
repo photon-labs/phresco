@@ -26,39 +26,24 @@
 	</background>
 	<pageHeader>
 		<band height="48">
+			<printWhenExpression><![CDATA[$P{testType}.contains("unit")]]></printWhenExpression>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC">
 					<printWhenExpression><![CDATA[$P{testType}.equals("unit")]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement x="126" y="4" width="158" height="20" backcolor="#FFFFFF"/>
+					<reportElement x="0" y="4" width="158" height="20" backcolor="#FFFFFF"/>
 					<textElement>
 						<font fontName="Times New Roman" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[- Test Report]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="12" y="4" width="100" height="20"/>
-					<textElement/>
-					<textFieldExpression><![CDATA[$P{testType}]]></textFieldExpression>
-				</textField>
-			</frame>
-			<frame>
-				<reportElement mode="Opaque" x="0" y="24" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC">
-					<printWhenExpression><![CDATA[$P{testType}.equals("functional")]]></printWhenExpression>
-				</reportElement>
-				<staticText>
-					<reportElement x="126" y="0" width="158" height="20" backcolor="#FFFFFF"/>
-					<textElement>
-						<font fontName="Times New Roman" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[- Test Report]]></text>
+					<text><![CDATA[Unit Test Report]]></text>
 				</staticText>
 			</frame>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="344" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{testType}.contains("unit")]]></printWhenExpression>
 			<frame>
 				<reportElement x="0" y="0" width="555" height="307" isRemoveLineWhenBlank="true"/>
 				<subreport>

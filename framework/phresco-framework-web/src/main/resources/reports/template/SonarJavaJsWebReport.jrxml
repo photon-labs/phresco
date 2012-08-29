@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhrescoXmlReport" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="reportsDataType" class="java.lang.String"/>
+	<field name="nonCommentLinesOfCode" class="java.lang.String"/>
+	<field name="classes" class="java.lang.String"/>
+	<field name="lines" class="java.lang.String"/>
+	<field name="files" class="java.lang.String"/>
+	<field name="functions" class="java.lang.String"/>
+	<field name="commentLinesDensity" class="java.lang.String"/>
+	<field name="commentLines" class="java.lang.String"/>
+	<field name="commentedOutCodeLines" class="java.lang.String"/>
+	<field name="duplicatedLinesDensity" class="java.lang.String"/>
+	<field name="duplicatedLines" class="java.lang.String"/>
+	<field name="duplicatedBlocks" class="java.lang.String"/>
+	<field name="duplicatedFiles" class="java.lang.String"/>
+	<field name="functionComplexity" class="java.lang.String"/>
+	<field name="classComplexity" class="java.lang.String"/>
+	<field name="fileComplexity" class="java.lang.String"/>
+	<field name="violationsDensity" class="java.lang.String"/>
+	<field name="blockerViolations" class="java.lang.String"/>
+	<field name="criticalViolations" class="java.lang.String"/>
+	<field name="majorViolations" class="java.lang.String"/>
+	<field name="minorViolations" class="java.lang.String"/>
+	<field name="infoViolations" class="java.lang.String"/>
+	<field name="weightedViolations" class="java.lang.String"/>
+	<field name="statements" class="java.lang.String"/>
+	<field name="accessors" class="java.lang.String"/>
+	<field name="publicDocumentedApiDensity" class="java.lang.String"/>
+	<field name="publicUndocumentedApi" class="java.lang.String"/>
+	<field name="packages" class="java.lang.String"/>
+	<field name="packageTangleIndex" class="java.lang.String"/>
+	<field name="packageCycles" class="java.lang.String"/>
+	<field name="packageFeedbackEdges" class="java.lang.String"/>
+	<field name="packageTangles" class="java.lang.String"/>
+	<field name="lackOfCohesionMethods" class="java.lang.String"/>
+	<field name="responseForCode" class="java.lang.String"/>
+	<field name="reportType" class="java.lang.String"/>
+	<field name="directories" class="java.lang.String"/>
+	<field name="technology" class="java.lang.String"/>
+	<field name="showDivElement" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="24">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC"/>
+				<staticText>
+					<reportElement x="15" y="3" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sonar Report -]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="115" y="4" width="100" height="16"/>
+					<textElement>
+						<font fontName="SansSerif" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reportType}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="672" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="332"/>
+				<rectangle>
+					<reportElement x="0" y="5" width="555" height="128"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="136" width="555" height="75"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="15" y="10" width="100" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" size="13" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Lines of Code(Loc)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="28" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[nonCommentLinesOfCode]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="28" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{nonCommentLinesOfCode}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="15" y="48" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[lines]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="48" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{lines}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="15" y="68" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[files]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="68" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{files}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="88" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[commentLinesDensity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="88" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{commentLinesDensity}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="108" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[commentLines]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="108" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{commentLines}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="283" y="30" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[duplicatedLinesDensity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="435" y="30" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{duplicatedLinesDensity}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="283" y="50" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[duplicatedLines]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="435" y="50" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{duplicatedLines}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="283" y="70" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[duplicatedBlocks]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="435" y="70" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{duplicatedBlocks}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="283" y="10" width="100" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" size="13" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Duplications]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="283" y="90" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[duplicatedFiles]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="435" y="90" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{duplicatedFiles}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="142" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="13" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Complexity]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="167" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[functionComplexity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="167" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{functionComplexity}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="15" y="187" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[fileComplexity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="187" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{fileComplexity}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="216" width="555" height="115"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="15" y="223" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="13" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Violations]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="16" y="248" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[violationsDensity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="248" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{violationsDensity}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="15" y="278" width="100" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="13" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Rules Compliance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="305" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[weightedViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="156" y="305" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{weightedViolations}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="228" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[blockerViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="228" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{blockerViolations}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="248" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[criticalViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="248" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{criticalViolations}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="268" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[majorViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="268" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{majorViolations}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="288" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[minorViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="288" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{minorViolations}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="308" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[infoViolations]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="308" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infoViolations}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="332" width="555" height="138" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{showDivElement}.equals("reportElementJavaFunc")? true : false]]></printWhenExpression>
+				</reportElement>
+				<rectangle>
+					<reportElement x="0" y="3" width="555" height="133"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="289" y="110" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[responseForCode]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="110" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{responseForCode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="441" y="90" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{lackOfCohesionMethods}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="10" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[statements]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="11" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{statements}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="30" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[accessors]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="30" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{accessors}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="50" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[publicDocumentedApiDensity]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="50" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{publicDocumentedApiDensity}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="70" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[publicUndocumentedApi]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="441" y="70" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{publicUndocumentedApi}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="289" y="90" width="150" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[lackOfCohesionMethods]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="16" y="10" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[packages]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="10" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{packages}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="31" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[packageTangleIndex]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="31" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{packageTangleIndex}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="16" y="52" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[packageCycles]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="52" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{packageCycles}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="17" y="73" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[packageFeedbackEdges]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="93" width="140" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[packageTangles]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="159" y="93" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{packageTangles}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="159" y="72" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{packageFeedbackEdges}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="474" width="555" height="44" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{showDivElement}.equals( "reportElementJsWeb" )  ? true : false]]></printWhenExpression>
+				</reportElement>
+				<rectangle>
+					<reportElement x="0" y="3" width="555" height="38" isRemoveLineWhenBlank="true"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="15" y="14" width="100" height="20"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[directories]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="158" y="14" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{directories}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="521" width="555" height="66" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{showDivElement}.equals("reportElementSrcFunc") ? true : false]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="17" y="10" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[classes]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="10" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{classes}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="18" y="30" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[functions]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="157" y="30" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{functions}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

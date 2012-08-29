@@ -33,7 +33,7 @@
 			<frame>
 				<reportElement x="0" y="0" width="554" height="24"/>
 				<rectangle radius="10">
-					<reportElement x="0" y="0" width="182" height="20"/>
+					<reportElement x="0" y="0" width="510" height="20"/>
 				</rectangle>
 				<staticText>
 					<reportElement x="13" y="3" width="59" height="15"/>
@@ -43,7 +43,7 @@
 					<text><![CDATA[File Name :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="72" y="3" width="100" height="15"/>
+					<reportElement x="72" y="3" width="425" height="15"/>
 					<textElement>
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
