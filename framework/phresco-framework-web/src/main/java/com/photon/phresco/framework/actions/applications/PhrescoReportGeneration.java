@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,22 +27,22 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.sonar.wsclient.Host;
+import org.sonar.wsclient.Sonar;
+import org.sonar.wsclient.connectors.HttpClient4Connector;
+import org.sonar.wsclient.services.Resource;
+import org.sonar.wsclient.services.ResourceQuery;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -52,7 +51,9 @@ import org.xml.sax.SAXException;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.actions.applications.Quality.XmlNameFileFilter;
+import com.photon.phresco.framework.FrameworkConfiguration;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.commons.AllTestSuite;
 import com.photon.phresco.framework.commons.AndroidPerfReport;
@@ -60,6 +61,7 @@ import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.framework.commons.JmeterReport;
 import com.photon.phresco.framework.commons.JmeterTypeReport;
 import com.photon.phresco.framework.commons.LoadTestReport;
+import com.photon.phresco.framework.commons.SonarReport;
 import com.photon.phresco.framework.commons.SureFireReport;
 import com.photon.phresco.framework.commons.XmlReport;
 import com.photon.phresco.framework.model.PerformanceTestResult;
@@ -70,9 +72,12 @@ import com.photon.phresco.framework.model.TestResult;
 import com.photon.phresco.framework.model.TestSuite;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.util.PomProcessor;
 
-public class PhrescoReportGeneration  implements FrameworkConstants {
 
+public class PhrescoReportGeneration extends FrameworkBaseAction implements FrameworkConstants {
+
+	private static final long serialVersionUID = 1L;
 	private static final Logger S_LOGGER = Logger.getLogger(PhrescoReportGeneration.class);
     private static Boolean debugEnabled  =S_LOGGER.isDebugEnabled();
 	private Project project = null;
@@ -83,7 +88,13 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	private String projectName = null;
     private FrameworkUtil reportPaths = null;
     private String reportDatasType = null;
-    
+	private String skipTest = null;
+    private String codeTechnology = null;
+    private String report = null;
+    private String validateAgainst = null;
+	private String target = null;
+	private static String FUNCTIONALTEST = "functional";
+
     //test suite details
 	private float noOfTstSuiteTests = 0;
     private float noOfTstSuiteFailures = 0;
@@ -95,7 +106,7 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
         final DateFormat yymmdd = new SimpleDateFormat("MMM dd yyyy HH.mm");
         this.fileName = yymmdd.format(today);
     }
-     
+    
 	public void generatePdfReport(Project proj, String tstType, String reportDataType)  throws PhrescoException {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generatePdfReport()");
 		try {
@@ -155,48 +166,81 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 	//Consolidated report for all test
 	public void cumalitiveTestReport() throws Exception {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.cumalitiveTestReport()");
-		//unit and functional details
-		testType = "unit";
-		SureFireReport unitTestSureFireReports = sureFireReports();
-		S_LOGGER.debug("unitTestSureFireReports " + unitTestSureFireReports);
-		
-		testType = "functional";
-		SureFireReport functionalSureFireReports = sureFireReports();
-		S_LOGGER.debug("functionalSureFireReports " + functionalSureFireReports);
-		
-		testType = "";
-		//performance details
-		List<AndroidPerfReport> jmeterTestResultsForAndroid = null;
-		ArrayList<JmeterTypeReport> jmeterTestResults = null;
-		if(TechnologyTypes.ANDROIDS.contains(techId)) {
-			jmeterTestResultsForAndroid = getJmeterTestResultsForAndroid();
-			S_LOGGER.debug("jmeterTestResultsForAndroid " + jmeterTestResultsForAndroid);
-		} else {
-			jmeterTestResults = getJmeterTestResults();
-			S_LOGGER.debug("jmeterTestResults " + jmeterTestResultsForAndroid);
+		try {
+			//unit and functional details
+			testType = UNIT;
+			SureFireReport unitTestSureFireReports = null;
+			unitTestSureFireReports = sureFireReports();
+			S_LOGGER.debug("unitTestSureFireReports" + unitTestSureFireReports);
+			
+			testType = FUNCTIONAL;
+			SureFireReport functionalSureFireReports = null;
+			functionalSureFireReports = sureFireReports();
+			S_LOGGER.debug(FUNCTIONAL_SURE_FIRE_REPORTS + functionalSureFireReports);
+			
+			testType = "";
+			//performance details
+			List<AndroidPerfReport> jmeterTestResultsForAndroid = null;
+			ArrayList<JmeterTypeReport> jmeterTestResults = null;
+			if(TechnologyTypes.ANDROIDS.contains(techId)) {
+				jmeterTestResultsForAndroid = getJmeterTestResultsForAndroid();
+				S_LOGGER.debug(JMETER_TEST_RESULTS_FOR_ANDROID + jmeterTestResultsForAndroid);
+			} else {
+				jmeterTestResults = getJmeterTestResults();
+				S_LOGGER.debug(JMETER_TEST_RESULTS + jmeterTestResultsForAndroid);
+			}
+			
+			//load test details
+			List<LoadTestReport> loadTestResults = getLoadTestResults();
+			S_LOGGER.debug("loadTestResults" + loadTestResults);
+			
+			Map<String, Object> cumulativeReportparams = new HashMap<String,Object>();
+			cumulativeReportparams.put(REQ_PROJECT_CODE, projectCode);
+			cumulativeReportparams.put(REQ_PROJECT_NAME, projectName);
+			cumulativeReportparams.put(REQ_TECH_NAME, techName);
+			cumulativeReportparams.put(REQ_REPORTS_DATA_TYPE, reportDatasType);
+			cumulativeReportparams.put(UNIT_TEST_REPORTS, Arrays.asList(unitTestSureFireReports));
+			cumulativeReportparams.put(FUNCTIONAL_TEST_REPORTS, Arrays.asList(functionalSureFireReports));
+			
+			if(TechnologyTypes.ANDROIDS.contains(techId)) {
+				cumulativeReportparams.put(PERFORMANCE_SPECIAL_HANDLE, true);
+				cumulativeReportparams.put(PERFORMANCE_TEST_REPORTS,jmeterTestResultsForAndroid);
+			} else {
+				cumulativeReportparams.put(PERFORMANCE_SPECIAL_HANDLE, false);
+				cumulativeReportparams.put(PERFORMANCE_TEST_REPORTS, jmeterTestResults);
+			}
+			cumulativeReportparams.put(LOAD_TEST_REPORTS, loadTestResults);
+			
+			List<SonarReport> sonarReports = null;
+			sonarReports = new ArrayList<SonarReport>();
+			
+			List<String> sonarTechReports = new ArrayList<String>(4);
+			
+			if (TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) 
+					|| TechnologyTypes.HTML5.equals(techId) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) 
+					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || TechnologyTypes.JAVA_WEBSERVICE.equals(techId)) {
+			
+				sonarTechReports.add(JAVA);
+				sonarTechReports.add(JS);
+				sonarTechReports.add(WEB);
+			} else {
+				sonarTechReports.add(SONAR_SOURCE);
+			}
+			sonarTechReports.add(FUNCTIONAL);
+			for (String sonarTechReport : sonarTechReports) {
+				SonarReport srcSonarReport = generateSonarReport(sonarTechReport, techId);
+				if(srcSonarReport != null) {
+					sonarReports.add(srcSonarReport);
+				}
+			}
+			
+			cumulativeReportparams.put(FrameworkConstants.REQ_SONAR_REPORT, sonarReports);
+			generateCumulativeTestReport(cumulativeReportparams);
+			
+		} catch (Exception e) {
+			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.cumalitiveTestReport()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Report generation errorr ");
 		}
-		
-		//load test details
-		List<LoadTestReport> loadTestResults = getLoadTestResults();
-		S_LOGGER.debug("loadTestResults " + loadTestResults);
-		
-		Map<String, Object> cumulativeReportparams = new HashMap<String,Object>();
-		cumulativeReportparams.put("projectCode", projectCode);
-		cumulativeReportparams.put("projectName", projectName);
-		cumulativeReportparams.put("techName", techName);
-		cumulativeReportparams.put("reportsDataType", reportDatasType);
-		cumulativeReportparams.put("unitTestReports", Arrays.asList(unitTestSureFireReports));
-		cumulativeReportparams.put("functionalTestReports", Arrays.asList(functionalSureFireReports));
-		
-		if(TechnologyTypes.ANDROIDS.contains(techId)) {
-			cumulativeReportparams.put("performanceSpecialHandle", true);
-			cumulativeReportparams.put("performanceTestReports",jmeterTestResultsForAndroid);
-		} else {
-			cumulativeReportparams.put("performanceSpecialHandle", false);
-			cumulativeReportparams.put("performanceTestReports", jmeterTestResults);
-		}
-		cumulativeReportparams.put("loadTestReports", loadTestResults);
-		generateCumulativeTestReport(cumulativeReportparams);
 	}
 	
 	//cumulative test report generation
@@ -243,6 +287,121 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		
 	}
 	
+	 public SonarReport generateSonarReport(String report, String techId) throws PhrescoException {
+		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateSonarReport()");
+		SonarReport sonarReport = new SonarReport();
+    	String technology = null;
+		try {
+			FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+        	String serverUrl = "";
+    	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
+    	    	serverUrl = frameworkConfig.getSonarUrl();
+    	    } else {
+    	    	serverUrl = getHttpRequest().getRequestURL().toString();
+    	    	StringBuilder tobeRemoved = new StringBuilder();
+    	    	tobeRemoved.append(getHttpRequest().getContextPath());
+    	    	tobeRemoved.append(getHttpRequest().getServletPath());
+
+    	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
+    	    	Matcher matcher = pattern.matcher(serverUrl);
+    	    	serverUrl = matcher.replaceAll("");
+    	    }
+        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+        	builder.append(projectCode);
+        	
+            if (StringUtils.isNotEmpty(report) && FUNCTIONALTEST.equals(report)) {
+                FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+                builder.append(frameworkUtil.getFuncitonalTestDir(techId));
+            }
+            
+            builder.append(File.separatorChar);
+        	builder.append(POM_XML);
+        	File pomPath = new File(builder.toString());
+        	
+        	PomProcessor processor = new PomProcessor(pomPath);
+        	String groupId = processor.getModel().getGroupId();
+        	String artifactId = processor.getModel().getArtifactId();
+
+        	StringBuilder sbuild = new StringBuilder();
+        	sbuild.append(groupId);
+        	sbuild.append(COLON);
+        	sbuild.append(artifactId);
+        	
+        	if (StringUtils.isNotEmpty(report) && !SOURCE_DIR.equals(report)) {
+        		sbuild.append(COLON);
+        		sbuild.append(report);
+        	}
+        	
+        	String artifact = sbuild.toString();
+			Sonar sonar = new Sonar(new HttpClient4Connector(new Host(serverUrl)));
+			
+			String metrickey[] = {"ncloc", "lines", "files", "comment_lines_density" , "comment_lines", "duplicated_lines_density", "duplicated_lines", 
+					"duplicated_blocks", "duplicated_files", "function_complexity", "file_complexity", "violations_density", "blocker_violations", 
+					"critical_violations", "major_violations", "minor_violations", "info_violations", "weighted_violations",
+					"classes", "functions",
+					"statements","packages", "accessors", "public_documented_api_density", "public_undocumented_api","package_tangle_index","package_cycles", "package_feedback_edges", "package_tangles", "lcom4", "rfc",
+					"directories", "class_complexity"};
+			
+			Resource resrc = sonar.find(ResourceQuery.createForMetrics(artifact, metrickey));
+			sonarReport.setNonCommentLinesOfCode(resrc.getMeasure(metrickey[0]).getFormattedValue());
+			sonarReport.setLines(resrc.getMeasure(metrickey[1]).getFormattedValue());
+			sonarReport.setFiles(resrc.getMeasure(metrickey[2]).getFormattedValue());
+			sonarReport.setCommentLinesDensity(resrc.getMeasure(metrickey[3]).getFormattedValue());
+			sonarReport.setCommentLines(resrc.getMeasure(metrickey[4]).getFormattedValue());
+			sonarReport.setDuplicatedLinesDensity(resrc.getMeasure(metrickey[5]).getFormattedValue());
+			sonarReport.setDuplicatedLines(resrc.getMeasure(metrickey[6]).getFormattedValue());
+			sonarReport.setDuplicatedBlocks(resrc.getMeasure(metrickey[7]).getFormattedValue());
+			sonarReport.setDuplicatedFiles(resrc.getMeasure(metrickey[8]).getFormattedValue());
+			if (!WEB.equals(report)) { 
+				sonarReport.setFunctionComplexity(resrc.getMeasure(metrickey[9]).getFormattedValue());
+			}
+			sonarReport.setFileComplexity(resrc.getMeasure(metrickey[10]).getFormattedValue());
+			sonarReport.setViolationsDensity(resrc.getMeasure(metrickey[11]).getFormattedValue());
+			sonarReport.setBlockerViolations(resrc.getMeasure(metrickey[12]).getFormattedValue());
+			sonarReport.setCriticalViolations(resrc.getMeasure(metrickey[13]).getFormattedValue());
+			sonarReport.setMajorViolations(resrc.getMeasure(metrickey[14]).getFormattedValue());
+			sonarReport.setMinorViolations(resrc.getMeasure(metrickey[15]).getFormattedValue());
+			sonarReport.setInfoViolations(resrc.getMeasure(metrickey[16]).getFormattedValue());
+			sonarReport.setWeightedViolations(resrc.getMeasure(metrickey[17]).getFormattedValue());
+			
+			if ((TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) 
+					|| TechnologyTypes.HTML5.equals(techId) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) 
+					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || TechnologyTypes.JAVA_WEBSERVICE.equals(techId)) && (JAVA.equals(report) || FUNCTIONAL.equals(report))){
+				
+				sonarReport.setClasses(resrc.getMeasure(metrickey[18]).getFormattedValue());
+				sonarReport.setFunctions(resrc.getMeasure(metrickey[19]).getFormattedValue());
+				sonarReport.setStatements(resrc.getMeasure(metrickey[20]).getFormattedValue());
+				sonarReport.setPackages(resrc.getMeasure(metrickey[21]).getFormattedValue());
+				sonarReport.setAccessors(resrc.getMeasure(metrickey[22]).getFormattedValue());
+				sonarReport.setPublicDocumentedApiDensity((resrc.getMeasure(metrickey[23]).getFormattedValue()));
+				sonarReport.setPublicUndocumentedApi(resrc.getMeasure(metrickey[24]).getFormattedValue());
+				sonarReport.setPackageTangleIndex(resrc.getMeasure(metrickey[25]).getFormattedValue());
+				sonarReport.setPackageCycles(resrc.getMeasure(metrickey[26]).getFormattedValue());
+				sonarReport.setPackageFeedbackEdges(resrc.getMeasure(metrickey[27]).getFormattedValue());
+				sonarReport.setPackageTangles(resrc.getMeasure(metrickey[28]).getFormattedValue());
+				sonarReport.setLackOfCohesionMethods(resrc.getMeasure(metrickey[29]).getFormattedValue());
+				sonarReport.setResponseForCode(resrc.getMeasure(metrickey[30]).getFormattedValue());
+				sonarReport.setClassComplexity(resrc.getMeasure(metrickey[32]).getFormattedValue());
+				sonarReport.setShowDivElement(REPORT_ELEMENT_JAVA_FUNC);
+				
+			} else if (SONAR_SOURCE.equals(report) || FUNCTIONAL.equals(report)) {
+				sonarReport.setClasses(resrc.getMeasure(metrickey[18]).getFormattedValue());
+				sonarReport.setFunctions(resrc.getMeasure(metrickey[19]).getFormattedValue());
+				sonarReport.setShowDivElement(REPORT_ELEMENT_SRC_FUNC);
+			} else if (JS.equals(report) || WEB.equals(report)) {
+				sonarReport.setDirectories(resrc.getMeasure(metrickey[31]).getFormattedValue());
+				sonarReport.setShowDivElement(REPORT_ELEMENT_JS_WEB);
+			}
+			
+			sonarReport.setReportType(report);
+			sonarReport.setTechnology(technology);
+			return sonarReport;
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	// Unit and functional pdf report generation
 	public void generateUnitAndFunctionalReport(SureFireReport sureFireReports)  throws PhrescoException {
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateUnitAndFunctionalReport()");
@@ -255,11 +414,11 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			reportStream = this.getClass().getClassLoader().getResourceAsStream("reports/jasper/" + containerJasperFile);
 			bufferedInputStream = new BufferedInputStream(reportStream);
 			Map<String, Object> parameters = new HashMap<String,Object>();
-			parameters.put("projectCode", projectCode);
-			parameters.put("projectName", projectName);
-			parameters.put("techName", techName);
-			parameters.put("testType", testType);
-			parameters.put("reportsDataType", reportDatasType);
+			parameters.put(REQ_PROJECT_CODE, projectCode);
+			parameters.put(REQ_PROJECT_NAME, projectName);
+			parameters.put(REQ_TECH_NAME, techName);
+			parameters.put(REQ_TEST_TYPE, testType);
+			parameters.put(REQ_REPORTS_DATA_TYPE, reportDatasType);
 			JRBeanArrayDataSource dataSource = new JRBeanArrayDataSource(new SureFireReport[]{sureFireReports});
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
@@ -298,11 +457,11 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType  + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
 			String jasperFile = "PhrescoPerfContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
-			parameters.put("projectCode", projectCode);
-			parameters.put("projectName", projectName);
-			parameters.put("techName", techName);
-			parameters.put("testType", testType);
-			parameters.put("reportsDataType", reportDatasType);
+			parameters.put(REQ_PROJECT_CODE, projectCode);
+			parameters.put(REQ_PROJECT_NAME, projectName);
+			parameters.put(REQ_TECH_NAME, techName);
+			parameters.put(REQ_TEST_TYPE, testType);
+			parameters.put(REQ_REPORTS_DATA_TYPE, reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jmeterTstResults);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
 		} catch (Exception e) {
@@ -319,11 +478,11 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
 			String jasperFile = "PhrescoAndroidPerfContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
-			parameters.put("projectCode", projectCode);
-			parameters.put("projectName", projectName);
-			parameters.put("techName", techName);
-			parameters.put("testType", testType);
-			parameters.put("reportsDataType", reportDatasType);
+			parameters.put(REQ_PROJECT_CODE, projectCode);
+			parameters.put(REQ_PROJECT_NAME, projectName);
+			parameters.put(REQ_TECH_NAME, techName);
+			parameters.put(REQ_TEST_TYPE, testType);
+			parameters.put(REQ_REPORTS_DATA_TYPE, reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(androidPerReports);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
 		} catch (Exception e) {
@@ -340,11 +499,11 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 			String outFileNamePDF = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType + File.separator + testType + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
 			String jasperFile = "PhrescoLoadTestContain.jasper";
 			Map<String, Object> parameters = new HashMap<String,Object>();
-			parameters.put("projectCode", projectCode);
-			parameters.put("projectName", projectName);
-			parameters.put("techName", techName);
-			parameters.put("testType", testType);
-			parameters.put("reportsDataType", reportDatasType);
+			parameters.put(REQ_PROJECT_CODE, projectCode);
+			parameters.put(REQ_PROJECT_NAME, projectName);
+			parameters.put(REQ_TECH_NAME, techName);
+			parameters.put(REQ_TEST_TYPE, testType);
+			parameters.put(REQ_REPORTS_DATA_TYPE, reportDatasType);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loadTestResults);
 			reportGenerate(outFileNamePDF, jasperFile, parameters, dataSource);
 		} catch (Exception e) {
@@ -1136,6 +1295,53 @@ public class PhrescoReportGeneration  implements FrameworkConstants {
 		this.techName = techName;
 	}
     
+	public String getProjectCode() {
+	    return projectCode;
+	}
+	
+	public void setProjectCode(String projectCode) {
+	    this.projectCode = projectCode;
+	}
+	
+	public String getCodeTechnology() {
+		return codeTechnology;
+	}
+	
+	public void setCodeTechnology(String codeTechnology) {
+		this.codeTechnology = codeTechnology;
+	}
+	
+	public String getReport() {
+		return report;
+	}
+	
+	public void setReport(String report) {
+		this.report = report;
+	}
+	
+	public String getTarget() {
+		return target;
+	}
+	
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	
+	public String getSkipTest() {
+		return skipTest;
+	}
+	
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
+	}
+	
+	public String getValidateAgainst() {
+		return validateAgainst;
+	}
+	
+	public void setValidateAgainst(String validateAgainst) {
+		this.validateAgainst = validateAgainst;
+	}
 }
 
 class PhrescoFileFilter implements FilenameFilter {
