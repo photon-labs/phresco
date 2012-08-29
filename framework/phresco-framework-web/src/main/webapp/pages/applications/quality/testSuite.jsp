@@ -340,7 +340,7 @@
     	   	var testCaseErrorOrFailName = results[0];
     	   	var testCaseErrorOrFailDesc = results[1];
     	   	$('.TestType').html(testCaseErrorOrFailName);
-    	   	$('.testCaseDesc').html(testCaseErrorOrFailDesc);
+    	   	$('.testCaseDesc').text(testCaseErrorOrFailDesc);
     	   	funcPopUp('block', 'testCaseErrOrFail');
     	});
         

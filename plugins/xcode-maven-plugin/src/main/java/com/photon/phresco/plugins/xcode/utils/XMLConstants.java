@@ -27,4 +27,19 @@ public interface XMLConstants {
     String FAILURES = "failures";
 	
 	String TESTS = "tests";
+	
+	String TYPE = "type";
+	
+	String DICT_START = "<dict>";
+	
+	String DICT_END = "</dict>";
+	
+	String KEY_START = "<key>";
+	
+	String KEY_END = "</key>";
+	
+	String STRING_START = "<string>";
+	
+	String STRING_END = "</string>";
+	
 }

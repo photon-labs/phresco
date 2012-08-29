@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,11 +35,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.configuration.plist.XMLPropertyListConfiguration;
 import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.commons.io.FileUtils;
@@ -50,10 +51,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.PhrescoFrameworkFactory;
-import com.photon.phresco.framework.api.Project;
-import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XMLConstants;
@@ -262,6 +259,10 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 		}
 	}
 
+//	public static void main(String[] args) {
+//		new Instrumentation().generateXMLReport("/Users/kaleeswaran/workspace/proj-temp-2/PHR_iphone_native_test/Run 1/Automation Results.plist");
+//	}
+	
 	private void generateXMLReport(String location) {
 		getLog().info("xml generation started");
 		try {
@@ -300,7 +301,7 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 
 				ConfigurationNode con = config.getRoot().getChild(0);
 				key = con.getName();
-
+				
 				if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.PASS)){
 					pass++;total++;
 					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
@@ -319,12 +320,25 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
 					child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
 					child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
-					
 					String endTime = config.getRoot().getChild(2).getValue().toString();
 					
+					List<ConfigurationNode> children = (List<ConfigurationNode>) config.getRoot().getChildren();
+					String errorTextNodes = XMLConstants.DICT_START;
+					for (ConfigurationNode child : children) {
+						errorTextNodes = errorTextNodes + XMLConstants.KEY_START + child.getName() + XMLConstants.KEY_END;
+						errorTextNodes = errorTextNodes + XMLConstants.STRING_START + child.getValue() + XMLConstants.STRING_END;
+					}
+					errorTextNodes = errorTextNodes + XMLConstants.DICT_END;
+					
+					getLog().info("error node " + errorTextNodes);
 					long differ = getTimeDiff(startTime, endTime);
 					startTime = endTime;
 					child1.setAttribute(XMLConstants.TIME, differ+"");
+					//adding error element
+					Element errorElem = doc.createElement(XMLConstants.FAILURE);
+					errorElem.setAttribute(XMLConstants.TYPE, "Exception");
+					errorElem.setTextContent(errorTextNodes);
+					child1.appendChild(errorElem);
 					testSuite.appendChild(child1);
 				}
 
@@ -342,15 +356,14 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 			Transformer trans = transfac.newTransformer();
 			trans.setOutputProperty(OutputKeys.INDENT, "yes");
 
-			
+//			File file = new File("/Users/kaleeswaran/Desktop/iphoneFunctionalXmlResult.xml");
 			File file = new File(project.getBasedir().getAbsolutePath()+File.separator+xmlResult);
 			Writer bw = new BufferedWriter(new FileWriter(file));
 			StreamResult result = new StreamResult(bw);
 			DOMSource source = new DOMSource(doc);
 			trans.transform(source, result);
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			getLog().error(e);
 		}
 	}
