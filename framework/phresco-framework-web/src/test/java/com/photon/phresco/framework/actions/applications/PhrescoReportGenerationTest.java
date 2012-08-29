@@ -446,7 +446,7 @@ public class PhrescoReportGenerationTest extends FrameworkBaseAction implements 
 		}
     }
     
-    @Test
+    //@Test
     public void getProfile() throws Exception {
     	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
     	String techid = "web";
@@ -458,6 +458,7 @@ public class PhrescoReportGenerationTest extends FrameworkBaseAction implements 
     	System.out.println("pomPath ============" + pomPath);
     	PomProcessor path = new PomProcessor(pomPath);
     	Profile profiles = path.getProfile(techid);
+    	
     	System.out.println("path.getProfiles  ---------->>>>>>>>> " + profiles.getId());
     	
     	if (profiles.equals(profiles.getId())) {
