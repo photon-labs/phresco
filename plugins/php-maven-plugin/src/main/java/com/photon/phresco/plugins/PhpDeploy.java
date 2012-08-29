@@ -178,10 +178,9 @@ public class PhpDeploy extends AbstractMojo implements PluginConstants {
 	}
 	
 	private List<SettingsInfo> getSettingsInfo(String configType) throws PhrescoException {
-		getLog().info("getSettingsInfo() config type value " + configType);
-		getLog().info("getSettingsInfo() environmentName " + environmentName);
-		getLog().info("getSettingsInfo() baseDir.getName() " + baseDir.getName());
-		getLog().info("getSettingsInfo() workspace location " + Utility.getJenkinsHome());
+		getLog().info("config type " + configType);
+		getLog().info("environmentName " + environmentName);
+		getLog().info("Name " + baseDir.getName());
 		ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
 		Project currentProject = projAdmin.getProjectByWorkspace(baseDir);
 		return projAdmin.getSettingsInfos(configType, currentProject.getProjectInfo().getProjectCode(), environmentName);
