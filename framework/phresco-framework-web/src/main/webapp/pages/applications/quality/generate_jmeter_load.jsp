@@ -30,7 +30,9 @@
 <%@ page import="com.photon.phresco.util.Constants"%>
 <%@ page import="com.photon.phresco.configuration.Environment"%>
 
-<%@include file="..\progress.jsp" %>
+<%@ include file="..\progress.jsp" %>
+<%@ include file="..\quality\request_header.jsp" %>
+
 <script src="js/select-envs.js"></script>
 
 <%
@@ -41,8 +43,9 @@
 	String selectedTestType = (String) request.getAttribute(FrameworkConstants.REQ_TEST_TYPE_SELECTED);
 	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
 %>
-<div class="popup_Modal per_popup_Modal" id="performance-popup" style="width: 620px; top: 76%; margin-left: -280px; ">
-	<form action="perTest">
+
+<div class="popup_Modal per_popup_Modal" id="performance-popup" style="width: 620px; top: 65%; margin-left: -280px;">
+<form>
 		<div class="modal-header">
 			<h3><s:text name="label.load.test"/></h3>
 			<a class="close" href="#" id="close">&times;</a>
@@ -112,12 +115,23 @@
 	            </div>
 
 				<div class="clearfix serverSettingsDiv perCaptionDisp" id="caption">
-		            	<label for="xlInput" class="xlInput popup-label perTestName" style="width: 163px;">
-		            	<span class="red">*</span>
-		            	<s:text name="label.test.rslt.name"/></label>
-		            	<label for="xlInput" class="xlInput popup-label perTestNameLab">
-		            		<input type="text" name="testName" id="testName" maxlength="20" title="20 Characters only" value="" style="width: 170px;">
-		            	</label>
+	            	<table>
+						<tr>
+							<td style="width: 20%; border-bottom: none;">
+								<label for="xlInput" class="xlInput popup-label perTestName" style="width: 163px">
+									<span class="red">*</span>
+									<s:text name="label.test.rslt.name"/>
+								</label>
+							</td>
+							<td style="width: 20%; border-bottom: none;">
+								<input type="text" name="testName" id="testName" maxlength="20" title="20 Characters only" value="" 
+									style="width: 170px;">
+							</td>
+							<td style="border-bottom: none;">
+								<input type="button" class="btn primary" id="addHeader" value="<s:text name="label.add.header"/>" >
+							</td>
+						</tr>
+					</table>
 				</div>				
 	        </fieldset>
 	        
@@ -146,7 +160,9 @@
 			</div>
 			</div>
 		</div>
-	</form> 
+	<!-- Hidden Fields -->
+	<input type="hidden" name="requestHeaders">
+</form>
 </div>
 
 <script type="text/javascript">
@@ -178,7 +194,7 @@
 				getConfigNames();
 				emptyAndReplaceWith('selectedTypeTitle', '<font color="red">* </font>Webservice');
 				showHideDiv('WebService', 'Server');
-			} 
+			}
 		});
 		
 		$("#noOfUsers, #rampUpPeriod, #loopCount").keydown(function(e) {
@@ -208,7 +224,45 @@
 	     	name = isContainSpace(name);
 	     	$(this).val(name);
 	    });
+	    
+	    $("#addHeader").click(function() {
+	    	$("#headerPopup").show();
+	    	$("#performance-popup").hide();
+	    	$("input[name=headerName]").val("");
+	    	$("input[name=headerValue]").val("");
+	    });
+	    
+	    $('#headerPopupCancelClose, #headerPopupCancel').click(function() {
+	    	$("#headerPopup").hide();
+	    	$("#performance-popup").show();
+		});
+	    
+	    $("#addHeaderActionBtn").click(function() {
+	    	addRequestHeader();
+	    });
 	});
+    
+    function addRequestHeader() {
+		var headerName = $("input[name=headerName]").val();
+		var headerValue = $("input[name=headerValue]").val();
+		if (isBlank(headerName)) {
+			showErrorMsg('errMsgHeader', "Enter Header name");
+			$("input[name=headerName]").focus();
+		} else if (isBlank(headerValue)) {
+			showErrorMsg('errMsgHeader', "Enter Header value");
+			$("input[name=headerValue]").focus();
+		} else {
+			var existingHeaders = "";
+			if ($("input[name=requestHeaders]").val() != undefined) {
+				existingHeaders = $("input[name=requestHeaders]").val();
+			}
+			var existingHeaders = $("input[name=requestHeaders]").val();
+			var header = existingHeaders + headerName + "#VSEP#" + headerValue + "#SEP#";
+			$("input[name=requestHeaders]").val(header);
+			$("#headerPopup").hide();
+	    	$("#performance-popup").show();
+		}
+	}
     
     function showHideDiv(showId, hideId) {
 		$('#'+ showId).show();

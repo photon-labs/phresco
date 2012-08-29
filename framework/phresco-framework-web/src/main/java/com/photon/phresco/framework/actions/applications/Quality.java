@@ -59,6 +59,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -1016,6 +1017,19 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             SettingsInfo selectedSettings = null;
+            String requestHeaders = getHttpRequest().getParameter("requestHeaders");
+            //To add the request header to the jmx
+            Map<String, String> headersMap = new HashMap<String, String>(2);
+            if (StringUtils.isNotEmpty(requestHeaders)) {
+            	String[] headers = requestHeaders.split("#SEP#");
+            	if (!ArrayUtils.isEmpty(headers)) {
+            		for (String header : headers) {
+						String[] nameAndValue = header.split("#VSEP#");
+						headersMap.put(nameAndValue[0], nameAndValue[1]);
+					}
+            	}
+            }
+            
             Map<String, String> settingsInfoMap = new HashMap<String, String>(2);
             if (TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
                 String[] connectedDevices = getHttpRequest().getParameterValues(ANDROID_DEVICE);
@@ -1112,10 +1126,12 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	            builder.append(jmeterTestAgainst.toLowerCase());
 	            QualityUtil.changeTestName(builder.toString(), testName);
 	            QualityUtil.adaptTestConfig(builder.toString(), selectedSettings);
-	            if (!Constants.SETTINGS_TEMPLATE_DB.equals(jmeterTestAgainst)) {
-	            QualityUtil.adaptPerformanceJmx(builder.toString(), name, context, contextType, contextPostData, encodingType, Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount));
+	            if (Constants.SETTINGS_TEMPLATE_DB.equals(jmeterTestAgainst)) {
+	            	QualityUtil.adaptDBPerformanceJmx(builder.toString(), dbPerName, Database, queryType, query, Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount), dbUrl, driver, uname, pwd);
+	            } else {
+	            	QualityUtil.adaptPerformanceJmx(builder.toString(), name, context, contextType, contextPostData, encodingType, Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount), headersMap);
 	            }
-	            QualityUtil.adaptDBPerformanceJmx(builder.toString(), dbPerName, Database, queryType, query, Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount), dbUrl, driver, uname, pwd);
+	            
 	            String filepath = builder.toString() + File.separator + testName + ".json";
 	            PerformanceDetails perform = new PerformanceDetails(jmeterTestAgainst, showSettings, setting, testName, name, context, contextType, contextPostData,  encodingType,dbPerName,queryType, query,Integer.parseInt(noOfUsers),Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount));
 	            Gson gson = new Gson();
@@ -1162,6 +1178,19 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             List<SettingsInfo> serverSettings = null;
+            String requestHeaders = getHttpRequest().getParameter("requestHeaders");
+            //To add the request header to the jmx
+            Map<String, String> headersMap = new HashMap<String, String>(2);
+            if (StringUtils.isNotEmpty(requestHeaders)) {
+            	String[] headers = requestHeaders.split("#SEP#");
+            	if (!ArrayUtils.isEmpty(headers)) {
+            		for (String header : headers) {
+						String[] nameAndValue = header.split("#VSEP#");
+						headersMap.put(nameAndValue[0], nameAndValue[1]);
+					}
+            	}
+            }
+            
             Map<String, String> settingsInfoMap = new HashMap<String, String>(2);
             if (TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
                 String device = getHttpRequest().getParameter(REQ_ANDROID_DEVICE);
@@ -1193,7 +1222,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             for (SettingsInfo serverSetting : serverSettings) {
             	QualityUtil.adaptTestConfig(builder.toString(), serverSetting);
 			}
-            QualityUtil.adaptLoadJmx(builder.toString(), Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount));
+            QualityUtil.adaptLoadJmx(builder.toString(), Integer.parseInt(noOfUsers), Integer.parseInt(rampUpPeriod), Integer.parseInt(loopCount), headersMap);
             actionType.setWorkingDirectory(builder.toString());
             ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
             BufferedReader reader = runtimeManager.performAction(project, actionType, settingsInfoMap, null);

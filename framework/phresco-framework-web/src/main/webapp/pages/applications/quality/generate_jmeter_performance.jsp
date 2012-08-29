@@ -29,6 +29,8 @@
 <%@ page import="com.photon.phresco.configuration.Environment"%>
 
 <%@ include file="..\progress.jsp" %>
+<%@ include file="..\quality\request_header.jsp" %>
+
 <script src="js/reader.js" ></script>
 <script src="js/select-envs.js"></script>
 
@@ -63,7 +65,7 @@
 
 </style>
 <div class="popup_Modal per_popup_Modal" id="performance-popup">
-	<form action="perTest">
+<form>	
 		<div class="modal-header">
 			<h3><s:text name="label.performance.test"/></h3>
 			<a class="close" href="#" id="close">&times;</a>
@@ -144,24 +146,29 @@
 			<!-- label ends -->
 
 			<div class="clearfix serverSettingsDiv perCaptionDisp" id="caption">
-	            	<label for="xlInput" class="xlInput popup-label perTestName">
-	            	<span class="red">*</span>
-	            	<s:text name="label.test.rslt.name"/></label>
-	            	<label for="xlInput" class="xlInput popup-label perTestNameLab">
-	            		 <div style="width: 170px; height:30px;"> 
-	            			<input type="text" name="testName" id="testName" maxlength="20" title="20 Characters only" value="" style="width: 160px;position: relative;">
-	            		 </div> 
-	            	</label>
+				<table>
+					<tr>
+						<td style="width: 20%; border-bottom: none;">
+							<label for="xlInput" class="xlInput popup-label perTestName" style="width: 208px">
+								<span class="red">*</span>
+								<s:text name="label.test.rslt.name"/>
+							</label>
+						</td>
+						<td style="width: 20%; border-bottom: none;">
+							<input type="text" name="testName" id="testName" maxlength="20" title="20 Characters only" 
+								value="" style="width: 160px; position: relative;">
+						</td>
+						<td style="border-bottom: none;">
+							<input type="button" class="btn primary" id="addHeader" value="<s:text name="label.add.header"/>" >
+						</td>
+					</tr>
+				</table>
 			</div>				
-			
 	        </fieldset>
-	        
-	       	
 
      <!-- Multiple text box generation starts -->
     <fieldset class="popup-fieldset fieldsetBottom perFieldSet perContextUrlFieldset" id="context">
-	       		<legend class="fieldSetLegend"><s:text name="label.context.url"/></legend>
-			
+       		<legend class="fieldSetLegend"><s:text name="label.context.url"/></legend>
 			<div id="screenUrlsContainer" class="screenUrlsContainer headerContainer perContextTitle">			
 				<div class="tblheader perf_tblhdr">
 	               	<table class="zebra-striped" style="height: 25px;">
@@ -179,11 +186,11 @@
 					<div class="screenUrlsContainer perScreenUrlContain" id="screenUrls">
 					<fieldset class="popup-fieldset perContentFieldsetDiv">
 			                 <label for="xlInput" class="xlInput popup-label algnLeft perScreenNameTxt">
-			                 	<input type="textbox" name="name" title="Name" maxlength="20" id="name1" value="" class="screenName">
+			                 	<input type="text" name="name" title="Name" maxlength="20" id="name1" value="" class="screenName">
 			                 </label>
 			                 
 			                 <div class="input padTop" style="margin-left: 133px;">
-			                    <input type="textbox" name="context" title="Context" id="context1" value="" class="screenUrl">&nbsp;&nbsp;
+			                    <input type="text" name="context" title="Context" id="context1" value="" class="screenUrl">&nbsp;&nbsp;
 			                    
 			                    <select id="contextType1" name="contextType" class="perGetPostField" onChange="showHidePostData(this);">
 			                    	<option value="GET"><s:text name="label.get"/></option>
@@ -291,9 +298,11 @@
 				</div>
 			</div>
 		</div>
-	</form> 
+		
+	<!-- Hidden Fields -->
+	<input type="hidden" name="requestHeaders">
+</form>
 </div>
-	
 
 <script type="text/javascript">
     var params = null;
@@ -340,6 +349,11 @@
 		});
 		
 		$('input:radio[name=jmeterTestAgainst]').change(function() {
+			if ($(this).val() == "Database") {
+				$("#addHeader").hide();
+			} else {
+				$("#addHeader").show();
+			}
 			loadGetCaption();
 			loadTestFiles();
 			$("#testName").val('');
@@ -440,8 +454,46 @@
 	     	var name = $(this).val();
 	     	name = isContainSpace(name);
 	     	$(this).val(name);
-	      });
+		});
+	    
+	    $("#addHeader").click(function() {
+	    	$("#headerPopup").show();
+	    	$("#performance-popup").hide();
+	    	$("input[name=headerName]").val("");
+	    	$("input[name=headerValue]").val("");
 	    });
+	    
+	    $('#headerPopupCancelClose, #headerPopupCancel').click(function() {
+	    	$("#headerPopup").hide();
+	    	$("#performance-popup").show();
+		});
+	    
+	    $("#addHeaderActionBtn").click(function() {
+	    	addRequestHeader();
+	    });
+	});
+	
+	function addRequestHeader() {
+		var headerName = $("input[name=headerName]").val();
+		var headerValue = $("input[name=headerValue]").val();
+		if (isBlank(headerName)) {
+			showErrorMsg('errMsgHeader', "Enter Header name");
+			$("input[name=headerName]").focus();
+		} else if (isBlank(headerValue)) {
+			showErrorMsg('errMsgHeader', "Enter Header value");
+			$("input[name=headerValue]").focus();
+		} else {
+			var existingHeaders = "";
+			if ($("input[name=requestHeaders]").val() != undefined) {
+				existingHeaders = $("input[name=requestHeaders]").val();
+			}
+			var existingHeaders = $("input[name=requestHeaders]").val();
+			var header = existingHeaders + headerName + "#VSEP#" + headerValue + "#SEP#";
+			$("input[name=requestHeaders]").val(header);
+			$("#headerPopup").hide();
+	    	$("#performance-popup").show();
+		}
+	}
 	
 	function defaulturl() {
 		
