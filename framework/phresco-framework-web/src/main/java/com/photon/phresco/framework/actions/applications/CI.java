@@ -73,6 +73,7 @@ import com.photon.phresco.util.XCodeConstants;
 
 public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
+	private static final String FIRST_BUILD = "1";
 	private static final long serialVersionUID = -2040671011555139339L;
 	private static final Logger S_LOGGER = Logger.getLogger(CI.class);
 	private static Boolean debugEnabled = S_LOGGER.isDebugEnabled();
@@ -283,7 +284,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 						S_LOGGER.debug("Cloned names .... " + ciJob.getName());
 						clonedWorkspaces.add(ciJob.getName());
 					}
-					S_LOGGER.debug("existJob names kalees in code .... "
+					S_LOGGER.debug("existJob names in code .... "
 							+ existJob);
 					existingJobsNames.add(ciJob.getName());
 				}
@@ -291,6 +292,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			if (existJob != null
 					&& StringUtils.isNotEmpty(existJob.getCollabNetpassword())) {
 				existJob.setCollabNetpassword(CIPasswordScrambler.unmask(existJob.getCollabNetpassword()));
+			}
+			if(existJob != null) {
 				existJob.setPassword(CIPasswordScrambler.unmask(existJob.getPassword()));
 			}
 			getHttpRequest().setAttribute(REQ_EXISTING_JOB, existJob);
@@ -511,6 +514,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 					androidVersion);
 		}
 
+		settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME);
+		settingsInfoMap.put(BUILD_NUMBER, FIRST_BUILD);
+		
 		// For iphone technoloies
 		if (TechnologyTypes.IPHONES.contains(technology)) {
 			settingsInfoMap.put(IPHONE_SDK, sdk);
@@ -560,7 +566,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 		if (TechnologyTypes.IPHONES.contains(techId)) {
 			valuesMap.put(TRIGGER_SIMULATOR, FALSE);
-			valuesMap.put(BUILD_NUMBER, "1");
+			valuesMap.put(BUILD_NAME, CI_BUILD_NAME + IPHONE_FORMAT);
+			valuesMap.put(BUILD_NUMBER, FIRST_BUILD);
 			// if deploy to device is selected we have to pass device deploy
 			// param as additional param
 			if (StringUtils.isNotEmpty(deployTo)
@@ -569,8 +576,12 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			} else {
 				valuesMap.put(DEVICE_DEPLOY, TRUE);
 			}
+		} else if (TechnologyTypes.ANDROIDS.contains(techId)) {
+			valuesMap.put(BUILD_NAME, CI_BUILD_NAME + ANDROID_FORMAT);
+			valuesMap.put(BUILD_NUMBER, FIRST_BUILD);
 		} else {
-			valuesMap.put(BUILD_NUMBER, "1");
+			valuesMap.put(BUILD_NAME, CI_BUILD_NAME + ARCHIVE_FORMAT);
+			valuesMap.put(BUILD_NUMBER, FIRST_BUILD);
 		}
 
 		if (!(TechnologyTypes.IPHONES.contains(techId)
@@ -636,8 +647,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD,
 					REQ_ANDROID_DEFAULT);
 			actionType = ActionType.MOBILE_COMMON_COMMAND;
-		} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) {
-			settingsInfoMap.put(BUILD_NUMBER, "1");
+		} else if (TechnologyTypes.IPHONES.equals(technology)) {
+			settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME);
+			settingsInfoMap.put(BUILD_NUMBER, FIRST_BUILD);
 			actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
 		} else if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
 			settingsInfoMap = null;
