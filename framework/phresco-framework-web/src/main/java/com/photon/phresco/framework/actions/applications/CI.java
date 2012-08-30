@@ -648,7 +648,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 					REQ_ANDROID_DEFAULT);
 			actionType = ActionType.MOBILE_COMMON_COMMAND;
 		} else if (TechnologyTypes.IPHONES.equals(technology)) {
-			settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME);
+			settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME + IPHONE_FORMAT);
 			settingsInfoMap.put(BUILD_NUMBER, FIRST_BUILD);
 			actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
 		} else if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
