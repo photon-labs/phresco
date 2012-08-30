@@ -33,6 +33,8 @@ public interface FrameworkConstants {
     String USER_HOME = "user.home";
     String PROJECTS_HOME = "projects";
     String ARCHIVE_FORMAT = ".zip";
+    String IPHONE_FORMAT = ".app";
+    String ANDROID_FORMAT = ".apk";
     String SETTINGS_INFO_FILE_NAME = "settings.xml";
     String CONFIGURATION_INFO_FILE_NAME = "phresco-env-config.xml";
     String BUILD_INFO_FILE_NAME = "build.info";
@@ -57,6 +59,7 @@ public interface FrameworkConstants {
 	String PATH_SUREFIRE_REPORTS = "/target/surefire-reports";
     
     String JENKINS_HOME = "JENKINS_HOME";
+    String CI_BUILD_NAME = "PHR_ci_build";
     String CI_JOB_INFO_NAME = "cijob.info";
     String CI_JOB_JSON_BUILDS = "builds";
     String CI_JOB_BUILD_RESULT = "result";
