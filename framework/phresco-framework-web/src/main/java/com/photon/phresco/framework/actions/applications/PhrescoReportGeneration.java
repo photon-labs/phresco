@@ -296,6 +296,7 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
         	String serverUrl = "";
     	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
     	    	serverUrl = frameworkConfig.getSonarUrl();
+    	    	S_LOGGER.debug("if condition serverUrl  " + serverUrl);
     	    } else {
     	    	serverUrl = getHttpRequest().getRequestURL().toString();
     	    	StringBuilder tobeRemoved = new StringBuilder();
@@ -305,7 +306,14 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
     	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
     	    	Matcher matcher = pattern.matcher(serverUrl);
     	    	serverUrl = matcher.replaceAll("");
+    	    	S_LOGGER.debug("else condition serverUrl  " + serverUrl);
     	    }
+    	    String sonarReportPath = frameworkConfig.getSonarReportPath();
+    	    S_LOGGER.debug("sonarReportPath  " + sonarReportPath);
+    	    String[] sonar1 = sonarReportPath.split("/");
+    	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar1[1]);
+    	    S_LOGGER.debug("serverUrl "+ serverUrl);
+
         	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
         	builder.append(projectCode);
         	
