@@ -20,7 +20,10 @@
 package com.photon.phresco.plugins;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,12 +36,12 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.model.WP8PackageInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
-import com.photon.phresco.model.BuildInfo;
 
 /**
  * Goal which deploys the Java WebApp to a server
@@ -183,9 +186,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				}
 			});
 			
-			for (int i=0;i<xapFile.length;i++) {
-				System.out.println("XAP FILE NAME === " + xapFile[i].getPath());
-			}
 			
 			// wptools.exe -target:emulator -xap:WindowsPhoneApplication1.xap -install
 			StringBuilder sb = new StringBuilder();
@@ -202,7 +202,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			
 			sb.append(WP7_INSTALL);
 			
-			System.out.println("DEPLOY WORKING DIR == "  + sb.toString());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -223,7 +222,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			getLog().info("Deploying project ...");
 			
 			if (packageAlreadyInstalled()) {
-				System.out.println("Package already installed... Uninstalling.");
+				getLog().info("Package already installed... Uninstalling.");
 				uninstallExistingPackage();
 			}
 			// Get .ps1 file from the extracted contents
@@ -232,6 +231,31 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 					return name.endsWith(".ps1");
 				}
 			});
+			
+			
+			BufferedReader br = null;
+			BufferedWriter bw = null;
+			File path = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
+			File tempFile = new File(tempDir.getPath() + File.separator + "tmp");
+			File newFile = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
+			try {
+				br = new BufferedReader(new FileReader(path));
+				bw = new BufferedWriter(new FileWriter(tempFile));
+				String line;
+				while ((line = br.readLine()) != null) {
+					if (line.contains("[switch]$Force = $false")) {
+						line = line.replace("[switch]$Force = $false", "[switch]$Force = $true");
+					}
+					bw.write(line + "\n");
+				}
+			} catch (Exception e) {
+				return;
+			} finally {
+				br.close();
+				bw.close();
+			}
+			path.delete();
+			tempFile.renameTo(newFile);
 			
 			// PowerShell .\Add-AppDevPackage.ps1
 			StringBuilder sb = new StringBuilder();

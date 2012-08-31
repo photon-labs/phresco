@@ -669,6 +669,8 @@ public class Build extends FrameworkBaseAction {
 			String techId = project.getProjectInfo().getTechnology().getId();
 			if (TechnologyTypes.IPHONES.contains(techId)) {
 				valuesMap.put(BUILD_NUMBER, buildNumber);
+				//addition param for 1.2.0. plugins, backward compatibility
+				valuesMap.put(IPHONE_BUILD_NAME, buildInfo.getBuildName());
 				// if deploy to device is selected we have to pass device deploy
 				// param as additional param
 				if (StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_SIMULATOR)) {
@@ -678,7 +680,8 @@ public class Build extends FrameworkBaseAction {
 				}
 			} else {
 				valuesMap.put(BUILD_NUMBER, buildNumber);
-//				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
+				//addition param for 1.2.0. plugins, backward compatibility
+				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
 			}
 
 			if (!(TechnologyTypes.IPHONES.contains(techId) || TechnologyTypes.ANDROIDS.contains(techId) || TechnologyTypes.SHAREPOINT

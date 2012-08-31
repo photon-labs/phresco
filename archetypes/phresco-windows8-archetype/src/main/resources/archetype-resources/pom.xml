@@ -39,7 +39,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>windows-phone-maven-plugin</artifactId>
-                <version>1.2.1.1001-SNAPSHOT</version>
+                <version>1.2.1.2001-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
 				<plugin>
