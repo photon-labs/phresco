@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhrescoXmlReport" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="106"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -519,6 +519,12 @@
 				<reportElement x="0" y="521" width="555" height="66" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{showDivElement}.equals("reportElementSrcFunc") ? true : false]]></printWhenExpression>
 				</reportElement>
+				<rectangle>
+					<reportElement x="0" y="3" width="555" height="60"/>
+					<graphicElement>
+						<pen lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
 				<staticText>
 					<reportElement x="17" y="10" width="100" height="20"/>
 					<textElement/>
