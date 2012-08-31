@@ -57,18 +57,15 @@ public interface PluginConstants {
 
 	// Constants for Php maven plugin
 	String PHP_SOURCE_DIR = "/source";
-	String PHP_TEST_CONFIG_FILE = "/test/functional/src/test/php/phresco/tests/"
-			+ CONFIG_FILE;
+	String PHP_TEST_CONFIG_FILE = "/test/functional/src/test/php/phresco/tests/" + CONFIG_FILE;
 	String PHP_SOURCE_CONFIG_FILE = "/source/config/" + CONFIG_FILE;
 	String PHP_SQL_DIR = "/source/sql/";
 	String PHP_SQL_FILE = "/site.sql";
 
 	// Constants for Drupal Plugin
 	String DRUPAL_SOURCE_DIR = "/source/sites";
-	String DRUPAL_TEST_CONFIG_FILE = "/test/functional/src/test/php/phresco/tests/"
-			+ CONFIG_FILE;
-	String DRUPAL_SOURCE_CONFIG_FILE = "/source/sites/default/config/"
-			+ CONFIG_FILE;
+	String DRUPAL_TEST_CONFIG_FILE = "/test/functional/src/test/php/phresco/tests/" + CONFIG_FILE;
+	String DRUPAL_SOURCE_CONFIG_FILE = "/source/sites/default/config/" + CONFIG_FILE;
 	String DRUPAL_SQL_DIR = "/source/sql/";
 	String DRUPAL_SQL_FILE = "/site.sql";
 	String BINARIES_DIR = DO_NOT_CHECKIN_FOLDER + "/binaries";
@@ -77,11 +74,9 @@ public interface PluginConstants {
 	// String MVN_HOME = "maven.home";
 	// String MVN_EXE_PATH = "\\bin\\mvn.bat";
 	String SKIP_TESTS = "-DskipTests=true";
-	String JAVA_TEST_CONFIG_FILE = "/test/functional/src/main/resources/"
-			+ CONFIG_FILE;
+	String JAVA_TEST_CONFIG_FILE = "/test/functional/src/main/resources/" + CONFIG_FILE;
 	String JAVA_CONFIG_FILE = "/src/main/resources/" + CONFIG_FILE;
-	String JAVA_WEBAPP_CONFIG_FILE = "/src/main/webapp/WEB-INF/resources/"
-			+ CONFIG_FILE;
+	String JAVA_WEBAPP_CONFIG_FILE = "/src/main/webapp/WEB-INF/resources/" + CONFIG_FILE;
 	String JAVA_SERVER_CONFIG_FILE = "/serverconfig.properties";
 	String JAVA_CMD = "java";
 	String JAR_PATH = "/lib/driver/";
@@ -102,7 +97,8 @@ public interface PluginConstants {
 	String JAR_PLUGIN_GROUPID = "org.apache.maven.plugins";
 	String JAR_PLUGIN_ARTIFACT_ID = "maven-jar-plugin";
 	String TOMCAT_GOAL = "org.codehaus.mojo:tomcat-maven-plugin:1.1:redeploy";
-	String WEBLOGIC_GOAL = "com.oracle.weblogic:weblogic-maven-plugin:12.1.1.0:redeploy";
+	String WEBLOGIC_GOAL = "com.oracle.weblogic:weblogic-maven-plugin:";
+	 String WEBLOGIC_REDEPLOY = ":redeploy";
 	String JBOSS_GOAL = "cargo:redeploy";
 	// String T7_START_GOAL = "t7:run-forked";
 	// String T7_STOP_GOAL = "t7:stop-forked";
@@ -155,8 +151,7 @@ public interface PluginConstants {
 
 	// Constants for WordPress Plugin
 	// Constants for Drupal Plugin
-	String WORDPRESS_TEST_CONFIG_FILE = "/source/wordpress/config/"
-			+ CONFIG_FILE;
+	String WORDPRESS_TEST_CONFIG_FILE = "/source/wordpress/config/" + CONFIG_FILE;
 	String APACHE_DEFAULT_PORT = "80";
 	String WORDPRESS_UPDATE_TABLE = "update wp_options set option_value='";
 	String WORDPRESS_UPDATE_WHERE = "' where option_name = 'siteurl'";
@@ -200,4 +195,5 @@ public interface PluginConstants {
 	String WP7_TARGET = "-target";
 	String WP7_XAP_FILE = "-xap";
 	String WP7_INSTALL = "-install";
+
 }
