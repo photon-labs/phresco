@@ -3,7 +3,7 @@
      <parent>
         <groupId>com.photon.phresco.framework</groupId>
         <artifactId>phresco-framework-root</artifactId>
-        <version>1.2.1.2001-SNAPSHOT</version>
+        <version>1.2.1.2002-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
    
@@ -76,8 +76,8 @@
 						<configuration>
 							<resourceSrc>${project.build.directory}/update.zip</resourceSrc>
 							<resourceDest>com/photon/phresco/framework/release/${project.version}</resourceDest>
-							<serverId>dev-releases</serverId>
-							<url>http://172.16.18.178:8080/nexus/content/repositories/releases/</url>
+							<serverId>${releases.repo.id}</serverId>
+							<url>${releases.repo.url}</url>
 						</configuration>
 					</execution>
 				</executions>
