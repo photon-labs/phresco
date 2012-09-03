@@ -26,6 +26,8 @@
 	<form name="testSuiteCall" action="functional" method="post" id="testSuiteCall" class="marginBottomZero">
 		<div class="modal-header repo_modal_header">
 		    <h3><s:text name="label.progress"/></h3>
+		    <img src="images/icons/clipboard-copy.png" alt="clipboard" id="clipboard" 
+		    	class="close progressClipboard" title="Copy to clipboard"/>
 		    <a class="close" href="#" id="closeGenerateTest">&times;</a>
 		</div>
 	</form>
@@ -55,5 +57,14 @@
 	}
 	
 	$('#performance-popup').css("margin-top", "-300px");
-
+	
+	$('#clipboard').click(function(){
+		copyToClipboard($('#build-output').text());
+	});
+	
+	function copyToClipboard(data) {
+        var params = "copyToClipboard=";
+        params = params.concat(data);
+        performAction('copyToClipboard', params, '');
+	}
 </script>

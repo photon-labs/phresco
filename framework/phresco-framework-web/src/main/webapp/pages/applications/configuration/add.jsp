@@ -351,12 +351,11 @@ h1 {margin-bottom: 0;}
 			if (validateKeyFields()) {
 				$("input[name=certificate]").prop("disabled", false);
 				var params = "";
-			    params = params.concat("&remoteDeployment=");
-				params = params.concat($("input[name='remoteDeployment']").prop("checked"));  
-			     
 				if (!isBlank($('form').serialize())) {
 		    		params = $('form').serialize() + "&";
 		    	}
+				params = params.concat("&remoteDeploymentChk=");
+				params = params.concat($("input[name='remoteDeployment']").prop("checked"));
 				<%
 				   if (StringUtils.isEmpty(fromPage)) {
 				%>

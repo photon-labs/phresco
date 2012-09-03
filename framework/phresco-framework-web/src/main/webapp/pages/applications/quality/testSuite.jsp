@@ -192,11 +192,21 @@
 					              		</td>
 					              		<td class="width-ten-percent">
 					              			<% if (failure != null) { %>
-												<input type="hidden" name="<%= testCase.getName() %>" value="<%= testCase.getTestCaseFailure().getFailureType()%>,<%= testCase.getTestCaseFailure().getDescription()%>" id="<%= testCase.getName() %>">
+				              					<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Type">
+													<%= testCase.getTestCaseFailure().getFailureType()%>
+												</textarea>
+												<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Desc">
+													<%= testCase.getTestCaseFailure().getDescription()%>
+												</textarea>
 												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
 											<% } else if (error != null) { %>
-												<input type="hidden" name="<%= testCase.getName() %>" value="<%= testCase.getTestCaseError().getErrorType()%>,<%= testCase.getTestCaseError().getDescription()%>" id="<%= testCase.getName() %>">
-												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
+												<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Type">
+													<%= testCase.getTestCaseError().getErrorType()%>
+												</textarea>
+												<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Desc">
+													<%= testCase.getTestCaseError().getDescription()%>
+												</textarea>
+												<a class="testCaseFailOrErr" onClick="showLogMsg('<%= testCase.getName() %>');" href="#"><img src="images/icons/log.png" alt="logo"> </a>
 											<% } else { %>
 												&nbsp;
 											<% } %>
@@ -332,18 +342,6 @@
             return textTrim($(this));
         });
         
-    	$(".testCaseFailOrErr").click(function(){
-    	   	var name = $(this).attr('name');
-            var errValue = window.document.getElementById(name).value;
-    	   	var testCaseErrAndFail = errValue;
-    	   	var results = testCaseErrAndFail.split(",");
-    	   	var testCaseErrorOrFailName = results[0];
-    	   	var testCaseErrorOrFailDesc = results[1];
-    	   	$('.TestType').html(testCaseErrorOrFailName);
-    	   	$('.testCaseDesc').text(testCaseErrorOrFailDesc);
-    	   	funcPopUp('block', 'testCaseErrOrFail');
-    	});
-        
     	$('#closeTestCasePopup').click(function() {
     		funcPopUp('none', 'testCaseErrOrFail');
     	});
@@ -409,5 +407,13 @@
         }
         return val;
     }
+    
+    function showLogMsg(testCaseName) {
+	   	var testCaseErrorOrFailName = $('textarea[name="'+ testCaseName +'_Type"]').val();
+	   	var testCaseErrorOrFailDesc = $('textarea[name="'+ testCaseName +'_Desc"]').val();
+	   	$('.TestType').html(testCaseErrorOrFailName);
+	   	$('.testCaseDesc').text(testCaseErrorOrFailDesc);
+	   	funcPopUp('block', 'testCaseErrOrFail');
+	}
 	</script>
 <% } %>

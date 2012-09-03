@@ -83,9 +83,9 @@ public class Settings extends FrameworkBaseAction {
 	private String appliesToError = null;
 	private boolean isValidated = false;
 	private List<String> projectInfoVersions = null;
-	private String remoteDeployment = null;
+	private String remoteDeploymentChk = null;
 
-    private String envName = null;
+	private String envName = null;
     private String emailError = null;
 	
 	Document dom;
@@ -184,9 +184,7 @@ public class Settings extends FrameworkBaseAction {
 	            		key = propertyTemplate.getKey();
 	            		value = getHttpRequest().getParameter(key);
 	            		if(key.equals("remoteDeployment")){
-	            			if(value == null){
-	                      		value="false";
-	                      	}
+                      		value = remoteDeploymentChk;
 	                    }
 	                    value = value.trim();
 						if(key.equals(ADDITIONAL_CONTEXT_PATH)){
@@ -373,7 +371,7 @@ public class Settings extends FrameworkBaseAction {
 	            }
 				
 	            // check Remotedeployment username and password mandatory
-				boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeployment);
+				boolean remoteDeplyVal = Boolean.parseBoolean(remoteDeploymentChk);
 				if(remoteDeplyVal) {
 					if ("admin_username".equals(key) || "admin_password".equals(key)) {
 						isRequired = true;
@@ -492,9 +490,7 @@ public class Settings extends FrameworkBaseAction {
 	            		key = propertyTemplate.getKey();
 	            		value = getHttpRequest().getParameter(key);
 	            		if(key.equals("remoteDeployment")){
-	            			if(value == null){
-	            				value="false";
-	            			}
+            				value = remoteDeploymentChk;
 	            		}
 	            		if ("certificate".equals(key)) {
 							String env = getHttpRequest().getParameter(ENVIRONMENTS);
@@ -966,12 +962,12 @@ public class Settings extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeployment() {
-		return remoteDeployment;
+	public String getRemoteDeploymentChk() {
+		return remoteDeploymentChk;
 	}
 
-	public void setRemoteDeployment(String remoteDeployment) {
-		this.remoteDeployment = remoteDeployment;
+	public void setRemoteDeploymentChk(String remoteDeploymentChk) {
+		this.remoteDeploymentChk = remoteDeploymentChk;
 	}
 	
 	public String getEmailError() {

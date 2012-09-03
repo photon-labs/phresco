@@ -4919,3 +4919,8 @@ a[id='androidSigning']:hover {
 .ciBuildReleaseURL {
 	width: 324px !important;
 }
+
+.progressClipboard {
+	margin-right: 25px !important;
+	margin-top: -5px !important;
+}
