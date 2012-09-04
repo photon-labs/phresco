@@ -1346,4 +1346,26 @@ public interface FrameworkConstants {
 	   String REQ_RMT_DEP_FILE_BROWSE_FROM = "fileBrowseFrom";
 	   String CONFIGURATION = "configuration";
 	   String FILE_TYPE_CRT = "crt";
+	   
+	   
+	   /* WINDOWS CONSTANT */
+		  String HELLOWORD_PROJECT_FILE = "HelloWorld.csproj"; 
+		  String HELLOWORLD = "HelloWorld";
+		  String HELLOWORD_SOLUTIONFILE = "HelloWorld.sln";
+		  String PROPERTYGROUP = "PropertyGroup";
+		  String ITEMGROUP = "ItemGroup";
+		  String ROOTNAMESPACE = "RootNamespace";
+		  String ASSEMBLY_NAME = "AssemblyName";
+		  String CERTIFACTE_KEY = "PackageCertificateKeyFile";
+		  String TEMPORARY_KEY = "_TemporaryKey.pfx";
+		  String NONE = "None";
+		  String NEWLINE = "\n";
+		  String INCLUDE = "Include";
+		  String REFERENCE = "Reference";
+		  String PROJECT = "Project";
+		  String LIBS = "Lib\\";
+		  String DLL = ".dll";
+		  String HINTPATH = "HintPath";
+		  String PROJECT_FILE = ".csproj";
+		  String CONTENT = "Content";
 }

@@ -19,8 +19,8 @@ require_once 'PHPUnit/Framework.php';
 	  $_SERVER['HTTP_HOST'] = 'localhost';
 	}
 
-	$cwd = explode("test",getcwd());
-	$fileContents = file_get_contents($cwd[0]."source/sites/default/config/phresco-env-config.xml");
+	chdir("../../");
+	$fileContents = file_get_contents("source/sites/default/config/phresco-env-config.xml");
 	$file = getDecryptedString($fileContents);
 	$document = new DOMDocument();
 	$document->loadXML($file);
@@ -75,7 +75,6 @@ function hexadecimalToBinary($str) {
 }
 
 define('DRUPAL_ROOT', $docRoot);
-$cwd = getcwd(); 
 class DrupalBaseclass extends PHPUnit_Framework_TestCase {
 	function connect(){
 		chdir(DRUPAL_ROOT);
