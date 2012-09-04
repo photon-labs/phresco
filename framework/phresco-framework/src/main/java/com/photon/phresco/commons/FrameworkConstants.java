@@ -39,6 +39,7 @@ public interface FrameworkConstants {
     String CONFIGURATION_INFO_FILE_NAME = "phresco-env-config.xml";
     String BUILD_INFO_FILE_NAME = "build.info";
     String PROJECT_INFO = "project.info";
+    String GIT_IMPORT_TEMP_DIR = "gitImportTemp";
     
    
     String DO_NOT_CHECKIN_DIR = "do_not_checkin";
@@ -243,6 +244,7 @@ public interface FrameworkConstants {
 	String MVN_ANDROID_PERF_COMMAND = "mvn install ";
     String MVN_SELENIUM_STOP_COMMAND = "mvn selenium:stop-server";
     String MVN_SONAR_COMMAND = "mvn sonar:sonar";
+    String MVN_PROJECT_UPDATE_COMMAND = "mvn scm:update";
     String MVN_JENKINS_START = "mvn t7:run-forked";
     String MVN_JENKINS_STOP = "mvn t7:stop-forked";
     String MVN_IPHONE_IPA_COMMAND = "mvn xcode:ipaBuilder";
@@ -1344,4 +1346,26 @@ public interface FrameworkConstants {
 	   String REQ_RMT_DEP_FILE_BROWSE_FROM = "fileBrowseFrom";
 	   String CONFIGURATION = "configuration";
 	   String FILE_TYPE_CRT = "crt";
+	   
+	   
+	   /* WINDOWS CONSTANT */
+		  String HELLOWORD_PROJECT_FILE = "HelloWorld.csproj"; 
+		  String HELLOWORLD = "HelloWorld";
+		  String HELLOWORD_SOLUTIONFILE = "HelloWorld.sln";
+		  String PROPERTYGROUP = "PropertyGroup";
+		  String ITEMGROUP = "ItemGroup";
+		  String ROOTNAMESPACE = "RootNamespace";
+		  String ASSEMBLY_NAME = "AssemblyName";
+		  String CERTIFACTE_KEY = "PackageCertificateKeyFile";
+		  String TEMPORARY_KEY = "_TemporaryKey.pfx";
+		  String NONE = "None";
+		  String NEWLINE = "\n";
+		  String INCLUDE = "Include";
+		  String REFERENCE = "Reference";
+		  String PROJECT = "Project";
+		  String LIBS = "Lib\\";
+		  String DLL = ".dll";
+		  String HINTPATH = "HintPath";
+		  String PROJECT_FILE = ".csproj";
+		  String CONTENT = "Content";
 }

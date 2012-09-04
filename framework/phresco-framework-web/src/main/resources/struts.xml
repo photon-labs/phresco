@@ -76,7 +76,11 @@
             <result name="importFromSvn">/pages/applications/svn_import.jsp</result>
         </action>
         
-        <action name="importcredentialdetails" method="importApplication" class="com.photon.phresco.framework.actions.applications.Applications">
+        <action name="importSVNProject" method="importSVNApplication" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result type="json"/>
+        </action>
+        
+        <action name="importGITProject" method="importGITApplication" class="com.photon.phresco.framework.actions.applications.Applications">
             <result type="json"/>
         </action>
         

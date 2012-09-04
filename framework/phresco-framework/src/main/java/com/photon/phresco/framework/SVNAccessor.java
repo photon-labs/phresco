@@ -82,8 +82,7 @@ public class SVNAccessor {
         }
     }
 
-    public void checkout(File dstPath, String revision, boolean isRecursive) throws Exception {
-            String projCode = getProjectInfo(revision).getCode();
+    public void checkout(File dstPath, String revision, boolean isRecursive, String projCode) throws Exception {
             File projectRoot = new File(dstPath, projCode);
             if (projectRoot.exists()) {
                 throw new PhrescoException("Import Fails", "Project with the code " + projCode + " already present");
@@ -104,7 +103,7 @@ public class SVNAccessor {
         String password = "******";
 
         SVNAccessor svnAccess = new SVNAccessor(svnURL, null, null);
-        svnAccess.checkout(checkOutDir, "HEAD", true);
-        System.out.println("Successfully checked out");
+//        svnAccess.checkout(checkOutDir, "HEAD", true);
+//        System.out.println("Successfully checked out");
     }
 }

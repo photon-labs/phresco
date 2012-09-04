@@ -80,6 +80,8 @@ import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.api.Validator;
+import com.photon.phresco.framework.win8.util.ItemGroupUpdater;
+import com.photon.phresco.framework.win8.util.Win8MetroCofigFileParser;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
 import com.photon.phresco.model.BuildInfo;
@@ -166,6 +168,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			try {
 				extractArchive(response, info);
 				updateProjectPOM(info);
+				if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId)) {
+					Win8MetroCofigFileParser.xmlParser(info, projectPath);
+					ItemGroupUpdater.update(info, projectPath);
+				}
 			} catch (FileNotFoundException e) {
 				throw new PhrescoException(e); 
 			} catch (IOException e) {
@@ -265,6 +271,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		try {
 			if (flag) {
 				extractArchive(response, delta);
+			}
+			File projectPath = new File(Utility.getProjectHome() + delta.getCode() + File.separator);
+			if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId)) {
+				ItemGroupUpdater.update(projectInfo, projectPath);
 			}
 			ProjectUtils.updateProjectInfo(projectInfo, path);
 			updateProjectPOM(projectInfo);

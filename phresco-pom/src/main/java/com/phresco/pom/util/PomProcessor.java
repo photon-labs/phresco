@@ -60,6 +60,7 @@ import com.phresco.pom.model.Profile;
 import com.phresco.pom.model.ReportPlugin;
 import com.phresco.pom.model.ReportSet;
 import com.phresco.pom.model.Reporting;
+import com.phresco.pom.model.Scm;
 import com.phresco.pom.site.ReportCategories;
 import com.phresco.pom.site.Reports;
 
@@ -1114,6 +1115,58 @@ public class PomProcessor {
 			return;
 		}
 		model.getReporting().getPlugins().getPlugin().removeAll(getReportPlugin());
+	}
+	
+	/**
+	 * @return
+	 */
+	public Scm getSCM() { 
+		if(model.getScm() != null) { 
+			return model.getScm();
+		}
+		return null;
+	}
+	
+	/**
+	 * @param connection
+	 * @param developerConnection
+	 * @param url
+	 * @param tag
+	 * @throws PhrescoPomException
+	 */
+	
+	public void setSCM(String connection, String developerConnection, String url, String tag) { 
+		Scm scm = null;
+		if(model.getScm() != null) { 
+			scm = model.getScm();
+			if (StringUtils.isNotEmpty(connection)) {
+				scm.setConnection(connection);
+			}
+			if (StringUtils.isNotEmpty(developerConnection)) {
+				scm.setDeveloperConnection(developerConnection);
+			}
+			if (StringUtils.isNotEmpty(url)) {
+				scm.setUrl(url);
+			}
+			if (StringUtils.isNotEmpty(tag)) {
+				scm.setTag(tag);
+			}
+		} else {
+			scm = new Scm();
+			if (StringUtils.isNotEmpty(connection)) {
+				scm.setConnection(connection);
+			}
+			if (StringUtils.isNotEmpty(developerConnection)) {
+				scm.setDeveloperConnection(developerConnection);
+			}
+			if (StringUtils.isNotEmpty(url)) {
+				scm.setUrl(url);
+			}
+			if (StringUtils.isNotEmpty(tag)) {
+				scm.setTag(tag);
+			}			
+			model.setScm(scm);
+		}
 	}
 	
 	/**

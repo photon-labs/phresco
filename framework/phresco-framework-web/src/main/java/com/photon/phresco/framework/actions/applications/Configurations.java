@@ -80,7 +80,7 @@ public class Configurations extends FrameworkBaseAction {
     private String oldConfigType = null;
 	private String envError = null;
 	private String emailError = null;
-	private String remoteDeployment = null;
+	private String remoteDeploymentChk = null;
    
 	// Environemnt delete
     private boolean isEnvDeleteSuceess = true;
@@ -190,8 +190,8 @@ public class Configurations extends FrameworkBaseAction {
 	            	} else {
 	            		key = propertyTemplate.getKey();
 	            		value = getHttpRequest().getParameter(key);
-	            		if(key.equals("remoteDeployment") && value == null){
-	            			value="false";
+	            		if(key.equals("remoteDeployment")){
+	            			value = remoteDeploymentChk;
 	            		}
 	                    value = value.trim();
 						if(key.equals(ADDITIONAL_CONTEXT_PATH)){
@@ -485,7 +485,7 @@ public class Configurations extends FrameworkBaseAction {
                		isRequired = false;
                 }
                 // validation for UserName & Password for RemoteDeployment
-                boolean remoteDeply = Boolean.parseBoolean(remoteDeployment);
+                boolean remoteDeply = Boolean.parseBoolean(remoteDeploymentChk);
                 if(remoteDeply){
                     if ("admin_username".equals(key) || "admin_password".equals(key)) {
                     	isRequired = true;
@@ -531,7 +531,7 @@ public class Configurations extends FrameworkBaseAction {
 	   	return validate;
     }
     
-    public String edit() {
+	public String edit() {
     	if (debugEnabled) {
     		S_LOGGER.debug("Entering Method  Configurations.edit()");
     	}
@@ -604,8 +604,8 @@ public class Configurations extends FrameworkBaseAction {
 						}
 	            	} else {
 		                value = getHttpRequest().getParameter(propertyTemplate.getKey());
-	   	                if(propertyTemplate.getKey().equals("remoteDeployment") && value == null){
-	   	                	value="false";
+	   	                if(propertyTemplate.getKey().equals("remoteDeployment")){
+	   	                	value = remoteDeploymentChk;
 	                    }
 	   	                if ("certificate".equals(key)) {
 							String env = getHttpRequest().getParameter(ENVIRONMENTS);
@@ -918,15 +918,6 @@ public class Configurations extends FrameworkBaseAction {
 		this.portError = portError;
 	}
 	
-	public String getRemoteDeployment() {
-		return remoteDeployment;
-	}
-
-	public void setRemoteDeployment(String remoteDeployment) {
-		this.remoteDeployment = remoteDeployment;
-	}
-	
-
 	public String getEmailError() {
 		return emailError;
 	}
@@ -935,4 +926,11 @@ public class Configurations extends FrameworkBaseAction {
 		this.emailError = emailError;
 	}
 
+	public String getRemoteDeploymentChk() {
+		return remoteDeploymentChk;
+	}
+
+	public void setRemoteDeploymentChk(String remoteDeploymentChk) {
+		this.remoteDeploymentChk = remoteDeploymentChk;
+	}
 }

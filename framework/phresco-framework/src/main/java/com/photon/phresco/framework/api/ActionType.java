@@ -36,6 +36,7 @@ import com.photon.phresco.framework.actions.MobileCommand;
 import com.photon.phresco.framework.actions.SharepointNUnitTest;
 import com.photon.phresco.framework.actions.SiteReport;
 import com.photon.phresco.framework.actions.Sonar;
+import com.photon.phresco.framework.actions.SCMUpdate;
 import com.photon.phresco.framework.actions.StartServer;
 import com.photon.phresco.framework.actions.StopSeleniumServer;
 import com.photon.phresco.framework.actions.StopServer;
@@ -51,6 +52,7 @@ public interface ActionType {
     ActionType SHAREPOINT_NUNIT_TEST = new SharepointNUnitTest();
     ActionType STOP_SELENIUM_SERVER = new StopSeleniumServer();
     ActionType SONAR = new Sonar();
+    ActionType SCMUpdate = new SCMUpdate();
     ActionType JENKINS_SETUP = new JenkinsSetup();
     ActionType JENKINS_START = new JenkinsStart();
     ActionType JENKINS_STOP = new JenkinsStop();

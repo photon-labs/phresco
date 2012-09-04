@@ -35,6 +35,11 @@
  ******************************************************************************/
 package com.photon.phresco.service.dependency.impl;
 
+import java.io.File;
+
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.RepositoryManager;
 
 public class WinMetroDependencyProcessor extends AbstractJsLibDependencyProcessor {
@@ -48,7 +53,20 @@ public class WinMetroDependencyProcessor extends AbstractJsLibDependencyProcesso
 	protected String getModulePathKey() {
 		return "win-metro.modules.path";
 	}
-
+	
+	@Override
+	public void process(ProjectInfo info, File path) throws PhrescoException {
+		File modulesPath = path;
+		String modulesPathString = "source" + File.separator+ info.getName()+ File.separator + "Libs";
+		modulesPath = new File(path, modulesPathString);
+		System.out.println("Module path = " + modulesPath.getPath());
+		
+		Technology technology = info.getTechnology();
+		
+		extractModules(modulesPath, technology.getModules());
+		// pilot projects
+		extractPilots(info, path, technology);
+	}
 
 	@Override
 	protected String getJsLibPathKey() {

@@ -32,6 +32,21 @@
         </div>
         
         <div class="modal-body">
+        
+			<!--   import from type -->
+        	<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
+				
+				<div class="input">
+					<div class="multipleFields ciTypeWidth">
+						<div><input type="radio" name="repoType" value="svn" checked />&nbsp; <s:text name="label.svn"/></div>
+					</div>
+					<div class="multipleFields ciTypeWidth">
+						<div><input type="radio" name="repoType" value="git" />&nbsp; <s:text name="label.git"/></div>
+					</div>
+				</div>
+			</div>
+			
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.repository.url"/></label>
 				<div class="input">
@@ -39,45 +54,49 @@
 				</div>
 			</div>
 			
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"> <s:text name="label.other.credential"/></label>
-				<div class="input checkFn">
-				   <input type="checkbox" name = "credential" class = "credentials" id="credentials" style="margin-top:8px;" />
+			<div id="svnCredentialInfo">
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"> <s:text name="label.other.credential"/></label>
+					<div class="input checkFn">
+					   <input type="checkbox" name = "credential" class = "credentials" id="credentials" style="margin-top:8px;" />
+					</div>
+				</div>
+				
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.username"/></label>
+					<div class="input">
+						<input type="text" name="username" id="userName" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingUsername" class="missingData"></span>
+					</div>
+				</div>
+				
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.password"/></label>
+					<div class="input">
+						<input type="password" name="password" id="password" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingPassword" class="missingData"></span>
+					</div>
+				</div>
+				
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
+					<div class="input"  style="padding-top:8px;">
+						<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
+					</div>
+					<div class="input">
+						<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
+					</div>
+					<div class="input" style="padding-top:5px;">
+						<span id="missingRevision" class="missingData"></span>
+					</div>
 				</div>
 			</div>
 			
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.username"/></label>
-				<div class="input">
-					<input type="text" name="username" id="userName" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingUsername" class="missingData"></span>
-				</div>
-			</div>
-			
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.password"/></label>
-				<div class="input">
-					<input type="password" name="password" id="password" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingPassword" class="missingData"></span>
-				</div>
-			</div>
-			
-			<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
-				<div class="input"  style="padding-top:8px;">
-					<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
-				</div>
-				<div class="input">
-					<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
-				</div>
-				<div class="input" style="padding-top:5px;">
-					<span id="missingRevision" class="missingData"></span>
-				</div>
-			</div>
         </div>
         <div class="modal-footer">
             <img class="popupLoadingIcon" style="position: relative; float: left; display: none;"> 
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
             <input type="button" id="svnImport" class="btn primary" value="<s:text name="label.ok"/>">
             <div id="errMsg" class="envErrMsg"></div>
+            <div id="reportMsg" class="envErrMsg"></div>
        </div>
              
     </form>
@@ -135,7 +154,7 @@
 	    });
 		
 		$('#svnImport').click(function() {
-
+			var action = "importGITProject";
 			$("#errMsg").html("");
 			var repoUrl = $("input[name='repourl']").val();
 			$('.missingData').empty();
@@ -145,39 +164,64 @@
 				$("#repoUrl").focus();
 				return false;
 			}
-			if(isBlank($.trim($("input[name='username']").val()))){
-				$("#errMsg").html("Username is missing");
-				$("#userName").focus();
-				$("#userName").val("");
-				return false;
+			
+			// if it is svn need to validate username and password fields
+			if($("input:radio[name=repoType][value='svn']").is(':checked')) {
+				// if it is svn 
+				action = "importSVNProject";
+				
+				if(isBlank($.trim($("input[name='username']").val()))){
+					$("#errMsg").html("Username is missing");
+					$("#userName").focus();
+					$("#userName").val("");
+					return false;
+				}
+				
+				if(isBlank($.trim($("input[name='password']").val()))){
+					$("#errMsg").html("Password is missing");
+					$("#password").focus();
+					return false;
+				}
+				
+				if($('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))){
+					$("#errMsg").html("Revision is missing");
+					$("#revisionVal").focus();
+					$("#revisionVal").val("");
+					return false;
+				}
+				// before form submit enable textboxes
+				enableSvnFormDet();
 			}
-			if(isBlank($.trim($("input[name='password']").val()))){
-				$("#errMsg").html("Password is missing");
-				$("#password").focus();
-				return false;
-			}
-			if($('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))){
-				$("#errMsg").html("Revision is missing");
-				$("#revisionVal").focus();
-				$("#revisionVal").val("");
-				return false;
-			}
-			// before form submit enable textboxes
-			enableSvnFormDet();
+			
 			$('.popupLoadingIcon').show();
 			getCurrentCSS();
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-            performAction('importcredentialdetails', params, '', true);
+            performAction(action, params, '', true);
 		});
 		
  		$('#credentials').click(function() {
  			svnCredentialMark();
  		});
  		
+ 		$('input:radio[name=repoType]').click(function() {
+ 			extraInfoDisplay();
+ 		});
+ 		
 	});
+	
+	//base on the repo type credential info need to be displayed
+	
+	function extraInfoDisplay() {
+		$("#errMsg").html("");
+		if($("input:radio[name=repoType][value='svn']").is(':checked')) {
+			$('#svnCredentialInfo').show();
+		} else if($("input:radio[name=repoType][value='git']").is(':checked')) {
+			$('#svnCredentialInfo').hide();
+		}
+	}
 	
 	function svnImportError(id, errMsg){
 		$("#missing" + id ).empty();
@@ -188,7 +232,11 @@
 		if(data.svnImport){                                              // Import Project Success
 			$("#errMsg").empty();
 			$('.popupLoadingIcon').hide();
-			$("#errMsg").html(data.svnImportMsg);
+			if(data.svnImportMsg == "<%= FrameworkConstants.IMPORT_SUCCESS_PROJECT%>") {
+				$("#reportMsg").html(data.svnImportMsg);
+			} else {
+				$("#errMsg").html(data.svnImportMsg);
+			}
 			performAction('applications', '', $("#container"));
 			setTimeout(function(){ $("#popup_div").hide(); }, 200);
 		} else{                                                         // Import Project Fails
@@ -199,7 +247,7 @@
 	}
 	
 	function successEvent(pageUrl, data){
-		if(pageUrl == "importcredentialdetails"){
+		if(pageUrl == "importSVNProject" || pageUrl == "importGITProject"){
 			fetchJSONData(data);
 		}
 	}
