@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -1740,12 +1741,15 @@ public class Build extends FrameworkBaseAction {
 				dbtype = databasedetail.getPropertyInfo(Constants.DB_TYPE).getValue();
 				if (selectedDb.equals(dbtype)) { 
 					dbversion = databasedetail.getPropertyInfo(Constants.DB_VERSION).getValue();
-					File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb + File.separator + dbversion).listFiles();
+					File[] dbSqlFiles = new File(Utility.getProjectHome() + projectCode + sqlPath + selectedDb
+							+ File.separator + dbversion).listFiles(new DumpFileNameFilter());
 					for (int i = 0; i < dbSqlFiles.length; i++) {
+						if (!dbSqlFiles[i].isDirectory()) {
 						 sqlFileName = dbSqlFiles[i].getName();
 						path = sqlPath + selectedDb + FILE_SEPARATOR +  dbversion + "#SEP#" +  sqlFileName ;
 						sqlFiles.add(path);
 					}
+				  }
 				}
 			}
 			
@@ -1753,6 +1757,13 @@ public class Build extends FrameworkBaseAction {
 			S_LOGGER.error("Entered into catch block of  Build.getSQLFiles()" + FrameworkUtil.getStackTraceAsString(e));
 		}
 		return SUCCESS;
+	}
+	
+	class DumpFileNameFilter implements FilenameFilter {
+
+		public boolean accept(File dir, String name) {
+			return !(name.startsWith("."));
+		}
 	}
 	
 	private static void initDbPathMap() {
