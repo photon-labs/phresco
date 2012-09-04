@@ -39,6 +39,8 @@ import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.util.TechnologyTypes;
+import com.photon.phresco.util.Utility;
+import com.phresco.pom.util.PomProcessor;
 
 public class FrameworkUtil implements FrameworkConstants {
 
@@ -522,6 +524,19 @@ public class FrameworkUtil implements FrameworkConstants {
 			FileUtils.copyFile(srcFile, dstFile);
 		} catch (Exception e) {
 			throw new PhrescoException();
+		}
+    }
+    
+    public PomProcessor getPomProcessor(String projectCode) throws PhrescoException {
+    	try {
+    		StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+    		builder.append(projectCode);
+    		builder.append(File.separatorChar);
+    		builder.append(POM_XML);
+    		File pomPath = new File(builder.toString());
+    		return new PomProcessor(pomPath);
+		} catch (Exception e) {
+			throw new PhrescoException(e);
 		}
     }
 }

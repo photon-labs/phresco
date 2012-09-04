@@ -33,14 +33,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.tmatesoft.svn.core.SVNAuthenticationException;
 import org.tmatesoft.svn.core.SVNException;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.photon.phresco.commons.FrameworkConstants;
@@ -76,7 +79,12 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 import org.apache.commons.codec.binary.Base64;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand.ListMode;
+import org.eclipse.jgit.lib.Ref;
+
 import com.photon.phresco.framework.commons.DiagnoseUtil;
+import com.phresco.pom.util.PomProcessor;
 
 public class Applications extends FrameworkBaseAction {
 	private static final long serialVersionUID = -4282767788002019870L;
@@ -114,6 +122,8 @@ public class Applications extends FrameworkBaseAction {
 	private String fileorfolder = null;
 	//svn info
 	private String credential = null;
+	// import from git
+	private String repoType = "";
 	
 	public String list() {
 		long start = System.currentTimeMillis();
@@ -567,33 +577,33 @@ public class Applications extends FrameworkBaseAction {
 		return list();
 	}
 
-	public String importApplication() {
+	public String importSVNApplication() {
 		S_LOGGER.debug("Entering Method  Applications.importApplication()");
-		
+		S_LOGGER.debug("repoType " + repoType);
+		S_LOGGER.debug("repositoryUrl " + repositoryUrl);
 		try {
 			File checkOutDir = new File(Utility.getProjectHome());
-			/*
-			 * byte[] decodedBytes = Base64.decodeBase64(password); password =
-			 * new String(decodedBytes);
-			 */
 			if (StringUtils.isEmpty(credential)) {
 				String decryptedPass = new String(Base64.decodeBase64(password));
 				password = decryptedPass;
 			}
 
 			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
+			String projCode = svnAccessor.getProjectInfo(revision).getCode();
 			S_LOGGER.debug("Import Application repository Url"
 						+ repositoryUrl + " Username " + userName);
 			revision = !"HEAD".equals(revision) ? revisionVal : revision;
-			svnAccessor.checkout(checkOutDir, revision, true);
+			svnAccessor.checkout(checkOutDir, revision, true, projCode);
 			svnImport = true;
 			svnImportMsg = getText(IMPORT_SUCCESS_PROJECT);
-	    } catch(SVNAuthenticationException e){
+			// update connection url in pom.xml
+			updateSCMConnection(projCode, repositoryUrl);
+		} catch(SVNAuthenticationException e) {
 	         S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 						+ FrameworkUtil.getStackTraceAsString(e));
 	         svnImport = false;
 	         svnImportMsg = getText(INVALID_CREDENTIALS);
-	    } catch(SVNException e){
+	    } catch(SVNException e) {
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e)); 
 	    	svnImport = false;
@@ -604,7 +614,7 @@ public class Applications extends FrameworkBaseAction {
 	    	} else {
 	    		svnImportMsg = getText(INVALID_FOLDER);
 	    	}
-	    } catch(PhrescoException e){
+	    } catch(PhrescoException e) {
 	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()"
 					+ FrameworkUtil.getStackTraceAsString(e));
 	    	svnImport = false;
@@ -615,7 +625,52 @@ public class Applications extends FrameworkBaseAction {
 			svnImport = false;
 			svnImportMsg = getText(IMPORT_PROJECT_FAIL);
 		}
-	    
+		return SUCCESS;
+	}
+	
+	public String importGITApplication() {
+		S_LOGGER.debug("Entering Method  Applications.importApplication()");
+		S_LOGGER.debug("repoType " + repoType);
+		S_LOGGER.debug("repositoryUrl " + repositoryUrl);
+		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
+		try {
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			File gitImportTemp = new File(Utility.getPhrescoTemp(), GIT_IMPORT_TEMP_DIR);
+			S_LOGGER.debug("gitImportTemp " + gitImportTemp);
+			if(gitImportTemp.exists()) {
+				S_LOGGER.debug("Empty git directory need to be removed before importing from git ");
+				FileUtils.deleteDirectory(gitImportTemp);
+			}
+			S_LOGGER.debug("gitImportTemp " + gitImportTemp);
+			importFromGit(repositoryUrl, gitImportTemp);
+			ProjectInfo projectInfo = getProjectInfo(gitImportTemp);
+			S_LOGGER.debug(projectInfo.getCode());
+			importToWorkspace(gitImportTemp, Utility.getProjectHome() , projectInfo.getCode());
+			svnImport = true;
+			svnImportMsg = getText(IMPORT_SUCCESS_PROJECT);
+			//update connection in pom.xml
+			updateSCMConnection(projectInfo.getCode(), repositoryUrl);
+		} catch(org.apache.commons.io.FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			svnImport = false;
+			svnImportMsg = getText(PROJECT_ALREADY);
+		} catch(org.eclipse.jgit.api.errors.TransportException e) { //Invalid remote: origin (URL)
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			svnImport = false;
+			svnImportMsg = getText(INVALID_URL);
+		} catch(org.eclipse.jgit.api.errors.InvalidRemoteException e) { //Invalid remote: origin (URL)
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			svnImport = false;
+			svnImportMsg = getText(INVALID_URL);
+		}  catch(PhrescoException e) {
+	    	S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+	    	svnImport = false;
+	    	svnImportMsg = getText(INVALID_FOLDER);
+	    } catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			svnImport = false;
+			svnImportMsg = getText(IMPORT_PROJECT_FAIL);
+		}
 		return SUCCESS;
 	}
 
@@ -1181,7 +1236,57 @@ public class Applications extends FrameworkBaseAction {
 
 		return SUCCESS;
 	}
-
+	
+	public boolean importFromGit(String url,File directory) throws Exception {
+		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
+		S_LOGGER.debug("importing git " + url);
+	    Git repo1 = Git.cloneRepository().setURI(url).setDirectory(directory).call();
+	    for (Ref b : repo1.branchList().setListMode(ListMode.ALL).call()) {
+	    	S_LOGGER.debug("(standard): cloned branch " + b.getName());
+	    }
+	    return true;
+	}
+	
+	public ProjectInfo getProjectInfo(File directory) throws Exception {
+		S_LOGGER.debug("Entering Method  Applications.getProjectInfo()");
+		BufferedReader reader = null;
+		try {
+		    File dotProjectFile = new File(directory, FOLDER_DOT_PHRESCO + File.separator + PROJECT_INFO);
+		    S_LOGGER.debug("dotProjectFile" + dotProjectFile);
+		    if (!dotProjectFile.exists()) {
+		        throw new PhrescoException("Phresco Project definition not found");
+		    }
+		    reader = new BufferedReader(new FileReader(dotProjectFile));
+		    return new Gson().fromJson(reader, ProjectInfo.class);
+		} finally {
+		    Utility.closeStream(reader);
+		}
+	}
+	
+	private void importToWorkspace(File gitImportTemp, String phrescoHomeDirectory, String projectCode) throws Exception {
+		S_LOGGER.debug("Entering Method  Applications.importToWorkspace()");
+		File workspaceProjectDir = new File(phrescoHomeDirectory + projectCode);
+		S_LOGGER.debug("workspaceProjectDir "+ workspaceProjectDir);
+		if (workspaceProjectDir.exists()) {
+			S_LOGGER.debug("workspaceProjectDir exists"+ workspaceProjectDir);
+			throw new org.apache.commons.io.FileExistsException();
+		}
+		S_LOGGER.debug("gitImportTemp ====> " + gitImportTemp);
+		S_LOGGER.debug("workspaceProjectDir ====> " + workspaceProjectDir);
+		FileUtils.moveDirectory(gitImportTemp, workspaceProjectDir);
+	}
+	
+	private void updateSCMConnection(String projCode, String repoUrl) throws Exception {
+		S_LOGGER.debug("Entering Method  Applications.updateSCMConnection()");
+		FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+		PomProcessor processor = frameworkUtil.getPomProcessor(projCode);
+		if (processor.getSCM() == null) {
+			S_LOGGER.debug("processor.getSCM() exists and repo url " + repoUrl);
+			processor.setSCM("", repoUrl, "", "");
+			processor.save();
+		}
+	}
+	
 	public String getProjectCode() {
 		return projectCode;
 	}
@@ -1420,5 +1525,13 @@ public class Applications extends FrameworkBaseAction {
 
 	public void setFileorfolder(String fileorfolder) {
 		this.fileorfolder = fileorfolder;
+	}
+
+	public String getRepoType() {
+		return repoType;
+	}
+
+	public void setRepoType(String repoType) {
+		this.repoType = repoType;
 	}
 }
