@@ -28,23 +28,31 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
+import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 import com.phresco.pom.util.PomProcessor;
 
-public class FrameworkUtil implements FrameworkConstants {
+public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConstants {
 
-    private static FrameworkUtil frameworkUtil = null;
+	private static final long serialVersionUID = 1L;
+	private static FrameworkUtil frameworkUtil = null;
+    private static final Logger S_LOGGER = Logger.getLogger(FrameworkUtil.class);
+    
     private Map<String, String> unitTestMap = new HashMap<String, String>(8);
     private Map<String, String> unitReportMap = new HashMap<String, String>(8);
     private Map<String, String> funcationTestMap = new HashMap<String, String>(8);
@@ -538,5 +546,32 @@ public class FrameworkUtil implements FrameworkConstants {
 		} catch (Exception e) {
 			throw new PhrescoException(e);
 		}
+    }
+    
+    //get server Url for sonar
+    public String getSonarURL() throws PhrescoException {
+    	FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+    	String serverUrl = "";
+    	
+	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
+	    	serverUrl = frameworkConfig.getSonarUrl();
+	    	S_LOGGER.debug("if condition serverUrl  " + serverUrl);
+	    } else {
+	    	serverUrl = getHttpRequest().getRequestURL().toString();
+	    	StringBuilder tobeRemoved = new StringBuilder();
+	    	tobeRemoved.append(getHttpRequest().getContextPath());
+	    	tobeRemoved.append(getHttpRequest().getServletPath());
+
+	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
+	    	Matcher matcher = pattern.matcher(serverUrl);
+	    	serverUrl = matcher.replaceAll("");
+	    	S_LOGGER.debug("else condition serverUrl  " + serverUrl);
+	    }
+	    String sonarReportPath = frameworkConfig.getSonarReportPath();
+	    S_LOGGER.debug("sonarReportPath  " + sonarReportPath);
+	    String[] sonar = sonarReportPath.split("/");
+	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar[1]);
+		
+	    return serverUrl;
     }
 }
