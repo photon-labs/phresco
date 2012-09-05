@@ -76,6 +76,14 @@
             <result name="importFromSvn">/pages/applications/svn_import.jsp</result>
         </action>
         
+        <action name="updateProject" method="updateProject" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="reader">/pages/applications/reader.jsp</result>
+        </action>
+        
+        <action name="updateProjectPopup" method="updateProjectPopup" class="com.photon.phresco.framework.actions.applications.Applications">
+            <result name="importFromSvn">/pages/applications/svn_import.jsp</result>
+        </action>
+        
         <action name="importSVNProject" method="importSVNApplication" class="com.photon.phresco.framework.actions.applications.Applications">
             <result type="json"/>
         </action>

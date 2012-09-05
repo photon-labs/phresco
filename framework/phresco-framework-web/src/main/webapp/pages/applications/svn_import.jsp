@@ -21,8 +21,14 @@
 
 <%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
+<%@ page import="org.apache.commons.lang.StringUtils"%>
 
-<% UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); %>
+<% 
+	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); 
+	String repoUrl = (String)request.getAttribute(FrameworkConstants.REPO_URL);
+	String fromTab = (String)request.getAttribute(FrameworkConstants.REQ_FROM_TAB);
+	String projectCode = (String)request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE);
+%>
 
 <div class="popup_Modal topFifty" id="repoDet">
     <form name="repoDetails" action="import" method="post" autocomplete="off" class="repo_form">
@@ -34,15 +40,17 @@
         <div class="modal-body">
         
 			<!--   import from type -->
-        	<div class="clearfix">
-				<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
-				
-				<div class="input">
-					<div class="multipleFields ciTypeWidth">
-						<div><input type="radio" name="repoType" value="svn" checked />&nbsp; <s:text name="label.svn"/></div>
-					</div>
-					<div class="multipleFields ciTypeWidth">
-						<div><input type="radio" name="repoType" value="git" />&nbsp; <s:text name="label.git"/></div>
+			<div id="typeInfo">
+	        	<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
+					
+					<div class="input">
+						<div class="multipleFields ciTypeWidth">
+							<div><input type="radio" name="repoType" value="svn" checked />&nbsp; <s:text name="label.svn"/></div>
+						</div>
+						<div class="multipleFields ciTypeWidth">
+							<div><input type="radio" name="repoType" value="git" />&nbsp; <s:text name="label.git"/></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -50,7 +58,7 @@
         	<div class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.repository.url"/></label>
 				<div class="input">
-					<input type="text" class="svnUrlTxtBox" name="repourl" id="repoUrl" value="http://">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
+					<input type="text" class="svnUrlTxtBox" name="repourl" id="repoUrl" value="<%= StringUtils.isEmpty(repoUrl) ? "http://" : repoUrl %>">&nbsp;&nbsp;<span id="missingURL" class="missingData"></span>
 				</div>
 			</div>
 			
@@ -76,16 +84,18 @@
 					</div>
 				</div>
 				
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
-					<div class="input"  style="padding-top:8px;">
-						<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
-					</div>
-					<div class="input">
-						<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
-					</div>
-					<div class="input" style="padding-top:5px;">
-						<span id="missingRevision" class="missingData"></span>
+				<div id="svnRevisionInfo">
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
+						<div class="input"  style="padding-top:8px;">
+							<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
+						</div>
+						<div class="input">
+							<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
+						</div>
+						<div class="input" style="padding-top:5px;">
+							<span id="missingRevision" class="missingData"></span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -94,7 +104,7 @@
         <div class="modal-footer">
             <img class="popupLoadingIcon" style="position: relative; float: left; display: none;"> 
             <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
-            <input type="button" id="svnImport" class="btn primary" value="<s:text name="label.ok"/>">
+            <input type="button" id="svnImport" class="btn primary" value="<%= StringUtils.isEmpty(fromTab) ? "Import" : "Update" %>">
             <div id="errMsg" class="envErrMsg"></div>
             <div id="reportMsg" class="envErrMsg"></div>
        </div>
@@ -103,7 +113,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function() {
 		$("#repoUrl").focus();
 		
 		// svn import already selected value display 
@@ -183,23 +193,36 @@
 					return false;
 				}
 				
-				if($('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))){
+				// when it is not updating operation , the revision have to be validated
+				if($('#svnImport').val() != "Update" && $('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))) {
 					$("#errMsg").html("Revision is missing");
 					$("#revisionVal").focus();
 					$("#revisionVal").val("");
 					return false;
 				}
+				
 				// before form submit enable textboxes
 				enableSvnFormDet();
 			}
 			
-			$('.popupLoadingIcon').show();
-			getCurrentCSS();
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-            performAction(action, params, '', true);
+			if($('#svnImport').val() == "Update") {
+				action = "updateProject";
+				params = params.concat("projectCode=");
+				params = params.concat("<%= projectCode %>");
+
+				$("#popup_div").empty();
+				$('#build-outputOuter').show().css("display","block");
+				getCurrentCSS();
+				readerHandlerSubmit(action, '<%= projectCode %>', '<%= FrameworkConstants.PROJECT_UPDATE %>', params, '');
+			} else {
+				$('.popupLoadingIcon').show();
+				getCurrentCSS();
+				performAction(action, params, '', true);
+			}
 		});
 		
  		$('#credentials').click(function() {
@@ -209,6 +232,29 @@
  		$('input:radio[name=repoType]').click(function() {
  			extraInfoDisplay();
  		});
+ 		
+		$('#closeGenerateTest, #closeGenTest').click(function() {
+			performAction('applications', '', $("#container"));
+			$("#popup_div").css("display","none");
+			$("#popup_div").empty();
+        });
+ 		//when the import popup is showed for updating the project, it have to hide the revision information
+ 		$('#svnRevisionInfo').css("display", "<%= StringUtils.isEmpty(fromTab) ? "block" : "none" %>");
+ 		<%
+ 			if (StringUtils.isNotEmpty(repoUrl) && repoUrl.contains(FrameworkConstants.GIT)) {
+ 		%>
+ 			$('input:radio[name=repoType]').filter("[value='git']").attr("checked","checked");
+ 			$('#typeInfo').hide();
+ 		<%
+ 			} else if (StringUtils.isNotEmpty(repoUrl)) {
+ 		%>
+			$('input:radio[name=repoType]').filter("[value='svn']").attr("checked","checked");
+ 			$('#typeInfo').hide();
+ 		<%
+ 			}
+ 		%>
+ 		
+ 		extraInfoDisplay();
  		
 	});
 	
