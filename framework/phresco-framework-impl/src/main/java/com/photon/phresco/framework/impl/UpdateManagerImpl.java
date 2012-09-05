@@ -115,19 +115,19 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 				outPutFile.write(bytes, 0, read);
 			}
 			
-			extractUpdate(tempFile);
-			updateSonarProfile();
 		} catch (IOException e) {
-			throw new PhrescoException(e);
-		} catch (ParserConfigurationException e) {
 			throw new PhrescoException(e);
 		} finally {
 			Utility.closeStream(latestVersionZip);
 			Utility.closeStream(outPutFile);
 		}
+		extractUpdate(tempFile);
+		markVersionUpdated(newVersion);
+		updateSonarProfile();
+		FileUtil.delete(tempFile);
 	}
 
-	private void updateSonarProfile() throws PhrescoException, ParserConfigurationException {
+	private void updateSonarProfile() throws PhrescoException {
 		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 		List<Project> projects = administrator.discover(Collections.singletonList(new File(Utility.getProjectHome())));
 		for (Project project : projects) {
@@ -151,7 +151,11 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 			File functionalPom = new File(Utility.getProjectHome() + File.separator + code + File.separator + TEST
 					+ File.separator + FUNCTIONAL + File.separator + POM_XML);
 			if (sonarPropertiesUpdateRequired) {
-				profileUpdater.addSonarProperties(functionalPom, techId);
+				try {
+					profileUpdater.addSonarProperties(functionalPom, techId);
+				} catch (ParserConfigurationException e) {
+					throw new PhrescoException(e);
+				}
 			}
 		}
 	}
@@ -188,7 +192,7 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 		FileUtil.delete(tempFile);
 	}
 
-	public void markVersionUpdated(String newVersion) throws PhrescoException {
+	private void markVersionUpdated(String newVersion) throws PhrescoException {
 		FileWriter writer = null;
 		try {
 			String fileName = Utility.getPhrescoTemp() + FrameworkConstants.UPGRADE_PROP_NAME;
