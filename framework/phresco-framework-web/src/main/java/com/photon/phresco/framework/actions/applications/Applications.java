@@ -46,6 +46,7 @@ import org.tmatesoft.svn.core.SVNException;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
+import com.photon.phresco.commons.CIPasswordScrambler;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
@@ -53,8 +54,10 @@ import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.SVNAccessor;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
+import com.photon.phresco.framework.api.ActionType;
 import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
+import com.photon.phresco.framework.api.ProjectRuntimeManager;
 import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.commons.ApplicationsUtil;
 import com.photon.phresco.framework.commons.FrameworkUtil;
@@ -84,9 +87,11 @@ import org.eclipse.jgit.api.ListBranchCommand.ListMode;
 import org.eclipse.jgit.lib.Ref;
 
 import com.photon.phresco.framework.commons.DiagnoseUtil;
+import com.phresco.pom.model.Scm;
 import com.phresco.pom.util.PomProcessor;
 
 public class Applications extends FrameworkBaseAction {
+
 	private static final long serialVersionUID = -4282767788002019870L;
 
 	private static final Logger S_LOGGER = Logger.getLogger(Applications.class);
@@ -634,7 +639,6 @@ public class Applications extends FrameworkBaseAction {
 		S_LOGGER.debug("repositoryUrl " + repositoryUrl);
 		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
 		try {
-			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
 			File gitImportTemp = new File(Utility.getPhrescoTemp(), GIT_IMPORT_TEMP_DIR);
 			S_LOGGER.debug("gitImportTemp " + gitImportTemp);
 			if(gitImportTemp.exists()) {
@@ -676,6 +680,60 @@ public class Applications extends FrameworkBaseAction {
 
 	public String importFromSvn() {
 		return APP_IMPORT_FROM_SVN;
+	}
+	
+	public String updateProjectPopup() {
+		S_LOGGER.debug("Entering Method  Applications.updateProjectPopup()");
+		try {
+			String connectionUrl = "";
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			PomProcessor processor = frameworkUtil.getPomProcessor(projectCode);
+			Scm scm = processor.getSCM();
+			if(scm != null) {
+				connectionUrl = scm.getConnection();
+			}
+			S_LOGGER.debug("connectionUrl " + connectionUrl);
+			getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
+			getHttpRequest().setAttribute(REPO_URL, connectionUrl);
+			getHttpRequest().setAttribute(REQ_FROM_TAB, UPDATE_SVN_PROJECT);
+			getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Applications.updateProjectPopup()" + FrameworkUtil.getStackTraceAsString(e));
+			new LogErrorReport(e, "Updating project popup");
+		}
+		return APP_IMPORT_FROM_SVN;
+	}
+	
+	public String updateProject() {
+		S_LOGGER.debug("Entering Method  Applications.updateProject()");
+		try {
+			S_LOGGER.debug("update SCM Connection " + repositoryUrl);
+			S_LOGGER.debug("userName " + userName);
+			S_LOGGER.debug("Repo type " + repoType);
+			S_LOGGER.debug("projectCode " + projectCode);
+			updateSCMConnection(projectCode, repositoryUrl);
+			ActionType actionType = ActionType.SCMUpdate;
+            Map<String, String> scmUpdateMap = new HashMap<String, String>(1);
+            scmUpdateMap.put(CONNECTION_URL, SCM_SVN + repositoryUrl);
+            if (SVN.equals(repoType)) {
+            	scmUpdateMap.put(USER_NAME, userName);
+            	scmUpdateMap.put(PASSWORD, CIPasswordScrambler.unmask(password));
+            }
+			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			if (StringUtils.isEmpty(projectCode)) {
+				throw new PhrescoException(getText(EMPTY_PROJECT_CODE));
+			}
+			Project project = administrator.getProject(projectCode);
+			BufferedReader reader = runtimeManager.performAction(project, actionType, scmUpdateMap, null);
+            getHttpSession().setAttribute(projectCode + PROJECT_UPDATE, reader);
+            getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+            getHttpRequest().setAttribute(REQ_TEST_TYPE, PROJECT_UPDATE);
+		} catch (Exception e) {
+			S_LOGGER.error("Entered into catch block of Applications.updateProject()" + FrameworkUtil.getStackTraceAsString(e));
+			new LogErrorReport(e, "Updating project");
+		}
+		return APP_ENVIRONMENT_READER;
 	}
 
 	public String validateFramework() {
@@ -1282,7 +1340,7 @@ public class Applications extends FrameworkBaseAction {
 		PomProcessor processor = frameworkUtil.getPomProcessor(projCode);
 		if (processor.getSCM() == null) {
 			S_LOGGER.debug("processor.getSCM() exists and repo url " + repoUrl);
-			processor.setSCM("", repoUrl, "", "");
+			processor.setSCM(repoUrl, "", "", "");
 			processor.save();
 		}
 	}

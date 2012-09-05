@@ -88,6 +88,8 @@ public interface FrameworkConstants {
     String CLASS = "class";
     String SCM = "scm";
     String SVN = "svn";
+    String REPO_URL = "repoUrl";
+    String PROJECT_UPDATE_POPUP = "projectUpdatePopup";
     String CLONED_WORKSPACE = "clonedWorkspace";
 	String CI_SCM = "scm";
 	String CLONE_WORKSPACE_SCM = "hudson.plugins.cloneworkspace.CloneWorkspaceSCM";
@@ -113,6 +115,7 @@ public interface FrameworkConstants {
 	String ANY = "Any";
     String GIT = "git";
     String REPO_TYPE = "repoType";
+    String UPDATE_SVN_PROJECT = "updateProject";
     String SVN_TYPE = "svnType";
     String GITHUB_SCM = "hudson.plugins.git.GitSCM";
     String SVN_SCM = "hudson.scm.SubversionSCM";
@@ -213,6 +216,7 @@ public interface FrameworkConstants {
     String ANDROID_LOWER_VER = "2.2";
     String DEVICE_DEPLOY = "device.deploy";
     String UNIT_TEST = "unittest";
+    String PROJECT_UPDATE = "projectUpdate";
     String TRUE = "true";
     String FALSE = "false";
     String NODE_JS_ID = "tech-nodejs-webservice";
@@ -295,6 +299,10 @@ public interface FrameworkConstants {
     String ELEMENT_TARGET = "do_not_checkin/target/*.apk";
     String ELEMENT_VERBOS = "verbose";
     String ELEMENT_VERIFY = "verify";
+    
+    String CONNECTION_URL = "connectionUrl";
+	String USER_NAME = "username";
+	String SCM_SVN = "scm:svn:";
     
     /*
      *  File Types for Browse in Functional
@@ -730,6 +738,7 @@ public interface FrameworkConstants {
     String MSG_REPORT_OVERALL = "Overall";
     String MSG_REPORT_DETAIL = "Detailed";
     String MSG_REPORT = "Atleast one test result is necessary";
+    String EMPTY_PROJECT_CODE = "project.code.empty";
     
     /*
      * CI Message keys
@@ -754,6 +763,8 @@ public interface FrameworkConstants {
      * Delete Project keys
      */
     String SUCCESS_PROJECT_DELETE = "Projects deleted successfully";
+    String SUCCESS_PROJECT_UPDATE = "update.project.success";
+    String FAILURE_PROJECT_UPDATE = "update.project.fail";
     String FAILURE_PROJECT_DELETE = "Projects deletion failed";
     /*
      * Project Import keys
