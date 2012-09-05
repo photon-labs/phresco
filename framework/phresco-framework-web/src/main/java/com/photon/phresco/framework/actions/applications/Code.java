@@ -64,29 +64,17 @@ public class Code extends FrameworkBaseAction {
 
 	public String view() {
     	S_LOGGER.debug("Entering Method Code.view()");
+		String serverUrl = "";
     	try {
         	getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
         	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
         	Project project = administrator.getProject(projectCode); 
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(APPLICATION_PROJECT, project);
-      		FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
-            String serverUrl = "";
-    	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
-    	    	serverUrl = frameworkConfig.getSonarUrl();
-    	    } else {
-    	    	serverUrl = getHttpRequest().getRequestURL().toString();
-    	    	StringBuilder tobeRemoved = new StringBuilder();
-    	    	tobeRemoved.append(getHttpRequest().getContextPath());
-    	    	tobeRemoved.append(getHttpRequest().getServletPath());
-    	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
-    	    	Matcher matcher = pattern.matcher(serverUrl);
-    	    	serverUrl = matcher.replaceAll("");
-    	    }
-    	    String sonarReportPath = frameworkConfig.getSonarReportPath();
-    	    String[] sonar = sonarReportPath.split("/");
-    	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar[1]);
-    	    URL sonarURL = new URL(serverUrl);
+      		FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			serverUrl = frameworkUtil.getSonarURL();
+    	    
+			URL sonarURL = new URL(serverUrl);
 			HttpURLConnection connection = null;
     	    try {
     	    	connection = (HttpURLConnection) sonarURL.openConnection();
