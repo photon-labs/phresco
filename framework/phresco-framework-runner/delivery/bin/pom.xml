@@ -88,6 +88,13 @@
 		<version>${phantomjs.version}</version>
 		<type>zip</type>
 	  </dependency>
+      
+      	 
+      <dependency>
+        <groupId>ant-contrib</groupId>
+        <artifactId>ant-contrib</artifactId>
+        <version>1.0b2</version>
+      </dependency>
 	  
 	</dependencies>
 	

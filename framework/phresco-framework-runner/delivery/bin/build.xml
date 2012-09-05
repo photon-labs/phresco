@@ -1,8 +1,8 @@
 <project name="Phresco Deployment Script" basedir="." default="run-phresco">
-
+    
 	<property name="phresco.home" value="${basedir}/.."/>
 	<property name="tomcat.home" value="${phresco.home}/workspace/tools/apache-tomcat-https-7.0.21"/>
-	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-3.1.1"/>
+	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-${sonar.version}"/>
 	<property name="jenkins.home" value="${phresco.home}/workspace/tools/jenkins"/>
 	<property name="checkers.home" value="${phresco.home}/workspace/tools/checker-267"/>
 	<property name="chief.home" value="${phresco.home}/workspace/tools/chief"/>
@@ -12,9 +12,9 @@
 	<property name="phresco.file.server.home" value="${phresco.home}/workspace/projects"/>
 	<property name="phresco.file.server" value="PhrescoFileServer"/>
 	<property name="phresco.url" value="http://localhost:2468/phresco"/>
-	
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${phresco.home}/workspace/repo/ant-contrib/ant-contrib/1.0b2/ant-contrib-1.0b2.jar" onerror="ignore"/>
 	<target name="init">
-		<available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
+        <echo message="Initializing Phresco"/>
 	</target>	
 	
 	<target name="set-execute-permissions">
@@ -111,15 +111,15 @@
 		<delete dir="${tomcat.home}/webapps/sonar"/>
 	</target>
 	
-	<target name="clean-phresco" depends="init" if="phresco.upgraded">
-		<echo message="removing older version of phresco war from tomcat"/>
+	<target name="clean-phresco" depends="updatefix" if="phresco.upgraded">
+   		<echo message="removing older version of phresco war from tomcat"/>
 		<delete dir="${tomcat.home}/webapps/phresco"/>
 		<delete dir="${tomcat.home}/work/Catalina/localhost/phresco"/>
 		<delete dir="${phresco.war.dir}"/>
 		<delete file="${phresco.upgrade.file}"/>
 	</target>
-	
-	<target name="tomcat-start">
+ 
+    <target name="tomcat-start">
 		<echo message="Starting tomcat"/>
 		<echo message="${tomcat.home}"/>
 		<java 
@@ -166,5 +166,19 @@
 			 </classpath>
 		</java>
 	</target>
+    
+    <target name="updatefix" depends="init">
+   <if>
+        <available file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
+        <else>
+    <touch file="${phresco.upgrade.file}"/>
+    <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.1.2001.marker"/>
+    <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.0.9000.marker"/>
+    <touch file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
+    <available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
+        </else>
+    </if>
+ </target>
+ 
   
 </project>
