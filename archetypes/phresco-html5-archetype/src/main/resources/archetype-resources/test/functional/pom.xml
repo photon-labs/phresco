@@ -2,12 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.photon.phresco</groupId>
-  <artifactId>test-HTML5-YUIWidget_None</artifactId>
+  <artifactId>HTML5-YUIWidget_Eshop</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
   <name>HTML5Widget_Eshop</name>
   <url>http://maven.apache.org</url>
-  
 <repositories>
     <repository>      
       <id>seleniumserver</id>
@@ -15,7 +14,6 @@
       <url>http://172.16.18.178:8080/nexus/content/repositories/releases/</url>
     </repository>
   </repositories>
-  
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -43,8 +41,7 @@
 				<groupId>org.seleniumhq.selenium</groupId>
 				<artifactId>selenium-server</artifactId>
 				<version>2.25.0</version>
-		</dependency>
-             
+		</dependency>             
 		
 		<!--  ***************For Windows operadriver ******************-->
 	<!-- 	<dependency>
@@ -218,8 +215,7 @@
 	</build>
 
 	<reporting>
-		<plugins>
-			
+		<plugins>			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>

@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.photon.phresco.Screens.WelcomeScreen;
-
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 

@@ -1,9 +1,9 @@
 /*
  * ###
- * PHR_jquery-widget-hw
- * %%
+ * Archetype - phresco-html5-archetype
+ * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * %%
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,17 +24,11 @@ import java.lang.reflect.Field;
 
 public class PhrescoUiConstants {
 	private ReadXMLFile readXml;
-
-	public String PROTOCOL = "protocol";
-	
+	public String PROTOCOL = "protocol";	
 	public String CONTEXT = "context";
 	public String HOST = "host";
-	public String BROWSER = "Browser";
-	
-	
-	
+	public String BROWSER = "Browser";	
 	public String PORT= "port";
-
 	// ***************LOGINPAGE*****************
     public String TEXTCAPTURED="loginText";
 	// ***************LOGINPAGE*****************

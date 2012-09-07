@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-import junit.framework.Assert;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,9 +25,6 @@ import com.photon.phresco.selenium.util.Constants;
 import com.photon.phresco.selenium.util.GetCurrentDir;
 import com.photon.phresco.selenium.util.ScreenException;
 
-
-
-
 public class BaseScreen {
 
 	private WebDriver driver;
@@ -37,19 +32,17 @@ public class BaseScreen {
 	private Log log = LogFactory.getLog("BaseScreen");
 	private WebElement element;	
 	
-
 	// private Log log = LogFactory.getLog(getClass());
 
 	public BaseScreen() {
 
 	}
 
-	public BaseScreen(String selectedBrowser, String applicationURL,
-			String applicationContext)
+	public BaseScreen(String selectedBrowser, String applicationURL, String applicatinContext)
 			throws ScreenException {
 	
 		
-		instantiateBrowser(selectedBrowser, applicationURL, applicationContext);
+		instantiateBrowser(selectedBrowser, applicationURL, applicatinContext);
 
 	}
 
@@ -63,11 +56,17 @@ public class BaseScreen {
 				chromeService = new ChromeDriverService.Builder()
 						.usingDriverExecutable(
 								new File(getChromeLocation()))
-						.usingAnyFreePort().build();			
+						.usingAnyFreePort().build();	
+				
 				log.info("-------------***LAUNCHING GOOGLECHROME***--------------");						
 				driver=new ChromeDriver(chromeService);
 				driver.manage().window().maximize();
-				driver.navigate().to(applicationURL+applicationContext);		
+			//	driver = new ChromeDriver(chromeService, chromeOption);
+				// driver.manage().timeouts().implicitlyWait(30,
+				// TimeUnit.SECONDS);				
+				//driver.navigate().to(applicationURL + applicationContext);
+				driver.navigate().to(applicationURL+applicationContext);
+			
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -125,8 +124,9 @@ public class BaseScreen {
 		log.info("-------------***BROWSER CLOSING***--------------");
 		if (driver != null) {
 			driver.quit();
-			if (chromeService != null) {				
-				chromeService.stop();
+			if (chromeService!=null) {				
+				
+				
 			}
 		}
 
@@ -234,8 +234,6 @@ public class BaseScreen {
 	}
 
 	
-	
-	
 	public void click() throws ScreenException {
 		log.info("Entering:********click operation start********");
 		try {
@@ -281,14 +279,4 @@ public class BaseScreen {
 
 	}
 
-	public void isTextPresent(String textValue){
-		if(textValue!=null){
-			Boolean textCheck=driver.getPageSource().contains(textValue);
-			Assert.assertTrue("HelloWorld Existed", textCheck);
-		}else{
-			
-			throw new RuntimeException("----HelloWorld Text is not existed----");
-			
-		}
-	}
 }
