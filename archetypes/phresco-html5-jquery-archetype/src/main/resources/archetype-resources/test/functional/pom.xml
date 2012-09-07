@@ -2,11 +2,20 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.photon.phresco</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <artifactId>test-HTML5-Jquery_None</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
-  <name>HelloWorld</name>
-  <url>http://maven.apache.org</url> 
+  <name>HTML5Widget_Eshop</name>
+  <url>http://maven.apache.org</url>
+  
+<repositories>
+    <repository>      
+      <id>seleniumserver</id>
+      <name>seleniumserver</name>
+      <url>http://172.16.18.178:8080/nexus/content/repositories/releases/</url>
+    </repository>
+  </repositories>
+  
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -15,56 +24,77 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
-			<scope>test</scope>
+			<!-- <scope>test</scope> -->
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<version>2.21.0</version>
+			<version>2.21.0</version>			
+		</dependency>  -->
+		
+	<!-- 	<dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-server</artifactId>
+				<version>2.25.0</version>
+		</dependency> -->
+		
+		<dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-server</artifactId>
+				<version>2.25.0</version>
 		</dependency>
+             
 		
 		<!--  ***************For Windows operadriver ******************-->
-		<dependency>
+	<!-- 	<dependency>
 				<groupId>com.opera</groupId>
 				<artifactId>operadriver</artifactId>
 				<version>0.14</version>
 		</dependency>
-		
+		 -->
+		 <dependency>
+					<groupId>com.opera</groupId>
+					<artifactId>operadriver</artifactId>
+					<version>0.16.1</version>
+		</dependency>
+            
        
     <!--  ***************For Windows chromedriver ******************-->    
         <dependency>
-		   <groupId>org.seleniumhq.selenium</groupId>
-		   <artifactId>chromedriver</artifactId>
-		   <version>19.0.1068.0</version>
-		   <classifier>win</classifier>
-		   <type>zip</type>
-		</dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>chromedriver</artifactId>
+				<version>23.0.1240.0</version>
+				<classifier>win</classifier>
+				<type>zip</type>
+	</dependency>
 	<!-- **************** For Mac machine chromedriver***************** -->   
 			<dependency>
-					<groupId>org.seleniumhq.selenium</groupId>
-					<artifactId>chromedriver</artifactId>
-					<version>21.0.1180.4</version>
-					<classifier>mac</classifier>
-					<type>zip</type>
-		</dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>chromedriver</artifactId>
+				<version>23.0.1240.0</version>
+				<classifier>mac</classifier>
+				<type>zip</type>
+	</dependency>
 
     <!-- **************** For Linux-32 machine chromedriver***************** -->     
         <dependency>
-			  <groupId>org.seleniumhq.selenium</groupId>
-			  <artifactId>chromedriver</artifactId>
-			  <version>19.0.1068.0</version>
-			  <classifier>linux32</classifier>
-			  <type>zip</type>
-		</dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>chromedriver</artifactId>
+				<version>23.0.1240.0</version>
+				<classifier>linux32</classifier>
+				<type>zip</type>
+	</dependency>
 	 <!-- **************** For Linux-64 machine chromedriver***************** -->     	
 		<dependency>
-			  <groupId>org.seleniumhq.selenium</groupId>
-			  <artifactId>chromedriver</artifactId>
-			  <version>19.0.1068.0</version>
-			  <classifier>linux64</classifier>
-			  <type>zip</type>
-		</dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>chromedriver</artifactId>
+				<version>23.0.1240.0</version>
+				<classifier>linux64</classifier>
+				<type>zip</type>
+	</dependency>	
+		
+		
 		<!--<dependency> <groupId>org.testng</groupId> <artifactId>testng</artifactId> 
 			<version>6.2</version> </dependency> -->
 	</dependencies>
@@ -110,12 +140,12 @@
 						<configuration>
 							<markersDirectory>chromedriver</markersDirectory>
 						<artifactItems>
-								<artifactItem>
-										 	  <groupId>org.seleniumhq.selenium</groupId>
-											   <artifactId>chromedriver</artifactId>
-											   <version>19.0.1068.0</version>
-											   <classifier>win</classifier>
-											   <type>zip</type>
+								<artifactItem>										 	  
+											<groupId>org.seleniumhq.selenium</groupId>
+											<artifactId>chromedriver</artifactId>
+											<version>23.0.1240.0</version>
+											<classifier>win</classifier>
+											<type>zip</type>	
 											   <overWrite>false</overWrite>
 											   <outputDirectory>chromedriver/windows</outputDirectory>
 								  </artifactItem>
@@ -123,27 +153,27 @@
 								                 
 												<groupId>org.seleniumhq.selenium</groupId>
 												<artifactId>chromedriver</artifactId>
-												<version>21.0.1180.4</version>
+												<version>23.0.1240.0</version>
 												<classifier>mac</classifier>
 												<type>zip</type>
 												<overWrite>false</overWrite>
 											    <outputDirectory>chromedriver/mac</outputDirectory>
 								</artifactItem>	
 								<artifactItem>
-											  <groupId>org.seleniumhq.selenium</groupId>
-											  <artifactId>chromedriver</artifactId>
-											  <version>19.0.1068.0</version>
-											  <classifier>linux32</classifier>
-											  <type>zip</type>
+											<groupId>org.seleniumhq.selenium</groupId>
+												<artifactId>chromedriver</artifactId>
+												<version>23.0.1240.0</version>
+												<classifier>linux32</classifier>
+												<type>zip</type>
 											  <overWrite>false</overWrite>
 											  <outputDirectory>chromedriver/linux-32</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-											  <groupId>org.seleniumhq.selenium</groupId>
-											  <artifactId>chromedriver</artifactId>
-											  <version>19.0.1068.0</version>
-											  <classifier>linux64</classifier>
-											  <type>zip</type>
+											 <groupId>org.seleniumhq.selenium</groupId>
+												<artifactId>chromedriver</artifactId>
+												<version>23.0.1240.0</version>
+												<classifier>linux64</classifier>
+												<type>zip</type>
 											  <overWrite>false</overWrite>
 											  <outputDirectory>chromedriver/linux-64</outputDirectory>
 								</artifactItem>
@@ -186,24 +216,6 @@
 			</plugin>
 	</plugins>
 	</build>
-    
-    <profiles>
-        <profile>
-            <id>ci</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.photon.phresco.plugins</groupId>
-                        <artifactId>ci-maven-plugin</artifactId>
-                        <version>1.2.1.2002-SNAPSHOT</version>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 	<reporting>
 		<plugins>

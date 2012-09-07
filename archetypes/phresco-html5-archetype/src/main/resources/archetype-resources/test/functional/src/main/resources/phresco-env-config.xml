@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ###
-  PHR_widget-hw
+  PHR_jquery-widget-hw
   %%
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
   %%
@@ -27,9 +27,8 @@
                <host>localhost</host>
                <port>8080</port>
            </Server>
-           <selenium>
-               <server.host>localhost</server.host>
-               <server.port>4444</server.port>
-               <speed>300</speed>
-           </selenium>
+         
+           <loginpage>
+              <loginText>Hello World</loginText>
+           </loginpage>
 </environment>
