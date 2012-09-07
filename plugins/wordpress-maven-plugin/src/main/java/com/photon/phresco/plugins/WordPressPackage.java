@@ -121,7 +121,7 @@ public class WordPressPackage extends AbstractMojo implements PluginConstants {
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			srcDir = new File(baseDir.getPath() + File.separator + sourceDirectory);
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
-			targetDir = new File(baseDir + File.separator + TARGET_DIRECTORY);
+			targetDir = new File(baseDir + File.separator + project.getBuild().getDirectory());
 			if (!buildDir.exists()) {
 				buildDir.mkdir();
 				getLog().info("Build directory created..." + buildDir.getPath());
