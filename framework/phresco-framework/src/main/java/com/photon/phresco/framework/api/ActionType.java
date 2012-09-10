@@ -22,7 +22,7 @@ package com.photon.phresco.framework.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.photon.phresco.framework.actions.AndroidPerfCommand;
+import com.photon.phresco.framework.actions.AndroidTestCommand;
 import com.photon.phresco.framework.actions.Build;
 import com.photon.phresco.framework.actions.Deploy;
 import com.photon.phresco.framework.actions.IphoneCodeValidate;
@@ -60,7 +60,7 @@ public interface ActionType {
     ActionType STOP_SERVER = new StopServer();
     ActionType INSTALL = new MobileCommand();
     ActionType MOBILE_COMMON_COMMAND = new MobileCommand();
-    ActionType ANDROID_PERF_COMMAND = new AndroidPerfCommand();
+    ActionType ANDROID_TEST_COMMAND = new AndroidTestCommand();
     ActionType IPHONE_DOWNLOADIPA_COMMAND = new IphoneIpa();
     ActionType IPHONE_FUNCTIONAL_COMMAND = new IPhoneFunctionalCommand();
     ActionType IPHONE_BUILD_UNIT_TEST = new IphoneBuildAndUnitTest();

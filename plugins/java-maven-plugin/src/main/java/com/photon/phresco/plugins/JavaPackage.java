@@ -149,7 +149,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 		try {
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
-			targetDir = new File(baseDir + File.separator + PluginConstants.TARGET_DIRECTORY);
+			targetDir = new File(baseDir + File.separator + project.getBuild().getDirectory());
 			baseDir = getProjectRoot(baseDir);
 			if (!buildDir.exists()) {
 				buildDir.mkdirs();

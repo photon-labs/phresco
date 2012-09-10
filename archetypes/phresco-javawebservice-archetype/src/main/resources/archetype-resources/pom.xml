@@ -103,7 +103,7 @@
 			<plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>java-maven-plugin</artifactId>
-				<version>1.2.1.2002-SNAPSHOT</version>
+				<version>1.2.2.1001-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>

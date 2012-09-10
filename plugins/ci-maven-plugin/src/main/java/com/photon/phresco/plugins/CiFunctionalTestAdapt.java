@@ -93,7 +93,7 @@ public class CiFunctionalTestAdapt extends AbstractMojo implements PluginConstan
         		File systemPath = new File(builder.toString() + File.separator + POM_XML);
         		PomProcessor pomprocessor = new PomProcessor(systemPath);
         		String jarName = pomprocessor.getFinalName();
-        		builder.append(TARGET_DIRECTORY);
+        		builder.append(project.getBuild().getDirectory());
         		builder.append(File.separator);
         		builder.append(jarName);
         		builder.append(".jar");

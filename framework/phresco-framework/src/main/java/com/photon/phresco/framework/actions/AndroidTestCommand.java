@@ -22,7 +22,7 @@ package com.photon.phresco.framework.actions;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.framework.api.AbstractActionType;
 
-public class AndroidPerfCommand extends AbstractActionType {
+public class AndroidTestCommand extends AbstractActionType {
     
     private static final String NAME = "android";
     private String type;
@@ -32,7 +32,7 @@ public class AndroidPerfCommand extends AbstractActionType {
     }
     
     public StringBuilder getCommand() {
-    	return new StringBuilder(FrameworkConstants.MVN_ANDROID_PERF_COMMAND);
+    	return new StringBuilder(FrameworkConstants.MVN_ANDROID_TEST_COMMAND);
 	}
     
     public String getType() {

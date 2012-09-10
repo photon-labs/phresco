@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ###
-  PHR_widget-hw
-  %%
+  Archetype - phresco-html5-archetype
+  
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
-  %%
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -22,14 +22,13 @@
 <environment>
 		   <Browser>firefox</Browser>
            <Server>
-               <context>yuiHW</context>
+               <context>mobilewidgetnone</context>
                <protocol>http</protocol>
                <host>localhost</host>
                <port>8080</port>
            </Server>
-           <selenium>
-               <server.host>localhost</server.host>
-               <server.port>4444</server.port>
-               <speed>300</speed>
-           </selenium>
+         
+           <loginpage>
+              <loginText>Hello World</loginText>
+           </loginpage>
 </environment>
