@@ -59,6 +59,7 @@ public interface Constants {
     String MVN_PLUGIN_JAVA_ID = "java:";
     String MVN_PLUGIN_NODEJS_ID = "nodejs:";
     String MVN_PLUGIN_SHAREPOINT_ID = "sharepoint:";
+    String MVN_PLUGIN_DOTNET_ID ="dotnet:";
     String MVN_GOAL_DEPLOY = "deploy";
     String MVN_PLUGIN_IPHONE_ID = "xcode:";
     String MVN_PLUGIN_WORDPRESS_ID = "wordpress:";
