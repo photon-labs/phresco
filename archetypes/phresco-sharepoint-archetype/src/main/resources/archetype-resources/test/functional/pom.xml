@@ -124,5 +124,7 @@
 		<visual.studio.solution>AllTest.sln</visual.studio.solution>
 		<dotnet.tool.version>3.5</dotnet.tool.version>
 		<sonar.language>cs</sonar.language>
+		<sonar.ndeps.mode>skip</sonar.ndeps.mode> 
+		<sonar.fxcop.mode>skip</sonar.fxcop.mode>
   </properties>
 </project>

@@ -36,6 +36,7 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.sonar.wsclient.Host;
@@ -51,8 +52,6 @@ import org.xml.sax.SAXException;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.FrameworkConfiguration;
-import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.commons.AllTestSuite;
@@ -72,6 +71,7 @@ import com.photon.phresco.framework.model.TestResult;
 import com.photon.phresco.framework.model.TestSuite;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.model.Profile;
 import com.phresco.pom.util.PomProcessor;
 
 
@@ -211,23 +211,33 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			}
 			cumulativeReportparams.put(LOAD_TEST_REPORTS, loadTestResults);
 			
+			//Sonar details
 			List<SonarReport> sonarReports = null;
 			sonarReports = new ArrayList<SonarReport>();
 			
-			List<String> sonarTechReports = new ArrayList<String>(4);
-			
-			if (TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) 
-					|| TechnologyTypes.HTML5.equals(techId) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) 
-					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || TechnologyTypes.JAVA_WEBSERVICE.equals(techId)) {
-			
-				sonarTechReports.add(JAVA);
-				sonarTechReports.add(JS);
-				sonarTechReports.add(WEB);
-			} else {
-				sonarTechReports.add(SONAR_SOURCE);
-			}
-			sonarTechReports.add(FUNCTIONAL);
-			for (String sonarTechReport : sonarTechReports) {
+			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+        	builder.append(projectCode);
+        	builder.append(File.separator);
+        	builder.append(POM_XML);
+        	
+        	File pomPath = new File(builder.toString());
+        	PomProcessor path = new PomProcessor(pomPath);
+        	List<Profile> profiles = path.getModel().getProfiles().getProfile();
+        	
+        	List<String> sonarTechReports = new ArrayList<String>(4);
+        	
+			for (Profile profile : profiles) {
+	    		if (profile.getProperties() != null) {
+	    			sonarTechReports.add(profile.getId());
+	    		}
+	    	}
+    		
+    		if(CollectionUtils.isEmpty(sonarTechReports)) {
+    			sonarTechReports.add(SONAR_SOURCE);
+    		}
+        	sonarTechReports.add(FUNCTIONAL);
+        	
+        	for (String sonarTechReport : sonarTechReports) {
 				SonarReport srcSonarReport = generateSonarReport(sonarTechReport, techId);
 				if(srcSonarReport != null) {
 					sonarReports.add(srcSonarReport);
@@ -291,34 +301,16 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 		S_LOGGER.debug("Entering Method PhrescoReportGeneration.generateSonarReport()");
 		SonarReport sonarReport = new SonarReport();
     	String technology = null;
+		String serverUrl = "";
 		try {
-			FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
-        	String serverUrl = "";
-    	    if (StringUtils.isNotEmpty(frameworkConfig.getSonarUrl())) {
-    	    	serverUrl = frameworkConfig.getSonarUrl();
-    	    	S_LOGGER.debug("if condition serverUrl  " + serverUrl);
-    	    } else {
-    	    	serverUrl = getHttpRequest().getRequestURL().toString();
-    	    	StringBuilder tobeRemoved = new StringBuilder();
-    	    	tobeRemoved.append(getHttpRequest().getContextPath());
-    	    	tobeRemoved.append(getHttpRequest().getServletPath());
-
-    	    	Pattern pattern = Pattern.compile(tobeRemoved.toString());
-    	    	Matcher matcher = pattern.matcher(serverUrl);
-    	    	serverUrl = matcher.replaceAll("");
-    	    	S_LOGGER.debug("else condition serverUrl  " + serverUrl);
-    	    }
-    	    String sonarReportPath = frameworkConfig.getSonarReportPath();
-    	    S_LOGGER.debug("sonarReportPath  " + sonarReportPath);
-    	    String[] sonar1 = sonarReportPath.split("/");
-    	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar1[1]);
-    	    S_LOGGER.debug("serverUrl "+ serverUrl);
-
-        	StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			serverUrl = frameworkUtil.getSonarURL();
+        
+			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
         	builder.append(projectCode);
         	
             if (StringUtils.isNotEmpty(report) && FUNCTIONALTEST.equals(report)) {
-                FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+                frameworkUtil = FrameworkUtil.getInstance();
                 builder.append(frameworkUtil.getFuncitonalTestDir(techId));
             }
             
@@ -343,12 +335,13 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
         	String artifact = sbuild.toString();
 			Sonar sonar = new Sonar(new HttpClient4Connector(new Host(serverUrl)));
 			
+			//metric key parameters for sonar 
 			String metrickey[] = {"ncloc", "lines", "files", "comment_lines_density" , "comment_lines", "duplicated_lines_density", "duplicated_lines", 
 					"duplicated_blocks", "duplicated_files", "function_complexity", "file_complexity", "violations_density", "blocker_violations", 
 					"critical_violations", "major_violations", "minor_violations", "info_violations", "weighted_violations",
 					"classes", "functions",
 					"statements","packages", "accessors", "public_documented_api_density", "public_undocumented_api","package_tangle_index","package_cycles", "package_feedback_edges", "package_tangles", "lcom4", "rfc",
-					"directories", "class_complexity"};
+					"directories", "class_complexity", "comment_blank_lines"};
 			
 			Resource resrc = sonar.find(ResourceQuery.createForMetrics(artifact, metrickey));
 			sonarReport.setNonCommentLinesOfCode(resrc.getMeasure(metrickey[0]).getFormattedValue());
@@ -374,7 +367,8 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			
 			if ((TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) 
 					|| TechnologyTypes.HTML5.equals(techId) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) 
-					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || TechnologyTypes.JAVA_WEBSERVICE.equals(techId)) && (JAVA.equals(report) || FUNCTIONAL.equals(report))){
+					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || TechnologyTypes.JAVA_WEBSERVICE.equals(techId) 
+					|| TechnologyTypes.NODE_JS_WEBSERVICE.equals(techId)) && (JAVA.equals(report) || FUNCTIONAL.equals(report))) {
 				
 				sonarReport.setClasses(resrc.getMeasure(metrickey[18]).getFormattedValue());
 				sonarReport.setFunctions(resrc.getMeasure(metrickey[19]).getFormattedValue());
@@ -392,13 +386,17 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 				sonarReport.setClassComplexity(resrc.getMeasure(metrickey[32]).getFormattedValue());
 				sonarReport.setShowDivElement(REPORT_ELEMENT_JAVA_FUNC);
 				
-			} else if (SONAR_SOURCE.equals(report) || FUNCTIONAL.equals(report)) {
+			} else if ((SONAR_SOURCE.equals(report) || FUNCTIONAL.equals(report)) && !TechnologyTypes.NODE_JS_WEBSERVICE.equals(techId)) {
 				sonarReport.setClasses(resrc.getMeasure(metrickey[18]).getFormattedValue());
 				sonarReport.setFunctions(resrc.getMeasure(metrickey[19]).getFormattedValue());
 				sonarReport.setShowDivElement(REPORT_ELEMENT_SRC_FUNC);
 			} else if (JS.equals(report) || WEB.equals(report)) {
 				sonarReport.setDirectories(resrc.getMeasure(metrickey[31]).getFormattedValue());
 				sonarReport.setShowDivElement(REPORT_ELEMENT_JS_WEB);
+				
+			} else if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(techId) && ("source".equals(report))) {
+				sonarReport.setCommentBlankLines(resrc.getMeasure(metrickey[33]).getFormattedValue());
+				sonarReport.setShowDivElement("ReportElementNodeJs");
 			}
 			
 			sonarReport.setReportType(report);

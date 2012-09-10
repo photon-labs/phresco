@@ -30,6 +30,8 @@
         <visual.test.project.pattern>test/functional/*.Tests;*Test</visual.test.project.pattern>
         <dotnet.tool.version>3.5</dotnet.tool.version>
         <sonar.language>cs</sonar.language>
+		<sonar.ndeps.mode>skip</sonar.ndeps.mode> 
+		<sonar.fxcop.mode>skip</sonar.fxcop.mode>
     </properties>
 
     <build>

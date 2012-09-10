@@ -40,6 +40,7 @@ public class SonarReport {
 	private String directories = "";
 	private String technology = "";
 	private String showDivElement = "";
+	private String commentBlankLines = "";
 	
 	public String getNonCommentLinesOfCode() {
 		return nonCommentLinesOfCode;
@@ -269,5 +270,12 @@ public class SonarReport {
 	public void setShowDivElement(String showDivElement) {
 		this.showDivElement = showDivElement;
 	}
+	public String getCommentBlankLines() {
+		return commentBlankLines;
+	}
+	public void setCommentBlankLines(String commentBlankLines) {
+		this.commentBlankLines = commentBlankLines;
+	}
+	
 	
 }

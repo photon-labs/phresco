@@ -115,7 +115,7 @@ public class NodeJSPackage extends AbstractMojo implements PluginConstants {
 				buildDir.mkdir();
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
-			targetDir = new File(baseDir + File.separator + TARGET_DIRECTORY);
+			targetDir = new File(baseDir + File.separator + project.getBuild().getDirectory());
 			buildInfoFile = new File(buildDir.getPath() + BUILD_INFO_FILE);
 			nextBuildNo = generateNextBuildNo();
 			currentDate = Calendar.getInstance().getTime();

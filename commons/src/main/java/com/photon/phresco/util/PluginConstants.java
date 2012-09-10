@@ -25,7 +25,6 @@ public interface PluginConstants {
 	String DOT_PHRESCO_FOLDER = ".phresco";
 	String PROJECT_FOLDER = "source";
 	String DO_NOT_CHECKIN_FOLDER = "/do_not_checkin";
-	String TARGET_DIRECTORY = DO_NOT_CHECKIN_FOLDER + "/target";
 	String BUILD_DIRECTORY = DO_NOT_CHECKIN_FOLDER + "/build";
 	String BUILD_INFO_FILE = "/build.info";
 	String TEMP_DIR = "/temp";
