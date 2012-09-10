@@ -43,7 +43,7 @@ import com.photon.phresco.framework.actions.IphoneCodeValidate;
 import com.photon.phresco.framework.actions.MobileCommand;
 import com.photon.phresco.framework.actions.SCMUpdate;
 import com.photon.phresco.framework.actions.Sonar;
-import com.photon.phresco.framework.actions.AndroidPerfCommand;
+import com.photon.phresco.framework.actions.AndroidTestCommand;
 import com.photon.phresco.framework.actions.IphoneIpa;
 import com.photon.phresco.framework.api.ActionType;
 import com.photon.phresco.framework.api.CallBack;
@@ -191,7 +191,7 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
     		command = buildMavenCommand(project, action, paramsMap);
     	}
     	
-    	if (action instanceof MobileCommand || action instanceof AndroidPerfCommand || action instanceof Sonar || action instanceof IphoneIpa || action instanceof IPhoneFunctionalCommand || action instanceof IphoneBuildAndUnitTest  || action instanceof IphoneCodeValidate || action instanceof SCMUpdate) {
+    	if (action instanceof MobileCommand || action instanceof AndroidTestCommand || action instanceof Sonar || action instanceof IphoneIpa || action instanceof IPhoneFunctionalCommand || action instanceof IphoneBuildAndUnitTest  || action instanceof IphoneCodeValidate || action instanceof SCMUpdate) {
     		command.append(" " + buildMavenArgCommand(action, paramsMap));
     	}
     	return executeMavenCommand(project, action, command);
