@@ -207,6 +207,7 @@ public interface FrameworkConstants {
     String DEPLOY_BUILD_NAME = "buildName";
     String IPHONE_BUILD_NAME = "application.path";
     String IPHONE_SIMULATOR_VERSION = "simulator.version";
+    String DEVICE_TO_USE = "family";
     String IPHONE_SCHEMA_PARAM = "scheme";
     String DEPLOY_LOCATION = "deployLocation";
     String DEPLOY_CONTEXT = "context";

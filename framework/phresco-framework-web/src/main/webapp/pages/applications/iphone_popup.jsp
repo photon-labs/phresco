@@ -58,26 +58,28 @@
 	            <div class="modal-body">
 			       	<div class="clearfix">
 			       		<% if (showDeployToSimulator) { %>
-						<div class="popup-input">
-							<div class="multipleFields emaillsFieldsWidth">
-								<div class="popup-label popup-lbl-style"><input type="radio" name="deployTo" value="simulator" checked="checked">&nbsp; <s:text name="label.simulator"/></div>
-							</div>
-							<div class="multipleFields">
-								<div>
-									<select id="simulatorVersion" name="simulatorVersion" class="medium">
-										<%
-										    if (macSimulatorSdkVersions != null) {
-										    	for (String simulatorVersion : macSimulatorSdkVersions) {
-										%>
-										     <option value="<%= simulatorVersion %>"><%= simulatorVersion %></option>
-										<%
-										    	}
-										    }
-										%>
-									</select>
-								</div>
-							</div>
-						</div>
+			       		
+						<!-- sdk versions -->
+		                <div class="clearfix">
+		                    <label for="xlInput" class="xlInput popup-label">
+			                    <input type="radio" name="deployTo" value="simulator" checked="checked" style="display: none;">&nbsp;
+			                    <s:text name="label.simulator"/>
+		                    </label>
+		                    <div class="input">
+								<select id="simulatorVersion" name="simulatorVersion" class="xlarge">
+									<%
+									    if (macSimulatorSdkVersions != null) {
+									    	for (String simulatorVersion : macSimulatorSdkVersions) {
+									%>
+									     <option value="<%= simulatorVersion %>"><%= simulatorVersion %></option>
+									<%
+									    	}
+									    }
+									%>
+								</select>
+		                    </div>
+		                </div>
+	                
 						<% } else if (showDeployToDevice) { %>
 						<div class="popup-input">
 							<div class="multipleFields emaillsFieldsWidth">
@@ -89,6 +91,20 @@
 						</div>
 						<% } %>
 					</div>
+					
+					<!-- iphone family starts -->
+	                <div class="clearfix">
+	                    <label for="xlInput" class="xlInput popup-label"><s:text name="label.family"/></label>
+	                    <div class="input">
+							<select id="family" name="family" class="xlarge" >
+								<option value="iphone">iphone</option>
+								<option value="ipad">ipad</option>
+					       	</select>
+	                    </div>
+	                </div>
+	                
+	                <!-- iphone family ends -->
+	                
 				</div>
 <!-- 				iphone unit popup -->
             <% } else if(FrameworkConstants.UNIT.equals(testType)) { %>

@@ -148,6 +148,9 @@ public class Build extends FrameworkBaseAction {
 	private String browseLocation = null;
 	private String fileLocation = null;
 	
+	//iphone family
+	private String family = ""; 
+	
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 
 	// DbWithSqlFiles
@@ -676,6 +679,7 @@ public class Build extends FrameworkBaseAction {
 				// param as additional param
 				if (StringUtils.isNotEmpty(deployTo) && deployTo.equals(REQ_IPHONE_SIMULATOR)) {
 					valuesMap.put(IPHONE_SIMULATOR_VERSION, simulatorVersion);
+					valuesMap.put(DEVICE_TO_USE, family);
 				} else {
 					valuesMap.put(DEVICE_DEPLOY, TRUE);
 				}
@@ -2161,5 +2165,11 @@ public class Build extends FrameworkBaseAction {
 
 	public String getFileLocation() {
 		return fileLocation;
+	}
+	public String getFamily() {
+		return family;
+	}
+	public void setFamily(String family) {
+		this.family = family;
 	}
 }
