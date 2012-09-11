@@ -25,6 +25,7 @@ public interface PluginConstants {
 	String DOT_PHRESCO_FOLDER = ".phresco";
 	String PROJECT_FOLDER = "source";
 	String DO_NOT_CHECKIN_FOLDER = "/do_not_checkin";
+	String TARGET_DIRECTORY = DO_NOT_CHECKIN_FOLDER + "/target";
 	String BUILD_DIRECTORY = DO_NOT_CHECKIN_FOLDER + "/build";
 	String BUILD_INFO_FILE = "/build.info";
 	String TEMP_DIR = "/temp";
@@ -179,6 +180,10 @@ public interface PluginConstants {
 	String WP_STR_PLATFORM = "Platform";
 	String WP_APP_PACKAGE = "\\AppPackages";
 	String WP_TEST = "_Test";
+	String WP_PROJECT_ROOT = "Metro.UI";
+	
+	String WP_PROPERTYGROUP = "PropertyGroup";
+	String WP_AUTO_INCREMENT_PKG_VERSION_NO = "AppxAutoIncrementPackageRevision";
 
 	// Variables related to Windows 8 deploy process
 	String WP_POWERSHELL_PATH = "PowerShell ";

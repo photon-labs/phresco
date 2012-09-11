@@ -169,7 +169,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				extractArchive(response, info);
 				updateProjectPOM(info);
 				if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId)) {
-					Win8MetroCofigFileParser.xmlParser(info, projectPath);
+//					Win8MetroCofigFileParser.xmlParser(info, projectPath);
 					ItemGroupUpdater.update(info, projectPath);
 				}
 			} catch (FileNotFoundException e) {

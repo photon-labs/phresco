@@ -39,6 +39,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -89,6 +90,11 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 	private String simVersion;
 	
 	/**
+	 * @parameter expression="${family}" default-value="iphone" 
+	 */
+	private String family;
+	
+	/**
 	 * @parameter expression="${device.deploy}"
 	 */
 	private boolean deviceDeploy;
@@ -126,8 +132,7 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 	
 	private File simHomeAppLocation;
 	
-	private File buildInfoFile;
-
+	private String home = "";
 	
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -144,60 +149,51 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 		//get the correct simhome if xCode 4.3 is installed simhome is in /Application/Xcode.app/Contents
 		//Fix for artf462004
 		File simHomeFile = new File(simHome);
+		getLog().info("simHomeFile " + simHomeFile);
 		if(!simHomeFile.exists()) {
+			getLog().info("simHomeFile doesn't exists " + simHomeFile);
 			simHome = "/Applications/Xcode.app/Contents" + simHome; 
 		}
 		
 		getLog().info("Simulator home" + simHome);
+		getLog().info("copyAppToSimHome method ");
+		//copy the files into simulation directory
+		home = System.getProperty("user.home");
+		// Have to get app path from build id
+		if (StringUtils.isEmpty(buildNumber)) {
+			throw new MojoExecutionException("Selected build is not available!");
+		}
+		getLog().info("Build id is " + buildNumber);
+		getLog().info("Project Code " + baseDir.getName());
 		
-		if(!deviceDeploy) {
-			//copy the files into simulation directory
-			String home = System.getProperty("user.home");
-			// Have to get app path from build id
-			if (StringUtils.isEmpty(buildNumber)) {
-				throw new MojoExecutionException("Selected build is not available!");
-			}
-			getLog().info("Build id is " + buildNumber);
-			getLog().info("Project Code " + baseDir.getName());
-			
-			PluginUtils pu = new PluginUtils();
-			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
-			getLog().info("Build Name " + buildInfo);
-			
-			appPath = buildInfo.getBuildName();
-
-			getLog().info("Application.path = " + appPath);
-			appName = getAppFileName(appPath);
-			getLog().info("Application name = "+ appName);
-			String deployHome = "";
-			if(StringUtils.isNotBlank(appDeployHome)){
-				deployHome = appDeployHome;
-			} else {
-			deployHome = home + "/Library/Application Support/iPhone Simulator/" + simVersion +"/Applications";
-			}
-			simHomeAppLocation = new File(deployHome+File.separator+ project.getName()+File.separator+appName);
-			if(!simHomeAppLocation.exists()){
-				getLog().info("directory created");
-				simHomeAppLocation.mkdirs();
-			}
-			getLog().info("Desired location "+simHomeAppLocation.getAbsolutePath());
-			try {
-				String alignedPath = alignedPath(appPath);
-				getLog().info("path to copy source :" + alignedPath);
-				XcodeUtil.copyFolder(new File(alignedPath), simHomeAppLocation);
-				getLog().info("copy the application " + appPath +" to "+ simHomeAppLocation);
-			} catch (IOException e1) {
-				getLog().error("couldn't copy the application " + appPath +" to "+ simHomeAppLocation);
-			}
+		PluginUtils pu = new PluginUtils();
+		BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
+		getLog().info("Build Name " + buildInfo);
+		appPath = buildInfo.getBuildName();
+		getLog().info("triggerSimulator " + triggerSimulator);
+		getLog().info("deviceDeploy " + !deviceDeploy);
+		
+		//when the device deploy is false, it will be deployed to the simulator.
+		if(!deviceDeploy && triggerSimulator) {
+			// phresco executes it. 
+			// if its simulator deploy, we can deploy in many family(ipad, iphone sim) using WaxSim
+			getLog().info("deployAppWithWaxSim started.... ");
+			deployAppWithWaxSim();
+		} else if (!deviceDeploy && !triggerSimulator) { 
+			// jenkins executes it.
+			// This process copies the app file and places it in simulatos applications dir.
+			getLog().info("copyAppToSimHome started.... ");
+			copyAppToSimHome();
 		}
 		Runnable runnable = new Runnable() {
 			public void run() {
 
 				ProcessBuilder pb;
-				if(deviceDeploy){
+				if (deviceDeploy) {
 					pb = new ProcessBuilder("transporter_chief.rb");
 					pb.command().add(appPath);
 				} else {
+					getLog().info("executing into device ");
 					pb = new ProcessBuilder(simHome);
 					// Include errors in output
 					pb.redirectErrorStream(true);
@@ -226,7 +222,9 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 			}
 		};
 
-		if (triggerSimulator) {
+		getLog().info("triggerSimulator " + triggerSimulator);
+		getLog().info("deviceDeploy " + deviceDeploy);
+		if (triggerSimulator || deviceDeploy) { // Phresco app deploy should deploy the app in both simulator and device, In jenkins, app should start running only on device deployment - Due to Pipeline issue
 			getLog().info("Triggering simulator started ");
 			Thread t = new Thread(runnable, "iPhoneSimulator");
 			t.start();
@@ -237,6 +235,98 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 			}
 		}
 
+	}
+
+	private void deployAppWithWaxSim() {
+		getLog().info("deployAppWithWaxSim method ");
+		try {
+			getLog().info("waxsim_home... " + System.getenv("waxsim_home"));
+			String waxsim_home = System.getenv("waxsim_home");
+			if(StringUtils.isEmpty(waxsim_home)) {
+				throw new MojoExecutionException("waxsim_home is not found!");
+			}
+			
+			Runnable deployRunnable = new Runnable() {
+				public void run() {
+
+					List<String> command = new ArrayList<String>();
+					command.add(System.getenv("waxsim_home"));
+					command.add("-s");
+					getLog().info("simVersion " + simVersion);
+					command.add(simVersion);
+					getLog().info("family " + family);
+					command.add("-f");
+					command.add(family);
+					command.add(appPath);
+					getLog().info("command " + command.toString());
+
+					try {
+						ProcessBuilder pb = new ProcessBuilder(command);
+						getLog().info("baseDir... " + baseDir.getCanonicalPath());
+						pb.directory(baseDir);
+						Process child = pb.start();
+						InputStream is = new BufferedInputStream(child.getInputStream());
+						int singleByte = 0;
+						while ((singleByte = is.read()) != -1) {
+							System.out.write(singleByte);
+						}
+					} catch (IOException e) {
+						getLog().error("error occured in launching simulator ");
+						getLog().error(e);
+					}
+				}
+			};
+
+			getLog().error("deviceDeploy " + deviceDeploy);
+			Thread t = new Thread(deployRunnable, "iPhoneSimulator");
+			t.start();
+			try {
+				t.join(5000);
+			} catch (InterruptedException e1) {
+				getLog().error("Triggering simulator failed.");
+			}
+			
+		} catch (Exception e) {
+			getLog().error("error occured in deployAppWithWaxSim ");
+			getLog().error(e);
+		}
+	}
+
+//	public static void main(String[] args) {
+//		try {
+//			new AppDeploy().deployAppWithWaxSim();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	private void copyAppToSimHome() throws MojoExecutionException {
+		
+		getLog().info("Application.path = " + appPath);
+		appName = getAppFileName(appPath);
+		getLog().info("Application name = "+ appName);
+		String deployHome = "";
+		if(StringUtils.isNotBlank(appDeployHome)){
+			deployHome = appDeployHome;
+			getLog().info("if deployHome = " + deployHome);
+		} else {
+			deployHome = home + "/Library/Application Support/iPhone Simulator/" + simVersion +"/Applications";
+			getLog().info("else deployHome = " + deployHome);
+		}
+		simHomeAppLocation = new File(deployHome + File.separator + project.getName() + File.separator + appName);
+		if(!simHomeAppLocation.exists()){
+			getLog().info("directory created");
+			simHomeAppLocation.mkdirs();
+		}
+		getLog().info("Simulator home Desired location "+ simHomeAppLocation.getAbsolutePath());
+		try {
+			String alignedPath = alignedPath(appPath);
+			getLog().info("path to copy source :" + alignedPath);
+			XcodeUtil.copyFolder(new File(alignedPath), simHomeAppLocation);
+			getLog().info("copy the application " + appPath +" to "+ simHomeAppLocation);
+		} catch (IOException e1) {
+			getLog().error("couldn't copy the application " + appPath +" to "+ simHomeAppLocation);
+		}
 	}
 
 	private String getAppFileName(String appPath2) {
