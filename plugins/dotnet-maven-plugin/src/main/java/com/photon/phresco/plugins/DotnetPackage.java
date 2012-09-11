@@ -110,16 +110,15 @@ public class DotnetPackage extends AbstractMojo implements PluginConstants {
 	private void init() throws MojoExecutionException {
 		try {
 			
-			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			srcDir = new File(baseDir.getPath() + File.separator + "source/src");
-			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
+			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
 			if (!buildDir.exists()) {
 				buildDir.mkdir();
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
-			buildInfoFile = new File(buildDir.getPath() + BUILD_INFO_FILE);
-			targetDir = new File(baseDir + File.separator + TARGET_DIRECTORY);
+			buildInfoFile = new File(buildDir.getPath() + PluginConstants.BUILD_INFO_FILE);
+			targetDir = new File(baseDir + File.separator + project.getBuild().getDirectory());
 			nextBuildNo = generateNextBuildNo();
 			currentDate = Calendar.getInstance().getTime();
 		} catch (Exception e) {
