@@ -58,6 +58,12 @@
 						  </filesets>
 						</configuration>
 					  </plugin>
+					  	<plugin>
+							<groupId>com.photon.phresco.plugins</groupId>
+							<artifactId>dotnet-maven-plugin</artifactId>
+							<version>1.2.2.1001-SNAPSHOT</version>
+							<extensions>true</extensions>
+						</plugin>
 		        </plugins>
             </build>
         </profile>

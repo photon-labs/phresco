@@ -43,226 +43,60 @@
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src</directory> 
-			<includes> 
-				<include>Estee.GlobalPricingSystem.sln</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core</directory> 
-			<includes> 
-				<include>BAL.Core.csproj</include> 
-				<include>BALSample.cs</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/bin</directory> 
-			<includes> 
-				<include>**/*</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/obj/Debug</directory> 
-			<includes> 
-				<include>BAL.Core.csproj.FileListAbsolute.txt</include> 
-				<include>Estee.GloablPricing.BAL.Core.dll</include> 
-				<include>Estee.GloablPricing.BAL.Core.pdb</include> 
-				<include>ResolveAssemblyReference.cache</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/obj/Debug/Refactor</directory> 
-			<includes> 
-				<include>**/*</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/obj/Debug/TempPE</directory> 
-			<includes> 
-				<include>**/*</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/Properties</directory> 
-			<includes> 
-				<include>AssemblyInfo.cs</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/BAL/BAL.Core/Utility</directory> 
-			<includes> 
-				<include>Utility.cs</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core</directory> 
-			<includes> 
-				<include>DAL.Core.csproj</include> 
-				<include>DAL.Core.csproj.user</include> 
-				<include>Estee.GlobalPricingSystem.Database.csproj</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/bin</directory> 
-			<includes> 
-				<include>**/*</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/Entities</directory> 
-			<includes> 
-				<include>GlobalPricingModel.Designer.cs</include> 
-				<include>GlobalPricingModel.edmx</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/obj/Debug</directory> 
-			<includes> 
-				<include>Estee.GlobalPricing.DAL.Core.csproj.FileListAbsolute.txt</include> 
-				<include>Estee.GlobalPricing.DAL.Core.dll</include> 
-				<include>Estee.GlobalPricing.DAL.Core.pdb</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/obj/Debug/Refactor</directory> 
-			<includes> 
-				<include>Estee.GlobalPricing.DAL.Core.dll</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/obj/Debug/TempPE</directory> 
-			<includes> 
+			<directory>source/src/App_Code</directory>
+			<includes>
 				<include>**/*</include>
-			</includes> 
+			</includes>			
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/Properties</directory> 
-			<includes> 
-				<include>AssemblyInfo.cs</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/DAL/DAL.Core/Utility</directory> 
-			<includes> 
-				<include>Utility.cs</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Services</directory> 
-			<includes> 
+				<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/App_Data</directory>
+			<includes>
 				<include>**/*</include>
-			</includes> 
+			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Tools</directory> 
+			<directory>source/src/CSS</directory> 
 			<includes> 
-				<include>Readme.txt</include>
+				<include>Default.cs</include> 
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem</directory> 
+			<directory>source/src/Pages</directory> 
 			<includes> 
 				<include>Default.aspx</include>
 				<include>Default.aspx.cs</include>
 				<include>Default.aspx.designer.cs</include>
-				<include>Estee.GlobalPricingSystem.csproj</include>
-				<include>Estee.GlobalPricingSystem.csproj.user</include>
-				<include>Home.aspx</include>
-				<include>Home.aspx.cs</include>
-				<include>Home.aspx.designer.cs</include>
-				<include>Web.config</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/App_Data</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/CSS</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/Images</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Assets/JavaScript</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/bin</directory> 
-			<includes> 
-				<include>Estee.GloablPricing.BAL.Core.dll</include>
-				<include>Estee.GloablPricing.BAL.Core.pdb</include>
-				<include>Estee.GloablPricingSystem.dll</include>
-				<include>Estee.GloablPricingSystem.pdb</include>
-				<include>Estee.GlobalPricing.DAL.Core.dll</include>
-				<include>Estee.GlobalPricing.DAL.Core.pdb</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/bin/Entities</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/MasterPages</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug</directory> 
-			<includes> 
-				<include>Estee.GloablPricingSystem.dll</include>
-				<include>Estee.GloablPricingSystem.pdb</include>
-				<include>Estee.GlobalPricingSystem.csproj.FileListAbsolute.txt</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug/Refactor</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/obj/Debug/TempPE</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Pages</directory> 
-			<includes> 
-				<include>**/*</include>
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Properties</directory> 
+			<directory>source/src/Properties</directory> 
 			<includes> 
 				<include>AssemblyInfo.cs</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/UserControls</directory> 
+			<directory>source/src/Scripts</directory> 
 			<includes> 
-				<include>**/*</include>
+				<include>jquery-1.4.1.js</include>
+				<include>jquery-1.4.1.min.js</include>
+				<include>jquery-1.4.1-vsdoc.js</include>				
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/src/Web/Estee.GlobalPricingSystem/Utility</directory> 
+			<directory>source/src/Service References</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src</directory> 
 			<includes> 
-				<include>ModelUtility.cs</include>
-				<include>Utility.cs</include>
+				<include>SampleWebApp.csproj</include>
+				<include>SampleWebApp.csproj.user</include>
+				<include>SampleWebApp.sln</include>
+				<include>Web.config</include>
+				<include>Web.Debug.config</include>
+				<include>Web.Release.config</include>
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

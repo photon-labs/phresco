@@ -1,5 +1,0 @@
-D:\sourcecode\IPS_Phresco\source\src\Web\Estee.GlobalPricingSystem\bin\Estee.GlobalPricing.DAL.Core.dll
-D:\sourcecode\IPS_Phresco\source\src\Web\Estee.GlobalPricingSystem\bin\Estee.GlobalPricing.DAL.Core.pdb
-D:\sourcecode\IPS_Phresco\source\src\DAL\DAL.Core\obj\Debug\ResolveAssemblyReference.cache
-D:\sourcecode\IPS_Phresco\source\src\DAL\DAL.Core\obj\Debug\Estee.GlobalPricing.DAL.Core.dll
-D:\sourcecode\IPS_Phresco\source\src\DAL\DAL.Core\obj\Debug\Estee.GlobalPricing.DAL.Core.pdb
