@@ -21,12 +21,9 @@ package com.photon.phresco.framework;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import org.tmatesoft.svn.core.SVNAuthenticationException;
 import org.tmatesoft.svn.core.SVNDepth;
-import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
 import org.tmatesoft.svn.core.internal.wc.DefaultSVNOptions;
@@ -91,19 +88,37 @@ public class SVNAccessor {
             uc.doCheckout(svnURL, projectRoot, SVNRevision.UNDEFINED, SVNRevision.parse(revision),
                     SVNDepth.UNKNOWN, false);
     }
+    
+    public void update(File dstPath, String revision, boolean isRecursive) throws Exception {
+        SVNUpdateClient uc = cm.getUpdateClient();
+        uc.doUpdate(dstPath, SVNRevision.parse(revision), isRecursive);
+    }
 
     /**
      * @param args
      * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
-        String svnURL = "https://insight.photoninfotech.com/svn/repos/phresco-projects/trunk/svn-import-projects/PHR_blogger/";
-        File checkOutDir = new File("D:\\work\\projects\\phresco\\incubator\\svntest");
-        String username = "******";
-        String password = "******";
-
-        SVNAccessor svnAccess = new SVNAccessor(svnURL, null, null);
-//        svnAccess.checkout(checkOutDir, "HEAD", true);
-//        System.out.println("Successfully checked out");
+    	try {
+    		System.out.println("started!!!!!!!!");
+            String svnURL = "https://insight.photoninfotech.com/svn/repos/phresco-svn-projects/ci/1.2.0.8003_QA/PHR_Phpblog/";
+            File checkOutDir = new File("C:\\Documents and Settings\\rajeshkumar_ra\\workspace\\temp\\PHR_Phpblog");
+            String username = "kaleeswaran_s";
+            String password = "Suresh@123";
+            String revision = "HEAD";
+            
+//            SVNAccessor svnAccess = new SVNAccessor(svnURL, null, null);
+//            svnAccess.checkout(checkOutDir, "HEAD", true);
+//            System.out.println("Successfully checked out");
+            
+    		SVNAccessor svnAccessor = new SVNAccessor(svnURL, username, password);
+//    		String projCode = svnAccessor.getProjectInfo(revision).getCode();
+//    		revision = !"HEAD".equals(revision) ? revisionVal : revision;
+//    		svnAccessor.checkout(checkOutDir, revision, true, projCode);
+    		svnAccessor.update(checkOutDir, revision, true);
+    		System.out.println("Completed!!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }

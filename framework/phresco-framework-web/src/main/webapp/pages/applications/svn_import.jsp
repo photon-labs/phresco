@@ -164,7 +164,8 @@
 	    });
 		
 		$('#svnImport').click(function() {
-			var action = "importGITProject";
+			var action = getAction();
+			
 			$("#errMsg").html("");
 			var repoUrl = $("input[name='repourl']").val();
 			$('.missingData').empty();
@@ -177,9 +178,6 @@
 			
 			// if it is svn need to validate username and password fields
 			if($("input:radio[name=repoType][value='svn']").is(':checked')) {
-				// if it is svn 
-				action = "importSVNProject";
-				
 				if(isBlank($.trim($("input[name='username']").val()))){
 					$("#errMsg").html("Username is missing");
 					$("#userName").focus();
@@ -193,8 +191,8 @@
 					return false;
 				}
 				
-				// when it is not updating operation , the revision have to be validated
-				if($('#svnImport').val() != "Update" && $('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))) {
+				// the revision have to be validated
+				if($('input:radio[name=revision]:checked').val() == "revision" && (isBlank($.trim($('#revisionVal').val())))) {
 					$("#errMsg").html("Revision is missing");
 					$("#revisionVal").focus();
 					$("#revisionVal").val("");
@@ -209,20 +207,14 @@
 	    	if (!isBlank($('form').serialize())) {
 	    		params = $('form').serialize() + "&";
 	    	}
-			if($('#svnImport').val() == "Update") {
-				action = "updateProject";
-				params = params.concat("projectCode=");
-				params = params.concat("<%= projectCode %>");
+	    	params = params.concat("projectCode=");
+	    	params = params.concat("<%= projectCode %>");
+	    	
+	    	// do import or update operation
+			$('.popupLoadingIcon').show();
+			getCurrentCSS();
+			performAction(action, params, '', true);
 
-				$("#popup_div").empty();
-				$('#build-outputOuter').show().css("display","block");
-				getCurrentCSS();
-				readerHandlerSubmit(action, '<%= projectCode %>', '<%= FrameworkConstants.PROJECT_UPDATE %>', params, '');
-			} else {
-				$('.popupLoadingIcon').show();
-				getCurrentCSS();
-				performAction(action, params, '', true);
-			}
 		});
 		
  		$('#credentials').click(function() {
@@ -238,8 +230,7 @@
 			$("#popup_div").css("display","none");
 			$("#popup_div").empty();
         });
- 		//when the import popup is showed for updating the project, it have to hide the revision information
- 		$('#svnRevisionInfo').css("display", "<%= StringUtils.isEmpty(fromTab) ? "block" : "none" %>");
+		
  		<%
  			if (StringUtils.isNotEmpty(repoUrl) && repoUrl.contains(FrameworkConstants.GIT)) {
  		%>
@@ -257,6 +248,23 @@
  		extraInfoDisplay();
  		
 	});
+	
+	function getAction() {
+		var actionUrl = "";
+		if ($("input:radio[name=repoType][value='svn']").is(':checked')) {
+			actionUrl = actionUrl + "SVNProject";
+		}
+		if ($("input:radio[name=repoType][value='git']").is(':checked')) {
+			actionUrl = actionUrl + "GITProject";
+		}
+		if ($('#svnImport').val() == "Import") {
+			actionUrl = "import" + actionUrl;
+		} else if ($('#svnImport').val() == "Update") {
+			actionUrl = "update" + actionUrl;
+		}
+		
+		return actionUrl;
+	}
 	
 	//base on the repo type credential info need to be displayed
 	
@@ -293,7 +301,7 @@
 	}
 	
 	function successEvent(pageUrl, data){
-		if(pageUrl == "importSVNProject" || pageUrl == "importGITProject"){
+		if(pageUrl == "importSVNProject" || pageUrl == "importGITProject" || pageUrl == "updateSVNProject" || pageUrl == "updateGITProject"){
 			fetchJSONData(data);
 		}
 	}
