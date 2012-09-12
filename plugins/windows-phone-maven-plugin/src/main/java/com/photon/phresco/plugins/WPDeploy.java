@@ -150,7 +150,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			File sourceDir = new File(baseDir.getPath() + sourceDirectory);
 			solutionFile = sourceDir.listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String name) { 
-					return name.endsWith(".sln");
+					return name.endsWith(WP_SLN);
 				}
 			});
 			
@@ -225,14 +225,14 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				uninstallExistingPackage();
 			}
 			// Get .ps1 file from the extracted contents
-			File[] ps1File = tempDir.listFiles(new FilenameFilter() { 
+			File[] appxFile = tempDir.listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String name) { 
-					return name.endsWith(".ps1");
+					return name.endsWith(".appx");
 				}
 			});
 			
-			
-			BufferedReader br = null;
+			/* DONT REMOVE FOLLOWING COMMENT BLOCK */
+			/*BufferedReader br = null;
 			BufferedWriter bw = null;
 			File path = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
 			File tempFile = new File(tempDir.getPath() + File.separator + "tmp" + ps1File[0].getName().substring(ps1File[0].getName().length() - 4));
@@ -254,14 +254,15 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				bw.close();
 			}
 			path.delete();
-			tempFile.renameTo(newFile);
+			tempFile.renameTo(newFile);*/
 			
 			// PowerShell .\Add-AppDevPackage.ps1
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
+			sb.append(WP_ADD_APPX_PACKAGE);
 			sb.append(WP_STR_DOT);
 			sb.append(WINDOWS_STR_BACKSLASH);
-			sb.append(ps1File[0].getName());
+			sb.append(appxFile[0].getName());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -282,12 +283,10 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 		try {
 			String packageName = packageInfo.getPackageName();
 			
-			getLog().info("Package Name: " + packageName);
-			
 			// PowerShell (Get-AppxPackage -Name <packageName>).count
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
-			sb.append("(Get-AppxPackage -Name " + packageName + ").count");
+			sb.append("(" + WP_GET_APPX_PACKAGE +"-Name " + packageName + ").count");
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -299,10 +298,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 					tempVar = line;
 				}
 			}
-/*			getLog().info("line: " + line);
-			getLog().info("tempVar: " + tempVar);
-*/			
-			
 			if (tempVar != null) {
 				if(Integer.parseInt(tempVar.trim()) > 0) {			
 					isPackageInstalled = true;
@@ -321,10 +316,11 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 		BufferedReader in = null;
 		try {
 			String packageFullName = getPackageFullName();
-			// PowerShell (Get-AppxPackage -Name <packageName>).count
+			// PowerShell Remove-AppxPackage <packageFullName>
+			
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
-			sb.append("Remove-AppxPackage " + packageFullName);
+			sb.append(WP_REMOVE_APPX_PACKAGE + packageFullName);
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -347,19 +343,21 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 		try {
 			String packageName = packageInfo.getPackageName();
 			
-			// PowerShell (Get-AppxPackage -Name <packageName>).count
+			// PowerShell (Get-AppxPackage -Name <packageName>).packagefullname
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
-			sb.append("(Get-AppxPackage -Name " + packageName + ").packagefullname");
+			sb.append("(" + WP_GET_APPX_PACKAGE + "-Name " + packageName + ").packagefullname");
+			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
 			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
-				packageFullName = line;				
+				if (packageFullName == null) {
+					packageFullName = line;
+				}		
 			}
-			
 		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
