@@ -593,7 +593,7 @@ public class Applications extends FrameworkBaseAction {
 			String projCode = svnAccessor.getProjectInfo(revision).getCode();
 			S_LOGGER.debug("Import Application repository Url"
 						+ repositoryUrl + " Username " + userName);
-			revision = !"HEAD".equals(revision) ? revisionVal : revision;
+			revision = !HEAD_REVISION.equals(revision) ? revisionVal : revision;
 			svnAccessor.checkout(checkOutDir, revision, true, projCode);
 			svnImport = true;
 			svnImportMsg = getText(IMPORT_SUCCESS_PROJECT);
@@ -718,23 +718,23 @@ public class Applications extends FrameworkBaseAction {
 			svnImport = true;
 			svnImportMsg = getText(SUCCESS_PROJECT_UPDATE);
 		} catch(org.apache.commons.io.FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
-			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
 		} catch(org.eclipse.jgit.api.errors.TransportException e) { //Invalid remote: origin (URL)
-			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(INVALID_URL);
 		} catch(org.eclipse.jgit.api.errors.InvalidRemoteException e) { //Invalid remote: origin (URL)
-			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(INVALID_URL);
 		}  catch(PhrescoException e) {
-	    	S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+	    	S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 	    	svnImport = false;
 	    	svnImportMsg = getText(INVALID_FOLDER);
 	    } catch (Exception e) {
-			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
+			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
 		}
@@ -752,7 +752,7 @@ public class Applications extends FrameworkBaseAction {
 			
 			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
 			S_LOGGER.debug("Import Application repository Url" + repositoryUrl + " Username " + userName);
-			revision = !"HEAD".equals(revision) ? revisionVal : revision;
+			revision = !HEAD_REVISION.equals(revision) ? revisionVal : revision;
 			File updateDir = new File(Utility.getProjectHome() , projectCode);
 			S_LOGGER.debug("updateDir SVN... " + updateDir);
 			svnAccessor.update(updateDir, revision, false);
@@ -760,7 +760,7 @@ public class Applications extends FrameworkBaseAction {
 			svnImport = true;
 			svnImportMsg = getText(SUCCESS_PROJECT_UPDATE);
 		} catch(SVNAuthenticationException e) {
-	         S_LOGGER.error("Entered into catch block of Applications.importApplication()" + FrameworkUtil.getStackTraceAsString(e));
+	         S_LOGGER.error("Entered into catch block of Applications.importApplication()" + getText(INVALID_CREDENTIALS) + FrameworkUtil.getStackTraceAsString(e));
 	         svnImport = false;
 	         svnImportMsg = getText(INVALID_CREDENTIALS);
 	    } catch(SVNException e) {
@@ -774,11 +774,11 @@ public class Applications extends FrameworkBaseAction {
 	    		svnImportMsg = getText(INVALID_FOLDER);
 	    	}
 	    } catch(PhrescoException e) {
-	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()" + FrameworkUtil.getStackTraceAsString(e));
+	    	S_LOGGER.error("Entered into catch block of Applications.importApplication()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 	    	svnImport = false;
 	    	svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
 	    } catch (Exception e) {
-			S_LOGGER.error("Entered into catch block of Applications.importApplication()" + FrameworkUtil.getStackTraceAsString(e)); 
+			S_LOGGER.error("Entered into catch block of Applications.importApplication()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e)); 
 			svnImport = false;
 			svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
 		}
