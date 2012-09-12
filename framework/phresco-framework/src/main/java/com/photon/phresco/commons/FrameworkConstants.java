@@ -1381,4 +1381,6 @@ public interface FrameworkConstants {
 		  String HINTPATH = "HintPath";
 		  String PROJECT_FILE = ".csproj";
 		  String CONTENT = "Content";
+		  String COMMON = "\\Common";
+		  String DOUBLE_DOT  = "..";
 }
