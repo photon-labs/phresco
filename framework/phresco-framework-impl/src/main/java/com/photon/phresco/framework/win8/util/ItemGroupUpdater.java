@@ -36,7 +36,7 @@ public class ItemGroupUpdater implements FrameworkConstants {
 	 */
 	public static void update(ProjectInfo info, File path) throws PhrescoException {
 		try {
-			path = new File(path + File.separator + SOURCE_DIR + File.separator + info.getName() + File.separator + info.getName()+ PROJECT_FILE);
+			path = new File(path + File.separator + SOURCE_DIR + File.separator + PROJECT_ROOT + File.separator + PROJECT_ROOT + CSPROJ_FILE);
 			List<ModuleGroup> modules = info.getTechnology().getModules();
 			if(!path.exists() && modules == null) {
 				return;
@@ -45,8 +45,6 @@ public class ItemGroupUpdater implements FrameworkConstants {
 			docFactory.setNamespaceAware(false);
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(path);
-			List<Node> itemGroup = getItemGroup(doc);
-		    updateContent(doc, modules, itemGroup, CONTENT);
 			boolean referenceCheck = referenceCheck(doc);
 			if (referenceCheck) {
 				updateItemGroups(doc,modules);
@@ -70,23 +68,22 @@ public class ItemGroupUpdater implements FrameworkConstants {
 			throw new PhrescoException(e);
 		} 
 	}
-
+	
 	private static void createNewItemGroup(Document doc, List<ModuleGroup> modules) {
-		NodeList projects = doc.getElementsByTagName(PROJECT);
+		Element project = doc.getDocumentElement();
 		Element itemGroup = doc.createElement(ITEMGROUP);
-		for (int i = 0; i < projects.getLength(); i++) {
-			Element project = (Element) projects.item(i);
-			for (ModuleGroup module : modules) {
-				Element reference = doc.createElement(REFERENCE);
-				reference.setAttribute(INCLUDE , module.getName());
-				Element hintPath = doc.createElement(HINTPATH);
-				hintPath.setTextContent(DOUBLE_DOT + COMMON + File.separator + module.getName()+ DLL);
-				reference.appendChild(hintPath);
-				itemGroup.appendChild(reference);
-			}
-			project.appendChild(itemGroup);
+		for (ModuleGroup module : modules) {
+			Element reference = doc.createElement(REFERENCE);
+			reference.setAttribute(INCLUDE , module.getName());
+			Element hintPath = doc.createElement(HINTPATH);
+			hintPath.setTextContent(DOUBLE_DOT + COMMON + File.separator + module.getName()+ DLL);
+			reference.appendChild(hintPath);
+			itemGroup.appendChild(reference);
 		}
+		project.appendChild(itemGroup);
 	}
+	
+	
 	
 	private static void updateItemGroups(Document doc, List<ModuleGroup> module) {
 	   List<Node> itemGroup = getItemGroup(doc);
@@ -103,12 +100,12 @@ public class ItemGroupUpdater implements FrameworkConstants {
 					for (ModuleGroup module : modules) {
 						Element content = doc.createElement(elementName);
 						if (elementName.equalsIgnoreCase(REFERENCE)) {
-							content.setAttribute(INCLUDE, LIBS + module.getName()+ DLL);
+							content.setAttribute(INCLUDE, module.getName()+ DLL);
 							Element hintPath = doc.createElement(HINTPATH);
-							hintPath.setTextContent(LIBS + module.getName()+ DLL);
+							hintPath.setTextContent(DOUBLE_DOT + COMMON + File.separator + module.getName()+ DLL);
 							content.appendChild(hintPath);
 						} else {
-							content.setAttribute(INCLUDE, LIBS + module.getName()+ DLL);
+							content.setAttribute(INCLUDE, module.getName()+ DLL);
 						}
 						parentNode.appendChild(content);
 					}
