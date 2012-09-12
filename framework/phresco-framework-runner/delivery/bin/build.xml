@@ -171,6 +171,8 @@
    <if>
         <available file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
         <else>
+    <mkdir dir="${phresco.home}/workspace/temp/"/>
+    <mkdir dir="${phresco.home}/workspace/temp/markers"/>
     <touch file="${phresco.upgrade.file}"/>
     <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.1.2001.marker"/>
     <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.0.9000.marker"/>
