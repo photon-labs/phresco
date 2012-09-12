@@ -114,7 +114,7 @@ public class DrupalPackage extends AbstractMojo implements PluginConstants {
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
 			buildInfoFile = new File(buildDir.getPath() + BUILD_INFO_FILE);
-			targetDir = new File(baseDir + File.separator + project.getBuild().getDirectory());
+			targetDir = new File(project.getBuild().getDirectory());
 			nextBuildNo = generateNextBuildNo();
 			currentDate = Calendar.getInstance().getTime();
 		} catch (Exception e) {
