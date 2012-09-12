@@ -1383,4 +1383,8 @@ public interface FrameworkConstants {
 		  String CONTENT = "Content";
 		  String COMMON = "\\Common";
 		  String DOUBLE_DOT  = "..";
+		  String PROJECT_ROOT = "Metro.UI";
+		  String SLN_FILE = "Metro.sln";
+		  String CSPROJ_FILE = ".csproj";
+
 }
