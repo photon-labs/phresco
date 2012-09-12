@@ -207,4 +207,6 @@ public interface PluginConstants {
 	String WP7_XAP_FILE = "-xap";
 	String WP7_INSTALL = "-install";
 
+	//Xcode plugin constants
+	String WAXSIM_HOME = "WAXSIM_HOME";
 }

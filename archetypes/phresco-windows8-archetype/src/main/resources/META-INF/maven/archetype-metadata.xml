@@ -33,84 +33,201 @@
 			<includes> 
 				<include>PHTN_Reference_Guide.doc</include> 
 				<include>PHTN_Release_Notes.doc</include> 
-				<include>README.txt</include> 
-			</includes> 
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
+				<include>README.txt</include>
+                <include>WinMetro_1_doc.pdf</include>
+			</includes>
+          </fileSet>  
+            <fileSet filtered="false" packaged="false"> 
 			<directory>source</directory> 
 			<includes>
-				<include>HelloWorld.sln</include>
+				<include>Metro.sln</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld/Libs</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Common</directory> 
 			<includes>
-			    <include>**/*</include>
+				<include>SharedAssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Common</directory> 
 			<includes>
-			    <include>App.xaml</include>
-				<include>App.xaml.cs</include>
-				<include>HelloWorld.csproj</include>
-				<include>HelloWorld.csproj.user</include>
-				<include>HelloWorld_TemporaryKey.pfx</include>
-				<include>MainPage.xaml</include>
-				<include>MainPage.xaml.cs</include>
-				<include>Package.appxmanifest</include>
+				<include>Metro.Common.csproj</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld/Assets</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Common/Configuration</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Common/Converters</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Common/Helpers</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Common/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Controls</directory> 
+			<includes>
+				<include>Metro.Controls.csproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Controls/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Entities</directory> 
+			<includes>
+				<include>Metro.Entities.csproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Entities/Commerce</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Entities/Model</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Entities/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Notifications</directory> 
+			<includes>
+				<include>BadgeContent.cs</include>
+                <include>Common.cs</include>
+                <include>ContentInterfaces.cs</include>
+                <include>Metro.Notifications.csproj</include>
+                <include>TileContent.cs</include>
+                <include>ToastContent.cs</include>  
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Notifications/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Services</directory> 
+			<includes>
+				<include>Metro.Services.csproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.Services/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI</directory> 
+			<includes>
+				<include>App.xaml</include>
+                <include>App.xaml.cs</include>
+                <include>HSN.UI_TemporaryKey.pfx</include>
+                <include>Metro.UI.csproj</include>
+                <include>Metro.UI.csproj.user</include>
+                <include>Package.appxmanifest</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Assets</directory> 
 			<includes>
 				<include>Logo.png</include>
-				<include>SmallLogo.png</include>
-				<include>SplashScreen.png</include>
-				<include>StoreLogo.png</include>				
+                <include>SmallLogo.png</include>
+                <include>SplashScreen.png</include>
+                <include>StoreLogo.png</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld/Common</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Common</directory> 
 			<includes>
 				<include>StandardStyles.xaml</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld/Properties</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Custom Controls</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Pages</directory> 
+			<includes>
+				<include>MainPage.xaml</include>
+                <include>MainPage.xaml.cs</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>                
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UI/Resources</directory> 
+			<includes>
+				<include>**/*</include>                
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UnitTests</directory> 
+			<includes>
+				<include>Metro.UnitTest.csproj</include>
+                <include>Package.appxmanifest</include>
+                <include>UnitTest1.cs</include>                
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.UnitTests/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
+                               
 			</includes>
-		</fileSet>		
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.ViewModels</directory> 
+			<includes>
+				<include>Metro.ViewModels.csproj</include>
+                               
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Metro.ViewModels/Properties</directory> 
+			<includes>
+				<include>AssemblyInfo.cs</include>
+                               
+			</includes>
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/unit</directory> 
 			<includes>
-   				<include>HelloWorld_UnitTest.sln</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/HelloWorld_UnitTest</directory> 
-			<includes>
-				<include>HelloWorld_UnitTest.csproj</include>
-				<include>HelloWorld_UnitTest.csproj.user</include>
-				<include>UnitTest1.cs</include>
-				<include>HelloWorld_UnitTest_TemporaryKey.pfx</include>
-				<include>Package.appxmanifest</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/HelloWorld_UnitTest/Images</directory> 
-			<includes>
-				<include>UnitTestLogo.png</include>
-				<include>UnitTestSmallLogo.png</include>
-				<include>UnitTestSplashScreen.png</include>
-				<include>UnitTestStoreLogo.png</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit/HelloWorld_UnitTest/Properties</directory> 
-			<includes>
-				<include>AssemblyInfo.cs</include>
+   				<include>**/*</include>
 			</includes>
 		</fileSet>
 	</fileSets>

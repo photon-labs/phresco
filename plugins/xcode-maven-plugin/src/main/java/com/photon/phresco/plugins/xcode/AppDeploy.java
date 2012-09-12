@@ -42,16 +42,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
-import com.photon.phresco.exception.PhrescoException;
-import com.photon.phresco.framework.PhrescoFrameworkFactory;
-import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
@@ -240,8 +236,8 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 	private void deployAppWithWaxSim() {
 		getLog().info("deployAppWithWaxSim method ");
 		try {
-			getLog().info("waxsim_home... " + System.getenv("waxsim_home"));
-			String waxsim_home = System.getenv("waxsim_home");
+			getLog().info("WAXSIM_HOME... " + System.getenv(WAXSIM_HOME));
+			String waxsim_home = System.getenv(WAXSIM_HOME);
 			if(StringUtils.isEmpty(waxsim_home)) {
 				throw new MojoExecutionException("waxsim_home is not found!");
 			}
@@ -250,7 +246,7 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 				public void run() {
 
 					List<String> command = new ArrayList<String>();
-					command.add(System.getenv("waxsim_home"));
+					command.add(System.getenv(WAXSIM_HOME));
 					command.add("-s");
 					getLog().info("simVersion " + simVersion);
 					command.add(simVersion);
