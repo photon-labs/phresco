@@ -174,6 +174,9 @@ public interface PluginConstants {
 	String WP_STR_SEMICOLON = ";";
 	String WINDOWS_STR_BACKSLASH = "\\";
 	String WP_STR_DOUBLEQUOTES = "\"";
+	
+	String WP_SLN = ".sln";
+	String WP_CSPROJ = ".csproj";
 
 	// Variables related to Windows 8 build process
 	String WP_STR_CONFIGURATION = "Configuration";
@@ -188,6 +191,10 @@ public interface PluginConstants {
 	// Variables related to Windows 8 deploy process
 	String WP_POWERSHELL_PATH = "PowerShell ";
 	String WP_STR_DOT = ".";
+	
+	String WP_ADD_APPX_PACKAGE = "Add-AppxPackage ";
+	String WP_GET_APPX_PACKAGE = "Get-AppxPackage ";
+	String WP_REMOVE_APPX_PACKAGE = "Remove-AppxPackage ";
 
 	// Variables related to Windows 7 build process
 	String WP7_BIN_FOLDER = "\\bin";
