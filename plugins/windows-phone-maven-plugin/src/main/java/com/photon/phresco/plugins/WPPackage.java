@@ -197,7 +197,7 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 			File sourceDir = new File(baseDir.getPath() + sourceDirectory);
 			solutionFile = sourceDir.listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String name) { 
-					return name.endsWith(".sln");
+					return name.endsWith(WP_SLN);
 				}
 			});			
 		} catch (Exception e) {
@@ -213,7 +213,7 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 			File projRootDir = new File(rootDir.getPath());
 			csprojFile = projRootDir.listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String name) { 
-					return name.endsWith(".csproj");
+					return name.endsWith(WP_CSPROJ);
 				}
 			});			
 		} catch (Exception e) {

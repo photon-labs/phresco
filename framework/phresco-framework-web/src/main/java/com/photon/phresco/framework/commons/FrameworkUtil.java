@@ -541,7 +541,9 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
     		builder.append(projectCode);
     		builder.append(File.separatorChar);
     		builder.append(POM_XML);
+    		S_LOGGER.debug("builder.toString() " + builder.toString());
     		File pomPath = new File(builder.toString());
+    		S_LOGGER.debug("file exists " + pomPath.exists());
     		return new PomProcessor(pomPath);
 		} catch (Exception e) {
 			throw new PhrescoException(e);

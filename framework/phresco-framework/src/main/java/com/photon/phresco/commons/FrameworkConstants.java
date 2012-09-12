@@ -300,6 +300,7 @@ public interface FrameworkConstants {
     String ELEMENT_TARGET = "do_not_checkin/target/*.apk";
     String ELEMENT_VERBOS = "verbose";
     String ELEMENT_VERIFY = "verify";
+    String HEAD_REVISION = "HEAD";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
@@ -1380,4 +1381,6 @@ public interface FrameworkConstants {
 		  String HINTPATH = "HintPath";
 		  String PROJECT_FILE = ".csproj";
 		  String CONTENT = "Content";
+		  String COMMON = "\\Common";
+		  String DOUBLE_DOT  = "..";
 }

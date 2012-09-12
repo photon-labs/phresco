@@ -144,7 +144,7 @@
 			              		<td>
 			              			<a href="#" name="edit" id="<%= projectInfo.getCode() %>" ><%= projectInfo.getName() %></a>
 			              		</td>
-			              		<td><%= projectInfo.getDescription() %></td>
+			              		<td style="width: 40%;"><%= projectInfo.getDescription() %></td>
 			              		<td><%= projectInfo.getTechnology().getName() %></td>
 			              		<td class="iconsTd">
 			              			<a href="#" id="pdfPopup" class="iconsCenterAlign"><img id="<%= projectInfo.getCode() %>" class="pdfCreation" src="images/icons/print_pdf.png" title="Generate Report" class="iconSizeinList"/></a>
