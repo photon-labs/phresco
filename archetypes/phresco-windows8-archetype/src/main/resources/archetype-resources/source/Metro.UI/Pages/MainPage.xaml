@@ -9,12 +9,7 @@
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
     <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Hello World" VerticalAlignment="Center" FontSize="72" Style="{StaticResource BodyTextStyle}">
-    <parent>
-        <groupId>com.photon.phresco.archetypes</groupId>
-        <artifactId>phresco-archetypes</artifactId>
-        <version>1.2.2.1001-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-    </parent></TextBlock>
+    </TextBlock>
 
     </Grid>
 </Page>
