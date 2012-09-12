@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>com.photon.phresco.archetypes</groupId>
+        <artifactId>phresco-archetypes</artifactId>
+        <version>1.2.2.1001-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>archetypes</groupId>
+  <artifactId>phresco-android-library-archetype</artifactId>
+  <name>Archetype - phresco-android-library-archetype</name>
+  <url>http://www.phresco.org</url>
+  <description>phresco-android-library-archetype</description>
+      <distributionManagement>
+        <site>
+            <id>phresco.archetype.android</id>
+            <name>Phresco Archetypes - Android Library</name>
+            <url>${siteBaseUrl}/archetypes/phresco-android-library-archetype/</url>
+        </site>
+    </distributionManagement>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                        <outputDirectory>src/main/resources/archetype-resources/.phresco</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/resources/META-INF/maven</directory>
+                                    <includes>
+                                        <include>archetype-metadata.xml</include>
+                                    </includes> 
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+            
+             <plugin>
+                <groupId>org.apache.geronimo.genesis.plugins</groupId>
+                <artifactId>tools-maven-plugin</artifactId>
+                <version>${tools-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>install-legal-files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-legal-files</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+	<profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+		        <plugins>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+						  <execution>
+							<id>default-clean</id>
+							<phase>pre-clean</phase>
+							<goals>
+							  <goal>clean</goal>
+							</goals>
+						  </execution>
+						</executions>
+						<configuration>
+						  <filesets>
+							<fileset>
+							  <directory>do_not_checkin/build</directory>
+							  <includes>
+								<include>**/*</include>
+							  </includes>
+							  <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+						</configuration>
+					  </plugin>
+		        </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
