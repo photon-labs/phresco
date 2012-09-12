@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
@@ -639,7 +640,8 @@ public class Applications extends FrameworkBaseAction {
 		S_LOGGER.debug("repositoryUrl " + repositoryUrl);
 		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
 		try {
-			File gitImportTemp = new File(Utility.getPhrescoTemp(), GIT_IMPORT_TEMP_DIR);
+			String uuid = UUID.randomUUID().toString();
+			File gitImportTemp = new File(Utility.getPhrescoTemp(), uuid);
 			S_LOGGER.debug("gitImportTemp " + gitImportTemp);
 			if(gitImportTemp.exists()) {
 				S_LOGGER.debug("Empty git directory need to be removed before importing from git ");
@@ -1295,7 +1297,7 @@ public class Applications extends FrameworkBaseAction {
 		return SUCCESS;
 	}
 	
-	public boolean importFromGit(String url,File directory) throws Exception {
+	public boolean importFromGit(String url, File directory) throws Exception {
 		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
 		S_LOGGER.debug("importing git " + url);
 	    Git repo1 = Git.cloneRepository().setURI(url).setDirectory(directory).call();
@@ -1331,7 +1333,12 @@ public class Applications extends FrameworkBaseAction {
 		}
 		S_LOGGER.debug("gitImportTemp ====> " + gitImportTemp);
 		S_LOGGER.debug("workspaceProjectDir ====> " + workspaceProjectDir);
-		FileUtils.moveDirectory(gitImportTemp, workspaceProjectDir);
+		FileUtils.copyDirectory(gitImportTemp, workspaceProjectDir);
+		try {
+			FileUtils.deleteDirectory(gitImportTemp);
+		} catch (IOException e) {
+			S_LOGGER.debug("pack file is not deleted "  + e.getLocalizedMessage());
+		}
 	}
 	
 	private void updateSCMConnection(String projCode, String repoUrl) throws Exception {
