@@ -161,19 +161,19 @@ public interface TechnologyTypes {
     String JAVA_STANDALONE = "tech-java-standalone";
     
     /**
-     * Technology Java Standalone
+     * Technology WIN_METRO
      */
     String WIN_METRO = "tech-win-metro";
     
     /**
      * All Technologies
      */
-    List<String> ALL = Arrays.asList(PHP, PHP_DRUPAL7,PHP_DRUPAL6, ANDROID_NATIVE,ANDROID_HYBRID,SHAREPOINT,JAVA_WEBSERVICE,NODE_JS_WEBSERVICE,HTML5_MOBILE_WIDGET,HTML5_WIDGET, DOT_NET, WORDPRESS, JAVA_STANDALONE);
+    List<String> ALL = Arrays.asList(PHP, PHP_DRUPAL7,PHP_DRUPAL6, ANDROID_NATIVE,ANDROID_HYBRID,SHAREPOINT,JAVA_WEBSERVICE,NODE_JS_WEBSERVICE,HTML5_MOBILE_WIDGET,HTML5_WIDGET, DOT_NET, WORDPRESS, JAVA_STANDALONE, WIN_METRO);
 
     String ALL_TECHS = "all";
 
     /**
      * All Mobile Technologies
      */
-    List<String> MOBILES = Arrays.asList(ANDROID_NATIVE, ANDROID_HYBRID, ANDROID_WEB, IPHONE_NATIVE, IPHONE_HYBRID, IPHONE_WEB);
+    List<String> MOBILES = Arrays.asList(ANDROID_NATIVE, ANDROID_HYBRID, ANDROID_WEB, IPHONE_NATIVE, IPHONE_HYBRID, IPHONE_WEB, WIN_METRO);
 }

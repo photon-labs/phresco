@@ -80,7 +80,7 @@ public class ItemGroupUpdater implements FrameworkConstants {
 				Element reference = doc.createElement(REFERENCE);
 				reference.setAttribute(INCLUDE , module.getName());
 				Element hintPath = doc.createElement(HINTPATH);
-				hintPath.setTextContent(LIBS + module.getName()+ DLL);
+				hintPath.setTextContent(DOUBLE_DOT + COMMON + File.separator + module.getName()+ DLL);
 				reference.appendChild(hintPath);
 				itemGroup.appendChild(reference);
 			}
