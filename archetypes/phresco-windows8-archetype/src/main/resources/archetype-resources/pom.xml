@@ -27,7 +27,7 @@
      
 	<properties>
         <sonar.language>cs</sonar.language>
-		<visual.studio.solution>source/HelloWorld.sln</visual.studio.solution>
+		<visual.studio.solution>source/Metro.sln</visual.studio.solution>
 		<sonar.dotnet.4.0.sdk.directory>C:\Windows\Microsoft.NET\Framework\v4.0.30319</sonar.dotnet.4.0.sdk.directory>
 		<sonar.dotnet.version>4.0</sonar.dotnet.version>
 		<sonar.stylecop.mode>skip</sonar.stylecop.mode>
