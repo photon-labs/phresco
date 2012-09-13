@@ -456,7 +456,7 @@ h1 {margin-bottom: 0;}
 		if(data.nameError != null){
 			$("#nameErrMsg").text(data.nameError);
 	    	$("#nameErrDiv").addClass("error");
-	    	$("#xlInput").focus(); 
+	    	$("#xlInput").focus();
 		}
 		
 		if(data.envError != null){
@@ -484,12 +484,23 @@ h1 {margin-bottom: 0;}
 		if(data.portError != null) {
 			$("div[id='port']").addClass("error");
         	$("div[id='portErrorDiv']").html(data.portError);
+        	$("#Port").focus();
         }
 		
 		if(data.emailError != null) {
 			$("div[id='emailid']").addClass("error");
         	$("div[id='emailidErrorDiv']").html(data.emailError);
         }
+		if (data.appNameError != null) {
+			$("div[id='appNameErrDiv']").addClass("error");
+        	$("div[id='appNameErrMsg']").text(data.appNameError);
+        	$("#appName").focus();
+		}
+		if (data.siteNameError != null) {
+			$("div[id='siteNameErrDiv']").addClass("error");
+        	$("div[id='siteNameErrMsg']").text(data.siteNameError);
+        	$("#nameOfSite").focus();
+		}
     }
 	
 	var versionFrom = "";
