@@ -25,11 +25,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="48">
+		<band height="25">
 			<printWhenExpression><![CDATA[$P{testType}.contains("unit")]]></printWhenExpression>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC">
-					<printWhenExpression><![CDATA[$P{testType}.equals("unit")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{testType}.equals("unit") && !$F{testSuites}.isEmpty() || $P{testType}.contains("unit") && !$F{allTestSuites}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<staticText>
 					<reportElement x="0" y="4" width="158" height="20" backcolor="#FFFFFF"/>

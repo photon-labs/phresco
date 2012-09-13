@@ -25,10 +25,10 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="48">
+		<band height="24">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="24" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC">
-					<printWhenExpression><![CDATA[$P{testType}.contains("functional")]]></printWhenExpression>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" isRemoveLineWhenBlank="true" forecolor="#D0B48E" backcolor="#FFCCCC">
+					<printWhenExpression><![CDATA[$P{testType}.contains("functional") && !$F{testSuites}.isEmpty() || $P{testType}.contains("functional") && !$F{allTestSuites}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<staticText>
 					<reportElement x="0" y="4" width="158" height="20" backcolor="#FFFFFF"/>
