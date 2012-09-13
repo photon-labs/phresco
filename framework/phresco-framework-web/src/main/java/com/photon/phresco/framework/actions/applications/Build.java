@@ -151,6 +151,10 @@ public class Build extends FrameworkBaseAction {
 	//iphone family
 	private String family = ""; 
 	
+	//Windows family
+	private String configuration = ""; 
+	private String platform = "";
+	
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 
 	// DbWithSqlFiles
@@ -458,6 +462,11 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(JARNAME, jarName);
 			}
 
+			if (TechnologyTypes.WIN_METRO.contains(technology)) {
+				settingsInfoMap.put(CONFIGURATION, configuration);
+				settingsInfoMap.put(PLATFORM, platform);
+			}
+			
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
@@ -2166,10 +2175,28 @@ public class Build extends FrameworkBaseAction {
 	public String getFileLocation() {
 		return fileLocation;
 	}
+
 	public String getFamily() {
 		return family;
 	}
+
 	public void setFamily(String family) {
 		this.family = family;
+	}
+
+	public String getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
 	}
 }
