@@ -139,7 +139,30 @@
 						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" maxlength="40" title="40 Characters only"/>
 				    </div>
 				</div>	
-		<% } %>	
+			<% } %>	
+		
+			<% if (TechnologyTypes.WIN_METRO.contains(technology)) { %>
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label "><s:text name="label.configuration"/></label>
+					    <div class="input">
+							<select name="configuration" class="xlarge">
+								<option value="Release">Release</option>
+								<option value="Debug">Debug</option>
+							</select>
+					    </div>
+					</div>
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><s:text name="label.platform"/></label>
+					    <div class="input">
+							<select name="platform" class="xlarge">
+								<option value="Any CPU">Any CPU</option>
+								<option value="ARM">ARM</option>
+								<option value="X86">X86</option>
+								<option value="X64">X64</option>
+							</select>
+					    </div>
+					</div>	
+			<% } %>	
 		<% } %>
 
 		<div class="clearfix">

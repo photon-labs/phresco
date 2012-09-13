@@ -302,6 +302,7 @@ public interface FrameworkConstants {
     String ELEMENT_VERIFY = "verify";
     String HEAD_REVISION = "HEAD";
     String REPORTS_JASPER = "reports/jasper/";
+    String PLATFORM = "platform";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
