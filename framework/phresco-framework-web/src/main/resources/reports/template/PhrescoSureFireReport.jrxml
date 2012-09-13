@@ -113,7 +113,7 @@
 					<printWhenExpression><![CDATA[!$F{allTestSuites}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<subreport>
-					<reportElement x="0" y="0" width="555" height="307" isRemoveLineWhenBlank="true">
+					<reportElement x="0" y="0" width="555" height="307">
 						<printWhenExpression><![CDATA[!$F{allTestSuites}.isEmpty()]]></printWhenExpression>
 					</reportElement>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{allTestSuites})]]></dataSourceExpression>
