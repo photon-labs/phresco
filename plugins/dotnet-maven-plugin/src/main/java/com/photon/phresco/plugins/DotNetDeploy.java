@@ -47,7 +47,7 @@ import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.Utility;
 
 /**
- * Goal which deploys the Drupal project
+ * Goal which deploys the DotNet webapp project
  * 
  * @goal deploy
  * 
@@ -151,9 +151,9 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			executeAddSite();
 			executeAddApp();
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
@@ -177,13 +177,13 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			executeAddSite();
 			executeAddApp();
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
-	private void executeAddSite() {
+	private void executeAddSite() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -204,13 +204,13 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
-	private void executeAddApp() {
+	private void executeAddApp() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -229,9 +229,9 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
