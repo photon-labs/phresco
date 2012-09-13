@@ -302,6 +302,7 @@ public interface FrameworkConstants {
     String ELEMENT_VERIFY = "verify";
     String HEAD_REVISION = "HEAD";
     String REPORTS_JASPER = "reports/jasper/";
+    String PLATFORM = "platform";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
@@ -1382,10 +1383,16 @@ public interface FrameworkConstants {
 		  String HINTPATH = "HintPath";
 		  String PROJECT_FILE = ".csproj";
 		  String CONTENT = "Content";
+
 		  String COMMON = "\\Common";
 		  String DOUBLE_DOT  = "..";
 		  String PROJECT_ROOT = "Metro.UI";
 		  String SLN_FILE = "Metro.sln";
 		  String CSPROJ_FILE = ".csproj";
+
+		  
+		  //SettingsTemplate keys for IIS server
+		  String SETTINGS_TEMP_KEY_APP_NAME = "applicationName";
+		  String SETTINGS_TEMP_KEY_SITE_NAME = "siteName";
 
 }

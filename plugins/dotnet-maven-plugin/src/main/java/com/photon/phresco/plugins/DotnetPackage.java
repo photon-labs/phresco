@@ -53,11 +53,13 @@ import com.photon.phresco.util.Utility;
 /**
  * Goal which builds the DotNET WebApp 
  * 
+ * @execute goal="clean"
+ * 
  * @goal package
  * 
  */
 
-public class DotnetPackage extends AbstractMojo implements PluginConstants {
+public class DotNetPackage extends AbstractMojo implements PluginConstants {
 
 	/**
 	 * The Maven project.
@@ -101,10 +103,9 @@ public class DotnetPackage extends AbstractMojo implements PluginConstants {
 	private Date currentDate;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		getLog().info("Plugin Development is in Progress ...");
-//		init();
-//		boolean buildStatus = build();
-//		writeBuildInfo(buildStatus);
+		init();
+		boolean buildStatus = build();
+		writeBuildInfo(buildStatus);
 	}
 
 	private void init() throws MojoExecutionException {

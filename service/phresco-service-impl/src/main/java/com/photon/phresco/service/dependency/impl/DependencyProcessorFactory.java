@@ -120,6 +120,8 @@ public final class DependencyProcessorFactory {
         	dependencyProcessor = new WordPressDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         } else  if(techId.equalsIgnoreCase(TechnologyTypes.WIN_METRO)) {
             dependencyProcessor = new WinMetroDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
+        }else if(techId.equalsIgnoreCase(TechnologyTypes.ANDROID_LIBRARY)) {
+            dependencyProcessor = new AndroidDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }else {
         	dependencyProcessor = new DefaultDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }
