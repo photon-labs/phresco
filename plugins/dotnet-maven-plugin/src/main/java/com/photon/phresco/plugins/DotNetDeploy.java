@@ -90,6 +90,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException {
 		init();
+		extractBuild();
 		sampleListSites();
 	}
 
@@ -128,7 +129,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn drupal:deploy -DbuildNumber=\"Number of the build\""
+				"mvn dotnet:deploy -DbuildNumber=\"Number of the build\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}
@@ -207,6 +208,14 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+	
+	private void extractBuild() throws MojoExecutionException {
+		try {
+			ArchiveUtil.extractArchive(buildFile.getPath(), targetDir.getPath(), ArchiveType.ZIP);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
 
