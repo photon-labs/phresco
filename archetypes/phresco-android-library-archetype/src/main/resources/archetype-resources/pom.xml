@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.photon.phresco</groupId>
-    <artifactId>PHR_android_lib</artifactId>
+    <groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<name>${artifactId}</name>
     <packaging>apklib</packaging>
-    <name>PHR_android_lib</name>
-    <version>1.0.0</version>
     <build>
         <sourceDirectory>source/src</sourceDirectory>
         <outputDirectory>do_not_checkin/target/android-classes</outputDirectory>
