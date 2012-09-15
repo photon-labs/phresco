@@ -76,7 +76,6 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected File baseDir;
 	
-
 	/**
 	 * @parameter expression="${environmentName}" required="true"
 	 */
@@ -131,7 +130,8 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 	private boolean build() throws MojoExecutionException {
 		boolean isBuildSuccess = true;
 		try {
-			executeCmd();
+			executeMsBuildCmd();
+			executeAspCompilerCmd();
 			createPackage();
 		} catch (Exception e) {
 			isBuildSuccess = false;
@@ -139,8 +139,27 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 		}
 		return isBuildSuccess;
 	}
-
-	private void executeCmd() {
+	
+	private void executeMsBuildCmd() throws MojoExecutionException {
+		BufferedReader in = null;
+		try {
+			Commandline cl = new Commandline("msbuild.exe SampleWebApp.csproj /t:rebuild");
+			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				System.out.println(line); // do not use getLog() here as this line already contains the log type.
+			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} finally {
+			Utility.closeStream(in);
+		}
+	}
+	private void executeAspCompilerCmd()throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -159,9 +178,9 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
 			Utility.closeStream(in);
 		}

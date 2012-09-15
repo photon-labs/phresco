@@ -155,6 +155,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		versionMap.put(TechnologyTypes.HTML5_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, new String[]{"1.6", "1.5"});
 		versionMap.put(TechnologyTypes.ANDROID_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
+		versionMap.put(TechnologyTypes.ANDROID_LIBRARY, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
 		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
 		/*versionMap.put(TechnologyTypes.IPHONE_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
 		versionMap.put(TechnologyTypes.IPHONE_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});*/

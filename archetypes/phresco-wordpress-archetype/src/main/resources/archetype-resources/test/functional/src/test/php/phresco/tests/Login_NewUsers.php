@@ -3,7 +3,6 @@
 
 */
 require_once 'WordPressCommonFun.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class Login_NewUsers extends WordPressCommonFun
 {
