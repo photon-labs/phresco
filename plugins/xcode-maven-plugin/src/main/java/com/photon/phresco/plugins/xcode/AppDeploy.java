@@ -273,7 +273,7 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 				}
 			};
 
-			getLog().error("deviceDeploy " + deviceDeploy);
+			getLog().info("deviceDeploy " + deviceDeploy);
 			Thread t = new Thread(deployRunnable, "iPhoneSimulator");
 			t.start();
 			try {

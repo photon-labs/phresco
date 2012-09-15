@@ -1,162 +1,148 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
 	<groupId>Phresco</groupId>
 	<artifactId>Php</artifactId>
 	<packaging>php</packaging>
 	<name>Phresco HelloWorld Project for Drupal Functional Tests</name>
 	<version>1.0</version>
-		<pluginRepositories>
-			<pluginRepository>
-				<id>release-repo1.php-maven.org</id>
-				<name>PHP-Maven 2 Release Repository</name>
-				<url>http://repos.php-maven.org/releases</url>
-				<releases>
-					<enabled>true</enabled>
-				</releases>
-			</pluginRepository>
-			<pluginRepository>
-				<id>snapshot-repo1.php-maven.org</id>
-				<name>PHP-Maven 2 Snapshot Repository</name>
-				<url>http://repos.php-maven.org/snapshots/</url>
-				<releases>
-					<enabled>false</enabled>
-				</releases>
-				<snapshots>
-					<enabled>true</enabled>
-				</snapshots>
-			</pluginRepository>
-		</pluginRepositories>
-		<repositories>
-			<repository>
-				<id>release-repo1.php-maven.org</id>
-				<name>PHP-Maven 2 Release Repository</name>
-				<url>http://repos.php-maven.org/releases</url>
-				<releases>
-					<enabled>true</enabled>
-				</releases>
-			</repository>
-			<repository>
-				<id>snapshot-repo1.php-maven.org</id>
-				<name>PHP-Maven 2 Snapshot Repository</name>
-				<url>http://repos.php-maven.org/snapshots/</url>
-				<releases>
-					<enabled>false</enabled>
-				</releases>
-				<snapshots>
-					<enabled>true</enabled>
-				</snapshots>
-			</repository>
-		</repositories>
-		
-		<!--Maven Dependencies to run the PHP functional testcases -->
-		
-		<dependencies>	
-			<dependency>
-				<groupId>de.phpunit</groupId>
-				<artifactId>PHPUnit_Selenium</artifactId>
-				<version>1.2.6</version>
-				 <type>phar</type> 
-				<scope>test</scope>
-			</dependency>
-			  <dependency>
-				<groupId>org.seleniumhq.selenium.server</groupId>
-				<artifactId>selenium-webdriver</artifactId>
-				<version>2.19.0</version>
-			</dependency>  
-		</dependencies>
-	
-	<!--Maven Plugins to run the PHP functional testcases -->
-	
-		<build>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.4</version>
-						<executions>
-							<execution>
-								<phase>validate</phase>
-									<goals>
-										<goal>copy</goal>
-									</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>org.seleniumhq.selenium.server</groupId>
-											<artifactId>selenium-webdriver</artifactId>
-											<version>2.19.0</version> 
-											<type>jar</type>
-											<outputDirectory>${project.basedir}/lib/driver/</outputDirectory>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+<artifactItem>
+    <groupId>org.seleniumhq.selenium.server</groupId>
+    <artifactId>selenium-webdriver</artifactId>
+    <version>2.19.0</version>
+    <type>jar</type>
+    <outputDirectory>${project.basedir}/lib/driver/</outputDirectory>
 										</artifactItem>
 									</artifactItems>
-								</configuration>
-							</execution>
-						</executions>
-			    </plugin> 				
-				<plugin>
-					<groupId>com.photon.phresco.plugins</groupId>
-					<artifactId>drupal-maven-plugin</artifactId>
-					<version>1.2.2.1002-SNAPSHOT</version>
-						<executions>
-							<execution>
-							<phase>validate</phase>
-								<goals>
-									<goal>startwebdriver</goal>
-								</goals>
-							</execution>
-						</executions> 		
-				</plugin>
-				
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<executions>
-						<execution>
-							<!-- <id>selenium-webdriver-Dir</id> -->
-							<configuration>
-								<tasks>
-									<mkdir dir="target/php-deps/license"/>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        <!--    <plugin>
+                <groupId>com.photon.phresco.plugins</groupId>
+                <artifactId>drupal-maven-plugin</artifactId>
+                <version>1.2.1.1000</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>startwebdriver</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+<mkdir dir="target/php-deps/license"/>
 								</tasks>
-							</configuration>
-							<phase>validate</phase>
-							 <goals>
-								<goal>run</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>		
-			 	<plugin>
-					<groupId>org.phpmaven</groupId>
-					<artifactId>maven-php-plugin</artifactId>
-					<version>2.0-SNAPSHOT</version>
-					<extensions>true</extensions>
-					<executions>
-						<execution>							
-							<phase>test</phase>
-						</execution>
-					</executions>
-					<configuration>
-						<resultFolder>target/surefire-reports</resultFolder>
-					</configuration>						
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>selenium-maven-plugin</artifactId>
-					<version>2.3</version>
-						<executions>       
-							<execution>
-								<phase>test</phase>
-								<goals>
-									<goal>stop-server</goal>
-								</goals>
-							</execution>
-						</executions>
-				</plugin>
-			</plugins>
-		</build>
-        <profiles>
+                        </configuration>
+                    </execution>
+                   
+                  <!--<execution>
+                      <id>stop-selenium</id>
+                      <phase>validate</phase>
+                        <configuration>
+                            <tasks>
+                                
+                                <get taskname="selenium"
+                                    src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
+                                    dest="result.txt" ignoreerrors="true"/>
+                             </tasks>   
+                          </configuration>
+                      <goals>
+                          <goal>run</goal>
+                      </goals>
+                  </execution>-->
+                   <execution>
+                      <id>start-Selenium</id>
+                      <phase>validate</phase>
+                      <goals>
+                          <goal>run</goal>
+                      </goals>
+                      <configuration>
+                        <tasks>
+                            <echo message="------------------------------------------------------------"/>
+                            <echo message=" Starting Selenium Webdriver                                "/>
+                            <echo message="                                                            "/>
+                            <java jar="lib/driver/selenium-webdriver-2.19.0.jar" fork="yes" spawn="true"/>
+                            <echo message=" Selenium Webdriver Started                               "/>
+                            <echo message="---------------------------------------------------------   "/>
+                        </tasks>
+                    </configuration>
+                  </execution>
+                  <execution>
+                      <id>stop-selenium</id>
+                      <phase>test</phase>
+                        <configuration>
+                            <tasks>
+                                <echo message="---------------------------------------------------------  "/>
+                                <echo message=" Shutting down Selenium Webdriver                        "/>
+                                <get taskname="selenium"
+                                    src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
+                                    dest="result.txt" ignoreerrors="true"/>
+                                <echo message="---------------------------------------------------------"/>
+                            </tasks>
+                          </configuration>
+                      <goals>
+                          <goal>run</goal>
+                      </goals>
+                  </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.phpmaven</groupId>
+                <artifactId>maven-php-plugin</artifactId>
+                <version>2.0-SNAPSHOT</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <resultFolder>target/surefire-reports</resultFolder>
+                </configuration>
+            </plugin>
+          <!--  <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>stop-server</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+        </plugins>
+    </build>
+    <profiles>
         <profile>
             <id>ci</id>
             <activation>
@@ -167,25 +153,94 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     <plugin>
                         <groupId>com.photon.phresco.plugins</groupId>
                         <artifactId>ci-maven-plugin</artifactId>
-                        <version>1.2.2.1002-SNAPSHOT</version>
+                        <version>1.2.1.1000</version>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-		<properties>
-			<sonar.language>php</sonar.language>
-			<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
-			<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
-			<sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
-			<sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
-			<sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
-			<sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
-			<sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
-			<sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
-			<sonar.phase>validate</sonar.phase>
-			<sonar.phpCodesniffer.skip>true</sonar.phpCodesniffer.skip> 
-			<sonar.phpCodesniffer.standardArgument>Drupal</sonar.phpCodesniffer.standardArgument>
-    </properties>
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>release-repo1.php-maven.org</id>
+            <name>PHP-Maven 2 Release Repository</name>
+            <url>http://repos.php-maven.org/releases</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>snapshot-repo1.php-maven.org</id>
+            <name>PHP-Maven 2 Snapshot Repository</name>
+            <url>http://repos.php-maven.org/snapshots/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>release-repo1.php-maven.org</id>
+            <name>PHP-Maven 2 Release Repository</name>
+            <url>http://repos.php-maven.org/releases</url>
+        </pluginRepository>
+        <pluginRepository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>snapshot-repo1.php-maven.org</id>
+            <name>PHP-Maven 2 Snapshot Repository</name>
+            <url>http://repos.php-maven.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
+       <!-- <dependency>
+            <groupId>de.phpunit</groupId>
+            <artifactId>PHPUnit_Selenium</artifactId>
+            <version>1.2.6</version>
+            <type>phar</type>
+            <scope>test</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>de.phpunit</groupId>
+            <artifactId>PHPUnit</artifactId>
+            <version>3.6.10</version>
+            <type>phar</type>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium.server</groupId>
+            <artifactId>selenium-webdriver</artifactId>
+            <version>2.19.0</version>
+        </dependency>
+    </dependencies>
+    <properties>
+        <drupal.version>7.8</drupal.version>
+        <sonar.language>php</sonar.language>
+        <sonar.phpPmd.skip>false</sonar.phpPmd.skip>
+        <sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
+        <sonar.phpPmd.shouldRun>true</sonar.phpPmd.shouldRun>
+        <sonar.phpCodesniffer.shouldRun>true</sonar.phpCodesniffer.shouldRun>
+        <sonar.phpDepend.shouldRun>true</sonar.phpDepend.shouldRun>
+        <sonar.phpUnit.coverage.shouldRun>false</sonar.phpUnit.coverage.shouldRun>
+        <sonar.phpUnit.shouldRun>false</sonar.phpUnit.shouldRun>
+        <sonar.phpcpd.shouldRun>true</sonar.phpcpd.shouldRun>
+        <sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
+        <sonar.phpcpd.excludes>source/public_html</sonar.phpcpd.excludes>
+        <sonar.phase>validate</sonar.phase>
+        <sonar.phpCodesniffer.standardArgument>Drupal</sonar.phpCodesniffer.standardArgument>
+        <sonar.phpDepend.timeout>100</sonar.phpDepend.timeout>
+        <sonar.phpPmd.timeout>100</sonar.phpPmd.timeout>
+        <sonar.phpCodesniffer.timeout>100</sonar.phpCodesniffer.timeout>
+        <sonar.phpCodesniffer.skip xmlns:ns2="http://maven.apache.org/POM/4.0.0" xmlns="">true</sonar.phpCodesniffer.skip>
+    </properties>
 </project>

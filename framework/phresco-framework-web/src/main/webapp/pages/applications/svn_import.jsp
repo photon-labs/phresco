@@ -45,12 +45,10 @@
 					<label for="xlInput" class="xlInput popup-label"><s:text name="label.svn.type"/></label>
 					
 					<div class="input">
-						<div class="multipleFields ciTypeWidth">
-							<div><input type="radio" name="repoType" value="svn" checked />&nbsp; <s:text name="label.svn"/></div>
-						</div>
-						<div class="multipleFields ciTypeWidth">
-							<div><input type="radio" name="repoType" value="git" />&nbsp; <s:text name="label.git"/></div>
-						</div>
+						<select name="repoType" class="medium" >
+							<option value="svn" selected >svn</option>
+							<option value="git">git</option>
+					    </select>
 					</div>
 				</div>
 			</div>
@@ -177,7 +175,7 @@
 			}
 			
 			// if it is svn need to validate username and password fields
-			if($("input:radio[name=repoType][value='svn']").is(':checked')) {
+			if($("[name=repoType]").val() == 'svn') {
 				if(isBlank($.trim($("input[name='username']").val()))){
 					$("#errMsg").html("Username is missing");
 					$("#userName").focus();
@@ -221,7 +219,7 @@
  			svnCredentialMark();
  		});
  		
- 		$('input:radio[name=repoType]').click(function() {
+ 		$('[name=repoType]').change(function() {
  			extraInfoDisplay();
  		});
  		
@@ -234,12 +232,12 @@
  		<%
  			if (StringUtils.isNotEmpty(repoUrl) && repoUrl.contains(FrameworkConstants.GIT)) {
  		%>
- 			$('input:radio[name=repoType]').filter("[value='git']").attr("checked","checked");
+ 			$("[name=repoType] option[value='git']").attr('selected', 'selected');
  			$('#typeInfo').hide();
  		<%
  			} else if (StringUtils.isNotEmpty(repoUrl)) {
  		%>
-			$('input:radio[name=repoType]').filter("[value='svn']").attr("checked","checked");
+ 			$("[name=repoType] option[value='svn']").attr('selected', 'selected');
  			$('#typeInfo').hide();
  		<%
  			}
@@ -251,10 +249,10 @@
 	
 	function getAction() {
 		var actionUrl = "";
-		if ($("input:radio[name=repoType][value='svn']").is(':checked')) {
+		if ($("[name=repoType]").val() == 'svn') {
 			actionUrl = actionUrl + "SVNProject";
 		}
-		if ($("input:radio[name=repoType][value='git']").is(':checked')) {
+		if ($("[name=repoType]").val() == 'git') {
 			actionUrl = actionUrl + "GITProject";
 		}
 		if ($('#svnImport').val() == "Import") {
@@ -270,9 +268,9 @@
 	
 	function extraInfoDisplay() {
 		$("#errMsg").html("");
-		if($("input:radio[name=repoType][value='svn']").is(':checked')) {
+		if($("[name=repoType]").val() == 'svn') {
 			$('#svnCredentialInfo').show();
-		} else if($("input:radio[name=repoType][value='git']").is(':checked')) {
+		} else if($("[name=repoType]").val() == 'git') {
 			$('#svnCredentialInfo').hide();
 		}
 	}

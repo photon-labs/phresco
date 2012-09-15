@@ -47,7 +47,7 @@ import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.Utility;
 
 /**
- * Goal which deploys the Drupal project
+ * Goal which deploys the DotNet webapp project
  * 
  * @goal deploy
  * 
@@ -90,6 +90,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException {
 		init();
+		extractBuild();
 		sampleListSites();
 	}
 
@@ -128,7 +129,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn drupal:deploy -DbuildNumber=\"Number of the build\""
+				"mvn dotnet:deploy -DbuildNumber=\"Number of the build\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}
@@ -151,9 +152,9 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			executeAddSite();
 			executeAddApp();
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
@@ -177,13 +178,13 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			executeAddSite();
 			executeAddApp();
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
-	private void executeAddSite() {
+	private void executeAddSite() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -204,13 +205,21 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
+	
+	private void extractBuild() throws MojoExecutionException {
+		try {
+			ArchiveUtil.extractArchive(buildFile.getPath(), targetDir.getPath(), ArchiveType.ZIP);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
 
-	private void executeAddApp() {
+	private void executeAddApp() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -229,9 +238,9 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 

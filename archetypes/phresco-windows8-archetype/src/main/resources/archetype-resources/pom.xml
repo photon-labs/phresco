@@ -31,6 +31,9 @@
 		<sonar.dotnet.4.0.sdk.directory>C:\Windows\Microsoft.NET\Framework\v4.0.30319</sonar.dotnet.4.0.sdk.directory>
 		<sonar.dotnet.version>4.0</sonar.dotnet.version>
 		<sonar.stylecop.mode>skip</sonar.stylecop.mode>
+        <sonar.ndeps.mode>skip</sonar.ndeps.mode>
+        <sonar.fxcop.mode>skip</sonar.fxcop.mode>
+
     </properties>
 	
 	<build>
@@ -39,7 +42,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>windows-phone-maven-plugin</artifactId>
-                <version>1.2.2.1002-SNAPSHOT</version>
+                <version>1.2.2.1002</version>
                 <extensions>true</extensions>
             </plugin>
 				<plugin>
