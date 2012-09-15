@@ -46,8 +46,8 @@
 					
 					<div class="input">
 						<select name="repoType" class="medium" >
-							<option value="svn" selected >svn</option>
-							<option value="git">git</option>
+							<option value="<s:text name="label.repo.type.svn"/>" selected ><s:text name="label.repo.type.svn"/></option>
+							<option value="<s:text name="label.repo.type.git"/>"><s:text name="label.repo.type.git"/></option>
 					    </select>
 					</div>
 				</div>
