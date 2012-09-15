@@ -374,6 +374,10 @@
             <result name="environment">/pages/applications/configuration/environment.jsp</result>
         </action>
         
+        <action name="setAsDefault" method="setAsDefault" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result type="json" />
+        </action>
+        
         <action name="openSettingsEnvPopup" method="openSettingsEnvPopup" class="com.photon.phresco.framework.actions.settings.Settings">
             <result name="environment">/pages/applications/configuration/environment.jsp</result>
         </action>
