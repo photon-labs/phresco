@@ -403,9 +403,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			}
 			for (ModuleGroup moduleGroup : modules) {
 				if(moduleGroup.isCore()) {
-					exclusionStringBuff.append("**/");
+					exclusionStringBuff.append("**\\");
 					exclusionStringBuff.append(moduleGroup.getName().toLowerCase());
-					exclusionStringBuff.append("/**");
+					exclusionStringBuff.append("\\**");
+					exclusionStringBuff.append("\\*.*");
 					exclusionStringBuff.append(",");
 				}
 			}
