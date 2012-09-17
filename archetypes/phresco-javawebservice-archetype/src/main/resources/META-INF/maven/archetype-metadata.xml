@@ -115,7 +115,7 @@
 				<include>ScreenActionFailedException.java</include>
 				<include>ScreenException.java</include>
                 <include>GetCurrentDir.java</include>
-                <include>WriteToFile.java<include>
+                <include>WriteToFile.java</include>
 		   </includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
