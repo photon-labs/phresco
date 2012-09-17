@@ -71,18 +71,23 @@
 					<img src="images/icons/delete(1).png" title="Remove" id="remove" style="cursor: pointer; margin-top: 20px;"><br>
 					<img src="images/icons/btm_arrow.png" title="Move down" id="down" style="cursor: pointer; margin-top: 16px;" >
 				</div>
+				<div id="setAsDefaultDiv" style="float: right; margin-right: 35px;">
+				    <input type="button" value="Set as Default" tabindex=5 id="setAsDefault" class="primary btn" style="margin-top: 30px;">
+				</div>
 			</fieldset>
 		</form>
 	</div>
 	
 	<div class="modal-footer">
 		<div class="action popup-action">
+		    <input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel" tabindex=7>
+            <input type="button" class="btn primary" value="<s:text name="label.save"/>" id="save" tabindex=6>
+            
 			<div id="errMsg" class="envErrMsg"></div>
+			<div id="reportMsg" class="envErrMsg"></div>
 <!-- 			error and success message -->
 			<div class="popup alert-message success" id="popupSuccessMsg"></div>
 			<div class="popup alert-message error" id="popupErrorMsg"></div>
-			<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel" tabindex=6>
-			<input type="button" class="btn primary" value="<s:text name="label.save"/>" id="save" tabindex=5>
 		</div>
 	</div>
 </div>
@@ -97,6 +102,11 @@
 	var deletableEnvs = "";
 	var deletableItems = "";
 	$(document).ready(function() {
+		
+		if(<%= "settings".equals(fromTab) %>) {
+			$('#setAsDefaultDiv').hide();
+		}
+		
 		$("#envName").focus();
 		
 		$('#close, #cancel').click(function() {
@@ -105,6 +115,8 @@
 		
 		//To add the entered values into the selectbox
 		$("#Add").click(function() {
+			emptyMessages();
+			
 			var returnVal = true;
 			name =($.trim($("#envName").val()));
 			desc = $("#envDesc").val();
@@ -128,6 +140,26 @@
 			}
 		});
 		  
+		
+         $("#setAsDefault").click(function() {
+             var setAsDefaultEnvsSize = $('#selectedEvn option:selected').size();
+             if(setAsDefaultEnvsSize < 1 || setAsDefaultEnvsSize > 1) {
+            	 showHidePopupMsg($("#popupErrorMsg"), "Please select one environment");
+             }
+             
+             var setAsDefaultEnvs = new Array();
+             $('#selectedEvn option:selected').each( function() {
+            	 setAsDefaultEnvs.push($(this).val());
+             });
+             
+             var params = "";
+             if (!isBlank($('form').serialize())) {
+                 params = $('form').serialize() + "&";
+             }
+             params = params.concat("setAsDefaultEnv=");
+             params = params.concat(setAsDefaultEnvs.join(","));           
+             performAction('setAsDefault', params, '', true); 
+        });
 		
 		//To remove the entered value
 		$('#remove').click(function() {
@@ -183,6 +215,8 @@
 		});
 		
 		$("#save").click(function() {
+			emptyMessages();
+			
 			var envs = $("#selectedEnvs").val();
 			var deletableData = $('#deletableItems').val();
            	if(deletableData == "" ) {
@@ -274,12 +308,20 @@
 		if (pageUrl == "checkDuplicateEnvSettings" || pageUrl == "checkDuplicateEnv") {
 			successValidateEnv(data);
 		}
-		if (pageUrl == "checkForRemoveSettings" || pageUrl == "checkForRemove") {
+		if (pageUrl == "checkForRemoveSettings" || pageUrl == "checkForRemove" || pageUrl == "setAsDefault") {
+			emptyMessages();
+			
 			if (data.envError != undefined) {
-				$("#errMsg").html(data.envError);
-				deletableItems = "";
+                //when setting a default , after successfull operation , it will come here
+                if(data.flag && pageUrl == "setAsDefault") {
+                    setDefaultAsDisable();
+                    $("#reportMsg").html(data.envError);
+                } else {
+                    $("#errMsg").html(data.envError);
+                    deletableItems = "";
+                }
 			} else {
-				$("#errMsg").html("");
+				$("#errMsg, #reportMsg").html("");
 				var availDeletableItems = $("#deletableItems").val();
 				if(availDeletableItems == ""){
 					availDeletableItems = availDeletableItems + deletableItems;
@@ -297,6 +339,19 @@
 			}
 		}
 	}
+	
+	function emptyMessages() {
+		$("#errMsg, #reportMsg").html("");
+	}
+	
+	function setDefaultAsDisable() {
+         $('#selectedEvn option').each( function() {
+        	$(this).prop('disabled', false);
+         });
+         
+         $('#selectedEvn option:selected').prop('disabled', true);
+         $('#selectedEvn option:selected').prop('selected', false);
+	}	
 	
 	function validateRemove(deletableItems) {
        	var params = "";

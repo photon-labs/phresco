@@ -3,7 +3,6 @@
 
 */
 require_once 'DrupalCommonFun.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class Login_NewUsers extends DrupalCommonFun
 {

@@ -815,6 +815,12 @@ public interface FrameworkConstants {
     String CONFIG_ALREADY_EXIST = "Configuration type already created for this environment";
     String SETTINGS_ALREADY_EXIST = "Settings type already created for this environment";
     String NO_CONFIG_TYPE = "configuration.type.info";
+    
+    String ENV_SET_AS_DEFAULT_SUCCESS="environment.set.as.default.success";
+    String ENV_SET_AS_DEFAULT_ERROR="environment.set.as.default.error";
+    String SELECT_ENV_TO_SET_AS_DEFAULT="environment.select.set.as.default";
+    String ENV_NOT_VALID="environment.not.valid";
+    
     /*
      * Create Environment keys
      */
