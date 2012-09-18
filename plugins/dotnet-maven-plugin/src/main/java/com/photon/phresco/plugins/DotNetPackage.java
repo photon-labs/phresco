@@ -114,7 +114,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			srcDir = new File(baseDir.getPath() + File.separator + "source/src");
 			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
 			if (!buildDir.exists()) {
-				buildDir.mkdir();
+				buildDir.mkdirs();
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
 			buildInfoFile = new File(buildDir.getPath() + PluginConstants.BUILD_INFO_FILE);
@@ -164,11 +164,11 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append("aspnet_compiler -v / -p ");
-			sb.append(srcDir.getPath());
+			sb.append("\"" + srcDir.getPath() + "\"");
 			sb.append(STR_SPACE);
 			sb.append("-u");
 			sb.append(STR_SPACE);
-			sb.append(targetDir.getPath());
+			sb.append("\"" + targetDir.getPath() + "\"");
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
 			Process process = cl.execute();

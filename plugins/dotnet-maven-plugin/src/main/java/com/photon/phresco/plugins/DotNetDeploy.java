@@ -194,7 +194,8 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			sb.append("/bindings:");
 			sb.append(serverprotocol + "/*:" + serverport + ":");
 			sb.append(STR_SPACE);
-			sb.append("/physicalPath:" + deploylocation);
+			sb.append("/physicalPath:");
+			sb.append("\"" + deploylocation + "\"");
 			Commandline cl = new Commandline(sb.toString());
 
 			cl.setWorkingDirectory("C:/Windows/System32/inetsrv");
@@ -228,7 +229,8 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(STR_SPACE);
 			sb.append("/path:/" + applicationName);
 			sb.append(STR_SPACE);
-			sb.append("/physicalPath:" + targetDir.getPath());
+			sb.append("/physicalPath:");
+			sb.append("\"" + targetDir.getPath() + "\"");
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory("C:/Windows/System32/inetsrv");
 			Process process = cl.execute();
