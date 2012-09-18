@@ -90,6 +90,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException {
 		init();
+		extractBuild();
 		sampleListSites();
 	}
 
@@ -128,7 +129,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 		getLog().error("Invalid usage.");
 		getLog().info("Usage of Deploy Goal");
 		getLog().info(
-				"mvn drupal:deploy -DbuildNumber=\"Number of the build\""
+				"mvn dotnet:deploy -DbuildNumber=\"Number of the build\""
 						+ " -DenvironmentName=\"Multivalued evnironment names\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}
@@ -193,7 +194,8 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			sb.append("/bindings:");
 			sb.append(serverprotocol + "/*:" + serverport + ":");
 			sb.append(STR_SPACE);
-			sb.append("/physicalPath:" + deploylocation);
+			sb.append("/physicalPath:");
+			sb.append("\"" + deploylocation + "\"");
 			Commandline cl = new Commandline(sb.toString());
 
 			cl.setWorkingDirectory("C:/Windows/System32/inetsrv");
@@ -209,6 +211,14 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
+	
+	private void extractBuild() throws MojoExecutionException {
+		try {
+			ArchiveUtil.extractArchive(buildFile.getPath(), targetDir.getPath(), ArchiveType.ZIP);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getErrorMessage(), e);
+		}
+	}
 
 	private void executeAddApp() throws MojoExecutionException {
 		BufferedReader in = null;
@@ -219,7 +229,8 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(STR_SPACE);
 			sb.append("/path:/" + applicationName);
 			sb.append(STR_SPACE);
-			sb.append("/physicalPath:" + targetDir.getPath());
+			sb.append("/physicalPath:");
+			sb.append("\"" + targetDir.getPath() + "\"");
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory("C:/Windows/System32/inetsrv");
 			Process process = cl.execute();

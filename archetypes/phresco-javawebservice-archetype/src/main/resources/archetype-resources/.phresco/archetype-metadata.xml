@@ -96,8 +96,6 @@
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/java/com/photon/phresco/Screens</directory>
 			<includes>
-				<include>AbstractBaseScreen.java</include>
-				<include>AddScreen.java</include>
 				<include>BaseScreen.java</include>
 				<include>PhotonAbstractScreen.java</include>
 				<include>WelcomeScreen.java</include>
@@ -110,40 +108,35 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
-			<directory>test/functional/src/main/java/com/photon/phresco/selenium/report</directory>
-			<includes>
-				<include>Reporter.java</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/java/com/photon/phresco/selenium/util</directory>
 			<includes>
 				<include>Constants.java</include>
 				<include>ExtractExeToLocalMachine.java</include>
-				<include>ProcessWaiter.java</include>
 				<include>ScreenActionFailedException.java</include>
 				<include>ScreenException.java</include>
-				<include>ScreenshottingSelenium.java</include>
-			</includes>
+                <include>GetCurrentDir.java</include>
+                <include>WriteToFile.java</include>
+		   </includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/java/com/photon/phresco/uiconstants</directory>
 			<includes>
 				<include>PhrescoUiConstants.java</include>
-				<include>TestProperties.java</include>
+                <include>ReadXMLFile.java</include>
+                <include>UserInfoConstants.java</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" encoding="UTF-8">
+        <fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
-				<include>config.ini</include>
+				<include>phresco-env-config.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/test/java/com/photon/phresco/testcases</directory>
 			<includes>
 				<include>AllTest.java</include>
-				<include>AWelcomePage.java</include>
+                <include>WelcomePage.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">

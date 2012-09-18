@@ -633,6 +633,14 @@ public interface ProjectAdministrator {
 	 */
 	List<SettingsInfo> configurationsByEnvName(String envName) throws PhrescoException;
 	
+	/**
+	 * setAsDefaultEnvironment
+	 * @param envName
+	 * @return
+	 * @throws PhrescoException
+	 */
+	void setAsDefaultEnv(String env, Project project) throws PhrescoException;
+	
 	//TODO: Remove the below method once the plugins are adapted for configuration.xml
 	SettingsInfo getSettingsInfo(String name, String type, String projectCode) throws PhrescoException;
 	

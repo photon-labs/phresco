@@ -76,7 +76,6 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 	 */
 	protected File baseDir;
 	
-
 	/**
 	 * @parameter expression="${environmentName}" required="true"
 	 */
@@ -115,7 +114,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			srcDir = new File(baseDir.getPath() + File.separator + "source/src");
 			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
 			if (!buildDir.exists()) {
-				buildDir.mkdir();
+				buildDir.mkdirs();
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
 			buildInfoFile = new File(buildDir.getPath() + PluginConstants.BUILD_INFO_FILE);
@@ -131,7 +130,8 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 	private boolean build() throws MojoExecutionException {
 		boolean isBuildSuccess = true;
 		try {
-			executeCmd();
+			executeMsBuildCmd();
+			executeAspCompilerCmd();
 			createPackage();
 		} catch (Exception e) {
 			isBuildSuccess = false;
@@ -139,17 +139,36 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 		}
 		return isBuildSuccess;
 	}
-
-	private void executeCmd() {
+	
+	private void executeMsBuildCmd() throws MojoExecutionException {
+		BufferedReader in = null;
+		try {
+			Commandline cl = new Commandline("msbuild.exe SampleWebApp.csproj /t:rebuild");
+			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
+			Process process = cl.execute();
+			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				System.out.println(line); // do not use getLog() here as this line already contains the log type.
+			}
+		} catch (CommandLineException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} finally {
+			Utility.closeStream(in);
+		}
+	}
+	private void executeAspCompilerCmd()throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append("aspnet_compiler -v / -p ");
-			sb.append(srcDir.getPath());
+			sb.append("\"" + srcDir.getPath() + "\"");
 			sb.append(STR_SPACE);
 			sb.append("-u");
 			sb.append(STR_SPACE);
-			sb.append(targetDir.getPath());
+			sb.append("\"" + targetDir.getPath() + "\"");
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
 			Process process = cl.execute();
@@ -159,9 +178,9 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 				System.out.println(line); // do not use getLog() here as this line already contains the log type.
 			}
 		} catch (CommandLineException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new MojoExecutionException(e.getMessage(), e);
 		} finally {
 			Utility.closeStream(in);
 		}

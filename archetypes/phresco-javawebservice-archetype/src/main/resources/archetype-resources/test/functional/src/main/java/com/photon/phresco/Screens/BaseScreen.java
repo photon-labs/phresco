@@ -1,71 +1,322 @@
-/*
- * ###
- * Archetype - phresco-javawebservice-archetype
- * 
- * Copyright (C) 1999 - 2012 Photon Infotech Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ###
- */
 package com.photon.phresco.Screens;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 
-import com.photon.phresco.selenium.report.Reporter;
-import com.photon.phresco.selenium.util.ScreenActionFailedException;
-import com.photon.phresco.selenium.util.ScreenshottingSelenium;
-import com.photon.phresco.uiconstants.PhrescoUiConstants;
+import junit.framework.Assert;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.base.Function;
+import com.opera.core.systems.OperaDriver;
+import com.photon.phresco.selenium.util.Constants;
+import com.photon.phresco.selenium.util.GetCurrentDir;
+import com.photon.phresco.selenium.util.ScreenException;
 
 public class BaseScreen {
 
-	public static ScreenshottingSelenium selenium;
+	private WebDriver driver;
+	private ChromeDriverService chromeService;
+	private Log log = LogFactory.getLog("BaseScreen");
+	private WebElement element;
+	private By by;
+
+	// private Log log = LogFactory.getLog(getClass());
 
 	public BaseScreen() {
 
 	}
 
-	public BaseScreen(String url, String browser, String speed,
-			Reporter reporter) throws AWTException, IOException,
-			ScreenActionFailedException {
-		selenium = new ScreenshottingSelenium("localhost", 4444, browser, url,
-				reporter);
-		selenium.start();
-		selenium.setSpeed(speed);
-		selenium.open("/");
+	public BaseScreen(String selectedBrowser, String applicationURL,
+			String applicationContext) throws ScreenException {
+
+		// this.yuiWidgetConstants = yuiWidgetConstants;
+		// this.uiConstants = uiConstants;
+		instantiateBrowser(selectedBrowser, applicationURL, applicationContext);
+
 	}
 
-	public static void initialize(String browser, Reporter reporter,
-			String speed, String url)
-			throws com.photon.phresco.selenium.util.ScreenActionFailedException {
-		selenium = new ScreenshottingSelenium("localhost", 4444, browser, url,
-				reporter);
-		selenium.start();
-		selenium.setSpeed(speed);
-		PhrescoUiConstants uiConstants = new PhrescoUiConstants();
-		selenium.open(uiConstants.CONTEXT);
-		selenium.waitForPageToLoad("30000");
-	}
+	public void instantiateBrowser(String selectedBrowser,
+			String applicationURL, String applicationContext)
+			throws ScreenException {
 
-	public static ScreenshottingSelenium getSeleniumInstance(String browser,
-			Reporter reporter, String speed, String url)
-			throws ScreenActionFailedException {
-		if (selenium == null) {
-			selenium = new ScreenshottingSelenium("localhost", 4444, browser,
-					url, reporter);
+		if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_CHROME)) {
+			try {
+				// "D:/Selenium-jar/chromedriver_win_19.0.1068.0/chromedriver.exe"
+				chromeService = new ChromeDriverService.Builder()
+						.usingDriverExecutable(new File(getChromeLocation()))
+						.usingAnyFreePort().build();
+				log.info("-------------***LAUNCHING GOOGLECHROME***--------------");
+				//chromeService.start();
+				driver = new ChromeDriver(chromeService);
+				driver.manage().window().maximize();
+				System.out.println(applicationURL+"------"+applicationContext);
+				driver.navigate().to(applicationURL + applicationContext);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_IE)) {
+			log.info("---------------***LAUNCHING INTERNET EXPLORE***-----------");
+			driver = new InternetExplorerDriver();
+			driver.navigate().to(applicationURL + applicationContext);
+
+		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_FIREFOX)) {
+			log.info("-------------***LAUNCHING FIREFOX***--------------");
+			driver = new FirefoxDriver();
+			driver.manage().window().maximize();
+			// windowMaximizeFirefox();
+			driver.navigate().to(applicationURL + applicationContext);
+
 		}
 
-		return selenium;
+		else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_OPERA)) {
+			log.info("-------------***LAUNCHING OPERA***--------------");
+			driver = new OperaDriver();
+			driver.navigate().to(applicationURL + applicationContext);
+			//driver.manage().window().maximize();
+			Robot robot;
+			try {
+				robot = new Robot();
+				robot.keyPress(KeyEvent.VK_ALT);
+				robot.keyPress(KeyEvent.VK_SPACE);
+				robot.keyRelease(KeyEvent.VK_ALT);
+				robot.keyRelease(KeyEvent.VK_SPACE);
+				robot.keyPress(KeyEvent.VK_X);
+				robot.keyRelease(KeyEvent.VK_X);
+			} catch (AWTException e) {
+
+				e.printStackTrace();
+			}
+
+		} else {
+			throw new ScreenException(
+					"------Only FireFox,InternetExplore and Chrome works-----------");
+		}
+
 	}
+
+	/*
+	 * public static void windowMaximizeFirefox() {
+	 * driver.manage().window().setPosition(new Point(0, 0)); java.awt.Dimension
+	 * screenSize = java.awt.Toolkit.getDefaultToolkit() .getScreenSize();
+	 * Dimension dim = new Dimension((int) screenSize.getWidth(), (int)
+	 * screenSize.getHeight()); driver.manage().window().setSize(dim); }
+	 */
+
+	public void closeBrowser() {
+		log.info("-------------***BROWSER CLOSING***--------------");
+		if (driver != null) {
+			driver.quit();
+		}
+			if (chromeService!=null) {
+	//			 chromeService.stop();
+
+			}
+		}
+
+	
+
+	public String getChromeLocation() {
+		log.info("getChromeLocation:*****CHROME TARGET LOCATION FOUND***");
+		String directory = System.getProperty("user.dir");
+		String targetDirectory = getChromeFile();
+		String location = directory + targetDirectory;
+		return location;
+	}
+
+	public String getChromeFile() {
+		if (System.getProperty("os.name").startsWith(Constants.WINDOWS_OS)) {
+			log.info("*******WINDOWS MACHINE FOUND*************");
+			// getChromeLocation("/chromedriver.exe");
+			return Constants.WINDOWS_DIRECTORY + "/chromedriver.exe";
+		} else if (System.getProperty("os.name").startsWith(Constants.LINUX_OS)) {
+			log.info("*******LINUX MACHINE FOUND*************");
+			return Constants.LINUX_DIRECTORY_64 + "/chromedriver";
+		} else if (System.getProperty("os.name").startsWith(Constants.MAC_OS)) {
+			log.info("*******MAC MACHINE FOUND*************");
+			return Constants.MAC_DIRECTORY + "/chromedriver";
+		} else {
+			throw new NullPointerException("******PLATFORM NOT FOUND********");
+		}
+
+	}
+
+	public void getXpathWebElement(String xpath) throws Exception {
+		log.info("Entering:-----getXpathWebElement-------");
+		try {
+
+			element = driver.findElement(By.xpath(xpath));
+
+		} catch (Throwable t) {
+			log.info("Entering:---------Exception in getXpathWebElement()-----------");
+			t.printStackTrace();
+
+		}
+
+	}
+
+	public void getIdWebElement(String id) throws ScreenException {
+		log.info("Entering:---getIdWebElement-----");
+		try {
+			element = driver.findElement(By.id(id));
+
+		} catch (Throwable t) {
+			log.info("Entering:---------Exception in getIdWebElement()----------");
+			t.printStackTrace();
+
+		}
+
+	}
+
+	public void getcssWebElement(String selector) throws ScreenException {
+		log.info("Entering:----------getIdWebElement----------");
+		try {
+			element = driver.findElement(By.cssSelector(selector));
+
+		} catch (Throwable t) {
+			log.info("Entering:---------Exception in getIdWebElement()--------");
+
+			t.printStackTrace();
+
+		}
+
+	}
+
+	public void waitForElementPresent(String locator, String methodName)
+			throws IOException, Exception {
+		try {
+			log.info("Entering:--------waitForElementPresent()--------");
+			By by = By.xpath(locator);
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			log.info("Waiting:--------One second----------");
+			wait.until(presenceOfElementLocated(by));
+		}
+
+		catch (Exception e) {
+			File scrFile = ((TakesScreenshot) driver)
+					.getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile,
+					new File(GetCurrentDir.getCurrentDirectory() + "\\"
+							+ methodName + ".png"));
+			throw new RuntimeException("waitForElementPresent"
+					+ super.getClass().getSimpleName() + " failed", e);
+
+		}
+	}
+
+	Function<WebDriver, WebElement> presenceOfElementLocated(final By locator) {
+		log.info("Entering:------presenceOfElementLocated()-----Start");
+		return new Function<WebDriver, WebElement>() {
+			public WebElement apply(WebDriver driver) {
+				log.info("Entering:*********presenceOfElementLocated()******End");
+				return driver.findElement(locator);
+
+			}
+
+		};
+
+	}
+	
+	public By getTagByValue(String name) throws ScreenException {
+		if (name != null) {
+			this.by = By.tagName(name);
+
+		} else {
+			throw new ScreenException("Enter:---getClassNameByValue()-----");
+		}
+		return this.by;
+	}
+	
+	/*public boolean isTextPresent(String name) throws ScreenException{
+//		String sourceCode=driver.getPageSource();
+		System.out.println("-------textvalue"+name);
+		WebElement ele=driver.findElement(getTagByValue("body"));
+		String name1=ele.getText();
+		String[] name2=name1.split("World");
+		
+		for(String name3:name2){
+			name3.trim();			
+			System.out.println("pagesource code---------->"+name3);
+			if(name3.endsWith(name)){
+				System.out.println("------------s-BREAK-------------");
+				break;
+			}
+			
+		}
+		return true;
+	}*/
+	public void click() throws ScreenException {
+		log.info("Entering:********click operation start********");
+		try {
+			element.click();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		log.info("Entering:********click operation end********");
+
+	}
+
+	public void clear() throws ScreenException {
+		log.info("Entering:********clear operation start********");
+		try {
+			element.clear();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		log.info("Entering:********clear operation end********");
+
+	}
+
+	public void sendKeys(String text) throws ScreenException {
+		log.info("Entering:********enterText operation start********");
+		try {
+			clear();
+			element.sendKeys(text);
+
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		log.info("Entering:********enterText operation end********");
+	}
+
+	public void submit() throws ScreenException {
+		log.info("Entering:********submit operation start********");
+		try {
+			element.submit();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		log.info("Entering:********submit operation end********");
+
+	}
+	
+	
+	 public void isTextPresent(String textValue){
+         if(textValue!=null){
+                 Boolean textCheck=driver.getPageSource().contains(textValue);
+                 Assert.assertTrue("HelloWorld Existed", textCheck);
+         }else{
+                 
+                 throw new RuntimeException("----HelloWorld Text is not existed----");
+                 
+         }
+ }
 
 }

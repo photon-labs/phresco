@@ -34,7 +34,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import com.opensymphony.xwork2.Action;
 import com.photon.phresco.configuration.Environment;
@@ -93,6 +92,10 @@ public class Configurations extends FrameworkBaseAction {
 	private String nameOfSite = "";
     private String appNameError = null;
     private String siteNameError = null;
+    //set as default envs
+    private String setAsDefaultEnv = "";
+    
+    private boolean flag = false;
     
 	public String list() {
         if (S_LOGGER.isDebugEnabled()) {
@@ -788,6 +791,43 @@ public class Configurations extends FrameworkBaseAction {
     	return APP_ENVIRONMENT;
     }
     
+    public String setAsDefault() {
+    	S_LOGGER.debug("Entering Method  Configurations.setAsDefault()");
+    	S_LOGGER.debug("SetAsdefault" + setAsDefaultEnv);
+		try {
+    		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+    		Project project = administrator.getProject(projectCode);
+    		
+    		if (StringUtils.isEmpty(setAsDefaultEnv)) {
+    			setEnvError(getText(SELECT_ENV_TO_SET_AS_DEFAULT));
+    			S_LOGGER.debug("Env value is empty");
+    		}
+    		
+    		List<Environment> enviroments = administrator.getEnvironments(project);
+    		boolean envAvailable = false;
+    		for (Environment environment : enviroments) {
+				if(environment.getName().equals(setAsDefaultEnv)) {
+					envAvailable = true;
+				}
+			}
+    		
+    		if(!envAvailable) {
+    			setEnvError(getText(ENV_NOT_VALID));
+    			S_LOGGER.debug("unable to find configuration in xml");
+    			return SUCCESS;
+    		}
+	    	administrator.setAsDefaultEnv(setAsDefaultEnv, project);
+	    	setEnvError(getText(ENV_SET_AS_DEFAULT_SUCCESS, Collections.singletonList(setAsDefaultEnv)));
+	    	// set flag value to indicate , successfully env set as default
+	    	flag = true;
+	    	S_LOGGER.debug("successfully updated the config xml");
+    	} catch(Exception e) {
+    		setEnvError(getText(ENV_SET_AS_DEFAULT_ERROR));
+            S_LOGGER.error("Entered into catch block of Configurations.setAsDefault()" + FrameworkUtil.getStackTraceAsString(e));
+    	}
+		return SUCCESS;
+    }
+    
     public String fetchProjectInfoVersions() {
     	try {
 	    	String configType = getHttpRequest().getParameter("configType");
@@ -1004,5 +1044,21 @@ public class Configurations extends FrameworkBaseAction {
 
 	public void setNameOfSite(String nameOfSite) {
 		this.nameOfSite = nameOfSite;
+	}
+
+	public String getSetAsDefaultEnv() {
+		return setAsDefaultEnv;
+	}
+
+	public void setSetAsDefaultEnv(String setAsDefaultEnv) {
+		this.setAsDefaultEnv = setAsDefaultEnv;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 }
