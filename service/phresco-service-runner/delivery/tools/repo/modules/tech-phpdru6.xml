@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules xmlns="http://www.example.org/Phresco">
-    <module required="false" core="true" version="6.19" name="Aggregator" id="mod_aggregator_6.19">
+    <module id="mod_aggregator__6.19" name="aggregator" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Aggregates syndicated content (RSS, RDF, and Atom feeds).</content>
@@ -10,7 +10,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Blog" id="mod_blog_6.19">
+    <module id="mod_blog__6.19" name="blog" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables keeping easily and regularly updated user web pages or blogs.</content>
@@ -20,7 +20,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Blog API" id="mod_blog_api_6.19">
+    <module id="mod_blog_api__6.19" name="blog_api" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to post content using applications that support XML-RPC blog APIs.</content>
@@ -30,7 +30,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Book" id="mod_book_6.19">
+    <module id="mod_book__6.19" name="book" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to structure site pages in a hierarchy or outline.</content>
@@ -40,7 +40,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Color" id="mod_color_6.19">
+    <module id="mod_color__6.19" name="color" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows the user to change the color scheme of certain themes.</content>
@@ -50,7 +50,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Comment" id="mod_comment_6.19">
+    <module id="mod_comment__6.19" name="comment" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to comment on and discuss published content.</content>
@@ -60,7 +60,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Contact" id="mod_contact_6.19">
+    <module id="mod_contact__6.19" name="contact" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables the use of both personal and site-wide contact forms.</content>
@@ -70,8 +70,8 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Content translation" id="mod_content_translation_6.19">
-        <dependentModules>mod_locale_6.19</dependentModules>
+    <module id="mod_content_translation__6.19" name="content_translation" version="6.19" core="true" required="false">
+        <dependentModules>mod_locale__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows content to be translated into different languages.</content>
@@ -81,7 +81,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Database logging" id="mod_database_logging_6.19">
+    <module id="mod_database_logging__6.19" name="database_logging" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Logs and records system events to the database.</content>
@@ -91,9 +91,9 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Forum" id="mod_forum_6.19">
-        <dependentModules>mod_comment_6.19</dependentModules>
-        <dependentModules>mod_taxonomy_6.19</dependentModules>
+    <module id="mod_forum__6.19" name="forum" version="6.19" core="true" required="false">
+        <dependentModules>mod_comment__6.19</dependentModules>
+        <dependentModules>mod_taxonomy__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables threaded discussions about general topics.</content>
@@ -103,7 +103,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Help" id="mod_help_6.19">
+    <module id="mod_help__6.19" name="help" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Manages the display of online help.</content>
@@ -113,7 +113,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Locale" id="mod_locale_6.19">
+    <module id="mod_locale__6.19" name="locale" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Adds language handling functionality and enables the translation of the user interface to languages other than English.</content>
@@ -123,7 +123,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Menu" id="mod_menu_6.19">
+    <module id="mod_menu__6.19" name="menu" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows administrators to customize the site navigation menu.</content>
@@ -133,7 +133,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="OpenId" id="mod_openid_6.19">
+    <module id="mod_openid__6.19" name="openid" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to log into your site using OpenID.</content>
@@ -143,7 +143,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Path" id="mod_path_6.19">
+    <module id="mod_path__6.19" name="path" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to rename URLs.</content>
@@ -153,7 +153,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="PHP filter" id="mod_php_filter_6.19">
+    <module id="mod_php_filter__6.19" name="php_filter" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows embedded PHP code/snippets to be evaluated.</content>
@@ -163,7 +163,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Ping" id="mod_ping_6.19">
+    <module id="mod_ping__6.19" name="ping" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Alerts other sites when your site has been updated.</content>
@@ -173,7 +173,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Poll" id="mod_poll_6.19">
+    <module id="mod_poll__6.19" name="poll" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows your site to capture votes on different topics in the form of multiple choice questions.</content>
@@ -183,7 +183,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Profile" id="mod_profile_6.19">
+    <module id="mod_profile__6.19" name="profile" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Supports configurable user profiles.</content>
@@ -193,7 +193,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Search" id="mod_search_6.19">
+    <module id="mod_search__6.19" name="search" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables site-wide keyword searching.</content>
@@ -203,7 +203,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Statistics" id="mod_statistics_6.19">
+    <module id="mod_statistics__6.19" name="statistics" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Logs access statistics for your site.</content>
@@ -213,7 +213,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Syslog" id="mod_syslog_6.19">
+    <module id="mod_syslog__6.19" name="syslog" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Logs and records system events to syslog.</content>
@@ -223,7 +223,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Taxonomy" id="mod_taxonomy_6.19">
+    <module id="mod_taxonomy__6.19" name="taxonomy" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables the categorization of content.</content>
@@ -233,7 +233,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Throttle" id="mod_throttle_6.19">
+    <module id="mod_throttle__6.19" name="throttle" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Handles the auto-throttling mechanism, to control site congestion.</content>
@@ -243,8 +243,8 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Tracker" id="mod_tracker_6.19">
-        <dependentModules>mod_comment_6.19</dependentModules>
+    <module id="mod_tracker__6.19" name="tracker" version="6.19" core="true" required="false">
+        <dependentModules>mod_comment__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables tracking of recent posts for users.</content>
@@ -254,7 +254,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Trigger" id="mod_trigger_6.19">
+    <module id="mod_trigger__6.19" name="trigger" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Enables actions to be fired on certain system events, such as when new content is created.</content>
@@ -264,7 +264,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Update status" id="mod_update_status_6.19">
+    <module id="mod_update_status__6.19" name="update_status" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Checks the status of available updates for Drupal and your installed modules and themes.</content>
@@ -274,7 +274,7 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="true" version="6.19" name="Upload" id="mod_upload_6.19">
+    <module id="mod_upload__6.19" name="upload" version="6.19" core="true" required="false">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows users to upload and attach files to content.</content>
@@ -284,7 +284,7 @@
             </document>
         </documents>
     </module>
-    <module required="true" core="true" version="6.19" name="Block" id="mod_block_6.19">
+    <module id="mod_block__6.19" name="block" version="6.19" core="true" required="true">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Controls the boxes that are displayed around the main content.</content>
@@ -294,7 +294,7 @@
             </document>
         </documents>
     </module>
-    <module required="true" core="true" version="6.19" name="Filter" id="mod_filter_6.19">
+    <module id="mod_filter__6.19" name="filter" version="6.19" core="true" required="true">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Handles the filtering of content in preparation for display.</content>
@@ -304,7 +304,7 @@
             </document>
         </documents>
     </module>
-    <module required="true" core="true" version="6.19" name="Node" id="mod_node_6.19">
+    <module id="mod_node__6.19" name="node" version="6.19" core="true" required="true">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows content to be submitted to the site and displayed on pages.</content>
@@ -314,7 +314,7 @@
             </document>
         </documents>
     </module>
-    <module required="true" core="true" version="6.19" name="System" id="mod_system_6.19">
+    <module id="mod_system__6.19" name="system" version="6.19" core="true" required="true">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Handles general site configuration for administrators.</content>
@@ -324,7 +324,7 @@
             </document>
         </documents>
     </module>
-    <module required="true" core="true" version="6.19" name="User" id="mod_user_6.19">
+    <module id="mod_user__6.19" name="user" version="6.19" core="true" required="true">
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Manages the user registration and login system.</content>
@@ -334,8 +334,8 @@
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.4" name="Backup and Migrate" id="mod_backup_and_migrate_6.x-2.4">
-        <contentURL>/modules/tech-phpdru6/files/mod_backup_and_migrate_6.x-2.4/6.x-2.4/mod_backup_and_migrate_6.x-2.4-6.x-2.4.zip</contentURL>
+    <module id="mod_backup_migrate_6.x-2.4" name="backup_migrate" version="6.x-2.4" core="true" required="false" groupId="modules/backup_migrate/backup_migrate.zip" artifactId="modules/backup_migrate/backup_migrate.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_backup_migrate_6.x-2.4/6.x-2.4/mod_backup_migrate_6.x-2.4-6.x-2.4.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Backup or migrate the Drupal Database quickly and without unnecessary data.</content>
@@ -347,8 +347,8 @@ With Backup and Migrate you can dump some or all of your database tables to a fi
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.2" name="Block Theme" id="mod_block_theme_6.x-1.2">
-        <contentURL>/modules/tech-phpdru6/files/mod_block_theme_6.x-1.2/6.x-1.2/mod_block_theme_6.x-1.2-6.x-1.2.zip</contentURL>
+    <module id="mod_blocktheme_6.x-1.2" name="blocktheme" version="6.x-1.2" core="true" required="false" groupId="modules/blocktheme/blocktheme.zip" artifactId="modules/blocktheme/blocktheme.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_blocktheme_6.x-1.2/6.x-1.2/mod_blocktheme_6.x-1.2-6.x-1.2.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Provides a configuration option to select custom themes for blocks</content>
@@ -358,7 +358,7 @@ With Backup and Migrate you can dump some or all of your database tables to a fi
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.1" name="Browscap" id="mod_browscap_6.x-1.1">
+    <module id="mod_browscap_6.x-1.1" name="browscap" version="6.x-1.1" core="true" required="false" groupId="modules/browscap/browscap.zip" artifactId="modules/browscap/browscap.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_browscap_6.x-1.1/6.x-1.1/mod_browscap_6.x-1.1-6.x-1.1.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -376,7 +376,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.4" name="CAPTCHA" id="mod_captcha_6.x-2.4">
+    <module id="mod_captcha_6.x-2.4" name="captcha" version="6.x-2.4" core="true" required="false" groupId="modules/captcha/captcha.zip" artifactId="modules/captcha/captcha.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_captcha_6.x-2.4/6.x-2.4/mod_captcha_6.x-2.4-6.x-2.4.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -387,7 +387,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.9" name="CCK" id="mod_cck_6.x-2.9">
+    <module id="mod_cck_6.x-2.9" name="cck" version="6.x-2.9" core="true" required="false" groupId="modules/cck/cck.zip" artifactId="modules/cck/cck.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_cck_6.x-2.9/6.x-2.9/mod_cck_6.x-2.9-6.x-2.9.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -398,7 +398,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.3" name="CKEditor" id="mod_ckeditor_6.x-1.3">
+    <module id="mod_ckeditor_6.x-1.3" name="ckeditor" version="6.x-1.3" core="true" required="false" groupId="modules/ckeditor/ckeditor.zip" artifactId="modules/ckeditor/ckeditor.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_ckeditor_6.x-1.3/6.x-1.3/mod_ckeditor_6.x-1.3-6.x-1.3.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -409,7 +409,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.7" name="Date" id="mod_date_6.x-2.7">
+    <module id="mod_date_6.x-2.7" name="date" version="6.x-2.7" core="true" required="false" groupId="modules/date/date.zip" artifactId="modules/date/date.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_date_6.x-2.7/6.x-2.7/mod_date_6.x-2.7-6.x-2.7.zip</contentURL>
         <dependentModules>mod_cck_6.x-2.9</dependentModules>
         <documents>
@@ -421,7 +421,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.8" name="Disqus" id="mod_disqus_6.x-1.8">
+    <module id="mod_disqus_6.x-1.8" name="disqus" version="6.x-1.8" core="true" required="false" groupId="modules/disqus/disqus.zip" artifactId="modules/disqus/disqus.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_disqus_6.x-1.8/6.x-1.8/mod_disqus_6.x-1.8-6.x-1.8.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -432,7 +432,7 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-3.2" name="FileField" id="mod_filefield_6.x-3.2">
+    <module id="mod_filefield_6.x-3.2" name="filefield" version="6.x-3.2" core="true" required="false" groupId="modules/filefield/filefield.zip" artifactId="modules/filefield/filefield.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_filefield_6.x-3.2/6.x-3.2/mod_filefield_6.x-3.2-6.x-3.2.zip</contentURL>
         <dependentModules>mod_cck_6.x-2.9</dependentModules>
         <documents>
@@ -444,8 +444,8 @@ Browscap automates maintenance by storing browser data in a database and automat
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-3.0-rc11" name="Facebook API" id="mod_facebook_api_6.x-3.0-rc11">
-        <contentURL>/modules/tech-phpdru6/files/mod_facebook_api_6.x-3.0-rc11/6.x-3.0-rc11/mod_facebook_api_6.x-3.0-rc11-6.x-3.0-rc11.zip</contentURL>
+    <module id="mod_fb_6.x-3.0-rc11" name="fb" version="6.x-3.0-rc11" core="true" required="false" groupId="modules/fb/fb.zip" artifactId="modules/fb/fb.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_fb_6.x-3.0-rc11/6.x-3.0-rc11/mod_fb_6.x-3.0-rc11-6.x-3.0-rc11.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Initializes facebook's PHP and Javascript client libraries. Enables FBML Like buttons and other social plugins.</content>
@@ -457,7 +457,7 @@ With Drupal for Facebook, you can harness all the power of Drupal in you Faceboo
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.2" name="Google Analytics" id="mod_google_analytics_6.x-2.2">
+    <module id="mod_google_analytics_6.x-2.2" name="google_analytics" version="6.x-2.2" core="true" required="false" groupId="modules/google_analytics/google_analytics.zip" artifactId="modules/google_analytics/google_analytics.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_google_analytics_6.x-2.2/6.x-2.2/mod_google_analytics_6.x-2.2-6.x-2.2.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -485,7 +485,7 @@ The module allows you to add the following statistics features to your site:
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.x-dev" name="IMCE" id="mod_imce_6.x-2.x-dev">
+    <module id="mod_imce_6.x-2.x-dev" name="imce" version="6.x-2.x-dev" core="true" required="false" groupId="modules/imce/imce.zip" artifactId="modules/imce/imce.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_imce_6.x-2.x-dev/6.x-2.x-dev/mod_imce_6.x-2.x-dev-6.x-2.x-dev.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -512,9 +512,9 @@ Features
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.0" name="InsertFrame" id="mod_insertframe_6.x-2.0">
+    <module id="mod_insertframe_6.x-2.0" name="insertframe" version="6.x-2.0" core="true" required="false" groupId="modules/insertFrame/insertFrame.zip" artifactId="modules/insertFrame/insertFrame.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_insertframe_6.x-2.0/6.x-2.0/mod_insertframe_6.x-2.0-6.x-2.0.zip</contentURL>
-        <dependentModules>mod_filter_6.19</dependentModules>
+        <dependentModules>mod_filter__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>A filter that includes iFrame in a node</content>
@@ -526,10 +526,10 @@ The height can be calculated to show entire page. Navigation in frame resize the
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.7" name="Internationalization" id="mod_internationalization_6.x-1.7">
-        <contentURL>/modules/tech-phpdru6/files/mod_internationalization_6.x-1.7/6.x-1.7/mod_internationalization_6.x-1.7-6.x-1.7.zip</contentURL>
-        <dependentModules>mod_content_translation_6.19</dependentModules>
-        <dependentModules>mod_locale_6.19</dependentModules>
+    <module id="mod_i18n_6.x-1.7" name="i18n" version="6.x-1.7" core="true" required="false" groupId="modules/i18n/i18n.zip" artifactId="modules/i18n/i18n.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_i18n_6.x-1.7/6.x-1.7/mod_i18n_6.x-1.7-6.x-1.7.zip</contentURL>
+        <dependentModules>mod_content_translation__6.19</dependentModules>
+        <dependentModules>mod_locale__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Extends Drupal support for multilingual features.</content>
@@ -543,7 +543,7 @@ The height can be calculated to show entire page. Navigation in frame resize the
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-3.2" name="ImageField" id="mod_imagefield_6.x-3.2">
+    <module id="mod_imagefield_6.x-3.2" name="imagefield" version="6.x-3.2" core="true" required="false" groupId="modules/imagefield/imagefield.zip" artifactId="modules/imagefield/imagefield.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_imagefield_6.x-3.2/6.x-3.2/mod_imagefield_6.x-3.2-6.x-3.2.zip</contentURL>
         <dependentModules>mod_cck_6.x-2.9</dependentModules>
         <dependentModules>mod_filefield_6.x-3.2</dependentModules>
@@ -558,8 +558,8 @@ ImageField does not provide a built-in thumbnail solution, but complements the i
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.0-beta7" name="Integrated Metatags" id="mod_integrated_metatags_6.x-1.0-beta7">
-        <contentURL>/modules/tech-phpdru6/files/mod_integrated_metatags_6.x-1.0-beta7/6.x-1.0-beta7/mod_integrated_metatags_6.x-1.0-beta7-6.x-1.0-beta7.zip</contentURL>
+    <module id="mod_int_meta_6.x-1.0-beta7" name="int_meta" version="6.x-1.0-beta7" core="true" required="false" groupId="modules/int_meta/int_meta.zip" artifactId="modules/int_meta/int_meta.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_int_meta_6.x-1.0-beta7/6.x-1.0-beta7/mod_int_meta_6.x-1.0-beta7-6.x-1.0-beta7.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Provides functionality for modules to dynamically add Metatags.</content>
@@ -569,7 +569,7 @@ ImageField does not provide a built-in thumbnail solution, but complements the i
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.4" name="jQuery UI" id="mod_jquery_ui_6.x-1.4">
+    <module id="mod_jquery_ui_6.x-1.4" name="jquery_ui" version="6.x-1.4" core="true" required="false" groupId="modules/jquery_ui/jquery_ui.zip" artifactId="modules/jquery_ui/jquery_ui.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_jquery_ui_6.x-1.4/6.x-1.4/mod_jquery_ui_6.x-1.4-6.x-1.4.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -580,7 +580,7 @@ ImageField does not provide a built-in thumbnail solution, but complements the i
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.1" name="Login Security" id="mod_login_security_6.x-1.1">
+    <module id="mod_login_security_6.x-1.1" name="login_security" version="6.x-1.1" core="true" required="false" groupId="modules/login_security/login_security.zip" artifactId="modules/login_security/login_security.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_login_security_6.x-1.1/6.x-1.1/mod_login_security_6.x-1.1-6.x-1.1.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -593,7 +593,7 @@ With Login Security module, a site administrator may protect and restrict access
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.9" name="Link" id="mod_link_6.x-2.9">
+    <module id="mod_link_6.x-2.9" name="link" version="6.x-2.9" core="true" required="false" groupId="modules/link/link.zip" artifactId="modules/link/link.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_link_6.x-2.9/6.x-2.9/mod_link_6.x-2.9-6.x-2.9.zip</contentURL>
         <dependentModules>mod_cck_6.x-2.9</dependentModules>
         <documents>
@@ -605,7 +605,7 @@ With Login Security module, a site administrator may protect and restrict access
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-3.1" name="Location" id="mod_location_6.x-3.1">
+    <module id="mod_location_6.x-3.1" name="location" version="6.x-3.1" core="true" required="false" groupId="modules/location/location.zip" artifactId="modules/location/location.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_location_6.x-3.1/6.x-3.1/mod_location_6.x-3.1-6.x-3.1.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -616,8 +616,8 @@ With Login Security module, a site administrator may protect and restrict access
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.0" name="Mime Mail" id="mod_mime_mail_6.x-1.0">
-        <contentURL>/modules/tech-phpdru6/files/mod_mime_mail_6.x-1.0/6.x-1.0/mod_mime_mail_6.x-1.0-6.x-1.0.zip</contentURL>
+    <module id="mod_mimemail_6.x-1.0" name="mimemail" version="6.x-1.0" core="true" required="false" groupId="modules/mimemail/mimemail.zip" artifactId="modules/mimemail/mimemail.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_mimemail_6.x-1.0/6.x-1.0/mod_mimemail_6.x-1.0-6.x-1.0.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Allows to send HTML e-mail with embedded images and attachments.</content>
@@ -636,7 +636,7 @@ With Login Security module, a site administrator may protect and restrict access
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.5" name="Multistep" id="mod_multistep_6.x-1.5">
+    <module id="mod_multistep_6.x-1.5" name="multistep" version="6.x-1.5" core="true" required="false" groupId="modules/multistep/multistep.zip" artifactId="modules/multistep/multistep.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_multistep_6.x-1.5/6.x-1.5/mod_multistep_6.x-1.5-6.x-1.5.zip</contentURL>
         <dependentModules>mod_cck_6.x-2.9</dependentModules>
         <documents>
@@ -650,10 +650,10 @@ The module also provides a block for each content type with a menu of the differ
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.3" name="Menu Block" id="mod_menu_block_6.x-2.3">
+    <module id="mod_menu_block_6.x-2.3" name="menu_block" version="6.x-2.3" core="true" required="false" groupId="modules/menu_block/menu_block.zip" artifactId="modules/menu_block/menu_block.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_menu_block_6.x-2.3/6.x-2.3/mod_menu_block_6.x-2.3-6.x-2.3.zip</contentURL>
-        <dependentModules>mod_menu_6.19</dependentModules>
-        <dependentModules>mod_block_6.19</dependentModules>
+        <dependentModules>mod_menu__6.19</dependentModules>
+        <dependentModules>mod_block__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Provides configurable blocks of menu items.</content>
@@ -663,7 +663,7 @@ The module also provides a block for each content type with a menu of the differ
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.1" name="Mobile Tools" id="mod_mobile_tools_6.x-2.1">
+    <module id="mod_mobile_tools_6.x-2.1" name="mobile_tools" version="6.x-2.1" core="true" required="false" groupId="modules/mobile_tools/mobile_tools.zip" artifactId="modules/mobile_tools/mobile_tools.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_mobile_tools_6.x-2.1/6.x-2.1/mod_mobile_tools_6.x-2.1-6.x-2.1.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -695,7 +695,7 @@ Mobile Tools does not provide a mobile theme, but can be used together with mobi
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.11" name="Nodewords" id="mod_nodewords_6.x-1.11">
+    <module id="mod_nodewords_6.x-1.11" name="nodewords" version="6.x-1.11" core="true" required="false" groupId="modules/nodewords/nodewords.zip" artifactId="modules/nodewords/nodewords.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_nodewords_6.x-1.11/6.x-1.11/mod_nodewords_6.x-1.11-6.x-1.11.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -706,7 +706,7 @@ Mobile Tools does not provide a mobile theme, but can be used together with mobi
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.02" name="OAuth" id="mod_oauth_6.x-2.02">
+    <module id="mod_oauth_6.x-2.02" name="oauth" version="6.x-2.02" core="true" required="false" groupId="modules/oauth/oauth.zip" artifactId="modules/oauth/oauth.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_oauth_6.x-2.02/6.x-2.02/mod_oauth_6.x-2.02-6.x-2.02.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -719,9 +719,9 @@ Version 3.x is an entirely new module, previously known as OAuth Common, that ta
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.5" name="Pathauto" id="mod_pathauto_6.x-1.5">
+    <module id="mod_pathauto_6.x-1.5" name="pathauto" version="6.x-1.5" core="true" required="false" groupId="modules/pathauto/pathauto.zip" artifactId="modules/pathauto/pathauto.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_pathauto_6.x-1.5/6.x-1.5/mod_pathauto_6.x-1.5-6.x-1.5.zip</contentURL>
-        <dependentModules>mod_path_6.19</dependentModules>
+        <dependentModules>mod_path__6.19</dependentModules>
         <dependentModules>mod_token_6.x-1.16</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
@@ -732,7 +732,7 @@ Version 3.x is an entirely new module, previously known as OAuth Common, that ta
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-2.5" name="Page Title" id="mod_page_title_6.x-2.5">
+    <module id="mod_page_title_6.x-2.5" name="page_title" version="6.x-2.5" core="true" required="false" groupId="modules/page_title/page_title.zip" artifactId="modules/page_title/page_title.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_page_title_6.x-2.5/6.x-2.5/mod_page_title_6.x-2.5-6.x-2.5.zip</contentURL>
         <dependentModules>mod_token_6.x-1.16</dependentModules>
         <documents>
@@ -746,7 +746,7 @@ This module gives you granular control over the page title. You can specify patt
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-0.x-dev" name="Pear" id="mod_pear_6.x-0.x-dev">
+    <module id="mod_pear_6.x-0.x-dev" name="pear" version="6.x-0.x-dev" core="true" required="false" groupId="modules/pear/pear.zip" artifactId="modules/pear/pear.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_pear_6.x-0.x-dev/6.x-0.x-dev/mod_pear_6.x-0.x-dev-6.x-0.x-dev.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -757,7 +757,7 @@ This module gives you granular control over the page title. You can specify patt
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.7" name="reCAPTCHA" id="mod_recaptcha_6.x-1.7">
+    <module id="mod_recaptcha_6.x-1.7" name="recaptcha" version="6.x-1.7" core="true" required="false" groupId="modules/recaptcha/recaptcha.zip" artifactId="modules/recaptcha/recaptcha.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_recaptcha_6.x-1.7/6.x-1.7/mod_recaptcha_6.x-1.7-6.x-1.7.zip</contentURL>
         <dependentModules>mod_captcha_6.x-2.4</dependentModules>
         <documents>
@@ -771,7 +771,7 @@ reCAPTCHA helps power massive-scale online collaboration.</content>
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.6" name="Role Theme Switcher" id="mod_role_theme_switcher_6.x-1.6">
+    <module id="mod_role_theme_switcher_6.x-1.6" name="role_theme_switcher" version="6.x-1.6" core="true" required="false" groupId="modules/role_theme_switcher/role_theme_switcher.zip" artifactId="modules/role_theme_switcher/role_theme_switcher.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_role_theme_switcher_6.x-1.6/6.x-1.6/mod_role_theme_switcher_6.x-1.6-6.x-1.6.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -784,9 +784,9 @@ Often you want to separate Drupal administrative interface from frontend. You ca
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.6" name="Search config" id="mod_search_config_6.x-1.6">
+    <module id="mod_search_config_6.x-1.6" name="search_config" version="6.x-1.6" core="true" required="false" groupId="modules/search_config/search_config.zip" artifactId="modules/search_config/search_config.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_search_config_6.x-1.6/6.x-1.6/mod_search_config_6.x-1.6-6.x-1.6.zip</contentURL>
-        <dependentModules>mod_search_6.19</dependentModules>
+        <dependentModules>mod_search__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Configure display of the advanced search form</content>
@@ -806,8 +806,8 @@ Often you want to separate Drupal administrative interface from frontend. You ca
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.9" name="Secure Pages" id="mod_secure_pages_6.x-1.9">
-        <contentURL>/modules/tech-phpdru6/files/mod_secure_pages_6.x-1.9/6.x-1.9/mod_secure_pages_6.x-1.9-6.x-1.9.zip</contentURL>
+    <module id="mod_securepages_6.x-1.9" name="securepages" version="6.x-1.9" core="true" required="false" groupId="modules/securepages/securepages.zip" artifactId="modules/securepages/securepages.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_securepages_6.x-1.9/6.x-1.9/mod_securepages_6.x-1.9-6.x-1.9.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Set which pages are always going to be used in secure mode (SSL) Warning: Do not enable this module without configuring your web server to handle SSL with this installation of Drupal</content>
@@ -817,7 +817,7 @@ Often you want to separate Drupal administrative interface from frontend. You ca
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-3.6" name="ThemeKey" id="mod_themekey_6.x-3.6">
+    <module id="mod_themekey_6.x-3.6" name="themekey" version="6.x-3.6" core="true" required="false" groupId="modules/themekey/themekey.zip" artifactId="modules/themekey/themekey.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_themekey_6.x-3.6/6.x-3.6/mod_themekey_6.x-3.6-6.x-3.6.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -837,7 +837,7 @@ Often you want to separate Drupal administrative interface from frontend. You ca
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.6" name="Thickbox" id="mod_thickbox_6.x-1.6">
+    <module id="mod_thickbox_6.x-1.6" name="thickbox" version="6.x-1.6" core="true" required="false" groupId="modules/thickbox/thickbox.zip" artifactId="modules/thickbox/thickbox.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_thickbox_6.x-1.6/6.x-1.6/mod_thickbox_6.x-1.6-6.x-1.6.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -851,7 +851,7 @@ with ImageField (CCK) + ImageCache and the Image module.</content>
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.16" name="Token" id="mod_token_6.x-1.16">
+    <module id="mod_token_6.x-1.16" name="token" version="6.x-1.16" core="true" required="false" groupId="modules/token/token.zip" artifactId="modules/token/token.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_token_6.x-1.16/6.x-1.16/mod_token_6.x-1.16-6.x-1.16.zip</contentURL>
         <documents>
             <document documentType="HELP_TEXT">
@@ -864,9 +864,9 @@ Note that Token module doesn't provide any visible functions to the user on its 
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.6" name="Taxonomy Image" id="mod_taxonomy_image_6.x-1.6">
+    <module id="mod_taxonomy_image_6.x-1.6" name="taxonomy_image" version="6.x-1.6" core="true" required="false" groupId="modules/taxonomy_image/taxonomy_image.zip" artifactId="modules/taxonomy_image/taxonomy_image.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_taxonomy_image_6.x-1.6/6.x-1.6/mod_taxonomy_image_6.x-1.6-6.x-1.6.zip</contentURL>
-        <dependentModules>mod_taxonomy_6.19</dependentModules>
+        <dependentModules>mod_taxonomy__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Upload and associate images with taxonomy terms.</content>
@@ -878,10 +878,10 @@ The module allows the admin to create a one-to-one term-to-image relationship. W
             </document>
         </documents>
     </module>
-    <module required="false" core="false" version="6.x-1.27" name="Translation Management" id="mod_translation_management_6.x-1.27">
+    <module id="mod_translation_management_6.x-1.27" name="translation_management" version="6.x-1.27" core="true" required="false" groupId="modules/translation_management/translation_management.zip" artifactId="modules/translation_management/translation_management.zip">
         <contentURL>/modules/tech-phpdru6/files/mod_translation_management_6.x-1.27/6.x-1.27/mod_translation_management_6.x-1.27-6.x-1.27.zip</contentURL>
-        <dependentModules>mod_content_translation_6.19</dependentModules>
-        <dependentModules>mod_locale_6.19</dependentModules>
+        <dependentModules>mod_content_translation__6.19</dependentModules>
+        <dependentModules>mod_locale__6.19</dependentModules>
         <documents>
             <document documentType="HELP_TEXT">
                 <content>Provides core services for sending and returning translation jobs.</content>
@@ -894,6 +894,429 @@ Content managers can manage all translations from one central page. The module s
 The module introduces a new Translator role. This role allows translating between specific language pairs. Translators have individual job queues, showing documents that were sent to them for translation.
 
 Translators can translate everything without having to learn Drupal administration. Node contents, menus, taxonomy, CCK, blocks and strings are all translated from the same interface.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_backup_migrate_6.x-1.x-dev" name="backup_migrate" version="6.x-1.x-dev" core="true" required="false" groupId="modules/backup_migrate_6.x-1.x-dev/backup_migrate.zip" artifactId="modules/backup_migrate_6.x-1.x-dev/backup_migrate.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_backup_migrate_6.x-1.x-dev/6.x-1.x-dev/mod_backup_migrate_6.x-1.x-dev-6.x-1.x-dev.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Backup or migrate the Drupal Database quickly and without unnecessary data.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Backup and Migrate simplifies the task of backing up and restoring your Drupal database or copying your database from one Drupal site to another. It supports gzip, bzip and zip compression as well as automatic scheduled backups.
+
+With Backup and Migrate you can dump some or all of your database tables to a file download or save to a file on the server, and to restore from an uploaded or previously saved database dump. You can chose which tables and what data to backup and cache data is excluded by default.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_cck_6.x-2.0-rc3" name="cck" version="6.x-2.0-rc3" core="true" required="false" groupId="modules/cck_6.x-2.0-rc3/cck.zip" artifactId="modules/cck_6.x-2.0-rc3/cck.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_cck_6.x-2.0-rc3/6.x-2.0-rc3/mod_cck_6.x-2.0-rc3-6.x-2.0-rc3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows administrators to define new content types.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The Content Construction Kit allows you to add custom fields to nodes using a web browser.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_date_6.x-2.6" name="date" version="6.x-2.6" core="true" required="false" groupId="modules/date_6.x-2.6/date.zip" artifactId="modules/date_6.x-2.6/date.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_date_6.x-2.6/6.x-2.6/mod_date_6.x-2.6-6.x-2.6.zip</contentURL>
+        <dependentModules>mod_cck_6.x-2.9</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Defines CCK date/time fields and widgets.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This package contains both a flexible date/time field type Date field and a Date API that other modules can use. </content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_fckeditor_6.x-1.4" name="fckeditor" version="6.x-1.4" core="true" required="false" groupId="modules/fckeditor/fckeditor.zip" artifactId="modules/fckeditor/fckeditor.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_fckeditor_6.x-1.4/6.x-1.4/mod_fckeditor_6.x-1.4-6.x-1.4.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enables the usage of CKEditor (WYSIWYG) instead of plain text fields.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This module will allow Drupal to replace textarea fields with the CKEditor - a visual HTML editor, sometimes called WYSIWYG editor. This HTML text editor brings many of the powerful WYSIWYG editing functions of known desktop editors like Word to the web. It's very fast and doesn't require any kind of installation on the client computer.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imageapi_6.x-1.10" name="imageapi" version="6.x-1.10" core="true" required="false" groupId="modules/imageapi/imageapi.zip" artifactId="modules/imageapi/imageapi.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imageapi_6.x-1.10/6.x-1.10/mod_imageapi_6.x-1.10-6.x-1.10.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ImageAPI supporting multiple toolkits.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ImageAPI supporting multiple toolkits.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imagecache_6.x-2.0-beta12" name="imagecache" version="6.x-2.0-beta12" core="true" required="false" groupId="modules/imagecache/imagecache.zip" artifactId="modules/imagecache/imagecache.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imagecache_6.x-2.0-beta12/6.x-2.0-beta12/mod_imagecache_6.x-2.0-beta12-6.x-2.0-beta12.zip</contentURL>
+        <dependentModules>mod_imageapi_6.x-1.10</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dynamic image manipulator and cache.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Dynamic image manipulator and cache.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_node-level_blocks_6.x-1.4" name="node_level_blocks" version="6.x-1.4" core="true" required="false" groupId="modules/node_level_blocks/node_level_blocks.zip" artifactId="modules/node_level_blocks/node_level_blocks.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_node-level_blocks_6.x-1.4/6.x-1.4/mod_node-level_blocks_6.x-1.4-6.x-1.4.zip</contentURL>
+        <dependentModules>mod_block__6.19</dependentModules>
+        <dependentModules>mod_node__6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows node editors to assign blocks to regions on a node base.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows node editors to assign blocks to regions on a node base.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_print_6.x-1.14" name="print" version="6.x-1.14" core="true" required="false" groupId="modules/print/print.zip" artifactId="modules/print/print.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_print_6.x-1.14/6.x-1.14/mod_print_6.x-1.14-6.x-1.14.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds a printer-friendly version link to content and administrative pages.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Adds a printer-friendly version link to content and administrative pages.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_taxonomy_menu_6.x-2.9" name="taxonomy_menu" version="6.x-2.9" core="true" required="false" groupId="modules/taxonomy_menu/taxonomy_menu.zip" artifactId="modules/taxonomy_menu/taxonomy_menu.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_taxonomy_menu_6.x-2.9/6.x-2.9/mod_taxonomy_menu_6.x-2.9-6.x-2.9.zip</contentURL>
+        <dependentModules>mod_taxonomy__6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Adds links to taxonomy terms to a menu.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Adds links to taxonomy terms to a menu.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_term_fields_6.x-2.1" name="term_fields" version="6.x-2.1" core="true" required="false" groupId="modules/term_fields/term_fields.zip" artifactId="modules/term_fields/term_fields.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_term_fields_6.x-2.1/6.x-2.1/mod_term_fields_6.x-2.1-6.x-2.1.zip</contentURL>
+        <dependentModules>mod_taxonomy__6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows adminitrators to define fields for taxonomy terms in the same way that CCK allows administrators to define fields for nodes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows adminitrators to define fields for taxonomy terms in the same way that CCK allows administrators to define fields for nodes.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_views_6.x-2.16" name="views" version="6.x-2.16" core="true" required="false" groupId="modules/views/views.zip" artifactId="modules/views/views.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_views_6.x-2.16/6.x-2.16/mod_views_6.x-2.16-6.x-2.16.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Create customized lists and queries from your database.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Create customized lists and queries from your database.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_weight_6.x-1.2" name="weight" version="6.x-1.2" core="true" required="false" groupId="modules/weight/weight.zip" artifactId="modules/weight/weight.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_weight_6.x-1.2/6.x-1.2/mod_weight_6.x-1.2-6.x-1.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Add weight-based sorting to nodes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Add weight-based sorting to nodes.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_backup_migrate_6.x-2.2" name="backup_migrate" version="6.x-2.2" core="true" required="false" groupId="modules/backup_migrate-6.x-2.2/backup_migrate-6.x-2.2.zip" artifactId="modules/backup_migrate-6.x-2.2/backup_migrate-6.x-2.2.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_backup_migrate_6.x-2.2/6.x-2.2/mod_backup_migrate_6.x-2.2-6.x-2.2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Backup or migrate the Drupal Database quickly and without unnecessary data.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Backup and Migrate simplifies the task of backing up and restoring your Drupal database or copying your database from one Drupal site to another. It supports gzip, bzip and zip compression as well as automatic scheduled backups.
+
+With Backup and Migrate you can dump some or all of your database tables to a file download or save to a file on the server, and to restore from an uploaded or previously saved database dump. You can chose which tables and what data to backup and cache data is excluded by default.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_domain_6.x-2.14" name="domain" version="6.x-2.14" core="true" required="false" groupId="modules/domain-6.x-2.14/domain-6.x-2.14.zip" artifactId="modules/domain-6.x-2.14/domain-6.x-2.14.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_domain_6.x-2.14/6.x-2.14/mod_domain_6.x-2.14-6.x-2.14.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A domain-based access control system</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The Domain Access project is a suite of modules that provide tools for running a group of affiliated sites from one Drupal installation and a single shared database. The module allows you to share users, content, and configurations across a group of sites.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_fbconnect_6.x-2.0-beta1" name="fbconnect" version="6.x-2.0-beta1" core="true" required="false" groupId="modules/fbconnect-6.x-2.0-beta1/fbconnect-6.x-2.0-beta1.zip" artifactId="modules/fbconnect-6.x-2.0-beta1/fbconnect-6.x-2.0-beta1.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_fbconnect_6.x-2.0-beta1/6.x-2.0-beta1/mod_fbconnect_6.x-2.0-beta1-6.x-2.0-beta1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users to connect with Facebook account</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This module allows users to login on a Drupal website through the Facebook Connect API – using their Facebook login and password.
+
+The module also brings other extra features:
+
+    Users can see which of their Facebook friends already have an account on the Drupal website
+    Users can publish a customizable message on their Facebook feed announcing that they have created an account on the Drupal website
+    Users can invite their Facebook friends to create an account on the Drupal website
+</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_filefield_6.x-3.9" name="filefield" version="6.x-3.9" core="true" required="false" groupId="modules/filefield-6.x-3.9/filefield-6.x-3.9.zip" artifactId="modules/filefield-6.x-3.9/filefield-6.x-3.9.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_filefield_6.x-3.9/6.x-3.9/mod_filefield_6.x-3.9-6.x-3.9.zip</contentURL>
+        <dependentModules>mod_cck_6.x-2.9</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Defines a file field type.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>FileField provides a universal file upload field for CCK. It is a robust alternative to core's Upload module and an absolute must for users uploading a large number of files. Great for managing video and audio files for podcasts on your own site.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_fivestar_6.x-1.19" name="fivestar" version="6.x-1.19" core="true" required="false" groupId="modules/fivestar-6.x-1.19/fivestar-6.x-1.19.zip" artifactId="modules/fivestar-6.x-1.19/fivestar-6.x-1.19.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_fivestar_6.x-1.19/6.x-1.19/mod_fivestar_6.x-1.19-6.x-1.19.zip</contentURL>
+        <dependentModules>mod_votingapi_6.x-2.3</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>A simple five-star voting widget for nodes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The Fivestar voting module adds a clean, attractive voting widget to nodes in Drupal 5, node and comments in Drupal 6, and any entity in Drupal 7. Developed by Lullabot and an officially supported module in Acquia Drupal.
+It features:
+
+    jQuery rollover effects and AJAX no-reload voting
+    Configurable star sets
+    Graceful degradation to an HTML rating form when JavaScript is turned off
+    Support for anonymous voters
+    Spam protection to keep users from filling your DB with bogus votes
+    Easy-to-use integration with Views module for lists sorted by rating, or filtered by min/max ratings
+    A Fivestar CCK field for use in custom node types
+    An easy-to-use Form API element type for use in other modules
+    Compatible with all versions of jQuery (1.0 - 1.4.4)
+</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_google_appliance_6.x-2.0-beta1" name="google_appliance" version="6.x-2.0-beta1" core="true" required="false" groupId="modules/google_appliance-6.x-2.0-beta1/google_appliance-6.x-2.0-beta1.zip" artifactId="modules/google_appliance-6.x-2.0-beta1/google_appliance-6.x-2.0-beta1.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_google_appliance_6.x-2.0-beta1/6.x-2.0-beta1/mod_google_appliance_6.x-2.0-beta1-6.x-2.0-beta1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides a search interface to a Google Mini or GSA, meta-data generators to allow for advanced search, and a class for talking to the appliance.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The Google Search Appliance module integreates a GSA device with a Drupal site. Utilizing a GSA gives you cross-domain search functionality, which can be aggregated into a single search experience on a drupal site.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imageapi_6.x-1.9" name="imageapi" version="6.x-1.9" core="true" required="false" groupId="modules/imageapi-6.x-1.9.zip/imageapi-6.x-1.9.zip" artifactId="modules/imageapi-6.x-1.9.zip/imageapi-6.x-1.9.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imageapi_6.x-1.9/6.x-1.9/mod_imageapi_6.x-1.9-6.x-1.9.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>ImageAPI supporting multiple toolkits.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>ImageAPI supporting multiple toolkits.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imce_6.x-2.0-beta3" name="imce" version="6.x-2.0-beta3" core="true" required="false" groupId="modules/imce-6.x-2.0-beta3/imce-6.x-2.0-beta3.zip" artifactId="modules/imce-6.x-2.0-beta3/imce-6.x-2.0-beta3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imce_6.x-2.0-beta3/6.x-2.0-beta3/mod_imce_6.x-2.0-beta3-6.x-2.0-beta3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>An image/file uploader and browser supporting personal directories and user quota.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>IMCE is an image/file uploader and browser that supports personal directories and quota.
+Features
+    Basic file operations: upload, delete
+    Image(jpg, png, gif) operations: resize, create thumbnails, preview
+    Support for private file system
+    Configurable limits for user roles: file size per upload, directory quota, file extensions, and image dimensions
+    Personal or shared folders for users
+    Permissions per directory
+    Ftp-like directory navigation
+    File sorting by name, size, dimensions, date
+    Tabbed interface for file operations
+    Keyboard shortcuts(up, down, insert(or enter), delete, home, end, ctrl+A, R(esize), T(humbnails), U(pload)).
+    Built-in support for inline image/file insertion into textareas
+    Multiple file selection(using ctrl or shift)
+    Ajax file operations
+    Themable layout using tpl files
+</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imce_mkdir_6.x-1.0" name="imce_mkdir" version="6.x-1.0" core="true" required="false" groupId="modules/imce_mkdir-6.x-1.0/imce_mkdir-6.x-1.0.zip" artifactId="modules/imce_mkdir-6.x-1.0/imce_mkdir-6.x-1.0.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imce_mkdir_6.x-1.0/6.x-1.0/mod_imce_mkdir_6.x-1.0-6.x-1.0.zip</contentURL>
+        <dependentModules>mod_imce_6.x-2.x-dev</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows users manage directories in IMCE</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>IMCE Mkdir allows users to create and delete sub-directories under directories assigned by IMCE.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_jquery_ui_6.x-1.3" name="jquery_ui" version="6.x-1.3" core="true" required="false" groupId="modules/jquery_ui-6.x-1.3/jquery_ui-6.x-1.3.zip" artifactId="modules/jquery_ui-6.x-1.3/jquery_ui-6.x-1.3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_jquery_ui_6.x-1.3/6.x-1.3/mod_jquery_ui_6.x-1.3-6.x-1.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides the jQuery UI plug-in to other Drupal modules.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A wrapper module around the jQuery UI effects library that lets module developers add swooshy, swishy effects to their code.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_lazy_image_loader_6.x-1.3" name="lazy_image_loader" version="6.x-1.3" core="true" required="false" groupId="modules/lazy_image_loader-6.x-1.3/lazy_image_loader-6.x-1.3.zip" artifactId="modules/lazy_image_loader-6.x-1.3/lazy_image_loader-6.x-1.3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_lazy_image_loader_6.x-1.3/6.x-1.3/mod_lazy_image_loader_6.x-1.3-6.x-1.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Load page's images only if they were visible or requested by user</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Websites with lots of images on a single page might take a long time to load, and it sometimes annoys visitors. for fixing this problem this module loads only the images that are visible to or requested by visitors and the other images loads only when visitor scroll downs to them (This is the default behavior there are other options available live mouseover, mouseclick etc). </content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_modalframe_6.x-1.3" name="modalframe" version="6.x-1.3" core="true" required="false" groupId="modules/modalframe-6.x-1.3/modalframe-6.x-1.3.zip" artifactId="modules/modalframe-6.x-1.3/modalframe-6.x-1.3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_modalframe_6.x-1.3/6.x-1.3/mod_modalframe_6.x-1.3-6.x-1.3.zip</contentURL>
+        <dependentModules>mod_jquery_ui_6.x-1.4</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides an API to render an iframe within a modal dialog based on the jQuery UI Dialog plugin.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides an API to render an iframe within a modal dialog based on the jQuery UI Dialog plugin.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_nodequeue_6.x-2.11" name="nodequeue" version="6.x-2.11" core="true" required="false" groupId="modules/nodequeue-6.x-2.11/nodequeue-6.x-2.11.zip" artifactId="modules/nodequeue-6.x-2.11/nodequeue-6.x-2.11.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_nodequeue_6.x-2.11/6.x-2.11/mod_nodequeue_6.x-2.11-6.x-2.11.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>The Nodequeue module allows users to collect nodes in an arbitrarily ordered list. The order in the list can be used for a any purpose, such as:
+
+    A block listing teasers for the five top news stories on a site
+    A user’s favorite music albums
+    A group of favorite from which one is randomly displayed
+
+Nodequeue provides a simple drag-and-drop interface to manually order any queue. Additionally, it allows nodes to be added and removed from queues without needing edit permissions to the node. Nodes can be added to queues either from a queue management tab or by links on the node teaser.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Create queues which can contain nodes in arbitrary order</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_page_title_6.x-2.3" name="page_title" version="6.x-2.3" core="true" required="false" groupId="modules/page_title-6.x-2.3/page_title-6.x-2.3.zip" artifactId="modules/page_title-6.x-2.3/page_title-6.x-2.3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_page_title_6.x-2.3/6.x-2.3/mod_page_title_6.x-2.3-6.x-2.3.zip</contentURL>
+        <dependentModules>mod_token_6.x-1.16</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Enhanced control over the page title (in the &lt;head&gt; tag).</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>The word &quot;title&quot; is a bit overloaded. Every piece of content in Drupal has a title, and so does every page. The page title is the one found in the HTML head inside the &lt;title&gt; tag. It is also used on SERPs (Search Engine Result Pages) and can greatly enhance your websites SEO (Search Engine Optimization).
+
+This module gives you granular control over the page title. You can specify patterns for how the title should be structured and, on content creation pages, specify the page title separately to the content's title.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_path_redirect_6.x-1.0-rc2" name="path_redirect" version="6.x-1.0-rc2" core="true" required="false" groupId="modules/path_redirect-6.x-1.0-rc2/path_redirect-6.x-1.0-rc2.zip" artifactId="modules/path_redirect-6.x-1.0-rc2/path_redirect-6.x-1.0-rc2.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_path_redirect_6.x-1.0-rc2/6.x-1.0-rc2/mod_path_redirect_6.x-1.0-rc2-6.x-1.0-rc2.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Redirect users from one URL to another.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Redirect users from one URL to another.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_securepages_6.x-1.8" name="securepages" version="6.x-1.8" core="true" required="false" groupId="modules/securepages-6.x-1.8/securepages-6.x-1.8.zip" artifactId="modules/securepages-6.x-1.8/securepages-6.x-1.8.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_securepages_6.x-1.8/6.x-1.8/mod_securepages_6.x-1.8-6.x-1.8.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Set which pages are always going to be used in secure mode (SSL) Warning: Do not enable this module without configuring your web server to handle SSL with this installation of Drupal</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>A small process which will redirect the required pages to a SSL version of the page.  This module makes sure that the user is running on a secure page when they create or edit content, view user details, or administer the site.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_service_links_6.x-2.1" name="service_links" version="6.x-2.1" core="true" required="false" groupId="modules/service_links-6.x-2.1/service_links-6.x-2.1.zip" artifactId="modules/service_links-6.x-2.1/service_links-6.x-2.1.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_service_links_6.x-2.1/6.x-2.1/mod_service_links_6.x-2.1-6.x-2.1.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Module engine for add various service links about sharing networks to nodes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Module engine for add various service links about sharing networks to nodes.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_swftools_6.x-2.5" name="swftools" version="6.x-2.5" core="true" required="false" groupId="modules/swftools-6.x-2.5/swftools-6.x-2.5.zip" artifactId="modules/swftools-6.x-2.5/swftools-6.x-2.5.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_swftools_6.x-2.5/6.x-2.5/mod_swftools_6.x-2.5-6.x-2.5.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>This is the core component of SWF Tools and provides a common API for handling Adobe Flash related media.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>This is the core component of SWF Tools and provides a common API for handling Adobe Flash related media.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_term_fields_6.x-1.16" name="term_fields" version="6.x-1.16" core="true" required="false" groupId="modules/term_fields-6.x-1.16/term_fields-6.x-1.16.zip" artifactId="modules/term_fields-6.x-1.16/term_fields-6.x-1.16.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_term_fields_6.x-1.16/6.x-1.16/mod_term_fields_6.x-1.16-6.x-1.16.zip</contentURL>
+        <dependentModules>mod_taxonomy__6.19</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Allows adminitrators to define fields for taxonomy terms in the same way that CCK allows administrators to define fields for nodes.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Allows adminitrators to define fields for taxonomy terms in the same way that CCK allows administrators to define fields for nodes.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_votingapi_6.x-2.3" name="votingapi" version="6.x-2.3" core="true" required="false" groupId="modules/votingapi-6.x-2.3/votingapi-6.x-2.3.zip" artifactId="modules/votingapi-6.x-2.3/votingapi-6.x-2.3.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_votingapi_6.x-2.3/6.x-2.3/mod_votingapi_6.x-2.3-6.x-2.3.zip</contentURL>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Provides a shared voting API for other modules.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Provides a shared voting API for other modules.</content>
+            </document>
+        </documents>
+    </module>
+    <module id="mod_imagecache_6.x-2.0-beta12" name="imagecache" version="6.x-2.0-beta12" core="true" required="false" groupId="modules/imagecache-6.x-2.0-beta10/imagecache-6.x-2.0-beta10.zip" artifactId="modules/imagecache-6.x-2.0-beta10/imagecache-6.x-2.0-beta10.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_imagecache_6.x-2.0-beta12/6.x-2.0-beta12/mod_imagecache_6.x-2.0-beta12-6.x-2.0-beta12.zip</contentURL>
+        <dependentModules>mod_imageapi_6.x-1.10</dependentModules>
+        <documents>
+            <document documentType="HELP_TEXT">
+                <content>Dynamic image manipulator and cache.</content>
+            </document>
+            <document documentType="DESCRIPTION">
+                <content>Dynamic image manipulator and cache.</content>
             </document>
         </documents>
     </module>
