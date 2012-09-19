@@ -187,7 +187,8 @@ public class CodeValidation extends AbstractXcodeMojo{
 			try {
 				File reportDir = new File(baseDir + DO_NOT_CHECKIN, report);
 				if (outputFile.exists()) {
-					getLog().info("No of Files to be copied " + outputFile.length());
+					File[] listFiles = outputFile.listFiles();
+					getLog().info("No of Files to be copied " + listFiles.length);
 				}
 				FileUtils.copyDirectory(outputFile, reportDir);
 				FileUtils.deleteDirectory(makeReportDir); //delete make dir
