@@ -84,6 +84,7 @@ public interface FrameworkConstants {
     String CI_BUILD_TRIGGERED_FROM_UI = "buildTriggeredFromUI";
     String CI_PROFILE = "-Pci clean ";
     String CI_FUNCTIONAL_ADAPT = "-Pci ci:adapt ";
+    String CI_ZIP = ".zip\"";
     String TIMER_TRIGGER = "TimerTrigger";
     String CLASS = "class";
     String SCM = "scm";
@@ -272,6 +273,7 @@ public interface FrameworkConstants {
     String SCRIPT_START = "<script>";
     String GRAPH_JSON = "var jsonData = [";
     String IPHONE_SDK = "sdk";
+    String IOS_TEST_TYPE = "applicationTest";
     String IPHONE_CONFIGURATION = "configuration";
     String IPHONE_TARGET_NAME = "targetName";
     String IPHONE_PLISTFILE = "plistfile";

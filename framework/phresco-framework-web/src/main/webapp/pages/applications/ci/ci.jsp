@@ -167,7 +167,10 @@
 								                                <img src="images/icons/inprogress.png" title="In progress"/>
 										              		<% 
 								                                } else if(build.getStatus().equals("SUCCESS")) {
-								                                	String downloadUrl = build.getUrl()+ FrameworkConstants.CI_JOB_BUILD_ARTIFACT + FrameworkConstants.FORWARD_SLASH + build.getDownload().replaceAll("\"",""); 
+								                                	String downloadUrl = build.getUrl()+ FrameworkConstants.CI_JOB_BUILD_ARTIFACT;
+								                                	if (StringUtils.isNotEmpty(build.getDownload())) {
+								                                		downloadUrl = downloadUrl + FrameworkConstants.FORWARD_SLASH + build.getDownload().replaceAll("\"","");								                                		
+								                                	}
 								                            %>
 										                		<a href="<s:url action='CIBuildDownload'>
 												          		     <s:param name="buildDownloadUrl"><%= downloadUrl %></s:param>

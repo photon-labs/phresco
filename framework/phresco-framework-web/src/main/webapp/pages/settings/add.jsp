@@ -430,6 +430,14 @@ $(document).ready(function() {
 		var valueClass = $(this).attr("id");
 		$("." + valueClass).attr("name", $(this).val());
 	});
+	
+	//should not allow special characters
+    $("input[name=propertyKey]").live('input propertychange',function(e) { 	//Name validation
+    	var name = $(this).val();
+    	name = checkForSplChr(name);
+    	$(this).val(name);
+    });
+	
 });
  
 function settingsType() {
