@@ -190,6 +190,17 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 
 	public void markVersionUpdated(String newVersion) throws PhrescoException {
 		FileWriter writer = null;
+		
+		File updateMarkkerFile = new File(Utility.getPhrescoTemp() + "/markers/upgrade-temp.marker");
+		if(updateMarkkerFile.exists()) {
+			FileUtil.delete(updateMarkkerFile);
+		}
+		
+		updateMarkkerFile = new File(Utility.getPhrescoTemp() + "/markers/upgrade-temp1.marker");
+		if(updateMarkkerFile.exists()) {
+			FileUtil.delete(updateMarkkerFile);
+		}
+		
 		try {
 			String fileName = Utility.getPhrescoTemp() + FrameworkConstants.UPGRADE_PROP_NAME;
 			writer = new FileWriter(fileName);
