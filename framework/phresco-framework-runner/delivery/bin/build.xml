@@ -9,6 +9,7 @@
 	<property name="phresco.war.dir" value="${phresco.home}/workspace/tools/war/phresco.war"/>
 	<property name="sonar.war.dir" value="${phresco.home}/workspace/tools/war/sonar.war"/>
 	<property name="phresco.upgrade.file" value="${phresco.home}/workspace/temp/upgrade.properties"/>
+    <property name="phresco.upgrade.temp1" value="${phresco.home}/workspace/temp/markers/upgrade-temp1.marker"/>
 	<property name="phresco.file.server.home" value="${phresco.home}/workspace/projects"/>
 	<property name="phresco.file.server" value="PhrescoFileServer"/>
 	<property name="phresco.url" value="http://localhost:2468/phresco"/>
@@ -167,7 +168,17 @@
 		</java>
 	</target>
     
-    <target name="updatefix" depends="init">
+    <target name="updatefix-new" depends="init">
+       <if>
+            <available file="${phresco.home}\workspace\temp\markers\upgrade-temp1.marker"/>
+            <else>
+                <touch file="${phresco.home}\workspace\temp\markers\upgrade-temp1.marker"/>
+                <available property="upgrade.temp1" file="${phresco.upgrade.temp1}"/>
+            </else>
+        </if>
+     </target>
+    
+    <target name="updatefix" depends="updatefix-new" if="${upgrade.temp1}">
    <if>
         <available file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
         <else>
