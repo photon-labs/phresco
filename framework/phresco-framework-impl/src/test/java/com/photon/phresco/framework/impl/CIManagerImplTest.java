@@ -24,6 +24,7 @@ import org.junit.Test;
 import com.photon.phresco.commons.CIJob;
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.framework.api.ServiceManager;
+import com.photon.phresco.model.CIBuild;
 
 public class CIManagerImplTest implements FrameworkConstants{
 
@@ -53,6 +54,9 @@ public class CIManagerImplTest implements FrameworkConstants{
 //	    if (serviceManager != null) {
 //	        serviceManager = null;
 //	    }
+	    if (ciManager != null) {
+	    	ciManager = null;
+	    }
 	}
 
 	//@Test
@@ -153,6 +157,21 @@ public class CIManagerImplTest implements FrameworkConstants{
 		}
 	}
 	
+	//@Test
+	public void getDownloadUrls() {
+		try {
+			System.out.println("getDownloadUrls!!!!!");
+			CIJob createJob = createJob();
+			List<CIBuild> ciBuilds = ciManager.getCIBuilds(createJob);
+			System.out.println(ciBuilds.size());
+			for (CIBuild ciBuild : ciBuilds) {
+				System.out.println("download zip !!!!" + ciBuild.getDownload());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
     public static Element createElement(String nodeName, String NodeValue) {
     	org.jdom.Element element = new Element(nodeName);
     	if (NodeValue != null) {
@@ -171,20 +190,23 @@ public class CIManagerImplTest implements FrameworkConstants{
     
 	private CIJob createJob() {
 		CIJob job = new CIJob();
-		job.setSvnUrl("KaleesUrl");
-		job.setScheduleExpression("@@@@@@@@@@@@");
-		List<String> triggers = new ArrayList<String>();
-		triggers.add(TIMER_TRIGGER);
-		triggers.add("kalees_triggers");
-		job.setTriggers(triggers);
-		job.setMvnCommand("mvn kalees:kalees");
-		Map<String, String> emails = new HashMap<String, String>(2);
-		emails.put(REQ_KEY_SUCCESS_EMAILS, "muthu success!!!");
-		emails.put(REQ_KEY_FAILURE_EMAILS, "muthu failure!!!");
-		job.setEmail(emails);
-		// need to pass as clonned workspace
-		job.setRepoType(SvnType);
-		job.setBranch("kalees-boston");
+		job.setName("Master2.0Check");
+		job.setJenkinsUrl("172.16.29.161");
+		job.setJenkinsPort("3579");
+//		job.setSvnUrl("KaleesUrl");
+//		job.setScheduleExpression("@@@@@@@@@@@@");
+//		List<String> triggers = new ArrayList<String>();
+//		triggers.add(TIMER_TRIGGER);
+//		triggers.add("kalees_triggers");
+//		job.setTriggers(triggers);
+//		job.setMvnCommand("mvn kalees:kalees");
+//		Map<String, String> emails = new HashMap<String, String>(2);
+//		emails.put(REQ_KEY_SUCCESS_EMAILS, "muthu success!!!");
+//		emails.put(REQ_KEY_FAILURE_EMAILS, "muthu failure!!!");
+//		job.setEmail(emails);
+//		// need to pass as clonned workspace
+//		job.setRepoType(SvnType);
+//		job.setBranch("kalees-boston");
 		return job;
 	}
 
