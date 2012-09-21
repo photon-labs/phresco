@@ -43,9 +43,10 @@
 		<sonar.phpDepend.timeout>100</sonar.phpDepend.timeout>
 		<sonar.phpPmd.timeout>100</sonar.phpPmd.timeout>
 		<sonar.phpCodesniffer.timeout>100</sonar.phpCodesniffer.timeout>
-	    <sonar.exclusions>**\\**\*.*</sonar.exclusions>
-		<sonar.phpDepend.argumentLine>--ignore=${sonar.exclusions} </sonar.phpDepend.argumentLine> 
-		<sonar.phpPmd.argumentLine>--exclude ${sonar.exclusions}</sonar.phpPmd.argumentLine> 
+	    <sonar.exclusions></sonar.exclusions>
+		<sonar.phpDepend.argumentLine></sonar.phpDepend.argumentLine> 
+		<sonar.phpPmd.argumentLine></sonar.phpPmd.argumentLine> 
+		<sonar.phpCodesniffer.argumentLine>${sonar.phpDepend.argumentLine}</sonar.phpCodesniffer.argumentLine> 
     </properties>
     
 	<build>

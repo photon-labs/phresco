@@ -1312,9 +1312,12 @@ public interface FrameworkConstants {
    String SONAR_LANGUAGE_PROFILE = "sonar.language";
    String SONAR_BRANCH   = "sonar.branch";
    String SONAR_SOURCE = "source"; 
+   String FUNCTIONALTEST = "functional";
+   String REPORT_ELEMENT_NODE_JS = "ReportElementNodeJs";
    String REPORT_ELEMENT_JS_WEB = "reportElementJsWeb";
    String REPORT_ELEMENT_SRC_FUNC = "reportElementSrcFunc";
    String REPORT_ELEMENT_JAVA_FUNC = "reportElementJavaFunc";
+   String REPORT_ELEMENT_SHAREPOINT_SRC_FUNC = "reportElementSharepointSrcFunc";
    String PHRESCO_SOURCE_DIRECTORY = "phresco.source.directory";
    String SONAR_DYNAMIC_ANALYSIS_PROFILE = "sonar.dynamicAnalysis";
    String SONAR_EXCLUSION = "sonar.exclusions";
@@ -1345,6 +1348,8 @@ public interface FrameworkConstants {
 	   String SONAR_PHPCODESNIFFER_TIMEOUT = "sonar.phpCodesniffer.timeout";
 	   String DRUPAL_STANDARD = "sonar.phpCodesniffer.standardArgument";
 	   String WORDPRESS_STANDARD = "sonar.phpCodesniffer.standardArgument";
+	   String SONAR_PHPPDEPEND_ARGUMENTLINE = "sonar.phpDepend.argumentLine";
+	   String SONAR_PHPPMD_ARGUMENTLINE  = "sonar.phpPmd.argumentLine";
 	   String DRUPAL = "Drupal";
 	   String DRUPAL_STANDAD_VERSION = "7.8";
 	   String WORDPRESS = "WordPress";	    
@@ -1354,6 +1359,8 @@ public interface FrameworkConstants {
 	   String SQL_EXCLUDES = "source/sql";
 	   String HTML_EXCLUDES = "source/public_html";
 	   String TEST = "test";
+	   String IGNORE = "--ignore=";
+	   String EXCLUDE = "--exclude ";
 	  
 	   
 	   /* Constants for plugin properties */ 

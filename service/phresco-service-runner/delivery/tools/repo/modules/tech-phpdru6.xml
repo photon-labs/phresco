@@ -967,8 +967,8 @@ With Backup and Migrate you can dump some or all of your database tables to a fi
             </document>
         </documents>
     </module>
-    <module id="mod_node-level_blocks_6.x-1.4" name="node_level_blocks" version="6.x-1.4" core="true" required="false" groupId="modules/node_level_blocks/node_level_blocks.zip" artifactId="modules/node_level_blocks/node_level_blocks.zip">
-        <contentURL>/modules/tech-phpdru6/files/mod_node-level_blocks_6.x-1.4/6.x-1.4/mod_node-level_blocks_6.x-1.4-6.x-1.4.zip</contentURL>
+    <module id="mod_node_level_blocks_6.x-1.4" name="node_level_blocks" version="6.x-1.4" core="true" required="false" groupId="modules/node_level_blocks/node_level_blocks.zip" artifactId="modules/node_level_blocks/node_level_blocks.zip">
+        <contentURL>/modules/tech-phpdru6/files/mod_node_level_blocks_6.x-1.4/6.x-1.4/mod_node_level_blocks_6.x-1.4-6.x-1.4.zip</contentURL>
         <dependentModules>mod_block__6.19</dependentModules>
         <dependentModules>mod_node__6.19</dependentModules>
         <documents>

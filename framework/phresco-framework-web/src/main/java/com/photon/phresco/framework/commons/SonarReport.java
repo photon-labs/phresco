@@ -41,6 +41,8 @@ public class SonarReport {
 	private String technology = "";
 	private String showDivElement = "";
 	private String commentBlankLines = "";
+	private String coverage = "";
+	private String uncoveredLines = "";
 	
 	public String getNonCommentLinesOfCode() {
 		return nonCommentLinesOfCode;
@@ -276,6 +278,17 @@ public class SonarReport {
 	public void setCommentBlankLines(String commentBlankLines) {
 		this.commentBlankLines = commentBlankLines;
 	}
-	
+	public String getCoverage() {
+		return coverage;
+	}
+	public void setCoverage(String coverage) {
+		this.coverage = coverage;
+	}
+	public String getUncoveredLines() {
+		return uncoveredLines;
+	}
+	public void setUncoveredLines(String uncoveredLines) {
+		this.uncoveredLines = uncoveredLines;
+	}
 	
 }
