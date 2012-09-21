@@ -377,16 +377,18 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			File projectPath = new File(Utility.getProjectHome()+ File.separator + info.getCode() + File.separator + POM_FILE);
 			PomProcessor processor = new PomProcessor(projectPath);
 			StringBuilder exclusionStringBuff = new StringBuilder();
+			StringBuilder exclusionValueBuff = new StringBuilder();
 			List<ModuleGroup> modules = info.getTechnology().getModules();
 			if (CollectionUtils.isEmpty(modules)) {
 				return;
 			}
 			for (ModuleGroup moduleGroup : modules) {
 				if (moduleGroup.isCore()) {
+					exclusionValueBuff.append(moduleGroup.getName().toLowerCase());
+					exclusionValueBuff.append(",");
 					exclusionStringBuff.append("**\\");
 					exclusionStringBuff.append(moduleGroup.getName().toLowerCase());
 					exclusionStringBuff.append("\\**");
-					exclusionStringBuff.append("\\*.*");
 					exclusionStringBuff.append(",");
 				}
 			}
@@ -394,8 +396,33 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			if (exclusionValue.lastIndexOf(',') != -1) {
 				exclusionValue = exclusionValue.substring(0, exclusionValue.lastIndexOf(','));
 			}
-			String pomExclusionValue = processor.getProperty("sonar.exclusions");
-			processor.setProperty("sonar.exclusions", pomExclusionValue + FrameworkConstants.COMMA + exclusionValue);
+			
+			String exclusiontoolValue = exclusionValueBuff.toString();
+			if (exclusiontoolValue.lastIndexOf(',') != -1) {
+				exclusiontoolValue = exclusiontoolValue.substring(0, exclusiontoolValue.lastIndexOf(','));
+			}
+			
+			String pomExclusionValue = processor.getProperty(FrameworkConstants.SONAR_EXCLUSION);
+			if (!pomExclusionValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_EXCLUSION, pomExclusionValue + FrameworkConstants.COMMA + exclusionValue);
+			} else if(pomExclusionValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_EXCLUSION, exclusionValue);
+			}
+			
+			String pdependExcludeValue = processor.getProperty(FrameworkConstants.SONAR_PHPPDEPEND_ARGUMENTLINE);
+			if (!pdependExcludeValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_PHPPDEPEND_ARGUMENTLINE, pdependExcludeValue + FrameworkConstants.COMMA + exclusiontoolValue);
+			} else 	if (pdependExcludeValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_PHPPDEPEND_ARGUMENTLINE, FrameworkConstants.IGNORE + exclusiontoolValue);
+			}
+			
+			String pmdExcludeValue = processor.getProperty(FrameworkConstants.SONAR_PHPPMD_ARGUMENTLINE);
+			if (!pmdExcludeValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_PHPPMD_ARGUMENTLINE, pmdExcludeValue + FrameworkConstants.COMMA + exclusiontoolValue);
+			} else 	if (pmdExcludeValue.equals("")) {
+				processor.setProperty(FrameworkConstants.SONAR_PHPPMD_ARGUMENTLINE, FrameworkConstants.EXCLUDE + exclusiontoolValue);
+			}
+			
 			processor.save();
 		} catch (JAXBException e) {
 			throw new PhrescoException(e);
