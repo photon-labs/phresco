@@ -128,7 +128,7 @@ $properties = getConfigByName($currentEnv, $type, $name);
 
 //$properties = parse_ini_file('config.ini', true);
 
-$db_url = $properties[0]->type.'://'.$properties[0]->username.':'.$properties[0]->password.'@'.$properties[0]->host.'/'.$properties[0]->dbname;
+$db_url = $properties[0]->type.'://'.$properties[0]->username.':'.$properties[0]->password.'@'.$properties[0]->host.':'.$properties[0]->port.'/'.$properties[0]->dbname;
 $db_prefix = '';
 /**
  * Access control for update.php script
