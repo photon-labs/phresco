@@ -12,7 +12,7 @@ require_once 'DrupalBaseclass.php';
 class Node extends DrupalBaseclass {
 		
 	function testNodeType(){
-		$this->connect();
+		@$this->connect();
 		$nodeType = node_load(array("nid" => 1));
 		$this->assertEquals("page", $nodeType->type);
 	}

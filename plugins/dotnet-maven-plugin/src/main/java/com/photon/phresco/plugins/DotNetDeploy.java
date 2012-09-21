@@ -29,7 +29,6 @@ import java.util.List;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -44,7 +43,6 @@ import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
-import com.photon.phresco.util.Utility;
 
 /**
  * Goal which deploys the DotNet webapp project

@@ -1,0 +1,73 @@
+Follow the bellow steps to run the drupal unit test in mac
+For database configuration host name should be IP address(eg.127.0.0.1)
+
+
+A.	Open the terminal follow the steps
+B.	cd ~
+C.	mkdir mcrypt
+D.	cd mcrypt
+E.	download libmcrypt-2.5.8.tar.gz and php(5.3.6  - 5.3.13)
+F.	copy and paste the (Libmcrypt and php) to mcrypt folder
+G.	extract libmcrypt and php
+H.	cd libmcrypt-2.5.8 
+I.	./configure
+  	if you get an error like this "Any errors on the command line including C++ and g++ mostly "are due to Xcode not being installed or the 
+  		command line tools missing – if you have Xcode but still get the errors
+   		
+   		i.Launch the xcode and do the following steps
+			a.	Xcode > Preferences > Downloads > Install ‘Command Line Tools’
+J.	make
+K.	sudo make install(It will ask the mac password)
+L.	cd ../{phpfolder}/ext/mcrypt/
+M.	phpize
+	If you get this error "
+		PHP Api Version: 20090626
+		Zend Module Api No: 20090626
+		Zend Extension Api No: 220090626
+		Cannot find autoconf. Please check your autoconf installation and the
+		$PHP_AUTOCONF environment variable. Then, rerun this script."
+
+	Follow below steps steps
+		a.	cd ~/mcrypt
+		b.	curl -O http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
+		c.	tar xvfz autoconf-latest.tar.gz
+		d.	cd autoconf-2.69/
+		e.	./configure	
+		f.	make
+		g.	sudo make install
+
+N.	Again repeat steps(M,L) and check the output
+
+		output should be like this
+		--------------------------
+			PHP Api Version: 20090626
+			Zend Module Api No: 20090626
+			Zend Extension Api No: 220090626
+			configure.in:3: warning: prefer named diversions
+			configure.in:3: warning: prefer named diversions
+O.	./configure
+P.	make
+Q.	cd modules
+R.	sudo cp mcrypt.so /usr/lib/php/extensions/no-debug-non-zts-20090626/
+
+S.	To enabling mcrypt.so  php Extension do the following steps
+
+	a.	If php.ini not exist do the step
+        i.  sudo cp /etc/php.ini.default /etc/php.ini 
+	b.	sudo chmod u+w  /etc/php.ini 
+	c.	Open the php.ini file in any editor and add the following
+		i.	extension_dir = "/usr/lib/php/extensions/no-debug-non-zts-20090626/" 
+	   ii.	extension=mcrypt.so
+T.	Restart the Apache server
+U.	If you have /tmp/mysql.sock but no /var/mysql/mysql.sock then follow the below steps
+		a.	cd /var 
+		b.	sudo mkdir mysql
+		c.	cd mysql
+		d.	sudo ln -s /tmp/mysql.sock mysql.sock	
+V.	If you have /var/mysql/mysql.sock but no /tmp/mysql.sock then follow the below steps
+		a.	cd /tmp
+		b.	sudo ln -s /var/mysql/mysql.sock mysql.sock
+
+
+
+
