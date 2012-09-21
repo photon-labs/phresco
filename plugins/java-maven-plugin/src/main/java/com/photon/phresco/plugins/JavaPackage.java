@@ -254,8 +254,6 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 	}
 	
 	private void executeMvnPackage() throws MojoExecutionException {
-		BufferedReader in = null;
-		try {
 			getLog().info("Packaging the project...");
 			StringBuilder sb = new StringBuilder();
 			sb.append(MVN_CMD);
@@ -265,24 +263,7 @@ public class JavaPackage extends AbstractMojo implements PluginConstants {
 			sb.append(MVN_PHASE_PACKAGE);
 			sb.append(STR_SPACE);
 			sb.append(SKIP_TESTS);
-
-			Commandline cl = new Commandline(sb.toString());
-			Process process = cl.execute();
-			in = new BufferedReader(new InputStreamReader(
-					process.getInputStream()));
-			String line = null;
-			while ((line = in.readLine()) != null) {
-				if (line.startsWith("[ERROR]")) {
-					System.out.println(line); //do not use getLog() here as this line already contains the log type.
-				}
-			}
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} finally {
-			Utility.closeStream(in);
-		}
+			Utility.executeStreamconsumer(sb.toString());
 	}
 
 	private boolean build() throws MojoExecutionException {
