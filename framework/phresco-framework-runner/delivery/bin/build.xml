@@ -167,7 +167,7 @@
 			 </classpath>
 		</java>
 	</target>
-    
+    <!-- To create temp marker if not available  during start up --> 
     <target name="updatefix-new" depends="init">
        <if>
             <available file="${phresco.home}\workspace\temp\markers\upgrade-temp1.marker"/>
@@ -177,21 +177,23 @@
             </else>
         </if>
      </target>
-    
+     
+     <!-- To create temp marker if not available durning startup  -->
+     
     <target name="updatefix" depends="updatefix-new" if="${upgrade.temp1}">
-   <if>
-        <available file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
-        <else>
-    <mkdir dir="${phresco.home}/workspace/temp/"/>
-    <mkdir dir="${phresco.home}/workspace/temp/markers"/>
-    <touch file="${phresco.upgrade.file}"/>
-    <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.1.2001.marker"/>
-    <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.0.9000.marker"/>
-    <touch file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
-    <available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
-        </else>
-    </if>
- </target>
+       <if>
+            <available file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
+            <else>
+                <mkdir dir="${phresco.home}/workspace/temp/"/>
+                <mkdir dir="${phresco.home}/workspace/temp/markers"/>
+                <touch file="${phresco.upgrade.file}"/>
+                <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.1.2001.marker"/>
+                <delete file="${phresco.home}\workspace\temp\markers\com.photon.phresco.framework-phresco-framework-web-war-1.2.0.9000.marker"/>
+                <touch file="${phresco.home}\workspace\temp\markers\upgrade-temp.marker"/>
+                <available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
+            </else>
+        </if>
+     </target>
  
   
 </project>

@@ -117,6 +117,7 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 			
 			extractUpdate(tempFile);
 			updateSonarProfile();
+			markVersionUpdated(newVersion);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} catch (ParserConfigurationException e) {
@@ -188,7 +189,7 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 		FileUtil.delete(tempFile);
 	}
 
-	public void markVersionUpdated(String newVersion) throws PhrescoException {
+	private void markVersionUpdated(String newVersion) throws PhrescoException {
 		FileWriter writer = null;
 		
 		File updateMarkkerFile = new File(Utility.getPhrescoTemp() + "/markers/upgrade-temp.marker");
