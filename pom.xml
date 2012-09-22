@@ -35,7 +35,7 @@
         <module>service</module>
         <module>archetypes</module>
         <module>libraries</module>
-        <module>plugins</module>  
+        <module>plugins</module> 
         <module>phresco-pom</module> 
     </modules>
 
@@ -48,7 +48,7 @@
         <jersey-version>1.9-ea07</jersey-version>
 
 		<siteBaseUrl>file://C:/apache-tomcat-7.0.26/webapps/ROOT/phresco-site/</siteBaseUrl>
-        <phresco.server.dependency.config.file>/config/dependency/1.2.2.3002/dependency-1.2.2.3002.properties</phresco.server.dependency.config.file>
+        <phresco.server.dependency.config.file>config/dependency/1.2.2.3001/dependency-1.2.2.3001.properties</phresco.server.dependency.config.file>
 
     </properties>
     
