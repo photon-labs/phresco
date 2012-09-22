@@ -191,6 +191,10 @@ public class Servers implements ServerConstants {
         versions.add("5.x");
         versions.add("4.x");
         servers.add(new Server(7, "Jetty", versions, "Jetty"));
+        
+    	versions = new ArrayList<String>(2);
+		versions.add("2007");
+		servers.add(new Server(8, "SharePoint Server", versions, "SharePoint Server"));
 
 		return servers;
 	}

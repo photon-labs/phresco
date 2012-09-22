@@ -329,10 +329,6 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		servers.add(new Server(3, "IIS", versions, "IIS Server"));
 
 		versions = new ArrayList<String>(2);
-		versions.add("2007");
-		servers.add(new Server(3, "SharePoint Server", versions, "SharePoint Server"));
-
-		versions = new ArrayList<String>(2);
 		versions.add("12c(12.1.1)");
 		versions.add("11gR1(10.3.6)");
 		versions.add("11g(10.3.1)");
@@ -362,7 +358,11 @@ public class RepositoryManagerImpl implements RepositoryManager {
         versions.add("5.x");
         versions.add("4.x");
         servers.add(new Server(7, "Jetty", versions, "Jetty"));
-
+        
+    	versions = new ArrayList<String>(2);
+		versions.add("2007");
+		servers.add(new Server(8, "SharePoint Server", versions, "SharePoint Server"));
+		
 		return servers;
 	}
 
