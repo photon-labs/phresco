@@ -7,6 +7,7 @@ $().ready(function() {
 		var helloWorldWidget; 
 
 		helloWorldWidget = new HelloWorldWidget();
+        helloWorldWidget.HelloWorldText = "HelloWorld Test";
 		helloWorldWidget.setMainContent();
 	});
 });
