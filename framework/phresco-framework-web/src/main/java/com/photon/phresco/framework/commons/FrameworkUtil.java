@@ -25,7 +25,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -36,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Element;
 
 import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
@@ -45,6 +48,9 @@ import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
+import com.phresco.pom.model.Model;
+import com.phresco.pom.model.Model.Profiles;
+import com.phresco.pom.model.Profile;
 import com.phresco.pom.util.PomProcessor;
 
 public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConstants {
@@ -569,11 +575,57 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
 	    	serverUrl = matcher.replaceAll("");
 	    	S_LOGGER.debug("else condition serverUrl  " + serverUrl);
 	    }
+	    S_LOGGER.debug("serverUrl ... " + serverUrl);
 	    String sonarReportPath = frameworkConfig.getSonarReportPath();
+	    S_LOGGER.debug("sonarReportPath ... " + sonarReportPath);
 	    S_LOGGER.debug("sonarReportPath  " + sonarReportPath);
 	    String[] sonar = sonarReportPath.split("/");
+	    S_LOGGER.debug("sonar[1] " + sonar[1]);
 	    serverUrl = serverUrl.concat(FORWARD_SLASH + sonar[1]);
 		
 	    return serverUrl;
     }
+    
+	public List<String> getSonarProfiles(String projectCode) throws PhrescoException {
+		List<String> sonarTechReports = new ArrayList<String>(4);
+		try {
+			StringBuilder pomBuilder = new StringBuilder(Utility.getProjectHome());
+			pomBuilder.append(projectCode);
+			pomBuilder.append(File.separator);
+			pomBuilder.append(POM_XML);
+			File pomPath = new File(pomBuilder.toString());
+			PomProcessor pomProcessor = new PomProcessor(pomPath);
+			Model model = pomProcessor.getModel();
+			S_LOGGER.debug("model... " + model);
+			Profiles modelProfiles = model.getProfiles();
+			if (modelProfiles == null) {
+				return sonarTechReports;
+			}
+			S_LOGGER.debug("model Profiles... " + modelProfiles);
+			List<Profile> profiles = modelProfiles.getProfile();
+			if (profiles == null) {
+				return sonarTechReports;
+			}
+			S_LOGGER.debug("profiles... " + profiles);
+			for (Profile profile : profiles) {
+				S_LOGGER.debug("profile...  " + profile);
+				if (profile.getProperties() != null) {
+					List<Element> any = profile.getProperties().getAny();
+					int size = any.size();
+					
+					for (int i = 0; i < size; ++i) {
+						boolean tagExist = 	any.get(i).getTagName().equals(SONAR_LANGUAGE);
+						if (tagExist){
+							S_LOGGER.debug("profile.getId()... " + profile.getId());
+							sonarTechReports.add(profile.getId());
+						}
+					}
+				}
+			}
+			S_LOGGER.debug("return from getSonarProfiles");
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		return sonarTechReports;
+	}
 }

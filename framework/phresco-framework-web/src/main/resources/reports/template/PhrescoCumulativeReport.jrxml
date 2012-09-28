@@ -114,6 +114,20 @@
 		</band>
 	</title>
 	<detail>
+		<band height="39">
+			<printWhenExpression><![CDATA[!$P{sonarReport}.isEmpty()]]></printWhenExpression>
+			<frame>
+				<reportElement x="0" y="0" width="555" height="38" isRemoveLineWhenBlank="true"/>
+				<subreport>
+					<reportElement x="0" y="1" width="555" height="36" isRemoveLineWhenBlank="true"/>
+					<subreportParameter name="reportsDataType">
+						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sonarReport})]]></dataSourceExpression>
+					<subreportExpression><![CDATA["reports/jasper/SonarJavaJsWebReport.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
 		<band height="40">
 			<printWhenExpression><![CDATA[!$P{unitTestReports}.isEmpty()]]></printWhenExpression>
 			<frame>
@@ -186,20 +200,6 @@
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{performanceTestReports})]]></dataSourceExpression>
 					<subreportExpression><![CDATA["reports/jasper/PhrescoAndroidPerfCumulativeReport.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-		</band>
-		<band height="39">
-			<printWhenExpression><![CDATA[!$P{sonarReport}.isEmpty()]]></printWhenExpression>
-			<frame>
-				<reportElement x="0" y="0" width="555" height="38" isRemoveLineWhenBlank="true"/>
-				<subreport>
-					<reportElement x="0" y="1" width="555" height="36" isRemoveLineWhenBlank="true"/>
-					<subreportParameter name="reportsDataType">
-						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
-					</subreportParameter>
-					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sonarReport})]]></dataSourceExpression>
-					<subreportExpression><![CDATA["reports/jasper/SonarJavaJsWebReport.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 		</band>

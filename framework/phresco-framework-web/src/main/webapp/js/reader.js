@@ -48,7 +48,7 @@ function readerHandler(data, projectCode, testType, pageUrl) {
 	   
 	$("a[name='appTabs']").each(function(index, value) {
 		if ($(this).attr('class') === 'selected') {
-			if ($(this).attr('id') === 'buildView' && (testType === 'unit' || testType === 'functional' || testType === 'performance' || testType === 'load')) {
+			if ($(this).attr('id') === 'buildView' && (testType === 'SonarPath' || testType === 'unit' || testType === 'functional' || testType === 'performance' || testType === 'load')) {
 				console.info('returning...');
 				return;
 				
