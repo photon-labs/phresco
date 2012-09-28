@@ -2068,9 +2068,10 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 			}
 			sonarProfiles.add(FUNCTIONAL);
 			FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
-			String serverUrl = frameworkConfig.getSonarUrl();
-			serverUrl = serverUrl + frameworkConfig.getSonarReportPath();
-			
+			String serverUrl = frameworkUtil.getSonarURL();
+			String sonarReportPath = frameworkConfig.getSonarReportPath().replace(FORWARD_SLASH + SONAR, "");
+			serverUrl = serverUrl + sonarReportPath;
+			S_LOGGER.debug("serverUrl with report path " + serverUrl);
 			for (String sonarProfile : sonarProfiles) {
 				//get sonar report
 				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
