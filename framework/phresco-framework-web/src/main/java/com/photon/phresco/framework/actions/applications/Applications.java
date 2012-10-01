@@ -1347,10 +1347,11 @@ public class Applications extends FrameworkBaseAction {
 	public boolean importFromGit(String url, File directory) throws Exception {
 		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
 		S_LOGGER.debug("importing git " + url);
-	    Git repo1 = Git.cloneRepository().setURI(url).setDirectory(directory).call();
-	    for (Ref b : repo1.branchList().setListMode(ListMode.ALL).call()) {
+	    Git repo = Git.cloneRepository().setURI(url).setDirectory(directory).call();
+	    for (Ref b : repo.branchList().setListMode(ListMode.ALL).call()) {
 	    	S_LOGGER.debug("(standard): cloned branch " + b.getName());
 	    }
+	    repo.getRepository().close();
 	    return true;
 	}
 	
