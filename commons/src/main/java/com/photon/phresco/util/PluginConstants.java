@@ -209,4 +209,14 @@ public interface PluginConstants {
 
 	//Xcode plugin constants
 	String WAXSIM_HOME = "WAXSIM_HOME";
+	
+	// BlackBerry maven plugin constants
+	// Author: Viral
+	// Date: Sept 24, 2012
+	String BB_BBWP_HOME = "bbwp ";
+	String BB_JAVA_LOADER_HOME = "javaloader ";
+	String BB_USB = "-usb";
+	String BB_LOAD = "load";
+	String BB_STANDARD_INSTALL = "StandardInstall";
+	
 }
