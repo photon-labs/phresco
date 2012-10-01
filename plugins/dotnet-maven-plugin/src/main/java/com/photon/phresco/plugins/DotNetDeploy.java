@@ -1,6 +1,6 @@
 /*
  * ###
- * drupal-maven-plugin Maven Mojo
+ * dotnet-maven-plugin Maven Mojo
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 
@@ -89,7 +89,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 	public void execute() throws MojoExecutionException {
 		init();
 		extractBuild();
-		sampleListSites();
+		listSites();
 	}
 
 	private void init() throws MojoExecutionException {
@@ -109,8 +109,8 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 
 			List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_SERVER);
 			for (SettingsInfo serverDetails : settingsInfos) {
-				applicationName = serverDetails.getPropertyInfo("applicationName").getValue();
-				siteName = serverDetails.getPropertyInfo("siteName").getValue();
+				applicationName = serverDetails.getPropertyInfo(Constants.APPLICATION_NAME).getValue();
+				siteName = serverDetails.getPropertyInfo(Constants.SITE_NAME).getValue();
 				serverport = serverDetails.getPropertyInfo(Constants.SERVER_PORT).getValue();
 				serverprotocol = serverDetails.getPropertyInfo(Constants.SERVER_PROTOCOL).getValue();
 				deploylocation = serverDetails.getPropertyInfo(Constants.SERVER_DEPLOY_DIR).getValue();
@@ -132,7 +132,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
 	}
 
-	private void sampleListSites() throws MojoExecutionException {
+	private void listSites() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -144,11 +144,12 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 			String line = null;
 			while ((line = in.readLine()) != null) {
 				if (line.contains(siteName)) {
-					sampleListApp();
+					listApp();
+				} else {
+					executeAddSite();
+					executeAddApp();
 				}
 			}
-			executeAddSite();
-			executeAddApp();
 		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
@@ -156,7 +157,7 @@ public class DotNetDeploy extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	private void sampleListApp() throws MojoExecutionException {
+	private void listApp() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();

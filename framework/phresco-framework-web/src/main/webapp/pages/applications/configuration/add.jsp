@@ -509,6 +509,11 @@ h1 {margin-bottom: 0;}
         	$("div[id='siteNameErrMsg']").text(data.siteNameError);
         	$("#nameOfSite").focus();
 		}
+		if (data.siteCoreInstPathError != null) {
+			$("div[id='siteCoreInstPathErrDiv']").addClass("error");
+        	$("div[id='siteCoreInstPathErrMsg']").text(data.siteCoreInstPathError);
+        	$("#siteCoreInstPath").focus();
+		}
     }
 	
 	var versionFrom = "";

@@ -239,6 +239,29 @@
     </div>
 </div>
 
+<% if (TechnologyTypes.SITE_CORE.equals(techId) && settingsTemplate.getType().equals("Server")) { %>
+ <div class="clearfix" id="siteCoreInstPathErrDiv">
+	<label class="new-xlInput"><span class="red">*</span> <s:text name="label.sitecore.inst.path"/> </label>
+	<div class="input new-input">
+		<div class="typeFields">
+			<%
+				String siteCoreInstPath = "";
+				if (settingsInfo != null && settingsInfo.getPropertyInfo(FrameworkConstants.SETTINGS_TEMP_SITECORE_INST_PATH) != null) {
+					siteCoreInstPath = settingsInfo.getPropertyInfo(FrameworkConstants.SETTINGS_TEMP_SITECORE_INST_PATH).getValue();							
+				}
+			%>
+			<input class="xlarge settings_text" id="siteCoreInstPath" name="siteCoreInstPath" type="text" placeholder="<s:text name="placeholder.sitecore.inst.path"/>" 
+				value="<%= siteCoreInstPath %>"/>
+		</div>
+		<div>
+			<div class="lblDesc configSettingHelp-block" id="siteCoreInstPathErrMsg">
+			    
+			</div>
+		</div>
+	</div>
+   </div>
+<% } %>
+
 <script type="text/javascript">
 	$("div#certificate").hide();
 	
@@ -466,11 +489,14 @@
 		<% 
 			if (TechnologyTypes.ANDROIDS.contains(techId)) {
 		%>
-			hideDeployDir();
-			hideRemoteDeply();
+				hideDeployDir();
+				hideRemoteDeply();
 		<%
 			}
+			if (TechnologyTypes.SITE_CORE.equals(techId)) {
 		%>
+				hideDeployDir();
+		<% } %>
 	}
 	
 	function enableOrDisabAuthBtn() {

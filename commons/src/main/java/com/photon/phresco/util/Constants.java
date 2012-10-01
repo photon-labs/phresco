@@ -60,6 +60,7 @@ public interface Constants {
     String MVN_PLUGIN_NODEJS_ID = "nodejs:";
     String MVN_PLUGIN_SHAREPOINT_ID = "sharepoint:";
     String MVN_PLUGIN_DOTNET_ID ="dotnet:";
+    String MVN_PLUGIN_SITECORE_ID ="sitecore:";
     String MVN_GOAL_DEPLOY = "deploy";
     String MVN_PLUGIN_IPHONE_ID = "xcode:";
     String MVN_PLUGIN_WORDPRESS_ID = "wordpress:";
@@ -81,6 +82,9 @@ public interface Constants {
     String SERVER_CONTEXT = "context";
     String SERVER_VERSION = "version";
     String SERVER_REMOTE_DEPLOYMENT = "remoteDeployment";
+    String SITECORE_INST_PATH = "sitecoreInstPath";
+    String SITE_NAME = "siteName";
+    String APPLICATION_NAME = "applicationName";
 
     // Constants for Database
     String DB_PROTOCOL="http";

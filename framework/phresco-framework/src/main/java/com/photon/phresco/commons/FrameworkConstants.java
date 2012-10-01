@@ -1411,5 +1411,6 @@ public interface FrameworkConstants {
 		  //SettingsTemplate keys for IIS server
 		  String SETTINGS_TEMP_KEY_APP_NAME = "applicationName";
 		  String SETTINGS_TEMP_KEY_SITE_NAME = "siteName";
+		  String SETTINGS_TEMP_SITECORE_INST_PATH = "sitecoreInstPath";
 
 }

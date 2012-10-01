@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ###
+  Archetype - phresco-sitecore-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+ 
+<archetype-descriptor name=".Net"> 
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include> 
+				<include>excludefiles.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include> 
+				<include>README.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/lib</directory> 
+			<includes> 
+				<include>ReadMe.txt</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/App_Config/Include</directory>
+			<includes>
+				<include>SiteDefinition.config</include>
+			</includes>			
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Layouts</directory>
+			<includes>
+				<include>WebForm1.aspx</include>
+				<include>WebForm1.aspx.cs</include>
+				<include>WebForm1.aspx.designer.cs</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src</directory> 
+			<includes> 
+				<include>sitecore.csproj</include>
+				<include>sitecore.csproj.user</include>
+				<include>sitecore.sln</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/src/test</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/db2</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mssql</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/mysql</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/sql/oracle</directory> 
+			<includes> 
+				<include>site.sql</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/test</directory> 
+			<includes> 
+				<include>Readme.txt</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+				<include>AllTest.sln</include> 
+				<include>AllTest.suo</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest</directory> 
+			<includes> 
+				<include>AllTest.cs</include> 
+				<include>AllTest.csproj</include> 
+				<include>App.config</include> 
+				<include>phresco-env-config.xml</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/bin/Debug</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.config</include> 
+				<include>AllTest.pdb</include> 
+				<include>nmock.dll</include> 
+				<include>nunit.core.dll</include> 
+				<include>nunit.framework.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.pdb</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.dll</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.pdb</include> 
+				<include>Castle.Core.dll</include> 
+				<include>Ionic.Zip.dll</include> 
+				<include>Newtonsoft.Json.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.pdb</include> 
+				<include>Selenium.WebDriverBackedSelenium.xml</include> 
+				<include>WebDriver.xml</include> 
+				<include>WebDriver.Support.xml</include> 
+				<include>WebDriver.Support.pdb</include> 
+				<include>WebDriver.Support.dll</include> 
+				<include>WebDriver.pdb</include> 
+				<include>WebDriver.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.xml</include> 
+				<include>System.Drawing.dll</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/bin/Release</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.config</include> 
+				<include>AllTest.dll.VisualState.xml</include> 
+				<include>AllTest.pdb</include> 
+				<include>nmock.dll</include> 
+				<include>nunit.core.dll</include> 
+				<include>nunit.framework.dll</include> 
+				<include>TestResult.xml</include> 
+				<include>ThoughtWorks.Selenium.Core.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.pdb</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.dll</include> 
+				<include>ThoughtWorks.Selenium.IntegrationTests.pdb</include> 
+				<include>Castle.Core.dll</include> 
+				<include>WebDriver.xml</include> 
+				<include>WebDriver.Support.xml</include> 
+				<include>WebDriver.Support.pdb</include> 
+				<include>WebDriver.Support.dll</include> 
+				<include>WebDriver.pdb</include> 
+				<include>WebDriver.dll</include> 
+				<include>ThoughtWorks.Selenium.Core.xml</include> 
+				<include>System.Drawing.dll</include> 
+				<include>Selenium.WebDriverBackedSelenium.xml</include> 
+				<include>Selenium.WebDriverBackedSelenium.pdb</include> 
+				<include>Selenium.WebDriverBackedSelenium.dll</include> 
+				<include>Newtonsoft.Json.dll</include> 
+				<include>Ionic.Zip.dll</include> 
+			</includes> 
+		</fileSet> 
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Debug</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Release</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include>
+				<include>AllTest.dll</include>
+				<include>AllTest.pdb</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/obj/Release/TempPE</directory> 
+			<includes> 
+				<include>**/*</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/functional/AllTest/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/load/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server</directory> 
+			<includes> 
+				<include>build.properties</include>
+				<include>build.xml</include>
+				<include>pom.xml</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>test/performance/server/tests</directory> 
+			<includes> 
+				<include>phresco-env-config.csv</include>
+				<include>PhrescoFrameWork_TestPlan.jmx</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test</directory> 
+			<includes> 
+				<include>pom.xml</include> 
+				<include>AllTest.sln</include> 
+				<include>AllTest.suo</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest</directory> 
+			<includes> 
+				<include>AllTest.cs</include> 
+				<include>AllTest.csproj</include>  
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/Properties</directory> 
+			<includes> 
+				<include>AssemblyInfo.cs</include>
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/bin/Debug</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>nunit.framework.dll</include> 
+				<include>nunit.framework.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/bin/Release</directory> 
+			<includes> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.dll.VisualState.xml</include> 
+				<include>AllTest.pdb</include> 
+				<include>nunit.framework.dll</include> 
+				<include>nunit.framework.xml</include> 
+				<include>TestResult.xml</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Debug</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Debug/TempPE</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Release</directory> 
+			<includes> 
+				<include>AllTest.csproj.FileListAbsolute.txt</include> 
+				<include>AllTest.dll</include> 
+				<include>AllTest.pdb</include> 
+				<include>ResolveAssemblyReference.cache</include> 
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" encoding="UTF-8"> 
+			<directory>source/test/AllTest/obj/Release/TempPE</directory> 
+			<includes> 
+				<include>**/*</include> 
+			</includes> 
+		</fileSet>
+	</fileSets> 
+</archetype-descriptor> 
