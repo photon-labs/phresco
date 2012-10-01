@@ -129,13 +129,11 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();
-		// writeConfiguration();
 		convertXMLToJSON();
 		writeJSONtoJavaScript();
 		generateArchive();
 		boolean buildStatus = build();
 		writeBuildInfo(buildStatus);
-		// cleanUp();
 	}
 
 	private void init() throws MojoExecutionException {
@@ -159,73 +157,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	/**
-	 * Read phresco-env-config.xml file from .phresco folder and write the
-	 * server / webservice urls in config.js file as global variables
-	 * 
-	 * @throws MojoExecutionException
-	 */
-	private void writeConfiguration() throws MojoExecutionException {
-		try {
-			StringBuilder stringBuilder = null;
-			configUrls = new HashMap<String, String>();
-
-			File configFile = new File(baseDir.getPath() + phrescoDirectory
-					+ File.separator + "phresco-env-config.xml");
-			getLog().info("PHRESCO ENV CONFIG PATH === " + configFile.getPath());
-			ConfigReader cr = new ConfigReader(configFile);
-			List<Configuration> configurationList = cr.getConfigByEnv(cr
-					.getDefaultEnvName());
-			for (Configuration configuration : configurationList) {
-				getLog().info(
-						"Configuration: Type = " + configuration.getType()
-								+ ", Name = " + configuration.getName());
-				String configURL = cr.getConfigAsJSON(cr.getDefaultEnvName(),
-						configuration.getType(), configuration.getName());
-				stringBuilder = new StringBuilder();
-				JSONObject jsonObject = new JSONObject(configURL);
-				stringBuilder.append(jsonObject.getString("protocol"));
-				stringBuilder.append("://");
-				stringBuilder.append(jsonObject.getString("host"));
-				stringBuilder.append(":");
-				stringBuilder.append(jsonObject.getString("port"));
-				stringBuilder.append("/");
-				stringBuilder.append(jsonObject.getString("context"));
-				stringBuilder.append("/");
-				configUrls.put(configuration.getName(),
-						stringBuilder.toString());
-			}
-
-			File configJSFile = new File(baseDir.getPath() + sourceDirectory
-					+ File.separator + "js" + File.separator + "config.js");
-			if (configJSFile.exists()) {
-				configJSFile.delete();
-			}
-			configJSFile.createNewFile();
-
-			BufferedWriter out = new BufferedWriter(
-					new FileWriter(configJSFile));
-
-			// Get a set of the entries
-			Set set = configUrls.entrySet();
-			// Get an iterator
-			Iterator i = set.iterator();
-			// Display elements
-			while (i.hasNext()) {
-				Map.Entry me = (Map.Entry) i.next();
-				getLog().info(
-						"Configuration: Name = " + me.getKey() + ", URL = "
-								+ me.getValue());
-				out.write("var " + me.getKey() + " = \"" + me.getValue()
-						+ "\";\n");
-			}
-
-			out.close();
-		} catch (Exception e) {
-			getLog().error(e);
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
+	
 
 	private void convertXMLToJSON() throws MojoExecutionException {
 		try {
@@ -425,15 +357,5 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 		// increment 1 to the max in the build list
 		nextBuildNo = buildArray[buildArray.length - 1] + 1;
 		return nextBuildNo;
-	}
-
-	@SuppressWarnings("unused")
-	private void cleanUp() throws MojoExecutionException {
-		try {
-			FileUtils.deleteDirectory(tempDir);
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-
 	}
 }
