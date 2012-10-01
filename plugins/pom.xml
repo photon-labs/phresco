@@ -30,6 +30,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>jslint-maven-plugin</module>   
         <module>ci-maven-plugin</module> 
     	<module>windows-phone-maven-plugin</module>
+		<module>blackberry-maven-plugin</module>
     </modules>
     
     <distributionManagement>

@@ -42,6 +42,7 @@ import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.util.Utility;
 
 /**
  * Goal which deploys the Java WebApp to a server
@@ -212,7 +213,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
-		} 
+		} finally {
+			Utility.closeStream(in);
+		}
 	}
 	
 	private void deployWp8Package() throws MojoExecutionException {
@@ -274,7 +277,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
-		} 
+		} finally {
+			Utility.closeStream(in);
+		}
 	}
 	
 	private boolean packageAlreadyInstalled() throws MojoExecutionException {
