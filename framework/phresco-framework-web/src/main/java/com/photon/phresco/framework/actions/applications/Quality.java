@@ -2225,13 +2225,17 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             reportGeneration(project, testType);
             getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(SUCCESS_REPORT_STATUS));
         } catch (Exception e) {
-        	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
-            S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        	S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        	if (e.getLocalizedMessage().contains(getText(ERROR_REPORT_MISSISNG_FONT_MSG))) {
+            	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_MISSISNG_FONT));
+        	} else {
+            	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
+        	}
         }
         return printAsPdfPopup();
     }
 
-    public void reportGeneration(Project project, String testType) {
+    public void reportGeneration(Project project, String testType) throws PhrescoException {
     	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
     	try {
     		PhrescoReportGeneration prg = new PhrescoReportGeneration();
@@ -2242,6 +2246,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             }
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Quality.reportGeneration()" + e);
+			throw new PhrescoException(e);
 		}
 
     }

@@ -243,6 +243,7 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 		} catch (Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.cumalitiveTestReport()" + FrameworkUtil.getStackTraceAsString(e));
 			S_LOGGER.error("Report generation errorr ");
+			throw new PhrescoException(e);
 		}
 	}
 	
