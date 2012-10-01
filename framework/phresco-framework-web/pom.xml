@@ -265,6 +265,14 @@
 		</dependency>
 		<!-- import from git plugins -->
 		
+		<!--  Times New Roman windows font  -->
+		<dependency>
+		  <groupId>com.photon.phresco</groupId>
+		  <artifactId>pdf-font</artifactId>
+		  <version>1.0</version>
+		</dependency>
+		<!--  Times New Roman windows font  -->
+		
     </dependencies>
     
     <build>
