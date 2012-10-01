@@ -182,7 +182,6 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			testType = UNIT;
 			SureFireReport unitTestSureFireReports = null;
 			unitTestSureFireReports = sureFireReports();
-			S_LOGGER.debug("unitTestSureFireReports" + unitTestSureFireReports);
 			
 			testType = FUNCTIONAL;
 			SureFireReport functionalSureFireReports = null;
@@ -223,34 +222,9 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			cumulativeReportparams.put(LOAD_TEST_REPORTS, loadTestResults);
 			
 			//Sonar details
-			List<SonarReport> sonarReports = null;
-			sonarReports = new ArrayList<SonarReport>();
-			
-			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
-        	builder.append(projectCode);
-        	builder.append(File.separator);
-        	builder.append(POM_XML);
-        	
-        	File pomPath = new File(builder.toString());
-        	PomProcessor path = new PomProcessor(pomPath);
-        	List<Profile> profiles = path.getModel().getProfiles().getProfile();
-        	
-        	List<String> sonarTechReports = new ArrayList<String>(4);
-        	
-        	for (Profile profile : profiles) {
-	    		if (profile.getProperties() != null) {
-	    			List<Element> any = profile.getProperties().getAny();
-	    			int size = any.size();
-	    			
-	    			for (int i = 0; i < size; ++i) {
-	    				boolean tagExist = 	any.get(i).getTagName().equals(SONAR_LANGUAGE);
-	    				if (tagExist != false){
-	    					sonarTechReports.add(profile.getId());
-						}
-	    			}
-	    		}
-	    	}
-    		
+			List<SonarReport> sonarReports = new ArrayList<SonarReport>();
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+        	List<String> sonarTechReports = frameworkUtil.getSonarProfiles(projectCode);
     		if(CollectionUtils.isEmpty(sonarTechReports)) {
     			sonarTechReports.add(SONAR_SOURCE);
     		}
@@ -269,6 +243,7 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 		} catch (Exception e) {
 			S_LOGGER.error("Entering into catch block of PhrescoReportGeneration.cumalitiveTestReport()" + FrameworkUtil.getStackTraceAsString(e));
 			S_LOGGER.error("Report generation errorr ");
+			throw new PhrescoException(e);
 		}
 	}
 	
@@ -311,14 +286,18 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			
 			if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
 				S_LOGGER.debug("going to generate html and concatinate files  " + techId);
-				iphoneSonarHtmlToPdf(outFileNameIphoneSonarPDF, outFileNameXHTML);
 				String outFinalFileNamePDF = Utility.getProjectHome() + File.separator + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
 				new File(outFinalFileNamePDF).getParentFile().mkdirs();
-				
-	            List<String> pdfs = new ArrayList<String>();
-	            pdfs.add(outFileNamePDF);
-	            pdfs.add(outFileNameIphoneSonarPDF);
-	            concatPDFs(pdfs, outFinalFileNamePDF, true);
+				try {
+					iphoneSonarHtmlToPdf(outFileNameIphoneSonarPDF, outFileNameXHTML);
+		            List<String> pdfs = new ArrayList<String>();
+		            pdfs.add(outFileNamePDF);
+		            pdfs.add(outFileNameIphoneSonarPDF);
+		            concatPDFs(pdfs, outFinalFileNamePDF, true);
+				} catch (PhrescoException e) {
+					// just copy generated generated pdf to archive folder
+					FileUtils.copyFile(new File(outFileNamePDF), new File(outFinalFileNamePDF));
+				}
 			}
 			try {
 				S_LOGGER.debug("going to delete directory ");
@@ -451,7 +430,7 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 	    	staticAnalysisReport = new File(codeValidatePath.toString());
 	    	S_LOGGER.debug("staticAnalysisReport " + staticAnalysisReport);
 	        if(!staticAnalysisReport.exists()) {
-	        	System.out.println("Index file is not available!!!!!!!!!");
+	        	S_LOGGER.debug("Index file is not available!!!!!!!!!");
 	        	throw new PhrescoException("static analysis report is not available!!!");
 	        }
 	        

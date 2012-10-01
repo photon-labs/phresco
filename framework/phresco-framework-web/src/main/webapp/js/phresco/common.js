@@ -384,7 +384,8 @@
 	}
 	// To check whether the given string contains empty space or not
 	function isContainSpace(name) {
-		newName = name.replace(/[^a-zA-Z 0-9\_]+/g, '');
+		//newName = name.replace(/[^a-zA-Z 0-9]+/g, '');
+		newName = name.replace(/[^a-zA-Z 0-9\_\-]+/g, '');
 		return newName;
     }
 			 

@@ -96,6 +96,10 @@ public class Login extends FrameworkBaseAction {
 	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
 	                return LOGIN_FAILURE;
 	            }
+//	            if (!userInfo.isLoginValidation()) {
+//	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+//	                return LOGIN_FAILURE;
+//	            }
 	            if (!userInfo.isPhrescoEnabled()) {
 	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_ACCESS_DENIED));
 	                return LOGIN_FAILURE;

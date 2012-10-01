@@ -142,6 +142,17 @@
 							</select>
 						</div>
 					</div>
+					
+					<!-- Test type-->
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label"><s:text name="label.ios.application.test"/></label>
+						<div class="input">
+							<div class="multipleFields emaillsFieldsWidth">
+								<div><input type="checkbox" id="iosTestType" name="iosTestType" value="true"/></div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 <!--         	iphone functional popup -->
             <% } else { %>

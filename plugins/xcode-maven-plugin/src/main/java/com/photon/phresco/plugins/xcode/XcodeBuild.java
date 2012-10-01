@@ -173,6 +173,11 @@ public class XcodeBuild extends AbstractMojo {
 	 */
 	protected String buildNumber;
 	
+	/**
+	 * @parameter expression="${applicationTest}" default-value="true"
+	 */
+	private boolean applicationTest;
+	
 	protected int buildNo;
 	private File srcDir;
 	private File buildDirFile;
@@ -226,6 +231,12 @@ public class XcodeBuild extends AbstractMojo {
 				commands.add("-project");
 				commands.add(xcodeProject);
 			}
+			
+			if (StringUtils.isNotBlank(xcodeTarget)) {
+				commands.add("-target");
+				commands.add(xcodeTarget);
+			}
+			
 			if (StringUtils.isNotBlank(configuration)) {
 				commands.add("-configuration");
 				commands.add(configuration);
@@ -240,20 +251,21 @@ public class XcodeBuild extends AbstractMojo {
 			commands.add("SYMROOT=" + buildDirectory);
 			commands.add("DSTROOT=" + buildDirectory);
 
-			if (StringUtils.isNotBlank(xcodeTarget)) {
-				commands.add("-target");
-				commands.add(xcodeTarget);
-			}
-			
 			if(StringUtils.isNotBlank(gccpreprocessor)) {
 				commands.add("GCC_PREPROCESSOR_DEFINITIONS="+gccpreprocessor);
 			}
 
-			if (unittest) {
+			
+			getLog().info("Unit test triggered from UI " + applicationTest);
+			// if the user selects , logical test, we need to add clean test... for other test nothing will be added except target.
+			if (unittest && !applicationTest) {
+				getLog().info("Unit test for logical test triggered !!!!!!!!");
 				commands.add("clean");
-				commands.add("build");
+//				commands.add("build");
 			}
 
+			commands.add("build");
+			
 			getLog().info("List of commands" + pb.command());
 			// pb.command().add("install");
 			pb.directory(new File(basedir));
@@ -302,8 +314,9 @@ public class XcodeBuild extends AbstractMojo {
 	private void init() throws MojoExecutionException, MojoFailureException {
 
 		try {
+			//if it is logical test, no need to delete target directory
 			// To Delete the buildDirectory if already exists
-			if (buildDirectory.exists()) {
+			if (buildDirectory.exists() && !applicationTest) {
 				FileUtils.deleteDirectory(buildDirectory);
 				buildDirectory.mkdirs();
 			}

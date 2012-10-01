@@ -32,6 +32,9 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,6 +77,7 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.commons.PerformanceDetails;
 import com.photon.phresco.configuration.Environment;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.actions.FrameworkBaseAction;
 import com.photon.phresco.framework.api.ActionType;
@@ -198,6 +202,9 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 	private String fileName = "";
 	private String reportFileName = null;
 	
+	//ios test type iosTestType
+	private String iosTestType = null;
+	
 	private static Map<String, Map<String, NodeList>> testSuiteMap = Collections.synchronizedMap(new HashMap<String, Map<String, NodeList>>(8));
     
     public String unit() {
@@ -221,10 +228,15 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 actionType = ActionType.ANDROID_TEST_COMMAND;
               
             } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) {
-            	      actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
-            	      settingsInfoMap.put(UNIT_TEST, TRUE);
-            	      settingsInfoMap.put(IPHONE_TARGET_NAME, target);
-            	      settingsInfoMap.put(IPHONE_SDK, sdk);
+				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
+				settingsInfoMap.put(UNIT_TEST, TRUE);
+				settingsInfoMap.put(IPHONE_TARGET_NAME, target);
+				settingsInfoMap.put(IPHONE_SDK, sdk);
+
+				// application test or logical test
+				iosTestType = Boolean.valueOf(iosTestType).toString();
+				S_LOGGER.debug("iosTestType " + iosTestType);
+				settingsInfoMap.put(IOS_TEST_TYPE, iosTestType);
             } else {
                 settingsInfoMap.put(TEST_PARAM, TEST_PARAM_VALUE);
                 if (TechnologyTypes.SHAREPOINT.equals(techId) || TechnologyTypes.DOT_NET.equals(techId)) {
@@ -2017,75 +2029,26 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     public String printAsPdfPopup () {
         S_LOGGER.debug("Entering Method Quality.printAsPdfPopup()");
         try {
-        	boolean XmlResultsAvailable = false;
+        	boolean isReportAvailable = false;
         	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
-            StringBuilder sb = new StringBuilder();
-            sb.append(Utility.getProjectHome());
-            sb.append(project.getProjectInfo().getCode());
             String technology = project.getProjectInfo().getTechnology().getId();
-          //check unit and functional are executed already or not
-            if(!XmlResultsAvailable) {
-	            File file = new File(sb.toString() + frameworkUtil.getUnitReportDir(technology));
-	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
-	            if(children != null) {
-	            	XmlResultsAvailable = true;
-	            }
-            }
+            // is sonar report available
+            isReportAvailable = isSonarReportAvailable(frameworkUtil, technology);
             
-            if(!XmlResultsAvailable) {
-	            File file = new File(sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
-	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
-	            if(children != null) {
-	            	XmlResultsAvailable = true;
-	            }
-            }
+            // is test report available
+            S_LOGGER.debug("sonar report avail !!!!!!!! " + isReportAvailable);
+    	    if (!isReportAvailable) {
+    	    	isReportAvailable = isTestReportAvailable(frameworkUtil, technology, project);
+    	    }
             
-            if(!XmlResultsAvailable) {
-	            performanceTestResultAvail();
-	        	if(isAtleastOneFileAvail()) {
-	        		XmlResultsAvailable = true;
-	        	}
-            }
-            
-            if(!XmlResultsAvailable) {
-	            File file = new File(sb.toString() + frameworkUtil.getLoadReportDir(technology));
-	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
-	            if(children != null) {
-	            	XmlResultsAvailable = true;
-	            }
-            }
-            
-        	getHttpRequest().setAttribute(REQ_TEST_EXE, XmlResultsAvailable);
-        	List<String> pdfFiles = new ArrayList<String>();
-            // popup showing list of pdf's already created
-        	String pdfDirLoc = "";
-        	String fileFilterName = "";
-        	if (StringUtils.isEmpty(testType)) {
-        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE;
-        		fileFilterName = projectCode;
-        	} else {
-        		pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType;
-        		fileFilterName = testType;
-        	}
-            File pdfFileDir = new File(pdfDirLoc);
-            if(pdfFileDir.isDirectory()) {
-                File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
-                QualityUtil util = new QualityUtil();
-                if(children != null) {
-                	util.sortResultFile(children);
-                }
-            	for (File child : children) {
-            		String fileNameWithType = child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, "");
-            		String[] fileWithType = fileNameWithType.split(UNDERSCORE);
-    				pdfFiles.add(fileWithType[0] + UNDERSCORE + fileWithType[1]);
-    			}
-            }
-            
-            if(pdfFiles != null) {
-                getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, pdfFiles);
-            }
+    	    S_LOGGER.debug(" Xml Results Available ====> " + isReportAvailable);
+        	getHttpRequest().setAttribute(REQ_TEST_EXE, isReportAvailable);
+        	List<String> existingPDFs = getExistingPDFs();
+    		if (existingPDFs != null) {
+    		    getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, existingPDFs);
+    		}
         } catch (Exception e) {
             S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
         }
@@ -2093,6 +2056,165 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
         return SUCCESS;
     }
+
+	private boolean isSonarReportAvailable(FrameworkUtil frameworkUtil, String technology) throws PhrescoException, MalformedURLException, JAXBException,
+			IOException {
+		boolean isSonarReportAvailable = false;
+		// check for sonar alive
+		if (!TechnologyTypes.MOBILES.contains(technology)) {
+			List<String> sonarProfiles = frameworkUtil.getSonarProfiles(projectCode);
+			if (CollectionUtils.isEmpty(sonarProfiles)) {
+				sonarProfiles.add(SONAR_SOURCE);
+			}
+			sonarProfiles.add(FUNCTIONAL);
+			FrameworkConfiguration frameworkConfig = PhrescoFrameworkFactory.getFrameworkConfig();
+			String serverUrl = frameworkUtil.getSonarURL();
+			String sonarReportPath = frameworkConfig.getSonarReportPath().replace(FORWARD_SLASH + SONAR, "");
+			serverUrl = serverUrl + sonarReportPath;
+			S_LOGGER.debug("serverUrl with report path " + serverUrl);
+			for (String sonarProfile : sonarProfiles) {
+				//get sonar report
+				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+	        	builder.append(projectCode);
+	        	
+	            if (FUNCTIONALTEST.equals(sonarProfile)) {
+	                builder.append(frameworkUtil.getFuncitonalTestDir(technology));
+	            }
+	            
+	            builder.append(File.separatorChar);
+	        	builder.append(POM_XML);
+	        	File sonarPomPath = new File(builder.toString());
+	        	
+	        	PomProcessor processor = new PomProcessor(sonarPomPath);
+	        	String groupId = processor.getModel().getGroupId();
+	        	String artifactId = processor.getModel().getArtifactId();
+
+	        	StringBuilder sbuild = new StringBuilder();
+	        	sbuild.append(groupId);
+	        	sbuild.append(COLON);
+	        	sbuild.append(artifactId);
+	        	
+	        	if (!SOURCE_DIR.equals(sonarProfile)) {
+	        		sbuild.append(COLON);
+	        		sbuild.append(sonarProfile);
+	        	}
+	        	
+	        	String artifact = sbuild.toString();
+	        	String sonarUrl = serverUrl + artifact;
+	        	S_LOGGER.debug("sonarUrl... " + sonarUrl);
+	        	if (isSonarAlive(sonarUrl)) {
+	        		isSonarReportAvailable = true;
+	        		break;
+	        	}
+			}
+			
+		}
+		    
+		if (TechnologyTypes.IPHONES.contains(technology)) {
+			StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
+			codeValidatePath.append(projectCode);
+			codeValidatePath.append(File.separatorChar);
+			codeValidatePath.append(DO_NOT_CHECKIN_DIR);
+			codeValidatePath.append(File.separatorChar);
+			codeValidatePath.append(STATIC_ANALYSIS_REPORT);
+			codeValidatePath.append(File.separatorChar);
+			codeValidatePath.append(INDEX_HTML);
+		    File indexPath = new File(codeValidatePath.toString());
+		    if (indexPath.exists()) {
+		    	isSonarReportAvailable = true;
+		    }
+		}
+		return isSonarReportAvailable;
+	}
+
+	private boolean isSonarAlive(String url) {
+		boolean XmlResultsAvailable = false;
+	    try {
+			URL sonarURL = new URL(url);
+			HttpURLConnection connection = null;
+	    	connection = (HttpURLConnection) sonarURL.openConnection();
+	    	int responseCode = connection.getResponseCode();
+	    	if (responseCode != 200) {
+	    		XmlResultsAvailable = false;
+	        } else {
+	        	XmlResultsAvailable = true;
+	        }
+	    } catch(Exception e) {
+	    	XmlResultsAvailable = false;
+	    }
+	    return XmlResultsAvailable;
+	}
+	
+	private boolean isTestReportAvailable(FrameworkUtil frameworkUtil, String technology, Project project) {
+		//check unit and functional are executed already or not
+        StringBuilder sb = new StringBuilder();
+        sb.append(Utility.getProjectHome());
+        sb.append(project.getProjectInfo().getCode());
+		boolean XmlResultsAvailable = false;
+            if(!XmlResultsAvailable) {
+            	S_LOGGER.debug("Unit dir " + sb.toString() + frameworkUtil.getUnitReportDir(technology));
+	            File file = new File(sb.toString() + frameworkUtil.getUnitReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null && children.length > 0) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+            	S_LOGGER.debug("Fucntional dir " + sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
+	            File file = new File(sb.toString() + frameworkUtil.getFunctionalReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null && children.length > 0) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+            
+            if(!XmlResultsAvailable) {
+	            performanceTestResultAvail();
+	        	if(isAtleastOneFileAvail()) {
+	        		S_LOGGER.debug("Check on performance for report");
+	        		XmlResultsAvailable = true;
+	        	}
+            }
+            
+            if(!XmlResultsAvailable) {
+            	S_LOGGER.debug("Load dir " + sb.toString() + frameworkUtil.getLoadReportDir(technology));
+	            File file = new File(sb.toString() + frameworkUtil.getLoadReportDir(technology));
+	            File[] children = file.listFiles(new XmlNameFileFilter(FILE_EXTENSION_XML));
+	            if(children != null && children.length > 0) {
+	            	XmlResultsAvailable = true;
+	            }
+            }
+		return XmlResultsAvailable;
+	}
+
+	private List<String> getExistingPDFs() {
+		List<String> pdfFiles = new ArrayList<String>();
+		// popup showing list of pdf's already created
+		String pdfDirLoc = "";
+		String fileFilterName = "";
+		if (StringUtils.isEmpty(testType)) {
+			pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE;
+			fileFilterName = projectCode;
+		} else {
+			pdfDirLoc = Utility.getProjectHome() + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + testType;
+			fileFilterName = testType;
+		}
+		File pdfFileDir = new File(pdfDirLoc);
+		if(pdfFileDir.isDirectory()) {
+		    File[] children = pdfFileDir.listFiles(new FileNameFileFilter(DOT + PDF, fileFilterName));
+		    QualityUtil util = new QualityUtil();
+		    if(children != null) {
+		    	util.sortResultFile(children);
+		    }
+			for (File child : children) {
+				String fileNameWithType = child.getName().replace(DOT + PDF, "").replace(fileFilterName + UNDERSCORE, "");
+				String[] fileWithType = fileNameWithType.split(UNDERSCORE);
+				pdfFiles.add(fileWithType[0] + UNDERSCORE + fileWithType[1]);
+			}
+		}
+		return pdfFiles;
+	}
     
     public String printAsPdf () {
         S_LOGGER.debug("Entering Method Quality.printAsPdf()");
@@ -2103,13 +2225,17 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             reportGeneration(project, testType);
             getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(SUCCESS_REPORT_STATUS));
         } catch (Exception e) {
-        	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
-            S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        	S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
+        	if (e.getLocalizedMessage().contains(getText(ERROR_REPORT_MISSISNG_FONT_MSG))) {
+            	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_MISSISNG_FONT));
+        	} else {
+            	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_STATUS));
+        	}
         }
         return printAsPdfPopup();
     }
 
-    public void reportGeneration(Project project, String testType) {
+    public void reportGeneration(Project project, String testType) throws PhrescoException {
     	S_LOGGER.debug("Entering Method Quality.reportGeneration()");
     	try {
     		PhrescoReportGeneration prg = new PhrescoReportGeneration();
@@ -2120,6 +2246,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             }
 		} catch (Exception e) {
 			S_LOGGER.error("Entered into catch block of Quality.reportGeneration()" + e);
+			throw new PhrescoException(e);
 		}
 
     }
@@ -2610,5 +2737,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setTestAgainst(String testAgainst) {
 		this.testAgainst = testAgainst;
+	}
+
+	public String getIosTestType() {
+		return iosTestType;
+	}
+
+	public void setIosTestType(String iosTestType) {
+		this.iosTestType = iosTestType;
 	}
 }

@@ -166,11 +166,12 @@ public class Code extends FrameworkBaseAction {
 	        	sb.append(COLON);
 	        	sb.append(artifactId);
 	        	
+	        	S_LOGGER.debug("groupid : artif ====> " + sb.toString());
 	        	if (StringUtils.isNotEmpty(report) && !SOURCE_DIR.equals(report)) {
 	        		sb.append(COLON);
 	        		sb.append(report);
 	        	}
-	        	
+	        	S_LOGGER.debug("Url to access API ====> " + sb.toString());
 	    		try {
 					URL sonarURL = new URL(sb.toString());
 					HttpURLConnection connection = (HttpURLConnection) sonarURL.openConnection();
