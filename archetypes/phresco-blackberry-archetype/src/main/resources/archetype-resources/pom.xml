@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.photon.phresco</groupId>
+    <artifactId>PHR_BB_Hybrid</artifactId>
+    <packaging>jar</packaging>
+    <name>PHR_BB_Hybrid</name>
+    <version>1.0.0</version>
+    <build>
+        <sourceDirectory>source</sourceDirectory>
+        <directory>do_not_checkin/target</directory>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+				<groupId>com.photon.phresco.plugins</groupId>
+				<artifactId>blackberry-maven-plugin</artifactId>
+				<version>1.2.2.3002-SNAPSHOT</version>
+				<extensions>true</extensions>
+			</plugin>         
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.5</version>
+                        <executions>
+                            <execution>
+<id>default-clean</id>
+<goals>
+    <goal>clean</goal>
+</goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <filesets>
+<fileset>
+    <directory>do_not_checkin/build</directory>
+    <includes>
+        <include>**/*</include>
+														  </includes>
+    <followSymlinks>false</followSymlinks>
+							</fileset>
+						  </filesets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
