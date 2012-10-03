@@ -40,6 +40,7 @@ public class UserInfo {
 	private List<String> permissions;
 	private List<String> customerNames;
 	
+	private boolean validLogin;
 
 	public UserInfo() {
 		//for jaxb
@@ -162,5 +163,13 @@ public class UserInfo {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public boolean isValidLogin() {
+		return validLogin;
+	}
+
+	public void setValidLogin(boolean validLogin) {
+		this.validLogin = validLogin;
 	}
 }
