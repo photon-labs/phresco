@@ -129,29 +129,15 @@
 				</div>
             </div>
             
-            
-           	<div class="clearfix" id="agnBuild" style="display: none;">
-			    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
-			    <div class="input">
-			        <select id="environments" name="environment" class="xlarge agnBuildEnv">
-			        
-			        </select>
+            <div>
+            	<div class="clearfix" id="agnBuild" style="display: none;">
+				    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
+				    <div class="input">
+				        <select id="environments" name="environment" class="xlarge agnBuildEnv">
+				        
+				        </select>
+					</div>
 				</div>
-			</div>
-			
-			<div class="clearfix" id="Resolution" style="display: none;">
-                <label for="xlInput" class="xlInput popup-label" id="resolution"><span class="red">*</span><s:text name="label.resolution"/></label>
-                <div class="input">
-                    <select id="environments" name="environment" class="xlarge agnBuildEnv">
-                        <option value="1024 * 768"></option>
-                        <option value="1280 * 800"></option>
-                        <option value="1280 * 960"></option>
-                        <option value="1280 * 1024"></option>
-                        <option value="1360 * 768"></option>
-                        <option value="1440 * 900"></option>
-                        <option value="1600 * 900"></option>
-                    </select>
-                </div>
             </div>
             
             <div id="agnServer" class="server" style="display: none;">
