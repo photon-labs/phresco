@@ -155,10 +155,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				}
 			});
 			
-//			projectRootFolder = solutionFile[0].getName().substring(0, solutionFile[0].getName().length() - 4);
-			
-			// Get the source/<ProjectRoot> folder
+			// Get the source/src/<ProjectRoot> folder
 			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + WP_PROJECT_ROOT);
+			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + "src" + File.separator + WP_PROJECT_ROOT);
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);

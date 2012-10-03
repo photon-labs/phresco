@@ -222,8 +222,8 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 
 	private void getProjectRoot() throws MojoExecutionException {
 		try {
-			// Get the source/<ProjectRoot> folder
-			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + WP_PROJECT_ROOT);
+			// Get the source/src/<ProjectRoot> folder
+			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + "src" + File.separator + WP_PROJECT_ROOT);
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);
