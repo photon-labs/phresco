@@ -119,6 +119,10 @@ public class Configurations extends FrameworkBaseAction {
 				}
             }
             getHttpRequest().setAttribute(REQ_CONFIGURATION, configurations);
+            String cloneConfigStatus = getHttpRequest().getParameter(CLONE_CONFIG_STATUS); 
+            if (cloneConfigStatus != null) {
+            	addActionMessage(getText(ENV_CLONE_SUCCESS));
+            }
         } catch (Exception e) {
         	if (debugEnabled) {
                S_LOGGER.error("Entered into catch block of Configurations.list()" + FrameworkUtil.getStackTraceAsString(e));
@@ -847,6 +851,73 @@ public class Configurations extends FrameworkBaseAction {
 		return SUCCESS;
     }
     
+    public String cloneConfigPopup() {
+    	S_LOGGER.debug("Entering Method  Configurations.cloneConfigPopup()");
+    	try {
+    		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+    		Project project = administrator.getProject(projectCode);
+    		
+    		List<Environment> environments = administrator.getEnvironments(project);
+    		getHttpRequest().setAttribute(ENVIRONMENTS, environments);
+    		getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+    		getHttpRequest().setAttribute(CLONE_FROM_CONFIG_NAME, configName);
+    		getHttpRequest().setAttribute(CLONE_FROM_ENV_NAME, envName);
+    		getHttpRequest().setAttribute(CLONE_FROM_CONFIG_TYPE, configType);
+		} catch (Exception e) {
+			if (debugEnabled) {
+				S_LOGGER.error("Entered into catch block of Configurations.cloneConfigPopup()" + FrameworkUtil.getStackTraceAsString(e));
+	    	}
+		}
+    	return SUCCESS;
+    }
+
+	public String cloneConfiguration() {
+		S_LOGGER.debug("Entering Method  Configurations.cloneConfiguration()");
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project project = administrator.getProject(projectCode);
+			
+			String cloneFromEnvName = getHttpRequest().getParameter(CLONE_FROM_ENV_NAME);
+			String cloneFromConfigType = getHttpRequest().getParameter(CLONE_FROM_CONFIG_TYPE);
+			String cloneFromConfigName = getHttpRequest().getParameter(CLONE_FROM_CONFIG_NAME);
+			
+			boolean configExists = isConfigExists(project, envName, cloneFromConfigType, cloneFromConfigName);
+			if (!configExists) {
+				List<SettingsInfo> configurations = administrator.configurations(project, cloneFromEnvName, cloneFromConfigType, cloneFromConfigName);
+				if (CollectionUtils.isNotEmpty(configurations)) {
+						SettingsInfo settingsInfo = configurations.get(0);
+						settingsInfo.setName(configName);
+						settingsInfo.setDescription(description);
+						administrator.createConfiguration(settingsInfo, envName, project);
+				}
+				flag = true;
+			} else {
+				setEnvError(getText(CONFIG_ALREADY_EXIST));
+				flag = false;
+			}
+		} catch (Exception e) {
+			flag = false;
+			setEnvError(getText(CONFIGURATION_CLONNING_FAILED));
+		}
+		return SUCCESS;
+	}
+    
+	public boolean isConfigExists(Project project, String envName, String configType, String cloneFromConfigName) throws PhrescoException {
+		try {
+		    if (configType.equals(Constants.SETTINGS_TEMPLATE_SERVER) || configType.equals(Constants.SETTINGS_TEMPLATE_EMAIL)) {
+		    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	            List<SettingsInfo> settingsinfos = administrator.configurations(project, envName, configType, cloneFromConfigName);
+	            if(CollectionUtils.isNotEmpty( settingsinfos)) {
+//	                setTypeError(CONFIG_ALREADY_EXIST);
+	                return true;
+	            }
+	    	}
+		    return false;
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
+	
     public String fetchProjectInfoVersions() {
     	try {
 	    	String configType = getHttpRequest().getParameter("configType");
