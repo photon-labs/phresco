@@ -218,5 +218,6 @@ public interface PluginConstants {
 	String BB_USB = "-usb";
 	String BB_LOAD = "load";
 	String BB_STANDARD_INSTALL = "StandardInstall";
+	String BB_OTA_INSTALL = "OTAInstall";
 	
 }
