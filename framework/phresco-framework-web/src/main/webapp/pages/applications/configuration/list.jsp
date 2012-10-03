@@ -120,6 +120,9 @@
 					              	<th class="third">
 					                	<div class="th-inner-head "><s:text name="label.status"/></div>
 					              	</th>
+					              	<th class="third">
+                                        <div class="th-inner-head "><s:text name="label.clone" /></div>
+                                    </th>
 					            </tr>
 				          	</thead>
 				
@@ -182,6 +185,9 @@
 			                           		urls.put(configNameForId, protocol +","+ host + "," + port);
 			                           	%>
 		                           		<img src="images/icons/inprogress.png" alt="status-up" title="Loading" id="isAlive<%= configNameForId %>">
+	       	  						</td>
+	       	  						<td>
+	       	  						   <a href="#" title="<%= configuration.getName() %>" id="cloneEnvId" onclick="cloneConfiguration('<%= configuration.getName()%>', '<%= configuration.getEnvName() %>', '<%= configuration.getType() %>')" ><img src="images/clone.png" alt="Clone"  title="clone configuration"></a>
 	       	  						</td>
 				            	</tr>
 				              <%
@@ -284,6 +290,19 @@
 	    });
     });
     
+    function cloneConfiguration(configName, envName, configType) {
+    	$('#popup_div').empty();
+        showPopup();
+        var params = "";
+        params = params.concat("configName=");
+        params = params.concat(configName);
+        params = params.concat("&envName=");
+        params = params.concat(envName);
+        params = params.concat("&configType=");
+        params = params.concat(configType);
+        popup('cloneConfigPopup', params, $('#popup_div'));
+    }
+        
     function editConfiguration(configName, envName) {
     	disableScreen();
     	showLoadingIcon($("#loadingIconDiv"));

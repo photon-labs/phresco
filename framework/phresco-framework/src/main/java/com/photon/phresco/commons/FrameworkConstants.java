@@ -817,6 +817,7 @@ public interface FrameworkConstants {
     String SUCCESS_CONFIGURATION = "Configuration {0} created successfully";
     String FAILURE_CONFIGURATION = "Configuration {0} creation failed";
     String CONFIG_ALREADY_EXIST = "Configuration type already created for this environment";
+    String CONFIGURATION_CLONNING_FAILED = "Configuration clonning failed";
     String SETTINGS_ALREADY_EXIST = "Settings type already created for this environment";
     String NO_CONFIG_TYPE = "configuration.type.info";
     
@@ -824,6 +825,10 @@ public interface FrameworkConstants {
     String ENV_SET_AS_DEFAULT_ERROR="environment.set.as.default.error";
     String SELECT_ENV_TO_SET_AS_DEFAULT="environment.select.set.as.default";
     String ENV_NOT_VALID="environment.not.valid";
+    String ENV_CLONE_SUCCESS="environment.clone.success";
+    String CLONE_FROM_CONFIG_TYPE = "cloneFromConfigType";
+	String CLONE_FROM_ENV_NAME = "cloneFromEnvName";
+	String CLONE_FROM_CONFIG_NAME = "cloneFromConfigName";
     
     /*
      * Create Environment keys
@@ -902,6 +907,7 @@ public interface FrameworkConstants {
     String ERROR_NAME = "Name is missing";
     String ERROR_CODE = "Code is missing";
     String ERROR_ENV = "Environment is missing";
+    String CLONE_CONFIG_STATUS = "cloneConfigStatus";
     String ERROR_ENV_REMOVE = "Environment {0} is already in use";
     String ERROR_ENVS_REMOVE = "Environment(s) {0} are already in use";
     String ERROR_TECHNOLOGY = "Technology is missing";

@@ -378,6 +378,14 @@
             <result type="json" />
         </action>
         
+        <action name="cloneConfigPopup" method="cloneConfigPopup" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result name="success">/pages/applications/configuration/cloneConfigPopup.jsp</result>
+        </action>
+        
+        <action name="cloneConfiguration" method="cloneConfiguration" class="com.photon.phresco.framework.actions.applications.Configurations">
+            <result type="json" />
+        </action>
+        
         <action name="openSettingsEnvPopup" method="openSettingsEnvPopup" class="com.photon.phresco.framework.actions.settings.Settings">
             <result name="environment">/pages/applications/configuration/environment.jsp</result>
         </action>
