@@ -33,9 +33,9 @@
         <module>commons</module>
         <module>framework</module>
         <module>service</module>
-        <module>archetypes</module>
+       <!--  <module>archetypes</module>
         <module>libraries</module>
-        <module>plugins</module> 
+        <module>plugins</module>  -->
         <module>phresco-pom</module> 
     </modules>
 
