@@ -153,7 +153,6 @@ public class BBDeploy extends AbstractMojo implements PluginConstants {
 			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
-				getLog().info(" ---- LINE == : " + line);
 			}
 		} catch (CommandLineException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
