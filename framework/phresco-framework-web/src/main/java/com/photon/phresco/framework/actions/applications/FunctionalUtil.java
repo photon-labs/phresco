@@ -37,7 +37,7 @@ public class FunctionalUtil {
 	private static final Logger S_LOGGER = Logger.getLogger(FunctionalUtil.class);
 	private static Boolean debugEnabled  = S_LOGGER.isDebugEnabled();
     
-    public static void adaptTestConfig(Project project, String envName, String browser) throws PhrescoException {
+    public static void adaptTestConfig(Project project, String envName, String browser, String resolution) throws PhrescoException {
     	if (debugEnabled) {
 			S_LOGGER.debug("Entering Method DrupalFunctionalUtil.adaptTestConfig(Project project, SettingsInfo serverDetails, String browser)");
 		}
@@ -53,7 +53,7 @@ public class FunctionalUtil {
         	File file = new File(builder.toString());
         	if(file.exists()){
         		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-        		administrator.updateTestConfiguration(project, envName, browser, builder.toString());
+        		administrator.updateTestConfiguration(project, envName, browser, builder.toString(), resolution);
         	} 
         } catch (Exception e) {
             throw new PhrescoException(e);
