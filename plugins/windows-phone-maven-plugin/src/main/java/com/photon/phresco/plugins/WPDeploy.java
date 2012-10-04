@@ -122,7 +122,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
-			getLog().info("Build Name " + buildInfo);
 			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
@@ -201,6 +200,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			
 			sb.append(WP7_INSTALL);
 			
+			getLog().info("Deploy Command: == " + sb.toString());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -240,6 +240,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(WP_STR_DOT);
 			sb.append(WINDOWS_STR_BACKSLASH);
 			sb.append(appxFile[0].getName());
+			
+			getLog().info("Deploy Command: == " + sb.toString());
+			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
