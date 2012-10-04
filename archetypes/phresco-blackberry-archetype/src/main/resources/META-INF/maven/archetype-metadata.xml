@@ -54,7 +54,6 @@
 			<directory>source/js</directory> 
 			<includes>
 				<include>config.js</include>
-                <include>jquery.min.js</include>
                 <include>main.js</include>
                 <include>utility.js</include>
           </includes>
