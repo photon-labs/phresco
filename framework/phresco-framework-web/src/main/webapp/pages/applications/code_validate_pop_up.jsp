@@ -58,10 +58,13 @@
 					<select id="target" name="target" class="xlarge" >
 					<% if (xcodeConfigs != null) { 
 							for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
-						%>
+					%>
 							<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
-						<% } 
-					} %>	
+					<% 
+							} 
+						} 
+					%>	
+<%-- 					<option value="functional" ><s:text name="label.funtional"/></option> --%>
 			       </select>
 				</div>
 			</div>
