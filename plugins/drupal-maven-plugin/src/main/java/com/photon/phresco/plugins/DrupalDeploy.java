@@ -40,6 +40,7 @@ import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.DatabaseUtil;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 
@@ -137,7 +138,7 @@ public class DrupalDeploy extends AbstractMojo implements PluginConstants {
 	}
 	
 	private void createDb() throws MojoExecutionException {
-		PluginUtils util = new PluginUtils();
+		DatabaseUtil util = new DatabaseUtil();
 		try {
 			if (importSql) {
 				List<SettingsInfo> settingsInfos = getSettingsInfo(Constants.SETTINGS_TEMPLATE_DB);
