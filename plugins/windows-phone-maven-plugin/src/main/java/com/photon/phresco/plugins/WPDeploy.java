@@ -122,7 +122,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			
 			PluginUtils pu = new PluginUtils();
 			BuildInfo buildInfo = pu.getBuildInfo(Integer.parseInt(buildNumber));
-			getLog().info("Build Name " + buildInfo);
 			
 			buildDir = new File(baseDir.getPath() + BUILD_DIRECTORY);
 			buildFile = new File(buildDir.getPath() + File.separator + buildInfo.getBuildName());
@@ -155,10 +154,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				}
 			});
 			
-//			projectRootFolder = solutionFile[0].getName().substring(0, solutionFile[0].getName().length() - 4);
-			
-			// Get the source/<ProjectRoot> folder
+			// Get the source/src/<ProjectRoot> folder
 			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + WP_PROJECT_ROOT);
+			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + "src" + File.separator + WP_PROJECT_ROOT);
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -202,6 +200,7 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			
 			sb.append(WP7_INSTALL);
 			
+			getLog().info("Deploy Command: == " + sb.toString());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
@@ -234,31 +233,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				}
 			});
 			
-			/* DONT REMOVE FOLLOWING COMMENT BLOCK */
-			/*BufferedReader br = null;
-			BufferedWriter bw = null;
-			File path = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
-			File tempFile = new File(tempDir.getPath() + File.separator + "tmp" + ps1File[0].getName().substring(ps1File[0].getName().length() - 4));
-			File newFile = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
-			try {
-				br = new BufferedReader(new FileReader(path));
-				bw = new BufferedWriter(new FileWriter(tempFile));
-				String line;
-				while ((line = br.readLine()) != null) {
-					if (line.trim().contains("[switch]$Force = $false")) {
-						line = line.replace("[switch]$Force = $false", "[switch]$Force = $true");
-					}
-					bw.write(line + "\n");
-				}
-			} catch (Exception e) {
-				return;
-			} finally {
-				br.close();
-				bw.close();
-			}
-			path.delete();
-			tempFile.renameTo(newFile);*/
-			
 			// PowerShell .\Add-AppDevPackage.ps1
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
@@ -266,6 +240,9 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(WP_STR_DOT);
 			sb.append(WINDOWS_STR_BACKSLASH);
 			sb.append(appxFile[0].getName());
+			
+			getLog().info("Deploy Command: == " + sb.toString());
+			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();

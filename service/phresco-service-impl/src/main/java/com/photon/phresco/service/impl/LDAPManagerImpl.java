@@ -147,7 +147,7 @@ public class LDAPManagerImpl implements LDAPManager {
 				userInfo.setMail(getMailId(attrs));
 				userInfo.setPhrescoEnabled(isPhrescoEnabled(attrs)); 
 				userInfo.setCustomerNames(getCustomerNames(attrs));
-//				userInfo.setLoginValidation(true);
+				userInfo.setValidLogin(true);
 			}
 			
 		} catch (Exception e) {

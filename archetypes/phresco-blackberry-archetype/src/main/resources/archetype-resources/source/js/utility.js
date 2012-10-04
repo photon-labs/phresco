@@ -8,10 +8,10 @@ function configParse(jsonStr, currentEnv, type, name) {
 }
 
  function parseString() {
+	//alert("this.name = " + this.name);
 	var jsonStrObj = jQuery.parseJSON(this.jsonStr);
 	var envLength = jsonStrObj.length;
-	if (envLength != 'undefined' && envLength > 1) {
-	
+	if (envLength != 'undefined' && envLength > 1) {	
 		for (i = 0; i < envLength; i++) {
 			var environment = jsonStrObj[i];
 			var env = environment["@name"];
@@ -35,6 +35,7 @@ function configParse(jsonStr, currentEnv, type, name) {
 }
 
 function getConfigJson(environment, type, name) {
+//	alert("getConfigJson: name = " + name);
 	var json = {};
     var configurations = environment[type];
 	if (configurations.length > 1) {

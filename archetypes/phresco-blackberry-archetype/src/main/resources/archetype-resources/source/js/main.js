@@ -2,13 +2,14 @@ var serverUrl;
 var req;
 var serviceConnFlag = false;
 function init() {
-	var mObj = new configParse(ENV_CONFIG_JSON, "Production" , "Server" , "google");
+	var mObj = new configParse(ENV_CONFIG_JSON, "Production" , "Server");
 	var serverConfig = mObj.parseString();
 	
 	var port = (serverConfig.port.length===0?"":':'+serverConfig.port);
 	var context = (serverConfig.context.length===0?"":'/'+serverConfig.context);
 	var additionalContext = (serverConfig.additional_context.length===0?"":+serverConfig.additional_context);
 	serverUrl = serverConfig.protocol + '://' + serverConfig.host + port  + context;// + additionalContext;
+	
 	loadURL();
 }
 
