@@ -233,31 +233,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 				}
 			});
 			
-			/* DONT REMOVE FOLLOWING COMMENT BLOCK */
-			/*BufferedReader br = null;
-			BufferedWriter bw = null;
-			File path = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
-			File tempFile = new File(tempDir.getPath() + File.separator + "tmp" + ps1File[0].getName().substring(ps1File[0].getName().length() - 4));
-			File newFile = new File(tempDir.getPath() + File.separator + ps1File[0].getName());
-			try {
-				br = new BufferedReader(new FileReader(path));
-				bw = new BufferedWriter(new FileWriter(tempFile));
-				String line;
-				while ((line = br.readLine()) != null) {
-					if (line.trim().contains("[switch]$Force = $false")) {
-						line = line.replace("[switch]$Force = $false", "[switch]$Force = $true");
-					}
-					bw.write(line + "\n");
-				}
-			} catch (Exception e) {
-				return;
-			} finally {
-				br.close();
-				bw.close();
-			}
-			path.delete();
-			tempFile.renameTo(newFile);*/
-			
 			// PowerShell .\Add-AppDevPackage.ps1
 			StringBuilder sb = new StringBuilder();
 			sb.append(WP_POWERSHELL_PATH);
