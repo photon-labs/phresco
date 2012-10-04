@@ -40,6 +40,7 @@ import com.photon.phresco.framework.PhrescoFrameworkFactory;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.SettingsInfo;
 import com.photon.phresco.util.Constants;
+import com.photon.phresco.util.DatabaseUtil;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
 
@@ -94,7 +95,7 @@ public class NodeJSStart extends AbstractMojo implements PluginConstants {
 	}
 
 	private void createDb() throws MojoExecutionException {
-		PluginUtils util = new PluginUtils();
+		DatabaseUtil util = new DatabaseUtil();
 		try {
 			if (importSql) {
 				ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
