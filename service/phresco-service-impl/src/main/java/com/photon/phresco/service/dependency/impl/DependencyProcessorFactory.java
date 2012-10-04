@@ -122,6 +122,8 @@ public final class DependencyProcessorFactory {
             dependencyProcessor = new WinMetroDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }else if(techId.equalsIgnoreCase(TechnologyTypes.ANDROID_LIBRARY)) {
             dependencyProcessor = new AndroidDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
+        }else  if(techId.equalsIgnoreCase(TechnologyTypes.BLACKBERRY_HYBRID)) {
+            dependencyProcessor = new BlackBerryDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }else {
         	dependencyProcessor = new DefaultDependencyProcessor(PhrescoServerFactory.getRepositoryManager());
         }
