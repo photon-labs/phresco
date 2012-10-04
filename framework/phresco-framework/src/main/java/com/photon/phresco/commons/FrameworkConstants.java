@@ -305,6 +305,8 @@ public interface FrameworkConstants {
     String HEAD_REVISION = "HEAD";
     String REPORTS_JASPER = "reports/jasper/";
     String PLATFORM = "platform";
+    String POM_LINE_BREAK = "linebreakpos";
+    String POM_LINE_MAX_COL_COUNT = "10000";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
