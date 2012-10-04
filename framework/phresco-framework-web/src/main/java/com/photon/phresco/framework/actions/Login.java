@@ -92,14 +92,14 @@ public class Login extends FrameworkBaseAction {
 	            Credentials credentials = new Credentials(username, password);
 	            userInfo = administrator.doLogin(credentials);
 	            
-	            if (userInfo.getDisplayName() == null) {
-	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
-	                return LOGIN_FAILURE;
-	            }
-//	            if (!userInfo.isLoginValidation()) {
+//	            if (userInfo.getDisplayName() == null) {
 //	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
 //	                return LOGIN_FAILURE;
 //	            }
+	            if (!userInfo.isValidLogin()) {
+	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
+	                return LOGIN_FAILURE;
+	            }
 	            if (!userInfo.isPhrescoEnabled()) {
 	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN_ACCESS_DENIED));
 	                return LOGIN_FAILURE;
