@@ -1550,6 +1550,7 @@ public class Build extends FrameworkBaseAction {
 				configList.add(createElement(doc, POM_FORCE, POM_VALUE_TRUE));
 				configList.add(createElement(doc, POM_JS_WARN, POM_VALUE_FALSE));
 				configList.add(createElement(doc, POM_NO_SUFFIX, POM_VALUE_TRUE));
+				configList.add(createElement(doc, POM_LINE_BREAK, POM_LINE_MAX_COL_COUNT));
 				
 				Element excludesElement = doc.createElement(POM_EXCLUDES);
 				appendChildElement(doc, excludesElement, POM_EXCLUDE, POM_EXCLUDE_CSS);
