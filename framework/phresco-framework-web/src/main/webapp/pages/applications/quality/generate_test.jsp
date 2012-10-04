@@ -50,6 +50,7 @@
     List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
     Map<String, String> browserMap = (Map<String, String>)request.getAttribute(FrameworkConstants.REQ_TEST_BROWSERS);
     List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
+    List<String> resolutions = (List<String>) request.getAttribute(FrameworkConstants.REQ_RESOLUTIONS);
 %>
 <div id="tests" style="display:block">
 <form action="functional" method="post" autocomplete="off" class="build_form">
@@ -143,14 +144,12 @@
                 <label for="xlInput" class="xlInput popup-label"><span class="red">*</span><s:text name="label.resolution"/></label>
                 <div class="input">
                     <select id="resolution" name="resolution" class="xlarge resolution">
-                        <option value="320*480">320 * 480</option>
-                        <option value="1024*768">1024 * 768</option>
-                        <option value="1280*800">1280 * 800</option>
-                        <option value="1280*960">1280 * 960</option>
-                        <option value="1280*1024">1280 * 1024</option>
-                        <option value="1360*768">1360 * 768</option>
-                        <option value="1440*900">1440 * 900</option>
-                        <option value="1600*900">1600 * 900</option>
+                        <%
+                               for(String resolution : resolutions) {
+                         %>
+                                <option value="<%= resolution%>"> <%= resolution %></option>
+                         <% } %>
+                    
                     </select>
                 </div>
             </div>

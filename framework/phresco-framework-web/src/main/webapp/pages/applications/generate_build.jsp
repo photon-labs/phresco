@@ -136,10 +136,23 @@
 				<div class="clearfix">
 					<label for="xlInput" class="xlInput popup-label"><s:text name="label.main.class.name"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" maxlength="40" title="40 Characters only"/>
+						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" 
+							value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" 
+							maxlength="40" title="40 Characters only"/>
 				    </div>
 				</div>	
 			<% } %>	
+			
+			<% if (TechnologyTypes.BLACKBERRY_HYBRID.contains(technology)) { %>
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label "><s:text name="label.keypassword"/></label>
+				    <div class="input">
+						<input type="password" placeholder="<s:text name="Enter the Password"/>" class="xlarge javastd" 
+							name="keypass" maxlength="20" title="20 Characters only"/>
+				    </div>
+				</div>								
+			<% } %>	
+			
 		
 			<% if (TechnologyTypes.WIN_METRO.contains(technology)) { %>
 					<div class="clearfix">

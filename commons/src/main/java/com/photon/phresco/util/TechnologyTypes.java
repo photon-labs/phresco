@@ -98,7 +98,7 @@ public interface TechnologyTypes {
     /**
      * Technology Blackberry
      */
-    String BLACKBERRY = "tech-blackberry";
+    String BLACKBERRY_HYBRID = "tech-blackberry-hybrid";
 
     /**
      * Technology Java
