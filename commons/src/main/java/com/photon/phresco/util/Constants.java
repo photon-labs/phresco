@@ -97,7 +97,13 @@ public interface Constants {
     String DB_TYPE = "type";
     String DB_DRIVER = "driver";
     String DB_TABLE_PREFIX = "table_prefix";
-    String DB_VERSION = "version";
+	String DB_VERSION = "version";
+    String MONGO_DB = "mongodb";
+    String ORACLE_DB = "oracle";
+    String MYSQL_DB = "mysql";
+    String HSQL_DB = "hsql";
+    String DB2_DB = "db2";
+    String MSSQL_DB = "mssql";
 
     // Constants for Email
     String SETTINGS_TEMPLATE_EMAIL = "Email";

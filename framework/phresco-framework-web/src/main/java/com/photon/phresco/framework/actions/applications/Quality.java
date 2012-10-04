@@ -133,6 +133,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String testAgainst = null;
     private String jarName = null;
     private File systemPath = null;
+    private String resolution = null; 
     
 	private List<String> configName = null;
 	private List<String> buildInfoEnvs = null;
@@ -322,7 +323,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             S_LOGGER.debug("settingsInfoMap ========>" + settingsInfoMap);
     		 technologyId = project.getProjectInfo().getTechnology().getId();            
             if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
-                FunctionalUtil.adaptTestConfig(project, envs, browser);
+                FunctionalUtil.adaptTestConfig(project, envs, browser, resolution);
             } /*else {
             	actionType = ActionType.INSTALL;
             }*/
@@ -2745,5 +2746,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setIosTestType(String iosTestType) {
 		this.iosTestType = iosTestType;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
 	}
 }

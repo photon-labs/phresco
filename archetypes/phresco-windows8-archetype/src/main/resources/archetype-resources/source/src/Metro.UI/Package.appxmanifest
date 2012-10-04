@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="1f0f1577-bc5a-4c10-9a06-f939dc76a130" Publisher="CN=ganesan_m" Version="1.0.0.3" />
+  <Identity Name="1f0f1577-bc5a-4c10-9a06-f939dc76a130" Publisher="CN=ganesan_m" Version="1.0.0.7" />
   <Properties>
     <DisplayName>HSNLive</DisplayName>
     <PublisherDisplayName>ganesan_m</PublisherDisplayName>

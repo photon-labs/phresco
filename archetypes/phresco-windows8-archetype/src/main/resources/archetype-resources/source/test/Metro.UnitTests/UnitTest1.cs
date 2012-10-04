@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace HSN.Test
+namespace Metro.UnitTests
 {
     [TestClass]
     public class UnitTest1
@@ -12,8 +12,7 @@ namespace HSN.Test
         [TestMethod]
         public void TestMethod1()
         {
-
-
+Assert.AreEqual("HELLO" , "HELLO");
         }
     }
 }
