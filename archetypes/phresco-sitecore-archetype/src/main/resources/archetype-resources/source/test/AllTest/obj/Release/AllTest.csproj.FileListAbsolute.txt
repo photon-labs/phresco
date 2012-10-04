@@ -1,0 +1,14 @@
+E:\Photon\unit\AllTest\AllTest\bin\Release\AllTest.dll
+E:\Photon\unit\AllTest\AllTest\bin\Release\AllTest.pdb
+E:\Photon\unit\AllTest\AllTest\bin\Release\nunit.framework.dll
+E:\Photon\unit\AllTest\AllTest\bin\Release\nunit.framework.xml
+E:\Photon\unit\AllTest\AllTest\obj\Release\ResolveAssemblyReference.cache
+E:\Photon\unit\AllTest\AllTest\obj\Release\AllTest.dll
+E:\Photon\unit\AllTest\AllTest\obj\Release\AllTest.pdb
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\bin\Release\AllTest.dll
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\bin\Release\AllTest.pdb
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\bin\Release\nunit.framework.dll
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\bin\Release\nunit.framework.xml
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\obj\Release\ResolveAssemblyReference.cache
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\obj\Release\AllTest.dll
+C:\1.0.5000\phresco-framework\workspace\projects\PHR_sharepoint\test\unit\AllTest\obj\Release\AllTest.pdb

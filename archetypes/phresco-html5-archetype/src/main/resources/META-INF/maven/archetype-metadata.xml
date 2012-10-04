@@ -86,6 +86,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
+			<directory>src/main/webapp/WEB-INF/resources</directory> 
+			<includes>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
 			<directory>src/main/webapp/images</directory> 
 			<includes>
 				<include>**/*</include>
@@ -100,14 +106,9 @@
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/java/com/photon/phresco/Screens</directory>
 			<includes>
-				<include>AbstractBaseScreen.java</include>
-				<include>AddScreen.java</include>
 				<include>BaseScreen.java</include>
 				<include>PhotonAbstractScreen.java</include>
 				<include>WelcomeScreen.java</include>
-				<include>MenuScreen.java</include>
-				<include>WebDriverAbstractBaseScreen.java</include>
-				<include>WebDriverBaseScreen.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -124,22 +125,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
-			<directory>test/functional/src/main/java/com/photon/phresco/selenium/report</directory>
-			<includes>
-				<include>Reporter.java</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/java/com/photon/phresco/selenium/util</directory>
 			<includes>
 				<include>Constants.java</include>
-				<include>ExtractExeToLocalMachine.java</include>
-				<include>ProcessWaiter.java</include>
 				<include>ScreenActionFailedException.java</include>
 				<include>ScreenException.java</include>
-				<include>ScreenshottingSelenium.java</include>
 				<include>GetCurrentDir.java</include>
-				<include>WriteToFile.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
@@ -147,18 +138,12 @@
 			<includes>
 				<include>PhrescoUiConstants.java</include>
 				<include>ReadXMLFile.java</include>
-                <include>UIConstants.java</include>
-                <include>UserInfoConstants.java</include>
-                <include>WidgetData.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
 			<directory>test/functional/src/main/resources</directory>
 			<includes>
 				<include>phresco-env-config.xml</include>
-                <include>WidgetData.xml</include>
-                <include>UIConstants.xml</include>
-                <include>UserInfo.xml</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">

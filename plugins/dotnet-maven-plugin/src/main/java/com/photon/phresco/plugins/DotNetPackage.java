@@ -1,6 +1,6 @@
 /*
  * ###
- * sharepoint-maven-plugin Maven Mojo
+ * dotnet-maven-plugin Maven Mojo
  * 
  * Copyright (C) 1999 - 2012 Photon Infotech Inc.
  * 
@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -51,7 +52,7 @@ import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.Utility;
 
 /**
- * Goal which builds the DotNET WebApp 
+ * Goal which builds the DotNET WebApp
  * 
  * @execute goal="clean"
  * 
@@ -75,7 +76,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 	 * @readonly
 	 */
 	protected File baseDir;
-	
+
 	/**
 	 * @parameter expression="${environmentName}" required="true"
 	 */
@@ -109,7 +110,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
-			
+
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
 			srcDir = new File(baseDir.getPath() + File.separator + "source/src");
 			buildDir = new File(baseDir.getPath() + PluginConstants.BUILD_DIRECTORY);
@@ -126,12 +127,12 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	
+
 	private boolean build() throws MojoExecutionException {
 		boolean isBuildSuccess = true;
 		try {
-			executeMsBuildCmd();
-			executeAspCompilerCmd();
+			executeMSBuildCmd();
+			executeASPCompilerCmd();
 			createPackage();
 		} catch (Exception e) {
 			isBuildSuccess = false;
@@ -139,12 +140,19 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 		}
 		return isBuildSuccess;
 	}
-	
-	private void executeMsBuildCmd() throws MojoExecutionException {
+
+	private void executeMSBuildCmd() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
-			Commandline cl = new Commandline("msbuild.exe SampleWebApp.csproj /t:rebuild");
-			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
+			String[] list = srcDir.list(new CsFileNameFilter());
+			StringBuilder sb = new StringBuilder();
+			sb.append("msbuild.exe");
+			sb.append(STR_SPACE);
+			sb.append(list[0]);
+			sb.append(STR_SPACE);
+			sb.append("/t:rebuild");
+			Commandline cl = new Commandline(sb.toString());
+			cl.setWorkingDirectory(srcDir.getPath());
 			Process process = cl.execute();
 			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
@@ -159,7 +167,8 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			Utility.closeStream(in);
 		}
 	}
-	private void executeAspCompilerCmd()throws MojoExecutionException {
+
+	private void executeASPCompilerCmd() throws MojoExecutionException {
 		BufferedReader in = null;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -170,7 +179,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			sb.append(STR_SPACE);
 			sb.append("\"" + targetDir.getPath() + "\"");
 			Commandline cl = new Commandline(sb.toString());
-			cl.setWorkingDirectory(baseDir.getPath() + "/source/src");
+			cl.setWorkingDirectory(srcDir.getPath());
 			Process process = cl.execute();
 			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
@@ -185,7 +194,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			Utility.closeStream(in);
 		}
 	}
-	
+
 	private void createPackage() throws MojoExecutionException {
 		try {
 			if (buildName != null) {
@@ -205,7 +214,7 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 			throw new MojoExecutionException(e.getErrorMessage(), e);
 		}
 	}
-	
+
 	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
 
 		try {
@@ -277,5 +286,12 @@ public class DotNetPackage extends AbstractMojo implements PluginConstants {
 
 		nextBuildNo = buildArray[buildArray.length - 1] + 1; // increment 1 to the max in the build list
 		return nextBuildNo;
+	}
+}
+
+class CsFileNameFilter implements FilenameFilter {
+
+	public boolean accept(File dir, String name) {
+		return name.endsWith(".csproj");
 	}
 }

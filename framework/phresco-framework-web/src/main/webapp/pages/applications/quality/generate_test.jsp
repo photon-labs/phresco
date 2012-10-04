@@ -129,17 +129,32 @@
 				</div>
             </div>
             
-            <div>
-            	<div class="clearfix" id="agnBuild" style="display: none;">
-				    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
-				    <div class="input">
-				        <select id="environments" name="environment" class="xlarge agnBuildEnv">
-				        
-				        </select>
-					</div>
+           	<div class="clearfix" id="agnBuild" style="display: none;">
+			    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
+			    <div class="input">
+			        <select id="environments" name="environment" class="xlarge agnBuildEnv">
+			        
+			        </select>
 				</div>
+			</div>
+			<% if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || 
+					TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) { %>
+            <div class="clearfix">
+                <label for="xlInput" class="xlInput popup-label"><span class="red">*</span><s:text name="label.resolution"/></label>
+                <div class="input">
+                    <select id="resolution" name="resolution" class="xlarge resolution">
+                        <option value="320*480">320 * 480</option>
+                        <option value="1024*768">1024 * 768</option>
+                        <option value="1280*800">1280 * 800</option>
+                        <option value="1280*960">1280 * 960</option>
+                        <option value="1280*1024">1280 * 1024</option>
+                        <option value="1360*768">1360 * 768</option>
+                        <option value="1440*900">1440 * 900</option>
+                        <option value="1600*900">1600 * 900</option>
+                    </select>
+                </div>
             </div>
-            
+            <% } %>
             <div id="agnServer" class="server" style="display: none;">
 	            <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>

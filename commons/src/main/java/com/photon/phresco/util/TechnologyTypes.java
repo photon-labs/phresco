@@ -156,6 +156,11 @@ public interface TechnologyTypes {
     String DOT_NET = "tech-dotnet";
     
     /**
+     * Technology SiteCore
+     */
+    String SITE_CORE = "tech-sitecore";
+    
+    /**
      * Technology wordpress
      */
     String WORDPRESS = "tech-wordpress";

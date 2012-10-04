@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.photon.phresco</groupId>
         <artifactId>phresco-parent</artifactId>
-        <version>1.2.3.1001-SNAPSHOT</version>
+        <version>1.2.3.2001-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -88,6 +88,12 @@
             <artifactId>commons-codec</artifactId>
             <version>1.5</version>
         </dependency>
+		
+		 <dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.8.0</version>
+		</dependency>
         
         <dependency>
             <groupId>org.jdom</groupId>

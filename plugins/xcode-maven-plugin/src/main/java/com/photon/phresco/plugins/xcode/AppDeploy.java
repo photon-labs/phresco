@@ -189,7 +189,7 @@ public class AppDeploy extends AbstractMojo implements PluginConstants {
 					pb = new ProcessBuilder("transporter_chief.rb");
 					pb.command().add(appPath);
 				} else {
-					getLog().info("executing into device ");
+					getLog().info("executing into simulator ");
 					pb = new ProcessBuilder(simHome);
 					// Include errors in output
 					pb.redirectErrorStream(true);

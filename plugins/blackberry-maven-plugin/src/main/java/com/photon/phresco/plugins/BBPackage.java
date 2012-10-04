@@ -106,6 +106,11 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 	protected String buildNumber;
 
 	/**
+	 * @parameter expression="${keyPass}" required="true"
+	 */
+	protected String keyPass;
+	
+	/**
 	 * @parameter expression="${project.name}" required="true"
 	 * @readonly
 	 */
@@ -118,7 +123,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 	private File tempDir;
 	private List<BuildInfo> buildInfoList;
 	private int nextBuildNo;
-	private String zipName, zipFilePath;
+	private String tempZipName,tempZipFilePath, zipName, zipFilePath;
 	private Date currentDate;
 	private String sourceDirectory = "\\source";
 	private String phrescoDirectory = "\\.phresco";
@@ -129,13 +134,13 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		init();
-		// writeConfiguration();
 		convertXMLToJSON();
 		writeJSONtoJavaScript();
-		generateArchive();
+		generateSourceArchive();	// generate .zip file of source folder contents
 		boolean buildStatus = build();
+		generateArchive();
 		writeBuildInfo(buildStatus);
-		// cleanUp();
+		cleanUp();
 	}
 
 	private void init() throws MojoExecutionException {
@@ -159,73 +164,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 		}
 	}
 
-	/**
-	 * Read phresco-env-config.xml file from .phresco folder and write the
-	 * server / webservice urls in config.js file as global variables
-	 * 
-	 * @throws MojoExecutionException
-	 */
-	private void writeConfiguration() throws MojoExecutionException {
-		try {
-			StringBuilder stringBuilder = null;
-			configUrls = new HashMap<String, String>();
-
-			File configFile = new File(baseDir.getPath() + phrescoDirectory
-					+ File.separator + "phresco-env-config.xml");
-			getLog().info("PHRESCO ENV CONFIG PATH === " + configFile.getPath());
-			ConfigReader cr = new ConfigReader(configFile);
-			List<Configuration> configurationList = cr.getConfigByEnv(cr
-					.getDefaultEnvName());
-			for (Configuration configuration : configurationList) {
-				getLog().info(
-						"Configuration: Type = " + configuration.getType()
-								+ ", Name = " + configuration.getName());
-				String configURL = cr.getConfigAsJSON(cr.getDefaultEnvName(),
-						configuration.getType(), configuration.getName());
-				stringBuilder = new StringBuilder();
-				JSONObject jsonObject = new JSONObject(configURL);
-				stringBuilder.append(jsonObject.getString("protocol"));
-				stringBuilder.append("://");
-				stringBuilder.append(jsonObject.getString("host"));
-				stringBuilder.append(":");
-				stringBuilder.append(jsonObject.getString("port"));
-				stringBuilder.append("/");
-				stringBuilder.append(jsonObject.getString("context"));
-				stringBuilder.append("/");
-				configUrls.put(configuration.getName(),
-						stringBuilder.toString());
-			}
-
-			File configJSFile = new File(baseDir.getPath() + sourceDirectory
-					+ File.separator + "js" + File.separator + "config.js");
-			if (configJSFile.exists()) {
-				configJSFile.delete();
-			}
-			configJSFile.createNewFile();
-
-			BufferedWriter out = new BufferedWriter(
-					new FileWriter(configJSFile));
-
-			// Get a set of the entries
-			Set set = configUrls.entrySet();
-			// Get an iterator
-			Iterator i = set.iterator();
-			// Display elements
-			while (i.hasNext()) {
-				Map.Entry me = (Map.Entry) i.next();
-				getLog().info(
-						"Configuration: Name = " + me.getKey() + ", URL = "
-								+ me.getValue());
-				out.write("var " + me.getKey() + " = \"" + me.getValue()
-						+ "\";\n");
-			}
-
-			out.close();
-		} catch (Exception e) {
-			getLog().error(e);
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
+	
 
 	private void convertXMLToJSON() throws MojoExecutionException {
 		try {
@@ -237,7 +176,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 			XMLSerializer xmlSerializer = new XMLSerializer();
 			JSON json = xmlSerializer.read(xml);
 			jsonString = json.toString();
-			getLog().info("Converted JSON = " + jsonString);
+			//getLog().info("Converted JSON = " + jsonString);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -256,7 +195,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 
 			out = new BufferedWriter(
 					new FileWriter(configJSFile));
-			getLog().info("Config JSON = " + jsonString);
+			//getLog().info("Config JSON = " + jsonString);
 			out.write("var ENV_CONFIG_JSON  = '" + jsonString + "';\n");
 			out.close();
 		} catch (IOException e) {
@@ -275,6 +214,23 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 				"Invalid Usage. Please see the Usage of Package Goal");
 	}
 
+	
+	private void generateSourceArchive() throws MojoExecutionException {
+		try {
+			tempZipName = "temp.zip";
+			tempDir = new File(baseDir + sourceDirectory);
+			getLog().info("generateSourceArchive: == tempDir == " + tempDir.getPath());
+			
+			tempZipFilePath = tempDir.getPath() + File.separator + tempZipName;
+			getLog().info("zipFilePath == " + tempZipFilePath);
+
+			ArchiveUtil.createArchive(tempDir.getPath(), tempZipFilePath,
+					ArchiveType.ZIP);
+		} catch (PhrescoException e) {
+			throw new MojoExecutionException(e.getErrorMessage(), e);
+		}
+	}
+	
 	private void generateArchive() throws MojoExecutionException {
 		try {
 			if (buildName != null) {
@@ -291,10 +247,10 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 				}
 			}
 			zipFilePath = buildDir.getPath() + File.separator + zipName;
-			getLog().error("zipFilePath == " + zipFilePath);
-			tempDir = new File(baseDir + sourceDirectory);
+			getLog().info("zipFilePath == " + zipFilePath);
+			tempDir = new File(baseDir + sourceDirectory + File.separator + tempZipName.substring(0, tempZipName.length() - 4));
 
-			getLog().error("tempDir == " + tempDir.getPath());
+			getLog().info("generateArchive: == tempDir == " + tempDir.getPath());
 
 			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath,
 					ArchiveType.ZIP);
@@ -325,16 +281,20 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 			StringBuilder sb = new StringBuilder();
 			sb.append(BB_BBWP_HOME);
 			sb.append(STR_SPACE);
-			sb.append(zipName);
+			sb.append(tempZipName);
 			sb.append(STR_SPACE);
-			sb.append("-g photon123");
+			sb.append("-g");
 			sb.append(STR_SPACE);
-			sb.append("-o " + buildName);
+			sb.append(keyPass);
+			sb.append(STR_SPACE);
+			sb.append("-o");
+			sb.append(STR_SPACE);
+			sb.append(tempZipName.substring(0, tempZipName.length() - 4));
 
 			getLog().info("Build command: " + sb.toString());
 
 			Commandline cl = new Commandline(sb.toString());
-			cl.setWorkingDirectory(buildDir.getPath());
+			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
 			Process process = cl.execute();
 			in = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
@@ -426,11 +386,14 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 		nextBuildNo = buildArray[buildArray.length - 1] + 1;
 		return nextBuildNo;
 	}
-
-	@SuppressWarnings("unused")
+	
 	private void cleanUp() throws MojoExecutionException {
 		try {
+			//getLog().info("Temp dir in cleanup = " + tempDir.getPath());
 			FileUtils.deleteDirectory(tempDir);
+			File f =new File(baseDir + sourceDirectory + File.separator + tempZipName);
+			f.delete();
+			
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}

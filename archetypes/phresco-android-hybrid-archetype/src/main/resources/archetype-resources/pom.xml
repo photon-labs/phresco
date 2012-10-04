@@ -53,7 +53,7 @@
 				<plugin>
 					<groupId>com.photon.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>1.2.3.1001-SNAPSHOT</version>
+					<version>1.2.3.2001-SNAPSHOT</version>
 					<extensions>true</extensions>
 				</plugin>
 			</plugins>

@@ -222,8 +222,8 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 
 	private void getProjectRoot() throws MojoExecutionException {
 		try {
-			// Get the source/<ProjectRoot> folder
-			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + WP_PROJECT_ROOT);
+			// Get the source/src/<ProjectRoot> folder
+			rootDir = new File(baseDir.getPath() + sourceDirectory + File.separator + "src" + File.separator + WP_PROJECT_ROOT);
 		} catch (Exception e) {
 			getLog().error(e);
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -250,6 +250,8 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 			sb.append(WP_STR_PROPERTY);
 			sb.append(WP_STR_COLON);
 			sb.append(WP_STR_CONFIGURATION + "=" + configuration);
+			
+			getLog().info("Build Command: == " + sb.toString());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
 			Process process = cl.execute();
@@ -291,6 +293,9 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 			sb.append(WP_STR_CONFIGURATION + "=" + configuration);
 			sb.append(WP_STR_SEMICOLON);
 			sb.append(WP_STR_PLATFORM + "=" + WP_STR_DOUBLEQUOTES + platform + WP_STR_DOUBLEQUOTES);
+			
+			getLog().info("Build Command: == " + sb.toString());
+			
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
 			Process process = cl.execute();
@@ -344,7 +349,7 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 				packageInfo.incrementPackageVersionNo();
 			}
 		} catch (Exception e) {
-			System.out.println("EXXXXCEPTION: == "  +e.getMessage());
+			getLog().error(e);
 		}
 	}
 	
@@ -380,8 +385,10 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 				tempDir = new File(tempFilePath);
 			} else if(type.equalsIgnoreCase("wp7")) {
 				String packageFolder = solutionFile[0].getName().substring(0, solutionFile[0].getName().length() - 4);
-				tempDir = new File(baseDir + sourceDirectory + File.separator  + packageFolder + WP7_BIN_FOLDER + WP7_RELEASE_FOLDER);	
+				tempDir = new File(baseDir + sourceDirectory + File.separator + "src" + File.separator + packageFolder + WP7_BIN_FOLDER + WP7_RELEASE_FOLDER);	
 			}
+			/* getLog().info("tempDir.getPath(): == " + tempDir.getPath());
+			getLog().info("zipFilePath: == " + zipFilePath); */
 			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath, ArchiveType.ZIP);
 		} catch (PhrescoException e) {
 			throw new MojoExecutionException(e.getErrorMessage(), e);

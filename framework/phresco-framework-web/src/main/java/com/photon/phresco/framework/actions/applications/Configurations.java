@@ -90,8 +90,11 @@ public class Configurations extends FrameworkBaseAction {
     // For IIS server
     private String appName = "";
 	private String nameOfSite = "";
+	  private String siteCoreInstPath = "";
     private String appNameError = null;
     private String siteNameError = null;
+    private String siteCoreInstPathError = null;
+    
     //set as default envs
     private String setAsDefaultEnv = "";
     
@@ -116,6 +119,10 @@ public class Configurations extends FrameworkBaseAction {
 				}
             }
             getHttpRequest().setAttribute(REQ_CONFIGURATION, configurations);
+            String cloneConfigStatus = getHttpRequest().getParameter(CLONE_CONFIG_STATUS); 
+            if (cloneConfigStatus != null) {
+            	addActionMessage(getText(ENV_CLONE_SUCCESS));
+            }
         } catch (Exception e) {
         	if (debugEnabled) {
                S_LOGGER.error("Entered into catch block of Configurations.list()" + FrameworkUtil.getStackTraceAsString(e));
@@ -233,6 +240,9 @@ public class Configurations extends FrameworkBaseAction {
 	                if (S_LOGGER.isDebugEnabled()) {
 	                	S_LOGGER.debug("Configuration.save() key " + propertyTemplate.getKey() + "and Value is " + value);
 	                }
+	            }
+	            if(TechnologyTypes.SITE_CORE.equals(project.getProjectInfo().getTechnology().getId())) { 
+	            	propertyInfoList.add(new PropertyInfo(SETTINGS_TEMP_SITECORE_INST_PATH, siteCoreInstPath));
 	            }
 	            if (isIISServer) {
 	            	propertyInfoList.add(new PropertyInfo(SETTINGS_TEMP_KEY_APP_NAME, appName));
@@ -451,6 +461,7 @@ public class Configurations extends FrameworkBaseAction {
 	   	}
     	
     	Project project = administrator.getProject(projectCode);
+    	String techId = project.getProjectInfo().getTechnology().getId();
     	if(StringUtils.isNotEmpty(configName) && !configName.equals(oldName)) {
     		for (String environment : environments) {
     			List<SettingsInfo> configurations = administrator.configurationsByEnvName(environment, project);
@@ -501,7 +512,6 @@ public class Configurations extends FrameworkBaseAction {
             	}
         	    value = getHttpRequest().getParameter(key);
                 boolean isRequired = propertyTemplate.isRequired();
-                String techId = project.getProjectInfo().getTechnology().getId();
                 if ((serverTypeValidation && "deploy_dir".equals(key)) || TechnologyTypes.ANDROIDS.contains(techId)) {
                		isRequired = false;
                 }
@@ -517,6 +527,10 @@ public class Configurations extends FrameworkBaseAction {
                     if("deploy_dir".equals(key)){
                     	isRequired = false;
                     }
+                }
+                
+                if (TechnologyTypes.SITE_CORE.equals(techId) && "deploy_dir".equals(key)) {
+                	isRequired = false;
                 }
                 
                 if(isRequired == true && StringUtils.isEmpty(value.trim())){
@@ -561,6 +575,11 @@ public class Configurations extends FrameworkBaseAction {
     	   			validate = false;
     	   		}
     	   	}
+    	   	
+    	   	if (TechnologyTypes.SITE_CORE.equals(techId) && StringUtils.isEmpty(siteCoreInstPath)) {
+        		setSiteCoreInstPathError("SiteCore Installation path Location is missing");
+        		validate = false;
+        	}
     	}
 
 	   	return validate;
@@ -664,6 +683,10 @@ public class Configurations extends FrameworkBaseAction {
 		                propertyInfoList.add(new PropertyInfo(propertyTemplate.getKey(), value));
 	            	}
 	            }
+	            if(TechnologyTypes.SITE_CORE.equals(project.getProjectInfo().getTechnology().getId())) { 
+	            	propertyInfoList.add(new PropertyInfo(SETTINGS_TEMP_SITECORE_INST_PATH, siteCoreInstPath));
+	            }
+	            
 	            if (isIISServer) {
 	                propertyInfoList.add(new PropertyInfo(SETTINGS_TEMP_KEY_APP_NAME, appName));
 	                propertyInfoList.add(new PropertyInfo(SETTINGS_TEMP_KEY_SITE_NAME, nameOfSite));
@@ -828,6 +851,73 @@ public class Configurations extends FrameworkBaseAction {
 		return SUCCESS;
     }
     
+    public String cloneConfigPopup() {
+    	S_LOGGER.debug("Entering Method  Configurations.cloneConfigPopup()");
+    	try {
+    		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+    		Project project = administrator.getProject(projectCode);
+    		
+    		List<Environment> environments = administrator.getEnvironments(project);
+    		getHttpRequest().setAttribute(ENVIRONMENTS, environments);
+    		getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
+    		getHttpRequest().setAttribute(CLONE_FROM_CONFIG_NAME, configName);
+    		getHttpRequest().setAttribute(CLONE_FROM_ENV_NAME, envName);
+    		getHttpRequest().setAttribute(CLONE_FROM_CONFIG_TYPE, configType);
+		} catch (Exception e) {
+			if (debugEnabled) {
+				S_LOGGER.error("Entered into catch block of Configurations.cloneConfigPopup()" + FrameworkUtil.getStackTraceAsString(e));
+	    	}
+		}
+    	return SUCCESS;
+    }
+
+	public String cloneConfiguration() {
+		S_LOGGER.debug("Entering Method  Configurations.cloneConfiguration()");
+		try {
+			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project project = administrator.getProject(projectCode);
+			
+			String cloneFromEnvName = getHttpRequest().getParameter(CLONE_FROM_ENV_NAME);
+			String cloneFromConfigType = getHttpRequest().getParameter(CLONE_FROM_CONFIG_TYPE);
+			String cloneFromConfigName = getHttpRequest().getParameter(CLONE_FROM_CONFIG_NAME);
+			
+			boolean configExists = isConfigExists(project, envName, cloneFromConfigType, cloneFromConfigName);
+			if (!configExists) {
+				List<SettingsInfo> configurations = administrator.configurations(project, cloneFromEnvName, cloneFromConfigType, cloneFromConfigName);
+				if (CollectionUtils.isNotEmpty(configurations)) {
+						SettingsInfo settingsInfo = configurations.get(0);
+						settingsInfo.setName(configName);
+						settingsInfo.setDescription(description);
+						administrator.createConfiguration(settingsInfo, envName, project);
+				}
+				flag = true;
+			} else {
+				setEnvError(getText(CONFIG_ALREADY_EXIST));
+				flag = false;
+			}
+		} catch (Exception e) {
+			flag = false;
+			setEnvError(getText(CONFIGURATION_CLONNING_FAILED));
+		}
+		return SUCCESS;
+	}
+    
+	public boolean isConfigExists(Project project, String envName, String configType, String cloneFromConfigName) throws PhrescoException {
+		try {
+		    if (configType.equals(Constants.SETTINGS_TEMPLATE_SERVER) || configType.equals(Constants.SETTINGS_TEMPLATE_EMAIL)) {
+		    	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
+	            List<SettingsInfo> settingsinfos = administrator.configurations(project, envName, configType, cloneFromConfigName);
+	            if(CollectionUtils.isNotEmpty( settingsinfos)) {
+//	                setTypeError(CONFIG_ALREADY_EXIST);
+	                return true;
+	            }
+	    	}
+		    return false;
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+	}
+	
     public String fetchProjectInfoVersions() {
     	try {
 	    	String configType = getHttpRequest().getParameter("configType");
@@ -1044,6 +1134,22 @@ public class Configurations extends FrameworkBaseAction {
 
 	public void setNameOfSite(String nameOfSite) {
 		this.nameOfSite = nameOfSite;
+	}
+
+	public String getSiteCoreInstPath() {
+		return siteCoreInstPath;
+	}
+
+	public void setSiteCoreInstPath(String siteCoreInstPath) {
+		this.siteCoreInstPath = siteCoreInstPath;
+	}
+
+	public String getSiteCoreInstPathError() {
+		return siteCoreInstPathError;
+	}
+
+	public void setSiteCoreInstPathError(String siteCoreInstPathError) {
+		this.siteCoreInstPathError = siteCoreInstPathError;
 	}
 
 	public String getSetAsDefaultEnv() {

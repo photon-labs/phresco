@@ -55,6 +55,7 @@
 	if(!isiPad()){
 		$(".jsLib_accordion_container").scrollbars();
 		$("#coremodule_accordion_container").scrollbars();
+		$(".custommodule_accordion_container").scrollbars();
 	}
 	
 	$(document).ready(function() {
