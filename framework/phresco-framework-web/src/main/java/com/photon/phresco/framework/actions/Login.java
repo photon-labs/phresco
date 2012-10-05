@@ -43,9 +43,12 @@ package com.photon.phresco.framework.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.framework.FrameworkConfiguration;
 import com.photon.phresco.framework.PhrescoFrameworkFactory;
@@ -95,10 +98,6 @@ public class Login extends FrameworkBaseAction {
 	            Credentials credentials = new Credentials(username, password);
 	            userInfo = administrator.doLogin(credentials);
 	            
-//	            if (userInfo.getDisplayName() == null) {
-//	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
-//	                return LOGIN_FAILURE;
-//	            }
 	            if (!userInfo.isValidLogin()) {
 	            	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_LOGIN));
 	                return LOGIN_FAILURE;
@@ -108,7 +107,16 @@ public class Login extends FrameworkBaseAction {
 	                return LOGIN_FAILURE;
 	            } else {
 	            	loginSuccess(userInfo);
-	            	initializeDatas();
+					FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+					String osType = frameworkUtil.getOsType();
+					if (MAC.equals(osType)) {
+		            	InitializeData initThread = new InitializeData(getHttpSession());
+		            	Thread newThread = new Thread(initThread);
+		            	newThread.start();
+					}
+					if (debugEnabled) {
+						S_LOGGER.debug("Redirecting to home page ");
+					}
 	                return LOGIN_SUCCESS;
 	            }
 	            
@@ -117,7 +125,6 @@ public class Login extends FrameworkBaseAction {
 	                S_LOGGER.error("Entered into catch block of Login.login()"+ FrameworkUtil.getStackTraceAsString(e));
 	    		}
 	        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(ERROR_EXCEPTION));
-	//        	getHttpRequest().setAttribute(REQ_LOGIN_ERROR, e.getLocalizedMessage());
 	            return LOGIN_FAILURE;
 	        }
 		} else {
@@ -167,30 +174,7 @@ public class Login extends FrameworkBaseAction {
 	}
 	
 	public void initializeDatas() {
-		try {
-			if (debugEnabled) {
-				S_LOGGER.debug("Entering Method  Login.loadMacSdks");
-			}
-			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
-			if (MAC.equals(frameworkUtil.getOsType())) {
-				S_LOGGER.debug("Mac machine initializing datas ");
-				// add ios session
-				List<String> iphoneSdks = new ArrayList<String>();
-				List<String> iphoneOSSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
-				List<String> simSdks = IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator);
-				List<String> macSdks = IosSdkUtil.getMacSdks(MacSdkType.macosx);
-				iphoneSdks.addAll(iphoneOSSdks);
-				iphoneSdks.addAll(simSdks);
-				iphoneSdks.addAll(macSdks);
-				
-				getHttpSession().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
-				getHttpSession().setAttribute(REQ_IPHONE_SIMULATOR_SDKS, simSdks);
-			}
-		} catch (Exception e) {
-        	if (debugEnabled) {
-                S_LOGGER.error("Entered into catch block of Login.loadMacSdks()"+ FrameworkUtil.getStackTraceAsString(e));
-    		}
-		}
+		
 	}
 	
 	public String cmdLogin(){
@@ -224,6 +208,43 @@ public class Login extends FrameworkBaseAction {
 
 	public void setFromPage(String fromPage) {
 		this.fromPage = fromPage;
+	}
+	
+	class InitializeData implements Runnable {
+		
+		HttpSession httpSession;
+		
+		InitializeData(HttpSession httpSession) {
+			this.httpSession = httpSession;
+		}
+		
+		@Override
+		public void run() {
+			if (debugEnabled) {
+				S_LOGGER.debug("Initialization started!!!!!!! ");
+			}
+			try {
+				if (debugEnabled) {
+					S_LOGGER.debug("Entering Method  Login.loadMacSdks");
+				}
+				// add ios session
+				List<String> iphoneSdks = new ArrayList<String>();
+				List<String> iphoneOSSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+				List<String> simSdks = IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator);
+				List<String> macSdks = IosSdkUtil.getMacSdks(MacSdkType.macosx);
+				iphoneSdks.addAll(iphoneOSSdks);
+				iphoneSdks.addAll(simSdks);
+				iphoneSdks.addAll(macSdks);
+				
+				httpSession.setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
+				httpSession.setAttribute(REQ_IPHONE_SIMULATOR_SDKS, simSdks);
+			} catch (Exception e) {
+	        	if (debugEnabled) {
+	                S_LOGGER.error("Entered into catch block of Login.loadMacSdks()"+ FrameworkUtil.getStackTraceAsString(e));
+	    		}
+			}
+		}
+		
 	}
     
 }
