@@ -40,6 +40,7 @@
 
 package com.photon.phresco.framework.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,6 +54,8 @@ import com.photon.phresco.framework.commons.FrameworkUtil;
 import com.photon.phresco.model.UserInfo;
 import com.photon.phresco.model.VideoInfo;
 import com.photon.phresco.util.Credentials;
+import com.photon.phresco.util.IosSdkUtil;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 
 public class Login extends FrameworkBaseAction {
 
@@ -105,6 +108,7 @@ public class Login extends FrameworkBaseAction {
 	                return LOGIN_FAILURE;
 	            } else {
 	            	loginSuccess(userInfo);
+	            	initializeDatas();
 	                return LOGIN_SUCCESS;
 	            }
 	            
@@ -160,6 +164,33 @@ public class Login extends FrameworkBaseAction {
                 S_LOGGER.error("Entered into catch block of Login.loginSuccess()"+ FrameworkUtil.getStackTraceAsString(e));
     		}
     	}
+	}
+	
+	public void initializeDatas() {
+		try {
+			if (debugEnabled) {
+				S_LOGGER.debug("Entering Method  Login.loadMacSdks");
+			}
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			if (MAC.equals(frameworkUtil.getOsType())) {
+				S_LOGGER.debug("Mac machine initializing datas ");
+				// add ios session
+				List<String> iphoneSdks = new ArrayList<String>();
+				List<String> iphoneOSSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+				List<String> simSdks = IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator);
+				List<String> macSdks = IosSdkUtil.getMacSdks(MacSdkType.macosx);
+				iphoneSdks.addAll(iphoneOSSdks);
+				iphoneSdks.addAll(simSdks);
+				iphoneSdks.addAll(macSdks);
+				
+				getHttpSession().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
+				getHttpSession().setAttribute(REQ_IPHONE_SIMULATOR_SDKS, simSdks);
+			}
+		} catch (Exception e) {
+        	if (debugEnabled) {
+                S_LOGGER.error("Entered into catch block of Login.loadMacSdks()"+ FrameworkUtil.getStackTraceAsString(e));
+    		}
+		}
 	}
 	
 	public String cmdLogin(){

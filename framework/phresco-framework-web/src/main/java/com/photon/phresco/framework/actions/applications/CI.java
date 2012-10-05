@@ -255,18 +255,6 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil
 						.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
-				// get list of sdks
-				List<String> iphoneSdks = IosSdkUtil
-						.getMacSdks(MacSdkType.iphoneos);
-				iphoneSdks.addAll(IosSdkUtil
-						.getMacSdks(MacSdkType.iphonesimulator));
-				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
-				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
-				// get list of sdk versions
-				List<String> iphoneSimulatorSdks = IosSdkUtil
-						.getMacSdksVersions(MacSdkType.iphonesimulator);
-				getHttpRequest().setAttribute(REQ_IPHONE_SIMULATOR_SDKS,
-						iphoneSimulatorSdks);
 			}
 			// get functional test browsers
 			Quality qty = new Quality();
