@@ -307,6 +307,7 @@ public interface FrameworkConstants {
     String PLATFORM = "platform";
     String POM_LINE_BREAK = "linebreakpos";
     String POM_LINE_MAX_COL_COUNT = "10000";
+    String KEYPASS = "keyPass";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
@@ -1410,6 +1411,7 @@ public interface FrameworkConstants {
 		  String CONTENT = "Content";
 
 		  String COMMON = "\\Common";
+		  String SHARED_ASSEMBLIES = "\\SharedAssemblies";
 		  String DOUBLE_DOT  = "..";
 		  String PROJECT_ROOT = "Metro.UI";
 		  String SLN_FILE = "Metro.sln";
@@ -1420,5 +1422,15 @@ public interface FrameworkConstants {
 		  String SETTINGS_TEMP_KEY_APP_NAME = "applicationName";
 		  String SETTINGS_TEMP_KEY_SITE_NAME = "siteName";
 		  String SETTINGS_TEMP_SITECORE_INST_PATH = "sitecoreInstPath";
-
+		  
+	  /* Resolutions */ 
+		String _1600_900 = "1600*900";
+		String _1440_900 = "1440*900";
+		String _1360_768 = "1360*768";
+		String _1280_1024 = "1280*1024";
+		String _1280_960 = "1280*960";
+		String _1280_800 = "1280*800";
+		String _1024_768 = "1024*768";
+		String _320_480 = "320*480";
+		String REQ_RESOLUTIONS = "resolution";
 }

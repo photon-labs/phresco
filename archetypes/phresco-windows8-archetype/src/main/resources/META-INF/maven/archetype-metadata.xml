@@ -44,79 +44,85 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Common</directory> 
+			<directory>source/src/Common</directory> 
 			<includes>
 				<include>SharedAssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Common</directory> 
+			<directory>source/src/Common/SharedAssemblies</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/src/Metro.Common</directory> 
 			<includes>
 				<include>Metro.Common.csproj</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Common/Configuration</directory> 
+			<directory>source/src/Metro.Common/Configuration</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
          <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Common/Converters</directory> 
+			<directory>source/src/Metro.Common/Converters</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Common/Helpers</directory> 
+			<directory>source/src/Metro.Common/Helpers</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Common/Properties</directory> 
+			<directory>source/src/Metro.Common/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Controls</directory> 
+			<directory>source/src/Metro.Controls</directory> 
 			<includes>
 				<include>Metro.Controls.csproj</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Controls/Properties</directory> 
+			<directory>source/src/Metro.Controls/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Entities</directory> 
+			<directory>source/src/Metro.Entities</directory> 
 			<includes>
 				<include>Metro.Entities.csproj</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Entities/Commerce</directory> 
+			<directory>source/src/Metro.Entities/Commerce</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Entities/Model</directory> 
+			<directory>source/src/Metro.Entities/Model</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Entities/Properties</directory> 
+			<directory>source/src/Metro.Entities/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Notifications</directory> 
+			<directory>source/src/Metro.Notifications</directory> 
 			<includes>
 				<include>BadgeContent.cs</include>
                 <include>Common.cs</include>
@@ -127,7 +133,7 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Notifications/Properties</directory> 
+			<directory>source/src/Metro.Notifications/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
 			</includes>
@@ -139,13 +145,13 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Services/Properties</directory> 
+			<directory>source/src/Metro.Services/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI</directory> 
+			<directory>source/src/Metro.UI</directory> 
 			<includes>
 				<include>App.xaml</include>
                 <include>App.xaml.cs</include>
@@ -156,7 +162,7 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Assets</directory> 
+			<directory>source/src/Metro.UI/Assets</directory> 
 			<includes>
 				<include>Logo.png</include>
                 <include>SmallLogo.png</include>
@@ -165,69 +171,75 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Common</directory> 
+			<directory>source/src/Metro.UI/Common</directory> 
 			<includes>
 				<include>StandardStyles.xaml</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Custom Controls</directory> 
+			<directory>source/src/Metro.UI/Custom Controls</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Pages</directory> 
+			<directory>source/src/Metro.UI/Pages</directory> 
 			<includes>
 				<include>MainPage.xaml</include>
                 <include>MainPage.xaml.cs</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Properties</directory> 
+			<directory>source/src/Metro.UI/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>                
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UI/Resources</directory> 
+			<directory>source/src/Metro.UI/Resources</directory> 
 			<includes>
 				<include>**/*</include>                
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UnitTests</directory> 
-			<includes>
-				<include>Metro.UnitTest.csproj</include>
-                <include>Package.appxmanifest</include>
-                <include>UnitTest1.cs</include>                
-			</includes>
-		</fileSet>
-        <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.UnitTests/Properties</directory> 
-			<includes>
-				<include>AssemblyInfo.cs</include>
-                               
-			</includes>
-		</fileSet>
-        <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.ViewModels</directory> 
+			<directory>source/src/Metro.ViewModels</directory> 
 			<includes>
 				<include>Metro.ViewModels.csproj</include>
                                
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.ViewModels/Properties</directory> 
+			<directory>source/src/Metro.ViewModels/Properties</directory> 
 			<includes>
 				<include>AssemblyInfo.cs</include>
                                
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/unit</directory> 
+			<directory>source/test/Metro.UnitTests</directory> 
 			<includes>
-   				<include>**/*</include>
+   				<include>Metro.UnitTests.csproj</include>
+                <include>Metro.UnitTests.csproj.user</include>
+                <include>Metro.UnitTests.sln</include>
+                <include>Metro.UnitTests.v11.suo</include>
+                <include>Metro.UnitTests_TemporaryKey.pfx</include>
+                <include>Package.appxmanifest</include>
+                <include>UnitTest1.cs</include>   
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/test/Metro.UnitTests/Images</directory> 
+			<includes>
+   				<include>UnitTestLogo.png</include>
+                <include>UnitTestSmallLogo.png</include>
+                <include>UnitTestSplashScreen.png</include>
+                <include>UnitTestStoreLogo.png</include>   
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/test/Metro.UnitTests/TestResults</directory> 
+			<includes>
+   				<include>**/*</include>   
 			</includes>
 		</fileSet>
 	</fileSets>

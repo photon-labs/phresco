@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-    <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Hello World" VerticalAlignment="Center" FontSize="72" Style="{StaticResource BodyTextStyle}">
+    <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Hello World - Revised" VerticalAlignment="Center" FontSize="72" Style="{StaticResource BodyTextStyle}">
     </TextBlock>
 
     </Grid>

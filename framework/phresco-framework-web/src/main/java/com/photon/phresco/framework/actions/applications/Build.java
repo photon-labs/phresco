@@ -462,6 +462,10 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(PLATFORM, platform);
 			}
 			
+			if (TechnologyTypes.BLACKBERRY_HYBRID.contains(technology)) {
+				settingsInfoMap.put(KEYPASS, keypass);
+			}
+			
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);

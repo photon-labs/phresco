@@ -57,7 +57,7 @@ public class WinMetroDependencyProcessor extends AbstractJsLibDependencyProcesso
 	@Override
 	public void process(ProjectInfo info, File path) throws PhrescoException {
 		File modulesPath = path;
-		String modulesPathString = "source" + File.separator + "Common";
+		String modulesPathString = getModulePathKey();
 		modulesPath = new File(path, modulesPathString);
 		System.out.println("Module path = " + modulesPath.getPath());
 		
@@ -67,6 +67,8 @@ public class WinMetroDependencyProcessor extends AbstractJsLibDependencyProcesso
 		// pilot projects
 		extractPilots(info, path, technology);
 	}
+	
+	
 
 	@Override
 	protected String getJsLibPathKey() {

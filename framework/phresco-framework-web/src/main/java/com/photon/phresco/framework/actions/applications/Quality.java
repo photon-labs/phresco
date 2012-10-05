@@ -322,7 +322,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
            
             S_LOGGER.debug("settingsInfoMap ========>" + settingsInfoMap);
     		 technologyId = project.getProjectInfo().getTechnology().getId();            
-            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
+            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY_HYBRID.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
                 FunctionalUtil.adaptTestConfig(project, envs, browser, resolution);
             } /*else {
             	actionType = ActionType.INSTALL;
@@ -1495,7 +1495,18 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_PROJECT, project);
             List<BuildInfo> buildInfos = administrator.getBuildInfos(project);
             environments = administrator.getEnvironments(project);
-
+            
+            List<String> screenResolution = new ArrayList<String>();
+            screenResolution.add(FrameworkConstants._320_480);
+            screenResolution.add(FrameworkConstants._1024_768);
+            screenResolution.add(FrameworkConstants._1280_800);
+            screenResolution.add(FrameworkConstants._1280_960);
+            screenResolution.add(FrameworkConstants._1280_1024);
+            screenResolution.add(FrameworkConstants._1360_768);
+            screenResolution.add(FrameworkConstants._1440_900);
+            screenResolution.add(FrameworkConstants._1600_900);
+            getHttpRequest().setAttribute(REQ_RESOLUTIONS, screenResolution);
+            
             getFunctionalTestBrowsers(technology);
 
             getHttpRequest().setAttribute(REQ_TEST_BUILD_INFOS, buildInfos);

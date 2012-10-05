@@ -103,6 +103,7 @@
     escPopup();
 
 	$('#close, #cancel').click(function() {
+		$('#popup_div').empty();
 	    showParentPage();
 	});
 	

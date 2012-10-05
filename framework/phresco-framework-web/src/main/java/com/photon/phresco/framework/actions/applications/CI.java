@@ -655,7 +655,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 		}
 		if (!TechnologyTypes.ANDROIDS.contains(technology)
 				&& !TechnologyTypes.IPHONES.contains(technology)
-				&& !TechnologyTypes.BLACKBERRY.equals(technology)
+				&& !TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)
 				&& !TechnologyTypes.SHAREPOINT.equals(technology)
 				&& !TechnologyTypes.DOT_NET.equals(technology)
 				&& !TechnologyTypes.JAVA_STANDALONE.equals(technology)) {
