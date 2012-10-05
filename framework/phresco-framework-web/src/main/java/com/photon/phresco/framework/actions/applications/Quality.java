@@ -322,7 +322,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
            
             S_LOGGER.debug("settingsInfoMap ========>" + settingsInfoMap);
     		 technologyId = project.getProjectInfo().getTechnology().getId();            
-            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
+            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY_HYBRID.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
                 FunctionalUtil.adaptTestConfig(project, envs, browser, resolution);
             } /*else {
             	actionType = ActionType.INSTALL;
