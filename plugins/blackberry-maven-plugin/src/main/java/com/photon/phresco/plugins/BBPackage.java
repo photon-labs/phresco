@@ -219,10 +219,10 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 		try {
 			tempZipName = "temp.zip";
 			tempDir = new File(baseDir + sourceDirectory);
-			getLog().info("generateSourceArchive: == tempDir == " + tempDir.getPath());
+			//getLog().info("generateSourceArchive: == tempDir == " + tempDir.getPath());
 			
 			tempZipFilePath = tempDir.getPath() + File.separator + tempZipName;
-			getLog().info("zipFilePath == " + tempZipFilePath);
+			//getLog().info("zipFilePath == " + tempZipFilePath);
 
 			ArchiveUtil.createArchive(tempDir.getPath(), tempZipFilePath,
 					ArchiveType.ZIP);
@@ -247,10 +247,10 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 				}
 			}
 			zipFilePath = buildDir.getPath() + File.separator + zipName;
-			getLog().info("zipFilePath == " + zipFilePath);
+			//getLog().info("zipFilePath == " + zipFilePath);
 			tempDir = new File(baseDir + sourceDirectory + File.separator + tempZipName.substring(0, tempZipName.length() - 4));
 
-			getLog().info("generateArchive: == tempDir == " + tempDir.getPath());
+			//getLog().info("generateArchive: == tempDir == " + tempDir.getPath());
 
 			ArchiveUtil.createArchive(tempDir.getPath(), zipFilePath,
 					ArchiveType.ZIP);
@@ -291,7 +291,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 			sb.append(STR_SPACE);
 			sb.append(tempZipName.substring(0, tempZipName.length() - 4));
 
-			getLog().info("Build command: " + sb.toString());
+			//getLog().info("Build command: " + sb.toString());
 
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);

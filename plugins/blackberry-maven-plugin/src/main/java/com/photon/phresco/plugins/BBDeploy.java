@@ -146,7 +146,7 @@ public class BBDeploy extends AbstractMojo implements PluginConstants {
 			sb.append(STR_SPACE);
 			sb.append(codFile[0].getName());
 			
-			getLog().info("Deploy command: " + sb.toString());
+			//getLog().info("Deploy command: " + sb.toString());
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(tempDir);
 			Process process = cl.execute();
