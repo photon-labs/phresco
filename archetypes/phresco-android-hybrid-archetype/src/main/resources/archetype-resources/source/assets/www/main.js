@@ -17,6 +17,9 @@
  * limitations under the License.
  * ###
  */
+
+
+
 var showMessageBox = function() {  
   
                              navigator.notification.alert("Hello World of PhoneGap....");  
