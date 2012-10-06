@@ -782,6 +782,7 @@ public interface FrameworkConstants {
      */
     String IMPORT_PROJECT_FAIL ="import.project.fail";
     String INVALID_CREDENTIALS = "import.invalid.credential";
+    String UNAUTHORIZED = "import.unauthorized";
     String INVALID_FOLDER = "import.invalid.folder";
     String PROJECT_ALREADY = "import.project.already";
     String SVN_FAILED ="failed";
