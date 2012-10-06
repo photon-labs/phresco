@@ -142,6 +142,8 @@ public class Login extends FrameworkBaseAction {
 
 		String errorTxt = (String) getHttpSession().getAttribute(REQ_LOGIN_ERROR);
 		getHttpSession().removeAttribute(REQ_LOGIN_ERROR);
+		getHttpSession().removeAttribute(REQ_IPHONE_SDKS);
+		getHttpSession().removeAttribute(REQ_IPHONE_SIMULATOR_SDKS);
 		if (StringUtils.isNotEmpty(errorTxt)) {
 			getHttpRequest().setAttribute(REQ_LOGIN_ERROR, getText(errorTxt));
 		} else {

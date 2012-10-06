@@ -22,6 +22,7 @@
 <%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+<%@ page import="org.apache.commons.codec.binary.Base64"%>
 
 <% 
 	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); 
@@ -60,44 +61,52 @@
 				</div>
 			</div>
 			
-			<div id="svnCredentialInfo">
+			<div id="otherCredentialInfo">
 				<div class="clearfix">
 					<label for="xlInput" class="xlInput popup-label"> <s:text name="label.other.credential"/></label>
 					<div class="input checkFn">
 					   <input type="checkbox" name = "credential" class = "credentials" id="credentials" style="margin-top:8px;" />
 					</div>
 				</div>
-				
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.username"/></label>
-					<div class="input">
-						<input type="text" name="username" id="userName" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingUsername" class="missingData"></span>
-					</div>
+			</div>
+			
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><span class="red credentialDet">*</span> <s:text name="label.username"/></label>
+				<div class="input">
+					<input type="text" name="username" id="userName" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingUsername" class="missingData"></span>
 				</div>
-				
-				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.password"/></label>
-					<div class="input">
-						<input type="password" name="password" id="password" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingPassword" class="missingData"></span>
-					</div>
+			</div>
+			
+			<div class="clearfix">
+				<label for="xlInput" class="xlInput popup-label"><span class="red credentialDet">*</span> <s:text name="label.password"/></label>
+				<div class="input">
+					<input type="password" name="password" id="password" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingPassword" class="missingData"></span>
 				</div>
-				
-				<div id="svnRevisionInfo">
-					<div class="clearfix">
-						<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
-						<div class="input"  style="padding-top:8px;">
-							<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
-						</div>
-						<div class="input">
-							<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
-						</div>
-						<div class="input" style="padding-top:5px;">
-							<span id="missingRevision" class="missingData"></span>
-						</div>
+			</div>
+			
+			<div id="svnRevisionInfo">
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.revision"/></label>
+					<div class="input"  style="padding-top:8px;">
+						<input id="revisionHead" type="radio" name="revision" value="HEAD" checked/>&nbsp; HEAD Revision
+					</div>
+					<div class="input">
+						<input id="revision" type="radio" name="revision" value="revision"/> &nbsp;Revision &nbsp; &nbsp; &nbsp; &nbsp;<input id="revisionVal" type="text" name="revisionVal" maxLength="10" title="10 Characters only" disabled>
+					</div>
+					<div class="input" style="padding-top:5px;">
+						<span id="missingRevision" class="missingData"></span>
 					</div>
 				</div>
 			</div>
 			
+<!-- 			<div id="branchInfo"> -->
+<!-- 				<div class="clearfix"> -->
+<%-- 					<label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.branch"/></label> --%>
+<!-- 					<div class="input"> -->
+<%-- 						<input type="text" name="branch" id="branch" value="master" maxlength="63" title="63 Characters only">&nbsp;&nbsp;<span id="missingBranch" class="missingData"></span> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
         </div>
         <div class="modal-footer">
             <img class="popupLoadingIcon" style="position: relative; float: left; display: none;"> 
@@ -127,14 +136,11 @@
         });
         
         $("#repoUrl").blur(function(event) {
-         	var repoUrl = $("input[name='repourl']").val();
-           	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
-				$('#credentials').attr("checked", false);
-           		svnCredentialMark();
-           	} else if(!isBlank(repoUrl)) {
-				$('#credentials').attr("checked", true);
-           		svnCredentialMark();
-           	}
+        	if ($("[name=repoType]").val() == 'svn') {
+        		urlBasedAction();
+        	} else if ($("[name=repoType]").val() == 'git') {
+        		enableSvnFormDet();
+        	}
         });
         
         $('#revisionVal').bind('input propertychange', function (e) { 
@@ -176,14 +182,15 @@
 			
 			// if it is svn need to validate username and password fields
 			if($("[name=repoType]").val() == 'svn') {
-				if(isBlank($.trim($("input[name='username']").val()))){
+				
+				if(isBlank($.trim($("input[name='username']").val()))) {
 					$("#errMsg").html("Username is missing");
 					$("#userName").focus();
 					$("#userName").val("");
 					return false;
 				}
 				
-				if(isBlank($.trim($("input[name='password']").val()))){
+				if(isBlank($.trim($("input[name='password']").val()))) {
 					$("#errMsg").html("Password is missing");
 					$("#password").focus();
 					return false;
@@ -196,10 +203,16 @@
 					$("#revisionVal").val("");
 					return false;
 				}
-				
-				// before form submit enable textboxes
-				enableSvnFormDet();
+			} else if($("[name=repoType]").val() == 'git') {
+// 				if(isBlank($.trim($("input[name='branch']").val()))) {
+// 					$("#errMsg").html("Branch name is missing");
+// 					$("#branch").focus();
+// 					return false;
+// 				}
 			}
+			
+			// before form submit enable textboxes
+			enableSvnFormDet();
 			
 			var params = "";
 	    	if (!isBlank($('form').serialize())) {
@@ -207,7 +220,6 @@
 	    	}
 	    	params = params.concat("projectCode=");
 	    	params = params.concat("<%= projectCode %>");
-	    	
 	    	// do import or update operation
 			$('.popupLoadingIcon').show();
 			getCurrentCSS();
@@ -229,21 +241,24 @@
 			$("#popup_div").empty();
         });
 		
+		extraInfoDisplay();
+		
  		<%
- 			if (StringUtils.isNotEmpty(repoUrl) && repoUrl.contains(FrameworkConstants.GIT)) {
+ 			if (StringUtils.isNotEmpty(repoUrl) && repoUrl.contains(FrameworkConstants.GIT)) { //git config
  		%>
+ 			$('.credentialDet').hide();
  			$("[name=repoType] option[value='git']").attr('selected', 'selected');
- 			$('#typeInfo').hide();
+ 			$('#typeInfo, #branchInfo, #svnRevisionInfo, #otherCredentialInfo').hide();
+ 			enableSvnFormDet();
  		<%
- 			} else if (StringUtils.isNotEmpty(repoUrl)) {
+ 			} else if (StringUtils.isNotEmpty(repoUrl)) { //svn config
  		%>
+ 			$('.credentialDet').show();
  			$("[name=repoType] option[value='svn']").attr('selected', 'selected');
- 			$('#typeInfo').hide();
+ 			$('#typeInfo, #branchInfo').hide();
  		<%
  			}
  		%>
- 		
- 		extraInfoDisplay();
  		
 	});
 	
@@ -265,14 +280,35 @@
 	}
 	
 	//base on the repo type credential info need to be displayed
-	
 	function extraInfoDisplay() {
 		$("#errMsg").html("");
 		if($("[name=repoType]").val() == 'svn') {
-			$('#svnCredentialInfo').show();
+			$('.credentialDet').show();
+			$('#svnRevisionInfo').show();
+			$('#branchInfo').hide();
+ 			// hide other credential checkbox
+			$('#otherCredentialInfo').show();
+ 			// to make check box untick (fill with insight username and password)
+			urlBasedAction();
 		} else if($("[name=repoType]").val() == 'git') {
-			$('#svnCredentialInfo').hide();
+			$('.credentialDet').hide();
+			$('#svnRevisionInfo').hide();
+			$('#branchInfo').show();
+ 			// hide other credential checkbox
+			$('#otherCredentialInfo').hide();
+			enableSvnFormDet();
 		}
+	}
+	
+	function urlBasedAction() {
+     	var repoUrl = $("input[name='repourl']").val();
+       	if (repoUrl.indexOf('insight.photoninfotech.com') != -1) {
+			$('#credentials').attr("checked", false);
+       		svnCredentialMark();
+       	} else if(!isBlank(repoUrl)) {
+			$('#credentials').attr("checked", true);
+       		svnCredentialMark();
+       	}
 	}
 	
 	function svnImportError(id, errMsg){
@@ -312,7 +348,11 @@
 	 		localStorage["svnImport"] = "credentials";
 	 	} else {
  			$("#userName").val('<%= userInfo.getCredentials().getUsername() %>');
- 			$("#password").val('<%= userInfo.getCredentials().getPassword() %>');
+ 			<%
+ 				byte[] decodedBytes = Base64.decodeBase64(userInfo.getCredentials().getPassword());
+ 				String password = new String(decodedBytes);
+ 			%>
+ 			$("#password").val('<%= password %>');
  			disableSvnFormDet();
  			localStorage["svnImport"] = "";
 	 	}
