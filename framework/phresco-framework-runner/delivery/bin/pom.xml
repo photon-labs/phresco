@@ -46,20 +46,6 @@
 		<version>${jmeter.version}</version>
 		<type>zip</type>
 	  </dependency>
-      
-      <dependency>
-		<groupId>softwares.iphone.files</groupId>
-		<artifactId>checker-267</artifactId>
-		<version>${checker.version}</version>
-		<type>zip</type>
-	  </dependency>
-      
-     <dependency>
-          <groupId>softwares.iphone.files</groupId>
-          <artifactId>device-deploy</artifactId>
-          <version>${device.deploy.version}</version>
-          <type>zip</type>
-      </dependency>
 	  
 	  <dependency>
 		<groupId>com.photon.phresco.file.server</groupId>
@@ -67,34 +53,6 @@
 		<version>${phresco.framework.version}</version>
 		<type>jar</type>
 	  </dependency>
-		
-	  <dependency>
-		<groupId>binaries</groupId>
-		<artifactId>phantomjs-win32</artifactId>
-		<version>${phantomjs.version}</version>
-		<type>zip</type>
-	  </dependency>
-		
-	  <dependency>
-		<groupId>binaries</groupId>
-		<artifactId>phantomjs-macosx</artifactId>
-		<version>${phantomjs.version}</version>
-		<type>zip</type>
-	  </dependency>
-	   
-	  <dependency>
-		<groupId>binaries</groupId>
-		<artifactId>phantomjs-linux-x86</artifactId>
-		<version>${phantomjs.version}</version>
-		<type>zip</type>
-	  </dependency>
-      
-      <dependency>
-          <groupId>softwares.iphone.files</groupId>
-          <artifactId>waxsim</artifactId>
-          <version>1.0</version>
-          <type>zip</type>
-        </dependency>
 
 	<dependency>
 	  <groupId>ant-contrib</groupId>
@@ -168,6 +126,7 @@
 									<groupId>softwares.iphone.files</groupId>
                                     <artifactId>checker-267</artifactId>
                                     <version>${checker.version}</version>
+                                    <classifier>${checkers.classifier}</classifier>
                                     <type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -176,8 +135,9 @@
                                 <!-- extracting waxsim zip file -->
 								<artifactItem>
 									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>Waxsim</artifactId>
+                                    <artifactId>waxsim</artifactId>
                                     <version>1.0</version>
+                                    <classifier>${waxsim.classifier}</classifier>
                                     <type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -188,6 +148,7 @@
 									<groupId>softwares.iphone.files</groupId>
                                     <artifactId>device-deploy</artifactId>
                                     <version>${device.deploy.version}</version>
+                                    <classifier>${chief.classifier}</classifier>
                                     <type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools/chief</outputDirectory>
@@ -203,31 +164,12 @@
 									<outputDirectory>../workspace/tools</outputDirectory>
 								</artifactItem>
 								
-								<!-- extracting Phantomjs For Windows -->
+								<!-- extracting Phantomjs  -->
 								<artifactItem>
 									<groupId>binaries</groupId>
-									<artifactId>phantomjs-win32</artifactId>
+									<artifactId>phantomjs</artifactId>
 									<version>${phantomjs.version}</version>
-									<type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools</outputDirectory>
-								</artifactItem>
-								
-								<!-- extracting Phantomjs For Mac  -->
-								<artifactItem>
-									<groupId>binaries</groupId>
-									<artifactId>phantomjs-macosx</artifactId>
-									<version>${phantomjs.version}</version>
-									<type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>../workspace/tools</outputDirectory>
-								</artifactItem>
-								
-								<!-- extracting Phantomjs For Linux -->
-								<artifactItem>
-									<groupId>binaries</groupId>
-									<artifactId>phantomjs-linux-x86</artifactId>
-									<version>${phantomjs.version}</version>
+                                    <classifier>${phantomjs.classifier}</classifier>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>../workspace/tools</outputDirectory>
@@ -295,5 +237,67 @@
 			
 		</plugins>
 	</build>
-	
+	 <profiles>
+            <profile>
+                <id>windows-x86</id>
+                <activation>
+                    <os>
+                        <family>Windows</family>
+                    </os>
+                </activation>
+                <properties>                
+                    <phantomjs.classifier>windows</phantomjs.classifier>
+                    <waxsim.classifier>windows</waxsim.classifier>
+                    <chief.classifier>windows</chief.classifier>
+                    <checkers.classifier>windows</checkers.classifier>
+                </properties>
+            </profile>
+            <profile>
+                <id>Linux-32bit</id>
+                <activation>
+                    <os>
+                        <family>unix</family>
+                        <name>Linux</name>
+                        <arch>x86</arch>
+                    </os>
+                </activation>
+                <properties>
+                    <phantomjs.classifier>linux-x86</phantomjs.classifier>
+                    <waxsim.classifier>windows</waxsim.classifier>
+                    <chief.classifier>windows</chief.classifier>
+                    <checkers.classifier>windows</checkers.classifier>
+                </properties>
+            </profile>
+            <profile>
+                <id>Linux-64bit</id>
+                <activation>
+                    <os>
+                        <family>unix</family>
+                        <name>Linux</name>
+                        <arch>x64</arch>
+                    </os>
+                </activation>
+                <properties>
+                    <phantomjs.classifier>linux-x64</phantomjs.classifier>
+                    <waxsim.classifier>windows</waxsim.classifier>
+                    <chief.classifier>windows</chief.classifier>
+                    <checkers.classifier>windows</checkers.classifier>
+                </properties>
+            </profile>
+            <profile>
+                <id>mac</id>
+                <activation>
+                    <os>
+                        <family>mac</family>
+                    </os>
+                </activation>
+                <properties>
+                    <phantomjs.classifier>mac</phantomjs.classifier>
+                    <waxsim.classifier>mac</waxsim.classifier>
+                    <chief.classifier>mac</chief.classifier>
+                    <checkers.classifier>mac</checkers.classifier>
+                </properties>
+            </profile>
+        </profiles>
+        
 </project>
