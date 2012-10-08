@@ -60,13 +60,21 @@
 	    <input id="validate" type="button" value="Validate" class="btn primary" <%= disabledStr %>>
 		&nbsp;&nbsp;<strong id="lblType" class="noTestAvail"><s:text name="label.sonar.report"/></strong>&nbsp;
 		<select id="report" name="report">
+		
 		<% if (TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) 
 				|| TechnologyTypes.HTML5.equals(technology) || TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) 
 				|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.JAVA_WEBSERVICE.equals(technology)) { %>	
 			<option value="java" ><s:text name="label.tech.java"/></option>
 			<option value="js" ><s:text name="label.tech.javascript"/></option>
 			<option value="web" ><s:text name="label.tech.jsp"/></option>
-		<% 
+			<option value="html" ><s:text name="label.tech.html"/></option>
+		
+		<% } else if (TechnologyTypes.ANDROID_HYBRID.equals(technology)|| TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
+			<option value="source" ><s:text name="label.validateAgainst.source"/></option>
+			<option value="html" ><s:text name="label.tech.html"/></option>
+		<% } else if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
+			<option value="html" ><s:text name="label.tech.html"/></option>
+		<%
 			} else if (isIphoneTech) {
 				if (xcodeConfigs != null) {
 					for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
@@ -75,7 +83,7 @@
 		<%
 					}
 				}
-			} else { 
+			} else {
 		%>
 				<option value="source" ><s:text name="label.validateAgainst.source"/></option>
 		<% 	} %>

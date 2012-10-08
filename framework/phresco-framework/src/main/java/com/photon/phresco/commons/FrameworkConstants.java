@@ -227,6 +227,8 @@ public interface FrameworkConstants {
     String TARGET_DIR = "target";
     String JMETER_REPORTS = "jmeter-reports";
     String FUNCTIONAL = "functional";
+    String HTML = "html";
+    String TARGET = "target";
     String UNIT = "unit";
     String LOAD = "load";
     String PERFORMACE = "performance";
