@@ -10,7 +10,7 @@
     
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>archetypes</groupId>
-	<artifactId>phresco-blackberry-archetype</artifactId>
+	<artifactId>phresco-blackberry-hybrid-archetype</artifactId>
 	<name>Archetype - phresco-blackberry-archetype</name>
 	<url>http://www.phresco.org</url>
 	<description>phresco-blackberry-archetype</description>
