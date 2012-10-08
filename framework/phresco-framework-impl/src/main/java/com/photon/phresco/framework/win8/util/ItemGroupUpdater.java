@@ -25,6 +25,7 @@ import com.photon.phresco.commons.FrameworkConstants;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.util.TechnologyTypes;
 
 
 public class ItemGroupUpdater implements FrameworkConstants {
@@ -36,7 +37,13 @@ public class ItemGroupUpdater implements FrameworkConstants {
 	 */
 	public static void update(ProjectInfo info, File path) throws PhrescoException {
 		try {
-			path = new File(path + File.separator + SOURCE_DIR + File.separator + PROJECT_ROOT + File.separator + PROJECT_ROOT + CSPROJ_FILE);
+			String techId = info.getTechnology().getId();
+			if (techId.equals(TechnologyTypes.WIN_METRO)) {
+				path = new File(path + File.separator + SOURCE_DIR + WIN_SRC_FOLDER + File.separator + PROJECT_ROOT + File.separator + PROJECT_ROOT + CSPROJ_FILE);
+			} else {
+				path = new File(path + File.separator + SOURCE_DIR + WIN_SRC_FOLDER + File.separator + WP_PROJECT_ROOT + File.separator + WP_PROJECT_ROOT + CSPROJ_FILE);
+			}
+			
 			List<ModuleGroup> modules = info.getTechnology().getModules();
 			if(!path.exists() && modules == null) {
 				return;

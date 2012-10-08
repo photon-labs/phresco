@@ -176,7 +176,22 @@
 					    </div>
 					</div>	
 			<% } %>	
+			
+			<% if (TechnologyTypes.WIN_PHONE.contains(technology)) { %>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label "><s:text name="label.configuration"/></label>
+					    <div class="input">
+							<select name="configuration" class="xlarge">
+								<option value="Release">Release</option>
+								<option value="Debug">Debug</option>
+							</select>
+					    </div>
+					</div>
+			<% } %>	
+			
 		<% } %>
+		
 
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>

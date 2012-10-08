@@ -105,7 +105,6 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 	
 	/**
 	 * @parameter expression="${type}" required="true"
-	 * default-value="wp8"
 	 * @readonly
 	 */
 	protected String type;

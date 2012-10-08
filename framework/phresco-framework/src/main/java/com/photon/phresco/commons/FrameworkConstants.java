@@ -307,6 +307,7 @@ public interface FrameworkConstants {
     String HEAD_REVISION = "HEAD";
     String REPORTS_JASPER = "reports/jasper/";
     String PLATFORM = "platform";
+    String WP_TYPE = "type";
     String POM_LINE_BREAK = "linebreakpos";
     String POM_LINE_MAX_COL_COUNT = "10000";
     String KEYPASS = "keyPass";
@@ -1417,8 +1418,12 @@ public interface FrameworkConstants {
 		  String SHARED_ASSEMBLIES = "\\SharedAssemblies";
 		  String DOUBLE_DOT  = "..";
 		  String PROJECT_ROOT = "Metro.UI";
-		  String SLN_FILE = "Metro.sln";
 		  String CSPROJ_FILE = ".csproj";
+		  
+		  // windows phone project
+		  String WP_PROJECT_ROOT = "WP";
+		  String WP_SLN_FILE = "WP.sln";
+		  String WIN_SRC_FOLDER = "\\src";
 
 		  
 		  //SettingsTemplate keys for IIS server
