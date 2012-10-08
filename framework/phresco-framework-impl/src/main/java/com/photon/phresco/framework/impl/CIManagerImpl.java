@@ -488,7 +488,6 @@ public class CIManagerImpl implements CIManager, FrameworkConstants {
         }
         
         if(job.isEnablePostBuildStep() && FUNCTIONAL_TEST.equals(job.getOperation())) {
-        	System.out.println("java stanalone technology with functional test enabled!!!!!!!");
         	processor.enablePostBuildStep(job.getPomLocation(), job.getMvnCommand());
         }
     }
