@@ -90,7 +90,7 @@
 							<% } %>
 							<% if (TechnologyTypes.ANDROID_HYBRID.equals(technology) || TechnologyTypes.BLACKBERRY_HYBRID.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
 									<input type="radio" name="validateAgainst" value="html" >
-									<span class="textarea_span popup-span"><s:text name=label.tech.html/></span>
+									<span class="textarea_span popup-span"><s:text name="label.tech.html"/></span>
 							<% } %>
 						</li>
 					</ul>
