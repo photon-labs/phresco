@@ -152,7 +152,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	// java Standalone tech info
 	private String jarName = "";
 	private String mainClassName = "";
-
+	private String resolution = ""; 
+	
 	public String ci() {
 		S_LOGGER.debug("Entering Method CI.ci()");
 		try {
@@ -284,6 +285,18 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			if(existJob != null) {
 				existJob.setPassword(CIPasswordScrambler.unmask(existJob.getPassword()));
 			}
+			
+            List<String> screenResolution = new ArrayList<String>();
+            screenResolution.add(FrameworkConstants._320x480);
+            screenResolution.add(FrameworkConstants._1024x768);
+            screenResolution.add(FrameworkConstants._1280x800);
+            screenResolution.add(FrameworkConstants._1280x960);
+            screenResolution.add(FrameworkConstants._1280x1024);
+            screenResolution.add(FrameworkConstants._1360x768);
+            screenResolution.add(FrameworkConstants._1440x900);
+            screenResolution.add(FrameworkConstants._1600x900);
+            getHttpRequest().setAttribute(REQ_RESOLUTIONS, screenResolution);
+            
 			getHttpRequest().setAttribute(REQ_EXISTING_JOB, existJob);
 			getHttpRequest().setAttribute(REQ_EXISTING_JOBS_NAMES,
 					existingJobsNames);
@@ -428,6 +441,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			S_LOGGER.debug("browser =====> " + browser);
 			existJob.setImportSql(importSql);
 			existJob.setBrowser(browser);
+			existJob.setResolution(resolution);
 			existJob.setEnvironment(environment);
 
 			String funcitonalTestDir = "";
@@ -661,6 +675,9 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				&& !TechnologyTypes.JAVA_STANDALONE.equals(technology)) {
 			settingsInfoMap.put(ENVIRONMENT_NAME, environment);
 			settingsInfoMap.put(BROWSER, browser);
+			if (resolution != null) {
+				settingsInfoMap.put(RESOLUTION, resolution);
+			}
 		}
 		return getMVNCommand(project, settingsInfoMap, actionType);
 	}
@@ -1623,5 +1640,13 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setMainClassName(String mainClassName) {
 		this.mainClassName = mainClassName;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
 	}
 }

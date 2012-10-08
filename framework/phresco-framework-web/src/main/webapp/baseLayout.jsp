@@ -77,6 +77,10 @@
 <script type="text/javascript" src="js/jqueryFileTree.js"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <!-- jquery file tree ends -->
+
+<!-- jquery editable combobox -->
+<script src="js/jquery.editable.combobox.js"></script>
+
 <script type="text/javascript">
 	if (localStorage["color"] != null) {
         $("link[title='phresco']").attr("href", localStorage["color"]);
