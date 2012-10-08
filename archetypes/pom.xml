@@ -43,6 +43,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>phresco-windows8-archetype</module>
         <module>phresco-android-library-archetype</module>
         <module>phresco-blackberry-archetype</module>
+        <module>phresco-windows-phone-archetype</module>
     </modules>
     
     <properties>

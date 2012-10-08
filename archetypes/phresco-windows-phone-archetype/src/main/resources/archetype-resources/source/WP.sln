@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{B30AF766-5EC1-42C3-AF7C-8B7E9CA811D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8F3C83DD-8C65-4E76-953A-318081F7509C}"
+	ProjectSection(SolutionItems) = preProject
+		src\Common\SharedAssemblyInfo.cs = src\Common\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedAssemblies", "SharedAssemblies", "{CB22A16B-5095-4BD6-AE42-9AFC9F03C666}"
+	ProjectSection(SolutionItems) = preProject
+		src\Common\SharedAssemblies\BugSense.dll = src\Common\SharedAssemblies\BugSense.dll
+		src\Common\SharedAssemblies\Microsoft.Silverlight.Testing.dll = src\Common\SharedAssemblies\Microsoft.Silverlight.Testing.dll
+		src\Common\SharedAssemblies\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll = src\Common\SharedAssemblies\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll
+		src\Common\SharedAssemblies\Newtonsoft.Json.dll = src\Common\SharedAssemblies\Newtonsoft.Json.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "test\UnitTesting\UnitTest\UnitTest.csproj", "{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Common", "src\WP.Common\WP.Common.csproj", "{0CE3AC7B-5B1F-427E-995C-FB541A5D8B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Controls", "src\WP.Controls\WP.Controls.csproj", "{55FBEA67-BEA0-47A3-8A25-6A7D2AC1E49C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Entities", "src\WP.Entities\WP.Entities.csproj", "{3379D4EA-30E8-4687-A94E-05E5741F6B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.ServiceManager", "src\WP.ServiceManager\WP.ServiceManager.csproj", "{A32ACD35-6CE8-4A31-8A0C-110A4294C12C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.ViewModels", "src\WP.ViewModels\WP.ViewModels.csproj", "{300D8B23-4E88-411B-AB30-BB13EA8BA7AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP", "src\WP\WP.csproj", "{1602F619-D2A7-4DE1-99E8-A3747366A351}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CE3AC7B-5B1F-427E-995C-FB541A5D8B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE3AC7B-5B1F-427E-995C-FB541A5D8B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE3AC7B-5B1F-427E-995C-FB541A5D8B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE3AC7B-5B1F-427E-995C-FB541A5D8B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55FBEA67-BEA0-47A3-8A25-6A7D2AC1E49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55FBEA67-BEA0-47A3-8A25-6A7D2AC1E49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55FBEA67-BEA0-47A3-8A25-6A7D2AC1E49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55FBEA67-BEA0-47A3-8A25-6A7D2AC1E49C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3379D4EA-30E8-4687-A94E-05E5741F6B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3379D4EA-30E8-4687-A94E-05E5741F6B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3379D4EA-30E8-4687-A94E-05E5741F6B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3379D4EA-30E8-4687-A94E-05E5741F6B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32ACD35-6CE8-4A31-8A0C-110A4294C12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32ACD35-6CE8-4A31-8A0C-110A4294C12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32ACD35-6CE8-4A31-8A0C-110A4294C12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32ACD35-6CE8-4A31-8A0C-110A4294C12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{300D8B23-4E88-411B-AB30-BB13EA8BA7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{300D8B23-4E88-411B-AB30-BB13EA8BA7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{300D8B23-4E88-411B-AB30-BB13EA8BA7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{300D8B23-4E88-411B-AB30-BB13EA8BA7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1602F619-D2A7-4DE1-99E8-A3747366A351}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0778FDB8-3CD5-4AEC-BF65-B2CC15230CCF} = {B30AF766-5EC1-42C3-AF7C-8B7E9CA811D3}
+		{CB22A16B-5095-4BD6-AE42-9AFC9F03C666} = {8F3C83DD-8C65-4E76-953A-318081F7509C}
+	EndGlobalSection
+EndGlobal
