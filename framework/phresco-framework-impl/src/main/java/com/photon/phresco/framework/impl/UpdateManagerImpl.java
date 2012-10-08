@@ -169,6 +169,7 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 		tempFile.mkdir();
 		File settingsFile = new File(FrameworkConstants.MAVEN_SETTINGS_FILE);
 		File binFile = new File(FrameworkConstants.PREV_DIR + FrameworkConstants.BIN_DIR);
+		File docFile = new File(FrameworkConstants.PREV_DIR + "docs");
 		if (binFile.exists()) {
 			File[] binFilesList = binFile.listFiles();
 			for (File file : binFilesList) {
@@ -179,6 +180,10 @@ public class UpdateManagerImpl implements UpdateManager, FrameworkConstants   {
 		}
 		if(settingsFile.exists()) {
 			FileUtils.copyFileToDirectory(settingsFile, new File(tempFile, FrameworkConstants.OUTPUT_SETTINGS_DIR));
+		}
+		
+		if (docFile.exists ()){
+			FileUtils.copyDirectory(docFile, new File(tempFile, "docs"));
 		}
 		File fileBackups = new File(FrameworkConstants.BACKUP_DIRNAME);
 		if (!fileBackups.exists()) {
