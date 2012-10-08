@@ -112,7 +112,7 @@ public class Code extends FrameworkBaseAction {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
         	Project project = administrator.getProject(projectCode);
 			technology = project.getProjectInfo().getTechnology().getId();
-            if (TechnologyTypes.IPHONES.contains(technology)) {
+            if (TechnologyTypes.IPHONES.contains(technology) && !HTML.equals(report)) {
             	StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
             	codeValidatePath.append(projectCode);
             	codeValidatePath.append(File.separatorChar);
@@ -217,20 +217,31 @@ public class Code extends FrameworkBaseAction {
             runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
             Map<String, String> codeValidateMap = new HashMap<String, String>(1);
             ActionType actionType = null;
-            if (TechnologyTypes.IPHONES.contains(technology)) {
+            
+            
+            if (TechnologyTypes.IPHONE_NATIVE.contains(technology)) {
             	S_LOGGER.debug("Selected target .... " + target);
             	codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
+            }
+            if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && validateAgainst.contains(TARGET)) {
+            	S_LOGGER.debug("Selected target .... " + target);
+        		codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
+            	actionType = ActionType.IPHONE_CODE_VALIDATE;
+            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && validateAgainst.contains(HTML)) {
+        		actionType = ActionType.SONAR;
             } else {
             	actionType = ActionType.SONAR;
             }
-            
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
             	actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
+            } else if (validateAgainst.equals(HTML)) {
+      			 actionType.setWorkingDirectory(null);
+      			 actionType.setProfileId(validateAgainst); 
             } else {
             	actionType.setWorkingDirectory(null);
             	actionType.setProfileId(codeTechnology);
