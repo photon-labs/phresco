@@ -37,8 +37,8 @@
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
    	// mac sdks
-   	List<String> macSimulatorSdkVersions = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
-   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	List<String> macSimulatorSdkVersions = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
+   	List<String> macSdks = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
 %>
 <div id="tests">
     <form action="" method="post" autocomplete="off" class="build_form">

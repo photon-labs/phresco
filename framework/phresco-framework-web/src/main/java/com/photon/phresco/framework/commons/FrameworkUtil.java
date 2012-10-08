@@ -628,4 +628,23 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
 		}
 		return sonarTechReports;
 	}
+	
+    // This method returns what type of OS we are using
+    public String getOsType() {
+        String OS = null;
+        String osType = null;
+        if(OS == null) {
+            OS = System.getProperty(OS_NAME).toLowerCase(); 
+        }
+        if (OS.indexOf(WINDOWS_CHECK) >= 0) {
+            osType = WINDOWS;
+        }
+        if (OS.indexOf(MAC_CHECK) >= 0) {
+            osType = MAC;
+        }
+        if (OS.indexOf(LINUX_CHECK) >= 0) {
+            osType = LINUX;
+        }
+        return osType;
+    }
 }

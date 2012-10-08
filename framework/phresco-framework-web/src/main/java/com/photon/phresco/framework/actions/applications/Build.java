@@ -270,6 +270,7 @@ public class Build extends FrameworkBaseAction {
 	
 
 	public String generateBuild() {
+		long startTime = System.currentTimeMillis();
 		S_LOGGER.debug("Entering Method  Build.generateBuild()");
 		String technology = null;
 		String from = null;
@@ -294,15 +295,7 @@ public class Build extends FrameworkBaseAction {
 			// Get xcode targets
 			if (TechnologyTypes.IPHONES.contains(technology)) {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
-				for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
-					S_LOGGER.debug("Iphone technology terget name" + xcodeConfig.getName());
-				}
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
-				// get list of sdks
-				List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
-				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
-				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
-				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
 			}
 
 			// get has signing info from android pom
@@ -360,6 +353,8 @@ public class Build extends FrameworkBaseAction {
 		getHttpRequest().setAttribute(REQ_BUILD_FROM, from);
 		getHttpRequest().setAttribute(REQ_TECHNOLOGY, technology);
 		getHttpRequest().setAttribute(REQ_DEPLOY_BUILD_NUMBER, buildNumber);
+		long endTime = System.currentTimeMillis();
+		S_LOGGER.debug("IOS method takes :"+ (endTime-startTime));
 		return APP_GENERATE_BUILD;
 	}
 	
@@ -824,9 +819,6 @@ public class Build extends FrameworkBaseAction {
 			getHttpRequest().setAttribute(REQ_HIDE_DEPLOY_TO_DEVICE,
 					new Boolean(createIpa && deviceDeploy ? true : false));
 			getHttpRequest().setAttribute(REQ_FROM_TAB, REQ_FROM_TAB_DEPLOY);
-			// get list of sdk versions
-			List<String> iphoneSimulatorSdks = IosSdkUtil.getMacSdksVersions(MacSdkType.iphonesimulator);
-			getHttpRequest().setAttribute(REQ_IPHONE_SIMULATOR_SDKS, iphoneSimulatorSdks);
 		} catch (Exception e) {
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Build.Iphone()" + FrameworkUtil.getStackTraceAsString(e));
