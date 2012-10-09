@@ -36,12 +36,16 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
+import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.model.WP8PackageInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 
 /**
@@ -84,7 +88,6 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 	
 	/**
 	 * @parameter expression="${type}" required="true"
-	 * default-value="wp8"
 	 * @readonly
 	 */
 	protected String type;
@@ -112,9 +115,19 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 	private void init() throws MojoExecutionException {
 		try {
 
-			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type)) {
+			if (StringUtils.isEmpty(buildNumber) || StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type) || (!type.equals("wp7") && !type.equals("wp8"))) {
 				callUsage();
 			}
+			
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project currentProject = projAdmin.getProjectByWorkspace(baseDir);
+			String techId = currentProject.getProjectInfo().getTechnology().getId();
+			
+			if ((type.equals("wp8") && !techId.equals(TechnologyTypes.WIN_METRO)) ||
+					(type.equals("wp7") && !techId.equals(TechnologyTypes.WIN_PHONE))	) {
+				invalidProjectType();
+			}
+			
 			if(type.equalsIgnoreCase("wp8")) {
 				getSolutionFile();
 				packageInfo = new WP8PackageInfo(rootDir);
@@ -142,6 +155,12 @@ public class WPDeploy extends AbstractMojo implements PluginConstants {
 						+ " -DenvironmentName=\"Multivalued evnironment names\"" 
 						+ " -Dtype=\"Windows Phone platform\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Deploy Goal");
+	}
+	
+	private void invalidProjectType() throws MojoExecutionException {
+		getLog().error("Invalid project type.");
+		getLog().info("Please check the &lt;type&gt; tag in plugin configuration section in pom.xml");
+		throw new MojoExecutionException("Invalid project type.");
 	}
 	
 	private void getSolutionFile() throws MojoExecutionException {
