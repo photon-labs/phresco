@@ -294,7 +294,7 @@ public class Build extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_ENVIRONMENTS, environments);
 			}
 			// Get xcode targets
-			if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
+			if (TechnologyTypes.IPHONES.contains(technology)) {
 				S_LOGGER.debug("Iphone tech!!!!");
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				S_LOGGER.debug(xcodeConfigs);
@@ -302,7 +302,7 @@ public class Build extends FrameworkBaseAction {
 			}
 
 			// get has signing info from android pom
-			if (TechnologyTypes.ANDROIDS.equals(technology)) {
+			if (TechnologyTypes.ANDROIDS.contains(technology)) {
 				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
 				builder.append(projectCode);
 				builder.append(File.separatorChar);
@@ -447,7 +447,7 @@ public class Build extends FrameworkBaseAction {
 				settingsInfoMap.put(CONFIGURATION, configuration);
 			} else if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) {
 				settingsInfoMap.put(KEYPASS, keypass);
-			} else if (TechnologyTypes.IPHONES.equals(technology)) {
+			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
 				settingsInfoMap.put(IPHONE_TARGET_NAME, target);
@@ -458,7 +458,10 @@ public class Build extends FrameworkBaseAction {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
 					settingsInfoMap.put(ENCRYPT, TRUE);
 				}
-			} else if (TechnologyTypes.ANDROIDS.equals(technology)) {
+			} 
+			
+			//action type specification 
+			if (TechnologyTypes.ANDROIDS.contains(technology)) {
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
 				actionType.setSkipTest(true);
 				actionType.setProfileId("");
@@ -480,7 +483,7 @@ public class Build extends FrameworkBaseAction {
 				}
 				settingsInfoMap.put(ANDROID_PROGUARD_SKIP, proguard);
 				// settingsInfoMap.put(SKIPTESTS, TRUE);
-			} else if (TechnologyTypes.IPHONES.equals(technology)) {
+			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 			} else {
 				actionType = ActionType.BUILD;
@@ -593,8 +596,8 @@ public class Build extends FrameworkBaseAction {
 			builder.append(File.separator);
 			builder.append(IMPORT_PROPERTY);
 			File configFile = new File(builder.toString());
-			if (!configFile.exists() && !TechnologyTypes.IPHONES.equals(technology)
-					|| !TechnologyTypes.ANDROIDS.equals(technology)) {
+			if (!configFile.exists() && !TechnologyTypes.IPHONES.contains(technology)
+					|| !TechnologyTypes.ANDROIDS.contains(technology)) {
 				getHttpRequest().setAttribute(REQ_IMPORT_SQL, Boolean.TRUE.toString());
 			}
 
@@ -669,7 +672,7 @@ public class Build extends FrameworkBaseAction {
 			BuildInfo buildInfo = administrator.getBuildInfo(project, Integer.parseInt(buildNumber));
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
 			Map<String, String> valuesMap = new HashMap<String, String>(2);
-			if (TechnologyTypes.IPHONES.equals(techId)) {
+			if (TechnologyTypes.IPHONES.contains(techId)) {
 				valuesMap.put(BUILD_NUMBER, buildNumber);
 				//addition param for 1.2.0. plugins, backward compatibility
 				valuesMap.put(IPHONE_BUILD_NAME, buildInfo.getBuildName());
@@ -687,7 +690,7 @@ public class Build extends FrameworkBaseAction {
 				valuesMap.put(DEPLOY_BUILD_NAME, buildInfo.getBuildName());
 			}
 
-			if (!(TechnologyTypes.IPHONES.equals(techId) || TechnologyTypes.ANDROIDS.equals(techId) || TechnologyTypes.SHAREPOINT
+			if (!(TechnologyTypes.IPHONES.contains(techId) || TechnologyTypes.ANDROIDS.contains(techId) || TechnologyTypes.SHAREPOINT
 					.equals(techId))
 					&& StringUtils.isNotEmpty(importSql)) {
 				valuesMap.put(DEPLOY_IMPORT_SQL, importSql);
@@ -696,7 +699,7 @@ public class Build extends FrameworkBaseAction {
 				valuesMap.put(DEPLOY_SERVERNAME, buildInfo.getServerName());
 			} else if (TechnologyTypes.WIN_PHONE.equals(techId)) {
 				valuesMap.put(TARGET, deviceTarget);
-			} else if (TechnologyTypes.ANDROIDS.equals(technology.getId())) {
+			} else if (TechnologyTypes.ANDROIDS.contains(technology.getId())) {
 				String device = getHttpRequest().getParameter(REQ_ANDROID_DEVICE);
 				if (device.equals(SERIAL_NUMBER)) {
 					device = serialNumber;
@@ -706,7 +709,11 @@ public class Build extends FrameworkBaseAction {
 				}
 				valuesMap.put(DEPLOY_ANDROID_DEVICE_MODE, device); 
 				valuesMap.put(DEPLOY_ANDROID_EMULATOR_AVD, REQ_ANDROID_DEFAULT);
-			} else if (TechnologyTypes.IPHONES.equals(technology) || TechnologyTypes.ANDROIDS.equals(technology)) {
+			} 
+			
+			// specifying action type
+			S_LOGGER.debug("technology ====> " + technology);
+			if (TechnologyTypes.IPHONES.contains(technology) || TechnologyTypes.ANDROIDS.contains(technology)) {
 				S_LOGGER.debug("Mobile command !!!!!");
 				actionType = ActionType.MOBILE_COMMON_COMMAND;
 			} else {
@@ -744,7 +751,7 @@ public class Build extends FrameworkBaseAction {
 
 			// This is for first time to check import Sql checkbox, and not
 			// required for the below technologies
-			if (!(TechnologyTypes.IPHONES.equals(technology) || TechnologyTypes.ANDROIDS.equals(technology) || TechnologyTypes.SHAREPOINT
+			if (!(TechnologyTypes.IPHONES.contains(technology) || TechnologyTypes.ANDROIDS.contains(technology) || TechnologyTypes.SHAREPOINT
 					.equals(technology))) {
 				updateImportSqlConfig(project);
 			}
@@ -834,7 +841,7 @@ public class Build extends FrameworkBaseAction {
 			if (debugEnabled) {
 				S_LOGGER.debug("Download build number " + buildNumber + " Download location " + builder.toString());
 			}
-			if (TechnologyTypes.IPHONES.equals(project.getProjectInfo().getTechnology().getId())) {
+			if (TechnologyTypes.IPHONES.contains(project.getProjectInfo().getTechnology().getId())) {
 				String path = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getDeliverables();
 				fileInputStream = new FileInputStream(new File(path));
 				fileName = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();
