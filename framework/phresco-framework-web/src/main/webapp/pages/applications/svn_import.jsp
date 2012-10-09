@@ -22,7 +22,6 @@
 <%@ page import="com.photon.phresco.model.UserInfo" %>
 <%@ page import="com.photon.phresco.commons.FrameworkConstants" %>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
-<%@ page import="org.apache.commons.codec.binary.Base64"%>
 
 <% 
 	UserInfo userInfo = (UserInfo)session.getAttribute(FrameworkConstants.REQ_USER_INFO); 
@@ -348,11 +347,7 @@
 	 		localStorage["svnImport"] = "credentials";
 	 	} else {
  			$("#userName").val('<%= userInfo.getCredentials().getUsername() %>');
- 			<%
- 				byte[] decodedBytes = Base64.decodeBase64(userInfo.getCredentials().getPassword());
- 				String password = new String(decodedBytes);
- 			%>
- 			$("#password").val('<%= password %>');
+ 			$("#password").val('<%= userInfo.getCredentials().getPassword() %>');
  			disableSvnFormDet();
  			localStorage["svnImport"] = "";
 	 	}

@@ -50,12 +50,16 @@ import org.jdom.input.SAXBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
+import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.model.WP8PackageInfo;
 import com.photon.phresco.util.ArchiveUtil;
 import com.photon.phresco.util.ArchiveUtil.ArchiveType;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import com.photon.phresco.util.TechnologyTypes;
 import com.photon.phresco.util.Utility;
 
 /**
@@ -153,8 +157,17 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 
 	private void init() throws MojoExecutionException {
 		try {
-			if (StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type)) {
+			if (StringUtils.isEmpty(environmentName) || StringUtils.isEmpty(type) || (!type.equals("wp7") && !type.equals("wp8"))) {
 				callUsage();
+			}
+			
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			Project currentProject = projAdmin.getProjectByWorkspace(baseDir);
+			String techId = currentProject.getProjectInfo().getTechnology().getId();
+			
+			if ((type.equals("wp8") && !techId.equals(TechnologyTypes.WIN_METRO)) ||
+					(type.equals("wp7") && !techId.equals(TechnologyTypes.WIN_PHONE))	) {
+				invalidProjectType();
 			}
 			
 			getSolutionFile();
@@ -186,6 +199,12 @@ public class WPPackage extends AbstractMojo implements PluginConstants {
 		getLog().info("mvn windows-phone:package -DenvironmentName=\"Multivalued evnironment names\"" 
 					+ " -Dtype=\"Windows Phone platform\"");
 		throw new MojoExecutionException("Invalid Usage. Please see the Usage of Package Goal");
+	}
+	
+	private void invalidProjectType() throws MojoExecutionException {
+		getLog().error("Invalid project type.");
+		getLog().info("Please check the &lt;type&gt; tag in plugin configuration section in pom.xml");
+		throw new MojoExecutionException("Invalid project type.");
 	}
 	
 	private void getSolutionFile() throws MojoExecutionException {

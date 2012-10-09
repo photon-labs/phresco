@@ -58,9 +58,7 @@ public class WinPhoneDependencyProcessor extends AbstractJsLibDependencyProcesso
 	public void process(ProjectInfo info, File path) throws PhrescoException {
 		File modulesPath = path;
 		String modulesPathString = getModulePathKey();
-		modulesPath = new File(path, modulesPathString);
-		System.out.println("Module path = " + modulesPath.getPath());
-		
+		modulesPath = new File(path, DependencyProcessorMessages.getString(modulesPathString));
 		Technology technology = info.getTechnology();
 		
 		extractModules(modulesPath, technology.getModules());
@@ -72,7 +70,6 @@ public class WinPhoneDependencyProcessor extends AbstractJsLibDependencyProcesso
 
 	@Override
 	protected String getJsLibPathKey() {
-		// TODO Auto-generated method stub
-		return null;
+		return "" ;
 	}
 }
