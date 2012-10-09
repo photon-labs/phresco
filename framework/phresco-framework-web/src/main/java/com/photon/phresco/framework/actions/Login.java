@@ -237,9 +237,10 @@ public class Login extends FrameworkBaseAction {
 				iphoneSdks.addAll(iphoneOSSdks);
 				iphoneSdks.addAll(simSdks);
 				iphoneSdks.addAll(macSdks);
-				
 				httpSession.setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
-				httpSession.setAttribute(REQ_IPHONE_SIMULATOR_SDKS, simSdks);
+				
+				List<String> iphoneSimulatorSdks = IosSdkUtil.getMacSdksVersions(MacSdkType.iphonesimulator);
+				httpSession.setAttribute(REQ_IPHONE_SIMULATOR_SDKS, iphoneSimulatorSdks);
 			} catch (Exception e) {
 	        	if (debugEnabled) {
 	                S_LOGGER.error("Entered into catch block of Login.loadMacSdks()"+ FrameworkUtil.getStackTraceAsString(e));

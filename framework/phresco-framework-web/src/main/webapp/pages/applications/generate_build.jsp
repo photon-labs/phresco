@@ -253,7 +253,18 @@
 				<% } %>
 			</div>
 		</div>
-
+		 <% if (from.equals(FrameworkConstants.DEPLOY) && TechnologyTypes.WIN_PHONE.equals(technology)) { %>
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
+					<div class="input">
+							<select class="xlarge" id="deviceTarget" name="label.device.target">
+									<option value="emulator" ><s:text name="Emulator"/></option>
+									<option value="device" ><s:text name="Device"/></option>
+							</select>
+					</div>
+				</div>
+	    <% } %>
+			    
 		<% 
 			if (TechnologyTypes.ANDROIDS.contains(technology)) { 
 				String pilotProjectName = project.getProjectInfo().getPilotProjectName();

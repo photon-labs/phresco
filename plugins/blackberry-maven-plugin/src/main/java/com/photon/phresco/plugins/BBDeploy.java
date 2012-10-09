@@ -19,10 +19,12 @@
  */
 package com.photon.phresco.plugins;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.lang.StringUtils;
@@ -138,26 +140,28 @@ public class BBDeploy extends AbstractMojo implements PluginConstants {
 			});
 			
 			// javaloader -usb load <FileName>.cod
-			StringBuilder sb = new StringBuilder();
-			sb.append(BB_JAVA_LOADER_HOME);
-			sb.append(BB_USB);
-			sb.append(STR_SPACE);
-			sb.append(BB_LOAD);
-			sb.append(STR_SPACE);
-			sb.append(codFile[0].getName());
+			ProcessBuilder pb;
+			pb = new ProcessBuilder(BB_JAVA_LOADER_HOME);
+			// Include errors in output
+			pb.redirectErrorStream(true);
+			pb.command().add(BB_USB);
+			pb.command().add(BB_LOAD);
+			pb.command().add(codFile[0].getName());
+			getLog().info("Deploy command: " + pb.command());
 			
-			//getLog().info("Deploy command: " + sb.toString());
-			Commandline cl = new Commandline(sb.toString());
-			cl.setWorkingDirectory(tempDir);
-			Process process = cl.execute();
-			in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line = null;
-			while ((line = in.readLine()) != null) {
+			Process child;
+			try {
+				pb.directory(tempDir);
+				child = pb.start();
+				InputStream is = new BufferedInputStream(child.getInputStream());
+				int singleByte = 0;
+				while ((singleByte = is.read()) != -1) {
+				}
+			} catch (IOException e) {
+				getLog().error(e);
+				throw new MojoExecutionException(e.getMessage(), e);
 			}
-		} catch (CommandLineException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			
 		}  finally {
 			Utility.closeStream(in);
 		}
@@ -179,6 +183,7 @@ public class BBDeploy extends AbstractMojo implements PluginConstants {
 	
 	private void renameFileNames(File dir, String bName, boolean replaceFlag) throws MojoExecutionException {
 		try {
+		
 			// Rename all the files in working dir with buildname
 			File[] fileList = dir.listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String name) { 
