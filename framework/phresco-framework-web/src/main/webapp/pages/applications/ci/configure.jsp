@@ -971,18 +971,20 @@
 		});
 		
 		$("#actionBtn").click(function() {
+			$("#errMsg").html('');
+			var operationVal = $('#operation option:selected').val();
 		    // validation for browser resolution
 		    <% 
                 if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || 
                      TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) {
             %>
-                
-                $("#errMsg").html('');
-                var editedOption = $('#resolution option:selected').val();
-                if (!checkForResolutionFormat(editedOption)) {
-                    return false;
-                }
-                $("#errMsg").html('');
+                if(operationVal == "functionalTest") {
+	                var editedOption = $('#resolution option:selected').val();
+		                if (!checkForResolutionFormat(editedOption)) {
+		                    return false;
+		                }
+	                $("#errMsg").html('');
+	                }
             <%
                }
             %>
