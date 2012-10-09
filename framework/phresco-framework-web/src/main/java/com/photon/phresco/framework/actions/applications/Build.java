@@ -154,6 +154,7 @@ public class Build extends FrameworkBaseAction {
 	//Windows family
 	private String configuration = ""; 
 	private String platform = "";
+	private String deviceTarget = "";
 	
 	private static Map<String, String> sqlFolderPathMap = new HashMap<String, String>();
 
@@ -460,11 +461,9 @@ public class Build extends FrameworkBaseAction {
 			if (TechnologyTypes.WIN_METRO.contains(technology)) {
 				settingsInfoMap.put(CONFIGURATION, configuration);
 				settingsInfoMap.put(PLATFORM, platform);
-				settingsInfoMap.put(WP_TYPE, "wp8");
 			}
 			if (TechnologyTypes.WIN_PHONE.contains(technology)) {
 				settingsInfoMap.put(CONFIGURATION, configuration);
-				settingsInfoMap.put(WP_TYPE, "wp7");
 			}
 			
 			if (TechnologyTypes.BLACKBERRY_HYBRID.contains(technology)) {
@@ -715,6 +714,10 @@ public class Build extends FrameworkBaseAction {
 			if (TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo().getTechnology().getId())) {
 				S_LOGGER.debug("Share point is passing server name!!!!!!!!");
 				valuesMap.put(DEPLOY_SERVERNAME, buildInfo.getServerName());
+			}
+			
+			if (TechnologyTypes.WIN_PHONE.contains(techId)) {
+				valuesMap.put(TARGET, deviceTarget);
 			}
 
 			if (debugEnabled) {
@@ -2201,4 +2204,13 @@ public class Build extends FrameworkBaseAction {
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}
+	
+	public String getDeviceTarget() {
+		return deviceTarget;
+	}
+	
+	public void setDeviceTarget(String deviceTarget) {
+		this.deviceTarget = deviceTarget;
+	}
+	
 }
