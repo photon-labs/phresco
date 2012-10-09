@@ -23,6 +23,7 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 	   <fileSet>
 			<directory>${project.basedir}/settings/maven/</directory>
 			<outputDirectory>tools/maven/conf</outputDirectory>
+            <filtered>true</filtered>
 			<fileMode>0777</fileMode>
 			<includes>
 				<include>*.xml</include>
