@@ -140,7 +140,7 @@ public class ConfigurationWriter extends ConfigWriter {
 	        Node configNode = getNode("environment");
 	        Node node = getNode("environment/" + settingsInfo.getType());
 	        Node browserNode = getNode("environment/Browser");
-	        Node resolutionNode = getNode("environment/Resolution");
+	        Node resolutionNode = getNode("environment/resolution");
 	        
 	        if (node != null) {
 	            configNode.removeChild(node);
@@ -157,7 +157,7 @@ public class ConfigurationWriter extends ConfigWriter {
 		        if (resolutionNode !=  null ) {
 		        	resolutionNode.setTextContent(resolution);
 		        } else {
-		        	Element resolutiontag = getDocument().createElement("Resolution");
+		        	Element resolutiontag = getDocument().createElement("resolution");
 		        	resolutiontag.setTextContent(resolution);
 		        	configNode.appendChild(resolutiontag);
 		        }
