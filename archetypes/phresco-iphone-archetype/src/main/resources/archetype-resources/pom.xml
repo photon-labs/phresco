@@ -26,7 +26,7 @@
 	<name>${artifactId}</name>
 	<packaging>xcode</packaging>
 	<build>
-	<sourceDirectory>/source</sourceDirectory>
+	<sourceDirectory>source</sourceDirectory>
 	<directory>do_not_checkin/target</directory>
 	  <plugins>
 		<plugin>
