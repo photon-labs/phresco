@@ -120,7 +120,7 @@
 									<option value="java" ><s:text name="label.tech.java"/></option>
 									<option value="js" ><s:text name="label.tech.javascript"/></option>
 									<option value="web" ><s:text name="label.tech.jsp"/></option>
-									<option value="html" ><s:text name="label.tech.jsp"/></option>
+									<option value="html" ><s:text name="label.tech.html"/></option>
 								</select>
 								
 								
