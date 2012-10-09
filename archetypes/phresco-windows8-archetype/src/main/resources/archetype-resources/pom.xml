@@ -44,6 +44,9 @@
                 <artifactId>windows-phone-maven-plugin</artifactId>
                 <version>1.2.3.3001-SNAPSHOT</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <type>wp8</type>
+                </configuration>
             </plugin>
 				<plugin>
                 <groupId>org.codehaus.sonar-plugins.dotnet</groupId>
