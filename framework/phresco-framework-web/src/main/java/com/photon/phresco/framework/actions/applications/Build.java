@@ -294,8 +294,10 @@ public class Build extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_ENVIRONMENTS, environments);
 			}
 			// Get xcode targets
-			if (TechnologyTypes.IPHONES.equals(technology)) {
+			if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
+				S_LOGGER.debug("Iphone tech!!!!");
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
+				S_LOGGER.debug(xcodeConfigs);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
 			}
 
