@@ -768,6 +768,11 @@ public class Applications extends FrameworkBaseAction {
 			S_LOGGER.debug("projectCode " + projectCode);
 			updateSCMConnection(projectCode, repositoryUrl);
 			
+			if (StringUtils.isEmpty(credential)) {
+				String decryptedPass = new String(Base64.decodeBase64(password));
+				password = decryptedPass;
+			}
+			
 			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
 			S_LOGGER.debug("Import Application repository Url" + repositoryUrl + " Username " + userName);
 			revision = !HEAD_REVISION.equals(revision) ? revisionVal : revision;
