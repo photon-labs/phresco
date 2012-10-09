@@ -460,6 +460,11 @@ public class Build extends FrameworkBaseAction {
 			if (TechnologyTypes.WIN_METRO.contains(technology)) {
 				settingsInfoMap.put(CONFIGURATION, configuration);
 				settingsInfoMap.put(PLATFORM, platform);
+				settingsInfoMap.put(WP_TYPE, "wp8");
+			}
+			if (TechnologyTypes.WIN_PHONE.contains(technology)) {
+				settingsInfoMap.put(CONFIGURATION, configuration);
+				settingsInfoMap.put(WP_TYPE, "wp7");
 			}
 			
 			if (TechnologyTypes.BLACKBERRY_HYBRID.contains(technology)) {

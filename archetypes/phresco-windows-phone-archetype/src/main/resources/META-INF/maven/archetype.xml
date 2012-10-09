@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ###
+  Archetype - phresco-android-native-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+
+<archetype>
+	<id>phresco-android-native-archetype</id>
+	<sources>
+		<source>source/AndroidManifest.xml</source>
+		<source>source/project.properties</source>
+		<source>source/proguard.cfg</source>
+		<source>source/default.properties</source>
+		<source>source/src/com/photon/phresco/nativeapp/activity/MainActivity.java</source>
+		<source>source/src/com/photon/phresco/nativeapp/config/ConfigReader.java</source>
+		<source>source/src/com/photon/phresco/nativeapp/config/Configuration.java</source>
+	</sources>
+	<testSources>
+		<source>test/functional/src/com/photon/phresco/nativeapp/functional/test/testcases/MainActivityTest.java</source>
+		<source>test/unit/src/com/photon/phresco/nativeapp/unit/test/AllTests.java</source>
+		<source>test/unit/src/com/photon/phresco/nativeapp/unit/test/testcases/A_MainActivityTest.java</source>
+	</testSources>
+	<resources>
+		<resource>source/res/drawable-hdpi/icon.png</resource>
+		<resource>source/res/drawable-ldpi/icon.png</resource>
+		<resource>source/res/drawable-mdpi/icon.png</resource>
+		<resource>source/res/layout/main.xml</resource>
+		<resource>source/res/values/strings.xml</resource>
+	</resources>
+	<testResources>
+		<resource>test/functional/res/drawable-hdpi/icon.png</resource>
+		<resource>test/functional/res/drawable-ldpi/icon.png</resource>
+		<resource>test/functional/res/drawable-mdpi/icon.png</resource>
+		<resource>test/functional/res/layout/main.xml</resource>
+		<resource>test/functional/res/values/strings.xml</resource>
+		<resource>test/functional/AndroidManifest.xml</resource>
+		<resource>test/functional/proguard.cfg</resource>
+		<resource>test/functional/project.properties</resource>
+		<resource>test/unit/res/drawable-hdpi/icon.png</resource>
+		<resource>test/unit/res/drawable-ldpi/icon.png</resource>
+		<resource>test/unit/res/drawable-mdpi/icon.png</resource>
+		<resource>test/unit/res/layout/main.xml</resource>
+		<resource>test/unit/res/values/strings.xml</resource>
+		<resource>test/unit/AndroidManifest.xml</resource>
+		<resource>test/unit/proguard.cfg</resource>
+		<resource>test/unit/project.properties</resource>
+	</testResources>
+</archetype>
