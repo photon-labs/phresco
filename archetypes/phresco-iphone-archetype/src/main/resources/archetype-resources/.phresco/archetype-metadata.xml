@@ -95,24 +95,24 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
+			<directory>source/LogicTest</directory> 
+			<includes>
+				<include>LogicTest-Info.plist</include>
+				<include>LogicTest-Prefix.pch</include>
+				<include>LogicTest.h</include>
+				<include>LogicTest.m</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/LogicTest/en.lproj</directory> 
+			<includes>
+				<include>InfoPlist.strings</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
 			<directory>source/OCUnitReports</directory> 
 			<includes>
 				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/AllTest</directory> 
-			<includes>
-				<include>AllTest.h</include>
-				<include>AllTest.m</include>
-				<include>AllTest-Info.plist</include>
-				<include>AllTest-Prefix.pch</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/AllTest/en.lproj</directory> 
-			<includes>
-				<include>InfoPlist.strings</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
