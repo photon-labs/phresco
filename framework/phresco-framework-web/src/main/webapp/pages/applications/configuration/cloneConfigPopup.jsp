@@ -42,9 +42,9 @@
 		<a class="close" href="#" id="close">&times;</a>
 	</div>
 
-	<div class="modal-body" style="height: 230px;">
+	<div class="modal-body">
 		
-			<fieldset class="popup-fieldset" style="height: 215px;">
+			<fieldset class="popup-fieldset"">
 				<legend class="fieldSetLegend" >Clone Configuration</legend>
 				<div class="clearfix">
 		            <label for="xlInput" class="xlInput popup-label" ><span class="red">*</span><s:text name = "label.name" /></label>
@@ -109,16 +109,16 @@
 	
 	$(document).ready(function() {
 		$("#add").click(function() {
-			 var EnvSelection = $("#created").size();
-			 if (EnvSelection == 0 ) {
-				 $("#errMsg").html("Please add atleast one Environment");
-			 }
-			 else {
-				var params = "";
-	            if (!isBlank($('form').serialize())) {
-	                params = $('form').serialize();
-	            }
-	            performAction('cloneConfiguration', params, '', true); 
+			 if (isBlank($('#configEnvName').val())) {
+				 $("#errMsg").html("<%=FrameworkConstants.CONFIGURATION_NAME_EMPTY %>");
+			 } else if ($("#created").size() == 0 ) {
+				 $("#errMsg").html("<%=FrameworkConstants.ADD_ONE_ENVIRONMENT %>");
+			 } else {
+				 var params = "";
+				 if (!isBlank($('form').serialize())) {
+				 params = $('form').serialize();
+				 }
+				 performAction('cloneConfiguration', params, '', true);
 			 }
 		});
 	});

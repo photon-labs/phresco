@@ -133,28 +133,22 @@
 			
 			<% if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>	
 				<div class="clearfix" id="techDiv">
-					<div class="xlInput">
-						<ul class="inputs-list">
-							<li class="popup-li"> 
-							
-								<span class="popup-span"><s:text name="label.target"/></span>
-								<select id="target" name="target" class="xlarge" >
-								<% 
-									if (xcodeConfigs != null) {
-										for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
-								%>
-										<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
-								<% 
-										} 
-									} 
-								%>	
-						       </select>
-							</li>
-						</ul>
+				<label class="xlInput popup-label" for="xlInput"><s:text name="label.target"/></label>
+					<div class="xlInput"  style=" float: left; margin-left: 25px;">
+						<select id="target" name="target" class="xlarge" >
+						<% 
+							if (xcodeConfigs != null) {
+								for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
+						%>
+								<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
+						<% 
+								} 
+							} 
+						%>	
+				       </select>
 					</div>	
 				</div>
 			<% } %>
-					
 		</fieldset>
 		<% } %>
 
