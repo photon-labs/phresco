@@ -143,11 +143,11 @@
 				</div>	
 			<% } %>	
 			
-			<% if (TechnologyTypes.BLACKBERRY_HYBRID.contains(technology)) { %>
+			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
 				<div class="clearfix">
-					<label for="xlInput" class="xlInput popup-label "><s:text name="label.keypassword"/></label>
+					<label for="xlInput" class="xlInput popup-label "><span class="red">*</span> <s:text name="label.keypassword"/></label>
 				    <div class="input">
-						<input type="password" placeholder="<s:text name="Enter the Password"/>" class="xlarge javastd" 
+						<input id="password" type="password" placeholder="<s:text name="Enter the Password"/>" class="xlarge javastd" 
 							name="keypass" maxlength="20" title="20 Characters only"/>
 				    </div>
 				</div>								
@@ -590,7 +590,7 @@
 		$('#close, #cancel').click(function() {
 			showParentPage();
 		});
-
+				
 		$('#build').click(function() {
 			if ($('input[type=checkbox][name=signing]').is(':checked') && isBlank($('#profileAvailable').val())) {
 				$("#errMsg").html('<%= FrameworkConstants.PROFILE_CREATE_MSG %>');
@@ -603,8 +603,18 @@
 					$(this).attr("disabled", false);
 				}
 			});
-
+			
+			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
+			 	$("#errMsg").html("");
+			 	var keyPwd = $('#password').val();
+	            if (isBlank(keyPwd)) {
+	               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY');
+	               	return false;
+	             }
+             <% } %>
+              
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
+			
 		});
 		
 		$('#userBuildNumber').bind('input propertychange', function (e) { 	//userBuildNumber validation

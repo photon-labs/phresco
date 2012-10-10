@@ -72,17 +72,20 @@
 		<% } else if (TechnologyTypes.ANDROID_HYBRID.equals(technology)|| TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
 			<option value="source" ><s:text name="label.validateAgainst.source"/></option>
 			<option value="html" ><s:text name="label.tech.html"/></option>
-		<% } else if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
-			<option value="html" ><s:text name="label.tech.html"/></option>
 		<%
 			} else if (isIphoneTech) {
 				if (xcodeConfigs != null) {
 					for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
 		%>
-				<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
+						<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
 		<%
 					}
 				}
+				
+				if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
+		%>
+					<option value="html" ><s:text name="label.tech.html"/></option>
+		<%		}
 			} else {
 		%>
 				<option value="source" ><s:text name="label.validateAgainst.source"/></option>

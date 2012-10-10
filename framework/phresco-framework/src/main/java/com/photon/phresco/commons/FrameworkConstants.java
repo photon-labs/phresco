@@ -836,6 +836,8 @@ public interface FrameworkConstants {
     String CLONE_FROM_CONFIG_TYPE = "cloneFromConfigType";
 	String CLONE_FROM_ENV_NAME = "cloneFromEnvName";
 	String CLONE_FROM_CONFIG_NAME = "cloneFromConfigName";
+	String CONFIGURATION_NAME_EMPTY = "Configuration name is Empty";
+	String ADD_ONE_ENVIRONMENT = "Please add atleast one Environment";
     
     /*
      * Create Environment keys
@@ -882,6 +884,7 @@ public interface FrameworkConstants {
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
     String SESSION_EXPIRED = "session.expired.message";
+    String KEY_PASSWORD_EMPTY = "KeyPassword is empty";
 
     /*
      * login keys
