@@ -136,7 +136,15 @@ public class Code extends FrameworkBaseAction {
                 	sb.append(COLON);
                 	sb.append(phrescoFileServerNumber);
                 	sb.append(FORWARD_SLASH);
-                	sb.append(codeValidatePath.toString().replace(File.separator, FORWARD_SLASH));
+                	sb.append(projectCode);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(DO_NOT_CHECKIN_DIR);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(STATIC_ANALYSIS_REPORT);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(report);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(INDEX_HTML);
                 	S_LOGGER.debug("File server path " + sb.toString());
              	} else {
              		getHttpRequest().setAttribute(REQ_ERROR, getText(FAILURE_CODE_REVIEW));
