@@ -1,4 +1,4 @@
--package com.photon.phresco.Screens;
+package com.photon.phresco.Screens;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -6,12 +6,11 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-import junit.framework.Assert;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -26,9 +25,7 @@ import com.google.common.base.Function;
 import com.photon.phresco.selenium.util.Constants;
 import com.photon.phresco.selenium.util.GetCurrentDir;
 import com.photon.phresco.selenium.util.ScreenException;
-
-
-
+import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 public class BaseScreen {
 
@@ -36,7 +33,7 @@ public class BaseScreen {
 	private ChromeDriverService chromeService;
 	private Log log = LogFactory.getLog("BaseScreen");
 	private WebElement element;	
-	
+	private PhrescoUiConstants phrescoUiConstants;
 
 	// private Log log = LogFactory.getLog(getClass());
 
@@ -44,12 +41,11 @@ public class BaseScreen {
 
 	}
 
-	public BaseScreen(String selectedBrowser, String applicationURL,
-			String applicationContext)
+	public BaseScreen(String selectedBrowser, String applicationURL, String applicatinContext,PhrescoUiConstants phrescoUiConstants)
 			throws ScreenException {
 	
-		
-		instantiateBrowser(selectedBrowser, applicationURL, applicationContext);
+		this.phrescoUiConstants=phrescoUiConstants;
+		instantiateBrowser(selectedBrowser, applicationURL, applicatinContext);
 
 	}
 
@@ -63,12 +59,13 @@ public class BaseScreen {
 				chromeService = new ChromeDriverService.Builder()
 						.usingDriverExecutable(
 								new File(getChromeLocation()))
-						.usingAnyFreePort().build();			
+						.usingAnyFreePort().build();	
+				
 				log.info("-------------***LAUNCHING GOOGLECHROME***--------------");						
 				driver=new ChromeDriver(chromeService);
-				//driver.manage().window().maximize();
-                windowResize();
-				driver.navigate().to(applicationURL+applicationContext);		
+				windowResize();
+				driver.navigate().to(applicationURL+applicationContext);
+			
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -77,14 +74,13 @@ public class BaseScreen {
 		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_IE)) {
 			log.info("---------------***LAUNCHING INTERNET EXPLORE***-----------");
 			driver = new InternetExplorerDriver();
-            windowResize();
+			windowResize();
 			driver.navigate().to(applicationURL + applicationContext);
 		
 
 		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_FIREFOX)) {
 			log.info("-------------***LAUNCHING FIREFOX***--------------");
 			driver = new FirefoxDriver();
-			//driver.manage().window().maximize();
 			windowResize();
 			driver.navigate().to(applicationURL + applicationContext);
 
@@ -114,25 +110,24 @@ public class BaseScreen {
 		}
 
 	}
-    
-    public static void windowResize()
-    {
-        phrsc = new PhrescoUiConstants();
-        String resolution = phrsc.RESOLUTION;	
-        if(resolution!=null)
-    {
-        String[] tokens = resolution.split("x");
-        String resolutionX=tokens[0];
-        String resolutionY=tokens[1];	
-        int x= Integer.parseInt(resolutionX);
-        int y= Integer.parseInt(resolutionY);
-        Dimension screenResolution = new Dimension(x,y);
-        driver.manage().window().setSize(screenResolution);
-    }
-        else{
-        driver.manage().window().maximize();
-    }
-    }
+	public  void windowResize()
+	{
+	
+	String resolution =this.phrescoUiConstants.RESOLUTION;
+	if(resolution!=null)
+	{
+			String[] tokens = resolution.split("x");
+			String resolutionX=tokens[0];
+			String resolutionY=tokens[1];
+			int x= Integer.parseInt(resolutionX);
+			int y= Integer.parseInt(resolutionY);
+			Dimension screenResolution = new Dimension(x,y);
+			driver.manage().window().setSize(screenResolution);
+	}
+	else{
+	driver.manage().window().maximize();
+	}
+	}
 
 	/*
 	 * public static void windowMaximizeFirefox() {
@@ -146,8 +141,9 @@ public class BaseScreen {
 		log.info("-------------***BROWSER CLOSING***--------------");
 		if (driver != null) {
 			driver.quit();
-			if (chromeService != null) {				
-				chromeService.stop();
+			if (chromeService!=null) {				
+				
+				
 			}
 		}
 
@@ -255,8 +251,7 @@ public class BaseScreen {
 	}
 
 	
-	
-	
+
 	public void click() throws ScreenException {
 		log.info("Entering:********click operation start********");
 		try {
@@ -302,14 +297,4 @@ public class BaseScreen {
 
 	}
 
-	public void isTextPresent(String textValue){
-		if(textValue!=null){
-			Boolean textCheck=driver.getPageSource().contains(textValue);
-			Assert.assertTrue("HelloWorld Existed", textCheck);
-		}else{
-			
-			throw new RuntimeException("----HelloWorld Text is not existed----");
-			
-		}
-	}
 }

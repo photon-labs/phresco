@@ -20,15 +20,15 @@
   -->
 
 <environment>
-		   <Browser>googlechrome</Browser>
+		   <Browser>firefox</Browser>
            <Server>
                <context>yuiHW</context>
                <protocol>http</protocol>
                <host>localhost</host>
                <port>8080</port>
-               <resolution></resolution>
+               <resolution>960x640</resolution>
            </Server>
-         
+           
            <loginpage>
               <loginText>Hello World</loginText>
            </loginpage>
