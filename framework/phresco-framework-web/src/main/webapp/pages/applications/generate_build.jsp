@@ -608,7 +608,7 @@
 			 	$("#errMsg").html("");
 			 	var keyPwd = $('#password').val();
 	            if (isBlank(keyPwd)) {
-	               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY');
+	               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY %>');
 	               	return false;
 	             }
              <% } %>
