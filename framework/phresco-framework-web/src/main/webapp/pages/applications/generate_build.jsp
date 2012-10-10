@@ -257,7 +257,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
 					<div class="input">
-							<select class="xlarge" id="deviceTarget" name="label.device.target">
+							<select class="xlarge" id="deviceTarget" name="deviceTarget">
 									<option value="emulator" ><s:text name="Emulator"/></option>
 									<option value="device" ><s:text name="Device"/></option>
 							</select>
