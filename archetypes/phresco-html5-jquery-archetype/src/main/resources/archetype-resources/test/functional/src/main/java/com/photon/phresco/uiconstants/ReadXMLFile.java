@@ -85,9 +85,10 @@ public class ReadXMLFile {
 		NodeList nlList = eElement.getElementsByTagName(elementName).item(0)
 				.getChildNodes();
 		Node nValue = (Node) nlList.item(0);		
-		if (nValue.getNodeValue() == null) {
-			throw new NullArgumentException("***The element value is zero***");
-		} 
+		 if(nValue==null){
+          return null; 
+            }
+
 
 		return nValue.getNodeValue();
 	}

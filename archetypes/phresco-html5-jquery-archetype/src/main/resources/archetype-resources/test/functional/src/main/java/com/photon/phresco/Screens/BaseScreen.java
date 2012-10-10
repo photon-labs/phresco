@@ -1,4 +1,4 @@
-package com.photon.phresco.Screens;
+-package com.photon.phresco.Screens;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -66,7 +66,8 @@ public class BaseScreen {
 						.usingAnyFreePort().build();			
 				log.info("-------------***LAUNCHING GOOGLECHROME***--------------");						
 				driver=new ChromeDriver(chromeService);
-				driver.manage().window().maximize();
+				//driver.manage().window().maximize();
+                windowResize();
 				driver.navigate().to(applicationURL+applicationContext);		
 
 			} catch (Exception e) {
@@ -76,14 +77,15 @@ public class BaseScreen {
 		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_IE)) {
 			log.info("---------------***LAUNCHING INTERNET EXPLORE***-----------");
 			driver = new InternetExplorerDriver();
+            windowResize();
 			driver.navigate().to(applicationURL + applicationContext);
 		
 
 		} else if (selectedBrowser.equalsIgnoreCase(Constants.BROWSER_FIREFOX)) {
 			log.info("-------------***LAUNCHING FIREFOX***--------------");
 			driver = new FirefoxDriver();
-			driver.manage().window().maximize();
-			// windowMaximizeFirefox();
+			//driver.manage().window().maximize();
+			windowResize();
 			driver.navigate().to(applicationURL + applicationContext);
 
 		}
@@ -112,6 +114,25 @@ public class BaseScreen {
 		}
 
 	}
+    
+    public static void windowResize()
+    {
+        phrsc = new PhrescoUiConstants();
+        String resolution = phrsc.RESOLUTION;	
+        if(resolution!=null)
+    {
+        String[] tokens = resolution.split("x");
+        String resolutionX=tokens[0];
+        String resolutionY=tokens[1];	
+        int x= Integer.parseInt(resolutionX);
+        int y= Integer.parseInt(resolutionY);
+        Dimension screenResolution = new Dimension(x,y);
+        driver.manage().window().setSize(screenResolution);
+    }
+        else{
+        driver.manage().window().maximize();
+    }
+    }
 
 	/*
 	 * public static void windowMaximizeFirefox() {
