@@ -17,9 +17,16 @@
  under the License.
  */
 
-// accessibility label for recording button
-"toggle audio recording" = "grabación de audio cambiar";
-// notification spoken by VoiceOver when timed recording finishes
-"timed recording complete" = "tiempo de grabación completo";
-// accessibility hint for display of recorded elapsed time
-"recorded time in minutes and seconds" = "tiempo registrado en minutos y segundos";
+//
+//  MainViewController.h
+//  __TESTING__
+//
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
+//
+
+#import <Cordova/CDVViewController.h>
+
+@interface MainViewController : CDVViewController
+
+@end

@@ -26,14 +26,25 @@
 		2596506914FB84E1002DF177 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2596506714FB84E1002DF177 /* Localizable.strings */; };
 		2596506D14FB84E1002DF177 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2596506B14FB84E1002DF177 /* Localizable.strings */; };
 		2596507B14FB84E1002DF177 /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2596507A14FB84E1002DF177 /* Capture.bundle */; };
-		2596507D14FB84E1002DF177 /* PhoneGap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2596507C14FB84E1002DF177 /* PhoneGap.plist */; };
 		2596508114FB84E1002DF177 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2596508014FB84E1002DF177 /* AppDelegate.m */; };
 		2596509114FB8710002DF177 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596508E14FB8710002DF177 /* icon-72.png */; };
 		2596509214FB8710002DF177 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596508F14FB8710002DF177 /* icon.png */; };
 		2596509314FB8710002DF177 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2596509014FB8710002DF177 /* icon@2x.png */; };
-		C3899CBE15BD9CB100ED971A /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */; };
-		EA04C537160B687000EB42C6 /* PhoneGap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04C536160B687000EB42C6 /* PhoneGap.framework */; };
+		C39226A916202EDE009A1866 /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39226A716202EDE009A1866 /* Cordova.plist */; };
+		C39226AA16202EDE009A1866 /* CordovaBuildSettings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C39226A816202EDE009A1866 /* CordovaBuildSettings.xcconfig */; };
+		C39226B8162030A8009A1866 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C39226B6162030A8009A1866 /* MainViewController.m */; };
+		C39226BA162030BB009A1866 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C39226A516202E63009A1866 /* libCordova.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C39226A416202E63009A1866 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C392269D16202E63009A1866 /* CordovaLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 68A32D7114102E1C006B237C;
+			remoteInfo = CordovaLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		25829C811506346F00504431 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
@@ -58,16 +69,19 @@
 		2596506814FB84E1002DF177 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2596506C14FB84E1002DF177 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2596507A14FB84E1002DF177 /* Capture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Capture.bundle; path = Resources/Capture.bundle; sourceTree = "<group>"; };
-		2596507C14FB84E1002DF177 /* PhoneGap.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PhoneGap.plist; sourceTree = "<group>"; };
 		2596507F14FB84E1002DF177 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		2596508014FB84E1002DF177 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		2596508314FB84E1002DF177 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = Plugins/README; sourceTree = "<group>"; };
 		2596508E14FB8710002DF177 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
 		2596508F14FB8710002DF177 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		2596509014FB8710002DF177 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		C3899CBC15BD9CB100ED971A /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationReader.h; sourceTree = "<group>"; };
-		C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationReader.m; sourceTree = "<group>"; };
-		EA04C536160B687000EB42C6 /* PhoneGap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhoneGap.framework; path = ThirdParty/PhoneGap.framework; sourceTree = SOURCE_ROOT; };
+		C392269D16202E63009A1866 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../../Downloads/phonegap-phonegap-26d211b/lib/ios/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		C39226A716202EDE009A1866 /* Cordova.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cordova.plist; sourceTree = "<group>"; };
+		C39226A816202EDE009A1866 /* CordovaBuildSettings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CordovaBuildSettings.xcconfig; sourceTree = "<group>"; };
+		C39226B5162030A8009A1866 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Classes/MainViewController.h; sourceTree = "<group>"; };
+		C39226B6162030A8009A1866 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Classes/MainViewController.m; sourceTree = "<group>"; };
+		C39226B7162030A8009A1866 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = Classes/MainViewController.xib; sourceTree = "<group>"; };
+		C39226CA16203A85009A1866 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39226BA162030BB009A1866 /* libCordova.a in Frameworks */,
 				2596504114FB84E0002DF177 /* Foundation.framework in Frameworks */,
 				2596504314FB84E0002DF177 /* UIKit.framework in Frameworks */,
 				2596504514FB84E0002DF177 /* CoreGraphics.framework in Frameworks */,
@@ -88,14 +103,6 @@
 				2596505514FB84E0002DF177 /* SystemConfiguration.framework in Frameworks */,
 				2596505714FB84E0002DF177 /* MobileCoreServices.framework in Frameworks */,
 				2596505914FB84E0002DF177 /* CoreMedia.framework in Frameworks */,
-				EA04C537160B687000EB42C6 /* PhoneGap.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2596503914FB84E0002DF177 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +112,8 @@
 		2596502E14FB84E0002DF177 = {
 			isa = PBXGroup;
 			children = (
-				C3899CBB15BD9CB100ED971A /* ConfigurationReader */,
+				C39226CA16203A85009A1866 /* CoreFoundation.framework */,
+				C392269D16202E63009A1866 /* CordovaLib.xcodeproj */,
 				2596505A14FB84E0002DF177 /* Phresco */,
 				2596503F14FB84E0002DF177 /* Frameworks */,
 				2596503D14FB84E0002DF177 /* Products */,
@@ -143,7 +151,6 @@
 		2596505A14FB84E0002DF177 /* Phresco */ = {
 			isa = PBXGroup;
 			children = (
-				EA04C536160B687000EB42C6 /* PhoneGap.framework */,
 				25829C811506346F00504431 /* www */,
 				2596506514FB84E1002DF177 /* Resources */,
 				2596507E14FB84E1002DF177 /* Classes */,
@@ -156,11 +163,12 @@
 		2596505B14FB84E0002DF177 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C39226A716202EDE009A1866 /* Cordova.plist */,
+				C39226A816202EDE009A1866 /* CordovaBuildSettings.xcconfig */,
 				2596505C14FB84E0002DF177 /* Phresco-Info.plist */,
 				2596505D14FB84E1002DF177 /* InfoPlist.strings */,
 				2596506014FB84E1002DF177 /* main.m */,
 				2596506214FB84E1002DF177 /* Phresco-Prefix.pch */,
-				2596507C14FB84E1002DF177 /* PhoneGap.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -195,6 +203,9 @@
 		2596507E14FB84E1002DF177 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C39226B5162030A8009A1866 /* MainViewController.h */,
+				C39226B6162030A8009A1866 /* MainViewController.m */,
+				C39226B7162030A8009A1866 /* MainViewController.xib */,
 				2596507F14FB84E1002DF177 /* AppDelegate.h */,
 				2596508014FB84E1002DF177 /* AppDelegate.m */,
 			);
@@ -219,14 +230,12 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
-		C3899CBB15BD9CB100ED971A /* ConfigurationReader */ = {
+		C392269E16202E63009A1866 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C3899CBC15BD9CB100ED971A /* ConfigurationReader.h */,
-				C3899CBD15BD9CB100ED971A /* ConfigurationReader.m */,
+				C39226A516202E63009A1866 /* libCordova.a */,
 			);
-			name = ConfigurationReader;
-			path = ThirdParty/ConfigurationReader;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,8 +248,6 @@
 				2596503514FB84E0002DF177 /* Sources */,
 				2596503614FB84E0002DF177 /* Frameworks */,
 				2596503714FB84E0002DF177 /* Resources */,
-				2596503814FB84E0002DF177 /* Sources */,
-				2596503914FB84E0002DF177 /* Frameworks */,
 				2596503A14FB84E0002DF177 /* ShellScript */,
 			);
 			buildRules = (
@@ -272,12 +279,28 @@
 			mainGroup = 2596502E14FB84E0002DF177;
 			productRefGroup = 2596503D14FB84E0002DF177 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C392269E16202E63009A1866 /* Products */;
+					ProjectRef = C392269D16202E63009A1866 /* CordovaLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				2596503B14FB84E0002DF177 /* Phresco */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C39226A516202E63009A1866 /* libCordova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCordova.a;
+			remoteRef = C39226A416202E63009A1866 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2596503714FB84E0002DF177 /* Resources */ = {
@@ -288,11 +311,12 @@
 				2596506914FB84E1002DF177 /* Localizable.strings in Resources */,
 				2596506D14FB84E1002DF177 /* Localizable.strings in Resources */,
 				2596507B14FB84E1002DF177 /* Capture.bundle in Resources */,
-				2596507D14FB84E1002DF177 /* PhoneGap.plist in Resources */,
 				2596509114FB8710002DF177 /* icon-72.png in Resources */,
 				2596509214FB8710002DF177 /* icon.png in Resources */,
 				2596509314FB8710002DF177 /* icon@2x.png in Resources */,
 				25829C821506346F00504431 /* www in Resources */,
+				C39226A916202EDE009A1866 /* Cordova.plist in Resources */,
+				C39226AA16202EDE009A1866 /* CordovaBuildSettings.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,14 +345,7 @@
 			files = (
 				2596506114FB84E1002DF177 /* main.m in Sources */,
 				2596508114FB84E1002DF177 /* AppDelegate.m in Sources */,
-				C3899CBE15BD9CB100ED971A /* ConfigurationReader.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2596503814FB84E0002DF177 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				C39226B8162030A8009A1866 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +395,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -397,7 +414,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -411,26 +428,34 @@
 		2596508714FB84E1002DF177 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/Shared/PhoneGap/Frameworks,
-					"\"$(SRCROOT)/ThirdParty\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phresco/Phresco-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+				);
 				INFOPLIST_FILE = "Phresco/Phresco-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					CoreFoundation,
 					"-weak_framework",
 					UIKit,
 					"-weak_framework",
 					AVFoundation,
 					"-weak_framework",
 					CoreMedia,
-					"-weak_library",
-					/usr/lib/libSystem.B.dylib,
+					"-weak-lSystem",
+					"-all_load",
+					"-Obj-C",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -441,26 +466,34 @@
 		2596508814FB84E1002DF177 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/Shared/PhoneGap/Frameworks,
-					"\"$(SRCROOT)/ThirdParty\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phresco/Phresco-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+				);
 				INFOPLIST_FILE = "Phresco/Phresco-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					CoreFoundation,
 					"-weak_framework",
 					UIKit,
 					"-weak_framework",
 					AVFoundation,
 					"-weak_framework",
 					CoreMedia,
-					"-weak_library",
-					/usr/lib/libSystem.B.dylib,
+					"-weak-lSystem",
+					"-all_load",
+					"-Obj-C",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
