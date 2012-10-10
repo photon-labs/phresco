@@ -884,6 +884,7 @@ public interface FrameworkConstants {
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
     String SESSION_EXPIRED = "session.expired.message";
+    String KEY_PASSWORD_EMPTY = "KeyPassword is empty";
 
     /*
      * login keys
