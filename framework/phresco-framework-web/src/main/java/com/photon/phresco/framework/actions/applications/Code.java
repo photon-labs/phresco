@@ -223,23 +223,23 @@ public class Code extends FrameworkBaseAction {
             	S_LOGGER.debug("Selected target .... " + target);
             	codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
-            }
-            if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && validateAgainst.contains(TARGET)) {
+            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && TARGET.equals(validateAgainst)) {
             	S_LOGGER.debug("Selected target .... " + target);
         		codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
-            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && validateAgainst.contains(HTML)) {
+            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && HTML.equals(validateAgainst)) {
         		actionType = ActionType.SONAR;
             } else {
             	actionType = ActionType.SONAR;
             }
+            
             if (FUNCTIONALTEST.equals(validateAgainst)) {
             	File projectPath = new File(Utility.getProjectHome()+ File.separator + projectCode + File.separator + TEST_DIR + File.separator + FUNCTIONAL);
             	actionType.setWorkingDirectory(projectPath.toString());
             	actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
-            } else if (validateAgainst.equals(HTML)) {
+            } else if (StringUtils.isNotEmpty(validateAgainst) && validateAgainst.equals(HTML)) {
       			 actionType.setWorkingDirectory(null);
       			 actionType.setProfileId(validateAgainst); 
             } else {
