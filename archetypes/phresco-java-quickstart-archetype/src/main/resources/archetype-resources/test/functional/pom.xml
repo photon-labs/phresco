@@ -74,7 +74,7 @@
                     <plugin>
                         <groupId>com.photon.phresco.plugins</groupId>
                         <artifactId>ci-maven-plugin</artifactId>
-                        <version>1.2.3.3001-SNAPSHOT</version>
+                        <version>1.2.3.3002-SNAPSHOT</version>
                     </plugin>
                 </plugins>
             </build>

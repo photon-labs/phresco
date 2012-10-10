@@ -139,11 +139,12 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Metro.Services</directory> 
+			<directory>source/src/Metro.Services</directory> 
 			<includes>
 				<include>Metro.Services.csproj</include>
 			</includes>
 		</fileSet>
+        
         <fileSet filtered="false" packaged="false"> 
 			<directory>source/src/Metro.Services/Properties</directory> 
 			<includes>
