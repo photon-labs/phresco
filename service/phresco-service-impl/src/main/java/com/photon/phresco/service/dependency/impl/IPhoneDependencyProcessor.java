@@ -35,6 +35,10 @@
  ******************************************************************************/
 package com.photon.phresco.service.dependency.impl;
 
+import java.io.File;
+
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.RepositoryManager;
 
 public class IPhoneDependencyProcessor extends AbstractJsLibDependencyProcessor {
@@ -43,7 +47,12 @@ public class IPhoneDependencyProcessor extends AbstractJsLibDependencyProcessor 
 		super(repoManager);
 	}
 
-
+	@Override
+	public void process(ProjectInfo info, File path) throws PhrescoException {
+		super.process(info, path);
+		extractJsLibraries(path, info.getTechnology().getJsLibraries());
+	}
+	
 	@Override
 	protected String getModulePathKey() {
 		return "iphone.modules.path";
