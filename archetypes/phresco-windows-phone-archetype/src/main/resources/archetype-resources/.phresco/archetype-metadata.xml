@@ -32,6 +32,7 @@
 			<directory>source</directory> 
 			<includes>
 				<include>WP.sln</include>
+				<include>WP.suo</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
@@ -49,7 +50,10 @@
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/src/Common/SharedAssemblies</directory> 
 			<includes>
-				<include>**/*</include>
+				<include>BugSense.dll</include>
+				<include>Microsoft.Silverlight.Testing.dll</include>
+				<include>Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</include>
+				<include>Newtonsoft.Json.dll</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
@@ -79,6 +83,7 @@
 			<includes>
 				<include>Class1.cs</include>
 				<include>WP.Common.csproj</include>
+				<include>WP.Common.csproj.user</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
@@ -92,6 +97,7 @@
 			<directory>source/src/WP.Controls</directory> 
 			<includes>
 				<include>WP.Controls.csproj</include>
+				<include>WP.Controls.csproj.user</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
@@ -159,6 +165,7 @@
 				<include>SampleUnitTest.cs</include>
 				<include>SplashScreenImage.jpg</include>
 				<include>UnitTest.csproj</include>
+				<include>UnitTest.csproj.user</include>
 			</includes>
 		</fileSet>
 	</fileSets>
