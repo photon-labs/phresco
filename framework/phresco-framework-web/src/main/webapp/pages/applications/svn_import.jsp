@@ -173,8 +173,14 @@
 			var repoUrl = $("input[name='repourl']").val();
 			$('.missingData').empty();
 			// When isValidUrl returns false URL is missing information is displayed
-			if(isValidUrl(repoUrl)){
+			if(isBlank(repoUrl)){
 				$("#errMsg").html("URL is missing");
+				$("#repoUrl").focus();
+				return false;
+			}
+			
+			if(isValidUrl(repoUrl)){
+				$("#errMsg").html("Invalid URL");
 				$("#repoUrl").focus();
 				return false;
 			}
