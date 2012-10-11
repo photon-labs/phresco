@@ -124,7 +124,7 @@
                                 <!-- extracting checkers zip file -->
 								<artifactItem>
 									<groupId>softwares.iphone.files</groupId>
-                                    <artifactId>checker-267</artifactId>
+                                    <artifactId>checker-269</artifactId>
                                     <version>${checker.version}</version>
                                     <classifier>${checkers.classifier}</classifier>
                                     <type>zip</type>
