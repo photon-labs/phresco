@@ -493,7 +493,9 @@ public class ApplicationsUtil implements FrameworkConstants {
 		PomProcessor pomProcessor = new PomProcessor(pomPath);
 		StringBuilder projPath = new StringBuilder(Utility.getProjectHome());
         projPath.append(projectCode);
+        projPath.append(File.separator);
         projPath.append(pomProcessor.getSourceDirectory());
+        S_LOGGER.debug("projPath.toString() ====> " + projPath.toString());
         File file = new File(projPath.toString());
         FilenameFilter filter = new FileListFilter("", IPHONE_XCODE_PROJ_EXTN);
         File[] listFiles = file.listFiles(filter);

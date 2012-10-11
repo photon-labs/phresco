@@ -161,7 +161,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			try {
 				extractArchive(response, info);
 				updateProjectPOM(info);
-				if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId)) {
+				if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId) ||TechnologyTypes.WIN_PHONE.equalsIgnoreCase(techId) ) {
 					ItemGroupUpdater.update(info, projectPath);
 				}
 			} catch (FileNotFoundException e) {
@@ -265,7 +265,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				extractArchive(response, delta);
 			}
 			File projectPath = new File(Utility.getProjectHome() + delta.getCode() + File.separator);
-			if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId)) {
+			if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId) ||TechnologyTypes.WIN_PHONE.equalsIgnoreCase(techId) ) {
 				ItemGroupUpdater.update(projectInfo, projectPath);
 			}
 			ProjectUtils.updateProjectInfo(projectInfo, path);
@@ -2077,7 +2077,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		 }
 	 }
 
-	 public void updateTestConfiguration(Project project, String selectedEnvs, String browser, String resultConfigXml) throws PhrescoException {
+	 public void updateTestConfiguration(Project project, String selectedEnvs, String browser, String resultConfigXml, String resolution) throws PhrescoException {
 		 try {
 			 S_LOGGER.debug("Enabling update test configuration !!!");
 			 adaptFunctionalConfig = true;
@@ -2087,7 +2087,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			 ConfigurationReader configReader = new ConfigurationReader(new File(resultConfigXml));
 			 ConfigurationWriter configWriter = new ConfigurationWriter(configReader, false);
 			 for (SettingsInfo settingsInfo : settingsInfos) {
-				 configWriter.updateTestConfiguration(settingsInfo, browser, resultConfigXml);
+				configWriter.updateTestConfiguration(settingsInfo, browser, resultConfigXml, resolution);
 			 }
 			 configWriter.saveXml(new File(resultConfigXml));
 			 adaptFunctionalConfig = false;

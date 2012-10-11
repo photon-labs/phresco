@@ -26,13 +26,13 @@
 	<name>${artifactId}</name>
 	<packaging>xcode</packaging>
 	<build>
-	<sourceDirectory>/source</sourceDirectory>
+	<sourceDirectory>source</sourceDirectory>
 	<directory>do_not_checkin/target</directory>
 	  <plugins>
 		<plugin>
 			<groupId>com.photon.phresco.plugins.xcode</groupId>
 			<artifactId>xcode-maven-plugin</artifactId>
-			<version>1.2.3.2001-SNAPSHOT</version>
+			<version>1.2.3.3003-SNAPSHOT</version>
 			<extensions>true</extensions>
 			<configuration>
 				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>

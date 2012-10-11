@@ -21,8 +21,9 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 		
 		<!-- copying maven settings.xml file -->
 	   <fileSet>
-			<directory>${project.basedir}/delivery/tools/maven/conf</directory>
+			<directory>${project.basedir}/settings/maven/</directory>
 			<outputDirectory>tools/maven/conf</outputDirectory>
+            <filtered>true</filtered>
 			<fileMode>0777</fileMode>
 			<includes>
 				<include>*.xml</include>
@@ -37,7 +38,16 @@ xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assemb
 				<include>pom.xml</include>
 			</includes>
 		</fileSet>
-			
+		
+        <fileSet>
+			<directory>${project.basedir}/delivery/docs</directory>
+			<outputDirectory>docs/</outputDirectory>
+			<fileMode>0777</fileMode>
+			<excludes>
+				<exclude>.gitignore</exclude>
+			</excludes>
+		</fileSet>
+				
 	</fileSets>
 
 </assembly>

@@ -130,7 +130,7 @@ public abstract class AbstractAndroidMojo extends AbstractMojo {
 	 * </p>
 	 * 
 	 * @parameter expression="${android.nativeLibrariesDirectory}"
-	 *            default-value="${project.basedir}/libs"
+	 *            default-value="${project.basedir}/source/libs"
 	 */
 	protected File nativeLibrariesDirectory;
 

@@ -29,6 +29,7 @@ public class PhrescoUiConstants {
 	public String HOST = "host";
 	public String BROWSER = "Browser";	
 	public String PORT= "port";
+    public String RESOLUTION = "resolution";
 	// ***************LOGINPAGE*****************
     public String TEXTCAPTURED="loginText";
 	// ***************LOGINPAGE*****************

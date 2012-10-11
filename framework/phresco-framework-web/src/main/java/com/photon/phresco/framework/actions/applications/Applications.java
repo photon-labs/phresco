@@ -41,9 +41,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand.ListMode;
+import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.tmatesoft.svn.core.SVNAuthenticationException;
 import org.tmatesoft.svn.core.SVNException;
 
@@ -85,6 +88,10 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+
+import org.apache.commons.io.FileExistsException;
+import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 
 public class Applications extends FrameworkBaseAction {
 
@@ -651,15 +658,19 @@ public class Applications extends FrameworkBaseAction {
 			svnImportMsg = getText(IMPORT_SUCCESS_PROJECT);
 			//update connection in pom.xml
 			updateSCMConnection(projectInfo.getCode(), repositoryUrl);
-		} catch(org.apache.commons.io.FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
+		} catch(FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(PROJECT_ALREADY);
-		} catch(org.eclipse.jgit.api.errors.TransportException e) { //Invalid remote: origin (URL)
+		} catch(TransportException e) { //Invalid remote: origin (URL)
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
-			svnImportMsg = getText(INVALID_URL);
-		} catch(org.eclipse.jgit.api.errors.InvalidRemoteException e) { //Invalid remote: origin (URL)
+			if (e.getLocalizedMessage().contains(getText(UNAUTHORIZED))) {
+				svnImportMsg = getText(INVALID_CREDENTIALS);
+			} else {
+				svnImportMsg = getText(INVALID_URL);
+			}
+		} catch(InvalidRemoteException e) { //Invalid remote: origin (URL)
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(INVALID_URL);
@@ -703,6 +714,7 @@ public class Applications extends FrameworkBaseAction {
 
 	public String updateGitProject() {
 		S_LOGGER.debug("Entering Method  Applications.updateGitProject()");
+		Git git = null;
 		try {
 			S_LOGGER.debug("update SCM Connection " + repositoryUrl);
 			S_LOGGER.debug("userName " + userName);
@@ -712,20 +724,22 @@ public class Applications extends FrameworkBaseAction {
 			
 			File updateDir = new File(Utility.getProjectHome() , projectCode);
 			S_LOGGER.debug("updateDir GIT... " + updateDir);
-			Git git = Git.open(updateDir); //checkout is the folder with .git
-			git.pull().call(); //succeeds
-			
+			git = Git.open(updateDir); //checkout is the folder with .git
+			UsernamePasswordCredentialsProvider userCredential = new UsernamePasswordCredentialsProvider(userName, password);
+			PullCommand pull = git.pull();
+			pull.setCredentialsProvider(userCredential);
+			pull.call();
 			svnImport = true;
 			svnImportMsg = getText(SUCCESS_PROJECT_UPDATE);
-		} catch(org.apache.commons.io.FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
+		} catch(FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
-		} catch(org.eclipse.jgit.api.errors.TransportException e) { //Invalid remote: origin (URL)
+		} catch(TransportException e) { //Invalid remote: origin (URL)
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(INVALID_URL);
-		} catch(org.eclipse.jgit.api.errors.InvalidRemoteException e) { //Invalid remote: origin (URL)
+		} catch(InvalidRemoteException e) { //Invalid remote: origin (URL)
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(INVALID_URL);
@@ -737,6 +751,10 @@ public class Applications extends FrameworkBaseAction {
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
 			svnImportMsg = getText(FAILURE_PROJECT_UPDATE);
+		} finally {
+			if (git != null) {
+				git.getRepository().close();
+			}
 		}
 		return SUCCESS;
 	}
@@ -749,6 +767,11 @@ public class Applications extends FrameworkBaseAction {
 			S_LOGGER.debug("Repo type " + repoType);
 			S_LOGGER.debug("projectCode " + projectCode);
 			updateSCMConnection(projectCode, repositoryUrl);
+			
+			if (StringUtils.isEmpty(credential)) {
+				String decryptedPass = new String(Base64.decodeBase64(password));
+				password = decryptedPass;
+			}
 			
 			SVNAccessor svnAccessor = new SVNAccessor(repositoryUrl, userName, password);
 			S_LOGGER.debug("Import Application repository Url" + repositoryUrl + " Username " + userName);
@@ -1347,11 +1370,16 @@ public class Applications extends FrameworkBaseAction {
 	public boolean importFromGit(String url, File directory) throws Exception {
 		S_LOGGER.debug("Entering Method  Applications.importFromGit()");
 		S_LOGGER.debug("importing git " + url);
-	    Git repo = Git.cloneRepository().setURI(url).setDirectory(directory).call();
-	    for (Ref b : repo.branchList().setListMode(ListMode.ALL).call()) {
+		UsernamePasswordCredentialsProvider userCredential = new UsernamePasswordCredentialsProvider(userName, password);
+		CloneCommand cloneRepository = Git.cloneRepository();
+		CloneCommand cloneCommand = cloneRepository.setCredentialsProvider(userCredential);
+		CloneCommand callCommand = cloneCommand.setURI(url).setDirectory(directory);
+		Git call = callCommand.call();
+//	    Git repo = Git.cloneRepository().setCredentialsProvider(userCredential).setURI(url).setDirectory(directory).call();
+	    for (Ref b : call.branchList().setListMode(ListMode.ALL).call()) {
 	    	S_LOGGER.debug("(standard): cloned branch " + b.getName());
 	    }
-	    repo.getRepository().close();
+	    call.getRepository().close();
 	    return true;
 	}
 	

@@ -133,6 +133,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     private String testAgainst = null;
     private String jarName = null;
     private File systemPath = null;
+    private String resolution = null; 
     
 	private List<String> configName = null;
 	private List<String> buildInfoEnvs = null;
@@ -321,8 +322,10 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
            
             S_LOGGER.debug("settingsInfoMap ========>" + settingsInfoMap);
     		 technologyId = project.getProjectInfo().getTechnology().getId();            
-            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
-                FunctionalUtil.adaptTestConfig(project, envs, browser);
+
+
+            if (StringUtils.isEmpty(testModule) && !TechnologyTypes.ANDROIDS.contains(technologyId) && !TechnologyTypes.IPHONES.contains(technologyId) && !TechnologyTypes.BLACKBERRY_HYBRID.equals(technologyId) && !TechnologyTypes.SHAREPOINT.equals(technologyId) && !TechnologyTypes.DOT_NET.equals(technologyId) && !TechnologyTypes.JAVA_STANDALONE.equals(technologyId)) {
+                FunctionalUtil.adaptTestConfig(project, envs, browser, resolution);
             } /*else {
             	actionType = ActionType.INSTALL;
             }*/
@@ -1494,7 +1497,18 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             getHttpRequest().setAttribute(REQ_PROJECT, project);
             List<BuildInfo> buildInfos = administrator.getBuildInfos(project);
             environments = administrator.getEnvironments(project);
-
+            
+            List<String> screenResolution = new ArrayList<String>();
+            screenResolution.add(FrameworkConstants._320x480);
+            screenResolution.add(FrameworkConstants._1024x768);
+            screenResolution.add(FrameworkConstants._1280x800);
+            screenResolution.add(FrameworkConstants._1280x960);
+            screenResolution.add(FrameworkConstants._1280x1024);
+            screenResolution.add(FrameworkConstants._1360x768);
+            screenResolution.add(FrameworkConstants._1440x900);
+            screenResolution.add(FrameworkConstants._1600x900);
+            getHttpRequest().setAttribute(REQ_RESOLUTIONS, screenResolution);
+            
             getFunctionalTestBrowsers(technology);
 
             getHttpRequest().setAttribute(REQ_TEST_BUILD_INFOS, buildInfos);
@@ -1509,67 +1523,72 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
         return APP_GENERATE_TEST;
     }
 
-	public void getFunctionalTestBrowsers(String technology) {
-		String osType = getOsName();
-		if (WINDOWS.equals(osType)) {
-		    Map<String, String> windowsBrowsersMap = new HashMap<String, String>();
-		    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
-		    	windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		    	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
-		        windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else {
-		    	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-		        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    }
-		    S_LOGGER.debug("Windows machine browsers list " + windowsBrowsersMap);
-		    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, windowsBrowsersMap);
-		}
+	public void getFunctionalTestBrowsers(String technology) throws PhrescoException {
+		try {
+			FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
+			String osType = frameworkUtil.getOsType();
+			if (WINDOWS.equals(osType)) {
+			    Map<String, String> windowsBrowsersMap = new HashMap<String, String>();
+			    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
+			    	windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			    	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_WEB_DRIVER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
+			        windowsBrowsersMap.put(WIN_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else {
+			    	windowsBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+			        windowsBrowsersMap.put(WIN_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    }
+			    S_LOGGER.debug("Windows machine browsers list " + windowsBrowsersMap);
+			    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, windowsBrowsersMap);
+			}
 
-		if (MAC.equals(osType)) {
-		    Map<String, String> macBrowsersMap = new HashMap<String, String>();
-		    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
-		    	macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		    	macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		    	macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
-		        macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		        macBrowsersMap.put(MAC_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
-		        macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		        macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else {
-		        macBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-		        macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    }
-		    S_LOGGER.debug("Mac machine browsers list " + macBrowsersMap);
-		    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, macBrowsersMap);
-		}
+			if (MAC.equals(osType)) {
+			    Map<String, String> macBrowsersMap = new HashMap<String, String>();
+			    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
+			    	macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			    	macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			    	macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
+			        macBrowsersMap.put(MAC_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			        macBrowsersMap.put(MAC_BROWSER_CHROME_KEY, BROWSER_CHROME_VALUE);
+			        macBrowsersMap.put(MAC_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			        macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else {
+			        macBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+			        macBrowsersMap.put(MAC_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    }
+			    S_LOGGER.debug("Mac machine browsers list " + macBrowsersMap);
+			    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, macBrowsersMap);
+			}
 
-		if (LINUX.equals(osType)) {
-		    Map<String, String> linuxBrowsersMap = new HashMap<String, String>();
-		    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
-		    	linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		    	linuxBrowsersMap.put(LINUX_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		    	linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
-		        linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
-		        linuxBrowsersMap.put(LINUX_BROWSER_CHROME_KEY,BROWSER_CHROME_VALUE);
-		        linuxBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
-		        linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    } else {
-		        linuxBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
-		        linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
-		    }
-		    
-		    S_LOGGER.debug("Linux machine browsers list " + linuxBrowsersMap);
-		    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, linuxBrowsersMap);
+			if (LINUX.equals(osType)) {
+			    Map<String, String> linuxBrowsersMap = new HashMap<String, String>();
+			    if (TechnologyTypes.PHP.equals(technology) || TechnologyTypes.PHP_DRUPAL6.equals(technology) || TechnologyTypes.PHP_DRUPAL7.equals(technology) || TechnologyTypes.WORDPRESS.equals(technology)) {
+			    	linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			    	linuxBrowsersMap.put(LINUX_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			    	linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else if (!TechnologyTypes.SHAREPOINT.equals(technology) && !TechnologyTypes.DOT_NET.equals(technology)) {
+			        linuxBrowsersMap.put(LINUX_BROWSER_FIREFOX_KEY, BROWSER_FIREFOX_VALUE);
+			        linuxBrowsersMap.put(LINUX_BROWSER_CHROME_KEY,BROWSER_CHROME_VALUE);
+			        linuxBrowsersMap.put(WIN_BROWSER_OPERA_KEY, BROWSER_OPERA_VALUE);
+			        linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    } else {
+			        linuxBrowsersMap.put(WIN_BROWSER_INTERNET_EXPLORER_KEY, BROWSER_INTERNET_EXPLORER_VALUE);
+			        linuxBrowsersMap.put(LINUX_BROWSER_SAFARI_KEY, BROWSER_SAFARI_VALUE);
+			    }
+			    
+			    S_LOGGER.debug("Linux machine browsers list " + linuxBrowsersMap);
+			    getHttpRequest().setAttribute(REQ_TEST_BROWSERS, linuxBrowsersMap);
+			}
+		} catch (Exception e) {
+			throw new PhrescoException(e);
 		}
 	}
     
@@ -1609,25 +1628,6 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     		e.printStackTrace();
     	}
     	return null;
-    }
-
-    // This method returns what type of OS we are using
-    public String getOsName() {
-        String OS = null;
-        String osType = null;
-        if(OS == null) {
-            OS = System.getProperty(OS_NAME).toLowerCase(); 
-        }
-        if (OS.indexOf(WINDOWS_CHECK) >= 0) {
-            osType = WINDOWS;
-        }
-        if (OS.indexOf(MAC_CHECK) >= 0) {
-            osType = MAC;
-        }
-        if (OS.indexOf(LINUX_CHECK) >= 0) {
-            osType = LINUX;
-        }
-        return osType;
     }
 
     public String testReport() {
@@ -1985,11 +1985,6 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 				// Get xcode targets
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
-				// get list of sdks
-				List<String> iphoneSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
-				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator));
-				iphoneSdks.addAll(IosSdkUtil.getMacSdks(MacSdkType.macosx));
-				getHttpRequest().setAttribute(REQ_IPHONE_SDKS, iphoneSdks);
             }
         } catch (Exception e) {
                S_LOGGER.error("Entered into catch block of Quality.testIPhone()"+ e);
@@ -2745,5 +2740,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setIosTestType(String iosTestType) {
 		this.iosTestType = iosTestType;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
 	}
 }

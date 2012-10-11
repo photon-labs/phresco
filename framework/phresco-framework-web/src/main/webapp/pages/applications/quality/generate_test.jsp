@@ -50,6 +50,7 @@
     List<String> projectModules = (List<String>) request.getAttribute(FrameworkConstants.REQ_PROJECT_MODULES);
     Map<String, String> browserMap = (Map<String, String>)request.getAttribute(FrameworkConstants.REQ_TEST_BROWSERS);
     List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
+    List<String> resolutions = (List<String>) request.getAttribute(FrameworkConstants.REQ_RESOLUTIONS);
 %>
 <div id="tests" style="display:block">
 <form action="functional" method="post" autocomplete="off" class="build_form">
@@ -129,17 +130,32 @@
 				</div>
             </div>
             
-            <div>
-            	<div class="clearfix" id="agnBuild" style="display: none;">
-				    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
-				    <div class="input">
-				        <select id="environments" name="environment" class="xlarge agnBuildEnv">
-				        
-				        </select>
-					</div>
+           	<div class="clearfix" id="agnBuild" style="display: none;">
+			    <label for="xlInput" class="xlInput popup-label" id="environmentlabel"><span class="red">*</span><s:text name="label.environment"/></label>
+			    <div class="input">
+			        <select id="environments" name="environment" class="xlarge agnBuildEnv">
+			        
+			        </select>
 				</div>
-            </div>
-            
+			</div>
+			<% 
+			   if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || 
+					TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) {
+			%>
+	            <div class="clearfix">
+	                <label for="xlInput" class="xlInput popup-label"><span class="red">*&nbsp;</span><s:text name="label.resolution"/></label>
+	                <div class="input">
+	                    <select id="resolution" name="resolution" class="xlarge resolution">
+	                        <option class="jecEditableOption"></option>
+							<%
+							   for(String resolution : resolutions) {
+							%>
+	                            <option value="<%= resolution%>"> <%= resolution %></option>
+	                        <% } %>
+	                    </select>
+	                </div>
+	            </div>
+            <% } %>
             <div id="agnServer" class="server" style="display: none;">
 	            <div class="clearfix">
 				    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
@@ -199,17 +215,19 @@
 		</div>
 		
 		<div class="modal-footer">
-		    <div class="action popup-action">
-		    	<div id="errMsg" style="width:72%; text-align: left;"></div>
 	        	<input type="button" class="btn primary" value="<s:text name="label.cancel"/>" id="cancel">
 	        	<input type="button" id="test" class="btn primary" value="<s:text name="label.test"/>">
-	        </div>
+	        	<div id="errMsg" style="width:72%; text-align: left;"></div>
 		</div>
 	</div>
 </form>
 </div>
 
 <script type="text/javascript">
+	$(function () {
+	    $('#resolution').jec();
+	});
+    
 	$(document).ready(function() {
 		<%
 			if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
@@ -237,8 +255,12 @@
 		%>
 			if ($('#buildId').val() == null){
 				$('#showBuild').attr('disabled', 'disabled');
-				$('#showServer').prop('checked', true);
-				$('#showjarrelease').prop('checked', true);
+				$('#showServer').prop('checked', true);// for other tech
+		        <%
+		            if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
+	            %>
+				$('#showjarrelease').prop('checked', true); // for java stand alone
+				<% } %>
 				$(".agnServerEnv").prop("id", "environments");
 				$(".agnBuildEnv").prop("id", "");
 				hideAll();
@@ -305,24 +327,40 @@
 		$("#buildId").change(function() {
 			showBuildEnvs();
 		});
-
+	
 		$('#test').click(function() {
-			<%
-				if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
-			%>
-					var selectedval = $('input:radio[name=testAgainst]:checked').val();
-					if(selectedval == "jar"){
-					    if($('#jarlocation').val() == null || $('#jarlocation').val() == "") {
-					        showErrorMsg('errMsg', "Select JAR");
-						    $("#jarlocation").val("");
-						   	$("#jarlocation").focus();
-							return false;
-						}
-					}
-			<%
-				}
-			%>
-			checkForConfigType('<%= Constants.SETTINGS_TEMPLATE_SERVER %>');
+			 <% 
+	            if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || 
+	                 TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) {
+            %>
+                
+                $("#errMsg").html('');
+                var editedOption = $('#resolution option:selected').val();
+                if (!checkForResolutionFormat(editedOption)) {
+                    return false;
+                }
+                $("#errMsg").html('');
+            <%
+               }
+            %>
+	            
+            <%
+                if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
+            %>
+                var selectedval = $('input:radio[name=testAgainst]:checked').val();
+                if(selectedval == "jar"){
+                    if($('#jarlocation').val() == null || $('#jarlocation').val() == "") {
+                        showErrorMsg('errMsg', "Select JAR");
+                        $("#jarlocation").val("");
+                        $("#jarlocation").focus();
+                        return false;
+                    }
+                }
+            <%
+               }
+            %>
+            
+            checkForConfigType('<%= Constants.SETTINGS_TEMPLATE_SERVER %>');
 		});
 		showPopup();
 	});
@@ -334,7 +372,16 @@
     	params = params.concat($('#buildId').val());
     	performAction("fetchBuildInfoEnvs", params, '', true);
     }
-
+    
+	function checkForResolutionFormat(resolutionVal) {
+		var resolutionFormat = /^([0-9])+\x([0-9])+$/;
+		if (!resolutionFormat.test(resolutionVal)) {
+			$("#errMsg").html('Enter a valid resolution');
+			return false;
+		}
+		return true;
+	}
+	
 	function successEnvValidation(data) {
 		<%
 			if(!TechnologyTypes.JAVA_STANDALONE.equals(techId)) {

@@ -227,6 +227,8 @@ public interface FrameworkConstants {
     String TARGET_DIR = "target";
     String JMETER_REPORTS = "jmeter-reports";
     String FUNCTIONAL = "functional";
+    String HTML = "html";
+    String TARGET = "target";
     String UNIT = "unit";
     String LOAD = "load";
     String PERFORMACE = "performance";
@@ -305,8 +307,10 @@ public interface FrameworkConstants {
     String HEAD_REVISION = "HEAD";
     String REPORTS_JASPER = "reports/jasper/";
     String PLATFORM = "platform";
+    String WP_TYPE = "type";
     String POM_LINE_BREAK = "linebreakpos";
     String POM_LINE_MAX_COL_COUNT = "10000";
+    String KEYPASS = "keyPass";
     
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
@@ -781,6 +785,7 @@ public interface FrameworkConstants {
      */
     String IMPORT_PROJECT_FAIL ="import.project.fail";
     String INVALID_CREDENTIALS = "import.invalid.credential";
+    String UNAUTHORIZED = "import.unauthorized";
     String INVALID_FOLDER = "import.invalid.folder";
     String PROJECT_ALREADY = "import.project.already";
     String SVN_FAILED ="failed";
@@ -831,6 +836,8 @@ public interface FrameworkConstants {
     String CLONE_FROM_CONFIG_TYPE = "cloneFromConfigType";
 	String CLONE_FROM_ENV_NAME = "cloneFromEnvName";
 	String CLONE_FROM_CONFIG_NAME = "cloneFromConfigName";
+	String CONFIGURATION_NAME_EMPTY = "Configuration name is Empty";
+	String ADD_ONE_ENVIRONMENT = "Please add atleast one Environment";
     
     /*
      * Create Environment keys
@@ -878,6 +885,7 @@ public interface FrameworkConstants {
     String ERROR_EXCEPTION = "login.exception.message";
     String SUCCESS_LOGOUT = "logout.success.message";
     String SESSION_EXPIRED = "session.expired.message";
+    String KEY_PASSWORD_EMPTY = "KeyPassword is empty";
 
     /*
      * login keys
@@ -1411,15 +1419,31 @@ public interface FrameworkConstants {
 		  String CONTENT = "Content";
 
 		  String COMMON = "\\Common";
+		  String SHARED_ASSEMBLIES = "\\SharedAssemblies";
 		  String DOUBLE_DOT  = "..";
 		  String PROJECT_ROOT = "Metro.UI";
-		  String SLN_FILE = "Metro.sln";
 		  String CSPROJ_FILE = ".csproj";
+		  
+		  // windows phone project
+		  String WP_PROJECT_ROOT = "WP";
+		  String WP_SLN_FILE = "WP.sln";
+		  String WIN_SRC_FOLDER = "\\src";
 
 		  
 		  //SettingsTemplate keys for IIS server
 		  String SETTINGS_TEMP_KEY_APP_NAME = "applicationName";
 		  String SETTINGS_TEMP_KEY_SITE_NAME = "siteName";
 		  String SETTINGS_TEMP_SITECORE_INST_PATH = "sitecoreInstPath";
-
+		  
+	  /* Resolutions */ 
+		String _1600x900 = "1600x900";
+		String _1440x900 = "1440x900";
+		String _1360x768 = "1360x768";
+		String _1280x1024 = "1280x1024";
+		String _1280x960 = "1280x960";
+		String _1280x800 = "1280x800";
+		String _1024x768 = "1024x768";
+		String _320x480 = "320x480";
+		String REQ_RESOLUTIONS = "resolutions";
+		String RESOLUTION = "resolution";
 }

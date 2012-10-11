@@ -82,6 +82,8 @@ public class ProjectRuntimeManagerImpl implements ProjectRuntimeManager {
 	    pluginMap.put(TechnologyTypes.WIN_METRO, Constants.MVN_PLUGIN_WINDOWS_PHONE_ID);
 	    pluginMap.put(TechnologyTypes.ANDROID_LIBRARY, Constants.MVN_PLUGIN_ANDROID_ID);
 	    pluginMap.put(TechnologyTypes.SITE_CORE, Constants.MVN_PLUGIN_SITECORE_ID);
+	    pluginMap.put(TechnologyTypes.BLACKBERRY_HYBRID, Constants.MVN_PLUGIN_BLACKBERRY_ID);
+	    pluginMap.put(TechnologyTypes.WIN_PHONE, Constants.MVN_PLUGIN_WINDOWS_PHONE_ID);
 	}
 	
 	/**

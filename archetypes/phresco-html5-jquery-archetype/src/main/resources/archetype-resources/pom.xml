@@ -47,7 +47,7 @@
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2.3.2001-SNAPSHOT</version>
+				<version>1.2.3.3003-SNAPSHOT</version>
 			</extension>
 		</extensions>
 		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.2.3.2001-SNAPSHOT</version>
+                <version>1.2.3.3003-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
@@ -264,6 +264,18 @@
 				</properties> 
 		</profile>
 		
+		 <profile>
+            <id>html</id>
+             <properties>
+				<sonar.language>web</sonar.language>
+				<sonar.branch>html</sonar.branch>
+				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+				<phresco.source.directory>src/main/webapp/</phresco.source.directory>
+				<sonar.profile>W3C Markup Validation</sonar.profile>
+				<sonar.w3cmarkup.url>http://127.0.0.2</sonar.w3cmarkup.url>
+				<sonar.web.fileExtensions>html</sonar.web.fileExtensions>
+			  </properties>
+        </profile>
     </profiles>
 
 </project>

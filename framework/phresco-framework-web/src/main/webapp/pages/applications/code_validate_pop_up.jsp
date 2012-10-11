@@ -48,11 +48,10 @@
 	</div>
 
 	<div class="modal-body">
-		
-		<% if (TechnologyTypes.IPHONES.contains(technology)) { %>
+				
+		<% if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) { %>
 
-			<!-- TARGET -->
-			<div class="clearfix">
+			<div id="targets" class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
 				<div class="input">
 					<select id="target" name="target" class="xlarge" >
@@ -68,6 +67,7 @@
 			       </select>
 				</div>
 			</div>
+			
 		<% }  else { %>
 		
 		<fieldset class="popup-fieldset">
@@ -77,18 +77,30 @@
 			<div class="clearfix">
 				<div class="xlInput">
 					<ul class="inputs-list">
-						<li class="popup-li"> 
-							<input type="radio" name="validateAgainst" value="source" checked>
-							<span class="textarea_span popup-span"><s:text name="label.validateAgainst.source"/></span>
-							<input id="funTestRadio" type="radio" name="validateAgainst" value="functional" >
-							<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
+						<li class="popup-li">
+							<% if (!TechnologyTypes.IPHONES.contains(technology))  { %>
+								<input type="radio" name="validateAgainst" value="source" checked>
+								<span class="textarea_span popup-span"><s:text name="label.validateAgainst.source"/></span>
+								<input id="funTestRadio" type="radio" name="validateAgainst" value="functional" >
+								<span  id="funTestText" class="textarea_span popup-span"><s:text name="label.validateAgainst.functionalTest"/></span>
+							<% } %>
+							<% if (TechnologyTypes.IPHONES.contains(technology))  { %>
+									<input type="radio" name="validateAgainst" value="target" checked>
+									<span class="textarea_span popup-span"><s:text name="label.target"/></span>
+							<% } %>
+							<% if (TechnologyTypes.ANDROID_HYBRID.equals(technology) || TechnologyTypes.BLACKBERRY_HYBRID.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
+									<input type="radio" name="validateAgainst" value="html" >
+									<span class="textarea_span popup-span"><s:text name="label.tech.html"/></span>
+							<% } %>
 						</li>
 					</ul>
 					<ul id="skipTestUl" class="inputs-list" style="text-align: center;" >
+					<% if (!(TechnologyTypes.IPHONES.contains(technology))) { %>
 						<li class="popup-li"> 
 							<input type="checkbox" id="skipTest" name="skipTest" value="true" />
 							<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
 						</li>
+					<% } %>	
 					</ul>
 				</div>	
 			</div>
@@ -102,19 +114,41 @@
 					<div class="xlInput">
 						<ul class="inputs-list">
 							<li class="popup-li"> 
+							
 								<span class="popup-span"><s:text name="label.technology"/></span>
 								<select class="xlarge" id="codeTechnology" name="codeTechnology">
 									<option value="java" ><s:text name="label.tech.java"/></option>
 									<option value="js" ><s:text name="label.tech.javascript"/></option>
 									<option value="web" ><s:text name="label.tech.jsp"/></option>
+									<option value="html" ><s:text name="label.tech.html"/></option>
 								</select>
+								
+								
 							</li>
 						</ul>
 					</div>	
 				</div>
 
 			<% } %>
-
+			
+			<% if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>	
+				<div class="clearfix" id="techDiv">
+				<label class="xlInput popup-label" for="xlInput"><s:text name="label.target"/></label>
+					<div class="xlInput"  style=" float: left; margin-left: 25px;">
+						<select id="target" name="target" class="xlarge" >
+						<% 
+							if (xcodeConfigs != null) {
+								for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
+						%>
+								<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
+						<% 
+								} 
+							} 
+						%>	
+				       </select>
+					</div>	
+				</div>
+			<% } %>
 		</fieldset>
 		<% } %>
 
@@ -145,13 +179,18 @@
 		
 		$('input[name="validateAgainst"]').click(function() {
 			var selectedVal = $(this).val();
-			if (selectedVal == "functional") {
+			if (selectedVal == "functional" || selectedVal == "html") {
 				$('#techDiv, #skipTestUl').hide();
 			} else if (selectedVal == "source") {
 				$('#techDiv, #skipTestUl').show();
 			}
+			if (selectedVal == "target") {
+				$('#techDiv, #target').show();
+			} else if (selectedVal == "html") {
+				$('#techDiv, #target').hide();
+			}
 		});
-		
+				
 		 $('#technology').change(function() {
 			var selectedval = $("#codeTechnology option:selected").val();
 			if (selectedval == "js" || selectedval == "jsp") {

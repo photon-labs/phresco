@@ -606,8 +606,9 @@ public interface ProjectAdministrator {
 	
 	/**
 	 * add server details for functional test configuration.xml file
+	 * @param resolution 
 	 */
-	void updateTestConfiguration(Project project, String selectedEnvs, String browser, String resultConfigXml) throws PhrescoException;
+	void updateTestConfiguration(Project project, String selectedEnvs, String browser, String resultConfigXml, String resolution) throws PhrescoException;
 	
 	/**
 	 * Get the default environment from the specified project

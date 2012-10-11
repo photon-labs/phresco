@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.photon.phresco</groupId>
-    <artifactId>PHR_BB_Hybrid</artifactId>
-    <packaging>jar</packaging>
-    <name>PHR_BB_Hybrid</name>
-    <version>1.0.0</version>
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <name>${artifactId}</name>
+    <version>${version}</version>
     <build>
         <sourceDirectory>source</sourceDirectory>
         <directory>do_not_checkin/target</directory>
@@ -14,7 +13,7 @@
             <plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>blackberry-maven-plugin</artifactId>
-				<version>1.2.2.3002-SNAPSHOT</version>
+				<version>1.2.3.3003-SNAPSHOT</version>
 				<extensions>true</extensions>
 			</plugin>         
         </plugins>
@@ -52,6 +51,17 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+		<profile>
+            <id>html</id>
+             <properties>
+				<sonar.language>web</sonar.language>
+				<sonar.branch>html</sonar.branch>
+				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+				<sonar.profile>W3C Markup Validation</sonar.profile>
+				<sonar.w3cmarkup.url>http://127.0.0.2</sonar.w3cmarkup.url>
+				<sonar.web.fileExtensions>html</sonar.web.fileExtensions>
+			  </properties>
         </profile>
     </profiles>
 </project>

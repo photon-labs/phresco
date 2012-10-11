@@ -1,0 +1,75 @@
+/*
+ * ###
+ * Phresco Service Implemenation
+ * 
+ * Copyright (C) 1999 - 2012 Photon Infotech Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ###
+ */
+/*******************************************************************************
+ * Copyright (c) 2011 Photon.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Photon Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.photon.in/legal/ppl-v10.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Contributors:
+ *     Photon - initial API and implementation
+ ******************************************************************************/
+package com.photon.phresco.service.dependency.impl;
+
+import java.io.File;
+
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.model.ProjectInfo;
+import com.photon.phresco.model.Technology;
+import com.photon.phresco.service.api.RepositoryManager;
+
+public class WinPhoneDependencyProcessor extends AbstractJsLibDependencyProcessor {
+
+	public WinPhoneDependencyProcessor(RepositoryManager repoManager) {
+		super(repoManager);
+	}
+
+
+	@Override
+	protected String getModulePathKey() {
+		return "win-phone.modules.path";
+	}
+	
+	@Override
+	public void process(ProjectInfo info, File path) throws PhrescoException {
+		File modulesPath = path;
+		String modulesPathString = getModulePathKey();
+		modulesPath = new File(path, DependencyProcessorMessages.getString(modulesPathString));
+		Technology technology = info.getTechnology();
+		
+		extractModules(modulesPath, technology.getModules());
+		// pilot projects
+		extractPilots(info, path, technology);
+	}
+	
+	
+
+	@Override
+	protected String getJsLibPathKey() {
+		return "" ;
+	}
+}

@@ -112,7 +112,7 @@ public class Code extends FrameworkBaseAction {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
         	Project project = administrator.getProject(projectCode);
 			technology = project.getProjectInfo().getTechnology().getId();
-            if (TechnologyTypes.IPHONES.contains(technology)) {
+            if (TechnologyTypes.IPHONES.contains(technology) && !HTML.equals(report)) {
             	StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
             	codeValidatePath.append(projectCode);
             	codeValidatePath.append(File.separatorChar);
@@ -136,7 +136,15 @@ public class Code extends FrameworkBaseAction {
                 	sb.append(COLON);
                 	sb.append(phrescoFileServerNumber);
                 	sb.append(FORWARD_SLASH);
-                	sb.append(codeValidatePath.toString().replace(File.separator, FORWARD_SLASH));
+                	sb.append(projectCode);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(DO_NOT_CHECKIN_DIR);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(STATIC_ANALYSIS_REPORT);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(report);
+                	sb.append(FORWARD_SLASH);
+                	sb.append(INDEX_HTML);
                 	S_LOGGER.debug("File server path " + sb.toString());
              	} else {
              		getHttpRequest().setAttribute(REQ_ERROR, getText(FAILURE_CODE_REVIEW));
@@ -217,10 +225,18 @@ public class Code extends FrameworkBaseAction {
             runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
             Map<String, String> codeValidateMap = new HashMap<String, String>(1);
             ActionType actionType = null;
-            if (TechnologyTypes.IPHONES.contains(technology)) {
+            
+            
+            if (TechnologyTypes.IPHONE_NATIVE.contains(technology)) {
             	S_LOGGER.debug("Selected target .... " + target);
             	codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
+            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && TARGET.equals(validateAgainst)) {
+            	S_LOGGER.debug("Selected target .... " + target);
+        		codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
+            	actionType = ActionType.IPHONE_CODE_VALIDATE;
+            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && HTML.equals(validateAgainst)) {
+        		actionType = ActionType.SONAR;
             } else {
             	actionType = ActionType.SONAR;
             }
@@ -231,6 +247,9 @@ public class Code extends FrameworkBaseAction {
             	actionType.setProfileId(null);
             	codeValidateMap.put(CODE_VALIDATE_PARAM, FUNCTIONAL);
             	validateAgainst(validateAgainst, project, projectCode);
+            } else if (StringUtils.isNotEmpty(validateAgainst) && validateAgainst.equals(HTML)) {
+      			 actionType.setWorkingDirectory(null);
+      			 actionType.setProfileId(validateAgainst); 
             } else {
             	actionType.setWorkingDirectory(null);
             	actionType.setProfileId(codeTechnology);

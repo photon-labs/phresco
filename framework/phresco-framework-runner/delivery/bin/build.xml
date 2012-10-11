@@ -67,9 +67,18 @@
 			overwrite="true"
 		/>
 	</target>
+    
+     <target name="check-url">
+        <sleep seconds="5"/>
+		<retry retrycount="30">
+			<get src="${phresco.url}" dest="${phresco.home}/workspace/temp/check-url.html" verbose="off">
+			</get>
+		</retry>
+	</target>
 	
 	<target name="copy-sonar">
-		<sleep seconds="20"/>
+        <antcall target="check-url"/>
+         
 		<echo message="*******************************************************************"/>
 		<echo message="*******************************************************************"/>
 		<echo message="*******************************************************************"/>

@@ -37,13 +37,22 @@
 				<include>README.txt</include> 
 			</includes> 
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/cordova</directory> 
+			<includes> 
+				<include>debug</include> 
+				<include>emulate</include> 
+				<include>log</include> 
+			</includes> 
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/Phresco</directory> 
 			<includes>
 				<include>main.m</include>
-				<include>PhoneGap.plist</include>
+				<include>Cordova.plist</include>
 				<include>Phresco-Info.plist</include>
 				<include>Phresco-Prefix.pch</include>
+				<include>CordovaBuildSettings.xcconfig</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -51,6 +60,9 @@
 			<includes>
 				<include>AppDelegate.h</include>
 				<include>AppDelegate.m</include>
+				<include>MainViewController.h</include>
+				<include>MainViewController.m</include>
+				<include>MainViewController.xib</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -91,6 +103,11 @@
 				<include>stop_button.png</include>
 				<include>stop_button@2x.png</include>
 				<include>stop_button~ipad.png</include>
+				<include>controls_bg@2x~ipad.png</include>
+				<include>microphone@2x~ipad.png</include>
+				<include>record_button@2x~ipad.png</include>
+				<include>recording_bg@2x~ipad.png</include>
+				<include>stop_button@2x~ipad.png</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -105,10 +122,51 @@
 				<include>Localizable.strings</include>
 			</includes>
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/de.lproj</directory> 
+			<includes>
+				<include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/icons</directory> 
+			<includes>
+				<include>icon-72.png</include>
+				<include>icon.png</include>
+				<include>icon@2x.png</include>
+				<include>icon_57.png</include>
+				<include>icon_114.png</include>
+				<include>iTunesArtwork</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/se.lproj</directory> 
+			<includes>
+				<include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco/Resources/splash</directory> 
+			<includes>
+				<include>Default@2x~iphone.png</include>
+				<include>Default~iphone.png</include>
+				<include>Default-Landscape@2x~ipad.png</include>
+				<include>Default-Landscape~ipad.png</include>
+				<include>Default-Portrait@2x~ipad.png</include>
+				<include>Default-Portrait~ipad.png</include>
+			</includes>
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/Phresco.xcodeproj</directory> 
 			<includes>
 				<include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj/xcuserdata/administrator.xcuserdatad/xcschemes</directory> 
+			<includes>
+				<include>Phresco.xcscheme</include>
+				<include>xcschememanagement.plist</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -117,17 +175,74 @@
 				<include>contents.xcworkspacedata</include>
 			</includes>
 		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/ThirdParty</directory> 
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace/xcuserdata/administrator.xcuserdatad</directory> 
 			<includes>
-				<include>**/*</include>
+				<include>UserInterfaceState.xcuserstate</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/www</directory> 
 			<includes>
 				<include>index.html</include>
-				<include>phonegap-1.4.0.js</include>
+				<include>cordova-2.1.0.js</include>
+				<include>spec.html</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/css</directory> 
+			<includes>
+				<include>index.css</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/img</directory> 
+			<includes>
+				<include>logo.png</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/js</directory> 
+			<includes>
+				<include>index.js</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/res/icon/ios</directory> 
+			<includes>
+				<include>icon-57-2x.png</include>
+				<include>icon-57.png</include>
+				<include>icon-72-2x.png</include>
+				<include>icon-72.png</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/res/screen/ios</directory> 
+			<includes>
+				<include>screen-ipad-landscape-2x.png</include>
+				<include>screen-ipad-landscape.png</include>
+				<include>screen-ipad-portrait-2x.png</include>
+				<include>screen-ipad-portrait.png</include>
+				<include>screen-iphone-landscape-2x.png</include>
+				<include>screen-iphone-landscape.png</include>
+				<include>screen-iphone-portrait-2x.png</include>
+				<include>screen-iphone-portrait.png</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/spec</directory> 
+			<includes>
+				<include>helper.js</include>
+				<include>index.js</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/www/spec/lib/jasmine-1.2.0</directory> 
+			<includes>
+				<include>jasmine.css</include>
+				<include>jasmine.js</include>
+				<include>jasmine-html.js</include>
+				<include>MIT.LICENSE</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 

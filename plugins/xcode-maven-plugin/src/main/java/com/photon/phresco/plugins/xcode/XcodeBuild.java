@@ -563,8 +563,17 @@ public class XcodeBuild extends AbstractMojo {
 			getLog().info("Configuring the project....");
 			getLog().info("environment name :" + environmentName);
 			getLog().info("base dir name :" + baseDir.getName());
-			File srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
-			getLog().info("Config file :" + srcConfigFile.getAbsolutePath() );
+			File srcConfigFile = null;
+			// pom.xml file have "/source" as as source directory , in that case we are getting only "/source" as string .
+			// if pom.xml file has source directory as "source", we will get whole path of the file
+			if (project.getBuild().getSourceDirectory().startsWith("/source")) {
+				srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
+			} else {
+				srcConfigFile = new File(project.getBuild().getSourceDirectory() + File.separator + plistFile);
+			}
+			getLog().info("baseDir ... " + baseDir.getAbsolutePath());
+			getLog().info("SourceDirectory ... " + project.getBuild().getSourceDirectory());
+			getLog().info("Config file : " + srcConfigFile.getAbsolutePath() );
 			String basedir = baseDir.getName();
 			PluginUtils pu = new PluginUtils();
 			pu.executeUtil(environmentName, basedir, srcConfigFile);

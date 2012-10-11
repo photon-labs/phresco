@@ -84,6 +84,7 @@ public class CIJob {
     private String jarName = "";
     private String mainClassName = "";
     private boolean enablePostBuildStep = false;
+    private String resolution = "";
     
     public CIJob() {
         super();
@@ -448,5 +449,13 @@ public class CIJob {
 
 	public void setEnablePostBuildStep(boolean enablePostBuildStep) {
 		this.enablePostBuildStep = enablePostBuildStep;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
 	}
 }

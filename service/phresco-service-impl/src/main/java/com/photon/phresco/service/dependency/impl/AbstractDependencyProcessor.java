@@ -167,6 +167,9 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		if (!StringUtils.isEmpty(modulePathKey)) {
 			String modulesPathString = DependencyProcessorMessages.getString(modulePathKey);
 			modulesPath = new File(path, modulesPathString);
+			if(!modulesPath.exists()) {
+				modulesPath.mkdirs();
+			}
 		}
 		Technology technology = info.getTechnology();
 		extractModules(modulesPath, technology.getModules());

@@ -65,7 +65,7 @@
    	List<String> buildInfoEnvs = (List<String>) request.getAttribute(FrameworkConstants.BUILD_INFO_ENVS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
    	// mac sdks
-   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	List<String> macSdks = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
    	
    	Map<String, String> jsMap = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_MINIFY_MAP);
    	String fileLoc = (String) request.getAttribute("fileLocation");
@@ -136,10 +136,23 @@
 				<div class="clearfix">
 					<label for="xlInput" class="xlInput popup-label"><s:text name="label.main.class.name"/></label>
 				    <div class="input">
-						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" maxlength="40" title="40 Characters only"/>
+						<input type="text" class="xlarge javastd" id="mainClassName" name="mainClassName" 
+							value="<%= StringUtils.isNotEmpty(mainClassValue) ? mainClassValue : "" %>" 
+							maxlength="40" title="40 Characters only"/>
 				    </div>
 				</div>	
 			<% } %>	
+			
+			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label "><span class="red">*</span> <s:text name="label.keypassword"/></label>
+				    <div class="input">
+						<input id="password" type="password" placeholder="<s:text name="Enter the Password"/>" class="xlarge javastd" 
+							name="keypass" maxlength="20" title="20 Characters only"/>
+				    </div>
+				</div>								
+			<% } %>	
+			
 		
 			<% if (TechnologyTypes.WIN_METRO.contains(technology)) { %>
 					<div class="clearfix">
@@ -163,7 +176,22 @@
 					    </div>
 					</div>	
 			<% } %>	
+			
+			<% if (TechnologyTypes.WIN_PHONE.contains(technology)) { %>
+					
+					<div class="clearfix">
+						<label for="xlInput" class="xlInput popup-label "><s:text name="label.configuration"/></label>
+					    <div class="input">
+							<select name="configuration" class="xlarge">
+								<option value="Release">Release</option>
+								<option value="Debug">Debug</option>
+							</select>
+					    </div>
+					</div>
+			<% } %>	
+			
 		<% } %>
+		
 
 		<div class="clearfix">
 		    <label for="xlInput" class="xlInput popup-label"><span class="red">*</span> <s:text name="label.environment"/></label>
@@ -225,7 +253,18 @@
 				<% } %>
 			</div>
 		</div>
-
+		 <% if (from.equals(FrameworkConstants.DEPLOY) && TechnologyTypes.WIN_PHONE.equals(technology)) { %>
+				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
+					<div class="input">
+							<select class="xlarge" id="deviceTarget" name="deviceTarget">
+									<option value="emulator" ><s:text name="Emulator"/></option>
+									<option value="device" ><s:text name="Device"/></option>
+							</select>
+					</div>
+				</div>
+	    <% } %>
+			    
 		<% 
 			if (TechnologyTypes.ANDROIDS.contains(technology)) { 
 				String pilotProjectName = project.getProjectInfo().getPilotProjectName();
@@ -551,7 +590,7 @@
 		$('#close, #cancel').click(function() {
 			showParentPage();
 		});
-
+				
 		$('#build').click(function() {
 			if ($('input[type=checkbox][name=signing]').is(':checked') && isBlank($('#profileAvailable').val())) {
 				$("#errMsg").html('<%= FrameworkConstants.PROFILE_CREATE_MSG %>');
@@ -564,8 +603,18 @@
 					$(this).attr("disabled", false);
 				}
 			});
-
+			
+			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
+			 	$("#errMsg").html("");
+			 	var keyPwd = $('#password').val();
+	            if (isBlank(keyPwd)) {
+	               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY  %>');
+	               	return false;
+	             }
+             <% } %>
+              
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
+			
 		});
 		
 		$('#userBuildNumber').bind('input propertychange', function (e) { 	//userBuildNumber validation

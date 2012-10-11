@@ -30,7 +30,7 @@ public class PhrescoUiConstants {
 	public String CONTEXT = "context";
 	public String HOST = "host";
 	public String BROWSER = "Browser";
-	
+	public String RESOLUTION="resolution";
 	
 	
 	public String PORT= "port";

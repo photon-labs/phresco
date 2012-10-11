@@ -77,6 +77,9 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 		if(!StringUtils.isEmpty(jsLibPathKey)) {
 			String modulesPathString=DependencyProcessorMessages.getString(jsLibPathKey);
 			libPath = new File(path, modulesPathString);
+			if(!libPath.exists()){
+				libPath.mkdirs();
+			}
 		}
 
 		for (ModuleGroup tupleBean : jsLibraries) {

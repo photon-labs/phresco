@@ -124,7 +124,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         unitTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_UNIT_TEST);
-        unitTestMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_UNIT_TEST);
+        unitTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_UNIT_TEST);
@@ -151,7 +151,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         unitReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_UNIT_TEST_REPORT);
-        unitReportMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_UNIT_TEST_REPORT);
@@ -178,7 +178,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_HYBRID_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_TEST);
-        funcationTestMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_FUNCTIONAL_TEST);
+        funcationTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_FUNCTIONAL_TEST);
@@ -205,7 +205,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationAdaptMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_ADAPT);
-        funcationAdaptMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_FUNCTIONAL_ADAPT);
+        funcationAdaptMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_FUNCTIONAL_ADAPT);
@@ -232,7 +232,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_HYBRID_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
-        funcationReportMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_FUNCTIONAL_TEST_REPORT);
+        funcationReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_FUNCTIONAL_TEST_REPORT);
@@ -259,7 +259,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         performanceTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_PERFORMANCE_TEST);
-        performanceTestMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_PERFORMANCE_TEST);
+        performanceTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_PERFORMANCE_TEST);
         performanceTestMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_PERFORMANCE_TEST);
@@ -286,7 +286,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         performanceReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_PERFORMANCE_TEST_REPORT);
-        performanceReportMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_PERFORMANCE_TEST_REPORT);
+        performanceReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_PERFORMANCE_TEST_REPORT);
         performanceReportMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_PERFORMANCE_TEST_REPORT);
@@ -313,7 +313,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         loadTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_LOAD_TEST);
-        loadTestMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_LOAD_TEST);
+        loadTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_LOAD_TEST);
         loadTestMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_LOAD_TEST);
@@ -340,7 +340,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         loadReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_LOAD_TEST_REPORT);
-        loadReportMap.put(TechnologyTypes.BLACKBERRY, PATH_BLACKBERRY_LOAD_TEST_REPORT);
+        loadReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.DOT_NET, PATH_SHAREPOINT_LOAD_TEST_REPORT);
         loadReportMap.put(TechnologyTypes.WORDPRESS, PATH_DRUPAL_LOAD_TEST_REPORT);
@@ -368,7 +368,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_UNIT_TESTSUITE);
-    	unitTestSuitePathMap.put(TechnologyTypes.BLACKBERRY, XPATH_BLACKBERRY_UNIT_TESTSUITE);
+    	unitTestSuitePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.DOT_NET, XPATH_SHAREPOINT_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.WORDPRESS, XPATH_PHP_WORDPRESS_UNIT_TESTSUITE);
@@ -395,7 +395,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_FUNCTIONAL_TESTSUITE);
-    	functionalTestSuitePathMap.put(TechnologyTypes.BLACKBERRY, XPATH_BLACKBERRY_FUNCTIONAL_TESTSUITE);
+    	functionalTestSuitePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.DOT_NET, XPATH_SHAREPOINT_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.WORDPRESS, XPATH_PHP_WORDPRESS_FUNCTIONAL_TESTSUITE);
@@ -422,7 +422,7 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
 		testCasePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_TESTCASE);
-		testCasePathMap.put(TechnologyTypes.BLACKBERRY, XPATH_BLACKBERRY_TESTCASE);
+		testCasePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.DOT_NET, XPATH_SHAREPOINT_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.WORDPRESS, XPATH_PHP_DRUPAL7_TESTCASE);
@@ -628,4 +628,23 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
 		}
 		return sonarTechReports;
 	}
+	
+    // This method returns what type of OS we are using
+    public String getOsType() {
+        String OS = null;
+        String osType = null;
+        if(OS == null) {
+            OS = System.getProperty(OS_NAME).toLowerCase(); 
+        }
+        if (OS.indexOf(WINDOWS_CHECK) >= 0) {
+            osType = WINDOWS;
+        }
+        if (OS.indexOf(MAC_CHECK) >= 0) {
+            osType = MAC;
+        }
+        if (OS.indexOf(LINUX_CHECK) >= 0) {
+            osType = LINUX;
+        }
+        return osType;
+    }
 }

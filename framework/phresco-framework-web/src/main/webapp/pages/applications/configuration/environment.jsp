@@ -143,8 +143,10 @@
 		
          $("#setAsDefault").click(function() {
              var setAsDefaultEnvsSize = $('#selectedEvn option:selected').size();
-             if(setAsDefaultEnvsSize < 1 || setAsDefaultEnvsSize > 1) {
-            	 showHidePopupMsg($("#popupErrorMsg"), "Please select one environment");
+             if (setAsDefaultEnvsSize < 1 || setAsDefaultEnvsSize > 1) {
+//             	 showHidePopupMsg($("#popupErrorMsg"), "Please select one environment");
+            	 $("#errMsg").html("Please select one environment");
+            	 return false;
              }
              
              var setAsDefaultEnvs = new Array();

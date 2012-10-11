@@ -64,6 +64,11 @@ public class CiFunctionalTestAdapt extends AbstractMojo implements PluginConstan
 	 */
 	protected String browser;
 	
+	/**
+	 * @parameter expression="${resolution}" default-value="1024*768"
+	 */
+	protected String resolution;
+	
     public void execute() throws MojoExecutionException {
     	getLog().info("Adapting the project for functional test execution....");
     	adaptFuntionalTest();
@@ -109,14 +114,14 @@ public class CiFunctionalTestAdapt extends AbstractMojo implements PluginConstan
 	        	pomprocessor.save();
 	        	getLog().info("java standalone dependency added in pom.xml");
     		} else {
-    			overwriteConfigFile(currentProject, environmentName, browser, functionalAdaptConfigXML.getCanonicalPath());
+    			overwriteConfigFile(currentProject, environmentName, browser, functionalAdaptConfigXML.getCanonicalPath(), resolution);
     		}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
     }
     
-    public void overwriteConfigFile(Project currentProject, String environmentName, String browser, String functionalConfigPath) throws MojoExecutionException {
+    public void overwriteConfigFile(Project currentProject, String environmentName, String browser, String functionalConfigPath, String resolution) throws MojoExecutionException {
     	getLog().info("overwriteConfigFile ...." + environmentName);
     	getLog().info("browser ...." + browser);
     	getLog().info("functionalConfigPath ...." + functionalConfigPath);
@@ -126,7 +131,7 @@ public class CiFunctionalTestAdapt extends AbstractMojo implements PluginConstan
         	if(file.exists()){
         		getLog().info("file exists ...." + file.getCanonicalPath());
         		ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
-        		administrator.updateTestConfiguration(currentProject, environmentName, browser, functionalConfigPath);
+        		administrator.updateTestConfiguration(currentProject, environmentName, browser, functionalConfigPath, resolution);
         	} 
         } catch (Exception e) {
         	throw new MojoExecutionException(e.getMessage(), e);

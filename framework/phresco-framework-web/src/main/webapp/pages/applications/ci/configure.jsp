@@ -55,6 +55,7 @@
 	String disableStr = existingJob == null ? "" : "disabled";
     String projectCode = (String) request.getAttribute(FrameworkConstants.REQ_PROJECT_CODE );
 	Project project = (Project)request.getAttribute(FrameworkConstants.REQ_PROJECT);
+	String techId = project.getProjectInfo().getTechnology().getId();
 	String technology = (String)project.getProjectInfo().getTechnology().getId();
     String actionStr = "saveJob";
     actionStr = (existingJob == null || StringUtils.isEmpty(existingJob.getRepoType())) ? "saveJob" : "updateJob";
@@ -63,11 +64,12 @@
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
    	List<Environment> environments = (List<Environment>) request.getAttribute(FrameworkConstants.REQ_ENVIRONMENTS);
    	// mac sdks
-   	List<String> macSdks = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
-   	List<String> macSimulatorSdkVersions = (List<String>) request.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
+   	List<String> macSdks = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	List<String> macSimulatorSdkVersions = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
     Map<String, String> browserMap = (Map<String, String>)request.getAttribute(FrameworkConstants.REQ_TEST_BROWSERS);
     List<String> existingClonedWorkspaces = (List<String>) request.getAttribute(FrameworkConstants.REQ_EXISTING_CLONNED_JOBS);
     List<String> existingJobsNames = (List<String>) request.getAttribute(FrameworkConstants.REQ_EXISTING_JOBS_NAMES);
+    List<String> resolutions = (List<String>) request.getAttribute(FrameworkConstants.REQ_RESOLUTIONS);
 %>
 <div class="popup_Modal configurePopUp" id="ciDetails">
     <form name="ciDetails" action="<%= actionStr %>" method="post" autocomplete="off" class="ci_form" id="ciForm">
@@ -498,7 +500,28 @@
 														</select>
 													</div>
 												</div>
-											<% } %>
+												
+												<% 
+										           if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || 
+										                    TechnologyTypes.HTML5_WIDGET.equals(technology) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) {
+										        %>
+									                <div class="clearfix" id="resolutionConfig">
+									                    <label for="xlInput" class="xlInput popup-label"><span class="red">*&nbsp;</span><s:text name="label.resolution"/></label>
+									                    <div class="input">
+									                        <select id="resolution" name="resolution" class="xlarge resolution">
+									                            <option class="jecEditableOption"></option>
+									                            <%
+									                               for(String resolution : resolutions) {
+									                            %>
+									                                <option value="<%= resolution%>"> <%= resolution %></option>
+									                            <% } %>
+									                        </select>
+									                    </div>
+									                </div>
+											<%
+										          }
+										      } 
+											%>
 											<% if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
 												<div id="javaStandaloneConfig" style="display: none;">
 													<div class="clearfix">
@@ -832,6 +855,10 @@
 </div>
 
 <script type="text/javascript">
+	$(function () {
+	    $('#resolution').jec();
+	});
+
 	var selectedSchedule = $("input:radio[name=schedule]:checked").val();
 	loadSchedule(selectedSchedule);
 	$(document).ready(function() {
@@ -944,6 +971,24 @@
 		});
 		
 		$("#actionBtn").click(function() {
+			$("#errMsg").html('');
+			var operationVal = $('#operation option:selected').val();
+		    // validation for browser resolution
+		    <% 
+                if (TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || 
+                     TechnologyTypes.HTML5_WIDGET.equals(techId) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) {
+            %>
+                if(operationVal == "functionalTest") {
+	                var editedOption = $('#resolution option:selected').val();
+		                if (!checkForResolutionFormat(editedOption)) {
+		                    return false;
+		                }
+	                $("#errMsg").html('');
+	                }
+            <%
+               }
+            %>
+			
 			// do the validation for collabNet info only if the user selects git radio button
 			if($("input:radio[name=enableBuildRelease][value='true']").is(':checked')) {
 // 				if(validateJavaStandAloneTech()) {
@@ -1070,6 +1115,10 @@
 				//java standalone technology
 				$("input:text[name=jarName]").val("<%= existingJob.getJarName() %>");
 				$("input:text[name=mainClassName]").val("<%= existingJob.getMainClassName() %>");
+				
+				// browser and resolution value
+				$("#browser option[value='<%= existingJob.getBrowser() %>']").attr('selected', 'selected');
+				$("#resolution option[value='<%= existingJob.getResolution() %>']").attr('selected', 'selected');
 		<%
 			}
 		%>
@@ -1096,7 +1145,16 @@
 		});
 		showHideAndroidSimulatorNo();		
 	});
-
+    
+	function checkForResolutionFormat(resolutionVal) {
+        var resolutionFormat = /^([0-9])+\x([0-9])+$/;
+        if (!resolutionFormat.test(resolutionVal)) {
+            $("#errMsg").html('Enter a valid resolution');
+            return false;
+        }
+        return true;
+    }
+	
 	function showHideAndroidSimulatorNo() {
 		if($('#androidDevice').val() == "serialNumber") {
 			$('#serialNo_div').show();
@@ -1122,11 +1180,11 @@
 			<% 
 				} else if (TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
 			%>
-				$('#environmentConfig, #browserConfig').hide();
+				$('#environmentConfig, #browserConfig, #resolutionConfig').hide();
 			<%	
 				} else {
 			%>
-					$('#browserConfig').show();
+					$('#browserConfig, #resolutionConfig').show();
 			<% } %>
 		} else if($('#operation').val() == "deploy") {
 			<% 
@@ -1142,7 +1200,7 @@
 			<% 
 				} else {
 			%>
-					$('#browserConfig').hide();
+					$('#browserConfig, #resolutionConfig').hide();
 			<% } %>
 		} else if($('#operation').val() == "build") {
 			<% 
@@ -1166,7 +1224,7 @@
 			<% 
 				} else {
 			%>
-				$('#browserConfig').hide();
+				$('#browserConfig, #resolutionConfig').hide();
 			<% } %>
 		}	
 	}
@@ -1372,6 +1430,5 @@
     
     function cronValidationLoad(params) {
     	popup('cronValidation', params, $('#cronValidation'));
-    	
     }
 </script>
