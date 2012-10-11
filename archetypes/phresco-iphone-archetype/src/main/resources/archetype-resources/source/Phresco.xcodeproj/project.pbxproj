@@ -23,7 +23,7 @@
 		C39226701620074F009A1866 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = C392266E1620074F009A1866 /* GDataXMLNode.m */; };
 		C39226711620074F009A1866 /* OCUnitToJUnitLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C392266F1620074F009A1866 /* OCUnitToJUnitLogger.m */; };
 		C39226731620075E009A1866 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39226721620075E009A1866 /* libxml2.2.dylib */; };
-		C3FFD8151589F01D00DEF961 /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FFD8141589F01D00DEF961 /* ConfigurationReader.m */; };
+		C393436C1626952100B94D25 /* ConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C393436B1626952100B94D25 /* ConfigurationReader.m */; };
 		E88B0DCB152EF10F00780CAA /* phresco-env-config.xml in Resources */ = {isa = PBXBuildFile; fileRef = E88B0DCA152EF10F00780CAA /* phresco-env-config.xml */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +51,8 @@
 		C392266E1620074F009A1866 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDataXMLNode.m; path = "ThirdParty/OCUnitReportLogger-1.0/GDataXMLNode.m"; sourceTree = SOURCE_ROOT; };
 		C392266F1620074F009A1866 /* OCUnitToJUnitLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OCUnitToJUnitLogger.m; path = "ThirdParty/OCUnitReportLogger-1.0/OCUnitToJUnitLogger.m"; sourceTree = SOURCE_ROOT; };
 		C39226721620075E009A1866 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		C3FFD8131589F01D00DEF961 /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationReader.h; path = Classes/ConfigurationReader.h; sourceTree = SOURCE_ROOT; };
-		C3FFD8141589F01D00DEF961 /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigurationReader.m; path = Classes/ConfigurationReader.m; sourceTree = SOURCE_ROOT; };
+		C393436A1626952100B94D25 /* ConfigurationReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationReader.h; sourceTree = "<group>"; };
+		C393436B1626952100B94D25 /* ConfigurationReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationReader.m; sourceTree = "<group>"; };
 		E88B0DCA152EF10F00780CAA /* phresco-env-config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "phresco-env-config.xml"; sourceTree = "<group>"; };
 		EA3C918A1560DE8300402AE8 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -198,8 +198,8 @@
 		E88B0DCD152EF11E00780CAA /* ConfigurationReader */ = {
 			isa = PBXGroup;
 			children = (
-				C3FFD8131589F01D00DEF961 /* ConfigurationReader.h */,
-				C3FFD8141589F01D00DEF961 /* ConfigurationReader.m */,
+				C393436A1626952100B94D25 /* ConfigurationReader.h */,
+				C393436B1626952100B94D25 /* ConfigurationReader.m */,
 			);
 			path = ConfigurationReader;
 			sourceTree = "<group>";
@@ -313,7 +313,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				7097CE1C1462842A0070885D /* RootViewController.m in Sources */,
 				0B8CE4661463D90A00A6CD29 /* PhrescoAppDelegate.m in Sources */,
-				C3FFD8151589F01D00DEF961 /* ConfigurationReader.m in Sources */,
+				C393436C1626952100B94D25 /* ConfigurationReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,8 +345,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -357,8 +357,11 @@
 				INFOPLIST_FILE = "Phresco-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Phresco;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "i386 armv6";
 			};
 			name = Debug;
 		};
@@ -366,8 +369,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -376,9 +379,12 @@
 				INFOPLIST_FILE = "Phresco-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = Phresco;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "i386 armv6";
 			};
 			name = Release;
 		};
@@ -386,15 +392,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = armv6;
+				VALID_ARCHS = "i386 armv6";
 			};
 			name = Debug;
 		};
@@ -402,16 +410,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = armv6;
+				VALID_ARCHS = "i386 armv6";
 			};
 			name = Release;
 		};
@@ -503,6 +513,7 @@
 				C392266C16200727009A1866 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
