@@ -63,7 +63,7 @@
 				<groupId>com.photon.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 				<extensions>true</extensions>
-				<version>1.2.3.3003-SNAPSHOT</version>
+				<version>1.2.3.3004-SNAPSHOT</version>
 				<configuration>
 					<run>
 						<debug>false</debug>
