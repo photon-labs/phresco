@@ -2045,6 +2045,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
     		    getHttpRequest().setAttribute(REQ_PDF_REPORT_FILES, existingPDFs);
     		}
         } catch (Exception e) {
+        	e.printStackTrace();
             S_LOGGER.error("Entered into catch block of Quality.printAsPdfPopup()"+ e);
         }
         getHttpRequest().setAttribute(REQ_TEST_TYPE, testType);
@@ -2220,6 +2221,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             reportGeneration(project, testType);
             getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(SUCCESS_REPORT_STATUS));
         } catch (Exception e) {
+        	e.printStackTrace();
         	S_LOGGER.error("Entered into catch block of Quality.printAsPdf()"+ e);
         	if (e.getLocalizedMessage().contains(getText(ERROR_REPORT_MISSISNG_FONT_MSG))) {
             	getHttpRequest().setAttribute(REQ_REPORT_STATUS, getText(ERROR_REPORT_MISSISNG_FONT));
