@@ -1,6 +1,6 @@
 <!--
   ###
-  Archetype - phresco-iphone-hybrid-archetype
+  Archetype - phresco-iphone-native-archetype
   
   Copyright (C) 1999 - 2012 Photon Infotech Inc.
   
@@ -33,81 +33,45 @@
 			<directory>docs</directory> 
 			<includes> 
 				<include>PHTN_Reference_Guide.doc</include> 
-				<include>PHTN_Release_Notes.doc</include> 
-				<include>README.txt</include> 
+				<include>PHTN_Release_Notes.doc</include>
+				<include>README.txt</include> 	
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco</directory> 
+			<directory>source</directory> 
 			<includes>
 				<include>main.m</include>
-				<include>PhoneGap.plist</include>
+				<include>MainWindow.xib</include>
+				<include>Phresco_Prefix.pch</include>
 				<include>Phresco-Info.plist</include>
-				<include>Phresco-Prefix.pch</include>
+				<include>phresco-env-config.xml</include>
+			</includes>
+		</fileSet>
+			<fileSet filtered="false" packaged="false"> 
+			<directory>source/Classes</directory> 
+			<includes>
+				<include>PhrescoAppDelegate.h</include>
+				<include>PhrescoAppDelegate.m</include>
+				<include>RootViewController.h</include>
+				<include>RootViewController.m</include>
+				<include>RootViewController.xib</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Classes</directory> 
+			<directory>source/Images</directory> 
 			<includes>
-				<include>AppDelegate.h</include>
-				<include>AppDelegate.m</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/en.lproj</directory> 
-			<includes>
-				<include>InfoPlist.strings</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/icons</directory> 
-			<includes>
-				<include>icon-72.png</include>
-				<include>icon.png</include>
-				<include>icon@2x.png</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Plugins</directory> 
-			<includes>
-				<include>README</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/Capture.bundle</directory> 
-			<includes>
-				<include>controls_bg.png</include>
-				<include>controls_bg@2x.png</include>
-				<include>controls_bg~ipad.png</include>
-				<include>microphone.png</include>
-				<include>microphone@2x.png</include>
-				<include>microphone~ipad.png</include>
-				<include>record_button@2x.png</include>
-				<include>record_button.png</include>
-				<include>record_button~ipad.png</include>
-				<include>recording_bg.png</include>
-				<include>recording_bg@2x.png</include>
-				<include>recording_bg~ipad.png</include>
-				<include>stop_button.png</include>
-				<include>stop_button@2x.png</include>
-				<include>stop_button~ipad.png</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/en.lproj</directory> 
-			<includes>
-				<include>Localizable.strings</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/es.lproj</directory> 
-			<includes>
-				<include>Localizable.strings</include>
+				<include>Icon.png</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>source/Phresco.xcodeproj</directory> 
 			<includes>
+				<include>esfdsnat.pbxuser</include>
+				<include>esfdsnat.perspectivev3</include>
+				<include>mac.pbxuser</include>
+				<include>mac.perspectivev3</include>
+				<include>photon.pbxuser</include>
+				<include>photon.perspectivev3</include>
 				<include>project.pbxproj</include>
 			</includes>
 		</fileSet>
@@ -118,39 +82,48 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/ThirdParty</directory> 
+			<directory>source/NativeControllers</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/www</directory> 
+			<directory>source/ThirdParty/ConfigurationReader</directory> 
 			<includes>
-				<include>index.html</include>
-				<include>phonegap-1.4.0.js</include>
+				<include>ConfigurationReader.h</include>
+				<include>ConfigurationReader.m</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/functional</directory> 
-			<includes>				
-				<include>pom.xml</include>
+			<directory>source/OCUnitReports</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/AllTest</directory> 
+			<includes>
+				<include>AllTest.h</include>
+				<include>AllTest.m</include>
+				<include>AllTest-Info.plist</include>
+				<include>AllTest-Prefix.pch</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>source/AllTest/en.lproj</directory> 
+			<includes>
+				<include>InfoPlist.strings</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src</directory> 
 			<includes>
 				<include>AllTests.js</include>
-                <include>HelloWorld.js</include>				
+				<include>HelloWorld.js</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/performance</directory> 
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/unit</directory> 
 			<includes>
 				<include>**/*</include>
 			</includes>

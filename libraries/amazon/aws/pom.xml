@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.photon.phresco.libraries</groupId>
         <artifactId>phresco-libraries</artifactId>
-        <version>1.2.3.3004-SNAPSHOT</version>
+        <version>1.2.3.3005-SNAPSHOT</version>
         <relativePath>../../</relativePath>
     </parent>
     
