@@ -7,7 +7,6 @@
 //
 
 #import "ConfigurationReader.h"
-#import "Base64.h"
 
 @implementation ConfigurationReader
 @synthesize stories;
