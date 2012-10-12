@@ -20,13 +20,13 @@
   -->
 
 <environment>
-		   <Browser>firefox</Browser>
+		   <Browser>googlechrome</Browser>
            <Server>
                <context>mobilewidgetnone</context>
                <protocol>http</protocol>
                <host>localhost</host>
                <port>8080</port>
-               <resolution></resolution>
+               <resolution>1024x760</resolution>
            </Server>
          
            <loginpage>

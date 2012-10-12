@@ -10,27 +10,18 @@ import org.junit.Test;
 import com.photon.phresco.Screens.WelcomeScreen;
 import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
-
 public class WelcomePage {
 
-	
 	private static PhrescoUiConstants phrescoUIConstants;
 	private static WelcomeScreen welcomeScreen;
-	private static String methodName;
 	private static String selectedBrowser;
-	
-
-	// private Log log = LogFactory.getLog(getClass());
 
 	@BeforeClass
 	public static void setUp() throws Exception {
 		try {
-			phrescoUIConstants = new PhrescoUiConstants();			
-			// assertNotNull(uiConstants);			
+			phrescoUIConstants = new PhrescoUiConstants();
 			launchingBrowser();
-			// menuScreen = welcomeScreen.menuScreen(uiConstants);
-			methodName = Thread.currentThread().getStackTrace()[1]
-					.getMethodName();
+
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -43,7 +34,7 @@ public class WelcomePage {
 					+ "/";
 			selectedBrowser = phrescoUIConstants.BROWSER;
 			welcomeScreen = new WelcomeScreen(selectedBrowser, applicationURL,
-					phrescoUIConstants.CONTEXT);
+					phrescoUIConstants.CONTEXT,phrescoUIConstants);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 
@@ -56,17 +47,16 @@ public class WelcomePage {
 			IOException, Exception {
 		try {
 			Assert.assertNotNull(welcomeScreen);
-			 Thread.sleep(1000);
+			Thread.sleep(1000);
 		} catch (Exception t) {
 			t.printStackTrace();
 
 		}
 	}
-	
+
 	@AfterClass
 	public static void tearDown() {
 		welcomeScreen.closeBrowser();
 	}
 
-	
 }
