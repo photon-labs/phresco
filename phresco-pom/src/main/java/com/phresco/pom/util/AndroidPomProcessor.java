@@ -167,17 +167,25 @@ public class AndroidPomProcessor extends PomProcessor {
 	 * @return
 	 */
 	public boolean hasSigning() {
-		if(model.getProfiles() !=null && model.getProfiles().getProfile() != null){
-			for(Profile profile : model.getProfiles().getProfile()){
-				List<Plugin> plugin = profile.getBuild().getPlugins().getPlugin();
-				for (Plugin plugin2 : plugin) {
-					List<PluginExecution> execution = plugin2.getExecutions().getExecution();
-					if(getSigningProfilePlugin(profile, execution)!=""){
-						return true;
+		try {
+			if (model.getProfiles() !=null && model.getProfiles().getProfile() != null) {
+				for (Profile profile : model.getProfiles().getProfile()) {
+					BuildBase build = profile.getBuild();
+					if (build != null) {
+						List<Plugin> plugin = build.getPlugins().getPlugin();
+						for (Plugin plugin2 : plugin) {
+							List<PluginExecution> execution = plugin2.getExecutions().getExecution();
+							if (getSigningProfilePlugin(profile, execution) != "") {
+								return true;
+							}
+						}
 					}
 				}
 			}
-		} return false;
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	/**
