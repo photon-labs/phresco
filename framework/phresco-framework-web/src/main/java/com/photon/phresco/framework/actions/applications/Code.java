@@ -175,7 +175,7 @@ public class Code extends FrameworkBaseAction {
 	        	PomProcessor processor = new PomProcessor(pomPath);
 	        	String groupId = processor.getModel().getGroupId();
 	        	String artifactId = processor.getModel().getArtifactId();
-	        	System.out.println("sonar url ==> " + serverUrl);
+	
 	        	sb.append(serverUrl);
 	        	sb.append(frameworkConfig.getSonarReportPath());
 	        	sb.append(groupId);
@@ -190,7 +190,6 @@ public class Code extends FrameworkBaseAction {
 	        	S_LOGGER.debug("Url to access API ====> " + sb.toString());
 	    		try {
 					URL sonarURL = new URL(sb.toString());
-					System.out.println("sb.toString()====> " + sb.toString());
 					HttpURLConnection connection = (HttpURLConnection) sonarURL.openConnection();
 					int responseCode = connection.getResponseCode();
 					S_LOGGER.info("responseCode === " + responseCode);  
