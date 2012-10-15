@@ -258,7 +258,7 @@
                     <os>
                         <family>unix</family>
                         <name>Linux</name>
-                        <arch>x86</arch>
+                        <arch>i386</arch>
                     </os>
                 </activation>
                 <properties>
