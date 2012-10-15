@@ -931,9 +931,10 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
             ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
             Project project = administrator.getProject(projectCode);
             String testType = getHttpRequest().getParameter(REQ_TEST_TYPE);
+            String techId = project.getProjectInfo().getTechnology().getId();
             
-            // Show warning message for Android technology in quality page when build is not available
-            if (TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
+            // Show warning message for Android unit and functional and Java stanalone functional technology in quality page when build is not available
+            if (TechnologyTypes.ANDROIDS.contains(techId) || (APP_FUNCTIONAL_TEST.equals(testType) && TechnologyTypes.JAVA_STANDALONE.equals(techId))) {
             	int buildSize = administrator.getBuildInfos(project).size();
                 getHttpRequest().setAttribute(REQ_BUILD_WARNING, buildSize == 0);
             } else {
@@ -945,7 +946,6 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 try {
                 	S_LOGGER.debug("Test type() test type unit  and Functional test");
                     FrameworkUtil frameworkUtil = FrameworkUtil.getInstance();
-                    String techId = project.getProjectInfo().getTechnology().getId();
                     if (APP_UNIT_TEST.equals(testType)) {
                         getHttpRequest().setAttribute(PATH, 
                                 frameworkUtil.getUnitTestDir(project.getProjectInfo().getTechnology().getId()));
