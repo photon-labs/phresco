@@ -12,17 +12,14 @@ import com.photon.phresco.uiconstants.PhrescoUiConstants;
 
 public class WelcomePage {
 
-	private static PhrescoUiConstants phrescoUiConstants;
+	private static PhrescoUiConstants phrescoUIConstants;
 	private static WelcomeScreen welcomeScreen;
-	private static String methodName;
 	private static String selectedBrowser;
-
-	// private Log log = LogFactory.getLog(getClass());
 
 	@BeforeClass
 	public static void setUp() throws Exception {
 		try {
-			phrescoUiConstants = new PhrescoUiConstants();
+			phrescoUIConstants = new PhrescoUiConstants();
 			launchingBrowser();
 
 		} catch (Exception exception) {
@@ -32,13 +29,12 @@ public class WelcomePage {
 
 	public static void launchingBrowser() throws Exception {
 		try {
-			String applicationURL = phrescoUiConstants.PROTOCOL + "://"
-					+ phrescoUiConstants.HOST + ":" + phrescoUiConstants.PORT
+			String applicationURL = phrescoUIConstants.PROTOCOL + "://"
+					+ phrescoUIConstants.HOST + ":" + phrescoUIConstants.PORT
 					+ "/";
-			selectedBrowser = phrescoUiConstants.BROWSER;
+			selectedBrowser = phrescoUIConstants.BROWSER;
 			welcomeScreen = new WelcomeScreen(selectedBrowser, applicationURL,
-					phrescoUiConstants.CONTEXT,phrescoUiConstants);
-
+					phrescoUIConstants.CONTEXT,phrescoUIConstants);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 
@@ -51,14 +47,16 @@ public class WelcomePage {
 			IOException, Exception {
 		try {
 			Assert.assertNotNull(welcomeScreen);
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (Exception t) {
 			t.printStackTrace();
 
 		}
 	}
+
 	@AfterClass
 	public static void tearDown() {
 		welcomeScreen.closeBrowser();
 	}
+
 }

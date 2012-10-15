@@ -111,8 +111,10 @@
 		$("#add").click(function() {
 			 if (isBlank($('#configEnvName').val())) {
 				 $("#errMsg").html("<%=FrameworkConstants.CONFIGURATION_NAME_EMPTY %>");
+				 return false;
 			 } else if ($("#created").size() == 0 ) {
 				 $("#errMsg").html("<%=FrameworkConstants.ADD_ONE_ENVIRONMENT %>");
+				 return false;
 			 } else {
 				 var params = "";
 				 if (!isBlank($('form').serialize())) {

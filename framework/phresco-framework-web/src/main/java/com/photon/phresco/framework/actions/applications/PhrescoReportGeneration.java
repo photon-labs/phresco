@@ -273,7 +273,6 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 			new File(outFileNamePDF).getParentFile().mkdirs();
 			String jasperFile = "PhrescoCumulativeReport.jasper";
 			reportStream = this.getClass().getClassLoader().getResourceAsStream(REPORTS_JASPER + jasperFile);
-	        
 			bufferedInputStream = new BufferedInputStream(reportStream);
 			JREmptyDataSource  dataSource = new JREmptyDataSource();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(bufferedInputStream);

@@ -18,7 +18,6 @@
  * ###
  */
 
-
 package com.photon.phresco.selenium.util;
 
 @SuppressWarnings("serial")

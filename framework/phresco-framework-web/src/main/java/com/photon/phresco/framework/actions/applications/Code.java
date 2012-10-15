@@ -121,7 +121,7 @@ public class Code extends FrameworkBaseAction {
             	codeValidatePath.append(STATIC_ANALYSIS_REPORT);
             	codeValidatePath.append(File.separatorChar);
             	
-            	S_LOGGER.debug("Selected target for dispaly ... " + report);
+            	S_LOGGER.debug("Selected target for display ... " + report);
             	codeValidatePath.append(report);
             	codeValidatePath.append(File.separatorChar);
             	

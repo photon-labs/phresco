@@ -121,14 +121,14 @@
 			name =($.trim($("#envName").val()));
 			desc = $("#envDesc").val();
 			if(name == "") {
-				$("#errMsg").html("Enter Environment Name");
+				$("#errMsg").html("<s:text name='enter.environment.name'/>");
 				$("#envName").focus();
 				$("#envName").val("");
 				returnVal = false;
 			} else {
 				$("#selectedEvn option").each(function() {
 					if (name.trim().toLowerCase() == $(this).val().trim().toLowerCase()) {
-						$("#errMsg").html("Environment Name already exists");
+						$("#errMsg").html("<s:text name='environment.name.already.exists'/>");
 						returnVal = false;
 						return false;
 					}
@@ -142,10 +142,10 @@
 		  
 		
          $("#setAsDefault").click(function() {
+        	 $('#errMsg').html('');
              var setAsDefaultEnvsSize = $('#selectedEvn option:selected').size();
              if (setAsDefaultEnvsSize < 1 || setAsDefaultEnvsSize > 1) {
-//             	 showHidePopupMsg($("#popupErrorMsg"), "Please select one environment");
-            	 $("#errMsg").html("Please select one environment");
+            	 $("#errMsg").html("<s:text name='please.select.one.environment'/>");
             	 return false;
              }
              

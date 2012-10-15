@@ -90,17 +90,20 @@ $(document).ready(function() {
 		var newHeight_newscrollfixedcon_inner = $(".fixed-table-container").height();
 		$(".fixed-table-container-inner").css("height",newHeight_newscrollfixedcon_inner - 3);
 		
-		/*var newHeight_newscrollbar = $(".fixed-table-container-inner").height();
-		$(".scroll-bar").css("height",newHeight_newscrollbar + 36);*/
-		
-		/*var newHeight_newscrollbardiv = $(".theme_accordion_container").height();
-		$(".scroll-bar").css("height",newHeight_newscrollbardiv + 36);*/
-		
 		/* Quality tab unit and functional table list resize */
 		var tblheight = (($("#subTabcontainer").height() - $("#form_test").height()));
 		$('.responsiveTableDisplay').css("height", parseInt((tblheight/($("#subTabcontainer").height()))*100) +'%');
 		var responsiveFixedTblhight = ((($('#tabularView').height() - 30) / $('#tabularView').height()) * 100);
 		$('.responsiveFixedTableContainer').css("height", responsiveFixedTblhight+'%');
+		
+		// sonar code validation tab
+		var containerHeight = $("#container").height();
+		var pageHeader = $('.page-header').height();
+		var tabs = $('.tabs').height();
+		var newH = containerHeight-(pageHeader + tabs);
+		$(".appInfoTabDiv").css("height",newH - 10);
+		var sonarDiv = $(".appInfoTabDiv").height();
+		$("#sonar_report").css("height",sonarDiv-37);
 		
 	}
 });

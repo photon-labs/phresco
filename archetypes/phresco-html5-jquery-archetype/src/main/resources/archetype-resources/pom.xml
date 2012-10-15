@@ -42,11 +42,12 @@
     <build>
 		<testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
         <directory>do_not_checkin/target</directory>
+		<finalName>service</finalName>
 		<extensions>
 			<extension>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>javascript-maven-plugin</artifactId>
-				<version>1.2.3.3003-SNAPSHOT</version>
+				<version>1.2.3.3005-SNAPSHOT</version>
 			</extension>
 		</extensions>
 		<sourceDirectory>${phresco.source.directory}</sourceDirectory>	
@@ -91,7 +92,7 @@
             <plugin>
                 <groupId>com.photon.phresco.plugins</groupId>
                 <artifactId>java-maven-plugin</artifactId>
-                <version>1.2.3.3003-SNAPSHOT</version>
+                <version>1.2.3.3005-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
@@ -152,53 +153,6 @@
 				  </execution>
 				</executions>
 		  </plugin>
-		  
-		  <plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-              
-				<configuration>
-					<container>
-						<containerId>${container.id}</containerId>
-						<type>remote</type>
-					</container>
-					<configuration>
-						<type>runtime</type>
-						<properties>
-							<cargo.protocol>http</cargo.protocol>
-							<cargo.hostname>localhost</cargo.hostname>
-							<cargo.servlet.port>8080</cargo.servlet.port>
-							<cargo.remote.username>admin</cargo.remote.username>
-							<cargo.remote.password>admin</cargo.remote.password>
-						</properties>
-					</configuration>
-					<deployables>
-						<deployable>
-							<location>do_not_checkin/target/service.war</location>
-						</deployable>
-                   </deployables>
-				</configuration>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.jboss.integration</groupId>
-						<artifactId>jboss-profileservice-spi</artifactId>
-						<version>5.1.0.GA</version>
-					</dependency>
-					<dependency>
-						<groupId>org.jboss.jbossas</groupId>
-						<artifactId>jboss-as-client</artifactId>
-						<version>5.1.0.GA</version>
-						<type>pom</type>
-					</dependency>
-					<dependency>
-						<groupId>org.jboss.as</groupId>
-						<artifactId>jboss-as-controller-client</artifactId>
-						<version>7.0.2.Final</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
@@ -226,8 +180,7 @@
 						</deployable>
                    </deployables>
 				</configuration>
-			</plugin>
-			
+			</plugin>	
         </plugins>
     </build>
     

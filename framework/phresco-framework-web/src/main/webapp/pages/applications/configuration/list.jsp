@@ -120,7 +120,7 @@
 					              	<th class="third">
 					                	<div class="th-inner-head "><s:text name="label.status"/></div>
 					              	</th>
-					              	<th class="third">
+					              	<th class="third" style="width: 50px;margin-right:5px">
                                         <div class="th-inner-head "><s:text name="label.clone" /></div>
                                     </th>
 					            </tr>

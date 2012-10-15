@@ -4,7 +4,7 @@
 	<property name="tomcat.home" value="${phresco.home}/workspace/tools/apache-tomcat-https-7.0.21"/>
 	<property name="sonar.home" value="${phresco.home}/workspace/tools/sonar-${sonar.version}"/>
 	<property name="jenkins.home" value="${phresco.home}/workspace/tools/jenkins"/>
-	<property name="checkers.home" value="${phresco.home}/workspace/tools/checker-267"/>
+	<property name="checkers.home" value="${phresco.home}/workspace/tools/checker-269"/>
 	<property name="chief.home" value="${phresco.home}/workspace/tools/chief"/>
 	<property name="phresco.war.dir" value="${phresco.home}/workspace/tools/war/phresco.war"/>
 	<property name="sonar.war.dir" value="${phresco.home}/workspace/tools/war/sonar.war"/>
