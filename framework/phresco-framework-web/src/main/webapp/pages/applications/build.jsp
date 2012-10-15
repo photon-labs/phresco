@@ -395,7 +395,7 @@
 			successProfileCreation(data);
 		} else if (pageUrl == "getSqlDatabases") {
 			if (isBlank(data.databases)) {
-<%-- 				$("#errMsg").html('<%= FrameworkConstants.CONFIGURATION_UNAVAILABLE %>'); --%>
+				$("#errMsg").html('<%= FrameworkConstants.CONFIGURATION_UNAVAILABLE %>'); 
 				hideLoadingIcon();
 			} else {
 				fillVersions("databases", data.databases , "");
