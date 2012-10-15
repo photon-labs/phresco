@@ -86,6 +86,8 @@ public class CIJob {
     private boolean enablePostBuildStep = false;
     private String resolution = "";
     
+    private boolean skipTest;
+    
     public CIJob() {
         super();
     }
@@ -457,5 +459,13 @@ public class CIJob {
 
 	public void setResolution(String resolution) {
 		this.resolution = resolution;
+	}
+
+	public boolean isSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(boolean skipTest) {
+		this.skipTest = skipTest;
 	}
 }
