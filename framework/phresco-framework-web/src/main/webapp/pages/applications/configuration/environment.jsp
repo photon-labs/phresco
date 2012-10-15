@@ -163,35 +163,77 @@
              performAction('setAsDefault', params, '', true); 
         });
 		
-		//To remove the entered value
-		$('#remove').click(function() {
-			var deletetableEnvsArr = new Array();
-			deletableItems = "";
-			var nameSep = new Array();
-			var hiddenFieldVal = $("#selectedEnvs").val();
-			nameSep = hiddenFieldVal.split("#SEP#");
-			var finalValue = "";
+       //To remove the entered value
+         $('#remove').click(function() {
+	         var deletetableEnvsArr = new Array();
+	         deletableItems = "";
+	         var nameSep = new Array();
+	         var hiddenFieldVal = $("#selectedEnvs").val();
+	         nameSep = hiddenFieldVal.split("#SEP#");
+	         var finalValue = "";
+	
+			//deleting environment array
+			var nameSepDelArr = new Array();
+			//deleting option in select box
+			var optionDelArr = new Array();
 			
-			// To remove the Environments from the list box which is not in the XML
-		    $('#selectedEvn option:selected').each( function() {
-		    	var currentVal = $(this).val(); // selected option
-				for(var i=0; i < nameSep.length; i++) {
-	                var avail = nameSep[i].indexOf(currentVal);
-	                if(avail > -1) {
-	                    delete nameSep[i];
-	                    $(this).remove();
-	                } else {
-	                    if(nameSep[i] != "") {
-	                        finalValue = finalValue + nameSep[i] + "#SEP#";
-	                    }
-	                }
-	            } 
-				deletetableEnvsArr.push(currentVal);
-				$("#selectedEnvs").val(finalValue);
+	         // To remove the Environments from the list box which is not in the XML
+	         $('#selectedEvn option:selected').each( function() {
+		         var currentVal = $(this).val(); // selected option
+		         for(var i=0; i < nameSep.length; i++) {
+		        	 if (nameSep[i] != "" && nameSep[i] != undefined) {
+		        		 var avail = nameSep[i].split("#DSEP#")[0] == currentVal;
+					     if(avail) {
+					    	 nameSepDelArr.push(nameSep[i]);
+					    	 optionDelArr.push($(this).val());
+					     } 
+				     }
+		         }
+		         deletetableEnvsArr.push(currentVal);
+		         $("#selectedEnvs").val(finalValue);
+	         });
+	         
+	        // remove added value , which deleted as soon as it is added
+	        //nameSep will have the newly added value
+	 		$.each(nameSepDelArr, function(key, nameSepDelvalue) {
+				if (nameSepDelvalue != "" && nameSepDelvalue != undefined) {
+	  				$.each(nameSep, function(key, nameSepvalue) {
+	  					if (nameSepDelvalue == nameSepvalue) {
+	  						delete nameSep[key];
+	  					}
+	  				});
+				}
 			});
-		    deletableItems = deletetableEnvsArr.join(",");
-		    validateRemove(deletableItems);
-		});
+
+	 		// after user removed from UI, updated in hiddenfield in above stmt and removing option
+	 		$.each(optionDelArr, function(key, delOptionvalue) {
+				$("#selectedEvn option[value='"+ delOptionvalue +"']").remove();
+				//remove these values from  deletetableEnvsArr which is having all the values that are selected for removal
+				//we removed locally added items. the items which are available in xml need to be deleted from thi variable
+				$.each(deletetableEnvsArr, function(key, deletableEnvs) {
+  					if (delOptionvalue == deletableEnvs) {
+  						delete deletetableEnvsArr[key];
+  					}
+  				});
+			});
+	 		
+	 		// make comma separated value here
+	 		// environment selected for deletion , the environmet that are available in xml values 
+	 		$.each(deletetableEnvsArr, function(key, deletableEnvs) {
+	 			if (deletableEnvs != "" && deletableEnvs != undefined) {
+	 				deletableItems = deletetableEnvsArr.join(",");
+	 			}
+	 		});
+
+	 		// final value is the value that need to be updated in hidden field , it specifies newly added env is popup
+	 		$.each(nameSep, function(key, nameSepvalue) {
+  				if (nameSepvalue != "" && nameSepvalue != undefined) {
+  					finalValue = finalValue + nameSepvalue + "#SEP#";
+  				}
+	  		});
+	 		$("#selectedEnvs").val(finalValue);// this value used in saving envs, That are added
+	        validateRemove(deletableItems);
+         });
 		
 		//To move up the values
 		$('#up').bind('click', function() {

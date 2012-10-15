@@ -151,11 +151,11 @@ public class Configurer
                     plugins.remove( mavenSurefirePlugin );
                     configureMavenSurefire( project );
                 }
-                if ( !projectSpecifiedPlugins.contains( mavenSitePlugin ) )
-                {
-                    plugins.remove( mavenSitePlugin );
-                    configureMavenSite( project );
-                }
+//                if ( !projectSpecifiedPlugins.contains( mavenSitePlugin ) )
+//                {
+//                    plugins.remove( mavenSitePlugin );
+//                    configureMavenSite( project );
+//                }
 
                 // Add our required resources.
                 addResources( project );

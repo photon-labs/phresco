@@ -445,11 +445,17 @@ function settingsType() {
     if (selectedType == "Other") {
     	$("#type-child-container").empty();
     	$("#configTypeDivOthers").show();
+    	// when user selects other type, it wont render type page , so we are displaying applies to hereitself and enableing it
     	$(".appliesToDiv").show();
+    	$('#.appliesToDiv :input').attr('disabled', false);
     	enableScreen();
     } else {
     	$("#configTypeDivOthers").hide();
+    	// when user selects other type, it wont render type page , so we are displaying applies to hereitself
+    	// if we don not specify input fields ate disabled, when user selects some other type and creates config. and comes to edit , selects diff applies to . so duplicate value from here also will be serialized
     	$(".appliesToDiv").hide();
+    	$('.appliesToDiv :input').attr('disabled', true);
+    	
 	    var settingsCount = $("#settingsCount").val();
 	    fromPage = "<%= fromPage %>";
 		var params = "";

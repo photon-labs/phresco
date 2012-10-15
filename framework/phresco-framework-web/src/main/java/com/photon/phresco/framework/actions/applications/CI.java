@@ -131,7 +131,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	private String collabNetProject = "";
 	private String collabNetPackage = "";
 	private String collabNetRelease = "";
-	private boolean collabNetoverWriteFiles = false;
+	private boolean collabNetoverWriteFiles;
 
 	// Test automation in jenkins
 	private String usedClonnedWorkspace = "";
@@ -153,6 +153,8 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 	private String jarName = "";
 	private String mainClassName = "";
 	private String resolution = ""; 
+	
+	private String skipTest = "";
 	
 	public String ci() {
 		S_LOGGER.debug("Entering Method CI.ci()");
@@ -427,7 +429,6 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			existJob.setCollabNetPackage(collabNetPackage);
 			existJob.setCollabNetRelease(collabNetRelease);
 			existJob.setCollabNetoverWriteFiles(collabNetoverWriteFiles);
-
 			// Automate values
 			existJob.setCloneWorkspace(cloneWorkspace);
 			existJob.setUsedClonnedWorkspace(usedClonnedWorkspace);
@@ -440,6 +441,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			S_LOGGER.debug("serialNumber =====> " + serialNumber);
 			S_LOGGER.debug("browser =====> " + browser);
 			existJob.setImportSql(importSql);
+			existJob.setSkipTest(Boolean.parseBoolean(skipTest));
 			existJob.setBrowser(browser);
 			existJob.setResolution(resolution);
 			existJob.setEnvironment(environment);
@@ -1648,5 +1650,13 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 
 	public void setResolution(String resolution) {
 		this.resolution = resolution;
+	}
+
+	public String getSkipTest() {
+		return skipTest;
+	}
+
+	public void setSkipTest(String skipTest) {
+		this.skipTest = skipTest;
 	}
 }

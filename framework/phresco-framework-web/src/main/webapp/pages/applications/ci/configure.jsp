@@ -730,7 +730,7 @@
 											 					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology) || TechnologyTypes.HTML5_WIDGET.equals(technology))) {
 											 %>
 													<input type="checkbox" id="skipTest" name="skipTest" value="true">
-													<span class="textarea_span popup-span"><s:text name="label.skip.unit.test"/></span>
+													<s:text name="label.skip.unit.test"/>
 											<% } %>
 											</div>
 										</div>
@@ -819,10 +819,10 @@
 													
 													<div class="input">
 														<div class="multipleFields quartsRadioWidth">
-															<div><input type="radio" name="overwriteFiles" value="true" checked />&nbsp; <s:text name="label.yes"/></div>
+															<div><input type="radio" name="collabNetoverWriteFiles" value="true" />&nbsp; <s:text name="label.yes"/></div>
 														</div>
 														<div class="multipleFields quartsRadioWidth">
-															<div><input type="radio" name="overwriteFiles" value="false" />&nbsp; <s:text name="label.no"/></div>
+															<div><input type="radio" name="collabNetoverWriteFiles" value="false" />&nbsp; <s:text name="label.no"/></div>
 														</div>
 													</div>
 												</div>
@@ -1075,7 +1075,7 @@
 		%>
 				// when the job is not null, have to make selection in radio buttons of collabnet plugin
 				$('input:radio[name=enableBuildRelease]').filter("[value='"+<%= existingJob.isEnableBuildRelease() %>+"']").attr("checked", true);
-				$('input:radio[name=overwriteFiles]').filter("[value='"+<%= existingJob.isCollabNetoverWriteFiles() %>+"']").attr("checked", true);
+				$("input:radio[name=collabNetoverWriteFiles][value='<%= existingJob.isCollabNetoverWriteFiles() %>']").attr("checked", true);
 				
 				$("#usedClonnedWorkspace option[value='<%= existingJob.getUsedClonnedWorkspace() %>']").attr('selected', 'selected');
 				$("#downstreamProject option[value='<%= existingJob.getDownStreamProject() %>']").attr('selected', 'selected');
@@ -1119,6 +1119,9 @@
 				// browser and resolution value
 				$("#browser option[value='<%= existingJob.getBrowser() %>']").attr('selected', 'selected');
 				$("#resolution option[value='<%= existingJob.getResolution() %>']").attr('selected', 'selected');
+				
+				//skipTest check implementation
+				$("input:checkbox[name=skipTest]").prop("checked", <%= existingJob.isSkipTest() %>);
 		<%
 			}
 		%>

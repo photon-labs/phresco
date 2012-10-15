@@ -72,6 +72,7 @@ public class PhrescoReportService implements ServerConstants {
 		siteReport.put(TechnologyTypes.HTML5_MOBILE_WIDGET,allReports);
 		siteReport.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,allReports);
 		siteReport.put(TechnologyTypes.HTML5_WIDGET,allReports);
+		siteReport.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET,allReports);
 				
 		List<Reports> infoandSurefireReports = new ArrayList<Reports>();
 		infoandSurefireReports.add(Reports.PROJECT_INFO);
