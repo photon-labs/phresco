@@ -843,11 +843,11 @@
 		if($('#importSql').is(":checked")) {
 			loadingIconShow();
 			$('#sqlExecutionContain').show();
+			// after fieldset completed, we have to load db and sql files
+			getDatabases();
 		} else {
 			$('#sqlExecutionContain').hide();
 		}
-		// after fieldset completed, we have to load db and sql files
-		getDatabases();
 	}
 	
 	function getDatabases() {
