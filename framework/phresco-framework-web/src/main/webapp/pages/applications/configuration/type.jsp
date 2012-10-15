@@ -157,7 +157,7 @@
 		        %>		
 		        		<input type="checkbox" id="<%= label %>" name="<%= key %>" value="true" <%= checkedStr %> style = "margin-top: 8px;">
 		        		&nbsp;&nbsp;&nbsp;&nbsp;
-		        		<input type="button" value="<s:text name="label.authenticate"/>" id="authenticate" class="primary btn hideContent"/>
+		        		<input type="button" value="<s:text name="label.add.cetificate"/>" id="authenticate" class="primary btn hideContent"/>
 		        <%	
 		        	} else if (possibleValues == null) {
 		        %>
