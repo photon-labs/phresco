@@ -178,6 +178,7 @@
 		});
 		
 		$('input[name="validateAgainst"]').click(function() {
+			$("#errMsg").html("");
 			var selectedVal = $(this).val();
 			if (selectedVal == "functional" || selectedVal == "html") {
 				$('#techDiv, #skipTestUl').hide();
@@ -190,7 +191,18 @@
 				$('#techDiv, #target').hide();
 			}
 		});
-				
+		
+		$('#funTestRadio').click(function() {
+			<% if (TechnologyTypes.ANDROID_HYBRID.equals(technology) || TechnologyTypes.ANDROID_NATIVE.equals(technology) ) { 
+	          	Boolean showWarning = (Boolean) request.getAttribute(FrameworkConstants.REQ_BUILD_WARNING);
+	          	if (showWarning) {
+		     %>
+		    	$('#errMsg').html("Atleast one build is required to run functional test code validation");
+		   	<% }%>
+		<% } %>
+		});
+		
+		
 		 $('#technology').change(function() {
 			var selectedval = $("#codeTechnology option:selected").val();
 			if (selectedval == "js" || selectedval == "jsp") {
