@@ -51,7 +51,6 @@ import com.photon.phresco.model.ModuleGroup;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.RepositoryManager;
-import com.photon.phresco.service.pom.AndroidTestPOMUpdater;
 import com.photon.phresco.util.TechnologyTypes;
 import com.phresco.pom.exception.PhrescoPomException;
 import com.phresco.pom.util.PomProcessor;
@@ -113,7 +112,6 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 		} catch (PhrescoPomException e) {
 			e.printStackTrace();
 		}
-		AndroidTestPOMUpdater.updatePOM(path);
 		if (technology.getId().equals(TechnologyTypes.ANDROID_HYBRID)) {
 			extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}

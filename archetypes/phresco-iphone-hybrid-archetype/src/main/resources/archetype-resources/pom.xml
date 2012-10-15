@@ -82,8 +82,8 @@
 				<sonar.branch>html</sonar.branch>
 				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
 				<sonar.profile>W3C Markup Validation</sonar.profile>
-				<sonar.w3cmarkup.url>http://127.0.0.2</sonar.w3cmarkup.url>
 				<sonar.web.fileExtensions>html</sonar.web.fileExtensions>
+				<sonar.exclusions>**/ThirdParty/**</sonar.exclusions>
 			  </properties>
         </profile>
 		</profiles>
