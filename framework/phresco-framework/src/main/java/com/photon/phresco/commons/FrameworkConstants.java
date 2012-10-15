@@ -474,6 +474,7 @@ public interface FrameworkConstants {
     String REQ_FROM_PAGE = "fromPage";
     String REQ_APPLICATION_TYPE = "applicationType";
     String REQ_OLD_CONFIG_NAME = "configName";
+    String REQ_PERSIST_DATA = "showData";
     String REQ_TEST_TYPE = "testType";
     String REQ_TEST_EXE = "testExecuted";
     String REQ_REPORT_STATUS = "reportStatus";

@@ -63,10 +63,21 @@
             FrameworkConstants.REQ_ALL_TECHNOLOGIES);
     
     Map<String, String> errorMap = (Map<String, String>) session.getAttribute(FrameworkConstants.ERROR_SETTINGS);
+    
+    boolean persistData = false;
+    
     if (settingsTemplate != null) {
     	projectInfoServers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_TEST_SERVERS);
     	projectInfoDatabases = (List<Database>) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO_DATABASES);
     	List<PropertyTemplate> propertyTemplates = settingsTemplate.getProperties();
+    	
+	    // while editing already existing configuration, one configuration values are copied to other configurations
+		persistData = false;
+		Object persistObj = request.getAttribute(FrameworkConstants.REQ_PERSIST_DATA);
+		if (persistObj != null) {
+			persistData = Boolean.valueOf((Boolean) persistObj);
+		}
+		
 	    for (PropertyTemplate propertyTemplate : propertyTemplates) {
 	    	String masterKey = "";
 	        String key = propertyTemplate.getKey();
@@ -95,8 +106,8 @@
         		}
         	}
 			
-	        
-	        if (settingsInfo != null && settingsInfo.getPropertyInfo(key) != null) {
+			// while configuration is clicked for edit , these are the values that are filled
+	        if (settingsInfo != null && settingsInfo.getPropertyInfo(key) != null && persistData) {
 	        	value = settingsInfo.getPropertyInfo(key).getValue();
 	        }
 %>
@@ -269,6 +280,12 @@
 									disableStr = "disabled";
 								}
 							}
+							
+							// while moving between configurations, one configuration applies to ahpuld not selected for other applies to
+							 if (!persistData) {
+								 selectedAppliesTos = null;
+							 }
+							
 			            	for (String appliesTo : appliesTos) {
 								if (selectedAppliesTos != null ) {
 									

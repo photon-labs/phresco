@@ -69,6 +69,13 @@
     	projectInfoServers = (List<Server>) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO_SERVERS);
     	projectInfoDatabases = (List<Database>) request.getAttribute(FrameworkConstants.REQ_PROJECT_INFO_DATABASES);
 	    List<PropertyTemplate> propertyTemplates = settingsTemplate.getProperties();
+	    
+	    // while editing already existing configuration, one configuration values are copied to other configurations
+		boolean persistData = false;
+		Object persistObj = request.getAttribute(FrameworkConstants.REQ_PERSIST_DATA);
+		if (persistObj != null) {
+			persistData = Boolean.valueOf((Boolean) persistObj);
+		}
 	    for (PropertyTemplate propertyTemplate : propertyTemplates) {
 	    	String masterKey = "";
 	        String key = propertyTemplate.getKey();
@@ -85,6 +92,7 @@
 	        	desc = descStr.get("en-US").getValue();
 			}
 	        
+			// while editiong on server and database, server type with version will displayed and DB type with version will be dispalayed
 	        if (key.equals("Server") || key.equals("Database")) {
         		List<PropertyTemplate> comPropertyTemplates = propertyTemplate.getpropertyTemplates();
         		for (PropertyTemplate comPropertyTemplate : comPropertyTemplates) {
@@ -97,7 +105,8 @@
         		}
         	}
 	        
-	        if (settingsInfo != null && settingsInfo.getPropertyInfo(key) != null) {
+	        // while configuration is clicked for edit , these are the values that are filled
+	        if (settingsInfo != null && settingsInfo.getPropertyInfo(key) != null && persistData) {
 	        	value = settingsInfo.getPropertyInfo(key).getValue();
 	        }
 %>
