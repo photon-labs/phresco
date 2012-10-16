@@ -302,9 +302,9 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 					File sqlFolder = new File(path, sqlFolderPathMap.get(techId) + sqlPath);
 					sqlFolder.mkdirs();
 					if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
-							&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
+							&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {	
 						FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
-					} else {
+					} else if (!databaseType.equals(Constants.DB_MYSQL)) {
 						File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
 						sqlFile.createNewFile();
 					}
