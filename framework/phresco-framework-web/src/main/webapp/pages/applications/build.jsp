@@ -136,7 +136,7 @@
 		
 		<%
 			if(TechnologyTypes.JAVA_WEBSERVICE.equals(technology) || TechnologyTypes.HTML5_WIDGET.equals(technology) 
-					|| TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology) || TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(technology)) {
+					|| TechnologyTypes.HTML5_MOBILE_WIDGET.equals(technology)) {
 		%>
 			<div id="nodeJS_btndiv" class="nodeJS_div">
 				<input id="runAgnSrc" type="button" value="<s:text name="label.runagainsrc"/>" class="primary btn">
