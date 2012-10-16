@@ -490,11 +490,14 @@ public class Build extends FrameworkBaseAction {
 			
 			if (StringUtils.isNotEmpty(environments)) {
 				settingsInfoMap.put(ENVIRONMENT_NAME, environments);
-			} else if (StringUtils.isNotEmpty(userBuildName)) {
+			} 
+			if (StringUtils.isNotEmpty(userBuildName)) {
 				settingsInfoMap.put(BUILD_NAME, userBuildName);
-			} else if (StringUtils.isNotEmpty(userBuildNumber)) {
+			} 
+			if (StringUtils.isNotEmpty(userBuildNumber)) {
 				settingsInfoMap.put(BUILD_NUMBER, userBuildNumber);
-			} else if (StringUtils.isNotEmpty(androidVersion)) {
+			} 
+			if (StringUtils.isNotEmpty(androidVersion)) {
 				settingsInfoMap.put(AndroidConstants.ANDROID_VERSION_MVN_PARAM, androidVersion);
 			}
 
@@ -1680,8 +1683,8 @@ public class Build extends FrameworkBaseAction {
 			configValues.getAny().addAll(executionConfig);
 			execution.setConfiguration(configValues);
 			List<Element> additionalConfigs = new ArrayList<Element>();
-			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null, additionalConfigs);
-			processor.save();
+    			processor.setProfile(profileId, defaultGoal, plugin, androidProfile, execution, null, additionalConfigs);
+    			processor.save();
 			profileCreationStatus = true;
 			if (hasSigning) {
 				profileCreationMessage = getText(PROFILE_UPDATE_SUCCESS);

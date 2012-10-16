@@ -90,7 +90,11 @@
 		%>
 				<option value="source" ><s:text name="label.validateAgainst.source"/></option>
 		<% 	} %>
+		
+		<!-- 	do not display functional option for iphone -->
+		<% if (!TechnologyTypes.IPHONES.contains(technology)) { %>
 			<option value="functional" ><s:text name="label.funtional"/></option>
+		<% } %>
 		</select>
 	</div>
 	<% if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) { %>
