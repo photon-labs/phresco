@@ -218,8 +218,7 @@ public class Build extends FrameworkBaseAction {
 				}
 			}
 			if (TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) || TechnologyTypes.HTML5_WIDGET.equals(techId)
-					|| TechnologyTypes.JAVA_WEBSERVICE.equals(techId)
-					|| TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId)) {
+					|| TechnologyTypes.JAVA_WEBSERVICE.equals(techId)) {
 				String serverProtocol = (String) getHttpSession().getAttribute(
 						projectCode + SESSION_JAVA_SERVER_PROTOCOL_VALUE);
 				String serverHost = (String) getHttpSession()
