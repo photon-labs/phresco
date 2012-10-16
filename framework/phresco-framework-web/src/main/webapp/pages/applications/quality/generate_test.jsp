@@ -146,11 +146,11 @@
 	                <label for="xlInput" class="xlInput popup-label"><span class="red">*&nbsp;</span><s:text name="label.resolution"/></label>
 	                <div class="input">
 	                    <select id="resolution" name="resolution" class="xlarge resolution">
-	                        <option class="jecEditableOption"></option>
+	                        <option class="jecEditableOption">Type or select from the list</option>
 							<%
 							   for(String resolution : resolutions) {
 							%>
-	                            <option value="<%= resolution%>"> <%= resolution %></option>
+	                            <option value="<%= resolution%>" onClick = "getResolution('<%= resolution%>');"> <%= resolution %></option>
 	                        <% } %>
 	                    </select>
 	                </div>
@@ -224,11 +224,18 @@
 </div>
 
 <script type="text/javascript">
-	$(function () {
-	    $('#resolution').jec();
-	});
-    
 	$(document).ready(function() {
+		//Document Defaults
+		$("#resolution option[value='1024x768']").prop("selected", true);
+		
+		$('.jecEditableOption').click(function() {
+	        $('.jecEditableOption').text("");
+	    });
+	    
+	    $(function () {
+	        $('#resolution').jec();
+	    });
+	    
 		<%
 			if(TechnologyTypes.JAVA_STANDALONE.equals(techId)) {
 		%>
@@ -381,6 +388,10 @@
 		}
 		return true;
 	}
+	
+	function getResolution(resolution) {
+        $('.jecEditableOption').text("Type or select from the list");
+    }
 	
 	function successEnvValidation(data) {
 		<%

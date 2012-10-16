@@ -37,11 +37,8 @@ package com.photon.phresco.service.dependency.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.FileUtils;
 
@@ -68,7 +65,7 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
     }
     
     @Override
-    public void process(ProjectInfo info, File path) throws PhrescoException {
+    public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
     	if (isDebugEnabled) {
     		S_LOGGER.debug("Entering Method PHPDependencyProcessor.process(ProjectInfo info, File path)");
     		S_LOGGER.debug("process() Path=" + path.getPath());
@@ -97,22 +94,8 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
             }
             
             //copy pilot projects
-            if(StringUtils.isNotBlank(info.getPilotProjectName())){
-	            List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
-	            if(CollectionUtils.isEmpty(pilotProjects)){
-	                return;
-	            }
-	
-	            for (ProjectInfo projectInfo : pilotProjects) {
-	//                extractModules(modulesPath, projectInfo.getTechnology().getModules());
-	//				extractLibraries(modulesPath, projectInfo.getTechnology().getLibraries());
-	                String urls[] = projectInfo.getPilotProjectUrls();
-	                if(urls != null){
-	                    for (String url : urls) {
-	                        DependencyUtils.extractFiles(url, path);
-	                    }
-	                }
-	            }
+            if (PROCESSTYPE.CREATE.equals(processType)) {
+            	extractPilots(info, path, technology);
             }
             extractJsLibraries(path, info.getTechnology().getJsLibraries());
             createSqlFolder(info, path);
@@ -123,7 +106,7 @@ public class PHPDependencyProcessor  extends AbstractJsLibDependencyProcessor {
         	  org.apache.commons.io.FileUtils.deleteQuietly(tempPath);
         }
     }
-
+    
     @Override
 	protected String getModulePathKey() {
 		return "php.modules.path";

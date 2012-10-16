@@ -299,6 +299,15 @@ public class Code extends FrameworkBaseAction {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
 			}
+            
+            // Show warning message for Android technology in quality page when build is not available
+            if (TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
+            	int buildSize = administrator.getBuildInfos(project).size();
+                getHttpRequest().setAttribute(REQ_BUILD_WARNING, buildSize == 0);
+            } else {
+            	getHttpRequest().setAttribute(REQ_BUILD_WARNING, false);
+            }
+            
         } catch (Exception e) {
         	S_LOGGER.error("Entered into catch block of Code.progressValidate()"+ FrameworkUtil.getStackTraceAsString(e));
         }

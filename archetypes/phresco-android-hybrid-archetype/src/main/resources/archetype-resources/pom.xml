@@ -53,7 +53,7 @@
 				<plugin>
 					<groupId>com.photon.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>1.2.3.3005-SNAPSHOT</version>
+					<version>1.2.3.4001-SNAPSHOT</version>
 					<extensions>true</extensions>
 				</plugin>
 			</plugins>
@@ -110,6 +110,17 @@
 					  </plugin>
 		        </plugins>
             </build>
+        </profile>
+		<profile>
+            <id>html</id>
+             <properties>
+				<sonar.language>web</sonar.language>
+				<sonar.branch>html</sonar.branch>
+				<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+				<sonar.profile>W3C Markup Validation</sonar.profile>
+				<sonar.web.fileExtensions>html</sonar.web.fileExtensions>
+				<sonar.exclusions>**/jslibs/**</sonar.exclusions>
+			  </properties>
         </profile>
     </profiles>
 </project>

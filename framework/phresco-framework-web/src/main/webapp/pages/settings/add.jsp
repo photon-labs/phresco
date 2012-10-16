@@ -64,6 +64,13 @@
     }
     
     List<Environment> envs = (List<Environment>) request.getAttribute(FrameworkConstants.ENVIRONMENTS);
+    
+	// When user saves a config for other type like server and DB, if the user comes to other field , it should not prepopulate with values
+	if (!FrameworkConstants.REQ_CONFIG_TYPE_OTHER.equals(selectedType)) {
+		configInfo = null;
+		appliesTo = null;
+	}
+	
     Map<String, String> errorMap = (Map<String, String>) session.getAttribute(FrameworkConstants.ERROR_SETTINGS);
     Map<String, Technology> mapTechnologies = (Map<String, Technology>)request.getAttribute(FrameworkConstants.REQ_ALL_TECHNOLOGIES);
 %>

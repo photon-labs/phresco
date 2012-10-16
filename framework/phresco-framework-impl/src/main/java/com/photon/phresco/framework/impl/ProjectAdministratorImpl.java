@@ -74,6 +74,7 @@ import com.photon.phresco.framework.api.Project;
 import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.api.ValidationResult;
 import com.photon.phresco.framework.api.Validator;
+import com.photon.phresco.framework.pom.AndroidTestPOMUpdater;
 import com.photon.phresco.framework.win8.util.ItemGroupUpdater;
 import com.photon.phresco.model.AdminConfigInfo;
 import com.photon.phresco.model.ApplicationType;
@@ -182,6 +183,11 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			ServerPluginUtil spUtil = new ServerPluginUtil();
 			spUtil.addServerPlugin(info, pomPath);
 		}
+		
+		if (techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+			AndroidTestPOMUpdater.updatePOM(path);
+		}
+		
 		boolean drupal = techId.equals(TechnologyTypes.PHP_DRUPAL7) || techId.equals(TechnologyTypes.PHP_DRUPAL6);
 		try {
 			if(drupal) {
@@ -260,6 +266,10 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			createSqlFolder(delta, path);
 		}
 		updatePomProject(delta, projectInfo);
+		
+		if (techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+			AndroidTestPOMUpdater.updatePOM(path);
+		}
 		try {
 			if (flag) {
 				extractArchive(response, delta);

@@ -155,7 +155,7 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 	}
 
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method  AbstractDependencyProcessor.process(ProjectInfo info, File path)");
 			S_LOGGER.debug("process() FilePath=" + path.getPath());
@@ -173,23 +173,20 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
 		}
 		Technology technology = info.getTechnology();
 		extractModules(modulesPath, technology.getModules());
+		
 		// pilot projects
-		extractPilots(info, path, technology);
+		if (PROCESSTYPE.CREATE.equals(processType)) {
+			extractPilots(info, path, technology);
+		}
 	}
 
-	protected void extractPilots(ProjectInfo info, File path,
-			Technology technology) throws PhrescoException {
+	protected void extractPilots(ProjectInfo info, File path, Technology technology) throws PhrescoException {
 		if (StringUtils.isNotBlank(info.getPilotProjectName())) {
 			List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
 			if (CollectionUtils.isEmpty(pilotProjects)) {
 				return;
 			}
-
 			for (ProjectInfo projectInfo : pilotProjects) {
-				// extractModules(modulesPath,
-				// projectInfo.getTechnology().getModules());
-				// extractLibraries(modulesPath,
-				// projectInfo.getTechnology().getLibraries());
 				String urls[] = projectInfo.getPilotProjectUrls();
 				if (urls != null) {
 					for (String url : urls) {

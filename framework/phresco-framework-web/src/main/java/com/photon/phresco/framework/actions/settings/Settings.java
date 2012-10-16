@@ -653,6 +653,9 @@ public class Settings extends FrameworkBaseAction {
 				List<Database> databases = administrator.getDatabases();
 				getHttpRequest().setAttribute(REQ_PROJECT_INFO_DATABASES, databases);
 			}
+			if (StringUtils.isNotEmpty(oldSettingType) && oldSettingType.equals(settingsType)) {
+				getHttpRequest().setAttribute(REQ_PERSIST_DATA, true);
+			}
 			getHttpRequest().setAttribute(REQ_CURRENT_SETTINGS_TEMPLATE, settingsTemplate);
 			getHttpRequest().setAttribute(REQ_ALL_TECHNOLOGIES, administrator.getAllTechnologies());
 		} catch (Exception e) {

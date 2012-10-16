@@ -769,6 +769,7 @@ public class Configurations extends FrameworkBaseAction {
 			ProjectAdministrator administrator = getProjectAdministrator();
 			Project project = administrator.getProject(projectCode);
 			SettingsTemplate settingsTemplate = administrator.getSettingsTemplate(configType);
+			
 			if(Constants.SETTINGS_TEMPLATE_SERVER.equals(configType)) {
 				List<Server> projectInfoServers = project.getProjectInfo().getTechnology().getServers();
 				getHttpRequest().setAttribute(REQ_PROJECT_INFO_SERVERS, projectInfoServers);
@@ -785,6 +786,9 @@ public class Configurations extends FrameworkBaseAction {
 				selectedConfigInfo = (SettingsInfo)getHttpRequest().getAttribute(REQ_CONFIG_INFO);
 			}
 
+			if (StringUtils.isNotEmpty(oldConfigType) && oldConfigType.equals(configType)) {
+				getHttpRequest().setAttribute(REQ_PERSIST_DATA, true);
+			}
 			getHttpRequest().setAttribute(REQ_PROJECT, project);
 			getHttpRequest().setAttribute(REQ_CURRENT_SETTINGS_TEMPLATE, settingsTemplate);
 			getHttpRequest().setAttribute(REQ_ALL_TECHNOLOGIES, administrator.getAllTechnologies());
@@ -836,7 +840,7 @@ public class Configurations extends FrameworkBaseAction {
     		
     		if(!envAvailable) {
     			setEnvError(getText(ENV_NOT_VALID));
-    			S_LOGGER.debug("unable to find configuration in xml");
+    			S_LOGGER.debug("configuration not yet saved");
     			return SUCCESS;
     		}
 	    	administrator.setAsDefaultEnv(setAsDefaultEnv, project);

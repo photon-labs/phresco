@@ -720,7 +720,6 @@ public class Applications extends FrameworkBaseAction {
 			S_LOGGER.debug("userName " + userName);
 			S_LOGGER.debug("Repo type " + repoType);
 			S_LOGGER.debug("projectCode " + projectCode);
-			updateSCMConnection(projectCode, repositoryUrl);
 			
 			File updateDir = new File(Utility.getProjectHome() , projectCode);
 			S_LOGGER.debug("updateDir GIT... " + updateDir);
@@ -731,6 +730,8 @@ public class Applications extends FrameworkBaseAction {
 			pull.call();
 			svnImport = true;
 			svnImportMsg = getText(SUCCESS_PROJECT_UPDATE);
+			// update connection scm in pom
+			updateSCMConnection(projectCode, repositoryUrl);
 		} catch(FileExistsException e) { // Destination '/Users/kaleeswaran/projects/PHR_Phpblog' already exists
 			S_LOGGER.error("Entered into catch block of Applications.importFromGit()" + getText(FAILURE_PROJECT_UPDATE) + FrameworkUtil.getStackTraceAsString(e));
 			svnImport = false;
@@ -766,7 +767,6 @@ public class Applications extends FrameworkBaseAction {
 			S_LOGGER.debug("userName " + userName);
 			S_LOGGER.debug("Repo type " + repoType);
 			S_LOGGER.debug("projectCode " + projectCode);
-			updateSCMConnection(projectCode, repositoryUrl);
 			
 			if (StringUtils.isEmpty(credential)) {
 				String decryptedPass = new String(Base64.decodeBase64(password));
@@ -782,6 +782,8 @@ public class Applications extends FrameworkBaseAction {
 			
 			svnImport = true;
 			svnImportMsg = getText(SUCCESS_PROJECT_UPDATE);
+			// update connection scm in pom
+			updateSCMConnection(projectCode, repositoryUrl);
 		} catch(SVNAuthenticationException e) {
 	         S_LOGGER.error("Entered into catch block of Applications.importApplication()" + getText(INVALID_CREDENTIALS) + FrameworkUtil.getStackTraceAsString(e));
 	         svnImport = false;
