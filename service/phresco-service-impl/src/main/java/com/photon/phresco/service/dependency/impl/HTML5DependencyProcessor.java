@@ -59,7 +59,7 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 	}
 	
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		S_LOGGER.debug("Entering Method HTML5DependencyProcessor.process(ProjectInfo info, File path)");
 		S_LOGGER.debug("process() Path=" + path.getPath());
 		updatePom(path, info.getTechnology().getModules());
@@ -70,7 +70,9 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
 		createSqlFolder(info, path);
-		extractPilots(info, path, info.getTechnology());
+		if (PROCESSTYPE.CREATE.equals(processType)) {
+			extractPilots(info, path, info.getTechnology());
+		}
 		updateTestPom(path);
 	}
 

@@ -43,7 +43,6 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.photon.phresco.exception.PhrescoException;
@@ -79,7 +78,7 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 	}
 
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method AndroidDependencyProcessor.process(ProjectInfo info, File path)");
 			S_LOGGER.debug("process() ProjectCode=" + info.getCode());
@@ -87,20 +86,10 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
 		}
 		Technology technology = info.getTechnology();
 		// copy pilot projects
-		if (StringUtils.isNotBlank(info.getPilotProjectName())) {
-			List<ProjectInfo> pilotProjects = getRepositoryManager().getPilotProjects(technology.getId());
-			if (CollectionUtils.isEmpty(pilotProjects)) {
-				return;
-			}
-			for (ProjectInfo projectInfo : pilotProjects) {
-				String urls[] = projectInfo.getPilotProjectUrls();
-				if (urls != null) {
-					for (String url : urls) {
-						DependencyUtils.extractFiles(url, path);
-					}
-				}
-			}
+		if (PROCESSTYPE.CREATE.equals(processType)) {
+			extractPilots(info, path, technology);
 		}
+		
 		updateAndroidVersion(path, info);
 	     try {
 	    	 List<ModuleGroup> modules = technology.getModules();
@@ -171,7 +160,7 @@ public class AndroidDependencyProcessor extends AbstractJsLibDependencyProcessor
             }
 		}
 	}
-
+	
 	@Override
 	protected String getJsLibPathKey() {
 		return "android.jslib.path";

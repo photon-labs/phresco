@@ -71,12 +71,12 @@ public class Drupal7DependencyProcessor  extends AbstractJsLibDependencyProcesso
 	 * @see com.photon.phresco.service.dependency.impl.AbstractJsLibDependencyProcessor#process(com.photon.phresco.model.ProjectInfo, java.io.File)
 	 */
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method Drupal7DependencyProcessor.process(ProjectInfo info, File path)");
 			S_LOGGER.debug("process() Path=" + path.getPath());
 		}
-		super.process(info, path);
+		super.process(info, path, processType);
 		createSqlFolder(info, path);
 		updateTestPom(path);
 	}

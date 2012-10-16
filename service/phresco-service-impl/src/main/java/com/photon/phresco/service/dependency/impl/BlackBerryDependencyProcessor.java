@@ -39,8 +39,7 @@ public class BlackBerryDependencyProcessor extends AbstractJsLibDependencyProces
 	}
 	
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
-		System.out.println("JS LIBRARIES = " + info.getTechnology().getJsLibraries());
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		 extractJsLibraries(path, info.getTechnology().getJsLibraries());
 	}
 

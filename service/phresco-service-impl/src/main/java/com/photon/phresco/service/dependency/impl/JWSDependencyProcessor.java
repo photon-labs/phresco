@@ -62,12 +62,12 @@ public class JWSDependencyProcessor extends AbstractDependencyProcessor {
 	}
 	
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method JWSDependencyProcessor.process(ProjectInfo info, File path)");
 			S_LOGGER.debug("process() Path=" + path.getPath());
 		}
-		super.process(info, path);
+		super.process(info, path, processType);
 		createSqlFolder(info, path);
 		updateTestPom(path);
 	}

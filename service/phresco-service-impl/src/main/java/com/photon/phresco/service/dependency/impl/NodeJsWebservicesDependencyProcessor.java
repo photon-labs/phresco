@@ -57,8 +57,8 @@ public class NodeJsWebservicesDependencyProcessor extends DefaultDependencyProce
 	}
 
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
-		super.process(info, path);
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
+		super.process(info, path,processType);
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method NodeJsWebservicesDependencyProcessor.process(ProjectInfo info, File path)");
 			S_LOGGER.debug("process() Path=" + path.getPath());

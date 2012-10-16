@@ -41,6 +41,10 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 
 public interface DependencyProcessor {
+	
+	public enum PROCESSTYPE {
+	    CREATE, UPDATE 
+	}
 
 	/**
 	 * Uses the {@link ProjectInfo} object to identify the dependent modules, libraries, technology, etc and handle
@@ -49,6 +53,6 @@ public interface DependencyProcessor {
 	 * @param projectPath Path of project to be created.
 	 * @throws PhrescoException
 	 */
-	void process(ProjectInfo info, File projectPath) throws PhrescoException;
+	void process(ProjectInfo info, File projectPath, PROCESSTYPE processType ) throws PhrescoException;
 
 }
