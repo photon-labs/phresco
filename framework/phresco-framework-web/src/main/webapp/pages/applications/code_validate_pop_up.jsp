@@ -88,9 +88,15 @@
 									<input type="radio" name="validateAgainst" value="target" checked>
 									<span class="textarea_span popup-span"><s:text name="label.target"/></span>
 							<% } %>
-							<% if (TechnologyTypes.ANDROID_HYBRID.equals(technology) || TechnologyTypes.BLACKBERRY_HYBRID.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
+							<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) { %>
 									<input type="radio" name="validateAgainst" value="html" >
 									<span class="textarea_span popup-span"><s:text name="label.tech.html"/></span>
+							<% } %>
+							<% if (TechnologyTypes.ANDROID_HYBRID.equals(technology)) { %>
+								<% if (!(project.getProjectInfo().getPilotProjectName().equalsIgnoreCase("EShop"))) { %>
+									<input type="radio" name="validateAgainst" value="html" >
+									<span class="textarea_span popup-span"><s:text name="label.tech.html"/></span>
+								<% } %>
 							<% } %>
 						</li>
 					</ul>
