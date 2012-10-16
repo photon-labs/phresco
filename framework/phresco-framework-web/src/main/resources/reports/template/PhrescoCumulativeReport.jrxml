@@ -227,7 +227,7 @@
 					<textElement>
 						<font fontName="Times New Roman"/>
 					</textElement>
-					<text><![CDATA[© Copyright Photon Infotech Pvt Ltd 2012.]]></text>
+					<text><![CDATA[© Copyright 2012 Photon Infotech Pvt.Ltd]]></text>
 				</staticText>
 			</frame>
 		</band>
