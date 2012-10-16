@@ -126,6 +126,23 @@
 	}
 	
 	$(document).ready(function() {
+		
+		// file name validation for js file name
+		<% 
+			if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
+				TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
+				TechnologyTypes.HTML5_MOBILE_WIDGET.equals(techId) ||
+				TechnologyTypes.HTML5_WIDGET.equals(techId)) {
+		%>
+			$("#jsFinalName").bind('input propertychange',function(e) { 	//File name validation
+		     	var name = $(this).val();
+		     	name = checkForSplChr(name);
+		     	$(this).val(name);
+			});
+		<%
+			}
+		%>
+		
 		$('#fileBrowseClose, #fileBrowseCancel').click(function() {
 			<% if(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET.equals(techId) || 
 					TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET.equals(techId) ||
