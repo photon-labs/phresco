@@ -41,6 +41,7 @@ import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.model.Technology;
 import com.photon.phresco.service.api.RepositoryManager;
+import com.photon.phresco.service.api.DependencyProcessor.PROCESSTYPE;
 
 public class WinPhoneDependencyProcessor extends AbstractJsLibDependencyProcessor {
 
@@ -55,17 +56,19 @@ public class WinPhoneDependencyProcessor extends AbstractJsLibDependencyProcesso
 	}
 	
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
 		File modulesPath = path;
 		String modulesPathString = getModulePathKey();
 		modulesPath = new File(path, DependencyProcessorMessages.getString(modulesPathString));
 		Technology technology = info.getTechnology();
 		
 		extractModules(modulesPath, technology.getModules());
+		
 		// pilot projects
-		extractPilots(info, path, technology);
+		if (PROCESSTYPE.CREATE.equals(processType)) {
+			extractPilots(info, path, technology);
+		}
 	}
-	
 	
 
 	@Override

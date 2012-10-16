@@ -43,6 +43,7 @@ import org.apache.log4j.Logger;
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.ProjectInfo;
 import com.photon.phresco.service.api.DependencyProcessor;
+import com.photon.phresco.service.api.DependencyProcessor.PROCESSTYPE;
 import com.photon.phresco.service.api.PhrescoServerFactory;
 import com.photon.phresco.service.api.ProjectService;
 import com.photon.phresco.service.config.impl.ConfiguratorFactory;
@@ -75,7 +76,7 @@ public class DefaultProjectService implements ProjectService, Constants {
 		// projectPath);
 		DependencyProcessor dependencyProcessor = DependencyProcessorFactory.getDependencyProcessor(projectInfo);
 		if (dependencyProcessor != null) {
-			dependencyProcessor.process(projectInfo, projectPath);
+			dependencyProcessor.process(projectInfo, projectPath, PROCESSTYPE.CREATE);
 		}
 
 		PhrescoServerFactory.getNewDocumentGenerator().generate(projectInfo, projectPath);
@@ -93,7 +94,7 @@ public class DefaultProjectService implements ProjectService, Constants {
 		projectPath.mkdirs();
 		DependencyProcessor dependencyProcessor = DependencyProcessorFactory.getDependencyProcessor(projectInfo);
 		if (dependencyProcessor != null) {
-			dependencyProcessor.process(projectInfo, projectPath);
+			dependencyProcessor.process(projectInfo, projectPath, PROCESSTYPE.UPDATE);
 		}
 		if (isDebugEnabled) {
 			S_LOGGER.info("successfully updated application :" + projectInfo.getName());
