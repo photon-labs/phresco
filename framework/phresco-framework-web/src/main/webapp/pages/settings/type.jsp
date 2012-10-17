@@ -370,11 +370,13 @@
 			    	 hideRemoteDeply();
 			     }
 				 remoteDeplyChecked();
-				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){	
-					 $("input[name='remoteDeployment']").attr("checked",false);
-					 $("#admin_username label").html('Admin Username');
-					 $("#admin_password label").html('Admin Password'); 
+				 if( $(this).val() != "Apache Tomcat" || $(this).val() != "JBoss" || $(this).val() != "WebLogic"){
+					 remortDeployMandaCheck();
 				 } 
+				 
+				 if ($(this).val() == "IIS" || $(this).val() == "NodeJS") {
+					 $("input[name='remoteDeployment']").attr("checked",false);
+				 }
 				 
 				 if ($(this).val() == "IIS") {
 					 configForIIS("none");
@@ -417,25 +419,18 @@
 	
 		// hide deploy dir if remote Deployment selected
 		$("input[name='remoteDeployment']").change(function() {
-			var isChecked = $("input[name='remoteDeployment']").is(":checked");
+			remortDeployMandaCheck(); 
 			enableOrDisabAuthBtn();
-			if (isChecked) {
-				hideDeployDir();
-				$("#admin_username label").html('<span class="red">* </span>Admin Username');
-				$("#admin_password label").html('<span class="red">* </span>Admin Password');
-			}  else {
-				$("#admin_username label").html('Admin Username');
-				$("#admin_password label").html('Admin Password');  
-			    $('#deploy_dir').show();
-			} 
 		});
 	 
 	    $("#type").change(function() {
 	    	$('#deploy_dir').show();
+		    getCurrentVersions('onChange');
+			remortDeployMandaCheck();
+			
 			if($(this).val() == "NodeJS") {
 				hideDeployDir();
 			}
-		    getCurrentVersions('onChange');
 		}); 
 		
 		$("input[name='name']").prop({"maxLength":"20", "title":"20 Characters only"});
@@ -493,6 +488,21 @@
 			performAction('authenticateServer', params, $('#popup_div'));
 		});
 	});
+	
+	function remortDeployMandaCheck() {
+		var isChecked = $("input[name='remoteDeployment']").is(":checked");
+		enableOrDisabAuthBtn();
+		
+		if (isChecked) {
+			hideDeployDir();
+			$("#admin_username label").html('<span class="red">* </span>Admin Username');
+			$("#admin_password label").html('<span class="red">* </span>Admin Password');  
+		} else {
+		    $("#admin_username label").html('Admin Username');
+			$("#admin_password label").html('Admin Password');  
+		    $('#deploy_dir').show();
+		}
+	}
 	
 	function showSetttingsInfoServer() {
 		$("#type option").each(function() {
