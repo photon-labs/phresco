@@ -25,7 +25,7 @@
 		<h3>
 			<s:text name="label.request.header"/>
 		</h3>
-		<a class="close" href="#" id="headerPopupClose">&times;</a>
+		<a class="close headerPop" href="#" id="headerPopupClose">&times;</a>
 	</div>
 
 	<div class="modal-body">

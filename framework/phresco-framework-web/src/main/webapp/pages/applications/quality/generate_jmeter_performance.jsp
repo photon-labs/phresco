@@ -463,7 +463,7 @@
 	    	$("input[name=headerValue]").val("");
 	    });
 	    
-	    $('#headerPopupCancelClose, #headerPopupCancel').click(function() {
+	    $(".headerPop, #headerPopupCancel").click(function() {
 	    	$("#headerPopup").hide();
 	    	$("#performance-popup").show();
 		});
