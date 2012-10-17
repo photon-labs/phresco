@@ -109,27 +109,6 @@
 		
 		// Document defaults 
 		$("#envName").focus();
-		$('#save').prop('disabled', true);
-		$('#Add').prop('disabled', true);
-        $('#save').removeClass('primary').addClass('disabled');
-        $('#Add').removeClass('primary').addClass('disabled');
-        
-        $('#envName').change(function() {
-        	var envName = $('#envName').val();
-        	if(!isBlank(envName)) {
-        		$('#Add').prop('disabled', false);
-                $('#Add').removeClass('disabled').addClass('primary');
-                $('#save').prop('disabled', false);
-                $('#save').removeClass('disabled').addClass('primary');
-        	} else {
-        		$('#save').prop('disabled', true);
-                $('#Add').prop('disabled', true);
-                $('#save').removeClass('primary').addClass('disabled');
-                $('#Add').removeClass('primary').addClass('disabled');
-        	}
-        	
-        });
-        
 		
 		$('#close, #cancel').click(function() {
 			showParentPage();
@@ -301,6 +280,11 @@
 	     	name = checkForSplChr(name);
 	     	$(this).val(name);
 		});
+		
+		$("#selectedEvn").change(function() {
+			setAsDefaultEnableAndDsiable();
+		});
+		
 	});
 
 	function generateXML(envs, deletableData) {
@@ -431,5 +415,32 @@
 		} else {
 			performAction('checkForRemove', params, '', true);	
 		}
+	}
+	
+	// Environment which is added only need to set as default, for others disable set as default button
+	function setAsDefaultEnableAndDsiable() {
+		var hiddenFieldVal = $("#selectedEnvs").val();
+        
+        $('#selectedEvn option:selected').each( function() {
+	         var currentVal = $(this).val(); // selected option
+	         var envNameSep = new Array();
+	         var hiddenFieldVal = $("#selectedEnvs").val();
+	         envNameSep = hiddenFieldVal.split("#SEP#");
+	         
+	      // enable the button , if it is locally added option , it will be disable in loop
+            $('#setAsDefault').prop('disabled', false);
+            $('#setAsDefault').removeClass('disabled').addClass('primary');
+	         
+	         for(var i=0; i < envNameSep.length; i++) {
+	        	 if (envNameSep[i] != "" && envNameSep[i] != undefined) {
+	        		 var avail = envNameSep[i].split("#DSEP#")[0] == currentVal;
+				     if (avail) {
+						$('#setAsDefault').prop('disabled', true);
+			            $('#setAsDefault').removeClass('primary').addClass('disabled');
+						return false;
+				     }
+			     }
+	         }
+        });
 	}
 </script>
