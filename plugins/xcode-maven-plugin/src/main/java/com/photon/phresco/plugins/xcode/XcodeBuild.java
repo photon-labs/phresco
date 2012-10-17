@@ -78,6 +78,8 @@ import com.photon.phresco.util.XCodeConstants;
  */
 public class XcodeBuild extends AbstractMojo {
 
+	private static final String PATH_TXT = "path.txt";
+
 	private static final String DO_NOT_CHECKIN_BUILD = "/do_not_checkin/build";
 
 	/**
@@ -559,17 +561,21 @@ public class XcodeBuild extends AbstractMojo {
 		if (StringUtils.isEmpty(environmentName)) {
 			return;
 		}
+		FileWriter writer = null;
 		try {
 			getLog().info("Configuring the project....");
 			getLog().info("environment name :" + environmentName);
 			getLog().info("base dir name :" + baseDir.getName());
 			File srcConfigFile = null;
+			String currentProjectPath = "";
 			// pom.xml file have "/source" as as source directory , in that case we are getting only "/source" as string .
 			// if pom.xml file has source directory as "source", we will get whole path of the file
 			if (project.getBuild().getSourceDirectory().startsWith("/source")) {
 				srcConfigFile = new File(baseDir, project.getBuild().getSourceDirectory() + File.separator + plistFile);
+				currentProjectPath = baseDir.getAbsolutePath() + project.getBuild().getSourceDirectory();
 			} else {
 				srcConfigFile = new File(project.getBuild().getSourceDirectory() + File.separator + plistFile);
+				currentProjectPath = project.getBuild().getSourceDirectory();
 			}
 			getLog().info("baseDir ... " + baseDir.getAbsolutePath());
 			getLog().info("SourceDirectory ... " + project.getBuild().getSourceDirectory());
@@ -581,8 +587,21 @@ public class XcodeBuild extends AbstractMojo {
 			// if(encrypt) {
 			// pu.encode(srcConfigFile);
 			// }
+			// write project source path inside source folder
+			getLog().info("Project source path identification file... " + currentProjectPath);
+			File projectSourceDir = new File(currentProjectPath, PATH_TXT);
+			writer = new FileWriter(projectSourceDir, false);
+			writer.write(currentProjectPath + File.separator);
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (Exception e) {
+					getLog().error(e);
+				}
+			}
 		}
 	}
 }
