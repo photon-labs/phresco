@@ -36,21 +36,21 @@
 package com.photon.phresco.framework.pom;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 
 import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.service.pom.POMConstants;
+import com.phresco.pom.exception.PhrescoPomException;
+import com.phresco.pom.util.PomProcessor;
 
 public class AndroidTestPOMUpdater {
 	private static final Logger S_LOGGER= Logger.getLogger(AndroidTestPOMUpdater.class);
@@ -58,89 +58,67 @@ public class AndroidTestPOMUpdater {
 	/**
 	 * @param path
 	 *            file path where the pom.xml present.
+	 * @return 
 	 * @throws PhrescoException
+	 * @throws PhrescoPomException 
+	 * @throws JAXBException 
 	 */
-	public static void updatePOM(File path) throws PhrescoException {
+	public static boolean updatePOM(File path) throws PhrescoException {
 		if (isDebugEnabled) {
 			S_LOGGER.debug("Entering Method AndroidTestPOMUpdater.updatePOM(File path)");
 			S_LOGGER.debug("updatePOM File Path=" + path.getPath());
 		}
+		File testFunctionalPom = new File(path, "/test/functional/pom.xml");
+		File projectPom = new File(path, "pom.xml");
+		File testUnitPom = new File(path, "/test/unit/pom.xml");
+		File testPerfPom = new File(path, "/test/performance/pom.xml");
+		boolean functionalTest = updateTestPom(testFunctionalPom, projectPom);
+		boolean unitTest = updateTestPom(testUnitPom, projectPom);
+		boolean performanceTest = updateTestPom(testPerfPom, projectPom);
+		if (Boolean.TRUE.equals(functionalTest) || Boolean.TRUE.equals(unitTest) || Boolean.TRUE.equals(performanceTest)  ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	/**
+	 * @param testPom
+	 * @param projectPom
+	 * @return 
+	 * @throws PhrescoException 
+	 * @throws JDOMException
+	 * @throws IOException
+	 * @throws JAXBException 
+	 * @throws PhrescoPomException 
+	 */
+	private static boolean updateTestPom(File testPom, File projectPom) throws PhrescoException {
+		SAXBuilder builder = new SAXBuilder();
+		if(!testPom.exists()) {
+			return false;
+		}
 		try {
-			File testFunctionalPom = new File(path, "/test/functional/pom.xml");
-			File projectPom = new File(path, "pom.xml");
-			File testUnitPom = new File(path, "/test/unit/pom.xml");
-			File testPerfPom = new File(path, "/test/performance/pom.xml");
-			
-			updateTestPom(testFunctionalPom, projectPom);
-			updateTestPom(testUnitPom, projectPom);
-			updateTestPom(testPerfPom, projectPom);
+			Document projectDoc = builder.build(projectPom);
+			Element projectRootNode = projectDoc.getRootElement();
+			Element group = getNode(projectRootNode, POMConstants.GROUP_ID);
+			Element artifact = getNode(projectRootNode, POMConstants.ARTIFACT_ID);
+			Element version = getNode(projectRootNode, POMConstants.VERSION);
 
+			PomProcessor processor = new PomProcessor(testPom);
+			processor.addDependency(group.getText(), artifact.getText(),  version.getText() , POMConstants.PROVIDED , POMConstants.JAR, "");
+			processor.addDependency(group.getText(), artifact.getText(),  version.getText() , POMConstants.PROVIDED , POMConstants.APK, "");
+			processor.save();
+		
 		} catch (JDOMException e) {
 			throw new PhrescoException(e);
 		} catch (IOException e) {
 			throw new PhrescoException(e);
+		} catch (JAXBException e) {
+			throw new PhrescoException(e);
+		} catch (PhrescoPomException e) {
+			throw new PhrescoException(e);
 		}
-	}
-
-	/**
-	 * @param testPom
-	 * @param projectPom
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	private static void updateTestPom(File testPom, File projectPom) throws JDOMException, IOException {
-		SAXBuilder builder = new SAXBuilder();
-		
-		if(!testPom.exists()) {
-			return;
-		}
-		Document projectDoc = builder.build(projectPom);
-		Document testDoc = builder.build(testPom);
-
-		Element projectRootNode = projectDoc.getRootElement();
-		Element testRootNode = testDoc.getRootElement();
-		Element group = getNode(projectRootNode, POMConstants.GROUP_ID);
-		Element artifact = getNode(projectRootNode, POMConstants.ARTIFACT_ID);
-		Element version = getNode(projectRootNode, POMConstants.VERSION);
-
-		Element dependencies = POMUpdater.getDependenciesNode(testRootNode);
-
-		Element jarDependency = createDependencyNode(group.getText(), artifact.getText(), version.getText(), POMConstants.JAR, testRootNode.getNamespace());
-		Element apkDependency = createDependencyNode(group.getText(), artifact.getText(), version.getText(), POMConstants.APK, testRootNode.getNamespace());
-		dependencies.addContent(apkDependency);
-		dependencies.addContent(jarDependency);
-
-
-		XMLOutputter xmlOutput = new XMLOutputter();
-
-		// display nice nice
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		xmlOutput.output(testDoc, new FileWriter(testPom));
-	}
-
-	private static Element createDependencyNode(String group, String artifact, String version, String type, Namespace namespace) {
-		if (isDebugEnabled) {
-			S_LOGGER.debug("Entering Method AndroidTestPOMUpdater.createDependencyNode(String group, String artifact, String version, String type, Namespace namespace)");
-		}
-		Element dependency = new Element(POMConstants.DEPENDENCY, namespace);
-		Element groupId = new Element(POMConstants.GROUP_ID, namespace);
-		groupId.setText(group);
-		Element artifactId = new Element(POMConstants.ARTIFACT_ID, namespace);
-		artifactId.setText(artifact);
-		Element versionId = new Element(POMConstants.VERSION, namespace);
-		versionId.setText(version);
-		Element typeNode = new Element(POMConstants.TYPE, namespace);
-		typeNode.setText(type);
-		Element scope = new Element(POMConstants.SCOPE, namespace);
-		scope.setText(POMConstants.PROVIDED);
-
-		dependency.addContent(groupId);
-		dependency.addContent(artifactId);
-		dependency.addContent(versionId);
-		dependency.addContent(typeNode);
-		dependency.addContent(scope);
-
-		return dependency;
+		return true;
 	}
 
 	/**

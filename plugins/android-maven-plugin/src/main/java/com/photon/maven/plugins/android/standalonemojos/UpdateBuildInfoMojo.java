@@ -48,6 +48,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -56,8 +58,11 @@ import org.codehaus.plexus.archiver.zip.ZipArchiver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
+import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.pom.AndroidTestPOMUpdater;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.PluginUtils;
+import com.phresco.pom.exception.PhrescoPomException;
 
 /**
  * Creates the apk file. By default signs it with debug keystore.<br/>
@@ -162,9 +167,16 @@ public class UpdateBuildInfoMojo extends AbstractAndroidMojo {
 				deliverable = deliverableZip.getName();
 				getLog().info("Deliverables available at " + deliverableZip.getName());
 				writeBuildInfo(true);
+				
+				Boolean status = AndroidTestPOMUpdater.updatePOM(new File(baseDir.getPath().toString()));
+				if (Boolean.TRUE.equals(status)) {
+					getLog().info("  Test project pom updated successfully ");
+				}
 			} catch (IOException e) {
 				throw new MojoExecutionException("Error in writing output...");
-			}
+			} catch (PhrescoException e) {
+				throw new MojoExecutionException("Error in writing output...");
+			} 
 
 		}
 	}
