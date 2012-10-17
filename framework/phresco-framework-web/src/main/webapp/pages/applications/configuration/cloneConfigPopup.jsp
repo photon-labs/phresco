@@ -44,38 +44,37 @@
 
 	<div class="modal-body">
 		
-			<fieldset class="popup-fieldset"">
-				<legend class="fieldSetLegend" >Clone Configuration</legend>
-				<div class="clearfix">
-		            <label for="xlInput" class="xlInput popup-label" ><span class="red">*</span><s:text name = "label.name" /></label>
-		            <div class="input">
-		                <input type="text" id="configEnvName" name="configName" tabindex=1 style="float: left;" class="xlarge configEnvName" maxlength="30" title="30 Characters only"> 
-		            </div>
-		        </div>
-		        <div class="clearfix">
-		            <label for="xlInput" class="xlInput popup-label"><s:text name="label.description"/></label>
-		            <div class="input">
-		                <textarea id="envDesc" name="description" class="xlarge env-desc"  style="float: left;" tabindex=2 maxlength="150" title="150 Characters only"></textarea>
-		            </div>
-		        </div>
-		        <div class="clearfix">
-                    <label for="xlInput" class="xlInput popup-label"><s:text name="label.environment"/></label>
-                    <div class="input">
-                        <select name="envName" id="configEnv" tabindex=3 class="xlarge cloneConfigToEnv" style="float: left;width: 300px;">
-							<%
-							   for(Environment env : envInfoValues ) {
-								   if(!env.getName().equals(copyFromEnvName) ) {
-								   
-		                    %>
-		                       <option value="<%= env.getName() %>" title="<%= env.getDesc() %>" id="created"><%= env.getName() %></option>
-		                    <% 
-								   }  
-							}
-		                    %>
-                     </select>
-                    </div>
-                </div>
-			</fieldset>
+		<fieldset class="popup-fieldset"">
+			<legend class="fieldSetLegend" >Clone Configuration</legend>
+			<div class="clearfix">
+	            <label for="xlInput" class="xlInput popup-label" ><span class="red">*</span><s:text name = "label.name" /></label>
+	            <div class="input">
+	                <input type="text" id="configEnvName" name="configName" tabindex=1 style="float: left;" class="xlarge configEnvName" maxlength="30" title="30 Characters only"> 
+	            </div>
+	        </div>
+	        <div class="clearfix">
+	            <label for="xlInput" class="xlInput popup-label"><s:text name="label.description"/></label>
+	            <div class="input">
+	                <textarea id="envDesc" name="description" class="xlarge env-desc"  style="float: left;" tabindex=2 maxlength="150" title="150 Characters only"></textarea>
+	            </div>
+	        </div>
+	        <div class="clearfix">
+                   <label for="xlInput" class="xlInput popup-label"><span class="red">*</span><s:text name="label.environment"/></label>
+                   <div class="input">
+                       <select name="envName" id="configEnv" tabindex=3 class="xlarge cloneConfigToEnv" style="float: left;width: 300px;">
+						<%
+						   for(Environment env : envInfoValues ) {
+							   if(!env.getName().equals(copyFromEnvName) ) {
+	                    %>
+	                       <option value="<%= env.getName() %>" title="<%= env.getDesc() %>" id="created"><%= env.getName() %></option>
+	                    <% 
+							   }  
+						}
+	                    %>
+                    </select>
+                   </div>
+               </div>
+		</fieldset>
 	</div>
 	
 	<div class="modal-footer">

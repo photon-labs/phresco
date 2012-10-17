@@ -107,7 +107,29 @@
 			$('#setAsDefaultDiv').hide();
 		}
 		
+		// Document defaults 
 		$("#envName").focus();
+		$('#save').prop('disabled', true);
+		$('#Add').prop('disabled', true);
+        $('#save').removeClass('primary').addClass('disabled');
+        $('#Add').removeClass('primary').addClass('disabled');
+        
+        $('#envName').change(function() {
+        	var envName = $('#envName').val();
+        	if(!isBlank(envName)) {
+        		$('#Add').prop('disabled', false);
+                $('#Add').removeClass('disabled').addClass('primary');
+                $('#save').prop('disabled', false);
+                $('#save').removeClass('disabled').addClass('primary');
+        	} else {
+        		$('#save').prop('disabled', true);
+                $('#Add').prop('disabled', true);
+                $('#save').removeClass('primary').addClass('disabled');
+                $('#Add').removeClass('primary').addClass('disabled');
+        	}
+        	
+        });
+        
 		
 		$('#close, #cancel').click(function() {
 			showParentPage();

@@ -55,8 +55,8 @@ public abstract class AbstractJsLibDependencyProcessor extends AbstractDependenc
 		super(repoManager);
 	}
 	@Override
-	public void process(ProjectInfo info, File path) throws PhrescoException {
-		super.process(info, path);
+	public void process(ProjectInfo info, File path, PROCESSTYPE processType) throws PhrescoException {
+		super.process(info, path, processType);
 	}
 
 	@Override

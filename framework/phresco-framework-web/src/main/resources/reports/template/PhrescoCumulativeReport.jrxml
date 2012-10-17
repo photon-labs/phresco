@@ -3,7 +3,6 @@
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -115,20 +114,6 @@
 		</band>
 	</title>
 	<detail>
-		<band height="39">
-			<printWhenExpression><![CDATA[!$P{sonarReport}.isEmpty()]]></printWhenExpression>
-			<frame>
-				<reportElement x="0" y="0" width="555" height="38" isRemoveLineWhenBlank="true"/>
-				<subreport>
-					<reportElement x="0" y="1" width="555" height="36" isRemoveLineWhenBlank="true"/>
-					<subreportParameter name="reportsDataType">
-						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
-					</subreportParameter>
-					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sonarReport})]]></dataSourceExpression>
-					<subreportExpression><![CDATA["reports/jasper/SonarJavaJsWebReport.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-		</band>
 		<band height="40">
 			<printWhenExpression><![CDATA[!$P{unitTestReports}.isEmpty()]]></printWhenExpression>
 			<frame>
@@ -204,6 +189,20 @@
 				</subreport>
 			</frame>
 		</band>
+		<band height="39">
+			<printWhenExpression><![CDATA[!$P{sonarReport}.isEmpty()]]></printWhenExpression>
+			<frame>
+				<reportElement x="0" y="0" width="555" height="38" isRemoveLineWhenBlank="true"/>
+				<subreport>
+					<reportElement x="0" y="1" width="555" height="36" isRemoveLineWhenBlank="true"/>
+					<subreportParameter name="reportsDataType">
+						<subreportParameterExpression><![CDATA[$P{reportsDataType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{sonarReport})]]></dataSourceExpression>
+					<subreportExpression><![CDATA["reports/jasper/SonarJavaJsWebReport.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
 	</detail>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
@@ -228,7 +227,7 @@
 					<textElement>
 						<font fontName="Times New Roman"/>
 					</textElement>
-					<text><![CDATA[© Copyright Photon Infotech Pvt Ltd 2012.]]></text>
+					<text><![CDATA[© Copyright 2012 Photon Infotech Pvt.Ltd]]></text>
 				</staticText>
 			</frame>
 		</band>

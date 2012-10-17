@@ -840,7 +840,7 @@ public class Configurations extends FrameworkBaseAction {
     		
     		if(!envAvailable) {
     			setEnvError(getText(ENV_NOT_VALID));
-    			S_LOGGER.debug("unable to find configuration in xml");
+    			S_LOGGER.debug("configuration not yet saved");
     			return SUCCESS;
     		}
 	    	administrator.setAsDefaultEnv(setAsDefaultEnv, project);
