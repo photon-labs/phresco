@@ -466,7 +466,7 @@ public class JavaDeploy extends AbstractMojo implements PluginConstants {
 			}		
 			File deployDir = new File(deployLocation);
 			if (!deployDir.exists()) {
-				throw new MojoExecutionException(" Deploy Directory" + deployLocation + " Does Not Exists ");
+				throw new MojoExecutionException(" Deploy Directory " + deployLocation + " Does Not Exists ");
 			}
 			getLog().info("Project is deploying into " + deployLocation);
 			FileUtils.copyDirectoryStructure(tempDir.getAbsoluteFile(), deployDir);
