@@ -14,11 +14,11 @@ require([ "jquery", "./HelloWorldWidget", "qunit" ], function($, HelloWorldWidge
 		// Setup view and call method under test
 		helloWorldWidget = new HelloWorldWidget();
 
-		helloWorldWidget.HelloWorldText = "HelloWorld Test";
+		helloWorldWidget.HelloWorldText = "HelloWorld";
 
 		output1 = helloWorldWidget.setMainContent();
 
 		// Expect that the text was set on the expected element
-		equal(output1.html(), "HelloWorld Test",	"Expected text not set in category-widget");
+		equal(output1.html(), "HelloWorld",	"Expected text not set in category-widget");
 	});
 });
