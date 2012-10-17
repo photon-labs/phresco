@@ -61,10 +61,13 @@ public class TweetCacheManagerImpl implements TweetCacheManager {
 	private String getTweetMessageFromService() {
 		String twitterMessage = defaultTweetMsg;
 		try {
-			Client client = Client.create();
-			//TODO: Read the twitter service url from server.config
-			WebResource webResource = client.resource(config.getTwitterServiceURL());
-			twitterMessage = webResource.get(String.class);
+			S_LOGGER.info("config.isEnabletwitterService() ... " + config.isEnabletwitterService());
+			if (config.isEnabletwitterService()) {
+				Client client = Client.create();
+				//TODO: Read the twitter service url from server.config
+				WebResource webResource = client.resource(config.getTwitterServiceURL());
+				twitterMessage = webResource.get(String.class);
+			}
 		} catch (java.lang.Exception e) {
 			S_LOGGER.error("Error : " + e.getMessage());
 		}

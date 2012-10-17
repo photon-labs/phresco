@@ -44,7 +44,7 @@ public class Tweets implements ServerConstants {
 	@Produces("application/javascript")
 	public JSONWithPadding testJSONP(@QueryParam("callback") String callback) throws JSONException{
 		if(!isServerStarted){
-			startScheduler(60);
+			startScheduler(600);
 		}
 		TweetCacheManager tcm = PhrescoServerFactory.getTweetCacheManager();
 		String tweetMessage = tcm.getTweetMessageFromCache();

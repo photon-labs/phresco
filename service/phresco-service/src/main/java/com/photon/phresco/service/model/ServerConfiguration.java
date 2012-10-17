@@ -82,7 +82,9 @@ public class ServerConfiguration {
 	private static final String EMAIL_EXT_FILE = "phresco.ci.emailext.file";
 	private static final String PHRESCO_SERVER_CONTEXT_NAME = "phresco.server.context.name";
 	private static final String PHRESCO_TWITTER_SERVICE_URL = "phresco.twitter.service.url";
+	private static final String PHRESCO_TWITTER_SERVICE_ENABLE = "phresco.twitter.service.enable";
 	private static final String PHRESCO_FRAMEWORK_LATEST_URL = "phresco.framework.latest.version.file";
+	private static final String TRUE = "true";
 	private String repositoryURL;
 	private String repositoryUser;
 	private String repositoryPassword;
@@ -93,7 +95,8 @@ public class ServerConfiguration {
 	private String credentialurl;
 	private String authenticateurl;
 	private String serviceContextName;
-	private String twitterServiceURL; 
+	private String twitterServiceURL;
+	private boolean enabletwitterService;
 
 	public ServerConfiguration(String fileName) throws PhrescoException {
 		initServerConfig(fileName);
@@ -139,6 +142,7 @@ public class ServerConfiguration {
 			this.authenticateurl= serverProps.getProperty(AUTHENTICATION_SERVICE_URL);
 			this.serviceContextName = serverProps.getProperty(PHRESCO_SERVER_CONTEXT_NAME);
 			this.twitterServiceURL = serverProps.getProperty(PHRESCO_TWITTER_SERVICE_URL);
+			this.enabletwitterService = TRUE.equals(serverProps.getProperty(PHRESCO_TWITTER_SERVICE_ENABLE));
 		} catch (IOException e) {
 			throw new PhrescoException(e);
 		} finally {
@@ -211,6 +215,10 @@ public class ServerConfiguration {
         return twitterServiceURL;
 	}
 	
+	public boolean isEnabletwitterService() {
+		return enabletwitterService;
+	}
+
 	public String getCiConfigFile(String repoType) {
 		if (GIT.equals(repoType)) {
 			return dependencyConfig.getProperty(PHRESCO_CI_JENKINS_CONFIG_FILE_PREFIX + GIT + PHRESCO_CI_JENKINS_CONFIG_FILE_SUFFIX);
