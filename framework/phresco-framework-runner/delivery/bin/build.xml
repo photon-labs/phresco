@@ -16,6 +16,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${phresco.home}/workspace/repo/ant-contrib/ant-contrib/1.0b2/ant-contrib-1.0b2.jar" onerror="ignore"/>
 	<target name="init">
         <echo message="Initializing Phresco"/>
+        <available property="phresco.upgraded" file="${phresco.upgrade.file}"/>
 	</target>	
 	
 	<target name="set-execute-permissions">
