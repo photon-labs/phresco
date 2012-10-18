@@ -278,6 +278,7 @@
 				}
 			%>
        	} else {
+       		enableScreen();
        		$("#noFiles").show();       		
        		$('.errorMsgLabel').empty();
        		$('.errorMsgLabel').html("Performance test not yet executed for " + testResultsType);
