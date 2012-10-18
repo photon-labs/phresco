@@ -89,6 +89,8 @@ import com.phresco.pom.util.PomProcessor;
 
 public class PhrescoReportGeneration extends FrameworkBaseAction implements FrameworkConstants {
 
+	private static final String INDEX = "index";
+	private static final String XHTML = "xhtml";
 	private static final long serialVersionUID = 1L;
 	private static final Logger S_LOGGER = Logger.getLogger(PhrescoReportGeneration.class);
     private static Boolean debugEnabled  =S_LOGGER.isDebugEnabled();
@@ -254,16 +256,11 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 		BufferedInputStream bufferedInputStream = null;
 		String uuid = UUID.randomUUID().toString();
 		String outFileNamePDF = "";
-		String outFileNameIphoneSonarPDF = "";
-		String outFileNameXHTML = "";
 		try {
 			if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
 				S_LOGGER.debug("generateCumulativeTestReport for iphone technology ");
 				outFileNamePDF = Utility.getPhrescoTemp() + uuid + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
-				outFileNameIphoneSonarPDF = Utility.getPhrescoTemp() + uuid + File.separator + projectCode + UNDERSCORE + fileName + DOT + PDF;
-				outFileNameXHTML = Utility.getPhrescoTemp() + uuid + File.separator + projectCode + UNDERSCORE + "index" + DOT + "xhtml";
-				new File(outFileNameIphoneSonarPDF).getParentFile().mkdirs();
-				new File(outFileNameXHTML).getParentFile().mkdirs();
+				S_LOGGER.debug("outFileNamePDF...." + outFileNamePDF);
 			} else {
 				S_LOGGER.debug("generateCumulativeTestReport for except mobile technology " + techId);
 				outFileNamePDF = Utility.getProjectHome() + File.separator + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
@@ -288,11 +285,26 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 				String outFinalFileNamePDF = Utility.getProjectHome() + File.separator + projectCode + File.separator + DO_NOT_CHECKIN_DIR + File.separator + ARCHIVES + File.separator + CUMULATIVE + File.separator + projectCode + UNDERSCORE + reportDatasType + UNDERSCORE + fileName + DOT + PDF;
 				new File(outFinalFileNamePDF).getParentFile().mkdirs();
 				try {
-					iphoneSonarHtmlToPdf(outFileNameIphoneSonarPDF, outFileNameXHTML);
+					iphoneSonarHtmlToPdf(uuid);
 		            List<String> pdfs = new ArrayList<String>();
-		            pdfs.add(outFileNamePDF);
-		            pdfs.add(outFileNameIphoneSonarPDF);
-		            concatPDFs(pdfs, outFinalFileNamePDF, true);
+		         // get all pdf from that uui location 
+		            String codeValidationPdfs = Utility.getPhrescoTemp() + uuid;
+		            File codeValidationsPdfDir = new File(codeValidationPdfs);
+		            if (codeValidationsPdfDir.exists()) {
+			            String[] extensions = new String[] { "pdf" };
+			            List<File> codeReportPdfs = (List<File>) FileUtils.listFiles(codeValidationsPdfDir, extensions, false);
+			            
+			            if (codeReportPdfs != null && codeReportPdfs.size() == 0) {
+			            	S_LOGGER.debug("no pdf found in " + codeValidationsPdfDir);
+			            	FileUtils.copyFile(new File(outFileNamePDF), new File(outFinalFileNamePDF));
+			            } else {
+				            for (File codeReportPdf : codeReportPdfs) {
+				            	S_LOGGER.debug("Code validation report files ... " + codeReportPdf);
+					            pdfs.add(codeReportPdf.getAbsolutePath());
+							}
+				            concatPDFs(pdfs, outFinalFileNamePDF, true);
+			            }
+		            }
 				} catch (PhrescoException e) {
 					// just copy generated generated pdf to archive folder
 					FileUtils.copyFile(new File(outFileNamePDF), new File(outFinalFileNamePDF));
@@ -409,45 +421,64 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
     }
 	
 	//Conversion of Html to Pdf
-	public void iphoneSonarHtmlToPdf(String outFileNameIphoneSonarPDF, String outFileNameXHTML) throws PhrescoException {
+	public void iphoneSonarHtmlToPdf(String uuid) throws PhrescoException {
 		S_LOGGER.debug("Entering Method  PhrescoReportGeneration.iphoneSonarHtmlToPdf()");
 		try {
-	        CleanerProperties props = new CleanerProperties();
-	        props.setTranslateSpecialEntities(true);
-	        props.setTransResCharsToNCR(true);
-	        props.setOmitComments(true);
-	        File staticAnalysisReport = null;
-	        
-	    	StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
+			// convert all html to xhmt and to pdf
+			
+			StringBuilder codeValidatePath = new StringBuilder(Utility.getProjectHome());
 	    	codeValidatePath.append(projectCode);
 	    	codeValidatePath.append(File.separatorChar);
 	    	codeValidatePath.append(DO_NOT_CHECKIN_DIR);
 	    	codeValidatePath.append(File.separatorChar);
 	    	codeValidatePath.append(STATIC_ANALYSIS_REPORT);
-	    	codeValidatePath.append(File.separatorChar);
-	    	codeValidatePath.append(INDEX_HTML);
-	    	staticAnalysisReport = new File(codeValidatePath.toString());
-	    	S_LOGGER.debug("staticAnalysisReport " + staticAnalysisReport);
-	        if(!staticAnalysisReport.exists()) {
-	        	S_LOGGER.debug("Index file is not available!!!!!!!!!");
-	        	throw new PhrescoException("static analysis report is not available!!!");
+	    	
+	    	File codeValidationReportDir = new File(codeValidatePath.toString());
+	        
+	        if(!codeValidationReportDir.exists()) {
+	        	S_LOGGER.debug("Index file is not available!!!!");
+	        	return;
 	        }
-	        
-	        //checking of starting and ending tags are in proper
-	        TagNode tagNode = new HtmlCleaner(props).clean(staticAnalysisReport);
-	        new PrettyXmlSerializer(props).writeToFile(tagNode, outFileNameXHTML, "utf-8");
-	        
-	        File xhtmlpath = new File(outFileNameXHTML);
-	        File pdfPath = new File(outFileNameIphoneSonarPDF);
-	        com.itextpdf.text.Document pdfDocument = null;
-	        PdfWriter pdfWriter = null;
-	        pdfDocument = new com.itextpdf.text.Document();
-	        pdfWriter = PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfPath));
-	        pdfDocument.open();
-	        
-	        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, (com.itextpdf.text.Document) pdfDocument,
-	                new FileInputStream(xhtmlpath), null);
-	        pdfDocument.close();
+	        S_LOGGER.debug("Proceeding with XHTML and pdfs ");
+	    	// if static analysis report dir is available 
+	    	List<File> targetFiles = null;
+	    	if (codeValidationReportDir.exists() && codeValidationReportDir.isDirectory()) {
+				targetFiles = new ArrayList<File>();
+				File[] listFiles = codeValidationReportDir.listFiles();
+				for (File targrtDir : listFiles) {
+					File targetIndexFile = new File(targrtDir, INDEX_HTML);
+					if (targrtDir.isDirectory() && targetIndexFile.exists()) {
+						targetFiles.add(targetIndexFile);
+						S_LOGGER.debug("file found at ... " + targetIndexFile);
+					}
+				}
+	    	}
+	    	
+	    	for (int i = 0; i < targetFiles.size(); i++) {
+	    		String tempOutFileNameXHTML = Utility.getPhrescoTemp() + uuid + File.separator + projectCode + UNDERSCORE + INDEX + i + DOT + XHTML;
+	    		String tempOutFileNameIphoneSonarPDF = Utility.getPhrescoTemp() + uuid + File.separator + projectCode + UNDERSCORE + fileName + i + DOT + PDF;
+	    		File targetFile = targetFiles.get(i);
+		        CleanerProperties props = new CleanerProperties();
+		        props.setTranslateSpecialEntities(true);
+		        props.setTransResCharsToNCR(true);
+		        props.setOmitComments(true);
+		        
+		        //checking of starting and ending tags are in proper
+		        TagNode tagNode = new HtmlCleaner(props).clean(targetFile);
+		        new PrettyXmlSerializer(props).writeToFile(tagNode, tempOutFileNameXHTML, "utf-8");
+		        
+		        File xhtmlpath = new File(tempOutFileNameXHTML);
+		        File pdfPath = new File(tempOutFileNameIphoneSonarPDF);
+		        com.itextpdf.text.Document pdfDocument = null;
+		        PdfWriter pdfWriter = null;
+		        pdfDocument = new com.itextpdf.text.Document();
+		        pdfWriter = PdfWriter.getInstance(pdfDocument, new FileOutputStream(pdfPath));
+		        pdfDocument.open();
+		        
+		        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, (com.itextpdf.text.Document) pdfDocument,
+		                new FileInputStream(xhtmlpath), null);
+		        pdfDocument.close();
+			}
 		} catch (Exception e) {
 			S_LOGGER.error("Entering Method PhrescoReportGeneration.iphoneSonarHtmlToPdf()" + FrameworkUtil.getStackTraceAsString(e));
 			throw new PhrescoException(e);
@@ -883,6 +914,11 @@ public class PhrescoReportGeneration extends FrameworkBaseAction implements Fram
 		for (String resultFile : testResultFiles) {
 
 			Document doc = getDocumentOfFile(reportFilePath, resultFile);
+			if (doc == null) {
+				// if doc is null, the file does not have any values (i.e) zero bytes.
+				continue;
+			}
+			
 			List<TestSuite> testSuites = getTestSuite(doc);
 			
 			//crisp info
