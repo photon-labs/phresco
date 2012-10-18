@@ -161,6 +161,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		if (response.getStatus() == 200) {
 			try {
 				extractArchive(response, info);
+				createSqlFolder(info, projectPath);
 				updateProjectPOM(info);
 				if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId) ||TechnologyTypes.WIN_PHONE.equalsIgnoreCase(techId) ) {
 					ItemGroupUpdater.update(info, projectPath);
@@ -182,10 +183,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 			File pomPath = new File(projectPath,POM_FILE);
 			ServerPluginUtil spUtil = new ServerPluginUtil();
 			spUtil.addServerPlugin(info, pomPath);
-		}
-		
-		if (techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
-			AndroidTestPOMUpdater.updatePOM(path);
 		}
 		
 		boolean drupal = techId.equals(TechnologyTypes.PHP_DRUPAL7) || techId.equals(TechnologyTypes.PHP_DRUPAL6);
@@ -238,7 +235,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 * @return Project based on the given information
 	 */
 
-	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path,UserInfo userInfo) throws PhrescoException {
+	public Project updateProject(ProjectInfo delta, ProjectInfo projectInfo, File path, UserInfo userInfo) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.updateProject(ProjectInfo info, File path)");
 		S_LOGGER.debug("updateProject() > info name : " + delta.getName());
@@ -254,6 +251,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		boolean flag = !techId.equals(TechnologyTypes.JAVA_WEBSERVICE) && !techId.equals(TechnologyTypes.JAVA_STANDALONE) && !techId.equals(TechnologyTypes.ANDROID_NATIVE);
 		updateDocument(delta, path);
 		response = PhrescoFrameworkFactory.getServiceManager().updateProject(projectInfo,userInfo);
+		File projectPath = new File(Utility.getProjectHome() + File.separator + delta.getCode());
 		if(response.getStatus() == 401){
 			throw new PhrescoException("Session expired");
 		}
@@ -262,19 +260,15 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 				throw new PhrescoException("Project updation failed");
 			}
 		} 
-		else if (techId.equals(TechnologyTypes.JAVA_WEBSERVICE)) {
-			createSqlFolder(delta, path);
+		if (response.getStatus() == 200) {
+			createSqlFolder(delta, projectPath);
 		}
 		updatePomProject(delta, projectInfo);
 		
-		if (techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
-			AndroidTestPOMUpdater.updatePOM(path);
-		}
 		try {
 			if (flag) {
 				extractArchive(response, delta);
 			}
-			File projectPath = new File(Utility.getProjectHome() + delta.getCode() + File.separator);
 			if (TechnologyTypes.WIN_METRO.equalsIgnoreCase(techId) ||TechnologyTypes.WIN_PHONE.equalsIgnoreCase(techId) ) {
 				ItemGroupUpdater.update(projectInfo, projectPath);
 			}
@@ -2171,44 +2165,45 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 }
 	 
 	 protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
-			String databaseType = "";
-			try {
-				String parentFile = path.getParentFile().getParent();
-				List<Database> databaseList = info.getTechnology().getDatabases();
-				String techId = info.getTechnology().getId();
-				if (databaseList == null || databaseList.size() == 0) {
-					return;
-				}
-				File mysqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
-				File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
-				for (Database db : databaseList) {
-					databaseType = db.getName().toLowerCase();
-					List<String> versions = db.getVersions();
-					for (String version : versions) {
-						String sqlPath = databaseType + File.separator + version.trim();
-						File sqlFolder = new File(parentFile, sqlFolderPathMap.get(techId) + sqlPath);
-						sqlFolder.mkdirs();
-						if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
-								&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
-							FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
-						} else if (!databaseType.equals(Constants.DB_MYSQL)) {
-							File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
+		String databaseType = "";
+		try {
+			List<Database> databaseList = info.getTechnology().getDatabases();
+			String techId = info.getTechnology().getId();
+			if (databaseList == null || databaseList.size() == 0) {
+				return;
+			}
+			File mysqlFolder = new File(path, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
+			File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
+			for (Database db : databaseList) {
+				databaseType = db.getName().toLowerCase();
+				List<String> versions = db.getVersions();
+				for (String version : versions) {
+					String sqlPath = databaseType + File.separator + version.trim();
+					File sqlFolder = new File(path, sqlFolderPathMap.get(techId) + sqlPath);
+					sqlFolder.mkdirs();
+					if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
+							&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {						
+						FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
+					} else {
+						File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
+						if (!sqlFile.exists()) {
 							sqlFile.createNewFile();
 						}
 					}
 				}
-			} catch (IOException e) {
-				throw new PhrescoException(e);
 			}
+		} catch (IOException e) {
+			throw new PhrescoException(e);
 		}
-	 
-		private File getMysqlVersionFolder(File mysqlFolder) {
-			File[] mysqlFolderFiles = mysqlFolder.listFiles();
-			if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
-				return mysqlFolderFiles[0];
-			}
-			return null;
+	}
+ 
+	private File getMysqlVersionFolder(File mysqlFolder) {
+		File[] mysqlFolderFiles = mysqlFolder.listFiles();
+		if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
+			return mysqlFolderFiles[0];
 		}
+		return null;
+	}
 
 	public List<Reports> getReports(ProjectInfo projectInfo) throws PhrescoException {
 		try {

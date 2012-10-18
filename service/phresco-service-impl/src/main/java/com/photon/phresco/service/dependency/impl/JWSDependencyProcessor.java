@@ -68,7 +68,6 @@ public class JWSDependencyProcessor extends AbstractDependencyProcessor {
 			S_LOGGER.debug("process() Path=" + path.getPath());
 		}
 		super.process(info, path, processType);
-		createSqlFolder(info, path);
 		updateTestPom(path);
 	}
 

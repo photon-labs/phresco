@@ -69,7 +69,6 @@ public class HTML5DependencyProcessor extends AbstractJsLibDependencyProcessor {
 		} else {
 		    extractJsLibraries(path, info.getTechnology().getJsLibraries());
 		}
-		createSqlFolder(info, path);
 		if (PROCESSTYPE.CREATE.equals(processType)) {
 			extractPilots(info, path, info.getTechnology());
 		}
