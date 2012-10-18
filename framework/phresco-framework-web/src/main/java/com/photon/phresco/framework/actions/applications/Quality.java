@@ -2112,11 +2112,19 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
 			codeValidatePath.append(DO_NOT_CHECKIN_DIR);
 			codeValidatePath.append(File.separatorChar);
 			codeValidatePath.append(STATIC_ANALYSIS_REPORT);
-			codeValidatePath.append(File.separatorChar);
-			codeValidatePath.append(INDEX_HTML);
-		    File indexPath = new File(codeValidatePath.toString());
-		    if (indexPath.exists()) {
-		    	isSonarReportAvailable = true;
+			
+		    File codeValidationReportDir = new File(codeValidatePath.toString());
+		    if (codeValidationReportDir.exists()) {
+		    	if (codeValidationReportDir.exists() && codeValidationReportDir.isDirectory()) {
+					File[] listFiles = codeValidationReportDir.listFiles();
+					for (File targrtDir : listFiles) {
+						File targetIndexFile = new File(targrtDir, "index.html");
+						if (targrtDir.isDirectory() && targetIndexFile.exists()) {
+							return true;
+						}
+					}
+		    	}
+		    	isSonarReportAvailable = false;
 		    }
 		}
 		return isSonarReportAvailable;
