@@ -127,7 +127,7 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	private static  Map<String, List<Reports>> siteReportMap = new HashMap<String, List<Reports>>(15);
 	private boolean adaptFunctionalConfig = false;
 	
-	private static void initializeSqlMap() {
+	static {
 		// TODO: This should come from database
 		sqlFolderPathMap.put(TechnologyTypes.PHP, "/source/sql/");
 		sqlFolderPathMap.put(TechnologyTypes.PHP_DRUPAL6, "/source/sql/");
@@ -2148,7 +2148,6 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	/* Delete the Sql Folder 
 	  */
 	 public void deleteSqlFolder(List<String> dbList , ProjectInfo projectInfo) throws PhrescoException {
-		 initializeSqlMap();
 		 try {
 			 File sqlPath = new File(Utility.getProjectHome() + File.separator
 					 + projectInfo.getCode() + File.separator
