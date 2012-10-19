@@ -126,6 +126,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 		INPUT_EXCEL_MAP.put(TechnologyTypes.SHAREPOINT,"PHTN_PHRESCO_Sharepoint.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_NATIVE,"PHTN_PHRESCO_Andriod-Native.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_NATIVE,"PHTN_PHRESCO_iPhone-Native.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_HYBRID,"PHTN_PHRESCO_iPhone-Web.xls");
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.NODE_JS_WEBSERVICE,"PHTN_PHRESCO_NodeJS-WebService.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_HYBRID,"PHTN_PHRESCO_Andriod-Hybrid.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.WORDPRESS, "PHTN_PHRESCO_Wordpress.xls");
@@ -144,6 +145,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 		CONTENTS_HOME_MAP.put(TechnologyTypes.ANDROID_HYBRID, new File(moduleBinariesDir, "android-hybrid"));
 		CONTENTS_HOME_MAP.put(TechnologyTypes.WORDPRESS, new File(moduleBinariesDir, "wordpress"));
 		CONTENTS_HOME_MAP.put(TechnologyTypes.PHP_DRUPAL6, new File(moduleBinariesDir, "drupal6"));
+		CONTENTS_HOME_MAP.put(TechnologyTypes.IPHONE_HYBRID, new File(moduleBinariesDir,"iphone-hybrid"));
 	}
 
 
@@ -354,7 +356,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 			module.setGroupId(groupId);
 		}
 
-		Cell artifactCell = row.getCell(14);
+		Cell artifactCell = row.getCell(15);
 		if (artifactCell != null
 				&& Cell.CELL_TYPE_BLANK != artifactCell.getCellType()) {
 			if (S_LOGGER.isDebugEnabled()) {
