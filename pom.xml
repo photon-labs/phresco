@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.photon.phresco</groupId>
     <artifactId>phresco-parent</artifactId>
-    <version>1.2.3.4002-SNAPSHOT</version>
+    <version>1.2.3.4003-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://www.phresco.org</url>
     <name>Phresco Parent POM for repository and distribution management</name>
@@ -41,14 +41,14 @@
 
      <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <phresco-commons-version>1.2.3.4002-SNAPSHOT</phresco-commons-version>
+        <phresco-commons-version>1.2.3.4003-SNAPSHOT</phresco-commons-version>
         <maven-plugin-plugin.version>2.9</maven-plugin-plugin.version>
         <maven.api.version>3.0.3</maven.api.version>
         <sitePluginVersion>3.1</sitePluginVersion>
         <jersey-version>1.9-ea07</jersey-version>
 
 		<siteBaseUrl>file://C:/apache-tomcat-7.0.26/webapps/ROOT/phresco-site/</siteBaseUrl>
-        <phresco.server.dependency.config.file>config/dependency/1.2.3.4001/dependency-1.2.3.4001.properties</phresco.server.dependency.config.file>
+        <phresco.server.dependency.config.file>config/dependency/1.2.3.4002/dependency-1.2.3.4002.properties</phresco.server.dependency.config.file>
 
     </properties>
     

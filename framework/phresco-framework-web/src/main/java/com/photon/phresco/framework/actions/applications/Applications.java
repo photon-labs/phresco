@@ -421,23 +421,23 @@ public class Applications extends FrameworkBaseAction {
 				ProjectInfo tempprojectInfo = administrator.getProject(projectCode).getProjectInfo();
 				List<Database> newDatabases = projectInfo.getTechnology().getDatabases();
 				List<String> newDbNames = new ArrayList<String>();
-				if (CollectionUtils.isNotEmpty(newDatabases) && newDatabases != null) {
+				if (CollectionUtils.isNotEmpty(newDatabases)) {
 					for (Database newDatabase : newDatabases) {
-						newDbNames.add(newDatabase.getName());
+						newDbNames.add(newDatabase.getName().trim());
 					}
 				}
 				
 				List<Database> projectInfoDbs = tempprojectInfo.getTechnology().getDatabases();
 				List<String> projectInfoDbNames = new ArrayList<String>();
-				if (CollectionUtils.isNotEmpty(projectInfoDbs) && projectInfoDbs != null) {
+				if (CollectionUtils.isNotEmpty(projectInfoDbs)) {
 					for (Database projectInfoDb : projectInfoDbs) {
 						projectInfoDbNames.add(projectInfoDb.getName());
 					}
 				}
 				
-				if (CollectionUtils.isNotEmpty(projectInfoDbNames) && projectInfoDbNames != null) {
+				if (CollectionUtils.isNotEmpty(projectInfoDbNames)) {
 					for (String projectInfoDbName : projectInfoDbNames) {
-						if (!newDbNames.contains(projectInfoDbName)) {
+						if (!newDbNames.contains(projectInfoDbName.trim())) {
 							deletableDbs.add(projectInfoDbName);
 						} else {
 							for (Database newDatabase : newDatabases) {
@@ -452,12 +452,11 @@ public class Applications extends FrameworkBaseAction {
 						}
 					}
 				}
-				
 				administrator.deleteSqlFolder(deletableDbs, projectInfo);
 				UserInfo userInfo = (UserInfo) getHttpSession().getAttribute(REQ_USER_INFO);
 				administrator.updateProject(projectInfo, originalinfo, projectPath,userInfo);
 				removeConfiguration();
-				addActionMessage(getText(UPDATE_PROJECT,Collections.singletonList(projectInfo.getName())));
+				addActionMessage(getText(UPDATE_PROJECT, Collections.singletonList(projectInfo.getName())));
 			} catch (Exception e) {
 				if ("Session expired".equalsIgnoreCase(e.getMessage())) {
 					getHttpSession().removeAttribute(REQ_USER_INFO);
@@ -482,10 +481,7 @@ public class Applications extends FrameworkBaseAction {
 	
 	private void compareVersions(String dbName, List<String> projectInfoDbVersions, List<String> newDbVersions) {
 		for (String projectInfoDbVersion : projectInfoDbVersions) {
-			if (newDbVersions.contains(projectInfoDbVersion)) {
-				
-			}
-			else {
+			if (!newDbVersions.contains(projectInfoDbVersion.trim())) {
 				deletableDbs.add(dbName + "/" + projectInfoDbVersion.trim());
 			}
 		}

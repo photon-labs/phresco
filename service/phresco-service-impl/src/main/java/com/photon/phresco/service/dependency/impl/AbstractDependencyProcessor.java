@@ -283,44 +283,4 @@ public abstract class AbstractDependencyProcessor implements DependencyProcessor
             throw new PhrescoException(e);
         }
     }
-	
-	protected void createSqlFolder(ProjectInfo info, File path) throws PhrescoException {
-		String databaseType = "";
-		try {
-			List<Database> databaseList = info.getTechnology().getDatabases();
-			String techId = info.getTechnology().getId();
-			if (databaseList == null || databaseList.size() == 0) {
-				return;
-			}
-			File mysqlFolder = new File(path, sqlFolderPathMap.get(techId) + Constants.DB_MYSQL);
-			File mysqlVersionFolder = getMysqlVersionFolder(mysqlFolder);
-			for (Database db : databaseList) {
-				databaseType = db.getName().toLowerCase();
-				List<String> versions = db.getVersions();
-				for (String version : versions) {
-					String sqlPath = databaseType + File.separator + version.trim();
-					File sqlFolder = new File(path, sqlFolderPathMap.get(techId) + sqlPath);
-					sqlFolder.mkdirs();
-					if (databaseType.equals(Constants.DB_MYSQL) && mysqlVersionFolder != null
-							&& !(mysqlVersionFolder.getPath().equals(sqlFolder.getPath()))) {	
-						FileUtils.copyDirectory(mysqlVersionFolder, sqlFolder);
-					} else if (!databaseType.equals(Constants.DB_MYSQL)) {
-						File sqlFile = new File(sqlFolder, Constants.SITE_SQL);
-						sqlFile.createNewFile();
-					}
-				}
-			}
-		} catch (IOException e) {
-			throw new PhrescoException(e);
-		}
-	}
-	
-	private File getMysqlVersionFolder(File mysqlFolder) {
-		File[] mysqlFolderFiles = mysqlFolder.listFiles();
-		if (mysqlFolderFiles != null && mysqlFolderFiles.length > 0) {
-			return mysqlFolderFiles[0];
-		}
-		return null;
-	}
-	
 }
