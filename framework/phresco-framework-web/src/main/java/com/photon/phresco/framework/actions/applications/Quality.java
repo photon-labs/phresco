@@ -228,7 +228,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD, REQ_ANDROID_DEFAULT);
                 actionType = ActionType.ANDROID_TEST_COMMAND;
               
-            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) {
+            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 				settingsInfoMap.put(UNIT_TEST, TRUE);
 				settingsInfoMap.put(IPHONE_TARGET_NAME, target);
