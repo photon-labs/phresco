@@ -131,7 +131,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 		INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_HYBRID,"PHTN_PHRESCO_Andriod-Hybrid.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.WORDPRESS, "PHTN_PHRESCO_Wordpress.xls");
 		INPUT_EXCEL_MAP.put(TechnologyTypes.PHP_DRUPAL6, "PHTN_PHRESCO_Drupal6.xls");
-		INPUT_EXCEL_MAP.put(TechnologyTypes.PHP_DRUPAL6, "PHTN_PHRESCO_Drupal6.3.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET,"PHTN_PHRESCO_HTML5-WebService.xls");
 	}
 
 	private  void initContentsHomeMap() {
@@ -278,6 +278,7 @@ public class TechnologyDataGenerator implements ServerConstants {
 			String[] depModuleIds = StringUtils.split(depModules,DELIMITER);
 			NAME_AND_DEP_MAP.put(identifier, depModuleIds);
 		}
+		
 		Documents documents = new Documents();
 		Cell helptext = row.getCell(9);
 		if (helptext != null && Cell.CELL_TYPE_BLANK != helptext.getCellType()) {
@@ -560,9 +561,9 @@ public class TechnologyDataGenerator implements ServerConstants {
 	}
 	
 	public static void main(String[] args) throws PhrescoException {
-	    File toolsHome = new File("D:\\work\\phresco\\agra\\service\\trunk\\phresco-service-runner\\delivery\\tools\\");
-	    File binariesDir = new File("D:\\work\\phresco\\Phresco-binaries\\");
-        File inputRootDir = new File(toolsHome, "files");
+	    File toolsHome = new File("D:\\Phresco\\Phresco-projects\\binaries");
+	    File binariesDir = new File("D:\\Phresco\\Phresco-projects\\binaries");
+       File inputRootDir = new File(toolsHome, "files");
         File outputRootDir = new File(toolsHome, "repo");
         TechnologyDataGenerator dataGen = new TechnologyDataGenerator(inputRootDir, outputRootDir, binariesDir);
         dataGen.publish();

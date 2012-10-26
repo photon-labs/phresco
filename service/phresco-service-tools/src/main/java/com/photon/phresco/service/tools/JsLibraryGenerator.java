@@ -84,12 +84,12 @@ public class JsLibraryGenerator {
 	
 	private static void initInputExcelMap() {
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.PHP,"PHTN_PHRESCO_JS-Libraries.xls");
-	    INPUT_EXCEL_MAP.put(TechnologyTypes.ANDROID_HYBRID,"PHTN_PHRESCO_JS-Libraries.xls");
 	    INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_HYBRID,"PHTN_PHRESCO_JS-Libraries.xls");
-	    INPUT_EXCEL_MAP.put(TechnologyTypes.IPHONE_NATIVE,"PHTN_PHRESCO_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MOBILE_WIDGET,"PHTN_PHRESCO_Html5_Mobile_Widget_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET, "PHTN_PHRESCO_Html5_Yui_Widget_JS-Libraries.xls");
+        INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
+		//INPUT_EXCEL_MAP.put(TechnologyTypes.BLACKBERRY_HYBRID, "PHTN_PHRESCO_Blackberry_JS-Libraries.xls");
     }
 	
 	private  void initContentsHomeMap() {
@@ -98,8 +98,10 @@ public class JsLibraryGenerator {
 	}
 
 	public void publish() throws PhrescoException {
+	
 	    for (String tech : INPUT_EXCEL_MAP.keySet()) {
             generate(tech);
+			
         }
 	}
 
@@ -292,12 +294,12 @@ public class JsLibraryGenerator {
 	public static void main(String[] args) throws PhrescoException, IOException {
 		//File inputFile = new File(
 				//"D:\\work\\phresco\\source\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");
-		File inputFile = new File("D:\\work\\phresco\\agra\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");
+		File inputFile = new File("D:\\Phresco\\Phresco-projects\\binaries");
 
 		//File outFile = new File(
 				//"D:\\work\\phresco\\source\\service\\trunk\\phresco-service-runner\\delivery\\tools\\files\\");
 		File outFile = new File("D:\\");
-		File binariesFileDir = new File("D:\\work\\phresco\\Phresco-binaries\\");
+		File binariesFileDir = new File("D:\\Phresco\\Phresco-projects\\binaries");
 		JsLibraryGenerator gen = new JsLibraryGenerator(inputFile, outFile, binariesFileDir);
 		gen.publish();
 	}
