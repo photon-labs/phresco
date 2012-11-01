@@ -89,7 +89,7 @@ public class JsLibraryGenerator {
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_MULTICHANNEL_JQUERY_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_WIDGET, "PHTN_PHRESCO_Html5_Yui_Widget_JS-Libraries.xls");
         INPUT_EXCEL_MAP.put(TechnologyTypes.HTML5_JQUERY_MOBILE_WIDGET, "PHTN_PHRESCO_Html5_Jquery_Widget_JS-Libraries.xls");
-		//INPUT_EXCEL_MAP.put(TechnologyTypes.BLACKBERRY_HYBRID, "PHTN_PHRESCO_Blackberry_JS-Libraries.xls");
+		INPUT_EXCEL_MAP.put(TechnologyTypes.BLACKBERRY_HYBRID, "PHTN_PHRESCO_Blackberry_JS-Libraries.xls");
     }
 	
 	private  void initContentsHomeMap() {
