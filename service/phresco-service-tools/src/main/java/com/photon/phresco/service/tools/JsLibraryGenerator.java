@@ -245,7 +245,9 @@ public class JsLibraryGenerator {
 				fileExt = "zip";
 			} else if (filePath.endsWith(".jar")) {
 				fileExt = "jar";
-			}
+			} else if (filePath.endsWith(".js")) {
+				fileExt = "js";
+			} 
 			String contentUrl = "/jslibraries/files/" + no +"/"+ version + "/"+ no + "-" + version + "." + fileExt;
 
 			library.setContentURL(contentUrl);
