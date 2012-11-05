@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +34,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -49,19 +47,27 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XMLConstants;
 import com.photon.phresco.util.PluginConstants;
 import com.photon.phresco.util.PluginUtils;
+import org.apache.commons.configuration.HierarchicalConfiguration.Node;
 
 /**
  * APP instrumentation
  * @goal instruments
  */
 public class Instrumentation extends AbstractXcodeMojo implements PluginConstants {
+	private static final String YES = "yes";
+
+	private static final String EEE_MMM_DD_HH_MM_SS_Z_YYYY = "EEE MMM dd hh:mm:ss z yyyy";
+
+	private static final String LOG_TYPE = "LogType";
+
+	private static final String TIMESTAMP = "Timestamp";
+	
 	/**
 	 * @parameter experssion="${command}" default-value="instruments"
 	 */
@@ -235,6 +241,7 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 			}
 
 			preparePlistResult();
+			getLog().info("Plist path ... " + project.getBasedir().getAbsolutePath()+File.separator+plistResult);
 			generateXMLReport(project.getBasedir().getAbsolutePath()+File.separator+plistResult);
 	}
 
@@ -259,9 +266,13 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 		}
 	}
 
-//	public static void main(String[] args) {
-//		new Instrumentation().generateXMLReport("/Users/kaleeswaran/workspace/proj-temp-2/PHR_iphone_native_test/Run 1/Automation Results.plist");
-//	}
+//    public static void main(String[] args) {
+//        try {
+//            new Instrumentation().generateXMLReport("/Users/kal/Notes/XCOde-Plist/Automation Results-DD-old.plist");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 	
 	private void generateXMLReport(String location) {
 		getLog().info("xml generation started");
@@ -270,14 +281,13 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 			int total,pass,fail;
 			total=pass=fail=0;
 			config = new XMLPropertyListConfiguration(location);
+			// getting all <dict> tags
 			ArrayList list =  (ArrayList) config.getRoot().getChild(0).getValue();
 			String key;
-
 
 			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-
 
 			Element root = doc.createElement(XMLConstants.TESTSUITES_NAME);
 			doc.appendChild(root);
@@ -287,59 +297,61 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 
 
 			for (Object object : list) {
-
+				// getting start time from initial <dict tag>
 				XMLPropertyListConfiguration config = (XMLPropertyListConfiguration) object;
-
-				startTime = config.getRoot().getChild(2).getValue().toString();
-
+				startTime = getValueOfNode(config.getRoot(), TIMESTAMP);
 				break;
 			}
 
 			for (Object object : list) {
-
+				// getChild(0) - <key>LogType</key>
+				// getChild(1) - <key>Message</key>
+				// getChild(2) - <key>Timestamp</key>
 				XMLPropertyListConfiguration config = (XMLPropertyListConfiguration) object;
 
-				ConfigurationNode con = config.getRoot().getChild(0);
-				key = con.getName();
+				ConfigurationNode con = getConfigurationOfNode(config.getRoot(), LOG_TYPE);
 				
-				if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.PASS)){
-					pass++;total++;
-					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
-					child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
-					child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
-
-					String endTime = config.getRoot().getChild(2).getValue().toString();
-					
-					long differ = getTimeDiff(startTime, endTime);
-					startTime = endTime;
-					child1.setAttribute(XMLConstants.TIME, differ+"");
-					testSuite.appendChild(child1);
-				}
-				else if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.ERROR)){
-					fail++;total++;
-					Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
-					child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
-					child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
-					String endTime = config.getRoot().getChild(2).getValue().toString();
-					
-					List<ConfigurationNode> children = (List<ConfigurationNode>) config.getRoot().getChildren();
-					String errorTextNodes = XMLConstants.DICT_START;
-					for (ConfigurationNode child : children) {
-						errorTextNodes = errorTextNodes + XMLConstants.KEY_START + child.getName() + XMLConstants.KEY_END;
-						errorTextNodes = errorTextNodes + XMLConstants.STRING_START + child.getValue() + XMLConstants.STRING_END;
+				if (con != null) {
+				
+					key = con.getName();
+					if(key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.PASS)){
+						pass++;total++;
+						Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
+						child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
+						child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
+	
+						String endTime = getValueOfNode(config.getRoot(), TIMESTAMP);
+						
+						long differ = getTimeDiff(startTime, endTime);
+						startTime = endTime;
+						child1.setAttribute(XMLConstants.TIME, differ+"");
+						testSuite.appendChild(child1);
+					} else if (key.equals(XMLConstants.LOGTYPE) && con.getValue().equals(XMLConstants.ERROR)) {
+						fail++;total++;
+						Element child1 = doc.createElement(XMLConstants.TESTCASE_NAME);
+						child1.setAttribute(XMLConstants.NAME,(String) config.getRoot().getChild(1).getValue());
+						child1.setAttribute(XMLConstants.RESULT,(String) con.getValue());
+						String endTime = getValueOfNode(config.getRoot(), TIMESTAMP);
+						
+						List<ConfigurationNode> children = (List<ConfigurationNode>) config.getRoot().getChildren();
+						String errorTextNodes = XMLConstants.DICT_START;
+						for (ConfigurationNode child : children) {
+							errorTextNodes = errorTextNodes + XMLConstants.KEY_START + child.getName() + XMLConstants.KEY_END;
+							errorTextNodes = errorTextNodes + XMLConstants.STRING_START + child.getValue() + XMLConstants.STRING_END;
+						}
+						errorTextNodes = errorTextNodes + XMLConstants.DICT_END;
+						
+						getLog().info("error node " + errorTextNodes);
+						long differ = getTimeDiff(startTime, endTime);
+						startTime = endTime;
+						child1.setAttribute(XMLConstants.TIME, differ+"");
+						//adding error element
+						Element errorElem = doc.createElement(XMLConstants.FAILURE);
+						errorElem.setAttribute(XMLConstants.TYPE, "Exception");
+						errorElem.setTextContent(errorTextNodes);
+						child1.appendChild(errorElem);
+						testSuite.appendChild(child1);
 					}
-					errorTextNodes = errorTextNodes + XMLConstants.DICT_END;
-					
-					getLog().info("error node " + errorTextNodes);
-					long differ = getTimeDiff(startTime, endTime);
-					startTime = endTime;
-					child1.setAttribute(XMLConstants.TIME, differ+"");
-					//adding error element
-					Element errorElem = doc.createElement(XMLConstants.FAILURE);
-					errorElem.setAttribute(XMLConstants.TYPE, "Exception");
-					errorElem.setTextContent(errorTextNodes);
-					child1.appendChild(errorElem);
-					testSuite.appendChild(child1);
 				}
 
 			}
@@ -354,9 +366,10 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 
 			TransformerFactory transfac = TransformerFactory.newInstance();
 			Transformer trans = transfac.newTransformer();
-			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			trans.setOutputProperty(OutputKeys.INDENT, YES);
 
-//			File file = new File("/Users/kaleeswaran/Desktop/iphoneFunctionalXmlResult.xml");
+//			File file = new File("/Users/kal/Notes/XCOde-Plist/DDOld.xml");
+			getLog().info("functional xml file generated ... ");
 			File file = new File(project.getBasedir().getAbsolutePath()+File.separator+xmlResult);
 			Writer bw = new BufferedWriter(new FileWriter(file));
 			StreamResult result = new StreamResult(bw);
@@ -368,9 +381,31 @@ public class Instrumentation extends AbstractXcodeMojo implements PluginConstant
 		}
 	}
 
+    private String getValueOfNode(Node rootNode, String nodeName) {
+        List<ConfigurationNode> children = (List<ConfigurationNode>) rootNode.getChildren();
+        String value = "";
+        for (ConfigurationNode child : children) {
+            if (nodeName.equals(child.getName())) {
+                value = child.getValue().toString();
+                break;
+            }
+        }
+        return value;
+    }
+    
+    private ConfigurationNode getConfigurationOfNode(Node rootNode, String nodeName) {
+        List<ConfigurationNode> children = (List<ConfigurationNode>) rootNode.getChildren();
+        for (ConfigurationNode child : children) {
+            if (nodeName.equals(child.getName())) {
+                return child;
+            }
+        }
+		return null;
+    }
+    
 	private long getTimeDiff(String dateStart, String dateStop) {
 		//TODO try to get the system time format.
-		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");  
+		SimpleDateFormat format = new SimpleDateFormat(EEE_MMM_DD_HH_MM_SS_Z_YYYY);  
 		Date d1 = null;
 		Date d2 = null;
 		try {
