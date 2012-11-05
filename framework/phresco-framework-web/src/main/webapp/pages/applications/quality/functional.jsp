@@ -79,18 +79,13 @@
 				$("#popup_div").empty();
 				showPopup();
 			 	<% 
-			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) { 
+			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) { 
 			 	%>
 			 		generateTest('testIphone', 'popup_div');
 			 	<% 
 			 		} else if (TechnologyTypes.ANDROIDS.contains(techId)) {
 			 	%>
 			 		generateTest('testAndroid', 'popup_div');
-			 		
-				<% 
-			 		} else if (TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
-			 	%>
-			 		iphone_HybridTest('testIphone', 'Iphone_HybridTest');
 				<% 
 			 		} else {
 			 	%>

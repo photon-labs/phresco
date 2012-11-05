@@ -651,13 +651,10 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD,
 					REQ_ANDROID_DEFAULT);
 			actionType = ActionType.ANDROID_TEST_COMMAND;
-		} else if (TechnologyTypes.IPHONES.equals(technology)) {
+		} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
 			settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME + IPHONE_FORMAT);
 			settingsInfoMap.put(BUILD_NUMBER, FIRST_BUILD);
 			actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
-		} else if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
-			settingsInfoMap = null;
-			actionType = ActionType.TEST;
 		} else {
 			// settingsInfoMap.put(TEST, TEST_PARAM_VALUE);
 			if (TechnologyTypes.SHAREPOINT.equals(project.getProjectInfo()

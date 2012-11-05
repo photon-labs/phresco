@@ -299,17 +299,13 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 settingsInfoMap.put(DEPLOY_ANDROID_DEVICE_MODE, device);
                 settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD, REQ_ANDROID_DEFAULT);
                 actionType = ActionType.ANDROID_TEST_COMMAND;
-            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId)) {
+            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
             	String buildNumber = getHttpRequest().getParameter(REQ_TEST_BUILD_ID);
             	String applicationPath = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();
             	settingsInfoMap.put(BUILD_NUMBER, buildNumber);
             	//addition param for 1.2.0. plugins, backward compatibility
             	settingsInfoMap.put(IPHONE_BUILD_NAME, applicationPath);
                 actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
-               
-	        } else if (TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
-	        	settingsInfoMap = null;
-	            actionType = ActionType.TEST;
 	        } else {
 	        	S_LOGGER.debug("All test param added");
                 settingsInfoMap.put(TEST_PARAM, TEST_PARAM_VALUE);
