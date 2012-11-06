@@ -45,6 +45,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <module>phresco-blackberry-archetype</module>
         <module>phresco-windows-phone-archetype</module>
         <module>phresco-iphone-library-archetype</module>
+        <module>phresco-iphone-workspace-archetype</module>
     </modules>
     
     <properties>

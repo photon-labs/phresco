@@ -24,7 +24,7 @@
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
 	<name>${artifactId}</name>
-	<packaging>xcode-static-library</packaging>
+	<packaging>xcode</packaging>
 	<build>
 	<sourceDirectory>source</sourceDirectory>
 	<directory>do_not_checkin/target</directory>
@@ -35,7 +35,7 @@
 			<version>1.2.3.4003-SNAPSHOT</version>
 			<extensions>true</extensions>
 			<configuration>
-				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>
+				<xcodeProject>./source/Phresco.xcworkspace</xcodeProject>
 			</configuration>
 		</plugin>
 	  </plugins>
