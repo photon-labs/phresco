@@ -58,6 +58,12 @@
 	if (TechnologyTypes.ANDROIDS.contains(project.getProjectInfo().getTechnology().getId())) {
 		popup = Boolean.TRUE;
 	}
+	
+// 	show deploy icon displaying
+	boolean showDeploy = false;
+	if (request.getAttribute(FrameworkConstants.REQ_SHOW_DEPLOY) != null) {
+		showDeploy = Boolean.valueOf(request.getAttribute(FrameworkConstants.REQ_SHOW_DEPLOY).toString());	
+	}
 %>
 
 <% if (buildInfos == null || buildInfos.size() == 0) { %>
@@ -86,7 +92,8 @@
 				              	<th class="third">
 				                	<div class="th-inner-head "><s:text name="label.download"/></div>
 				              	</th>
-				              	<% if (!(TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology) || TechnologyTypes.JAVA_STANDALONE.contains(technology))) { %>
+				              	<!-- when showDeploy is true, display deploy icon -->
+				              	<% if (showDeploy) { %>
 					              	<th class="third">
 					                	<div class="th-inner-head ">
 					                		Deploy
@@ -136,11 +143,12 @@
 		                            	}
 		                            %>     
 			              		</td>
+			              			<!-- when showDeploy is true, display deploy icon -->
+			              		<%
+			              			if (showDeploy) {
+			              		%>
 			              		<td>
-			              			<% if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology)) { %>
-										<!-- By default disable all Run buttons under builds -->
-				       	  				<!-- <input type="button" value="Run" id="<%= buildInfo.getBuildNo() %>" name="<%= buildInfo.getBuildNo() %>" class="btn disabled" disabled="disabled" onClick="startNodeJS(this);"> -->
-				       	  			<% } else if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
+			              			<% if (TechnologyTypes.ANDROIDS.contains(technology)) { %>
 		                                <a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="deployAndroid(this);">
 		                                    <img src="images/icons/deploy.png" />
 		                                </a>
@@ -153,11 +161,15 @@
 		                                 <img src="images/icons/deploy.png" />  
 		                                </a>   
 		                            <% } else if (!TechnologyTypes.JAVA_STANDALONE.contains(technology)) { %>
+										<!-- Other web technologies -->
 				       	  				<a id="buildNumberHref#<%= buildInfo.getBuildNo() %>" href="#" value="<%= buildInfo.getBuildNo() %>" onClick="generateBuild('<%= projectCode %>', 'deploy', this);">			       	  				
 				       	  					<img src="images/icons/deploy.png" />
 				       	  				</a>
 				       	  			<% } %>
 			              		</td>
+			              		<% 
+			              			}
+			              		%>
 			            	</tr>
 			            <%
 							}
