@@ -35,7 +35,7 @@
 			<version>1.2.3.4003-SNAPSHOT</version>
 			<extensions>true</extensions>
 			<configuration>
-				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>
+				<xcodeProject>./source/Phresco.xcworkspace</xcodeProject>
 			</configuration>
 		</plugin>
 	  </plugins>
