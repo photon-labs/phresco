@@ -69,4 +69,5 @@
 				<include>UserInterfaceState.xcuserstate</include>
 			</includes>
 		</fileSet>
+      </filesets>
 </archetype-descriptor>
