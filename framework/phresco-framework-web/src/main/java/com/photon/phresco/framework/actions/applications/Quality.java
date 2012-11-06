@@ -228,7 +228,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD, REQ_ANDROID_DEFAULT);
                 actionType = ActionType.ANDROID_TEST_COMMAND;
               
-            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
+            } else if (TechnologyTypes.IPHONES.contains(techId)) {
 				actionType = ActionType.IPHONE_BUILD_UNIT_TEST;
 				settingsInfoMap.put(UNIT_TEST, TRUE);
 				settingsInfoMap.put(IPHONE_TARGET_NAME, target);
@@ -299,7 +299,7 @@ public class Quality extends FrameworkBaseAction implements FrameworkConstants {
                 settingsInfoMap.put(DEPLOY_ANDROID_DEVICE_MODE, device);
                 settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD, REQ_ANDROID_DEFAULT);
                 actionType = ActionType.ANDROID_TEST_COMMAND;
-            } else if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) {
+            } else if (TechnologyTypes.IPHONES.contains(techId)) {
             	String buildNumber = getHttpRequest().getParameter(REQ_TEST_BUILD_ID);
             	String applicationPath = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();
             	settingsInfoMap.put(BUILD_NUMBER, buildNumber);
