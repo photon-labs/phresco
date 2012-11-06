@@ -131,16 +131,9 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>test/functional</directory> 
-			<includes>				
-				<include>pom.xml</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src</directory> 
 			<includes>
-				<include>AllTests.js</include>
-                <include>HelloWorld.js</include>				
+				<include>AllTests.js</include> 				
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -155,5 +148,19 @@
 				<include>**/*</include>
 			</includes>
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>src/main/com/photon/phresco/util</directory> 
+			<includes>
+				<include>MainActivity.js</include>
+                <include>UIElements.js</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>src/test/com/photon/phresco/testcase</directory> 
+			<includes>
+				<include>Helloworld_suite.js</include>
+                </includes>
+		</fileSet>
 	</fileSets>
+    
 </archetype-descriptor>

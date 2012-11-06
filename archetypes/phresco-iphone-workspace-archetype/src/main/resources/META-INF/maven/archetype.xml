@@ -1,0 +1,60 @@
+<!--
+  ###
+  Archetype - phresco-iphone-native-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+<archetype>
+  <id>phresco-iphone-archetype</id>
+	<sources>
+		<source>source/main.m</source>
+		<source>source/MainWindow.xib</source>
+		<source>source/Phresco_Prefix.pch</source>
+		<source>source/Phresco-Info.plist</source>
+		<source>source/phresco-env-config.xml</source>
+		<source>source/Classes/PhrescoAppDelegate.h</source>
+		<source>source/Classes/PhrescoAppDelegate.m</source>
+		<source>source/Classes/RootViewController.h</source>
+		<source>source/Classes/RootViewController.m</source>
+		<source>source/Classes/RootViewController.xib</source>
+	</sources>
+	<testSources>
+		<source>test/functional/tests/TestSuite.js</source>
+	</testSources>
+	<resources>
+		<resource>source/images/Icon.png</resource>
+		<resource>source/Phresco.xcodeproj/esfdsnat.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/esfdsnat.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/mac.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/mac.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/photon.pbxuser</resource>
+		<resource>source/Phresco.xcodeproj/photon.perspectivev3</resource>
+		<resource>source/Phresco.xcodeproj/project.pbxproj</resource>
+		<resource>source/Phresco.xcodeproj/project.xcworkspace/contents.xcworkspacedata</resource>
+		<resource>source/Phresco.xcodeproj/project.xcworkspace/xcuserdata/bharatkumar.xcuserdatad/UserInterfaceState.xcuserstate</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 2.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 4.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 6.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco 8.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/Phresco.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/bharatkumar.xcuserdatad/xcschemes/xcschememanagement.plist</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/HomeViewTest 2.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/HomeViewTest.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/Phresco.xcscheme</resource>
+		<resource>source/Phresco.xcodeproj/xcuserdata/photon.xcuserdatad/xcschemes/xcschememanagement.plist</resource>
+	</resources>
+</archetype>
