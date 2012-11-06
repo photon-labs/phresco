@@ -78,6 +78,14 @@ import com.photon.phresco.util.XCodeConstants;
  */
 public class XcodeBuild extends AbstractMojo {
 
+	private static final String DD_MMM_YYYY_HH_MM_SS = "dd/MMM/yyyy HH:mm:ss";
+
+	private static final String POM_XML = "/pom.xml";
+
+	private static final String PACKAGING_XCODE_STATIC_LIBRARY = "xcode-static-library";
+
+	private static final String PACKAGING_XCODE = "xcode";
+
 	private static final String PATH_TXT = "path.txt";
 
 	private static final String DO_NOT_CHECKIN_BUILD = "/do_not_checkin/build";
@@ -290,8 +298,17 @@ public class XcodeBuild extends AbstractMojo {
 			
 			if(!unittest) {
 				//In case of unit testcases run, the APP files will not be generated.
-				createdSYM();
-				createApp(); 
+				// if packagin is xcode go with following steps
+				if (PACKAGING_XCODE.equals(project.getPackaging())) {
+					getLog().info("xcode archiving started ");
+					createdSYM();
+					createApp(); 
+				} else if (PACKAGING_XCODE_STATIC_LIBRARY.equals(project.getPackaging())) {
+					createStaticLibrary();
+					getLog().info("xcode static library archiving started ");
+				} else {
+					throw new MojoExecutionException("Packaging is not defined!");
+				}
 			}
 			/*
 			 * child.waitFor();
@@ -306,10 +323,9 @@ public class XcodeBuild extends AbstractMojo {
 			getLog().error("The clean process was been interrupted.");
 			throw new MojoExecutionException("The clean process was been interrupted", e);
 		} catch (MojoFailureException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MojoExecutionException("An MojoFailure Exception occured", e);
 		}
-		File directory = new File(this.basedir + "/pom.xml");
+		File directory = new File(this.basedir + POM_XML);
 		this.project.getArtifact().setFile(directory);
 	}
 
@@ -373,15 +389,64 @@ public class XcodeBuild extends AbstractMojo {
 		
 	}
 	
-
+	private void createStaticLibrary() throws MojoExecutionException {
+		File outputFile = getDotAFile();
+		if (outputFile == null) {
+			getLog().error("xcodebuild failed. resultant library is not generated!");
+			throw new MojoExecutionException("xcodebuild has been failed");
+		}
+		
+		if (outputFile.exists()) {
+			try {
+				getLog().info("Completed " + outputFile.getAbsolutePath());
+				getLog().info("Folder name ....." + baseDir.getName());
+				getLog().info("library file created.. Copying to Build directory....." + project.getBuild().getFinalName());
+				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
+				File baseFolder = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName);
+				if (!baseFolder.exists()) {
+					baseFolder.mkdirs();
+					getLog().info("build output direcory created at " + baseFolder.getAbsolutePath());
+				}
+				
+				// copy include folder and .a files to build directory
+				getLog().info("outputFile of static library " + outputFile.getAbsolutePath());
+				getLog().info("baseFolder of static library " + baseFolder.getAbsolutePath());
+				XcodeUtil.copyFolder(outputFile, baseFolder);
+				
+				// generating zip file
+				getLog().info("Creating deliverables.....");
+				ZipArchiver zipArchiver = new ZipArchiver();
+				zipArchiver.addDirectory(baseFolder);
+				File deliverableZip = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName + ".zip");
+				zipArchiver.setDestFile(deliverableZip);
+				zipArchiver.createArchive();
+				deliverable = deliverableZip.getAbsolutePath();
+				getLog().info("Deliverables available at " + deliverableZip.getName());
+				
+				// writing build info
+				File outputlibFile = getDotAFileName();
+				File destFile = new File(baseFolder, outputlibFile.getName());
+				appFileName = destFile.getAbsolutePath();
+				getLog().info("static library app name ... " + destFile.getName());
+				
+				boolean isDeviceBuild = Boolean.FALSE;
+				writeBuildInfo(true, appFileName, isDeviceBuild);
+			} catch (IOException e) {
+				throw new MojoExecutionException("Error in writing output..." + e.getLocalizedMessage());
+			}
+		} else {
+			getLog().info("output directory not found");
+		}
+	}
+	
 	private void createApp() throws MojoExecutionException {
 		File outputFile = getAppName();
 		if (outputFile == null) {
 			getLog().error("xcodebuild failed. resultant APP not generated!");
 			throw new MojoExecutionException("xcodebuild has been failed");
 		}
+		
 		if (outputFile.exists()) {
-
 			try {
 				System.out.println("Completed " + outputFile.getAbsolutePath());
 				getLog().info("Folder name ....." + baseDir.getName());
@@ -407,7 +472,12 @@ public class XcodeBuild extends AbstractMojo {
 
 				deliverable = deliverableZip.getAbsolutePath();
 				getLog().info("Deliverables available at " + deliverableZip.getName());
-				writeBuildInfo(true);
+				// writing build info
+				boolean isDeviceBuild = Boolean.FALSE;
+				if (sdk.startsWith("iphoneos")) {
+					isDeviceBuild = Boolean.TRUE;
+				}
+				writeBuildInfo(true, appFileName, isDeviceBuild);
 			} catch (IOException e) {
 				throw new MojoExecutionException("Error in writing output..." + e.getLocalizedMessage());
 			}
@@ -458,6 +528,44 @@ public class XcodeBuild extends AbstractMojo {
 		}
 	}
 
+	private File getDotAFile() {
+		String path = configuration + "-";
+		if (sdk.startsWith("iphoneos")) {
+			path = path + "iphoneos";
+		} else {
+			path = path + "iphonesimulator";
+		}
+		
+		File baseFolder = new File(buildDirectory, path);
+		File[] files = baseFolder.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+			if (file.getName().endsWith("a")) {
+				return baseFolder;
+			}
+		}
+		return null;
+	}
+	
+	private File getDotAFileName() {
+		String path = configuration + "-";
+		if (sdk.startsWith("iphoneos")) {
+			path = path + "iphoneos";
+		} else {
+			path = path + "iphonesimulator";
+		}
+		
+		File baseFolder = new File(buildDirectory, path);
+		File[] files = baseFolder.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+			if (file.getName().endsWith("a")) {
+				return file;
+			}
+		}
+		return null;
+	}
+	
 	private File getAppName() {
 		String path = configuration + "-";
 		if (sdk.startsWith("iphoneos")) {
@@ -465,7 +573,7 @@ public class XcodeBuild extends AbstractMojo {
 		} else {
 			path = path + "iphonesimulator";
 		}
-
+		
 		File baseFolder = new File(buildDirectory, path);
 		File[] files = baseFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
@@ -496,7 +604,7 @@ public class XcodeBuild extends AbstractMojo {
 		return null;
 	}
 
-	private void writeBuildInfo(boolean isBuildSuccess) throws MojoExecutionException {
+	private void writeBuildInfo(boolean isBuildSuccess, String appFileName1, boolean isDeviceBuild1) throws MojoExecutionException {
 		try {
 			if (buildNumber != null) {
 				buildNo = Integer.parseInt(buildNumber);
@@ -515,23 +623,16 @@ public class XcodeBuild extends AbstractMojo {
 			} else {
 				buildInfo.setBuildStatus("FAILURE");
 			}
-			buildInfo.setBuildName(appFileName);
+			
+			buildInfo.setBuildName(appFileName1);
 			buildInfo.setDeliverables(deliverable);
 			buildInfo.setEnvironments(envList);
 
 			Map<String, Boolean> sdkOptions = new HashMap<String, Boolean>(2);
-			boolean isDeviceBuild = Boolean.FALSE;
-			if (sdk.startsWith("iphoneos")) {
-				isDeviceBuild = Boolean.TRUE;
-			}
-			sdkOptions.put(XCodeConstants.CAN_CREATE_IPA, isDeviceBuild);
-			sdkOptions.put(XCodeConstants.DEVICE_DEPLOY, isDeviceBuild);
+			sdkOptions.put(XCodeConstants.CAN_CREATE_IPA, isDeviceBuild1);
+			sdkOptions.put(XCodeConstants.DEVICE_DEPLOY, isDeviceBuild1);
 	        buildInfo.setOptions(sdkOptions);
 	        
-//			Gson gson2 = new Gson();	       
-//	        String json = gson2.toJson(sdkOptions);
-//	        System.out.println("json = " + json);
-			
 			buildInfoList.add(buildInfo);
 			Gson gson2 = new Gson();
 			FileWriter writer = new FileWriter(buildInfoFile);
@@ -546,7 +647,7 @@ public class XcodeBuild extends AbstractMojo {
 	}
 
 	private String getTimeStampForDisplay(Date currentDate) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat(DD_MMM_YYYY_HH_MM_SS);
 		String timeStamp = formatter.format(currentDate.getTime());
 		return timeStamp;
 	}

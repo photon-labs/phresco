@@ -24,7 +24,7 @@
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
 	<name>${artifactId}</name>
-	<packaging>xcode</packaging>
+	<packaging>xcode-static-library</packaging>
 	<build>
 	<sourceDirectory>source</sourceDirectory>
 	<directory>do_not_checkin/target</directory>

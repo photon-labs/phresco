@@ -1,0 +1,148 @@
+<!--
+  ###
+  Archetype - phresco-iphone-native-archetype
+  
+  Copyright (C) 1999 - 2012 Photon Infotech Inc.
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  ###
+  -->
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+    name="iphone">
+	<fileSets> 	
+		<fileSet filtered="false" packaged="false"> 
+			<directory>.phresco/</directory> 
+			<includes> 
+				<include>archetype-metadata.xml</include>
+				<include>excludefiles.txt</include> 	
+			</includes> 
+		</fileSet>
+		<fileSet filtered="false" packaged="false"> 
+			<directory>docs</directory> 
+			<includes> 
+				<include>PHTN_Reference_Guide.doc</include> 
+				<include>PHTN_Release_Notes.doc</include>
+				<include>README.txt</include> 	
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcworkspace</directory> 
+			<includes> 
+				<include>contents.xcworkspacedata</include> 
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcworkspace/xcuserdata/administrator.xcuserdatad</directory> 
+			<includes> 
+				<include>UserInterfaceState.xcuserstate</include> 
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld</directory> 
+			<includes> 
+				<include>main.m</include>
+                <include>MainWindow.xib</include>
+                <include>path.txt</include>
+                <include>Phresco_Prefix.pch</include>
+                <include>phresco-env-config.xml</include>
+                <include>Phresco-Info.plist</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/AllTest</directory> 
+			<includes> 
+				<include>AllTest.h</include>
+                <include>AllTest.m</include>
+                <include>AllTest-Info.plist</include>
+                <include>AllTest-Prefix.pch</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/AllTest/en.lproj</directory> 
+			<includes> 
+				<include>InfoPlist.strings</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/Classes</directory> 
+			<includes> 
+				<include>PhrescoAppDelegate.h</include>
+                <include>PhrescoAppDelegate.m</include>
+                <include>RootViewController.h</include>
+                <include>RootViewController.m</include>
+                <include>RootViewController.xib</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/OCUnitReports</directory> 
+			<includes> 
+				<include>**/</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/NativeControllers</directory> 
+			<includes> 
+				<include>**/</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/Images</directory> 
+			<includes> 
+				<include>Icon.png</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/Phresco.xcodeproj</directory> 
+			<includes> 
+				<include>esfdsnat.pbxuser</include>
+                <include>esfdsnat.perspectivev3</include>
+                <include>mac.pbxuser</include>
+                <include>mac.perspectivev3</include>
+                <include>photon.pbxuser</include>
+                <include>photon.perspectivev3</include>
+                <include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/Phresco.xcodeproj/project.xcworkspace</directory> 
+			<includes> 
+				<include>contents.xcworkspacedata</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/Phresco.xcodeproj/xcuserdata/administrator.xcuserdatad/xcschemes</directory> 
+			<includes> 
+				<include>AllTest.xcscheme</include>
+                <include>HelloWorld.xcscheme</include>
+                <include>xcschememanagement.plist</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/ThirdParty/ConfigurationReader</directory> 
+			<includes> 
+				<include>ConfigurationReader.h</include>
+                <include>ConfigurationReader.m</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Projects/Helloworld/ThirdParty/OCUnitReportLogger-1.0</directory> 
+			<includes> 
+				<include>GDataXMLNode.h</include>
+                <include>GDataXMLNode.m</include>
+                <include>OCUnitToJUnitLogger.m</include>
+			</includes>
+		</fileSet>
+     <fileSets>
+</archetype-descriptor>

@@ -38,5 +38,22 @@
         </phases>
       </configuration>
     </component>
+    <component>
+      <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+      <role-hint>xcode-static-library</role-hint>
+      <implementation>
+				org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+      </implementation>
+      <configuration>
+        <phases>
+          <clean>com.photon.phresco.plugins.xcode:xcode-maven-plugin:xcodebuild-clean</clean>
+          <package>com.photon.phresco.plugins.xcode:xcode-maven-plugin:xcodebuild</package>
+          <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+          <deploy>
+          	com.photon.phresco.plugins.xcode:xcode-maven-plugin:deploy
+          </deploy>
+        </phases>
+      </configuration>
+    </component>
   </components>
 </component-set>

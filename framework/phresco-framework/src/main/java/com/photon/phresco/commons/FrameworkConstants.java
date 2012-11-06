@@ -661,7 +661,9 @@ public interface FrameworkConstants {
 	
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
-
+	String REQ_SHOW_DEPLOY = "showDeploy";
+	String XCODE_STATIC_LIBRARY = "xcode-static-library";
+	
     /*
      * REST url
      */

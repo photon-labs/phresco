@@ -79,7 +79,7 @@
 				$("#popup_div").empty();
 				showPopup();
 			 	<% 
-			 		if (TechnologyTypes.IPHONE_NATIVE.equals(techId) || TechnologyTypes.IPHONE_HYBRID.equals(techId)) { 
+			 		if (TechnologyTypes.IPHONES.contains(techId)) { 
 			 	%>
 			 		generateTest('testIphone', 'popup_div');
 			 	<% 

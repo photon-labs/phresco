@@ -530,7 +530,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 				settingsInfoMap.put(IPHONE_PLISTFILE,
 						XCodeConstants.HYBRID_PLIST);
 				settingsInfoMap.put(ENCRYPT, FALSE);
-			} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) {
+			} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_LIBRARY.equals(technology)  || TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
 				settingsInfoMap.put(IPHONE_PLISTFILE,
 						XCodeConstants.NATIVE_PLIST);
 				settingsInfoMap.put(ENCRYPT, TRUE);
@@ -651,7 +651,7 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			settingsInfoMap.put(DEPLOY_ANDROID_EMULATOR_AVD,
 					REQ_ANDROID_DEFAULT);
 			actionType = ActionType.ANDROID_TEST_COMMAND;
-		} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
+		} else if (TechnologyTypes.IPHONES.contains(technology)) {
 			settingsInfoMap.put(BUILD_NAME, CI_BUILD_NAME + IPHONE_FORMAT);
 			settingsInfoMap.put(BUILD_NUMBER, FIRST_BUILD);
 			actionType = ActionType.IPHONE_FUNCTIONAL_COMMAND;
