@@ -78,6 +78,18 @@ import com.photon.phresco.util.XCodeConstants;
  */
 public class XcodeBuild extends AbstractMojo {
 
+	private static final String SDK = "-sdk";
+
+	private static final String CONFIGURATION = "-configuration";
+
+	private static final String TARGET = "-target";
+
+	private static final String SCHEME = "-scheme";
+
+	private static final String PROJECT = "-project";
+
+	private static final String WORKSPACE = "-workspace";
+
 	private static final String DD_MMM_YYYY_HH_MM_SS = "dd/MMM/yyyy HH:mm:ss";
 
 	private static final String POM_XML = "/pom.xml";
@@ -85,6 +97,8 @@ public class XcodeBuild extends AbstractMojo {
 	private static final String PACKAGING_XCODE_STATIC_LIBRARY = "xcode-static-library";
 
 	private static final String PACKAGING_XCODE = "xcode";
+	
+	private static final String PACKAGING_XCODE_WORLSAPCE = "xcode-workspace";
 
 	private static final String PATH_TXT = "path.txt";
 
@@ -188,6 +202,11 @@ public class XcodeBuild extends AbstractMojo {
 	 */
 	private boolean applicationTest;
 	
+	/**
+	 * @parameter expression="${projectType}" default-value="xcode"
+	 */
+	private String projectType;
+	
 	protected int buildNo;
 	private File srcDir;
 	private File buildDirFile;
@@ -238,22 +257,32 @@ public class XcodeBuild extends AbstractMojo {
 
 			List<String> commands = pb.command();
 			if (xcodeProject != null) {
-				commands.add("-project");
+				// based on project type , it should be changed to -workspace
+				if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+					commands.add(WORKSPACE);
+				} else {
+					commands.add(PROJECT);
+				}
 				commands.add(xcodeProject);
 			}
 			
 			if (StringUtils.isNotBlank(xcodeTarget)) {
-				commands.add("-target");
+				// based on project type , it should be changed
+				if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+					commands.add(SCHEME);
+				} else {
+					commands.add(TARGET);
+				}
 				commands.add(xcodeTarget);
 			}
 			
 			if (StringUtils.isNotBlank(configuration)) {
-				commands.add("-configuration");
+				commands.add(CONFIGURATION);
 				commands.add(configuration);
 			}
 
 			if (StringUtils.isNotBlank(sdk)) {
-				commands.add("-sdk");
+				commands.add(SDK);
 				commands.add(sdk);
 			}
 
@@ -448,7 +477,7 @@ public class XcodeBuild extends AbstractMojo {
 		
 		if (outputFile.exists()) {
 			try {
-				System.out.println("Completed " + outputFile.getAbsolutePath());
+				getLog().info("Completed " + outputFile.getAbsolutePath());
 				getLog().info("Folder name ....." + baseDir.getName());
 				getLog().info("APP created.. Copying to Build directory....." + project.getBuild().getFinalName());
 				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);

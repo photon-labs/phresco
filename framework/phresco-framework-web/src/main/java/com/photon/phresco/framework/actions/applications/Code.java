@@ -53,6 +53,7 @@ import com.phresco.pom.util.PomProcessor;
 public class Code extends FrameworkBaseAction {
     private static final long serialVersionUID = 8217209827121703596L;
     private static final Logger S_LOGGER = Logger.getLogger(Code.class);
+    private static Boolean debugEnabled = S_LOGGER.isDebugEnabled();
     
     private String projectCode = null;
 	private String skipTest = null;
@@ -63,7 +64,9 @@ public class Code extends FrameworkBaseAction {
 	private static String FUNCTIONALTEST = "functional";
 
 	public String view() {
-    	S_LOGGER.debug("Entering Method Code.view()");
+		if (debugEnabled) {
+			S_LOGGER.debug("Entering Method Code.view()");
+		}
 		String serverUrl = "";
     	try {
         	getHttpRequest().setAttribute(REQ_SELECTED_MENU, APPLICATIONS);
@@ -85,7 +88,13 @@ public class Code extends FrameworkBaseAction {
     	    } catch(Exception e) {
     	    	getHttpRequest().setAttribute(REQ_ERROR, getText(SONAR_NOT_STARTED));
     	    }
-			if (TechnologyTypes.IPHONES.contains(project.getProjectInfo().getTechnology().getId())) {
+    	    
+    	    String technology = project.getProjectInfo().getTechnology().getId();
+    	    if (TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+    	    	S_LOGGER.debug("iphone workspace project ");
+				List<String> targets = ApplicationsUtil.getTargets(projectCode);
+				getHttpRequest().setAttribute(REQ_WORKSPACE_TARGETS, targets); //REQ_TARGETS
+    	    } else if (TechnologyTypes.IPHONES.contains(technology)) {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
 					S_LOGGER.debug("Iphone technology terget name" + xcodeConfig.getName());
@@ -100,7 +109,9 @@ public class Code extends FrameworkBaseAction {
     }
     
     public String check() {
-    	S_LOGGER.debug("Entering Method Code.check()");
+    	if (debugEnabled) {
+    		S_LOGGER.debug("Entering Method Code.check()");
+    	}
     	StringBuilder sb = new StringBuilder();
     	String technology = null;
     	try {
@@ -182,7 +193,7 @@ public class Code extends FrameworkBaseAction {
 	        	sb.append(COLON);
 	        	sb.append(artifactId);
 	        	
-	        	S_LOGGER.debug("groupid : artif ====> " + sb.toString());
+	        	S_LOGGER.debug("groupid : artif .. " + sb.toString());
 	        	if (StringUtils.isNotEmpty(report) && !SOURCE_DIR.equals(report)) {
 	        		sb.append(COLON);
 	        		sb.append(report);
@@ -216,7 +227,9 @@ public class Code extends FrameworkBaseAction {
     }
     
     public String progressValidate() {
-    	S_LOGGER.debug("Entering Method  Code.progressValidate()");
+    	if (debugEnabled) {
+    		S_LOGGER.debug("Entering Method  Code.progressValidate()");
+    	}
     	try {
         	ProjectRuntimeManager runtimeManager;
         	ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
@@ -226,17 +239,17 @@ public class Code extends FrameworkBaseAction {
             Map<String, String> codeValidateMap = new HashMap<String, String>(1);
             ActionType actionType = null;
             
-            
-            if (TechnologyTypes.IPHONE_NATIVE.contains(technology)) {
-            	S_LOGGER.debug("Selected target .... " + target);
-            	codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
-            	actionType = ActionType.IPHONE_CODE_VALIDATE;
-            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && TARGET.equals(validateAgainst)) {
-            	S_LOGGER.debug("Selected target .... " + target);
+            if (TechnologyTypes.IPHONE_HYBRID.equals(technology) && TARGET.equals(validateAgainst)) {
         		codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
             	actionType = ActionType.IPHONE_CODE_VALIDATE;
-            } else if (TechnologyTypes.IPHONE_HYBRID.contains(technology) && HTML.equals(validateAgainst)) {
+            } else if (TechnologyTypes.IPHONE_HYBRID.equals(technology) && HTML.equals(validateAgainst)) {
         		actionType = ActionType.SONAR;
+            } else if (TechnologyTypes.IPHONES.contains(technology)) {
+            	codeValidateMap.put(IPHONE_SCHEMA_PARAM, target);
+            	actionType = ActionType.IPHONE_CODE_VALIDATE;
+            	if (TechnologyTypes.IPHONE_WORKSPACE.contains(technology)) {
+            		codeValidateMap.put(XCODE_PROJECT_TYPE, XCODE_WORKSPACE_PROJ);
+            	}
             } else {
             	actionType = ActionType.SONAR;
             }
@@ -261,7 +274,9 @@ public class Code extends FrameworkBaseAction {
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(REQ_TEST_TYPE, REQ_SONAR_PATH);
         } catch (Exception e) {
-        	S_LOGGER.error("Entered into catch block of Code.progressValidate()"+ FrameworkUtil.getStackTraceAsString(e));
+        	if (debugEnabled) {
+        		S_LOGGER.error("Entered into catch block of Code.progressValidate()"+ FrameworkUtil.getStackTraceAsString(e));
+        	}
         	new LogErrorReport(e, "Code progressValidate");
         }
         
@@ -295,7 +310,11 @@ public class Code extends FrameworkBaseAction {
 			technology = project.getProjectInfo().getTechnology().getId();
             getHttpRequest().setAttribute(REQ_PROJECT_CODE, projectCode);
             getHttpRequest().setAttribute(APPLICATION_PROJECT, project);
-            if (TechnologyTypes.IPHONES.contains(technology)) {
+            
+            if (TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+				List<String> targets = ApplicationsUtil.getTargets(projectCode);
+				getHttpRequest().setAttribute(REQ_WORKSPACE_TARGETS, targets); //REQ_TARGETS
+    	    } else if (TechnologyTypes.IPHONES.contains(technology)) {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
 			}

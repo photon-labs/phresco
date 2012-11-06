@@ -527,13 +527,18 @@ public class CI extends FrameworkBaseAction implements FrameworkConstants {
 			settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
 			settingsInfoMap.put(IPHONE_TARGET_NAME, target);
 			if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
-				settingsInfoMap.put(IPHONE_PLISTFILE,
-						XCodeConstants.HYBRID_PLIST);
+				settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.HYBRID_PLIST);
 				settingsInfoMap.put(ENCRYPT, FALSE);
-			} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_LIBRARY.equals(technology)  || TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
-				settingsInfoMap.put(IPHONE_PLISTFILE,
-						XCodeConstants.NATIVE_PLIST);
+				settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_PROJ);
+				// for iphone library and native and workspace plist file specification.
+			} else if (TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+				settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
 				settingsInfoMap.put(ENCRYPT, TRUE);
+				settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_WORKSPACE_PROJ);
+			} else {
+				settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
+				settingsInfoMap.put(ENCRYPT, TRUE);
+				settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_PROJ);
 			}
 		}
 

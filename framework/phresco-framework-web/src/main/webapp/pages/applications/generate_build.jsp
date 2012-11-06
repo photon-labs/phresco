@@ -69,6 +69,7 @@
    	
    	Map<String, String> jsMap = (Map<String, String>) request.getAttribute(FrameworkConstants.REQ_MINIFY_MAP);
    	String fileLoc = (String) request.getAttribute("fileLocation");
+   	List<String> targets = (List<String>) request.getAttribute(FrameworkConstants.REQ_WORKSPACE_TARGETS);
 %>
 
 <form action="build" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
@@ -309,12 +310,24 @@
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
 				<div class="input">
 					<select id="target" name="target" class="xlarge" >
-					<% if (xcodeConfigs != null) { 
-							for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
+						<!--  it will list down the targets using plutil -->
+						<% 
+							if (xcodeConfigs != null) { 
+								for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
+							%>
+								<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
+							<% } 
+							} 
+						%>	
+											
+						<!--  it will list down the schemes using xcodebuild which is for iphone workspace command -->
+						<% if (targets != null) { 
+								for (String target : targets) {
+							%>
+								<option value="<%= target %>"><%= target %></option>
+							<% } 
+							} 
 						%>
-							<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
-						<% } 
-					} %>	
 			       </select>
 				</div>
 			</div>

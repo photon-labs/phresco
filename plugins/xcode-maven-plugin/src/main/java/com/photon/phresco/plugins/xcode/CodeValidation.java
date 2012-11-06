@@ -42,6 +42,7 @@ public class CodeValidation extends AbstractXcodeMojo{
 	private static final String DO_NOT_CHECKIN = "/do_not_checkin";
 	private static final String TARGET = "/target";
 	private static final String report = "static-analysis-report";
+	private static final String PACKAGING_XCODE_WORLSAPCE = "xcode-workspace";
 	
 	/**
 	 * @parameter  
@@ -76,6 +77,11 @@ public class CodeValidation extends AbstractXcodeMojo{
 	 * @required
 	 */
 	private File buildDirectory;
+	
+	/**
+	 * @parameter expression="${projectType}" default-value="xcode"
+	 */
+	private String projectType;
 	
 	int exitValue = 0; 
 			
@@ -120,9 +126,20 @@ public class CodeValidation extends AbstractXcodeMojo{
 			//specify the folder here to generate it... do not start with /
 			commands.add(MAKE_DIR_LOC);
 			commands.add("xcodebuild");
-			commands.add("-target");
+			
+			if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+				commands.add("-scheme");
+			} else {
+				commands.add("-target");
+			}
 			commands.add(scheme);
-			commands.add("-project");
+			
+			if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+				commands.add("-workspace");
+			} else {
+				commands.add("-project");
+			}
+			
 			commands.add(xcodeProject);
 			commands.add("build");
 			

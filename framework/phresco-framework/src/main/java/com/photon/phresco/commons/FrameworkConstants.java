@@ -285,6 +285,8 @@ public interface FrameworkConstants {
     String IPHONE_XCODEPROJ = "/source/Phresco.xcodeproj";
     String SOURCE_DIR = "source";
     String IPHONE_XCODE_PROJ_EXTN = "xcodeproj";
+    String IPHONE_XCODE_WORKSPACE_PROJ_EXTN = "xcworkspace";
+    String SCHEMES = "Schemes";
     String ANDROID_DEVICE = "device";
     String ANDROID_DEVICE_LIST = "deviceList";
     String ANDROID_PROGUARD_SKIP = "android.proguard.skip";
@@ -315,6 +317,11 @@ public interface FrameworkConstants {
     String CONNECTION_URL = "connectionUrl";
 	String USER_NAME = "username";
 	String SCM_SVN = "scm:svn:";
+	
+	String XCODE_STATIC_LIBRARY = "xcode-static-library";
+	String XCODE_WORKSPACE_PROJ = "xcode-workspace";
+	String XCODE_PROJ = "xcode";
+	String XCODE_PROJECT_TYPE = "projectType";
     
     /*
      *  File Types for Browse in Functional
@@ -662,7 +669,7 @@ public interface FrameworkConstants {
 	String REQ_CONFIG_SERVER_NAMES = "configServerNames";
 	String REQ_CONFIG_DB_NAMES = "configDbNames";
 	String REQ_SHOW_DEPLOY = "showDeploy";
-	String XCODE_STATIC_LIBRARY = "xcode-static-library";
+	String REQ_WORKSPACE_TARGETS = "workspaceTargets";
 	
     /*
      * REST url

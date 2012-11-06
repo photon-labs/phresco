@@ -123,6 +123,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         unitTestMap.put(TechnologyTypes.ANDROID_WEB, PATH_ANDROID_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_UNIT_TEST);
+        unitTestMap.put(TechnologyTypes.IPHONE_LIBRARY, PATH_IPHONE_UNIT_TEST);
+        unitTestMap.put(TechnologyTypes.IPHONE_WORKSPACE, PATH_IPHONE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_UNIT_TEST);
         unitTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST);
@@ -150,6 +152,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         unitReportMap.put(TechnologyTypes.ANDROID_WEB, PATH_ANDROID_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.IPHONE_LIBRARY, PATH_IPHONE_UNIT_TEST_REPORT);
+        unitReportMap.put(TechnologyTypes.IPHONE_WORKSPACE, PATH_IPHONE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_UNIT_TEST_REPORT);
         unitReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_UNIT_TEST_REPORT);
@@ -177,6 +181,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationTestMap.put(TechnologyTypes.ANDROID_WEB, PATH_ANDROID_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_HYBRID_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_TEST);
+        funcationTestMap.put(TechnologyTypes.IPHONE_LIBRARY, PATH_IPHONE_FUNCTIONAL_TEST);
+        funcationTestMap.put(TechnologyTypes.IPHONE_WORKSPACE, PATH_IPHONE_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_TEST);
         funcationTestMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_TEST);
@@ -204,6 +210,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationAdaptMap.put(TechnologyTypes.ANDROID_WEB, PATH_ANDROID_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_ADAPT);
+        funcationAdaptMap.put(TechnologyTypes.IPHONE_LIBRARY, PATH_IPHONE_FUNCTIONAL_ADAPT);
+        funcationAdaptMap.put(TechnologyTypes.IPHONE_WORKSPACE, PATH_IPHONE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_ADAPT);
         funcationAdaptMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_ADAPT);
@@ -231,6 +239,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
         funcationReportMap.put(TechnologyTypes.ANDROID_WEB, PATH_ANDROID_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.IPHONE_HYBRID, PATH_IPHONE_HYBRID_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.IPHONE_NATIVE, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
+        funcationReportMap.put(TechnologyTypes.IPHONE_LIBRARY, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
+        funcationReportMap.put(TechnologyTypes.IPHONE_WORKSPACE, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.IPHONE_WEB, PATH_IPHONE_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.BLACKBERRY_HYBRID, PATH_BLACKBERRY_FUNCTIONAL_TEST_REPORT);
         funcationReportMap.put(TechnologyTypes.JAVA_WEBSERVICE, PATH_JAVA_WEBSERVICE_FUNCTIONAL_TEST_REPORT);
