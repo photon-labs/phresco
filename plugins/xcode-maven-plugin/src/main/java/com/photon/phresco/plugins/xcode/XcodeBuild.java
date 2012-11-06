@@ -82,7 +82,7 @@ public class XcodeBuild extends AbstractMojo {
 
 	private static final String POM_XML = "/pom.xml";
 
-	private static final String PACKAGING_XCODE_STATIC_LIBRARY = "xcodeStaticLibrary";
+	private static final String PACKAGING_XCODE_STATIC_LIBRARY = "xcode-static-library";
 
 	private static final String PACKAGING_XCODE = "xcode";
 
