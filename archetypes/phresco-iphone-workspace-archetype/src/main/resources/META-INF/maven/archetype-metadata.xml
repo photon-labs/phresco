@@ -144,5 +144,5 @@
                 <include>OCUnitToJUnitLogger.m</include>
 			</includes>
 		</fileSet>
-     <fileSets>
+     </fileSets>
 </archetype-descriptor>
