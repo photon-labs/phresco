@@ -84,6 +84,16 @@ public interface TechnologyTypes {
      */
     String IPHONE_WEB = "tech-iphone-web";
 
+    /**
+     * Technology IPHONE_LIBRARY
+     */
+    String IPHONE_LIBRARY = "tech-iphone-library";
+    
+    /**
+     * Technology IPHONE_WORKSPACE
+     */
+    String IPHONE_WORKSPACE = "tech-iphone-workspace";
+    
     /*
      * All iPhone Technologies
      */
@@ -174,17 +184,6 @@ public interface TechnologyTypes {
      * Technology WIN_METRO
      */
     String WIN_METRO = "tech-win-metro";
-    
-    /**
-     * Technology IPHONE_LIBRARY
-     */
-    String IPHONE_LIBRARY = "tech-iphone-library";
-    
-    /**
-     * Technology IPHONE_WORKSPACE
-     */
-    String IPHONE_WORKSPACE = "tech-iphone-workspace";
-    
     
     /**
      * Technology WIN_PHONE
