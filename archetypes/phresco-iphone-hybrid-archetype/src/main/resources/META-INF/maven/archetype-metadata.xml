@@ -38,86 +38,6 @@
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco</directory> 
-			<includes>
-				<include>main.m</include>
-				<include>PhoneGap.plist</include>
-				<include>Phresco-Info.plist</include>
-				<include>Phresco-Prefix.pch</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Classes</directory> 
-			<includes>
-				<include>AppDelegate.h</include>
-				<include>AppDelegate.m</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/en.lproj</directory> 
-			<includes>
-				<include>InfoPlist.strings</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/icons</directory> 
-			<includes>
-				<include>icon-72.png</include>
-				<include>icon.png</include>
-				<include>icon@2x.png</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Plugins</directory> 
-			<includes>
-				<include>README</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/Capture.bundle</directory> 
-			<includes>
-				<include>controls_bg.png</include>
-				<include>controls_bg@2x.png</include>
-				<include>controls_bg~ipad.png</include>
-				<include>microphone.png</include>
-				<include>microphone@2x.png</include>
-				<include>microphone~ipad.png</include>
-				<include>record_button@2x.png</include>
-				<include>record_button.png</include>
-				<include>record_button~ipad.png</include>
-				<include>recording_bg.png</include>
-				<include>recording_bg@2x.png</include>
-				<include>recording_bg~ipad.png</include>
-				<include>stop_button.png</include>
-				<include>stop_button@2x.png</include>
-				<include>stop_button~ipad.png</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/en.lproj</directory> 
-			<includes>
-				<include>Localizable.strings</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco/Resources/es.lproj</directory> 
-			<includes>
-				<include>Localizable.strings</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco.xcodeproj</directory> 
-			<includes>
-				<include>project.pbxproj</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco.xcodeproj/project.xcworkspace</directory> 
-			<includes>
-				<include>contents.xcworkspacedata</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="false" packaged="false"> 
 			<directory>source/ThirdParty</directory> 
 			<includes>
 				<include>**/*</include>
@@ -127,7 +47,6 @@
 			<directory>source/www</directory> 
 			<includes>
 				<include>index.html</include>
-				<include>phonegap-1.4.0.js</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -143,24 +62,119 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/unit</directory> 
+			<directory>source/cordova</directory> 
 			<includes>
-				<include>**/*</include>
+				<include>debug</include>
+                <include>emulate</include>
+                <include>log</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>src/main/com/photon/phresco/util</directory> 
+			<directory>source/HelloWorld</directory> 
 			<includes>
-				<include>MainActivity.js</include>
-                <include>UIElements.js</include>
+				<include>Cordova.plist</include>
+                <include>CordovaBuildSettings.xcconfig</include>
+                <include>HelloWorld-Info.plist</include>
+                <include>HelloWorld-Prefix.pch</include>
+                <include>main.m</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>src/test/com/photon/phresco/testcase</directory> 
+			<directory>source/HelloWorld/Classes</directory> 
 			<includes>
-				<include>Helloworld_suite.js</include>
-                </includes>
+                <include>AppDelegate.h</include>
+                <include>AppDelegate.m</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/en.lproj</directory> 
+			<includes>
+                <include>InfoPlist.strings</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Plugins</directory> 
+			<includes>
+                <include>README</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources</directory> 
+			<includes>
+                <include>Cordova.plist</include>
+                <include>CordovaBuildSettings.xcconfig</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/Capture.bundle</directory> 
+			<includes>
+                <include>controls_bg.png</include>
+                <include>controls_bg.png</include>
+                <include>controls_bg@2x~ipad.png</include>
+                <include>controls_bg~ipad.png</include>
+                <include>controls_bg~ipad.png</include>
+                <include>microphone@2x.png</include>
+                <include>microphone@2x.png</include>
+                <include>microphone@2x~ipad.png</include>
+                <include>record_button.png</include>
+                <include>record_button@2x.png</include>
+                <include>record_button@2x.png</include>
+                <include>record_button~ipad.png</include>
+                <include>recording_bg.png</include>
+                <include>recording_bg@2x.png</include>
+                <include>recording_bg@2x~ipad.png</include>
+                <include>recording_bg~ipad.png</include>
+                <include>stop_button.png</include>
+                <include>stop_button@2x.png</include>
+                <include>stop_button@2x~ipad.png</include>
+                <include>stop_button~ipad.png</include>   
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/de.lproj</directory> 
+			<includes>
+                <include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/en.lproj</directory> 
+			<includes>
+                <include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/es.lproj</directory> 
+			<includes>
+                <include>es.lproj</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/icons</directory> 
+			<includes>
+                <include>icon-72.png</include>
+                <include>icon-72@2x.png</include>
+                <include>icon.png</include>
+                <include>icon@2x.png</include>  
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/se.lproj</directory> 
+			<includes>
+                <include>Localizable.strings</include>
+			</includes>
+		</fileSet>
+         <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld/Resources/splash</directory> 
+			<includes>
+                <include>Default@2x~iphone.png</include>
+                <include>Default~iphone.png</include>
+                <include>Default~iphone.png</include>
+                <include>Default-Landscape@2x~ipad.png</include>
+                <include>Default-Portrait@2x~ipad.png</include>
+                <include>Default-Portrait~ipad.png</include>
+			</includes>
 		</fileSet>
 	</fileSets>
+    
     
 </archetype-descriptor>
