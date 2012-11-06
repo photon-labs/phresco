@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codehaus.mojo</groupId>
 	<artifactId>js-import-maven-plugin</artifactId>
-	<version>1.2.3.4003-SNAPSHOT</version>
+	<version>1.2.4.1001</version>
 
 	<packaging>maven-plugin</packaging>
 

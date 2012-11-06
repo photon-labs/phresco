@@ -38,7 +38,7 @@
            <plugin>
 				<groupId>com.photon.phresco.plugins</groupId>
 				<artifactId>dotnet-maven-plugin</artifactId>
-				<version>1.2.3.4003-SNAPSHOT</version>
+				<version>1.2.4.1001</version>
 				<extensions>true</extensions>
 			</plugin>
 		</plugins>
