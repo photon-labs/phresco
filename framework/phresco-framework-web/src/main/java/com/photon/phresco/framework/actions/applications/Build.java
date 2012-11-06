@@ -404,11 +404,31 @@ public class Build extends FrameworkBaseAction {
 			ProjectAdministrator administrator = PhrescoFrameworkFactory.getProjectAdministrator();
 			Map<String, Object> sessionMap = ActionContext.getContext().getSession();
 			Project project = administrator.getProject(projectCode);
+			String technology = project.getProjectInfo().getTechnology().getId();
 			List<BuildInfo> builds = administrator.getBuildInfos(project);
 			getHttpRequest().setAttribute(REQ_BUILD, builds);
 			getHttpRequest().setAttribute(REQ_PROJECT, project);
 
 			sessionMap.remove(SESSION_PROPERTY_INFO_LIST);
+			
+			// show hide deploy icon
+			boolean showDeploy = Boolean.TRUE;
+			if (TechnologyTypes.IPHONES.contains(technology)) {
+				StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+				builder.append(projectCode);
+				builder.append(File.separatorChar);
+				builder.append(POM_XML);
+				File pomPath = new File(builder.toString());
+				PomProcessor processor = new PomProcessor(pomPath);
+				String packaging = processor.getModel().getPackaging();
+				if (XCODE_STATIC_LIBRARY.equals(packaging)) {
+					showDeploy = Boolean.FALSE;
+				}
+			} else if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology) || TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
+				showDeploy = Boolean.FALSE;
+			}
+			getHttpRequest().setAttribute(REQ_SHOW_DEPLOY, showDeploy);
+			
 		} catch (Exception e) {
 			if (debugEnabled) {
 				S_LOGGER.error("Entered into catch block of Build.builds()" + FrameworkUtil.getStackTraceAsString(e));
