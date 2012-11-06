@@ -473,7 +473,8 @@ public class Build extends FrameworkBaseAction {
 				if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.HYBRID_PLIST);
 					settingsInfoMap.put(ENCRYPT, FALSE);
-				} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) {
+					// for iphone library and native and workspace plist file specification.
+				} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_LIBRARY.equals(technology)  || TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
 					settingsInfoMap.put(ENCRYPT, TRUE);
 				}
