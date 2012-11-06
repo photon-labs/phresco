@@ -7,83 +7,83 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0603B8931647FEEE00DC0840 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0603B8921647FEEE00DC0840 /* Foundation.framework */; };
-		0603B8981647FEEE00DC0840 /* HelloWorld.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0603B8971647FEEE00DC0840 /* HelloWorld.h */; };
-		0603B89A1647FEEE00DC0840 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 0603B8991647FEEE00DC0840 /* HelloWorld.m */; };
+		06221AA0164963A3009E81AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06221A9F164963A3009E81AB /* Foundation.framework */; };
+		06221AA5164963A3009E81AB /* Phresco.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 06221AA4164963A3009E81AB /* Phresco.h */; };
+		06221AA7164963A3009E81AB /* Phresco.m in Sources */ = {isa = PBXBuildFile; fileRef = 06221AA6164963A3009E81AB /* Phresco.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0603B88D1647FEEE00DC0840 /* CopyFiles */ = {
+		06221A9A164963A3009E81AB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				0603B8981647FEEE00DC0840 /* HelloWorld.h in CopyFiles */,
+				06221AA5164963A3009E81AB /* Phresco.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0603B88F1647FEEE00DC0840 /* libHelloWorld.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHelloWorld.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0603B8921647FEEE00DC0840 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		0603B8961647FEEE00DC0840 /* HelloWorld-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloWorld-Prefix.pch"; sourceTree = "<group>"; };
-		0603B8971647FEEE00DC0840 /* HelloWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorld.h; sourceTree = "<group>"; };
-		0603B8991647FEEE00DC0840 /* HelloWorld.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorld.m; sourceTree = "<group>"; };
+		06221A9C164963A3009E81AB /* libPhresco.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPhresco.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		06221A9F164963A3009E81AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		06221AA3164963A3009E81AB /* Phresco-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Phresco-Prefix.pch"; sourceTree = "<group>"; };
+		06221AA4164963A3009E81AB /* Phresco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Phresco.h; sourceTree = "<group>"; };
+		06221AA6164963A3009E81AB /* Phresco.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Phresco.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0603B88C1647FEEE00DC0840 /* Frameworks */ = {
+		06221A99164963A3009E81AB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0603B8931647FEEE00DC0840 /* Foundation.framework in Frameworks */,
+				06221AA0164963A3009E81AB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0603B8841647FEEE00DC0840 = {
+		06221A91164963A3009E81AB = {
 			isa = PBXGroup;
 			children = (
-				0603B8941647FEEE00DC0840 /* HelloWorld */,
-				0603B8911647FEEE00DC0840 /* Frameworks */,
-				0603B8901647FEEE00DC0840 /* Products */,
+				06221AA1164963A3009E81AB /* Phresco */,
+				06221A9E164963A3009E81AB /* Frameworks */,
+				06221A9D164963A3009E81AB /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		0603B8901647FEEE00DC0840 /* Products */ = {
+		06221A9D164963A3009E81AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0603B88F1647FEEE00DC0840 /* libHelloWorld.a */,
+				06221A9C164963A3009E81AB /* libPhresco.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0603B8911647FEEE00DC0840 /* Frameworks */ = {
+		06221A9E164963A3009E81AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0603B8921647FEEE00DC0840 /* Foundation.framework */,
+				06221A9F164963A3009E81AB /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0603B8941647FEEE00DC0840 /* HelloWorld */ = {
+		06221AA1164963A3009E81AB /* Phresco */ = {
 			isa = PBXGroup;
 			children = (
-				0603B8971647FEEE00DC0840 /* HelloWorld.h */,
-				0603B8991647FEEE00DC0840 /* HelloWorld.m */,
-				0603B8951647FEEE00DC0840 /* Supporting Files */,
+				06221AA4164963A3009E81AB /* Phresco.h */,
+				06221AA6164963A3009E81AB /* Phresco.m */,
+				06221AA2164963A3009E81AB /* Supporting Files */,
 			);
-			path = HelloWorld;
+			path = Phresco;
 			sourceTree = "<group>";
 		};
-		0603B8951647FEEE00DC0840 /* Supporting Files */ = {
+		06221AA2164963A3009E81AB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0603B8961647FEEE00DC0840 /* HelloWorld-Prefix.pch */,
+				06221AA3164963A3009E81AB /* Phresco-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -91,62 +91,62 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0603B88E1647FEEE00DC0840 /* HelloWorld */ = {
+		06221A9B164963A3009E81AB /* Phresco */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0603B89D1647FEEE00DC0840 /* Build configuration list for PBXNativeTarget "HelloWorld" */;
+			buildConfigurationList = 06221AAA164963A3009E81AB /* Build configuration list for PBXNativeTarget "Phresco" */;
 			buildPhases = (
-				0603B88B1647FEEE00DC0840 /* Sources */,
-				0603B88C1647FEEE00DC0840 /* Frameworks */,
-				0603B88D1647FEEE00DC0840 /* CopyFiles */,
+				06221A98164963A3009E81AB /* Sources */,
+				06221A99164963A3009E81AB /* Frameworks */,
+				06221A9A164963A3009E81AB /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = HelloWorld;
-			productName = HelloWorld;
-			productReference = 0603B88F1647FEEE00DC0840 /* libHelloWorld.a */;
+			name = Phresco;
+			productName = Phresco;
+			productReference = 06221A9C164963A3009E81AB /* libPhresco.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		0603B8861647FEEE00DC0840 /* Project object */ = {
+		06221A93164963A3009E81AB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Photon;
 			};
-			buildConfigurationList = 0603B8891647FEEE00DC0840 /* Build configuration list for PBXProject "HelloWorld" */;
+			buildConfigurationList = 06221A96164963A3009E81AB /* Build configuration list for PBXProject "Phresco" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 0603B8841647FEEE00DC0840;
-			productRefGroup = 0603B8901647FEEE00DC0840 /* Products */;
+			mainGroup = 06221A91164963A3009E81AB;
+			productRefGroup = 06221A9D164963A3009E81AB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0603B88E1647FEEE00DC0840 /* HelloWorld */,
+				06221A9B164963A3009E81AB /* Phresco */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0603B88B1647FEEE00DC0840 /* Sources */ = {
+		06221A98164963A3009E81AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0603B89A1647FEEE00DC0840 /* HelloWorld.m in Sources */,
+				06221AA7164963A3009E81AB /* Phresco.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		0603B89B1647FEEE00DC0840 /* Debug */ = {
+		06221AA8164963A3009E81AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -173,7 +173,7 @@
 			};
 			name = Debug;
 		};
-		0603B89C1647FEEE00DC0840 /* Release */ = {
+		06221AA9164963A3009E81AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -193,24 +193,24 @@
 			};
 			name = Release;
 		};
-		0603B89E1647FEEE00DC0840 /* Debug */ = {
+		06221AAB164963A3009E81AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/HelloWorld.dst;
+				DSTROOT = /tmp/Phresco.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HelloWorld/HelloWorld-Prefix.pch";
+				GCC_PREFIX_HEADER = "Phresco/Phresco-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		0603B89F1647FEEE00DC0840 /* Release */ = {
+		06221AAC164963A3009E81AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/HelloWorld.dst;
+				DSTROOT = /tmp/Phresco.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HelloWorld/HelloWorld-Prefix.pch";
+				GCC_PREFIX_HEADER = "Phresco/Phresco-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -220,24 +220,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0603B8891647FEEE00DC0840 /* Build configuration list for PBXProject "HelloWorld" */ = {
+		06221A96164963A3009E81AB /* Build configuration list for PBXProject "Phresco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0603B89B1647FEEE00DC0840 /* Debug */,
-				0603B89C1647FEEE00DC0840 /* Release */,
+				06221AA8164963A3009E81AB /* Debug */,
+				06221AA9164963A3009E81AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0603B89D1647FEEE00DC0840 /* Build configuration list for PBXNativeTarget "HelloWorld" */ = {
+		06221AAA164963A3009E81AB /* Build configuration list for PBXNativeTarget "Phresco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0603B89E1647FEEE00DC0840 /* Debug */,
-				0603B89F1647FEEE00DC0840 /* Release */,
+				06221AAB164963A3009E81AB /* Debug */,
+				06221AAC164963A3009E81AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 0603B8861647FEEE00DC0840 /* Project object */;
+	rootObject = 06221A93164963A3009E81AB /* Project object */;
 }

@@ -38,35 +38,42 @@
 			</includes> 
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld</directory> 
+			<directory>source/Phresco</directory> 
 			<includes>
-				<include>HelloWorld.h</include>
-                <include>HelloWorld.m</include>
-                <include>HelloWorld-Prefix.pch</include>
+				<include>Phresco.h</include>
+                <include>Phresco.m</include>
+                <include>Phresco-Prefix.pch</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld.xcodeproj</directory> 
+			<directory>source/Phresco.xcodeproj</directory> 
 			<includes>
 				<include>project.pbxproj</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld.xcodeproj/project.xcworkspace</directory> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace</directory> 
 			<includes>
 				<include>contents.xcworkspacedata</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld.xcodeproj/project.xcworkspace/xcuserdata</directory> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace/xcuserdata</directory> 
 			<includes>
 				<include>contents.xcworkspacedata</include>
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/HelloWorld.xcodeproj/project.xcworkspace/xcuserdata/shivakumar_ch.xcuserdatad</directory> 
+			<directory>source/Phresco.xcodeproj/project.xcworkspace/xcuserdata/shivakumar_ch.xcuserdatad</directory> 
 			<includes>
 				<include>UserInterfaceState.xcuserstate</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/Phresco.xcodeproj/xcuserdata/shivakumar_ch.xcuserdatad/xcschemes</directory> 
+			<includes>
+				<include>Phresco.xcscheme</include>
+				<include>xcschememanagement.plist</include>
 			</includes>
 		</fileSet>
       </fileSets>

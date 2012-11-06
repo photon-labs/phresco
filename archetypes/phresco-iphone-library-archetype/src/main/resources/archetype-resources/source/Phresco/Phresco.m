@@ -1,14 +1,14 @@
 //
-//  HelloWorld.m
-//  HelloWorld
+//  Phresco.m
+//  Phresco
 //
-//  Created by SHIVAKUMAR_CH on 11/5/12.
+//  Created by SHIVAKUMAR_CH on 11/6/12.
 //  Copyright (c) 2012 Photon. All rights reserved.
 //
 
-#import "HelloWorld.h"
+#import "Phresco.h"
 
-@implementation HelloWorld
+@implementation Phresco
 
 -(void) createHelloWorldLabel
 {
