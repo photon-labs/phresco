@@ -143,7 +143,7 @@ public class UpdateBuildInfoMojo extends AbstractAndroidMojo {
 			}
 			
 			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
-			if (baseDir.getPath().endsWith("unit")) {
+			if (baseDir.getPath().endsWith("unit") || baseDir.getPath().endsWith("functional") || baseDir.getPath().endsWith("performance")) {
 				root = baseDir.getParentFile().getParentFile();
 				currentProject = projAdmin.getProjectByWorkspace(root);
 			} else {
