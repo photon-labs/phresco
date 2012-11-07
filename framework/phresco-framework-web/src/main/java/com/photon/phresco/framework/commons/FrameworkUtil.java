@@ -377,6 +377,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
     	unitTestSuitePathMap.put(TechnologyTypes.ANDROID_WEB, XPATH_ANDROID_WEB_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_UNIT_TESTSUITE);
+    	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_LIBRARY, XPATH_IPHONE_NATIVE_UNIT_TESTSUITE);
+    	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_WORKSPACE, XPATH_IPHONE_NATIVE_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_UNIT_TESTSUITE);
     	unitTestSuitePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_UNIT_TESTSUITE);
@@ -404,6 +406,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
     	functionalTestSuitePathMap.put(TechnologyTypes.ANDROID_WEB, XPATH_ANDROID_WEB_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_FUNCTIONAL_TESTSUITE);
+    	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_LIBRARY, XPATH_IPHONE_NATIVE_FUNCTIONAL_TESTSUITE);
+    	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_WORKSPACE, XPATH_IPHONE_NATIVE_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_FUNCTIONAL_TESTSUITE);
     	functionalTestSuitePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_FUNCTIONAL_TESTSUITE);
@@ -431,6 +435,8 @@ public class FrameworkUtil extends FrameworkBaseAction implements FrameworkConst
 		testCasePathMap.put(TechnologyTypes.ANDROID_WEB, XPATH_ANDROID_WEB_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.IPHONE_HYBRID, XPATH_IPHONE_HYBRID_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.IPHONE_NATIVE, XPATH_IPHONE_NATIVE_TESTCASE);
+		testCasePathMap.put(TechnologyTypes.IPHONE_LIBRARY, XPATH_IPHONE_NATIVE_TESTCASE);
+		testCasePathMap.put(TechnologyTypes.IPHONE_WORKSPACE, XPATH_IPHONE_NATIVE_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.IPHONE_WEB, XPATH_IPHONE_WEB_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.BLACKBERRY_HYBRID, XPATH_BLACKBERRY_TESTCASE);
 		testCasePathMap.put(TechnologyTypes.JAVA_WEBSERVICE, XPATH_JAVA_WEBSERVICE_TESTCASE);

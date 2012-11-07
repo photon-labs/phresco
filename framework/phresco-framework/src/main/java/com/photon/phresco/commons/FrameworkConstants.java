@@ -1183,7 +1183,7 @@ public interface FrameworkConstants {
     String XPATH_ANDROID_HYBRID_FUNCTIONAL_TESTSUITE = "/testsuite";
     String XPATH_ANDROID_WEB_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
     String XPATH_IPHONE_NATIVE_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
-    String XPATH_IPHONE_HYBRID_FUNCTIONAL_TESTSUITE = "/testsuite";
+    String XPATH_IPHONE_HYBRID_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
     String XPATH_IPHONE_WEB_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
     String XPATH_SHAREPOINT_FUNCTIONAL_TESTSUITE = "/test-results/test-suite/results/test-suite/results/test-suite";
     String XPATH_BLACKBERRY_FUNCTIONAL_TESTSUITE = "/testsuites/testsuite";
