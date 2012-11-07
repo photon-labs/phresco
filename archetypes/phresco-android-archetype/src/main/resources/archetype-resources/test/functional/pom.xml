@@ -12,7 +12,7 @@
             <plugin>
                 <groupId>com.photon.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>1.2.4.1002-SNAPSHOT</version>
+                <version>1.2.4.1003-SNAPSHOT-SNAPSHOT</version>
                 <extensions>true</extensions>
                 <configuration>
                     <run>
