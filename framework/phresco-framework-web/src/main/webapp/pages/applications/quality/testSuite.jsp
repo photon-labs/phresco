@@ -198,7 +198,7 @@
 												<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Desc">
 													<%= testCase.getTestCaseFailure().getDescription()%>
 												</textarea>
-												<a class="testCaseFailOrErr" name="<%= testCase.getName() %>" href="#"><img src="images/icons/log.png" alt="logo"> </a>
+												<a class="testCaseFailOrErr" onClick="showLogMsg('<%= testCase.getName() %>');" href="#"><img src="images/icons/log.png" alt="logo"> </a>
 											<% } else if (error != null) { %>
 												<textarea class="hideContent" name="<%= testCase.getName().replace("\\", "") %>_Type">
 													<%= testCase.getTestCaseError().getErrorType()%>
