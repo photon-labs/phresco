@@ -26,6 +26,7 @@
   <name>${artifactId}</name>
 	
 	<properties>
+		<wordpress.version>3.3.1</wordpress.version>
 		<sonar.language>php</sonar.language>
 		<sonar.phpPmd.skip>false</sonar.phpPmd.skip>
 		<sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
@@ -68,7 +69,7 @@
 								<artifactItem>
 									<groupId>binaries</groupId>
 									<artifactId>wordpress</artifactId>
-									<version>3.3.1</version>
+									<version>${wordpress.version}</version>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>do_not_checkin/binaries</outputDirectory>
@@ -121,7 +122,7 @@
 		<dependency>
 			<groupId>binaries</groupId>
 			<artifactId>wordpress</artifactId>
-			<version>3.3.1</version>
+			<version>${wordpress.version}</version>
 			<type>zip</type>
 		</dependency>
 	</dependencies>

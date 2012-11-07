@@ -186,10 +186,13 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 		}
 		
 		boolean drupal = techId.equals(TechnologyTypes.PHP_DRUPAL7) || techId.equals(TechnologyTypes.PHP_DRUPAL6);
+		boolean wordPress = techId.equals(TechnologyTypes.WORDPRESS);
 		try {
 			if(drupal) {
-				updateDrupalVersion(projectPath, info);
+				updateBinaryVersion(projectPath, info, techId);
 				excludeModule(info);
+			} else if (wordPress) {
+				updateBinaryVersion(projectPath, info, techId);
 			}
 		} catch (IOException e1) {
 			throw new PhrescoException(e1);
@@ -446,15 +449,19 @@ public class ProjectAdministratorImpl implements ProjectAdministrator, Framework
 	 * @throws JAXBException
 	 * @throws ParserConfigurationException
 	 */
-	private void updateDrupalVersion(File path, ProjectInfo info) throws IOException, JAXBException, ParserConfigurationException {
+	private void updateBinaryVersion(File path, ProjectInfo info, String techId) throws IOException, JAXBException, ParserConfigurationException {
 		File xmlFile = new File(path, POM_FILE);
 		PomProcessor processor = new PomProcessor(xmlFile);
 		List<String> name = info.getTechnology().getVersions();
 		String selectedVersion = name.get(0);
-		processor.setProperty(DRUPAL_VERSION, selectedVersion);
+		if(techId.equals(TechnologyTypes.WORDPRESS)) {
+			processor.setProperty(WORDPRESS_VERSION, selectedVersion);
+		} else {
+			processor.setProperty(DRUPAL_VERSION, selectedVersion);
+		}
 		processor.save();
 	}
-
+	
 	public Project getProject(String projectCode) throws PhrescoException {
 
 		S_LOGGER.debug("Entering Method ProjectAdministratorImpl.getProject(String projectCode)");

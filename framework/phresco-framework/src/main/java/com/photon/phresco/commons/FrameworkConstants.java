@@ -1271,6 +1271,7 @@ public interface FrameworkConstants {
    
    /* Drupal Version */
    String DRUPAL_VERSION = "drupal.version";
+   String WORDPRESS_VERSION = "wordpress.version";
    
    /* Site report */
    String REQ_SITE_REPORT = "siteReport";

@@ -159,7 +159,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
 		versionMap.put(TechnologyTypes.ANDROID_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2", "1.6", "2.1_r1"});
 		/*versionMap.put(TechnologyTypes.IPHONE_HYBRID, new String[]{"4.0.3", "2.3.3", "2.2"});
 		versionMap.put(TechnologyTypes.IPHONE_NATIVE, new String[]{"4.0.3", "2.3.3", "2.2"});*/
-		versionMap.put(TechnologyTypes.WORDPRESS, new String[]{"3.3.1"});
+		versionMap.put(TechnologyTypes.WORDPRESS, new String[]{"3.3.1", "3.4.2"});
 		versionMap.put(TechnologyTypes.DOT_NET, new String[]{"3.5", "3.0", "2.0"});
 		versionMap.put(TechnologyTypes.SHAREPOINT, new String[]{"3.5", "3.0", "2.0"});
 		versionMap.put(TechnologyTypes.NODE_JS_WEBSERVICE, new String[]{"0.6.x","0.7.x", "0.8.x"});
