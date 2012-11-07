@@ -133,8 +133,8 @@
 			<includes>
 				<include>Cordova.plist</include>
                 <include>CordovaBuildSettings.xcconfig</include>
-                <include>HelloWorld-Info.plist</include>
-                <include>HelloWorld-Prefix.pch</include>
+                <include>Phresco-Info.plist</include>
+                <include>Phresco-Prefix.pch</include>
                 <include>main.m</include>
                 <include>phresco-env-config.xml</include>
 			</includes>
@@ -205,7 +205,7 @@
          <fileSet filtered="false" packaged="false"> 
 			<directory>source/Phresco/Resources/es.lproj</directory> 
 			<includes>
-                <include>es.lproj</include>
+                <include>Localizable.strings</include>
 			</includes>
 		</fileSet>
          <fileSet filtered="false" packaged="false"> 
@@ -230,6 +230,7 @@
                 <include>Default~iphone.png</include>
                 <include>Default~iphone.png</include>
                 <include>Default-Landscape@2x~ipad.png</include>
+                <include>Default-Landscape~ipad.png</include>
                 <include>Default-Portrait@2x~ipad.png</include>
                 <include>Default-Portrait~ipad.png</include>
 			</includes>
