@@ -243,7 +243,7 @@ public class CodeValidation extends AbstractXcodeMojo{
 			OutputStream fos = null;
 			StringBuffer sb = new StringBuffer();
 	        sb.append("<html>");
-	        sb.append("<body>");
+	        sb.append("<body style=\"background-color:#FFFFFF;\">");
 	        sb.append("<h1>"); 
 	        sb.append(baseDir.getName() + "- scan-build results");
 	        sb.append("</h1>");

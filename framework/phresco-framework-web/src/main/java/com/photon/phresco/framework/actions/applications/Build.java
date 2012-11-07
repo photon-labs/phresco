@@ -875,11 +875,13 @@ public class Build extends FrameworkBaseAction {
 			if (debugEnabled) {
 				S_LOGGER.debug("Download build number " + buildNumber + " Download location " + builder.toString());
 			}
+			
 			if (TechnologyTypes.IPHONES.contains(project.getProjectInfo().getTechnology().getId())) {
 				String path = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getDeliverables();
 				fileInputStream = new FileInputStream(new File(path));
 				fileName = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();
-				fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+				fileName = fileName.substring(fileName.lastIndexOf(FORWARD_SLASH) + 1);
+				fileName = fileName.split(SPLIT_DOT)[0] + ARCHIVE_FORMAT;
 			} else {
 				fileInputStream = new FileInputStream(new File(builder.toString()));
 				fileName = administrator.getBuildInfo(project, Integer.parseInt(buildNumber)).getBuildName();

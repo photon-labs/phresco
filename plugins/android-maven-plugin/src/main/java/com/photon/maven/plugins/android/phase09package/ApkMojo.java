@@ -310,9 +310,6 @@ public class ApkMojo extends AbstractAndroidMojo {
 			getLog().info("Build directory created..." + buildDir.getPath());
 		}
 		buildInfoFile = new File(buildDir.getPath() + "/build.info");
-
-		//			nextBuildNo = generateNextBuildNo();
-
 		currentDate = Calendar.getInstance().getTime();
 
 		configure();
@@ -342,32 +339,7 @@ public class ApkMojo extends AbstractAndroidMojo {
 			// If there is a classifier specified, attach the artifact using that
 			projectHelper.attachArtifact(project, outputFile, classifier);
 		}
-		/*if (outputFile.exists()) {
-
-			try {
-				getLog().info("APK created.. Copying to Build directory.....");
-				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
-				File destFile = new File(buildDir, buildName + '.' + APK);
-				FileUtils.copyFile(outputFile, destFile);
-				getLog().info("copied to..." + destFile.getName());
-				apkFileName = destFile.getName();
-
-				getLog().info("Creating deliverables.....");
-				ZipArchiver zipArchiver = new ZipArchiver();
-				File inputFile = new File(apkFileName);
-				zipArchiver.addFile(destFile, destFile.getName());
-				File deliverableZip = new File(buildDir, buildName + ".zip");
-				zipArchiver.setDestFile(deliverableZip);
-				zipArchiver.createArchive();
-
-				deliverable = deliverableZip.getName();
-				getLog().info("Deliverables available at " + deliverableZip.getName());
-				writeBuildInfo(true);
-			} catch (IOException e) {
-				throw new MojoExecutionException("Error in writing output...");
-			}
-
-		}*/
+		
 	}
 
 	private void configure() throws MojoExecutionException {
@@ -385,39 +357,6 @@ public class ApkMojo extends AbstractAndroidMojo {
 			throw new MojoExecutionException(e.getMessage());
 		}
 	}
-
-	
-
-	/*private int generateNextBuildNo() throws IOException {
-		int nextBuildNo = 1;
-		if (!buildInfoFile.exists()) {
-			return nextBuildNo;
-		}
-
-		BufferedReader read = new BufferedReader(new FileReader(buildInfoFile));
-		String content = read.readLine();
-
-
-		Gson gson = new Gson();
-		java.lang.reflect.Type listType = new TypeToken<List<BuildInfo>>() {
-		}.getType();
-		buildInfoList = (List<BuildInfo>) gson.fromJson(content, listType);
-		if (buildInfoList == null || buildInfoList.size() == 0) {
-			return nextBuildNo;
-		}
-
-		int buildArray[] = new int[buildInfoList.size()];
-		int count = 0;
-		for (BuildInfo buildInfo : buildInfoList) {
-			buildArray[count] = buildInfo.getBuildNo();
-			count++;
-		}
-
-		Arrays.sort(buildArray); // sort to the array to find the max build no
-
-		nextBuildNo = buildArray[buildArray.length - 1] + 1; // increment 1 to the max in the build list
-		return nextBuildNo;
-	}*/
 
 	void createApkFile(File outputFile, boolean signWithDebugKeyStore) throws MojoExecutionException {
 

@@ -146,6 +146,7 @@ public interface FrameworkConstants {
     String HTTP_PROTOCOL = "http";
     String PROTOCOL_POSTFIX = "://";
     String FORWARD_SLASH = "/";
+    String SPLIT_DOT = "\\.";
     String LOCALHOST = "localhost";
     String JENKINS_START = "JenkinsStart";
     String JENKINS_STOP = "JenkinsStop";

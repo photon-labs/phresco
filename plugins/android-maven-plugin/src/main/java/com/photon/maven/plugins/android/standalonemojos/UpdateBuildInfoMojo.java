@@ -35,6 +35,7 @@
 package com.photon.maven.plugins.android.standalonemojos;
 
 import static com.photon.maven.plugins.android.common.AndroidExtension.APK;
+import static com.photon.maven.plugins.android.common.AndroidExtension.APKLIB;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,8 +49,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -59,10 +58,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.photon.maven.plugins.android.AbstractAndroidMojo;
 import com.photon.phresco.exception.PhrescoException;
+import com.photon.phresco.framework.PhrescoFrameworkFactory;
+import com.photon.phresco.framework.api.Project;
+import com.photon.phresco.framework.api.ProjectAdministrator;
 import com.photon.phresco.framework.pom.AndroidTestPOMUpdater;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.util.PluginUtils;
-import com.phresco.pom.exception.PhrescoPomException;
+import com.photon.phresco.util.TechnologyTypes;
 
 /**
  * Creates the apk file. By default signs it with debug keystore.<br/>
@@ -125,33 +127,69 @@ public class UpdateBuildInfoMojo extends AbstractAndroidMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
+		File outputFile = null, destFile = null;
+		String techId = null;
 		try {
+			
+			getLog().info("Base Dir === "  + baseDir.getAbsolutePath());
+			File root = null;
+			Project currentProject;
 			buildInfoList = new ArrayList<BuildInfo>(); // initialization
-//			srcDir = new File(baseDir.getPath() + File.separator + sourceDirectory);
+			
 			buildDir = new File(baseDir.getPath() + buildDirectory);
 			if (!buildDir.exists()) {
 				buildDir.mkdir();
 				getLog().info("Build directory created..." + buildDir.getPath());
 			}
+			
+			ProjectAdministrator projAdmin = PhrescoFrameworkFactory.getProjectAdministrator();
+			if (baseDir.getPath().endsWith("unit") || baseDir.getPath().endsWith("functional") || baseDir.getPath().endsWith("performance")) {
+				root = baseDir.getParentFile().getParentFile();
+				currentProject = projAdmin.getProjectByWorkspace(root);
+			} else {
+				currentProject = projAdmin.getProjectByWorkspace(baseDir);	
+			}
+			techId = currentProject.getProjectInfo().getTechnology().getId();
+			
 			buildInfoFile = new File(buildDir.getPath() + "/build.info");
 
 			nextBuildNo = generateNextBuildNo();
 
 			currentDate = Calendar.getInstance().getTime();
 		} catch (IOException e) {
-			throw new MojoFailureException("APK could not initialize " + e.getLocalizedMessage());
+			if (techId.equals(TechnologyTypes.ANDROID_NATIVE) || techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+				throw new MojoFailureException("APK could not initialize " + e.getLocalizedMessage());
+			} else if (techId.equals(TechnologyTypes.ANDROID_LIBRARY)) {
+				throw new MojoFailureException("APKLib could not initialize " + e.getLocalizedMessage());
+			} 
+			
+		} catch (PhrescoException e) {
+			throw new MojoFailureException(e.getLocalizedMessage());
 		}
 		
-		// Initialize apk build configuration
-		File outputFile = new File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + '.' + APK);
+		
+		if (techId.equals(TechnologyTypes.ANDROID_NATIVE) || techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+			// 	Initialize apk build configuration
+			outputFile = new File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + '.' + APK);
+		} else if (techId.equals(TechnologyTypes.ANDROID_LIBRARY)) {
+			// 	Initialize apklib build configuration
+			outputFile = new File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + '.' + APKLIB);
+		} 
 
 		
 		if (outputFile.exists()) {
 
 			try {
-				getLog().info("APK created.. Copying to Build directory.....");
 				String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
-				File destFile = new File(buildDir, buildName + '.' + APK);
+				
+				if (techId.equals(TechnologyTypes.ANDROID_NATIVE) || techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+					getLog().info("APK created.. Copying to Build directory.....");
+					destFile = new File(buildDir, buildName + '.' + APK);
+				} else if (techId.equals(TechnologyTypes.ANDROID_LIBRARY)) {
+					getLog().info("APKLib created.. Copying to Build directory.....");
+					destFile = new File(buildDir, buildName + '.' + APKLIB);
+				} 
+				
 				FileUtils.copyFile(outputFile, destFile);
 				getLog().info("copied to..." + destFile.getName());
 				apkFileName = destFile.getName();
@@ -168,9 +206,11 @@ public class UpdateBuildInfoMojo extends AbstractAndroidMojo {
 				getLog().info("Deliverables available at " + deliverableZip.getName());
 				writeBuildInfo(true);
 				
-				Boolean status = AndroidTestPOMUpdater.updatePOM(new File(baseDir.getPath().toString()));
-				if (Boolean.TRUE.equals(status)) {
-					getLog().info("  Test project pom updated successfully ");
+				if (techId.equals(TechnologyTypes.ANDROID_NATIVE) || techId.equals(TechnologyTypes.ANDROID_HYBRID)) {
+					Boolean status = AndroidTestPOMUpdater.updatePOM(new File(baseDir.getPath().toString()));
+					if (Boolean.TRUE.equals(status)) {
+						getLog().info("  Test project pom updated successfully ");
+					}
 				}
 			} catch (IOException e) {
 				throw new MojoExecutionException("Error in writing output...");

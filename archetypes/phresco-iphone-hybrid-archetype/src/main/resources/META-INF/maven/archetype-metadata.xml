@@ -235,7 +235,7 @@
 			</includes>
 		</fileSet>
         <fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco.xcodeproj</directory> 
+			<directory>source/Phresco.xcodeproj</directory> 	
 			<includes>
                 <include>project.pbxproj</include>
 			</includes>
@@ -252,6 +252,7 @@
                 <include>UserInterfaceState.xcuserstate</include>
 			</includes>
 		</fileSet>
+
         <fileSet filtered="false" packaged="false"> 
 			<directory>source/Phresco.xcodeproj/xcuserdata/administrator.xcuserdatad/xcschemes</directory> 
 			<includes>
@@ -259,12 +260,7 @@
                 <include>xcschememanagement.plist</include>
 			</includes>
 		</fileSet>
-        <fileSet filtered="false" packaged="false"> 
-			<directory>source/Phresco.xcodeproj</directory> 
-			<includes>
-                <include>project.pbxproj</include>
-			</includes>
-		</fileSet>
+        
 	</fileSets>
     
     
