@@ -174,6 +174,31 @@
                 <include>Default-Portrait~ipad.png</include>
 			</includes>
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld.xcodeproj</directory> 
+			<includes>
+                <include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld.xcodeproj/project.xcworkspace/contents.xcworkspacedata</directory> 
+			<includes>
+                <include>project.pbxproj</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld.xcodeproj/project.xcworkspace/contents.xcworkspacedata/xcuserdata/administrator.xcuserdatad</directory> 
+			<includes>
+                <include>UserInterfaceState.xcuserstate</include>
+			</includes>
+		</fileSet>
+                <fileSet filtered="false" packaged="false"> 
+			<directory>source/HelloWorld.xcodeproj/xcuserdata/administrator.xcuserdatad/xcschemes</directory> 
+			<includes>
+                <include>HelloWorld.xcscheme</include>
+                <include>xcschememanagement.plist</include>
+			</includes>
+		</fileSet>
 	</fileSets>
     
     

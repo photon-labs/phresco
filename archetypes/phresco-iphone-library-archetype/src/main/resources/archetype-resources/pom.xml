@@ -35,7 +35,7 @@
 			<version>1.2.4.1001</version>
 			<extensions>true</extensions>
 			<configuration>
-				<xcodeProject>./source/HelloWorld.xcodeproj</xcodeProject>
+				<xcodeProject>./source/Phresco.xcodeproj</xcodeProject>
 			</configuration>
 		</plugin>
 	  </plugins>
