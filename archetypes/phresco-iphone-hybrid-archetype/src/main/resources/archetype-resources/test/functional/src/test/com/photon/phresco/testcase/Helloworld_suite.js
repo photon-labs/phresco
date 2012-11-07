@@ -27,15 +27,15 @@ function testTextPresent(testname){
 		
 	}
 	catch(error){
-		UIALogger.logFail(testname);
+		//UIALogger.logFail(testname);
 		captureScreenshot(testname);
-		UIALogger.logError(error);
+		UIALogger.logError(testname);
 		
 		}
 	}
 
 
-testTextPresent("TextPresent");
+testTextPresent("testTextPresent");
 
 
 
