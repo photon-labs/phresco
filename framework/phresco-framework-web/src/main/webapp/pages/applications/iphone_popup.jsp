@@ -39,6 +39,7 @@
    	// mac sdks
    	List<String> macSimulatorSdkVersions = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SIMULATOR_SDKS);
    	List<String> macSdks = (List<String>) session.getAttribute(FrameworkConstants.REQ_IPHONE_SDKS);
+   	List<String> targets = (List<String>) session.getAttribute(FrameworkConstants.REQ_WORKSPACE_TARGETS);
 %>
 <div id="tests">
     <form action="" method="post" autocomplete="off" class="build_form">
@@ -115,12 +116,24 @@
 	                    <label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
 	                    <div class="input">
 							<select id="target" name="target" class="xlarge" >
+							<!--  it will list down the targets using plutil -->
 							<% if (xcodeConfigs != null) { 
 									for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
 								%>
 									<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
 								<% } 
-							} %>	
+								} 
+							%>
+							
+							<!--  it will list down the schemes using xcodebuild which is for iphone workspace command -->
+							<% if (targets != null) { 
+									for (String target : targets) {
+								%>
+									<option value="<%= target %>"><%= target %></option>
+								<% } 
+								} 
+							%>
+							
 					       </select>
 	                    </div>
 	                </div>

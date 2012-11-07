@@ -46,6 +46,7 @@
 	String sonarError = (String)request.getAttribute(FrameworkConstants.REQ_ERROR);
    	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
+   	List<String> targets = (List<String>) request.getAttribute(FrameworkConstants.REQ_WORKSPACE_TARGETS);
 	String disabledStr = "";
 	boolean isIphoneTech = false;
 	if (!TechnologyTypes.IPHONES.contains(technology) && StringUtils.isNotEmpty(sonarError)) {
@@ -79,6 +80,14 @@
 		%>
 						<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
 		<%
+					}
+				}
+				
+				if (targets != null) {
+					for (String target : targets) {
+		%>
+						<option value="<%= target %>"><%= target %></option>
+		<%		
 					}
 				}
 				

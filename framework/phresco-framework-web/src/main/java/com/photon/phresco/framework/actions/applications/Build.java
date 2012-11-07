@@ -293,8 +293,11 @@ public class Build extends FrameworkBaseAction {
 				getHttpRequest().setAttribute(REQ_ENVIRONMENTS, environments);
 			}
 			// Get xcode targets
-			if (TechnologyTypes.IPHONES.contains(technology)) {
-				S_LOGGER.debug("Iphone tech!!!!");
+			S_LOGGER.debug("technology " + technology);
+			if (TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+				List<String> targets = ApplicationsUtil.getTargets(projectCode);
+				getHttpRequest().setAttribute(REQ_WORKSPACE_TARGETS, targets); //REQ_TARGETS
+			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				List<PBXNativeTarget> xcodeConfigs = ApplicationsUtil.getXcodeConfiguration(projectCode);
 				S_LOGGER.debug(xcodeConfigs);
 				getHttpRequest().setAttribute(REQ_XCODE_CONFIGS, xcodeConfigs);
@@ -441,7 +444,9 @@ public class Build extends FrameworkBaseAction {
 	}
 
 	public String build() {
-		S_LOGGER.debug("Entering Method  Build.build()");
+		if (debugEnabled) {
+			S_LOGGER.debug("Entering Method  Build.build()");
+		}
 		try {
 			ActionType actionType = null;
 			ProjectRuntimeManager runtimeManager = PhrescoFrameworkFactory.getProjectRuntimeManager();
@@ -473,10 +478,16 @@ public class Build extends FrameworkBaseAction {
 				if (TechnologyTypes.IPHONE_HYBRID.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.HYBRID_PLIST);
 					settingsInfoMap.put(ENCRYPT, FALSE);
+					settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_PROJ);
 					// for iphone library and native and workspace plist file specification.
-				} else if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_LIBRARY.equals(technology)  || TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+				} else if (TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
 					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
 					settingsInfoMap.put(ENCRYPT, TRUE);
+					settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_WORKSPACE_PROJ);
+				} else {
+					settingsInfoMap.put(IPHONE_PLISTFILE, XCodeConstants.NATIVE_PLIST);
+					settingsInfoMap.put(ENCRYPT, TRUE);
+					settingsInfoMap.put(XCODE_PROJECT_TYPE, XCODE_PROJ);
 				}
 			} 
 			

@@ -37,6 +37,11 @@
 	
 	//xcode targets
    	List<PBXNativeTarget> xcodeConfigs = (List<PBXNativeTarget>) request.getAttribute(FrameworkConstants.REQ_XCODE_CONFIGS);
+   	List<String> targets = (List<String>) request.getAttribute(FrameworkConstants.REQ_WORKSPACE_TARGETS);
+   	boolean showOnlyTaregts = false;
+   	if (TechnologyTypes.IPHONE_NATIVE.equals(technology) || TechnologyTypes.IPHONE_LIBRARY.equals(technology) || TechnologyTypes.IPHONE_WORKSPACE.equals(technology)) {
+   		showOnlyTaregts = true;
+   	}
 %>
 <form action="code" method="post" autocomplete="off" class="build_form" id="generateBuildForm">
 <div class="popup_Modal">
@@ -49,13 +54,15 @@
 
 	<div class="modal-body">
 				
-		<% if (TechnologyTypes.IPHONE_NATIVE.equals(technology)) { %>
+		<% if (showOnlyTaregts) { %>
 
 			<div id="targets" class="clearfix">
 				<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
 				<div class="input">
 					<select id="target" name="target" class="xlarge" >
-					<% if (xcodeConfigs != null) { 
+					<!--  it will list down the targets using plutil -->
+					<% 
+						if (xcodeConfigs != null) { 
 							for (PBXNativeTarget xcodeConfig : xcodeConfigs) {
 					%>
 							<option value="<%= xcodeConfig.getName() %>"><%= xcodeConfig.getName() %></option>
@@ -63,7 +70,16 @@
 							} 
 						} 
 					%>	
-<%-- 					<option value="functional" ><s:text name="label.funtional"/></option> --%>
+
+					<!--  it will list down the schemes using xcodebuild which is for iphone workspace command -->
+					<% 
+ 						if (targets != null) {
+ 							for (String target : targets) {
+ 					%>
+							<option value="<%= target %>"><%= target %></option>
+					<% 		} 
+						}
+	 				%>
 			       </select>
 				</div>
 			</div>

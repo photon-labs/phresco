@@ -27,6 +27,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -76,6 +79,7 @@ import com.sun.jersey.api.client.WebResource;
 
 public class ApplicationsUtil implements FrameworkConstants {
 
+	private static final String XCODEBUILD_LIST_WORKSPACE_CMD = "xcodebuild -list -workspace ";
 	private static final Logger S_LOGGER = Logger.getLogger(Applications.class);
     private static Boolean debugEnabled  = S_LOGGER.isDebugEnabled();
     private static Map<String, List<ProjectInfo>> mapPilotProjectInfos = new HashMap<String, List<ProjectInfo>>(15);
@@ -495,7 +499,7 @@ public class ApplicationsUtil implements FrameworkConstants {
         projPath.append(projectCode);
         projPath.append(File.separator);
         projPath.append(pomProcessor.getSourceDirectory());
-        S_LOGGER.debug("projPath.toString() ====> " + projPath.toString());
+        S_LOGGER.debug("projPath.toString() " + projPath.toString());
         File file = new File(projPath.toString());
         FilenameFilter filter = new FileListFilter("", IPHONE_XCODE_PROJ_EXTN);
         File[] listFiles = file.listFiles(filter);
@@ -524,13 +528,13 @@ public class ApplicationsUtil implements FrameworkConstants {
         	S_LOGGER.error("Error While Executing" + e);
             throw new PhrescoException("Error while executing ");
         }
-        S_LOGGER.error("Before While loop");
+        S_LOGGER.debug("Before While loop");
         while(!xcodeprojJson.exists()) {
         	
         }
-        S_LOGGER.error("After While loop Completed");
+        S_LOGGER.debug("After While loop Completed");
         if (xcodeprojJson.exists()) {
-        	S_LOGGER.error("File exists");
+        	S_LOGGER.debug("File exists");
             XcodeprojParser parser = new XcodeprojParser(xcodeprojJson);
             try {
                 PBXProject project = parser.parseXcodeFile();
@@ -541,7 +545,7 @@ public class ApplicationsUtil implements FrameworkConstants {
                 throw new PhrescoException(e);
             }
         }
-        S_LOGGER.error("File reading completed");
+        S_LOGGER.debug("File reading completed");
         xcodeprojJson.delete();
         S_LOGGER.debug("Going to return from applications util");
 		return targets;
@@ -576,5 +580,56 @@ public class ApplicationsUtil implements FrameworkConstants {
 		}
 		
 		return null;
+	}
+	
+	public static List<String> getTargets(String projectCode) throws Exception {
+		S_LOGGER.debug("Entering Method  ApplicationsUtil.getTargets()");
+		List<String> targets = new ArrayList<String>();
+		try {
+			StringBuilder builder = new StringBuilder(Utility.getProjectHome());
+	        builder.append(projectCode);
+	        builder.append(File.separatorChar);
+	        builder.append(POM_XML);
+	        S_LOGGER.debug("pom path " + builder.toString());
+			File pomPath = new File(builder.toString());
+			
+			PomProcessor pomProcessor = new PomProcessor(pomPath);
+			
+			StringBuilder projPath = new StringBuilder(Utility.getProjectHome());
+	        projPath.append(projectCode);
+	        projPath.append(File.separator);
+	        projPath.append(pomProcessor.getSourceDirectory());
+	        S_LOGGER.debug("source directory path " + projPath.toString());
+	        
+	        File sourceDir = new File(projPath.toString());
+	        FilenameFilter filter = new FileListFilter("", IPHONE_XCODE_WORKSPACE_PROJ_EXTN);
+	        File[] listFiles = sourceDir.listFiles(filter);
+	        
+	        projPath.append(File.separator);
+	        // Get firest xcode proj file name
+	        projPath.append(listFiles[0].getName());
+	        S_LOGGER.debug("Iphone workspace technology listFile name" + listFiles[0].getName());
+	        
+	        Commandline cl = new Commandline(XCODEBUILD_LIST_WORKSPACE_CMD + listFiles[0].getName());
+	        cl.setWorkingDirectory(sourceDir);
+			Process p = cl.execute();
+			BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream()));
+			
+			String line = null;
+			boolean checklist = false;
+	        while ((line = reader.readLine()) != null) {                   
+				if (checklist && StringUtils.isNotEmpty(line)) {
+					targets.add(line.trim());
+				}
+				  
+				// afetr Schemes found need to get schemes
+				if (line.contains(SCHEMES)) {
+					checklist = true;
+				}
+	        }
+		} catch (Exception e) {
+			throw new PhrescoException(e);
+		}
+		return targets;
 	}
 }
