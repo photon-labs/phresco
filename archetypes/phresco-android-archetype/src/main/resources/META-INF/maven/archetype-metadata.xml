@@ -120,6 +120,14 @@
 			<directory>test/functional/src/com/photon/phresco/nativeapp/functional/test/testcases</directory> 
 			<includes>
 				<include>MainActivityTest.java</include>
+				<include>TestException.java</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/src/com/photon/phresco/nativeapp/functional/test/core</directory> 
+			<includes>
+				<include>Data.java</include>
+				<include>ReadXMLFile.java</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
@@ -140,6 +148,12 @@
 				<include>icon.png</include>
 			</includes>
 		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/drawable-xhdpi</directory> 
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
 		<fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/res/layout</directory> 
 			<includes>
@@ -150,6 +164,12 @@
 			<directory>test/functional/res/values</directory> 
 			<includes>
 				<include>strings.xml</include>
+			</includes>
+		</fileSet>
+        <fileSet filtered="false" packaged="false"> 
+			<directory>test/functional/res/raw</directory> 
+			<includes>
+				<include>data.xml</include>
 			</includes>
 		</fileSet>
 		
