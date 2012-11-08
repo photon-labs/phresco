@@ -126,7 +126,7 @@
         <fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/src/com/photon/phresco/nativeapp/functional/test/core</directory> 
 			<includes>
-				<include>Data.java</include>
+				<include>AndroidNativeData.java</include>
 				<include>ReadXMLFile.java</include>
 			</includes>
 		</fileSet>
@@ -169,7 +169,7 @@
         <fileSet filtered="false" packaged="false"> 
 			<directory>test/functional/res/raw</directory> 
 			<includes>
-				<include>data.xml</include>
+				<include>android_native_data.xml</include>
 			</includes>
 		</fileSet>
 		
