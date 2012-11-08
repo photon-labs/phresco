@@ -36,7 +36,7 @@ public class IosSdkUtil {
 	// types to be passed
 	public enum MacSdkType { macosx, iphoneos, iphonesimulator };
 	
-	public static List<String> getMacSdks(MacSdkType type)  throws Exception {
+	public static List<String> getMacSdks(MacSdkType type) {
 		List<String> sdks = new ArrayList<String>();
 		try {
 			Process p=Runtime.getRuntime().exec(XCODEBUILD_SHOWSDKS); 
@@ -64,7 +64,7 @@ public class IosSdkUtil {
 		return Lists.reverse(sdks);
 	}
 
-	public static List<String> getMacSdksVersions(MacSdkType type)  throws Exception {
+	public static List<String> getMacSdksVersions(MacSdkType type) {
 		List<String> sdks = null;
 		try {
 			Process p=Runtime.getRuntime().exec(XCODEBUILD_SHOWSDKS); 
@@ -94,5 +94,18 @@ public class IosSdkUtil {
 			return sdks;
 		}
 		return sdks;
+	}
+	
+	public static boolean isAvailable(String sdk, MacSdkType type) {
+		try {
+			List<String> macSdks = getMacSdks(type);
+			if (macSdks.contains(sdk)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

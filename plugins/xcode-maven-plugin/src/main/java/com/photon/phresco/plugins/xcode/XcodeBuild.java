@@ -42,6 +42,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +52,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -63,12 +65,13 @@ import org.codehaus.plexus.archiver.zip.ZipArchiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.photon.phresco.exception.PhrescoException;
 import com.photon.phresco.model.BuildInfo;
 import com.photon.phresco.plugins.xcode.utils.SdkVerifier;
 import com.photon.phresco.plugins.xcode.utils.XcodeUtil;
+import com.photon.phresco.util.IosSdkUtil;
 import com.photon.phresco.util.PluginUtils;
 import com.photon.phresco.util.XCodeConstants;
+import com.photon.phresco.util.IosSdkUtil.MacSdkType;
 
 /**
  * Run the xcodebuild command line program
@@ -77,6 +80,38 @@ import com.photon.phresco.util.XCodeConstants;
  * @phase compile
  */
 public class XcodeBuild extends AbstractMojo {
+
+	private static final String BUILD_FAILURE = "FAILURE";
+
+	private static final String BUILD_SUCCESS = "SUCCESS";
+
+	private static final String DSYM = "dSYM";
+
+	private static final String APP = "app";
+
+	private static final String IPHONE_SIMULATOR = "iphonesimulator";
+
+	private static final String IPHONEOS = "iphoneos";
+
+	private static final String HYPHEN = "-";
+
+	private static final String CMD_BUILD = "build";
+
+	private static final String CMD_CLEAN = "clean";
+
+	private static final String LIB = "lib";
+
+	private static final String FAT_FILE = "FatFile";
+
+	private static final String OUTPUT = " -output ";
+
+	private static final String CM_LIPO_CREATE = "lipo -create ";
+
+	private static final String SPACE = " ";
+
+	private static final String DOT_A_EXT = ".a";
+
+	private static final String STATIC_LIB_EXT = "a";
 
 	private static final String SDK = "-sdk";
 
@@ -251,90 +286,27 @@ public class XcodeBuild extends AbstractMojo {
 			try {
 			init();
 			configure();
-			ProcessBuilder pb = new ProcessBuilder(xcodeCommandLine.getAbsolutePath());
-			// Include errors in output
-			pb.redirectErrorStream(true);
-
-			List<String> commands = pb.command();
-			if (xcodeProject != null) {
-				// based on project type , it should be changed to -workspace
-				if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
-					commands.add(WORKSPACE);
-				} else {
-					commands.add(PROJECT);
-				}
-				commands.add(xcodeProject);
+			
+			// if this is static library , two .a files need to be generated and fat file generation
+			if (PACKAGING_XCODE_STATIC_LIBRARY.equals(project.getPackaging()) && !unittest) {
+				getLog().info("Static lib file generation started ");
+				// generate .a file for device and sim and generate fat file and provide deliverables
+				createFatFileDeliverables();
+			} else {
+				getLog().info("App file generation started ");
+				// when packaging type is xcode , it should generate app file
+				executeAppCreateCommads();
 			}
 			
-			if (StringUtils.isNotBlank(xcodeTarget)) {
-				// based on project type , it should be changed
-				if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
-					commands.add(SCHEME);
-				} else {
-					commands.add(TARGET);
-				}
-				commands.add(xcodeTarget);
-			}
-			
-			if (StringUtils.isNotBlank(configuration)) {
-				commands.add(CONFIGURATION);
-				commands.add(configuration);
-			}
-
-			if (StringUtils.isNotBlank(sdk)) {
-				commands.add(SDK);
-				commands.add(sdk);
-			}
-
-			commands.add("OBJROOT=" + buildDirectory);
-			commands.add("SYMROOT=" + buildDirectory);
-			commands.add("DSTROOT=" + buildDirectory);
-
-			if(StringUtils.isNotBlank(gccpreprocessor)) {
-				commands.add("GCC_PREPROCESSOR_DEFINITIONS="+gccpreprocessor);
-			}
-
-			
-			getLog().info("Unit test triggered from UI " + applicationTest);
-			// if the user selects , logical test, we need to add clean test... for other test nothing will be added except target.
-			if (unittest && !applicationTest) {
-				getLog().info("Unit test for logical test triggered !!!!!!!!");
-				commands.add("clean");
-//				commands.add("build");
-			}
-
-			commands.add("build");
-			
-			getLog().info("List of commands" + pb.command());
-			// pb.command().add("install");
-			pb.directory(new File(basedir));
-			Process child = pb.start();
-
-			// Consume subprocess output and write to stdout for debugging
-			InputStream is = new BufferedInputStream(child.getInputStream());
-			int singleByte = 0;
-			while ((singleByte = is.read()) != -1) {
-				// output.write(buffer, 0, bytesRead);
-				System.out.write(singleByte);
-			}
-
-			child.waitFor();
-			int exitValue = child.exitValue();
-			getLog().info("Exit Value: " + exitValue);
-			if (exitValue != 0) {
-				throw new MojoExecutionException("Compilation error occured. Resolve the error(s) and try again!");
-			}
-			
-			if(!unittest) {
+			// when packaging type is xcode , it should cpme here to package app files
+			if(!unittest && !PACKAGING_XCODE_STATIC_LIBRARY.equals(project.getPackaging())) {
+				getLog().info("Creating app file deliverables ");
 				//In case of unit testcases run, the APP files will not be generated.
 				// if packagin is xcode go with following steps
 				if (PACKAGING_XCODE.equals(project.getPackaging())) {
 					getLog().info("xcode archiving started ");
 					createdSYM();
 					createApp(); 
-				} else if (PACKAGING_XCODE_STATIC_LIBRARY.equals(project.getPackaging())) {
-					createStaticLibrary();
-					getLog().info("xcode static library archiving started ");
 				} else {
 					throw new MojoExecutionException("Packaging is not defined!");
 				}
@@ -356,6 +328,206 @@ public class XcodeBuild extends AbstractMojo {
 		}
 		File directory = new File(this.basedir + POM_XML);
 		this.project.getArtifact().setFile(directory);
+	}
+
+	private void createFatFileDeliverables() throws IOException,
+			InterruptedException, MojoExecutionException {
+		// getting machine sim and device sdks
+		List<String> iphoneSimSdks = IosSdkUtil.getMacSdks(MacSdkType.iphonesimulator);
+		List<String> iphoneOSSdks = IosSdkUtil.getMacSdks(MacSdkType.iphoneos);
+		
+		// generate .a file for simulator
+		File simDotAFile = null;
+		File simDotAFileBaseFolder = null;
+		if (CollectionUtils.isNotEmpty(iphoneSimSdks)) {
+			getLog().info("Iphone static lib creation .");
+			sdk = iphoneSimSdks.get(0);
+			executeAppCreateCommads(); // executing command to generate .a file
+			simDotAFile = getDotAFile();
+			simDotAFileBaseFolder = getDotAFileBaseFolder();
+			getLog().info("Simulator dot a file ..... " + simDotAFile);
+		}
+
+		// generate .a file for device
+		File deviceDotAFile = null;
+		File deviceDotAFileBaseFolder = null;
+		if (CollectionUtils.isNotEmpty(iphoneOSSdks)) {
+			getLog().info("Iphone device lib generation ");
+			sdk = iphoneOSSdks.get(0);
+			executeAppCreateCommads();  // executing command to generate .a file
+			deviceDotAFile = getDotAFile();
+			deviceDotAFileBaseFolder = getDotAFileBaseFolder();
+			getLog().info("device dot a file ..... " + deviceDotAFile);
+		}
+		
+		// if both the files are generated, genearte fat file and pzck it
+		if (simDotAFile.exists() && deviceDotAFile.exists()) {
+			getLog().info("sim and device library file created.. Copying to Build directory....." + project.getBuild().getFinalName());
+			String buildName = project.getBuild().getFinalName() + '_' + getTimeStampForBuildName(currentDate);
+			File baseFolder = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName);
+			
+			if (!baseFolder.exists()) {
+				baseFolder.mkdirs();
+				getLog().info("build output direcory created at " + baseFolder.getAbsolutePath());
+			}
+			
+			// copy include folder and .a files to build directory
+			getLog().info("simDotAFileBaseFolder of static library " + simDotAFileBaseFolder.getAbsolutePath());
+			getLog().info("baseFolder of static library " + baseFolder.getAbsolutePath());
+			XcodeUtil.copyFolder(simDotAFileBaseFolder, baseFolder); // sim copied to base folder
+			
+			// include dir is same for both simulator and device. so can copy either whole folder and we need to delete .a file. bcz we will create a fat file and we will plca here
+			File aFile = getFile(STATIC_LIB_EXT, baseFolder);
+			String fatFileName = "";
+			if (aFile.exists()) {
+				fatFileName = aFile.getName();
+				FileUtils.deleteQuietly(aFile);
+			}
+			
+			// pack and place generated .a file and delete old .a file
+			generateFatFile(simDotAFile, deviceDotAFile, baseFolder, fatFileName);
+			
+			// generating zip file
+			createDeliverables(buildName, baseFolder);
+			
+			// writing build info
+			File outputlibFile = getDotAFile();
+			File destFile = new File(baseFolder, outputlibFile.getName());
+			appFileName = destFile.getAbsolutePath();
+			getLog().info("static library app name ... " + destFile.getName());
+			boolean isDeviceBuild = Boolean.FALSE;
+			writeBuildInfo(true, appFileName, isDeviceBuild);
+			
+		// if both the files are not available, pack with 
+		} else if (simDotAFile.exists()) {
+			getLog().info("Simulator library file created.. Copying to Build directory. ");
+			createStaticLibrary(simDotAFileBaseFolder);
+		} else if (deviceDotAFile.exists()) {
+			getLog().info("Device library file created.. Copying to Build directory. ");
+			createStaticLibrary(deviceDotAFileBaseFolder);
+		} else {
+			throw new MojoExecutionException("Static library is not generated! ");
+		}
+	}
+
+	private void generateFatFile (File simFile, File deviceFile, File outputLocation, String fatFileName) throws MojoExecutionException {
+		getLog().info("Fat file generation started.");
+		try {
+			if (!simFile.exists()) {
+				throw new MojoExecutionException("simulator static library not found ");
+			}
+			
+			if (!deviceFile.exists()) {
+				throw new MojoExecutionException("device static library not found ");
+			}
+			
+			if (!outputLocation.exists()) {
+				outputLocation.mkdirs();
+				getLog().info("Fat file output folder create " + outputLocation.getAbsolutePath());
+			}
+			
+			// output file name
+			String fatFileLibName = "";
+			if (StringUtils.isEmpty(fatFileName)) {
+				fatFileLibName = LIB + project.getBuild().getFinalName();
+			} else {
+				fatFileLibName = FilenameUtils.removeExtension(fatFileName);
+			}
+			fatFileLibName = fatFileLibName + FAT_FILE + DOT_A_EXT;
+			
+			// excecuting lipo command to merge sim and device static library .a files
+			String staticLibFatCmd = CM_LIPO_CREATE + simFile + SPACE + deviceFile + OUTPUT + outputLocation + File.separator + fatFileLibName;
+			getLog().info("static library falt file generation command . " + staticLibFatCmd);
+			Process p = Runtime.getRuntime().exec(staticLibFatCmd); 
+			p.waitFor(); 
+			
+			// Consume subprocess output and write to stdout for debugging
+			InputStream is = new BufferedInputStream(p.getInputStream());
+			int singleByte = 0;
+			while ((singleByte = is.read()) != -1) {
+				// output.write(buffer, 0, bytesRead);
+				System.out.write(singleByte);
+			}
+			getLog().info("Fat file generation completed .");
+		} catch (Exception e) {
+			throw new MojoExecutionException("Failed to generate falt library file. ", e);
+		}
+	}
+	
+	private void executeAppCreateCommads() throws IOException, InterruptedException, MojoExecutionException {
+		ProcessBuilder pb = new ProcessBuilder(xcodeCommandLine.getAbsolutePath());
+		// Include errors in output
+		pb.redirectErrorStream(true);
+
+		List<String> commands = pb.command();
+		if (xcodeProject != null) {
+			// based on project type , it should be changed to -workspace
+			if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+				commands.add(WORKSPACE);
+			} else {
+				commands.add(PROJECT);
+			}
+			commands.add(xcodeProject);
+		}
+		
+		if (StringUtils.isNotBlank(xcodeTarget)) {
+			// based on project type , it should be changed
+			if (PACKAGING_XCODE_WORLSAPCE.equals(projectType)) {
+				commands.add(SCHEME);
+			} else {
+				commands.add(TARGET);
+			}
+			commands.add(xcodeTarget);
+		}
+		
+		if (StringUtils.isNotBlank(configuration)) {
+			commands.add(CONFIGURATION);
+			commands.add(configuration);
+		}
+
+		if (StringUtils.isNotBlank(sdk)) {
+			commands.add(SDK);
+			commands.add(sdk);
+		}
+
+		commands.add("OBJROOT=" + buildDirectory);
+		commands.add("SYMROOT=" + buildDirectory);
+		commands.add("DSTROOT=" + buildDirectory);
+
+		if(StringUtils.isNotBlank(gccpreprocessor)) {
+			commands.add("GCC_PREPROCESSOR_DEFINITIONS="+gccpreprocessor);
+		}
+
+		
+		getLog().info("Unit test triggered from UI " + applicationTest);
+		// if the user selects , logical test, we need to add clean test... for other test nothing will be added except target.
+		if (unittest && !applicationTest) {
+			getLog().info("Unit test for logical test triggered !!!!!!!!");
+			commands.add(CMD_CLEAN);
+//				commands.add("build");
+		}
+
+		commands.add(CMD_BUILD);
+		
+		getLog().info("List of commands" + pb.command());
+		// pb.command().add("install");
+		pb.directory(new File(basedir));
+		Process child = pb.start();
+
+		// Consume subprocess output and write to stdout for debugging
+		InputStream is = new BufferedInputStream(child.getInputStream());
+		int singleByte = 0;
+		while ((singleByte = is.read()) != -1) {
+			// output.write(buffer, 0, bytesRead);
+			System.out.write(singleByte);
+		}
+
+		child.waitFor();
+		int exitValue = child.exitValue();
+		getLog().info("Exit Value: " + exitValue);
+		if (exitValue != 0) {
+			throw new MojoExecutionException("Compilation error occured. Resolve the error(s) and try again!");
+		}
 	}
 
 	private void init() throws MojoExecutionException, MojoFailureException {
@@ -418,8 +590,8 @@ public class XcodeBuild extends AbstractMojo {
 		
 	}
 	
-	private void createStaticLibrary() throws MojoExecutionException {
-		File outputFile = getDotAFile();
+	private void createStaticLibrary(File dotAFileBaseFolder) throws MojoExecutionException {
+		File outputFile = dotAFileBaseFolder;
 		if (outputFile == null) {
 			getLog().error("xcodebuild failed. resultant library is not generated!");
 			throw new MojoExecutionException("xcodebuild has been failed");
@@ -443,17 +615,10 @@ public class XcodeBuild extends AbstractMojo {
 				XcodeUtil.copyFolder(outputFile, baseFolder);
 				
 				// generating zip file
-				getLog().info("Creating deliverables.....");
-				ZipArchiver zipArchiver = new ZipArchiver();
-				zipArchiver.addDirectory(baseFolder);
-				File deliverableZip = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName + ".zip");
-				zipArchiver.setDestFile(deliverableZip);
-				zipArchiver.createArchive();
-				deliverable = deliverableZip.getAbsolutePath();
-				getLog().info("Deliverables available at " + deliverableZip.getName());
+				createDeliverables(buildName, baseFolder);
 				
 				// writing build info
-				File outputlibFile = getDotAFileName();
+				File outputlibFile = getDotAFile();
 				File destFile = new File(baseFolder, outputlibFile.getName());
 				appFileName = destFile.getAbsolutePath();
 				getLog().info("static library app name ... " + destFile.getName());
@@ -492,18 +657,11 @@ public class XcodeBuild extends AbstractMojo {
 				getLog().info("copied to..." + destFile.getName());
 				appFileName = destFile.getAbsolutePath();
 
-				getLog().info("Creating deliverables.....");
-				ZipArchiver zipArchiver = new ZipArchiver();
-				zipArchiver.addDirectory(baseFolder);
-				File deliverableZip = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName + ".zip");
-				zipArchiver.setDestFile(deliverableZip);
-				zipArchiver.createArchive();
+				createDeliverables(buildName, baseFolder);
 
-				deliverable = deliverableZip.getAbsolutePath();
-				getLog().info("Deliverables available at " + deliverableZip.getName());
 				// writing build info
 				boolean isDeviceBuild = Boolean.FALSE;
-				if (sdk.startsWith("iphoneos")) {
+				if (sdk.startsWith(IPHONEOS)) {
 					isDeviceBuild = Boolean.TRUE;
 				}
 				writeBuildInfo(true, appFileName, isDeviceBuild);
@@ -538,15 +696,8 @@ public class XcodeBuild extends AbstractMojo {
 				getLog().info("copied to..." + destFile.getName());
 				dSYMFileName = destFile.getAbsolutePath();
 
-				getLog().info("Creating deliverables.....");
-				ZipArchiver zipArchiver = new ZipArchiver();
-				zipArchiver.addDirectory(baseFolder);
-				File deliverableZip = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName + ".zip");
-				zipArchiver.setDestFile(deliverableZip);
-				zipArchiver.createArchive();
-
-				deliverable = deliverableZip.getAbsolutePath();
-				getLog().info("Deliverables available at " + deliverableZip.getName());
+				// create deliverables
+				createDeliverables(buildName, baseFolder);
 
 			} catch (IOException e) {
 				throw new MojoExecutionException("Error in writing output..." + e.getLocalizedMessage());
@@ -557,38 +708,65 @@ public class XcodeBuild extends AbstractMojo {
 		}
 	}
 
-	private File getDotAFile() {
-		String path = configuration + "-";
-		if (sdk.startsWith("iphoneos")) {
-			path = path + "iphoneos";
+
+	private void createDeliverables(String buildName, File baseFolder) throws MojoExecutionException {
+		try {
+			getLog().info("Creating deliverables.....");
+			ZipArchiver zipArchiver = new ZipArchiver();
+			zipArchiver.addDirectory(baseFolder);
+			File deliverableZip = new File(baseDir + DO_NOT_CHECKIN_BUILD, buildName + ".zip");
+			zipArchiver.setDestFile(deliverableZip);
+			zipArchiver.createArchive();
+			deliverable = deliverableZip.getAbsolutePath();
+			getLog().info("Deliverables available at " + deliverableZip.getName());
+		} catch (IOException e) {
+			throw new MojoExecutionException("Error in writing output..." + e.getLocalizedMessage());
+		}
+	}
+	
+	private File getDotAFileBaseFolder() {
+		String path = configuration + HYPHEN;
+		if (sdk.startsWith(IPHONEOS)) {
+			path = path + IPHONEOS;
 		} else {
-			path = path + "iphonesimulator";
+			path = path + IPHONE_SIMULATOR;
 		}
 		
 		File baseFolder = new File(buildDirectory, path);
 		File[] files = baseFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
-			if (file.getName().endsWith("a")) {
+			if (file.getName().endsWith(STATIC_LIB_EXT)) {
 				return baseFolder;
 			}
 		}
 		return null;
 	}
 	
-	private File getDotAFileName() {
-		String path = configuration + "-";
-		if (sdk.startsWith("iphoneos")) {
-			path = path + "iphoneos";
+	private File getDotAFile() {
+		String path = configuration + HYPHEN;
+		if (sdk.startsWith(IPHONEOS)) {
+			path = path + IPHONEOS;
 		} else {
-			path = path + "iphonesimulator";
+			path = path + IPHONE_SIMULATOR;
 		}
 		
 		File baseFolder = new File(buildDirectory, path);
 		File[] files = baseFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
-			if (file.getName().endsWith("a")) {
+			if (file.getName().endsWith(STATIC_LIB_EXT)) {
+				return file;
+			}
+		}
+		return null;
+	}
+	
+	private File getFile(String extension, File Folder) {
+		File[] files = Folder.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+			if (file.getName().endsWith(STATIC_LIB_EXT)) {
 				return file;
 			}
 		}
@@ -596,18 +774,18 @@ public class XcodeBuild extends AbstractMojo {
 	}
 	
 	private File getAppName() {
-		String path = configuration + "-";
-		if (sdk.startsWith("iphoneos")) {
-			path = path + "iphoneos";
+		String path = configuration + HYPHEN;
+		if (sdk.startsWith(IPHONEOS)) {
+			path = path + IPHONEOS;
 		} else {
-			path = path + "iphonesimulator";
+			path = path + IPHONE_SIMULATOR;
 		}
 		
 		File baseFolder = new File(buildDirectory, path);
 		File[] files = baseFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
-			if (file.getName().endsWith("app")) {
+			if (file.getName().endsWith(APP)) {
 				return file;
 			}
 		}
@@ -615,18 +793,18 @@ public class XcodeBuild extends AbstractMojo {
 	}
 
 	private File getdSYMName() {
-		String path = configuration + "-";
-		if (sdk.startsWith("iphoneos")) {
-			path = path + "iphoneos";
+		String path = configuration + HYPHEN;
+		if (sdk.startsWith(IPHONEOS)) {
+			path = path + IPHONEOS;
 		} else {
-			path = path + "iphonesimulator";
+			path = path + IPHONE_SIMULATOR;
 		}
 
 		File baseFolder = new File(buildDirectory, path);
 		File[] files = baseFolder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
-			if (file.getName().endsWith("dSYM")) {
+			if (file.getName().endsWith(DSYM)) {
 				return file;
 			}
 		}
@@ -648,9 +826,9 @@ public class XcodeBuild extends AbstractMojo {
 			}
 			buildInfo.setTimeStamp(getTimeStampForDisplay(currentDate));
 			if (isBuildSuccess) {
-				buildInfo.setBuildStatus("SUCCESS");
+				buildInfo.setBuildStatus(BUILD_SUCCESS);
 			} else {
-				buildInfo.setBuildStatus("FAILURE");
+				buildInfo.setBuildStatus(BUILD_FAILURE);
 			}
 			
 			buildInfo.setBuildName(appFileName1);
