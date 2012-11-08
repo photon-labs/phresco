@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Nodejs_EShopjson</groupId>
   <artifactId>nodejs</artifactId>
-  <version>1.2.4.1003-SNAPSHOT</version>
+  <version>1.2.4.1004-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>nodejs</name>
   <url>http://maven.apache.org</url>
@@ -204,7 +204,7 @@
                     <plugin>
                         <groupId>com.photon.phresco.plugins</groupId>
                         <artifactId>ci-maven-plugin</artifactId>
-                        <version>1.2.4.1003-SNAPSHOT</version>
+                        <version>1.2.4.1004-SNAPSHOT</version>
                     </plugin>
                 </plugins>
             </build>
