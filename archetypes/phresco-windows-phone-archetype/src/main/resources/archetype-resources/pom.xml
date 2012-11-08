@@ -30,6 +30,8 @@
 		<visual.studio.solution>source/WP.sln</visual.studio.solution>
 		<sonar.dotnet.4.0.sdk.directory>C:\Windows\Microsoft.NET\Framework\v4.0.30319</sonar.dotnet.4.0.sdk.directory>
 		<sonar.dotnet.version>4.0</sonar.dotnet.version>
+        <sonar.ndeps.mode>skip</sonar.ndeps.mode> 
+		<sonar.fxcop.mode>skip</sonar.fxcop.mode>
     </properties>
     <build>
         <sourceDirectory>source</sourceDirectory>
