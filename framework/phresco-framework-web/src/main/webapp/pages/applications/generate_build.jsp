@@ -146,6 +146,15 @@
 			
 			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
 				<div class="clearfix">
+					<label for="xlInput" class="xlInput popup-label"><s:text name="label.target"/></label>
+				    <div class="input">
+						<select id ="targetdeploy" name="target" class="xlarge" onChange="onSelectChange()";>
+							<option value="device">Device</option>
+							<option value="simulator">Simulator</option>
+						</select>
+				    </div>
+				</div>	    
+				<div id="keypass" class="clearfix">
 					<label for="xlInput" class="xlInput popup-label "><span class="red">*</span> <s:text name="label.keypassword"/></label>
 				    <div class="input">
 						<input id="password" type="password" placeholder="<s:text name="Enter the Password"/>" class="xlarge javastd" 
@@ -619,16 +628,21 @@
 			
 			<% if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) { %>
 			 	$("#errMsg").html("");
-			 	var keyPwd = $('#password').val();
-	            if (isBlank(keyPwd)) {
-	               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY  %>');
-	               	return false;
-	             }
+			 	var selected = isSelectchange();
+			 	if (selected) {
+				 	var keyPwd = $('#password').val();
+		            if (isBlank(keyPwd)) {
+		               	$("#errMsg").html('<%= FrameworkConstants.KEY_PASSWORD_EMPTY  %>');
+		               	return false;
+		             }
+			 	}
              <% } %>
               
 			buildValidateSuccess("build", '<%= FrameworkConstants.REQ_BUILD %>');
 			
 		});
+
+		 $("#targetdeploy").change(onSelectChange);
 		
 		$('#userBuildNumber').bind('input propertychange', function (e) { 	//userBuildNumber validation
 			var userBuildNumber = $(this).val();
@@ -775,6 +789,24 @@
 		executeSqlShowHide();
 		showHideMinusIcon();
 	});
+	
+	function isSelectchange() {
+		var selected = $("#targetdeploy option:selected"); 
+		if (selected.val() == "simulator") {
+			return false;
+		} else if (selected.val() == "device") {
+			return true;
+		}
+	}
+	
+	function onSelectChange() {
+	    var selected = $("#targetdeploy option:selected");    
+		if (selected.val() == "simulator") {
+			$("#keypass").hide();
+		} else if (selected.val() == "device") {
+			$("#keypass").show();
+		}
+	}
 	
 	function addDbWithVersions() {
 		//creating new data list

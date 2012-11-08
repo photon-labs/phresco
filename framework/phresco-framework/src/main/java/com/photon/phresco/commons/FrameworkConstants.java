@@ -535,6 +535,7 @@ public interface FrameworkConstants {
     String REQ_ANDROID_DEVICE = "device";
     String REQ_IPHONE_DEVICE = "device";
     String REQ_IPHONE_SIMULATOR = "simulator";
+    String REQ_BLACKBERRY_DEVICE = "device";
     String REQ_ANDROID_DEFAULT = "default";
     String REQ_FROM_TAB = "fromTab";
     String REQ_FROM_TAB_TEST = "Test";
