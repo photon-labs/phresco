@@ -12,7 +12,7 @@
             <plugin>
                 <groupId>com.photon.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>1.2.4.1003-SNAPSHOT-SNAPSHOT</version>
+                <version>1.2.4.1003-SNAPSHOT</version>
                 <extensions>true</extensions>
                 <configuration>
                     <run>
@@ -52,20 +52,7 @@
             <artifactId>junit</artifactId>
             <version>4.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.photon.phresco</groupId>
-            <artifactId>PHR_android_native_none</artifactId>
-            <version>1.0.0</version>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.photon.phresco</groupId>
-            <artifactId>PHR_android_native_none</artifactId>
-            <version>1.0.0</version>
-            <type>apk</type>
-            <scope>provided</scope>
-        </dependency>
+        
     </dependencies>
     <properties>
         <android.version>4.0.3</android.version>
