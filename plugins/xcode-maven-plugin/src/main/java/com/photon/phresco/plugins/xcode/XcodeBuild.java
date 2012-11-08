@@ -81,6 +81,12 @@ import com.photon.phresco.util.IosSdkUtil.MacSdkType;
  */
 public class XcodeBuild extends AbstractMojo {
 
+	private static final String OUTPUT = "-output";
+
+	private static final String CREATE = "-create";
+
+	private static final String LIPO = "lipo";
+
 	private static final String BUILD_FAILURE = "FAILURE";
 
 	private static final String BUILD_SUCCESS = "SUCCESS";
@@ -102,10 +108,6 @@ public class XcodeBuild extends AbstractMojo {
 	private static final String LIB = "lib";
 
 	private static final String FAT_FILE = "FatFile";
-
-	private static final String OUTPUT = " -output ";
-
-	private static final String CM_LIPO_CREATE = "lipo -create ";
 
 	private static final String SPACE = " ";
 
@@ -436,16 +438,24 @@ public class XcodeBuild extends AbstractMojo {
 			fatFileLibName = fatFileLibName + FAT_FILE + DOT_A_EXT;
 			
 			// excecuting lipo command to merge sim and device static library .a files
-			String staticLibFatCmd = CM_LIPO_CREATE + simFile + SPACE + deviceFile + OUTPUT + outputLocation + File.separator + fatFileLibName;
-			getLog().info("static library falt file generation command . " + staticLibFatCmd);
-			Process p = Runtime.getRuntime().exec(staticLibFatCmd); 
-			p.waitFor(); 
+			// lipo -create libPhresco.a libPhresco.a -output libPhrescoFatFile.a 
+			List<String> cmdargs = new ArrayList<String>();
+			cmdargs.add(LIPO);
+			cmdargs.add(CREATE);
+			cmdargs.add(simFile.getAbsolutePath());
+			cmdargs.add(deviceFile.getAbsolutePath());
+			cmdargs.add(OUTPUT);
+			cmdargs.add(outputLocation.getAbsolutePath() + File.separator + fatFileLibName);
+			getLog().info("static library falt file generation command . " + cmdargs);
+			ProcessBuilder pb = new ProcessBuilder(cmdargs);
+			pb.redirectErrorStream(true);
+			Process proc = pb.start();
+			proc.waitFor();
 			
 			// Consume subprocess output and write to stdout for debugging
-			InputStream is = new BufferedInputStream(p.getInputStream());
+			InputStream is = new BufferedInputStream(proc.getInputStream());
 			int singleByte = 0;
 			while ((singleByte = is.read()) != -1) {
-				// output.write(buffer, 0, bytesRead);
 				System.out.write(singleByte);
 			}
 			getLog().info("Fat file generation completed .");
