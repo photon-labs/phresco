@@ -106,7 +106,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 	protected String buildNumber;
 
 	/**
-	 * @parameter expression="${keyPass}" required="true"
+	 * @parameter expression="${keyPass}" required="false"
 	 */
 	protected String keyPass;
 	
@@ -282,17 +282,18 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 			sb.append(BB_BBWP_HOME);
 			sb.append(STR_SPACE);
 			sb.append(tempZipName);
-			sb.append(STR_SPACE);
-			sb.append("-g");
-			sb.append(STR_SPACE);
-			sb.append(keyPass);
+			if (!(keyPass == null && keyPass.isEmpty())) {
+				sb.append(STR_SPACE);
+				sb.append("-g");
+				sb.append(STR_SPACE);
+				sb.append(keyPass); 
+			}
 			sb.append(STR_SPACE);
 			sb.append("-o");
 			sb.append(STR_SPACE);
 			sb.append(tempZipName.substring(0, tempZipName.length() - 4));
 
 			//getLog().info("Build command: " + sb.toString());
-
 			Commandline cl = new Commandline(sb.toString());
 			cl.setWorkingDirectory(baseDir.getPath() + sourceDirectory);
 			Process process = cl.execute();

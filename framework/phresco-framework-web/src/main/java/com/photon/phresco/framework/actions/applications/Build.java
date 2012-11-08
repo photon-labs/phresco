@@ -427,9 +427,11 @@ public class Build extends FrameworkBaseAction {
 				if (XCODE_STATIC_LIBRARY.equals(packaging)) {
 					showDeploy = Boolean.FALSE;
 				}
-			} else if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology) || TechnologyTypes.JAVA_STANDALONE.contains(technology)) {
-				showDeploy = Boolean.FALSE;
-			}
+
+			} else if (TechnologyTypes.NODE_JS_WEBSERVICE.equals(technology)|| TechnologyTypes.JAVA_STANDALONE.contains(technology)
+					|| TechnologyTypes.ANDROID_LIBRARY.equals(technology)) {
+					showDeploy = Boolean.FALSE;
+				}
 			getHttpRequest().setAttribute(REQ_SHOW_DEPLOY, showDeploy);
 			
 		} catch (Exception e) {
@@ -470,7 +472,9 @@ public class Build extends FrameworkBaseAction {
 			} else if (TechnologyTypes.WIN_PHONE.equals(technology)) {
 				settingsInfoMap.put(CONFIGURATION, configuration);
 			} else if (TechnologyTypes.BLACKBERRY_HYBRID.equals(technology)) {
-				settingsInfoMap.put(KEYPASS, keypass);
+				if(getTarget().equals(REQ_BLACKBERRY_DEVICE)) {
+					settingsInfoMap.put(KEYPASS, keypass);
+				}
 			} else if (TechnologyTypes.IPHONES.contains(technology)) {
 				settingsInfoMap.put(IPHONE_SDK, sdk);
 				settingsInfoMap.put(IPHONE_CONFIGURATION, mode);
