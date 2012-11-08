@@ -30,7 +30,7 @@
     <groupId>com.photon.phresco.eShop</groupId>
     <artifactId>phresco-test</artifactId>
     <packaging>apk</packaging>
-	<version>1.2.4.1003-SNAPSHOT</version>
+	<version>1.2.4.1004-SNAPSHOT</version>
     <name>eShop - Test</name>
 
 	<properties>
@@ -63,7 +63,7 @@
 			<plugin>
 				<groupId>com.photon.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
-				<version>1.2.4.1003-SNAPSHOT</version>
+				<version>1.2.4.1004-SNAPSHOT</version>
 				<extensions>true</extensions>
 				<configuration>
 					<run>
