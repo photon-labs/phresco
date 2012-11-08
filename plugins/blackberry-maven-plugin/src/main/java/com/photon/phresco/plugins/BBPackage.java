@@ -282,7 +282,7 @@ public class BBPackage extends AbstractMojo implements PluginConstants {
 			sb.append(BB_BBWP_HOME);
 			sb.append(STR_SPACE);
 			sb.append(tempZipName);
-			if (!(keyPass == null && keyPass.isEmpty())) {
+			if (keyPass != null) {
 				sb.append(STR_SPACE);
 				sb.append("-g");
 				sb.append(STR_SPACE);
