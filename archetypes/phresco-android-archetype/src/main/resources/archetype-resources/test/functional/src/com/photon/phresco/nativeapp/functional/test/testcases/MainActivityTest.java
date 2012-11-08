@@ -28,7 +28,7 @@ import android.util.Log;
 
 import com.jayway.android.robotium.solo.Solo;
 import com.photon.phresco.nativeapp.activity.MainActivity;
-import com.photon.phresco.nativeapp.functional.test.core.Data;
+import com.photon.phresco.nativeapp.functional.test.core.AndroidNativeData;
 
 
 @SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class MainActivityTest extends
 
 	private static final String TAG = "****MainTestCase****";
 	private Instrumentation inst;
-	private Data data;
+	private AndroidNativeData data;
 
 	/**
 	 * This block will be executed first and it will loads the SplashActivity .
@@ -85,7 +85,7 @@ public class MainActivityTest extends
 
 		soloMain = new Solo(getInstrumentation(), getActivity());
 		inst=getInstrumentation();
-		data=new Data();
+		data=new AndroidNativeData();
 
 	}
 
