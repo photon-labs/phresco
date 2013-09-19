@@ -22,290 +22,244 @@ Continuous Integration and Remote Deployment.
 
 <table Border="1" cellpadding="2" cellspacing="2" style="text-align:center" width="100%">
 <tr>
-   <td style="text-align:center"><b>Supported Technologies</b></td>
-	<td style="text-align:center"><b>Code Validation</b></td>
+	<td style="text-align:center"><b>Supported Technologies</font></b></td>
+  	<td style="text-align:center"><b>Static Code Analysis</b></td>
+  	<td style="text-align:center"><b>Build & Deploy</b></td>
 	<td style="text-align:center"><b>Unit Test</b></td>
 	<td style="text-align:center"><b>Functional Test</b></td>
-	<td style="text-align:center"><b>Performance Test</b></td>
+	<td style="text-align:center"><b>Perf Test</b></td>
 	<td style="text-align:center"><b>Load Test</b></td>
-	<td style="text-align:center"><b>Build & Deploy</b></td>
 	<td style="text-align:center"><b>Continuous Integration</b></td>
 	<td style="text-align:center"><b>Remote Deployment</b></td>
 </tr>
 
+
 <tr>
-	<td style="text-align:left"><b>iPhone</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"><b>IOS Native</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
 </tr>
 
 <tr>
-	<td style="text-align:left"><b>Android</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-</tr>
-
-
-<tr>
-	<td style="text-align:left"><b>Node JS</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:left"><b>IOS Hybrid</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
 </tr>
 
 <tr>
-	<td style="text-align:left"><b>JQuery Widget</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td style="text-align:left"><b>IOS Library</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Android Native</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Android Hybrid</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Android Library</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>JQuery MultiChannel Responsive Web Design (RWD) Widget</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>YUI Widget</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
 </tr>
 
 <tr>
-	<td style="text-align:left"><b>JAVA</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" 
-	width="15px" 
-	height="15px" style="text-align:center"></img></td>
-</tr>
-
-<tr>
-	<td style="text-align:left"><b>Drupal</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-</tr>
-
-<tr>
-	<td style="text-align:left"><b>WordPress</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-</tr>
-
-
-<tr>
-	<td style="text-align:left"><b>PHP</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td style="text-align:left"><b>Node JS</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>SharePoint</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>	
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>	
 </tr>
 
 <tr>
 	<td style="text-align:left"><b>ASP .NET</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center">&nbsp;</td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
-	
-	<tr>
-	<td style="text-align:left"><b>Site Core</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center">&nbsp;</td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></img></td>
-	<td style="text-align:center"></img></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>	
+
+<tr>
+	<td style="text-align:left"><b>Java Web (Spring) / Standalone</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
 </tr>
 
-	<tr>
-	<td style="text-align:left"><b>Blackberry Hybrid</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center">&nbsp;</td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"&nbsp;</img></td>
+<tr>
+	<td style="text-align:left"><b>Blackberry </b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
 </tr>
 
-</tr>
-
-	<tr>
+<tr>
 	<td style="text-align:left"><b>Windows Metro</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center">&nbsp;</td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
 </tr>
 
-</tr>
-
-	<tr>
+<tr>
 	<td style="text-align:left"><b>Windows Phone</b></td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center">&nbsp;</td>
-	<td style="text-align:center"><img src="http://findicons.com/files//icons/42/basic/32/tick.png" width="15px" 
-	height="15px" style="text-align:center"></img></td>
-	<td style="text-align:center"></td>
-	<td style="text-align:center"&nbsp;</img></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Drupal</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>WordPress</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>Site Core</b></td>
+	<td align="center">&#10003;</img></td>
+	<td align="center">&#10003;</img></td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td style="text-align:left"><b>PHP</b></td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td align="center">&#10003;</td>
+	<td>&nbsp;</td>
 </tr>
 
 </table>
@@ -313,7 +267,7 @@ Continuous Integration and Remote Deployment.
 Quick start
 -----------
 
-Clone the repo, git clone git://github.com/phresco/phresco.git 
+Clone the repo, git clone https://github.com/photon-infotech/framework.git
 
 Versioning
 ----------
@@ -357,8 +311,19 @@ Please make pull requests against all branches.
 Authors
 ------------
 
-Mukund Balasubramanian (CTO)
+Mukund Balasubramanian (CTO) <BR>
+Srinivas Balasubramanian (CEO)
 
+<!--
+Core Team
+---------
+Senthilkumar Shanmugam (SDT) <BR>
+Jebastin Prabaharan (Architecht) <BR>
+Saravanakumar Sagadevan (QA Manager) <BR>
+Sathishkumar Dhanapal (Tech Manager) <BR>
+Bharatkumar Radha (Tech Lead) <BR>
+Suresh Dhanagopal (PM)
+-->
 Copyright and license
 ---------------------
 
